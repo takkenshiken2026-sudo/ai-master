@@ -87,6 +87,7 @@ const TOOLS = [
     logo: "deepseek-chat.ico",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "中国発。GPT-4級の性能を低コストで提供",
     url: "https://chat.deepseek.com",
   },
