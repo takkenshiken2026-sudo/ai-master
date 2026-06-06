@@ -8,6 +8,7 @@ const TOOLS = [
     cat: "chat",
     catLabel: "チャットAI",
     featured: true,
+    article: true,
     tagline: "最大手。GPT-4oを搭載し、画像生成・音声会話も対応",
     url: "https://chat.openai.com",
   },

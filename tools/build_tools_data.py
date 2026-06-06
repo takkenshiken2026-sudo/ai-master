@@ -14,6 +14,7 @@ from pathlib import Path
 import openpyxl
 
 ROOT = Path(__file__).resolve().parents[1]
+TOOLS_PAGES_DIR = ROOT / "tools"
 XLSX_DEFAULT = Path.home() / "Downloads" / "AIツール一覧v2.xlsx"
 XLSX_PROJECT = ROOT / "data" / "ai-tools-v2.xlsx"
 OUT_JS = ROOT / "assets" / "js" / "tools-data.js"
@@ -300,6 +301,10 @@ def js_string(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
+def has_article(tool_id: str) -> bool:
+    return (TOOLS_PAGES_DIR / tool_id / "index.html").is_file()
+
+
 def render_js(tools: list[dict]) -> str:
     lines = ["const TOOLS = ["]
     current_cat = None
@@ -316,6 +321,8 @@ def render_js(tools: list[dict]) -> str:
         lines.append(f"    catLabel: {js_string(tool['catLabel'])},")
         if tool["featured"]:
             lines.append("    featured: true,")
+        if has_article(tool["id"]):
+            lines.append("    article: true,")
         lines.append(f"    tagline: {js_string(tool['tagline'])},")
         lines.append(f"    url: {js_string(tool['url'])},")
         lines.append("  },")

@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://ai-master.jp"
 SITEMAP = ROOT / "sitemap.xml"
 INDEX_JSON = ROOT / "data" / "question-index.json"
+GLOSSARY_TERMS_JSON = ROOT / "data" / "glossary-terms.json"
 
 EXAMS = {
     "g-kentei": {
@@ -216,19 +217,130 @@ def breadcrumb(items: list[tuple[str, str | None]]) -> str:
   return "\n".join(lines)
 
 
-def render_drill_body(q: dict) -> str:
+def load_published_glossary() -> list[tuple[str, str]]:
+    if not GLOSSARY_TERMS_JSON.is_file():
+        return []
+    data = json.loads(GLOSSARY_TERMS_JSON.read_text(encoding="utf-8"))
+    terms: list[tuple[str, str]] = []
+    for term in data.get("terms") or []:
+        tid = term.get("id")
+        name = term.get("name")
+        if not tid or not name:
+            continue
+        if (ROOT / "glossary" / tid / "index.html").is_file():
+            terms.append((name, tid))
+    terms.sort(key=lambda x: len(x[0]), reverse=True)
+    return terms
+
+
+def match_glossary_terms(
+    text: str, glossary: list[tuple[str, str]], limit: int = 6
+) -> list[tuple[str, str]]:
+    matched: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for name, tid in glossary:
+        if len(name) < 2 or tid in seen:
+            continue
+        if name in text:
+            matched.append((name, tid))
+            seen.add(tid)
+        if len(matched) >= limit:
+            break
+    return matched
+
+
+def render_question_header(q: dict, exam_label: str, mode_label: str) -> str:
+    topic = html.escape(q.get("topic") or "")
+    return f"""  <header class="hub-header hub-header--question">
+    <h1>{topic}</h1>
+    <p class="hub-intro">{html.escape(exam_label)} {html.escape(mode_label)}の問題です。解説付きで個別に学習できます。</p>
+  </header>"""
+
+
+def render_meta_pills(q: dict, domain_slug: str) -> str:
+    domain = html.escape(q.get("domain", ""))
+    return f"""  <div class="question-page__meta">
+    <a class="question-page__pill question-page__pill--link" href="../../domain/{domain_slug}/">{domain}</a>
+    <span class="question-page__pill question-page__pill--muted">{html.escape(q.get("difficulty", ""))}</span>
+    <span class="question-page__pill question-page__pill--muted">ID: {html.escape(q.get("id", ""))}</span>
+  </div>"""
+
+
+def render_related_section(
+    q: dict,
+    *,
+    exam_id: str,
+    exam_label: str,
+    mode_label: str,
+    domain_slug: str,
+    by_domain: dict[str, list[dict]],
+    glossary: list[tuple[str, str]],
+    rel_root: str,
+) -> str:
+    domain = q.get("domain", "")
+    topic = q.get("topic", "")
+    text = " ".join(
+        filter(
+            None,
+            [topic, q.get("statement") or q.get("question") or "", q.get("explanation") or ""],
+        )
+    )
+
+    keyword_links: list[tuple[str, str]] = [
+        (exam_label, f"{rel_root}exams/{exam_id}/"),
+        (mode_label, "../../"),
+        (domain, f"../../domain/{domain_slug}/"),
+        ("問題一覧", "../../questions/"),
+        ("用語辞典", f"{rel_root}glossary/"),
+    ]
+    for name, tid in match_glossary_terms(text, glossary):
+        keyword_links.append((name, f"{rel_root}glossary/{tid}/"))
+
+    pills: list[str] = []
+    seen_href: set[str] = set()
+    for label, href in keyword_links:
+        if href in seen_href:
+            continue
+        seen_href.add(href)
+        pills.append(
+            f'<a class="question-page__pill question-page__pill--link" '
+            f'href="{html.escape(href)}">{html.escape(label)}</a>'
+        )
+
+    siblings = [
+        item
+        for item in by_domain.get(domain, [])
+        if item.get("topic") == topic and item["id"] != q["id"]
+    ][:5]
+    sibling_html = ""
+    if siblings:
+        items = []
+        for item in siblings:
+            qs = id_slug(item["id"])
+            items.append(
+                f'      <li><a href="../{qs}/">'
+                f'{html.escape(item.get("id", qs))} · {html.escape(topic)}</a></li>'
+            )
+        sibling_html = f"""
+    <h3 class="question-page__related-sub">同じトピックの問題</h3>
+    <ul class="question-page__related-list">
+{chr(10).join(items)}
+    </ul>"""
+
+    return f"""  <section class="question-page__related" aria-label="関連キーワード">
+    <h2 class="question-page__related-title">関連キーワード</h2>
+    <div class="question-page__keywords">
+      {"".join(pills)}
+    </div>{sibling_html}
+  </section>"""
+
+
+def render_drill_body(q: dict, exam_label: str, mode_label: str, domain_slug: str) -> str:
     statement = html.escape(q["statement"])
     answer = html.escape(q["answer"])
     explanation = html.escape(q["explanation"])
-    return f"""  <header class="hub-header">
-    <h1>{html.escape(q.get("topic") or "一問一答")}</h1>
-    <p class="hub-intro">G検定・生成AIパスポート対策の一問一答です。解説付きで個別に学習できます。</p>
-  </header>
-  <div class="question-page__meta">
-    <span class="question-page__pill">{html.escape(q.get("domain", ""))}</span>
-    <span class="question-page__pill question-page__pill--muted">{html.escape(q.get("difficulty", ""))}</span>
-    <span class="question-page__pill question-page__pill--muted">ID: {html.escape(q.get("id", ""))}</span>
-  </div>
+    return f"""{render_question_header(q, exam_label, mode_label)}
+{render_meta_pills(q, domain_slug)}
   <article class="question-page__card">
     <h2 class="question-page__section-title">問題</h2>
     <p class="question-page__prompt">{statement}</p>
@@ -240,7 +352,7 @@ def render_drill_body(q: dict) -> str:
   </article>"""
 
 
-def render_choice_body(q: dict) -> str:
+def render_choice_body(q: dict, exam_label: str, mode_label: str, domain_slug: str) -> str:
     prompt = html.escape(q["question"])
     answer = q["answer"].upper()
     choices = q.get("choices") or {}
@@ -253,15 +365,8 @@ def render_choice_body(q: dict) -> str:
         choice_items.append(f'      <li class="{cls}">{key}. {label}</li>')
     choices_html = "\n".join(choice_items)
     explanation = html.escape(q["explanation"])
-    return f"""  <header class="hub-header">
-    <h1>{html.escape(q.get("topic") or "実践演習")}</h1>
-    <p class="hub-intro">四肢択一の実践演習問題です。正解と解説を確認できます。</p>
-  </header>
-  <div class="question-page__meta">
-    <span class="question-page__pill">{html.escape(q.get("domain", ""))}</span>
-    <span class="question-page__pill question-page__pill--muted">{html.escape(q.get("difficulty", ""))}</span>
-    <span class="question-page__pill question-page__pill--muted">ID: {html.escape(q.get("id", ""))}</span>
-  </div>
+    return f"""{render_question_header(q, exam_label, mode_label)}
+{render_meta_pills(q, domain_slug)}
   <article class="question-page__card">
     <h2 class="question-page__section-title">問題</h2>
     <p class="question-page__prompt">{prompt}</p>
@@ -427,19 +532,35 @@ def build_mode(
         )
         sitemap_urls.append(domain_canonical)
 
+    glossary = load_published_glossary()
+    rel_root = rel_to_root(5)
+
     for i, q in enumerate(ordered_all):
         qs = id_slug(q["id"])
         q_dir = q_root / qs
         q_dir.mkdir(parents=True, exist_ok=True)
         kind = mode_cfg["kind"]
-        body = render_drill_body(q) if kind == "drill" else render_choice_body(q)
+        domain_slug = domain_slugs[q["domain"]]
+        if kind == "drill":
+            body = render_drill_body(q, exam_label, mode_label, domain_slug)
+        else:
+            body = render_choice_body(q, exam_label, mode_label, domain_slug)
         player_href = f"../../?q={qs}"
         prev_href = f"../{id_slug(ordered_all[i - 1]['id'])}/" if i > 0 else None
         next_href = (
             f"../{id_slug(ordered_all[i + 1]['id'])}/" if i < len(ordered_all) - 1 else None
         )
         body += render_question_actions(player_href, prev_href, next_href)
-        body += f'\n  <p style="font-size:var(--text-sm);margin-top:16px;"><a href="../../domain/{domain_slugs[q["domain"]]}/">{html.escape(q["domain"])}の一覧</a> · <a href="../../questions/">分野一覧</a></p>'
+        body += render_related_section(
+            q,
+            exam_id=exam_id,
+            exam_label=exam_label,
+            mode_label=mode_label,
+            domain_slug=domain_slug,
+            by_domain=by_domain,
+            glossary=glossary,
+            rel_root=rel_root,
+        )
 
         topic = q.get("topic") or qs
         prompt = q.get("statement") if kind == "drill" else q.get("question")

@@ -5,6 +5,10 @@ function toolUrl(tool) {
   return `${tool.id}/`;
 }
 
+function hasArticle(tool) {
+  return tool.article === true;
+}
+
 function logoSrc(tool) {
   return `${ICON_BASE}${tool.logo}`;
 }
@@ -100,40 +104,59 @@ function renderFeatured() {
 
   grid.innerHTML = TOOLS.filter((t) => t.featured)
     .slice(0, FEATURED_LIMIT)
-    .map((t) => `
-    <a href="${toolUrl(t)}" class="featured-card">
+    .map((t) => {
+      const body = `
       <div class="featured-head">
         ${toolIcon(t)}
         <h3 class="featured-name">${escapeHtml(t.name)}</h3>
+        ${hasArticle(t) ? '' : '<span class="tool-soon-badge">準備中</span>'}
       </div>
-      <p class="featured-tagline">${escapeHtml(t.tagline)}</p>
-    </a>
-  `).join('');
+      <p class="featured-tagline">${escapeHtml(t.tagline)}</p>`;
+      if (hasArticle(t)) {
+        return `<a href="${toolUrl(t)}" class="featured-card">${body}</a>`;
+      }
+      return `<div class="featured-card featured-card--soon" aria-disabled="true">${body}</div>`;
+    }).join('');
 }
 
 const TOOL_CHEVRON =
   '<svg class="tool-row-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">' +
   '<path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-function renderListRows(tools) {
-  return tools.map((t) => `
-    <li class="tool-row">
-      <a href="${toolUrl(t)}" class="tool-row-link">
+function toolRowInner(t) {
+  const soonBadge = hasArticle(t) ? '' : '<span class="tool-soon-badge">準備中</span>';
+  const chevron = hasArticle(t) ? TOOL_CHEVRON : '';
+  return `
         ${toolIcon(t, 'sm')}
         <div class="tool-row-body">
           <div class="tool-row-top">
             <h2 class="tool-row-name">${escapeHtml(t.name)}</h2>
+            ${soonBadge}
           </div>
           <p class="tool-row-maker">${escapeHtml(t.maker)}</p>
           <p class="tool-row-desc">${escapeHtml(t.tagline)}</p>
         </div>
         <div class="tool-row-aside">
           <span class="tool-category">${escapeHtml(t.catLabel)}</span>
-          ${TOOL_CHEVRON}
-        </div>
+          ${chevron}
+        </div>`;
+}
+
+function renderListRows(tools) {
+  return tools.map((t) => {
+    if (hasArticle(t)) {
+      return `
+    <li class="tool-row">
+      <a href="${toolUrl(t)}" class="tool-row-link">${toolRowInner(t)}
       </a>
-    </li>
-  `).join('');
+    </li>`;
+    }
+    return `
+    <li class="tool-row tool-row--soon">
+      <div class="tool-row-link tool-row-link--static">${toolRowInner(t)}
+      </div>
+    </li>`;
+  }).join('');
 }
 
 function renderPagination(cat, page, q, totalPages) {
@@ -251,14 +274,5 @@ document.getElementById('searchInput')?.addEventListener('input', (e) => {
   }, 300);
 });
 
-function renderSitemap() {
-  const list = document.getElementById('toolSitemapList');
-  if (!list) return;
-  list.innerHTML = TOOLS.map((t) =>
-    `<li><a href="${toolUrl(t)}">${escapeHtml(t.name)}</a><span>${escapeHtml(t.catLabel)}</span></li>`
-  ).join('');
-}
-
 window.addEventListener('popstate', render);
 render();
-renderSitemap();

@@ -155,6 +155,7 @@
   padding: 16px;
   background: var(--surface-inset);
   border: 1px solid var(--border-subtle);
+  border-top: 3px solid var(--blue);
   border-radius: 0;
   text-decoration: none;
   color: inherit;
