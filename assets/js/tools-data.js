@@ -176,6 +176,7 @@ const TOOLS = [
     logo: "leonardo-ai.png",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "ゲームやイラスト向けに特化した画像生成ツール",
     url: "https://leonardo.ai",
   },
