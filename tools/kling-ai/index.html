@@ -1,0 +1,507 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Kling AIの機能・料金・使い方を解説。中国・快手（Kuaishou）発の動画生成AI、クレジット制、Text-to-Video・Image-to-Video、Runway・Veo 3との違いを整理。">
+          <title>Kling AIとは？動画生成AIの機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/kling-ai/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="Kling AIとは？動画生成AIの機能・料金・使い方を解説">
+          <meta property="og:description" content="Kling AIをわかりやすく解説。クレジット制の料金体系、動画生成の主な機能、実務活用、Runway・Veo 3との比較を2026年6月時点で整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/kling-ai/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/kling-ai/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/kling-ai/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/kling-ai/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ホーム",
+          "item": "https://ai-master.jp/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AIツール",
+          "item": "https://ai-master.jp/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Kling AI",
+          "item": "https://ai-master.jp/tools/kling-ai/"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/kling-ai/#article",
+      "headline": "Kling AIとは？動画生成AIの機能・料金・使い方を解説",
+      "description": "Kling AIをわかりやすく解説。クレジット制の料金体系、動画生成の主な機能、実務活用、Runway・Veo 3との比較を2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/kling-ai/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/kling-ai/og-hero.png",
+      "author": {
+        "@type": "Organization",
+        "name": "AI Master"
+      },
+      "publisher": {
+        "@id": "https://ai-master.jp/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://ai-master.jp/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://ai-master.jp/tools/kling-ai/#webpage"
+      },
+      "about": {
+        "@type": "SoftwareApplication",
+        "name": "Kling AI"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ai-master.jp/tools/kling-ai/#webpage",
+      "url": "https://ai-master.jp/tools/kling-ai/",
+      "name": "Kling AIとは？動画生成AIの機能・料金・使い方を解説",
+      "description": "Kling AIをわかりやすく解説。クレジット制の料金体系、動画生成の主な機能、実務活用、Runway・Veo 3との比較を2026年6月時点で整理。",
+      "isPartOf": {
+        "@id": "https://ai-master.jp/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ai-master.jp/tools/kling-ai/#breadcrumb"
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Kling AI",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser, API",
+      "description": "快手（Kuaishou）が提供する動画・画像生成AIプラットフォーム。Text-to-Video、Image-to-Video、リップシンクなどをクレジット制で利用できる。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "無料枠（ログインクレジット等）あり。有料会員プランとクレジット購入（$1 USD = 66 Credits）が公式に定義（2026年6月時点）。月額は支払い画面で確認"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "Kuaishou",
+        "url": "https://klingai.com"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Kling AIは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "無料枠があります。ログイン時のデイリークレジットなど、公式が案内する範囲で試せますが、付与数・解像度・ウォーターマークの有無はプランやキャンペーンで変わります。継続利用は有料会員またはクレジット購入が必要になることが多いです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kling AIのクレジットはどう買えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "公式のCredits Policyによると、クレジット購入の標準レートは $1 USD = 66 Credits です。会員サブスクリプションの月次クレジットとは別枠で、購入クレジットは配布から2年間有効です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kling AIとRunwayの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "どちらも動画生成AIですが、Kling AIは快手（Kuaishou）発のクレジット制Webサービス、Runwayは米国発の動画生成・編集プラットフォームです。モデル名・料金体系・編集機能の充実度が異なります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kling AIは商用利用できますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "商用利用の可否はプラン・利用規約・生成コンテンツの権利帰属に依存します。案件利用前に公式のTerms of ServiceとCredits Policyを必ず確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "1本の動画に何クレジットかかりますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "モデル（例：Kling 2.6）、尺（5秒/10秒）、品質モード（Standard/Professional）、音声の有無で消費量が変わります。生成前にアプリ内の表示を確認し、API利用時は公式のDeveloper Pricingを参照してください。"
+          }
+        }
+      ]
+    }
+  ]
+}
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">Kling AI</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/kling-ai/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">Kling AI · Kuaishou · 音声・動画</p>
+                  <h1>Kling AIとは？動画生成AIの機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">中国・快手（Kuaishou）発の動画生成AI。高品質なText-to-VideoとImage-to-Videoで注目</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">無料枠あり</span>
+                <span class="tool-category">動画生成AI</span>
+                <span class="tool-category">クレジット制</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Web（klingai.com）</li><li>iOS / Androidアプリ</li><li>Developer API</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/kling-ai/og-hero.png" alt="Kling AIの公式イメージ" width="1412" height="794" fetchpriority="high">
+              <figcaption>出典：Kling AI公式（klingai.com）</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>Kling AI</strong>は、中国の<strong>快手（Kuaishou）</strong>が提供する<strong>動画・画像生成AI</strong>プラットフォームです。<strong>Text-to-Video</strong>や<strong>Image-to-Video</strong>で高品質な短尺動画を生成でき、クレジット制で利用します。本記事では、<a href="#pricing">公式のクレジット制度</a>、<a href="#comparison">Runway・Veo 3との比較</a>、<a href="#misconception">試験・実務での誤解</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+                <li><a href="#what-is">Kling AIとは</a></li>
+                <li><a href="#features">できること（主な機能）</a></li>
+                <li><a href="#misconception">よくある誤解</a></li>
+                <li><a href="#pricing">料金・クレジット（2026年6月時点）</a></li>
+                <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+                <li><a href="#use-cases">ビジネスでの活用例</a></li>
+                <li><a href="#pros-cons">メリット・デメリット</a></li>
+                <li><a href="#comparison">主要ツールとの比較</a></li>
+                <li><a href="#recommend">こんな人におすすめ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+              <h2>試験で問われる見方</h2>
+              <p>生成AIパスポートでは動画生成AIのカテゴリと利用上の注意が問われます。Kling AIはRunwayやVeoと並ぶ「動画生成AIの具体例」として、クレジット制・商用条件の確認が試験の定番論点です。</p>
+              <p>「動画生成AI = すべて同じ料金体系」という誤解に注意してください。Klingはクレジット消費がモデル・尺・品質モードで変わるため、ツールごとに制度を区別して覚える必要があります。</p>
+              <div class="tool-callout">
+                <p><strong>このサイトの演習で確認する</strong></p>
+                <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0196/">一問一答 TF-0196（動画生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0197/">TF-0197（動画生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a></p>
+                <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+              </div>
+            </section>
+
+            <section id="what-is">
+              <h2>Kling AIとは</h2>
+              <p>Kling AI（可灵）は、短视频プラットフォーム快手（Kuaishou）が展開する生成AIサービスです。Webブラウザとモバイルアプリから、テキストや画像を入力して動画を生成できます。</p>
+              <p>モデルはKling 1.xから2.x、2.6など世代が進んでおり、Professionalモードやネイティブ音声付き生成など高品質オプションが追加されています。開発者向けにはAPIも提供され、秒・解像度・モデルごとにクレジット（ポイント）が課金されます。</p>
+              <p>試験では「中国発の動画生成AI」「Runway・Pikaと並ぶ選択肢」として名前が出ることがあり、開発元と課金の仕組みをセットで押さえると得点しやすくなります。</p>
+            </section>
+
+            <section id="features">
+              <h2>できること（主な機能）</h2>
+              <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+  <h3>Text-to-Video</h3>
+  <p>テキストプロンプトから5〜10秒程度の動画を生成。カメラワークや被写体の動きを指示できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Image-to-Video</h3>
+  <p>1枚の画像や開始・終了フレームから動画化し、静止画素材を動きのあるクリップに変換できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>画像生成・編集</h3>
+  <p>Text-to-Imageや画像編集機能も統合され、動画制作の前段階を同一サービスで進められます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>リップシンク・音声</h3>
+  <p>アバターやリップシンク、テキスト読み上げなど、音声まわりの機能モデルも提供されています。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Professionalモード</h3>
+  <p>高品質生成モードはクレジット消費が増えますが、本番に近い仕上がりを狙えます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Developer API</h3>
+  <p>公式APIから動画生成を組み込め、モデル・尺・解像度ごとのクレジット単価が公開されています。</p>
+</div>
+              </div>
+            </section>
+
+            <section id="misconception">
+              <h2>よくある誤解</h2>
+              <p>代表的な誤解は「<strong>Kling AI = 月額定額で無制限</strong>」です。Klingはクレジット制であり、生成1回ごとにモデル・尺・品質に応じて消費します。会員プランは月次クレジットの付与枠が異なるだけで、使い切れば追加購入や上位プランが必要になります。</p>
+              <p>もう1つは「<strong>動画生成AIはすべて欧米製</strong>」という見方です。Kling AIは中国企業が提供する主要な動画生成サービスの一つです。試験では地域や開発元の違いより、クレジット制・利用規約・商用可否の確認が問われやすい点に注目してください。</p>
+            </section>
+
+            <section id="pricing">
+              <h2>料金・クレジット（2026年6月時点）</h2>
+              <p>Kling AIは<strong>クレジット（Credits）</strong>を消費する方式です。無料枠、会員サブスクリプション、クレジット購入の3層で理解すると整理しやすくなります。以下は公式ドキュメントに基づく<strong>2026年6月時点</strong>の整理です。</p>
+
+              <h3>クレジットの基本ルール（公式）</h3>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>取得方法</th>
+                    <th>有効期限（公式）</th>
+                    <th>備考</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td><strong>会員サブスクリプション</strong>の月次クレジット</td><td>配布から<strong>1か月</strong></td><td>プラン名・付与数は支払い画面に表示</td></tr>
+<tr><td><strong>クレジット購入</strong></td><td>配布から<strong>2年間</strong></td><td>標準レート：<strong>$1 USD = 66 Credits</strong></td></tr>
+<tr><td><strong>ログイン・プロモーション</strong>クレジット</td><td>イベントごとに異なる</td><td>付与数は公式告知に従う</td></tr>
+                </tbody>
+              </table>
+              <p>会員プラン（Standard / Pro / Premier / Ultra など）の<strong>月額・付与クレジット数</strong>は地域やキャンペーンで変動するため、契約前に klingai.com の会員ページで必ず確認してください。公式は「実際の金額は支払い画面の表示が優先」と明記しています。</p>
+
+              <h3>動画生成の消費イメージ</h3>
+              <p>1本あたりの消費クレジットは、モデル世代・尺（5秒/10秒）・Standard/Professional・音声の有無で変わります。Developer APIの公式Pricing（2026年6月時点）では、例としてKling 2.6のProfessionalモード・5秒・音声なしで<strong>1.5クレジット</strong>、10秒・音声付きで<strong>5〜10クレジット</strong>といった区分が公開されています。</p>
+              <p>Webアプリの表示とAPIの単価表は一致しない場合があるため、実際の利用前にアプリ内の消費表示を確認してください。</p>
+            </section>
+
+            <section id="how-to">
+              <h2>はじめ方・基本的な使い方</h2>
+              <p>最短で試す流れは次のとおりです。</p>
+              <div class="tool-split">
+                <ol class="tool-steps">
+        <li>
+  <strong>アカウント登録</strong>
+  klingai.comでアカウントを作成し、利用可能なクレジット残高を確認します。
+</li>
+<li>
+  <strong>生成タイプを選択</strong>
+  Text-to-VideoかImage-to-Videoかを決め、尺とアスペクト比を設定します。
+</li>
+<li>
+  <strong>プロンプトを入力</strong>
+  被写体・動き・カメラ・スタイルを具体的に記述します。
+</li>
+<li>
+  <strong>モードを選ぶ</strong>
+  試作はStandard、本番候補はProfessionalなど、クレジットと品質のバランスを取ります。
+</li>
+<li>
+  <strong>商用前に規約確認</strong>
+  ウォーターマークの有無、商用可否、クレジット有効期限を公式ドキュメントで確認します。
+</li>
+                </ol>
+                <div class="tool-split__media">
+                  <figure class="tool-figure">
+                    <img src="../../assets/images/tools/kling-ai/og-hero.png" alt="Kling AIの公式イメージ" width="600" height="337" loading="lazy">
+                    <figcaption>出典：Kling AI公式（klingai.com）</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <section id="use-cases">
+              <h2>ビジネスでの活用例</h2>
+              <div class="tool-usecase-grid">
+              <div class="tool-usecase-card">
+        <h3>SNS・広告クリエイティブ</h3>
+        <ul>
+                <li>短尺動画を複数パターン生成してA/Bテスト</li>
+<li>商品画像から動きのある紹介動画を作成</li>
+<li>キャンペーンごとに訴求を高速展開</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>映像・エンタメの試作</h3>
+        <ul>
+                <li>絵コンテやコンセプトを動画で可視化</li>
+<li>シーンの雰囲気を関係者と共有</li>
+<li>撮影前のビジュアル検証</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>API連携・自動化</h3>
+        <ul>
+                <li>Developer APIでバッチ生成パイプラインを構築</li>
+<li>クレジット単価表に基づきコスト見積もり</li>
+<li>他ツールと組み合わせた制作フロー</li>
+        </ul>
+      </div>
+              </div>
+            </section>
+
+            <section id="pros-cons">
+              <h2>メリット・デメリット</h2>
+              <table class="tool-pros-cons-table">
+                <thead>
+                  <tr>
+                    <th>メリット</th>
+                    <th>デメリット</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td>高品質な動画生成で評価が高い</td><td>クレジット消費がモデル・モードで大きく変わる</td></tr>
+<tr><td>無料枠で試作を始めやすい</td><td>会員月額・付与数は地域で差があり公式確認が必須</td></tr>
+<tr><td>画像生成と動画生成を同一サービスで扱える</td><td>商用・データ取扱いは利用規約の精読が必要</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="comparison">
+              <h2>主要ツールとの比較</h2>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>項目</th>
+                    <th>Kling AI</th>
+                    <th>Runway</th>
+                    <th>Veo 3</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td>開発元</td><td>Kuaishou（中国）</td><td>Runway（米国）</td><td>Google DeepMind</td></tr>
+<tr><td>主な強み</td><td>高品質T2V/I2V・クレジット試作</td><td>Gen-4系・編集UI統合</td><td>音声同期・Google連携</td></tr>
+<tr><td>課金</td><td>クレジット制（$1=66 Credits購入）</td><td>月額＋クレジット</td><td>Google AIクレジット／API秒課金</td></tr>
+<tr><td>API</td><td>Developer APIあり</td><td>APIあり</td><td>Gemini API</td></tr>
+<tr><td>向いている用途</td><td>コストを抑えた動画試作</td><td>制作スタジオ型ワークフロー</td><td>Googleエコシステム連携</td></tr>
+                </tbody>
+              </table>
+              <p>制作UIと編集まで一気通貫なら<a href="../runway/">Runway</a>、Googleアカウント基盤なら<a href="../veo-3/">Veo 3</a>、クレジット単価を細かく試したいならKling AIが候補です。音声だけ別途整える場合は<a href="../elevenlabs/">ElevenLabs</a>との併用もあります。</p>
+            </section>
+
+            <section id="recommend">
+              <h2>こんな人におすすめ</h2>
+              <ul>
+                      <li><strong>動画生成AIを複数比較したいクリエイター</strong></li>
+              <li><strong>クレジット制で試作コストを管理したい個人・小規模チーム</strong></li>
+              <li><strong>画像から動画化するワークフローを構築したい担当者</strong></li>
+              <li><strong>試験対策で動画生成AIの具体例を増やしたい受験生</strong></li>
+              </ul>
+              <p>あえて向いていないのは、Google/Microsoft単一ベンダーに統一された企業で外部サービスのデータ持ち出しが制限されているケースです。導入前に情報セキュリティポリシーと公式のデータ取扱いを確認してください。</p>
+            </section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+        <details>
+  <summary>Kling AIは無料で使えますか？</summary>
+  <p class="tool-faq-a">無料枠があります。ログイン時のデイリークレジットなどで試せますが、付与数やウォーターマークの有無はプランやキャンペーンで変わります。継続利用は有料会員またはクレジット購入が必要になることが多いです。</p>
+</details>
+<details>
+  <summary>Kling AIのクレジットはどう買えますか？</summary>
+  <p class="tool-faq-a">公式Credits Policyによると、標準レートは $1 USD = 66 Credits です。購入クレジットは配布から2年間有効です。会員の月次クレジットとは別枠です。</p>
+</details>
+<details>
+  <summary>Kling AIとRunwayの違いは何ですか？</summary>
+  <p class="tool-faq-a">どちらも動画生成AIですが、開発元・モデル・料金体系・編集機能が異なります。用途と課金モデルの両方で比較してください。</p>
+</details>
+<details>
+  <summary>Kling AIは商用利用できますか？</summary>
+  <p class="tool-faq-a">商用可否はプランと利用規約に依存します。案件利用前に最新のTerms of ServiceとCredits Policyを必ず確認してください。</p>
+</details>
+<details>
+  <summary>1本の動画に何クレジットかかりますか？</summary>
+  <p class="tool-faq-a">モデル・尺・品質モード・音声の有無で変わります。生成前にアプリ内表示を確認し、API利用時はDeveloper Pricingを参照してください。</p>
+</details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://klingai.com" target="_blank" rel="noopener noreferrer">Kling AI（klingai.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://kling.ai/docs/point-policy" target="_blank" rel="noopener noreferrer">Credits Policy</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://klingai.com/global/dev/pricing" target="_blank" rel="noopener noreferrer">Developer Pricing</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../runway/"><img src="../../assets/images/tools/runway/app-icon.png" alt="" width="16" height="16"> Runway</a></li>
+          <li><a href="../veo-3/"><img src="../../assets/images/tools/veo-3/icon.svg" alt="" width="16" height="16"> Veo 3</a></li>
+          <li><a href="../elevenlabs/"><img src="../../assets/images/tools/elevenlabs/app-icon.png" alt="" width="16" height="16"> ElevenLabs</a></li>
+          <li class="tool-related-list__soon">Pika <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Video（動画生成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a>
+                ·
+                <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        <script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+        </html>

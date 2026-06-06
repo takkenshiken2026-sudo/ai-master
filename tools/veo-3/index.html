@@ -1,0 +1,507 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Veo 3の機能・料金・使い方を解説。Google DeepMindの動画生成モデル、音声同期、Gemini API・Google AIプランでの利用、Runway・Kling AIとの違いを整理。">
+          <title>Veo 3とは？Googleの動画生成AIの機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/veo-3/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="Veo 3とは？Googleの動画生成AIの機能・料金・使い方を解説">
+          <meta property="og:description" content="Veo 3をわかりやすく解説。音声込み動画生成、Gemini APIの秒課金、Google AIプランのクレジット、主要ツール比較を2026年6月時点で整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/veo-3/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/veo-3/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/veo-3/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/veo-3/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ホーム",
+          "item": "https://ai-master.jp/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AIツール",
+          "item": "https://ai-master.jp/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Veo 3",
+          "item": "https://ai-master.jp/tools/veo-3/"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/veo-3/#article",
+      "headline": "Veo 3とは？Googleの動画生成AIの機能・料金・使い方を解説",
+      "description": "Veo 3をわかりやすく解説。音声込み動画生成、Gemini APIの秒課金、Google AIプランのクレジット、主要ツール比較を2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/veo-3/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/veo-3/og-hero.png",
+      "author": {
+        "@type": "Organization",
+        "name": "AI Master"
+      },
+      "publisher": {
+        "@id": "https://ai-master.jp/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://ai-master.jp/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://ai-master.jp/tools/veo-3/#webpage"
+      },
+      "about": {
+        "@type": "SoftwareApplication",
+        "name": "Veo 3"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ai-master.jp/tools/veo-3/#webpage",
+      "url": "https://ai-master.jp/tools/veo-3/",
+      "name": "Veo 3とは？Googleの動画生成AIの機能・料金・使い方を解説",
+      "description": "Veo 3をわかりやすく解説。音声込み動画生成、Gemini APIの秒課金、Google AIプランのクレジット、主要ツール比較を2026年6月時点で整理。",
+      "isPartOf": {
+        "@id": "https://ai-master.jp/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ai-master.jp/tools/veo-3/#breadcrumb"
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Veo 3",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser, API",
+      "description": "Google DeepMindが開発した動画生成モデル。セリフや環境音を含む音声同期動画の生成に対応し、Geminiアプリ・Google Flow・Gemini APIから利用できる。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Gemini APIのVeo 3はFree Tierでは利用不可。Paid TierはStandard $0.40/秒（音声付き）、Fast $0.10〜/秒。一般向けはGoogle AIプランのクレジット制（2026年6月時点）"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "Google DeepMind",
+        "url": "https://deepmind.google/models/veo/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Veo 3は無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gemini APIのVeo 3はFree Tierでは利用できません。一般ユーザーはGoogle AIプラン（Plus/Pro/Ultra）の範囲でGeminiアプリやFlowから動画生成にアクセスできますが、クレジットや利用上限があります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Veo 3とGeminiチャットは同じですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "同じではありません。Geminiは対話型AIアプリの総称で、Veo 3はその中で使われる動画生成モデルです。試験では「生成AIサービス」と「動画生成モデル」を区別して覚えるのが重要です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Veo 3とRunwayの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Veo 3はGoogle製の動画生成モデルで、GeminiやFlowと連携します。Runwayは独立した動画生成・編集プラットフォームで、Gen-4など独自モデルとクレジット制を提供します。課金体系もGoogle AIクレジット/API秒課金とRunwayクレジットで異なります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Veo 3の料金はどう計算されますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "開発者向けGemini APIでは生成動画の秒数に応じて課金されます（例：Standard音声付き $0.40/秒）。一般向けはGoogle AIプランの月次AIクレジットから消費する方式です。成功した生成のみ課金対象となる場合があります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Veo 3.1とVeo 3の関係は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Veo 3.1は後継のプレビュー世代で、GeminiアプリやFlowではVeo 3.1 Fastなどが提供されています。試験では「Google製・音声同期動画生成」という位置づけを押さえ、細かいモデル番号は公式の最新情報で確認してください。"
+          }
+        }
+      ]
+    }
+  ]
+}
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">Veo 3</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/veo-3/icon.svg" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">Veo 3 · Google DeepMind · 音声・動画</p>
+                  <h1>Veo 3とは？Googleの動画生成AIの機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">セリフや環境音まで含めた高品質動画を生成できるGoogle DeepMindの動画生成モデル</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">音声同期</span>
+                <span class="tool-category">動画生成AI</span>
+                <span class="tool-category">Gemini連携</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Geminiアプリ</li><li>Google Flow</li><li>Gemini API</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/veo-3/og-hero.png" alt="Google AIの公式イメージ" width="512" height="288" fetchpriority="high">
+              <figcaption>出典：Google公式（ai.google.dev）</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>Veo 3</strong>は、<strong>Google DeepMind</strong>が開発した<strong>動画生成AIモデル</strong>です。テキストや画像から動画を生成し、<strong>セリフや環境音を含む音声同期</strong>に対応した点が特徴です。本記事では、<a href="#pricing">料金の考え方</a>（Gemini APIとGoogle AIプラン）、<a href="#comparison">Runway・Kling AIとの比較</a>、<a href="#misconception">試験で混乱しやすいポイント</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+                <li><a href="#what-is">Veo 3とは</a></li>
+                <li><a href="#features">できること（主な機能）</a></li>
+                <li><a href="#misconception">よくある誤解</a></li>
+                <li><a href="#pricing">料金の考え方（2026年6月時点）</a></li>
+                <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+                <li><a href="#use-cases">ビジネスでの活用例</a></li>
+                <li><a href="#pros-cons">メリット・デメリット</a></li>
+                <li><a href="#comparison">主要ツールとの比較</a></li>
+                <li><a href="#recommend">こんな人におすすめ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+              <h2>試験で問われる見方</h2>
+              <p>生成AIパスポートやG検定では、動画生成AIの特徴と利用上の注意が問われます。Veo 3は「Google製の動画生成モデル」「音声を含む動画生成」という2点をセットで覚えると整理しやすいです。</p>
+              <p>試験では「Veo = Geminiチャットそのもの」「Veo = Runwayと同じサービス」という混同が出やすいため、モデル名と提供形態（アプリ/API）を分けて理解するのがポイントです。</p>
+              <div class="tool-callout">
+                <p><strong>このサイトの演習で確認する</strong></p>
+                <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0196/">一問一答 TF-0196（動画生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0197/">TF-0197（動画生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a></p>
+                <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+              </div>
+            </section>
+
+            <section id="what-is">
+              <h2>Veo 3とは</h2>
+              <p>Veo 3は、Google DeepMindが公開する動画生成モデルファミリーの一つです。テキストプロンプトや参照画像から短尺動画を生成でき、従来の無音動画生成に加えて、会話や効果音を含む<strong>ネイティブ音声</strong>の生成にも対応しています。</p>
+              <p>一般ユーザーは<a href="../gemini/">Gemini</a>アプリやGoogle Flowから、開発者はGemini API（モデルID例：<code>veo-3.0-generate-001</code>）から利用します。後継の<strong>Veo 3.1</strong>も提供されており、Fast/Standard/Liteなど速度・品質のバリエーションがあります。</p>
+              <p>Googleエコシステム内の画像生成（Imagen）やチャット（Gemini）と並ぶ「動画生成の柱」として位置づけられ、試験ではGoogle主要AIの一員として名前が出ることがあります。</p>
+            </section>
+
+            <section id="features">
+              <h2>できること（主な機能）</h2>
+              <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+  <h3>Text-to-Video</h3>
+  <p>テキストの指示からシーンを生成し、カメラワークや被写体の動きを含む動画を作れます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Image-to-Video</h3>
+  <p>静止画を起点に動きを付与し、コンセプトアートや商品画像から動画案を起こせます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>ネイティブ音声生成</h3>
+  <p>セリフや環境音を動画と同時に生成し、後から別ツールで音声を足す手間を減らせます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>高解像度出力</h3>
+  <p>720p・1080pに加え、モデルやプランにより4K相当の生成にも対応します（公式仕様はモデルごとに異なります）。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Gemini / Flow 連携</h3>
+  <p>チャットや制作スタジオのフローに組み込み、Googleアカウント基盤で試作から共有まで進められます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>API連携</h3>
+  <p>開発者はGemini API経由でアプリやワークフローに動画生成を組み込めます（Paid Tier）。</p>
+</div>
+              </div>
+            </section>
+
+            <section id="misconception">
+              <h2>よくある誤解</h2>
+              <p>代表的な誤解は「<strong>Veo 3 = Geminiチャット</strong>」です。Geminiは対話アプリの名称であり、Veo 3はその中で使われる動画生成モデルです。同様に「Googleの生成AI = すべてGemini」と一括りにせず、画像（Imagen）・動画（Veo）・音声など役割で分ける必要があります。</p>
+              <p>もう1つは「<strong>Veo = Runway</strong>」の混同です。どちらも動画生成AIですが、VeoはGoogle製モデルでGemini/Flow/APIから提供され、Runwayは独立した制作プラットフォームです。課金もGoogle AIクレジットやAPI秒課金と、Runwayのクレジット制で異なります。</p>
+            </section>
+
+            <section id="pricing">
+              <h2>料金の考え方（2026年6月時点）</h2>
+              <p>Veo 3の料金は<strong>利用経路によって異なります</strong>。開発者向けAPIと一般向けGoogle AIプランを分けて理解してください。以下は公式情報に基づく<strong>2026年6月時点</strong>の整理です。</p>
+
+              <h3>Gemini API（開発者向け）</h3>
+              <p>Gemini APIの公式Pricingによると、Veo 3は<strong>Free Tierでは利用不可</strong>で、Paid Tierの従量課金となります。音声付き動画（デフォルト）の目安は次のとおりです。</p>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>モデル</th>
+                    <th>料金（Paid Tier・秒あたりUSD）</th>
+                    <th>備考</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td><strong>Veo 3 Standard</strong>（音声付き）</td><td><strong>$0.40/秒</strong></td><td>720p/1080p</td></tr>
+<tr><td><strong>Veo 3 Fast</strong>（音声付き）</td><td><strong>$0.10</strong>（720p）／<strong>$0.12</strong>（1080p）／<strong>$0.30</strong>（4K）</td><td>速度優先</td></tr>
+                </tbody>
+              </table>
+              <p>音声なし生成はおおむね半額程度になる場合があります。音声処理の問題で生成に失敗した場合は課金されないことがあります（公式Pricingの注記）。</p>
+
+              <h3>Google AIプラン（一般向け）</h3>
+              <p>GeminiアプリやGoogle Flowでは、<strong>Google AI Plus / Pro / Ultra</strong>などのプランに含まれる<strong>月次AIクレジット</strong>から消費します。Google Oneヘルプ（2026年6月時点）の例では、Google AI Pro（月1,000クレジット）でVeo 3.1 Fastは<strong>1本あたり20クレジット</strong>（最大50本程度）、Veo 3.1 Qualityは<strong>100クレジット</strong>（最大10本程度）といった換算が示されています。</p>
+              <p>プラン名・月額・付与クレジット・日次上限は更新が速いため、利用前にGoogle Oneの公式ページで最新条件を確認してください。</p>
+            </section>
+
+            <section id="how-to">
+              <h2>はじめ方・基本的な使い方</h2>
+              <p>最短で試す流れは次のとおりです。</p>
+              <div class="tool-split">
+                <ol class="tool-steps">
+        <li>
+  <strong>Googleアカウントを用意</strong>
+  GeminiアプリまたはFlowにサインインします。
+</li>
+<li>
+  <strong>プランとクレジットを確認</strong>
+  無料枠かGoogle AIプランかを確認し、動画生成の上限を把握します。
+</li>
+<li>
+  <strong>プロンプトを設計</strong>
+  被写体・動き・カメラ・音声（セリフや環境音）を具体的に記述します。
+</li>
+<li>
+  <strong>生成と選別</strong>
+  Fastモデルで試作し、必要に応じてQuality/Standardで本番用を生成します。
+</li>
+<li>
+  <strong>API利用時は課金設計</strong>
+  秒課金のため、尺と解像度・音声の有無を事前に決めてコストを管理します。
+</li>
+                </ol>
+                <div class="tool-split__media">
+                  <figure class="tool-figure">
+                    <img src="../../assets/images/tools/veo-3/og-hero.png" alt="Google AIの公式イメージ" width="512" height="288" loading="lazy">
+                    <figcaption>出典：Google公式（ai.google.dev）</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <section id="use-cases">
+              <h2>ビジネスでの活用例</h2>
+              <div class="tool-usecase-grid">
+              <div class="tool-usecase-card">
+        <h3>広告・SNSの試作</h3>
+        <ul>
+                <li>音声付き短尺動画を素早く複数案生成</li>
+<li>撮影前の絵コンテを動画で共有</li>
+<li>Google Workspace利用チームでの社内レビュー</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>プロダクトデモ</h3>
+        <ul>
+                <li>UIモックや商品画像から動きのあるデモを作成</li>
+<li>ナレーション付き説明動画のたたき台</li>
+<li>多言語展開前のビジュアル検証</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>開発・自動化</h3>
+        <ul>
+                <li>Gemini APIで動画生成をアプリに組み込み</li>
+<li>バッチ生成のコストを秒単位で見積もり</li>
+<li>既存のGoogle Cloudワークフローと連携</li>
+        </ul>
+      </div>
+              </div>
+            </section>
+
+            <section id="pros-cons">
+              <h2>メリット・デメリット</h2>
+              <table class="tool-pros-cons-table">
+                <thead>
+                  <tr>
+                    <th>メリット</th>
+                    <th>デメリット</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td>音声同期動画を一気通貫で生成できる</td><td>APIはFree Tierでは使えず、秒課金でコスト設計が必要</td></tr>
+<tr><td>Gemini・FlowとGoogleアカウントで統合しやすい</td><td>プラン・クレジット・モデル世代の更新が速い</td></tr>
+<tr><td>試験でGoogle主要AIの動画枠として名前が出やすい</td><td>Runwayのような専用編集UIは別ツールが必要な場合がある</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="comparison">
+              <h2>主要ツールとの比較</h2>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>項目</th>
+                    <th>Veo 3</th>
+                    <th>Runway</th>
+                    <th>Kling AI</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td>開発元</td><td>Google DeepMind</td><td>Runway</td><td>Kuaishou（快手）</td></tr>
+<tr><td>主な提供形態</td><td>Geminiアプリ・Flow・API</td><td>独立Webプラットフォーム</td><td>klingai.com（Web）</td></tr>
+<tr><td>音声生成</td><td>ネイティブ音声同期に対応</td><td>別途音声ツール連携が一般的</td><td>モデル世代によりネイティブ音声対応</td></tr>
+<tr><td>課金モデル</td><td>Google AIクレジット／API秒課金</td><td>クレジット制サブスク</td><td>クレジット制（会員＋購入）</td></tr>
+<tr><td>向いている用途</td><td>Google連携・API組み込み</td><td>動画制作の試作〜編集</td><td>高品質動画の量産試作</td></tr>
+                </tbody>
+              </table>
+              <p>Google基盤で動画を試すならVeo 3、制作スタジオ型のワークフローなら<a href="../runway/">Runway</a>、クレジット制で中国発の動画生成を試すなら<a href="../kling-ai/">Kling AI</a>が候補です。音声だけ別途整える場合は<a href="../elevenlabs/">ElevenLabs</a>との併用も検討できます。</p>
+            </section>
+
+            <section id="recommend">
+              <h2>こんな人におすすめ</h2>
+              <ul>
+                      <li><strong>Google Workspace / Geminiを既に使っているチーム</strong></li>
+              <li><strong>音声付き動画を一括生成したいマーケ・制作担当</strong></li>
+              <li><strong>Gemini APIで動画生成を組み込みたい開発者</strong></li>
+              <li><strong>試験対策でGoogle製動画生成AIの代表名を押さえたい受験生</strong></li>
+              </ul>
+              <p>あえて向いていないのは、Googleアカウントを業務で使えない環境や、専用NLEだけで完結したいケースです。Veo 3はGoogleエコシステムとの相性を前提に選ぶと効果的です。</p>
+            </section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+        <details>
+  <summary>Veo 3は無料で使えますか？</summary>
+  <p class="tool-faq-a">Gemini APIのVeo 3はFree Tierでは利用できません。一般ユーザーはGoogle AIプランの範囲でGeminiアプリやFlowからアクセスできますが、クレジットや利用上限があります。</p>
+</details>
+<details>
+  <summary>Veo 3とGeminiチャットは同じですか？</summary>
+  <p class="tool-faq-a">同じではありません。Geminiは対話型AIアプリの総称で、Veo 3はその中で使われる動画生成モデルです。試験ではサービス名とモデル名を区別して覚えてください。</p>
+</details>
+<details>
+  <summary>Veo 3とRunwayの違いは何ですか？</summary>
+  <p class="tool-faq-a">Veo 3はGoogle製モデルでGeminiやFlowと連携します。Runwayは独立した動画生成・編集プラットフォームです。課金体系も異なります。</p>
+</details>
+<details>
+  <summary>Veo 3の料金はどう計算されますか？</summary>
+  <p class="tool-faq-a">Gemini APIでは生成秒数に応じて課金されます（例：Standard音声付き $0.40/秒）。一般向けはGoogle AIプランの月次クレジットから消費します。成功した生成のみ課金となる場合があります。</p>
+</details>
+<details>
+  <summary>Veo 3.1とVeo 3の関係は？</summary>
+  <p class="tool-faq-a">Veo 3.1は後継世代で、GeminiアプリやFlowではVeo 3.1 Fastなどが提供されています。試験ではGoogle製・音声同期動画生成の位置づけを押さえ、詳細は公式で確認してください。</p>
+</details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://deepmind.google/models/veo/" target="_blank" rel="noopener noreferrer">Veo（Google DeepMind）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener noreferrer">Gemini API 料金</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://support.google.com/googleone/answer/16287445" target="_blank" rel="noopener noreferrer">Google AIクレジット（ヘルプ）</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../gemini/"><img src="../../assets/images/tools/gemini/icon.svg" alt="" width="16" height="16"> Gemini</a></li>
+          <li><a href="../runway/"><img src="../../assets/images/tools/runway/app-icon.png" alt="" width="16" height="16"> Runway</a></li>
+          <li><a href="../kling-ai/"><img src="../../assets/images/tools/kling-ai/app-icon.png" alt="" width="16" height="16"> Kling AI</a></li>
+          <li><a href="../elevenlabs/"><img src="../../assets/images/tools/elevenlabs/app-icon.png" alt="" width="16" height="16"> ElevenLabs</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Video（動画生成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a>
+                ·
+                <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        <script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+        </html>

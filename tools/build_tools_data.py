@@ -120,6 +120,7 @@ DIRECT_ICON_URL = {
     "warp": "https://www.warp.dev/android-chrome-512x512.png",
     "elevenlabs": "https://elevenlabs.io/apple-icon.png",
     "runway": "https://runwayml.com/icon.png",
+    "kling-ai": "https://s16-kling.klingai.com/kos/s101/nlav112918/kling-homepage-aio/logo-180x180.png",
 }
 
 
