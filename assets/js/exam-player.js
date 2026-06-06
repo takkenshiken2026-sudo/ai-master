@@ -68,6 +68,13 @@
     return !(window.AI_MASTER && window.AI_MASTER.mockExamsEnabled === false);
   }
 
+  function questionSlug(id) {
+    return String(id)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
   class ExamPlayer {
     constructor(root) {
       this.root = root;
@@ -320,6 +327,7 @@
 
       this.questions = this.allQuestions.slice();
       this.loadProgress();
+      this.applyDeepLinkQuestion();
       this.loadSessionScore();
       if (this.isPaywalled()) {
         this.showPaywall();
@@ -331,7 +339,16 @@
     }
 
     useSetup() {
+      if (new URLSearchParams(window.location.search).get("q")) return false;
       return !this.config.examId && this.config.setup !== false;
+    }
+
+    applyDeepLinkQuestion() {
+      const param = new URLSearchParams(window.location.search).get("q");
+      if (!param) return;
+      const target = questionSlug(param);
+      const idx = this.questions.findIndex((q) => questionSlug(q.id) === target);
+      if (idx >= 0) this.index = idx;
     }
 
     isDrill() {

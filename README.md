@@ -35,6 +35,24 @@ python3 tools/build_genai_passport_questions.py
 
 生成先: `assets/data/g-kentei/`、`assets/data/genai-passport/`
 
+## 問題ページ（SEO）の生成
+
+一問一答・実践演習の各問題を静的 HTML として出力します（模擬試験は対象外）。
+
+```bash
+python3 tools/build_question_pages.py
+```
+
+生成先:
+
+- `exams/{試験}/{モード}/q/{id-slug}/index.html` — 1問1ページ
+- `exams/{試験}/{モード}/domain/{slug}/index.html` — 分野一覧
+- `exams/{試験}/{モード}/questions/index.html` — 問題ハブ
+- `data/question-index.json` — 全問題のインデックス
+- `sitemap.xml` — `question-pages` ブロックを更新
+
+部分ビルド: `python3 tools/build_question_pages.py --exam g-kentei --mode drill`
+
 ## 模擬試験の有効化
 
 `assets/js/exam-flags.js` のフラグを変更します。
