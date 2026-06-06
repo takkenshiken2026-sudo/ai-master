@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Microsoft Copilotの機能・料金・使い方を解説。Microsoft 365連携、ChatGPT・Geminiとの違い、業務利用の注意点まで。生成AIパスポート対策にも。">
+  <title>Microsoft Copilotとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/copilot/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Microsoft Copilotとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Microsoft Copilotの機能・料金・使い方を解説。Microsoft 365連携、ChatGPT・Geminiとの違い、業務利用の注意点まで。">
+  <meta property="og:url" content="https://ai-master.jp/tools/copilot/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/copilot/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/copilot/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/copilot/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Microsoft Copilot", "item": "https://ai-master.jp/tools/copilot/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/copilot/#article",
+        "headline": "Microsoft Copilotとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Microsoft Copilotの機能・料金・使い方を解説。Microsoft 365連携、ChatGPT・Geminiとの違い、業務利用の注意点まで。",
+        "url": "https://ai-master.jp/tools/copilot/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/copilot/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/copilot/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Microsoft Copilot" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/copilot/#webpage",
+        "url": "https://ai-master.jp/tools/copilot/",
+        "name": "Microsoft Copilotとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Microsoft Copilotの機能・料金・使い方を解説。Microsoft 365連携、ChatGPT・Geminiとの違い、業務利用の注意点まで。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/copilot/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Microsoft Copilot",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, iOS, Android, Windows, macOS",
+        "description": "Microsoftが提供する生成AI支援機能・サービス群。チャット、Microsoft 365連携、検索統合など。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料プランあり。Microsoft 365 Copilotは別料金"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Microsoft",
+          "url": "https://www.microsoft.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Microsoft Copilotは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。copilot.microsoft.comなどから無料で基本的なチャット機能を利用できます。ただし、Microsoft 365アプリ内のCopilotや企業向け機能は別プラン・別料金です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Microsoft CopilotとGitHub Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft CopilotはチャットやOffice連携を含む生成AI支援の総称です。GitHub Copilotは開発者向けのコード補完ツールで、名称は似ていますが主な用途が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Microsoft CopilotとChatGPTの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft CopilotはMicrosoft製で、Word・Excel・TeamsなどMicrosoft 365との連携が強みです。ChatGPTはOpenAI製で、カスタムGPTや多機能な個人向けチャットとして広く使われています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Microsoft Copilotは何社が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft（マイクロソフト）が提供する生成AI支援機能・サービス群です。試験では開発元と名称の対応、およびGitHub Copilotなど類似名称との区別が問われることがあります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "会社の業務でMicrosoft Copilotを使っても大丈夫ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "個人の無料アカウントに機密情報を入力するのは避けるべきです。業務利用ではMicrosoft 365 CopilotやEnterprise向けプラン、社内ガイドラインの整備が推奨されます。出力の正確性や権利関係は自動保証されないため、利用前に公式の規約を確認してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Microsoft Copilot</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/copilot/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Microsoft · チャットAI</p>
+          <h1>Microsoft Copilotとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">Microsoft 365と連携する、Microsoft発の生成AIアシスタント</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料プランあり</span>
+        <span class="tool-category">M365 Copilot別料金</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web</li>
+          <li>Windows</li>
+          <li>macOS</li>
+          <li>iOS</li>
+          <li>Android</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/copilot/og-hero.png" alt="Microsoft Copilotのチャット画面。質問に答えるAIアシスタント" width="800" height="450" fetchpriority="high">
+      <figcaption>画面イメージ（Microsoft公式UIを参考）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Microsoft Copilot</strong>（マイクロソフト・コパイロット）は、Microsoftが提供する<a href="../../glossary/generative-ai/">生成AI</a>支援のサービス群です。ブラウザのチャットから、Word・Excel・Teams内のAIまで幅広く使われます。本記事は全機能の網羅ではなく、<strong>試験での定義</strong>（MicrosoftとCopilotの対応、GitHub Copilotとの違い）と、<strong>Microsoft 365ユーザーにとっての位置づけ</strong>に絞って書いています。料金やプラン名は<strong>2026年6月時点</strong>の情報です。契約前は<a href="#pricing">料金表</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Microsoft Copilotとは</a></li>
+        <li><a href="#features">Copilotでできること（主な機能）</a></li>
+        <li><a href="#pricing">料金プラン一覧</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">ChatGPT・Geminiとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Copilotは<strong>「Microsoftが提供する生成AI支援機能・サービス群」</strong>として覚えるのが基本です。<a href="../chatgpt/">ChatGPT</a>、<a href="../gemini/">Gemini</a>、<a href="../claude/">Claude</a>と並ぶ主要例のひとつで、開発元を入れ替えた選択肢がよく出ます。
+      </p>
+      <p>
+        よくある誤解は3つあります。<strong>「Copilot＝GitHub Copilotだけ」</strong>と狭く捉えること（チャットやOffice連携も含む総称です）。<strong>「Copilot＝要配慮個人情報」</strong>のような法律用語と混同すること。そして<strong>「AIが出力を自動的に保証する」</strong>と考えること。試験のケース問題では、定義に加えて<strong>出力の確認義務</strong>や<strong>機密情報の入力禁止</strong>までセットで問われます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong>（読んだあとに解いてみてください）</p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0143/">一問一答 TF-0143（主要生成AI支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0146/">TF-0146（Copilotの誤解）</a>、<a href="../../exams/genai-passport/practice/q/hq-0294/">実践演習 HQ-0294（Copilotの説明）</a>、<a href="../../exams/genai-passport/practice/q/hq-0270/">HQ-0270（Geminiとの違い）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">HQ-0318（業務利用の注意）</a>
+        </p>
+        <p>
+          関連：<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141（Gemini）</a> · <a href="../../exams/g-kentei/drill/q/tf-170/">G検定 TF-170（生成AI）</a>
+        </p>
+        <p>
+          まとめて演習する：<a href="../../exams/genai-passport/drill/">生成AIパスポート 一問一答</a> · <a href="../../exams/genai-passport/practice/">実践演習</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Microsoft Copilotとは</h2>
+      <p>
+        Microsoft Copilotは、2023年頃から本格展開された<strong>Microsoft製のAIアシスタントブランド</strong>です。個人向けのWebチャット（copilot.microsoft.com）、Windowsに組み込まれたCopilot、Microsoft 365アプリ内のCopilotなど、入口は複数あります。背後ではOpenAIなどのモデルも使われますが、試験では「どのモデルか」より<strong>Microsoftのサービスとして何をするか</strong>が重要です。
+      </p>
+      <p>
+        実務で効いてくるのは<strong>Microsoft 365との一体感</strong>です。Wordで下書き、Excelで数式の説明、Outlookでメール整理、Teamsで会議要約——すでにMicrosoftで仕事をしている組織ほど、導入の意味が大きくなります。逆にGoogle Workspace中心の会社では<a href="../gemini/">Gemini</a>のほうが自然な場面も多いです。
+      </p>
+      <p>
+        名称が似た<strong>GitHub Copilot</strong>（コード補完）は別製品です。開発者向けツールとして一覧にも載っていますが、本記事のMicrosoft Copilotとは用途が異なるため、試験では定義を混ぜないよう注意してください。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Copilotでできること（主な機能）</h2>
+      <p>「Copilot」とひと言で言っても、利用場所によってできることが変わります。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Webチャット</h3>
+          <p>copilot.microsoft.comから質問・要約・文案作成。Bing検索と連携し、比較的新しい話題にも触れやすいです。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Microsoft 365連携</h3>
+          <p>Word・Excel・PowerPoint・Outlook・Teams内で文章生成や要約（Microsoft 365 Copilotライセンスが必要な機能あり）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>画像の理解・生成</h3>
+          <p>画像の説明や画像生成系の機能（プラン・地域により異なる）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Windows統合</h3>
+          <p>Windows 11などに組み込まれたCopilotから、PC操作や質問への回答を行えます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>エンタープライズ機能</h3>
+          <p>組織向けの管理、データ保護、Microsoft Graph経由の社内情報参照（設定・プラン依存）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>モバイルアプリ</h3>
+          <p>iOS・Androidアプリからチャット利用。移動中の簡易質問に向きます。</p>
+        </div>
+      </div>
+
+      <h3>個人版とMicrosoft 365 Copilotの違い</h3>
+      <p>
+        無料のWeb Copilotで試した体験と、会社で契約した<strong>Microsoft 365 Copilot</strong>は、参照できるデータや管理方法が異なります。「家で使った無料版と、会社の環境は同じ」と思い込むと、情報管理の判断を誤りやすいので、業務利用ではIT部門の案内を優先してください。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン一覧</h2>
+      <p>Copilotは<strong>無料のチャット</strong>と<strong>有料のM365 Copilot</strong>が別系統です。企業契約はさらに複雑なため、ここでは個人・中小チームの目安のみ示します（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">¥0<small>無料</small></p>
+          <p class="tool-plan-note">Webチャット</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Copilot Pro</p>
+          <p class="tool-plan-price">要確認<small>個人向け</small></p>
+          <p class="tool-plan-note">上位機能</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">M365 Copilot</p>
+          <p class="tool-plan-price">要確認<small>ライセンス追加</small></p>
+          <p class="tool-plan-note">業務向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要相談</p>
+          <p class="tool-plan-note">大規模組織向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額料金</th>
+            <th>主な特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free（無料）</strong></td>
+            <td>0円</td>
+            <td>Web版Copilotの基本チャット。利用制限あり。</td>
+          </tr>
+          <tr>
+            <td><strong>Copilot Pro 等</strong></td>
+            <td>要確認</td>
+            <td>個人向けの上位機能。Office連携の一部など（名称・内容は変更あり）。</td>
+          </tr>
+          <tr>
+            <td><strong>Microsoft 365 Copilot</strong></td>
+            <td>要確認<br><small>（M365に追加）</small></td>
+            <td>Word・Excel・Teamsなどアプリ内AI。組織のデータガバナンス下で利用。</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>要問い合わせ</td>
+            <td>大規模導入、セキュリティ・コンプライアンス対応。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        業務データを扱う場合は、<strong>個人の無料アカウントではなく組織契約と社内ルール</strong>を先に確認してください。料金は変更が多いため、契約前に<a href="https://www.microsoft.com/ja-jp/microsoft-copilot" target="_blank" rel="noopener noreferrer">Microsoft Copilot公式</a>の情報を参照してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>まずは無料のWeb版から試すのが手軽です。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>Microsoftアカウントでログインする</strong>
+            <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">copilot.microsoft.com</a>にアクセスし、Microsoftアカウントでサインインします。
+          </li>
+          <li>
+            <strong>質問または依頼を入力する</strong>
+            例：「この文章をビジネスメール向けに短くして」「Excelのピボットテーブルの手順を教えて」
+          </li>
+          <li>
+            <strong>必要ならファイルや画像を添付する</strong>
+            資料の要約や画像の説明を依頼できます（プランにより上限あり）。
+          </li>
+          <li>
+            <strong>会社で使う場合はIT部門の案内を確認する</strong>
+            Microsoft 365 Copilotは管理者が有効化したうえで、許可された範囲で利用します。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/copilot/og-hero.png" alt="Microsoft Copilotの入力欄" width="600" height="338" loading="lazy">
+            <figcaption>Web版はブラウザからすぐ試せます</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <h3>うまく使うためのコツ</h3>
+      <ul>
+        <li><strong>利用場所を意識する</strong> — Web版・Windows版・Office内ではできることが違う</li>
+        <li><strong>検索連携の回答も要確認</strong> — 最新情報でも誤りは起こりうる</li>
+        <li><strong>機密は組織ルールに従う</strong> — 無料個人アカウントに社内資料を入れない</li>
+        <li><strong>GitHub Copilotと混同しない</strong> — コード補完は別製品・別記事の対象</li>
+      </ul>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>Microsoft 365を業務で使っているチームにとって、Copilotは「既存ツールの延長」として導入しやすいことが多いです。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>事務・管理部門</h3>
+          <ul>
+            <li>Wordでの報告書下書き</li>
+            <li>Excelデータの要約・説明</li>
+            <li>Outlookメールの整理</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>営業・企画</h3>
+          <ul>
+            <li>PowerPoint構成案</li>
+            <li>提案資料のたたき台</li>
+            <li>議事録の要点整理（Teams連携）</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>人事・総務</h3>
+          <ul>
+            <li>社内通知文の起草</li>
+            <li>規程・マニュアルの平易化</li>
+            <li>研修資料の下書き</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>情報システム</h3>
+          <ul>
+            <li>社内AI利用ガイドライン策定のたたき台</li>
+            <li>Microsoft 365 Copilotの展開検討</li>
+            <li>利用ログ・権限設計の確認</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>生成AIパスポートの実践演習では、こうした活用シーンに加えて<strong>不適切な利用例を選ぶ</strong>形式も多いです。定義だけでなく、ケース判断まで練習しておくとよいです。</p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Microsoft 365と自然に連携できる</td>
+            <td>プラン体系が複雑で分かりにくい</td>
+          </tr>
+          <tr>
+            <td>無料のWeb版で試せる</td>
+            <td>無料版と業務版でできることが大きく違う</td>
+          </tr>
+          <tr>
+            <td>Bing検索連携で新しい話題にも対応しやすい</td>
+            <td>Google中心の環境ではGeminiのほうが馴染む</td>
+          </tr>
+          <tr>
+            <td>企業向けの管理・セキュリティオプションがある</td>
+            <td>出力の正確性は自動保証されない</td>
+          </tr>
+          <tr>
+            <td>Windowsユーザーにとって導線が近い</td>
+            <td>GitHub Copilotなど類似名称と混同されやすい</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>ChatGPT・Geminiとの比較</h2>
+      <p>主要チャットAIを、エコシステムの観点で比較しました。</p>
+
+      <div class="tool-compare-brands">
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/microsoft.svg" alt="Microsoft Copilot">
+          <span>Copilot</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/openai.svg" alt="ChatGPT">
+          <span>ChatGPT</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/google.svg" alt="Gemini">
+          <span>Gemini</span>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th><img src="../../assets/images/tools/microsoft.svg" alt="" class="tool-table-logo" width="22" height="22">Copilot</th>
+            <th><img src="../../assets/images/tools/openai.svg" alt="" class="tool-table-logo" width="22" height="22">ChatGPT</th>
+            <th><img src="../../assets/images/tools/google.svg" alt="" class="tool-table-logo" width="22" height="22">Gemini</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>開発元</td>
+            <td>Microsoft</td>
+            <td>OpenAI</td>
+            <td>Google</td>
+          </tr>
+          <tr>
+            <td>試験での定義</td>
+            <td>生成AI支援機能・サービス群</td>
+            <td>主要な生成AIサービス</td>
+            <td>主要な生成AIサービス・モデル群</td>
+          </tr>
+          <tr>
+            <td>Office連携</td>
+            <td>◎（Microsoft 365）</td>
+            <td>△</td>
+            <td>△</td>
+          </tr>
+          <tr>
+            <td>Google連携</td>
+            <td>△</td>
+            <td>△</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>無料で試す</td>
+            <td>◎</td>
+            <td>◎</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>向いている環境</td>
+            <td>Microsoft 365・Windows</td>
+            <td>汎用・個人の第一ツール</td>
+            <td>Google Workspace</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        使い分けは、<strong>仕事の土台がMicrosoftならCopilot</strong>、<strong>最初の1本・機能の広さなら<a href="../chatgpt/">ChatGPT</a></strong>、<strong>Google中心なら<a href="../gemini/">Gemini</a></strong>が目安です。長文分析を重視するなら<a href="../claude/">Claude</a>も選択肢に入ります。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>Microsoft 365で日々の業務をしている方</strong> — 既存アプリにAIを載せやすい</li>
+        <li><strong>生成AIパスポートでCopilotの定義を押さえたい方</strong> — 開発元とサービス群の説明がそのまま出る</li>
+        <li><strong>WindowsをメインPCにしている方</strong> — OS統合の導線がある</li>
+        <li><strong>社内でCopilot導入を検討している担当者</strong> — ただし最終判断は情報システム部門と</li>
+      </ul>
+      <p>あえて向いていないのは、<strong>すでにGoogle WorkspaceとGeminiで統一されている組織で、個人のCopilotを業務に持ち込みたい</strong>ケースです。ツール以前に情報管理ポリシーの確認が必要です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Microsoft Copilotは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。copilot.microsoft.comなどから無料で基本的なチャット機能を利用できます。ただし、Microsoft 365アプリ内のCopilotや企業向け機能は別プラン・別料金です。</p>
+        </details>
+        <details>
+          <summary>Microsoft CopilotとGitHub Copilotの違いは？</summary>
+          <p class="tool-faq-a">Microsoft CopilotはチャットやOffice連携を含む生成AI支援の総称です。GitHub Copilotは開発者向けのコード補完ツールで、名称は似ていますが主な用途が異なります。</p>
+        </details>
+        <details>
+          <summary>Microsoft CopilotとChatGPTの違いは何ですか？</summary>
+          <p class="tool-faq-a">Microsoft CopilotはMicrosoft製で、Word・Excel・TeamsなどMicrosoft 365との連携が強みです。ChatGPTはOpenAI製で、カスタムGPTや多機能な個人向けチャットとして広く使われています。</p>
+        </details>
+        <details>
+          <summary>Microsoft Copilotは何社が提供していますか？</summary>
+          <p class="tool-faq-a">Microsoft（マイクロソフト）が提供する生成AI支援機能・サービス群です。試験では開発元と名称の対応、およびGitHub Copilotなど類似名称との区別が問われることがあります。</p>
+        </details>
+        <details>
+          <summary>会社の業務でMicrosoft Copilotを使っても大丈夫ですか？</summary>
+          <p class="tool-faq-a">個人の無料アカウントに機密情報を入力するのは避けるべきです。業務利用ではMicrosoft 365 CopilotやEnterprise向けプラン、社内ガイドラインの整備が推奨されます。出力の正確性や権利関係は自動保証されないため、利用前に公式の規約を確認してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://apps.apple.com/app/microsoft-copilot/id6472538445" target="_blank" rel="noopener noreferrer">App Store</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://play.google.com/store/apps/details?id=com.microsoft.copilot" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
+          <li><a href="../gemini/"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> Gemini</a></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/perplexity.svg" alt="" width="16" height="16"> Perplexity <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">大規模言語モデル（LLM） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

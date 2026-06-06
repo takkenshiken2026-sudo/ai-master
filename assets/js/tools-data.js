@@ -9,7 +9,7 @@ const TOOLS = [
     catLabel: "チャットAI",
     featured: true,
     article: true,
-    tagline: "最大手。GPT-4oを搭載し、画像生成・音声会話も対応",
+    tagline: "最大手。GPTシリーズを搭載し、画像生成・音声会話も対応",
     url: "https://chat.openai.com",
   },
   {
@@ -43,6 +43,7 @@ const TOOLS = [
     logo: "microsoft.svg",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "Bing検索統合型。無料で使えるGPT-4ベースのAI",
     url: "https://copilot.microsoft.com",
   },
