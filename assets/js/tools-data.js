@@ -109,6 +109,7 @@ const TOOLS = [
     logo: "pi.png",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "会話型に特化した対話AI。サービス縮小中だが知名度あり",
     url: "https://pi.ai",
   },

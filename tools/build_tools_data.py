@@ -99,6 +99,7 @@ DIRECT_ICON_URL = {
     "poe": "https://psc2.cf2.poecdn.net/assets/apple-touch-icon.png",
     "deepseek-chat": "https://cdn.deepseek.com/chat/icon.png",
     "le-chat": "https://chat.mistral.ai/favicons/apple-touch-icon.png",
+    "pi": "https://framerusercontent.com/images/Hu7aeJCxpUvwSxyA5mfRMSPAqAU.svg",
 }
 
 
