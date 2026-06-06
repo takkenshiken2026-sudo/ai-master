@@ -143,6 +143,7 @@ const TOOLS = [
     logo: "adobe.svg",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "著作権クリアな素材のみ学習。商用利用に安全",
     url: "https://firefly.adobe.com",
   },

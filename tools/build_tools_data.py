@@ -102,6 +102,7 @@ DIRECT_ICON_URL = {
     "pi": "https://framerusercontent.com/images/Hu7aeJCxpUvwSxyA5mfRMSPAqAU.svg",
     "midjourney": "https://www.midjourney.com/public/apple-touch-icon.png",
     "dalle": "https://chatgpt.com/cdn/assets/favicon-32x32.png",
+    "adobe-firefly": "https://www.adobe.com/favicon.ico",
 }
 
 
