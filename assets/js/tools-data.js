@@ -209,6 +209,7 @@ const TOOLS = [
     logo: "microsoft.svg",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "DALL·E搭載の無料画像生成。Microsoftアカウントで使用可",
     url: "https://www.bing.com/images/create",
   },

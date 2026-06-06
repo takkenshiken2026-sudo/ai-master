@@ -107,6 +107,7 @@ DIRECT_ICON_URL = {
     "flux": "https://blackforestlabs.ai/favicon.ico",
     "ideogram": "https://ideogram.ai/favicon.ico",
     "canva": "https://www.canva.com/favicon.ico",
+    "bing-image-creator": "https://www.bing.com/sa/simg/favicon-2x.ico",
 }
 
 
