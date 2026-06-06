@@ -103,6 +103,7 @@ DIRECT_ICON_URL = {
     "midjourney": "https://www.midjourney.com/public/apple-touch-icon.png",
     "dalle": "https://chatgpt.com/cdn/assets/favicon-32x32.png",
     "adobe-firefly": "https://www.adobe.com/favicon.ico",
+    "stable-diffusion": "https://stability.ai/favicon.ico",
 }
 
 

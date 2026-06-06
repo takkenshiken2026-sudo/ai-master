@@ -154,6 +154,7 @@ const TOOLS = [
     logo: "stable-diffusion.ico",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "オープンソース。ローカルPCでの動作も可能",
     url: "https://stability.ai",
   },

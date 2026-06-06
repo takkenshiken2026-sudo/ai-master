@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Stable Diffusionの機能・使い方を解説。オープンソースの画像生成モデル、ローカル実行、Midjourney・DALL·Eとの違い、拡散モデルの試験ポイントまで。生成AIパスポート・G検定対策にも。">
+  <title>Stable Diffusionとは？機能・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/stable-diffusion/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Stable Diffusionとは？機能・使い方をわかりやすく解説">
+  <meta property="og:description" content="Stable Diffusionの機能・使い方を解説。オープンソース、ローカル実行、他画像AIとの違い、試験で押さえる拡散モデルまで。">
+  <meta property="og:url" content="https://ai-master.jp/tools/stable-diffusion/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/stable-diffusion/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/stable-diffusion/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/stable-diffusion/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Stable Diffusion", "item": "https://ai-master.jp/tools/stable-diffusion/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/stable-diffusion/#article",
+        "headline": "Stable Diffusionとは？機能・使い方をわかりやすく解説",
+        "description": "Stable Diffusionの機能・使い方を解説。オープンソース、ローカル実行、他画像AIとの違い、試験で押さえる拡散モデルまで。",
+        "url": "https://ai-master.jp/tools/stable-diffusion/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/stable-diffusion/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/stable-diffusion/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Stable Diffusion" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/stable-diffusion/#webpage",
+        "url": "https://ai-master.jp/tools/stable-diffusion/",
+        "name": "Stable Diffusionとは？機能・使い方をわかりやすく解説",
+        "description": "Stable Diffusionの機能・使い方を解説。オープンソース、ローカル実行、他画像AIとの違い、試験で押さえる拡散モデルまで。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/stable-diffusion/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Stable Diffusion",
+        "alternateName": "SDXL",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "description": "潜在拡散モデルに基づくオープンなテキスト画像生成モデル。Stability AIが中心となって公開。ローカルや各種アプリから利用される。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "モデルウェイトは無料で入手できる場合が多い。GPU・クラウド費用は別途（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Stability AI",
+          "url": "https://stability.ai/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Stable Diffusionは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "多くのモデルウェイトは無料で入手できますが、ローカル実行にはGPUなどの環境コストがかかります。クラウドサービス経由なら従量課金になることもあります。またライセンスはバージョンごとに異なるため、商用前に必ず確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Stable DiffusionとMidjourneyの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Stable Diffusionはオープンな画像生成モデルで、ローカルPCや各種アプリから使われることが多いです。Midjourneyはクラウドの有料サービスとして完結します。どちらもText-to-Imageですが、提供形態が大きく異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Stable Diffusionは何社が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Stability AI（スタビリティ・エーアイ）が中心となって開発・公開したモデルとして知られます。ただし実際の利用は、ComfyUIや各種アプリなど多様なソフト経由で行われ、単一の公式アプリだけに限定されません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Stable DiffusionはローカルPCで動かせますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。GPUを搭載したPCにモデルを導入し、ローカルで画像生成する使い方が一般的です。社内の機密データを外に出さずに試せる点がメリットとして挙げられることがあります。ただしセットアップとハード要件の負担は大きめです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Stable Diffusionは拡散モデルの例として正しいですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。潜在拡散（Latent Diffusion）に基づく画像生成モデルとして、拡散モデルの代表例のひとつです。試験では「拡散モデル＝SNSの拡散人数」など別分野の用語と混同しないよう注意してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Stable Diffusion</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/stable-diffusion/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Stability AI · 画像生成</p>
+          <h1>Stable Diffusionとは？機能・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">オープンな潜在拡散モデル。ローカルPCや各種アプリから使える画像生成AI</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">オープンソース</span>
+        <span class="tool-category">ローカル実行可</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Windows</li>
+          <li>macOS</li>
+          <li>Linux</li>
+          <li>クラウド</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/stable-diffusion/og-hero.png" alt="Stability AIの公式ロゴマーク" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Stability AI公式（stability.ai）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Stable Diffusion</strong>（ステーブル・ディフュージョン）は、<strong>潜在拡散モデル</strong>に基づく<a href="../../glossary/generative-ai/">生成AI</a>の<strong>画像生成モデル</strong>です。<strong>Stability AI</strong>を中心に公開され、<strong>オープンなモデルウェイト</strong>として広く流通しています。<a href="../midjourney/">Midjourney</a>のような単一のクラウドサービスではなく、<strong>自社PCや各種アプリ</strong>から動かす使い方が特徴です。本記事は全バージョンの技術解説ではなく、<strong>試験で押さえる定義</strong>（拡散モデル・Text-to-Image・オープンソース）と<strong>実務の誤解</strong>に絞って書いています。ライセンスや商用条件は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">コストとライセンス</a>、公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Stable Diffusionとは</a></li>
+        <li><a href="#features">Stable Diffusionでできること（主な機能）</a></li>
+        <li><a href="#pricing">コスト・ライセンス</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Midjourney・DALL·Eとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、<strong>拡散モデル</strong>が画像生成AIの代表的手法として扱われます。Stable Diffusionはその具体例として名前が挙がることがあり、<strong>Text-to-Image</strong>（テキストから画像）の文脈で覚えます。G検定でも同様に、潜在拡散やオープンな画像生成モデルとして出題されやすいです。
+      </p>
+      <p>
+        よくある誤解は、<strong>「Stable Diffusion＝Midjourney」</strong>と同一視することです。どちらも画像を作りますが、Midjourneyは<strong>クラウドの有料サービス</strong>、Stable Diffusionは<strong>モデル＋自分で選ぶ実行環境</strong>です。また<strong>「オープンソースだから何でも自由」</strong>とも限りません。ライセンス条件・商用可否・表示義務はバージョンごとに確認が必要です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0184/">一問一答 TF-0184（拡散モデル）</a>、<a href="../../exams/genai-passport/drill/q/tf-0185/">TF-0185（拡散モデルの定義）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/practice/q/g-391/">実践演習 G-391（Text-To-Image）</a>、<a href="../../exams/g-kentei/drill/q/tf-478/">一問一答 TF-478（OSSライセンス）</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479（OSSの誤解）</a>
+        </p>
+        <p>
+          まとめて：<a href="../../exams/genai-passport/drill/">一問一答一覧</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Stable Diffusionとは</h2>
+      <p>
+        Stable Diffusionは2022年に公開された、<strong>Latent Diffusion Model</strong>（潜在拡散モデル）を用いた画像生成AIです。高解像度の画像空間ではなく<strong>低次元の潜在空間</strong>で拡散処理を行うため、比較的高速に画像を生成できます。開発・公開の中心には<strong>Stability AI</strong>があり、研究コミュニティやクリエイターに大きな影響を与えました。
+      </p>
+      <p>
+        その後、<strong>SDXL</strong>（Stable Diffusion XL）など高品質・高解像度向けの派生モデルも登場しています。試験では細かいバージョン名より、<strong>「オープンな拡散モデルによる画像生成」</strong>という位置づけを押さえると十分なことが多いです。
+      </p>
+      <p>
+        重要なのは、Stable Diffusionが<strong>ひとつのスマホアプリ</strong>ではない点です。モデルファイルをダウンロードし、ComfyUI・Stable Diffusion WebUI（AUTOMATIC1111）・各種クラウドサービスなど、<strong>実行環境を自分で選ぶ</strong>のが一般的です。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Stable Diffusionでできること（主な機能）</h2>
+      <p>モデル本体の能力と、周辺ツールで拡張される機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>テキストから画像生成</h3>
+          <p>プロンプトからイラスト・写真風・概念画などを生成します（Text-to-Image）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>画像から画像（img2img）</h3>
+          <p>既存画像を元に、構図やスタイルを保ちながら別の絵に変換します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>インペインティング</h3>
+          <p>画像の一部をマスクし、その領域だけを生成し直します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>LoRA・カスタムモデル</h3>
+          <p>追加学習データで画風や被写体を特化。コミュニティモデルが豊富。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ローカル実行</h3>
+          <p>自社PC上で完結。データを外部に送らない運用が可能（構成による）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>API・クラウド連携</h3>
+          <p>Stability AIのAPIや各種ホスティング経由でクラウド利用も可能。</p>
+        </div>
+      </div>
+
+      <h3>「オープン」とは何を指すか</h3>
+      <p>
+        試験やニュースで「オープンソースの画像AI」と言われるとき、多くは<strong>モデルウェイトやコードが公開されている</strong>ことを指します。ただしライセンスには<strong>商用制限や禁止用途</strong>が含まれる場合があり、<a href="../../exams/g-kentei/drill/q/tf-479/">OSSの誤解</a>のように「完全自由」とは限りません。実務では利用するバージョンのライセンス文書を必ず読みます。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>コスト・ライセンス</h2>
+      <p>Stable Diffusionは「月額○ドル」の単一プランではなく、<strong>モデル・環境・商用条件</strong>の組み合わせでコストが決まります（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">モデルウェイト</p>
+          <p class="tool-plan-price">無料枠あり</p>
+          <p class="tool-plan-note">バージョンでライセンス異なる</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">ローカル実行</p>
+          <p class="tool-plan-price">GPU等</p>
+          <p class="tool-plan-note">初期構築に手間</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">クラウドAPI</p>
+          <p class="tool-plan-price">従量課金</p>
+          <p class="tool-plan-note">Stability AI等</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">商用利用</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">ライセンス・規約を個別確認</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>利用形態</th>
+            <th>コストの考え方</th>
+            <th>注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>自社PC（ローカル）</strong></td>
+            <td>モデルは無料のことが多い。GPU・電力・運用工数が実コスト。</td>
+            <td>セットアップ難易度が高い</td>
+          </tr>
+          <tr>
+            <td><strong>クラウドGPU</strong></td>
+            <td>時間課金。環境構築は楽になることも。</td>
+            <td>データの社外送信に注意</td>
+          </tr>
+          <tr>
+            <td><strong>Stability AI API</strong></td>
+            <td>生成ごとの従量課金。</td>
+            <td>利用規約・商用条件を確認</td>
+          </tr>
+          <tr>
+            <td><strong>コミュニティモデル</strong></td>
+            <td>無料〜寄付。品質は様々。</td>
+            <td>ライセンス・学習データが不明瞭な場合あり</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        商用前は、利用するモデルバージョンのライセンスとStability AIの公式説明を確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>個人で試す代表的な流れです。詳細は選ぶツールによって大きく異なります。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>実行環境を選ぶ</strong>
+            ローカル（GPU搭載PC）か、クラウドサービスかを決めます。
+          </li>
+          <li>
+            <strong>UIツールを導入する</strong>
+            ComfyUI、Stable Diffusion WebUIなど、公式・コミュニティのフロントエンドをセットアップします。
+          </li>
+          <li>
+            <strong>モデルをダウンロードする</strong>
+            用途に合ったベースモデル（SDXL等）を入手します。
+          </li>
+          <li>
+            <strong>プロンプトを入力して生成</strong>
+            例：「minimalist coffee shop logo, flat design, white background」
+          </li>
+          <li>
+            <strong>商用・社内利用はライセンス確認</strong>
+            バージョンと追加モデルごとに条件が異なります。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/stable-diffusion/app-icon.png" alt="Stability AIの公式ロゴ" width="600" height="338" loading="lazy">
+            <figcaption>出典：Stability AI公式（stability.ai）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドライン・ライセンス・生成物の権利確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>社内検証・PoC</h3>
+          <ul>
+            <li>オンプレで画像生成を試す</li>
+            <li>機密データを外に出さない検証</li>
+            <li>大量バッチ生成の自動化</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>デザイン・ゲーム</h3>
+          <ul>
+            <li>コンセプトアートの探索</li>
+            <li>テクスチャ・背景のたたき台</li>
+            <li>LoRAでキャラクター統一</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>開発・研究</h3>
+          <ul>
+            <li>拡散モデルの学習題材</li>
+            <li>ファインチューニングの実験</li>
+            <li>API連携プロトタイプ</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>試験対策</h3>
+          <ul>
+            <li>拡散モデル・Text-to-Imageの理解</li>
+            <li>オープンソースとライセンスの復習</li>
+            <li>他画像AIとの比較整理</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ローカル実行でデータを社内に閉じやすい</td>
+            <td>セットアップ・GPU要件が重い</td>
+          </tr>
+          <tr>
+            <td>モデル・画風のカスタム自由度が高い</td>
+            <td>品質は設定とスキルに依存</td>
+          </tr>
+          <tr>
+            <td>試験で拡散モデルの代表例</td>
+            <td>単一の公式UIがなく迷いやすい</td>
+          </tr>
+          <tr>
+            <td>コミュニティのノウハウ・モデルが豊富</td>
+            <td>ライセンス確認が複雑</td>
+          </tr>
+          <tr>
+            <td>クラウドサービス不要でコストを抑えられる場合も</td>
+            <td>初心者には<a href="../dalle/">DALL·E</a>等の方が手軽</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Midjourney・DALL·Eとの比較</h2>
+      <p>主要な画像生成とのざっくりした違いです。</p>
+
+      <div class="tool-compare-brands">
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/stable-diffusion/app-icon.png" alt="Stable Diffusion" width="40" height="40">
+          <span>Stable Diffusion</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/midjourney/app-icon.png" alt="Midjourney" width="40" height="40">
+          <span>Midjourney</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/dalle/app-icon.png" alt="DALL·E" width="40" height="40">
+          <span>DALL·E</span>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th><img src="../../assets/images/tools/stable-diffusion.ico" alt="" class="tool-table-logo" width="22" height="22">Stable Diffusion</th>
+            <th><img src="../../assets/images/tools/midjourney/app-icon.png" alt="" class="tool-table-logo" width="22" height="22">Midjourney</th>
+            <th><img src="../../assets/images/tools/openai.svg" alt="" class="tool-table-logo" width="22" height="22">DALL·E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>性質</td>
+            <td>オープンなモデル</td>
+            <td>クラウドサービス</td>
+            <td>OpenAIのモデル</td>
+          </tr>
+          <tr>
+            <td>主な入口</td>
+            <td>各種UI・API・ローカル</td>
+            <td>midjourney.com</td>
+            <td>ChatGPT・API</td>
+          </tr>
+          <tr>
+            <td>ローカル実行</td>
+            <td>◎</td>
+            <td>×</td>
+            <td>×</td>
+          </tr>
+          <tr>
+            <td>手軽さ</td>
+            <td>△</td>
+            <td>○</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>カスタム性</td>
+            <td>◎</td>
+            <td>△</td>
+            <td>△</td>
+          </tr>
+          <tr>
+            <td>試験での出方</td>
+            <td>拡散モデル・OSS</td>
+            <td>画像生成AIの代表</td>
+            <td>Text-to-Imageの例</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        手軽に試すなら<a href="../dalle/">DALL·E</a>（<a href="../chatgpt/">ChatGPT</a>経由）、画質探索なら<a href="../midjourney/">Midjourney</a>、自社環境でカスタムするならStable Diffusion、という使い分けが現実的です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>GPU環境があり、ローカルで画像生成を試したい方</strong></li>
+        <li><strong>拡散モデル・オープンソースの論点を試験用に押さえたい受験生</strong></li>
+        <li><strong>独自LoRAや社内モデルで画風を統一したいチーム</strong></li>
+        <li><strong>データを外部クラウドに送りたくない検証プロジェクト</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>すぐに高品質な結果だけ欲しい初心者</strong>（<a href="../chatgpt/">ChatGPT</a>や<a href="../midjourney/">Midjourney</a>の方が手軽）や、<strong>IT運用リソースが限られた現場</strong>です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Stable Diffusionは無料で使えますか？</summary>
+          <p class="tool-faq-a">多くのモデルウェイトは無料で入手できますが、ローカル実行にはGPUなどの環境コストがかかります。クラウドサービス経由なら従量課金になることもあります。またライセンスはバージョンごとに異なるため、商用前に必ず確認してください。</p>
+        </details>
+        <details>
+          <summary>Stable DiffusionとMidjourneyの違いは何ですか？</summary>
+          <p class="tool-faq-a">Stable Diffusionはオープンな画像生成モデルで、ローカルPCや各種アプリから使われることが多いです。Midjourneyはクラウドの有料サービスとして完結します。どちらもText-to-Imageですが、提供形態が大きく異なります。</p>
+        </details>
+        <details>
+          <summary>Stable Diffusionは何社が提供していますか？</summary>
+          <p class="tool-faq-a">Stability AI（スタビリティ・エーアイ）が中心となって開発・公開したモデルとして知られます。ただし実際の利用は、ComfyUIや各種アプリなど多様なソフト経由で行われ、単一の公式アプリだけに限定されません。</p>
+        </details>
+        <details>
+          <summary>Stable DiffusionはローカルPCで動かせますか？</summary>
+          <p class="tool-faq-a">はい。GPUを搭載したPCにモデルを導入し、ローカルで画像生成する使い方が一般的です。社内の機密データを外に出さずに試せる点がメリットとして挙げられることがあります。ただしセットアップとハード要件の負担は大きめです。</p>
+        </details>
+        <details>
+          <summary>Stable Diffusionは拡散モデルの例として正しいですか？</summary>
+          <p class="tool-faq-a">はい。潜在拡散（Latent Diffusion）に基づく画像生成モデルとして、拡散モデルの代表例のひとつです。試験では「拡散モデル＝SNSの拡散人数」など別分野の用語と混同しないよう注意してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://stability.ai/" target="_blank" rel="noopener noreferrer">Stability AI（stability.ai）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://platform.stability.ai/docs" target="_blank" rel="noopener noreferrer">API ドキュメント</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../midjourney/"><img src="../../assets/images/tools/midjourney/app-icon.png" alt="" width="16" height="16"> Midjourney</a></li>
+          <li><a href="../dalle/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> DALL·E</a></li>
+          <li><a href="../adobe-firefly/"><img src="../../assets/images/tools/adobe.svg" alt="" width="16" height="16"> Adobe Firefly</a></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/flux.ico" alt="" width="16" height="16"> Flux <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
