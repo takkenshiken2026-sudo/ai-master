@@ -89,9 +89,11 @@ main.page-wrap.page-wrap--article
 
 **ツール記事**
 1. `tools/{id}/index.html` を配置
-2. `python3 tools/build_tools_data.py` → `article: true` が付く
-3. `sitemap.xml` に URL を手動追加
-4. 一覧・関連リンクが記事ページを指すことを確認
+2. 公式画像を `assets/images/tools/{id}/` に配置（`app-icon` 最大辺128px以上、`og-hero` 最大辺512px以上）
+3. `python3 tools/check_article_images.py` で画像解像度を確認（デプロイ前）
+4. `python3 tools/build_tools_data.py` → `article: true` が付く
+5. `sitemap.xml` に URL を手動追加
+6. 一覧・関連リンクが記事ページを指すことを確認
 
 **用語記事（フル記事）**
 1. `glossary/{id}/index.html` を手書き（スキャフォールド上書き）

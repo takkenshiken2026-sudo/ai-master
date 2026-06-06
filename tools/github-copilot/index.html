@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GitHub Copilotの機能・料金・使い方を解説。VS Code等のIDE内コード補完、Microsoft Copilotとの違い、OpenAI Codexとの関係、業務利用の注意点まで。生成AIパスポート・G検定対策にも。">
+  <title>GitHub Copilotとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/github-copilot/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="GitHub Copilotとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="GitHub Copilotの機能・料金・使い方を解説。IDE内コード補完、Microsoft Copilotとの違い、OpenAI Codexとの関係まで。">
+  <meta property="og:url" content="https://ai-master.jp/tools/github-copilot/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/github-copilot/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/github-copilot/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/github-copilot/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "GitHub Copilot", "item": "https://ai-master.jp/tools/github-copilot/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/github-copilot/#article",
+        "headline": "GitHub Copilotとは？機能・料金・使い方をわかりやすく解説",
+        "description": "GitHub Copilotの機能・料金・使い方を解説。IDE内コード補完、Microsoft Copilotとの違い、OpenAI Codexとの関係まで。",
+        "url": "https://ai-master.jp/tools/github-copilot/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/github-copilot/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/github-copilot/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "GitHub Copilot" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/github-copilot/#webpage",
+        "url": "https://ai-master.jp/tools/github-copilot/",
+        "name": "GitHub Copilotとは？機能・料金・使い方をわかりやすく解説",
+        "description": "GitHub Copilotの機能・料金・使い方を解説。IDE内コード補完、Microsoft Copilotとの違い、OpenAI Codexとの関係まで。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/github-copilot/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "GitHub Copilot",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "VS Code, JetBrains, Visual Studio, Neovim, GitHub.com",
+        "description": "GitHub（Microsoft）が提供するIDE統合型のAIコード補完ツール。入力中のコードやコメントから次の行・関数を提案する。",
+        "offers": {
+          "@type": "Offer",
+          "price": "10",
+          "priceCurrency": "USD",
+          "description": "Individualプラン等。無料枠・学生向け優遇あり（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "GitHub",
+          "url": "https://github.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GitHub Copilotは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "条件付きで無料利用できる場合があります。学生・教職員・OSSメンテナ向けの無償提供や、Copilot Freeなどの無料枠が用意されていることがあります。一般的な個人利用では有料プラン（Individual等）が必要です。最新の条件はGitHub公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GitHub CopilotとMicrosoft Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GitHub Copilotは開発者向けのIDE内コード補完・ペアプログラミング支援です。Microsoft CopilotはチャットやMicrosoft 365連携を含む生成AI支援の総称で、名称は似ていますが主な用途と画面が異なります。試験では開発元・用途を分けて覚えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GitHub Copilotは何社が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GitHub（ギットハブ）が提供するサービスです。GitHubはMicrosoft傘下のため、試験では「Microsoft/GitHub製のコード支援AI」として整理されることがあります。Microsoft Copilotとは別製品として区別します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GitHub CopilotとOpenAI Codexの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CodexはOpenAIが開発したコード生成に特化したモデル系列の名称です。GitHub Copilotの初期版はCodex系モデルを基盤としていました。試験では「Codex＝コード生成モデル」「GitHub Copilot＝IDEに統合したコード支援サービス」と役割を分けて覚えるとよいです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GitHub CopilotとCursorの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GitHub Copilotは既存のIDE（VS Code、JetBrains等）に拡張機能として組み込み、主にコード補完・インライン提案が中心です。CursorはAI機能を前提にしたエディタ本体で、チャットからファイル全体を編集する使い方が強みです。どちらもコーディング支援AIですが、製品形態が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">GitHub Copilot</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/github.svg" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Microsoft/GitHub · コーディング</p>
+          <h1>GitHub Copilotとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">VSCode等に統合するコード補完の定番ツール</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">コード補完</span>
+        <span class="tool-category">IDE統合</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>VS Code</li>
+          <li>JetBrains</li>
+          <li>Visual Studio</li>
+          <li>Neovim</li>
+          <li>GitHub.com</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/github-copilot/og-hero.png" alt="GitHub Copilotの公式イメージ。IDE内でコード補完を行うAI支援" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：GitHub公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GitHub Copilot</strong>（ギットハブ・コパイロット）は、<strong>GitHub</strong>（Microsoft傘下）が提供する<strong>IDE内のAIコード補完ツール</strong>です。VS CodeやJetBrainsなどのエディタに拡張機能として組み込み、入力中のコードやコメントから次の行・関数・テストコードを提案します。初期はOpenAIの<strong>Codex</strong>系モデルが話題となり、<a href="../../glossary/generative-ai/">生成AI</a>による<strong>ペアプログラミング</strong>の代表例として知られています。本記事は全機能の網羅ではなく、<strong>試験で押さえる定義</strong>（Microsoft Copilotとの混同防止、Codexとの関係）と<strong>実務での位置づけ</strong>に絞って書いています。料金・対応IDEは<strong>2026年6月時点</strong>の情報です。契約前は<a href="#pricing">料金の考え方</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">GitHub Copilotとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#pricing">料金プランの考え方</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Microsoft Copilot・Cursorとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<strong>コード生成・コード支援AI</strong>としてGitHub Copilotが選択肢に登場することがあります。覚え方の要点は3つです。<strong>提供元はGitHub（Microsoft傘下）</strong>であること。<strong>用途はIDE内のコード補完</strong>であること。そして<strong><a href="../copilot/">Microsoft Copilot</a>とは名称が似るが別サービス</strong>であることです。
+      </p>
+      <p>
+        よくある誤解も3つあります。<strong>「GitHub Copilot＝Microsoft Copilot」</strong>と同一視すること（前者は開発者向けコード支援、後者はチャット・Office連携が中心です）。<strong>「GitHub Copilot＝OpenAI Codex」</strong>と混同すること（Codexはモデル名、Copilotはサービス名です）。そして<strong>「提案コードはそのまま本番投入してよい」</strong>と思い込むこと（ライセンス・セキュリティ・品質の確認が必要です）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（Codex・コード支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0143/">TF-0143（主要生成AI支援・Microsoft）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用の注意）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：<a href="../copilot/">Microsoft Copilot</a> · <a href="../cursor/">Cursor</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>GitHub Copilotとは</h2>
+      <p>
+        GitHub Copilotは2021年頃から順次提供された<strong>AIペアプログラマー</strong>です。開発者がエディタでコードを書いている最中に、続きの行や関数全体、コメントから逆算した実装案をリアルタイムで提案します。VS Code、Visual Studio、JetBrains IDE、Neovimなど<strong>普段使いのIDEにそのまま載せる</strong>点が特徴で、別アプリに切り替えずコーディングフローの中でAIを使えます。
+      </p>
+      <p>
+        技術的背景として、初期版はOpenAIの<strong>Codex</strong>（コード特化モデル）を基盤としていました。Codex自体はGPT系の派生で、自然言語やコード片からプログラムを生成する能力が試験でも話題になります。GitHub Copilotはその能力を<strong>「エディタに常駐する補完」</strong>という形で製品化したサービスと整理すると、モデル名とサービス名の区別がつきやすくなります。
+      </p>
+      <p>
+        名称が紛らわしいのが<a href="../copilot/">Microsoft Copilot</a>です。どちらも「Copilot」という語を含み、Microsoftグループに属しますが、Microsoft CopilotはWord・Excel・TeamsやWebチャット向けの<strong>汎用AIアシスタント</strong>、GitHub Copilotは<strong>開発者向けコード支援</strong>です。試験の選択肢で「Copilot＝Microsoft製」とだけ覚えていると、GitHub Copilotの設問で誤答しやすいので、用途で切り分けてください。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <p>コーディング支援に関わる主な機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>インラインコード補完</h3>
+          <p>入力中の文脈から次の行・ブロックを灰色のゴーストテキストで提案します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コメントからコード生成</h3>
+          <p>「// ユーザー一覧をJSONで返す」などのコメントから実装案を生成します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>複数言語対応</h3>
+          <p>Python、JavaScript、TypeScript、Go、Rustなど主要言語に対応（一覧は公式参照）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Copilot Chat</h3>
+          <p>IDE内チャットでコード説明・リファクタ・バグ調査を対話形式で行えます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>テスト・ドキュメント生成</h3>
+          <p>既存関数からユニットテストやdocstringのたたき台を提案します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>GitHub.com連携</h3>
+          <p>Pull RequestやIssue上での支援機能（プラン・提供範囲は変更あり）。</p>
+        </div>
+      </div>
+
+      <h3>コード支援AIとの位置づけ</h3>
+      <p>
+        <a href="../chatgpt/">ChatGPT</a>にコードを貼って相談する使い方と比べ、GitHub Copilotは<strong>エディタ内で逐次提案</strong>する点が異なります。<a href="../cursor/">Cursor</a>のようにエディタ本体がAI前提の製品ではなく、<strong>既存IDEに拡張機能として足す</strong>定番路線です。社内でVS Codeが標準なら、導入ハードルが低い選択肢になりやすいです。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プランの考え方</h2>
+      <p>GitHub Copilotは個人・組織向けに複数プランがあります（2026年6月時点）。金額や無料枠は変更され得るため、契約前に公式を確認してください。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Copilot Free</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">利用上限あり（条件要確認）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Copilot Individual</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">個人開発者向け有料</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Copilot Business</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">チーム・組織向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Copilot Enterprise</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">大規模・ポリシー管理向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Copilot Free</strong></td>
+            <td>無料枠内で基本機能を試用。補完回数等に上限がある場合あり。</td>
+            <td>お試し・学習</td>
+          </tr>
+          <tr>
+            <td><strong>Individual</strong></td>
+            <td>月額または年額の定額（例：月額10米ドル前後の記載あり）。</td>
+            <td>個人のフリーランス・副業</td>
+          </tr>
+          <tr>
+            <td><strong>Business / Enterprise</strong></td>
+            <td>ユーザー数課金。組織ポリシー・監査機能が付く場合あり。</td>
+            <td>企業開発チーム</td>
+          </tr>
+          <tr>
+            <td><strong>学生・教職員・OSS</strong></td>
+            <td>条件を満たせば無償提供のプログラムあり（要申請）。</td>
+            <td>学習・オープンソース活動</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        会社のソースコードを扱う場合は、<strong>個人アカウントではなくBusiness/Enterprise</strong>と社内ガイドラインの整備が推奨されます。提案コードのライセンスや機密情報の送信可否も利用規約で確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>VS Codeを例に、拡張機能から数分で始められます。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>GitHubアカウントを用意</strong>
+            Copilotの利用にはGitHubアカウントとサブスクリプション（または無料枠・優遇プログラム）が必要です。
+          </li>
+          <li>
+            <strong>IDEに拡張機能をインストール</strong>
+            VS Codeなら「GitHub Copilot」拡張をMarketplaceから追加します。JetBrains等も同様に公式プラグインを導入します。
+          </li>
+          <li>
+            <strong>GitHubでサインイン</strong>
+            拡張機能の指示に従い、ブラウザで認可します。
+          </li>
+          <li>
+            <strong>コードを書いて提案を確認</strong>
+            関数やコメントを入力すると、Tabキーで提案を採用できます。
+          </li>
+          <li>
+            <strong>内容をレビューしてからコミット</strong>
+            提案は必ずしも正しくないため、テスト実行と人の目での確認を行います。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/github.svg" alt="GitHub Copilotの公式アイコン（GitHubロゴ）" width="600" height="338" loading="lazy">
+            <figcaption>出典：GitHub公式</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内のセキュリティポリシーと利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>アプリ開発</h3>
+          <ul>
+            <li>定型的なCRUD・APIハンドラの下書き</li>
+            <li>ユニットテストのたたき台生成</li>
+            <li>未知のライブラリ利用時の記法確認</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>学習・試験対策</h3>
+          <ul>
+            <li>生成AIパスポートのCodex・コード支援の理解</li>
+            <li>ペアプログラミングAIの体験演習</li>
+            <li>プロンプト（コメント）設計の練習</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>チーム開発</h3>
+          <ul>
+            <li>コーディング規約に沿った雛形の提案</li>
+            <li>レガシーコードのリファクタ支援（Chat併用）</li>
+            <li>オンボーディング時の実装例提示</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VS Code等、主流IDEにそのまま統合できる</td>
+            <td>Microsoft Copilot等と名称が混同されやすい</td>
+          </tr>
+          <tr>
+            <td>入力の流れを止めず補完できる</td>
+            <td>提案コードの正確性・セキュリティは保証されない</td>
+          </tr>
+          <tr>
+            <td>多言語・多フレームワークに対応</td>
+            <td>有料プランが必要な場合が多い（無料枠に上限）</td>
+          </tr>
+          <tr>
+            <td>試験でコード支援AIの代表例として出やすい</td>
+            <td>機密コードの送信可否は組織ポリシー次第</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Microsoft Copilot・Cursorとの比較</h2>
+      <p>名称やMicrosoftグループ所属で迷いやすい3つを整理します。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>GitHub Copilot</th>
+            <th>Microsoft Copilot</th>
+            <th>Cursor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>GitHub（Microsoft傘下）</td>
+            <td>Microsoft</td>
+            <td>Anysphere</td>
+          </tr>
+          <tr>
+            <td>主な用途</td>
+            <td>IDE内コード補完・開発支援</td>
+            <td>チャット・Office・検索連携</td>
+            <td>AI前提のコードエディタ</td>
+          </tr>
+          <tr>
+            <td>製品形態</td>
+            <td>既存IDEへの拡張機能</td>
+            <td>Webアプリ・OS/M365統合</td>
+            <td>専用エディタ（VS Code系）</td>
+          </tr>
+          <tr>
+            <td>操作感</td>
+            <td>インライン補完が中心</td>
+            <td>対話型アシスタント</td>
+            <td>チャットで複数ファイル編集</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>コード支援・Codex文脈</td>
+            <td>Microsoft製生成AI支援</td>
+            <td>コーディング特化エディタ</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        普段のIDEを変えずに補完だけ欲しいならGitHub Copilot、Microsoft 365と一緒にチャットAIを使うなら<a href="../copilot/">Microsoft Copilot</a>、エディタごとAIワークフローに寄せたいなら<a href="../cursor/">Cursor</a>、という使い分けが現実的です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>VS CodeやJetBrainsで毎日コードを書いている開発者</strong></li>
+        <li><strong>生成AIパスポートでCodex・コード支援AIの設問対策をしたい受験生</strong></li>
+        <li><strong>Microsoft CopilotとGitHub Copilotの違いを整理したい人</strong></li>
+        <li><strong>IDEを変えずにAI補完を試したいチーム</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>チャットだけで大規模リポジトリを丸ごと書き換えたい</strong>場合（<a href="../cursor/">Cursor</a>等のエディタ一体型の方が向くことが多い）や、<strong>機密コードを外部送信できない環境</strong>（オンプレ・エアギャップ）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>GitHub Copilotは無料で使えますか？</summary>
+          <p class="tool-faq-a">条件付きで無料利用できる場合があります。学生・教職員・OSSメンテナ向けの無償提供や、Copilot Freeなどの無料枠が用意されていることがあります。一般的な個人利用では有料プラン（Individual等）が必要です。最新の条件はGitHub公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>GitHub CopilotとMicrosoft Copilotの違いは？</summary>
+          <p class="tool-faq-a">GitHub Copilotは開発者向けのIDE内コード補完・ペアプログラミング支援です。Microsoft CopilotはチャットやMicrosoft 365連携を含む生成AI支援の総称で、名称は似ていますが主な用途と画面が異なります。試験では開発元・用途を分けて覚えます。</p>
+        </details>
+        <details>
+          <summary>GitHub Copilotは何社が提供していますか？</summary>
+          <p class="tool-faq-a">GitHub（ギットハブ）が提供するサービスです。GitHubはMicrosoft傘下のため、試験では「Microsoft/GitHub製のコード支援AI」として整理されることがあります。Microsoft Copilotとは別製品として区別します。</p>
+        </details>
+        <details>
+          <summary>GitHub CopilotとOpenAI Codexの関係は？</summary>
+          <p class="tool-faq-a">CodexはOpenAIが開発したコード生成に特化したモデル系列の名称です。GitHub Copilotの初期版はCodex系モデルを基盤としていました。試験では「Codex＝コード生成モデル」「GitHub Copilot＝IDEに統合したコード支援サービス」と役割を分けて覚えるとよいです。</p>
+        </details>
+        <details>
+          <summary>GitHub CopilotとCursorの違いは？</summary>
+          <p class="tool-faq-a">GitHub Copilotは既存のIDE（VS Code、JetBrains等）に拡張機能として組み込み、主にコード補完・インライン提案が中心です。CursorはAI機能を前提にしたエディタ本体で、チャットからファイル全体を編集する使い方が強みです。どちらもコーディング支援AIですが、製品形態が異なります。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer">GitHub Copilot（機能紹介）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://docs.github.com/en/copilot" target="_blank" rel="noopener noreferrer">GitHub Copilot ドキュメント</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../copilot/"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Microsoft Copilot</a></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/windsurf/app-icon.png" alt="" width="16" height="16"> Windsurf <span class="tool-soon-badge">準備中</span></li>
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">ペアプログラミング <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

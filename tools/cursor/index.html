@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cursorの機能・料金・使い方を解説。Anysphere製のAIネイティブコードエディタ（VS Codeフォーク）。チャット・Composerで複数ファイル編集、GitHub Copilot・Windsurfとの違い、商用利用の試験ポイントまで。生成AIパスポート・G検定対策にも。">
+  <title>Cursorとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/cursor/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Cursorとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Cursorの機能・料金・使い方を解説。AIネイティブコードエディタ、GitHub Copilot・Windsurfとの違い、ChatGPTプラグインではない点も整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/cursor/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/cursor/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/cursor/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/cursor/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Cursor", "item": "https://ai-master.jp/tools/cursor/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/cursor/#article",
+        "headline": "Cursorとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Cursorの機能・料金・使い方を解説。AIネイティブコードエディタ、GitHub Copilot・Windsurfとの違い、ChatGPTプラグインではない点も整理。",
+        "url": "https://ai-master.jp/tools/cursor/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/cursor/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/cursor/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Cursor" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/cursor/#webpage",
+        "url": "https://ai-master.jp/tools/cursor/",
+        "name": "Cursorとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Cursorの機能・料金・使い方を解説。AIネイティブコードエディタ、GitHub Copilot・Windsurfとの違い、ChatGPTプラグインではない点も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/cursor/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Cursor",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Windows, Linux",
+        "description": "Anysphereが提供するAIネイティブのコードエディタ。Visual Studio Codeをベースに、チャットや複数ファイル編集でコードベース全体を扱える。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料プラン（Hobby）あり。Proは月額課金（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Anysphere",
+          "url": "https://www.cursor.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Cursorは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Hobby（無料）プランがあり、基本的なエディタ機能と限られたAIリクエストが利用できます。ただし高性能モデルやComposerの利用回数には制限があり、本格的に使う場合はProなどの有料プランが必要になることが多いです。最新の枠と料金はCursor公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CursorとVisual Studio Codeの関係は何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CursorはVisual Studio Code（VS Code）をフォーク（派生）したデスクトップエディタです。見た目や拡張機能の互換性はVS Codeに近い一方、AIチャット・コードベース参照・複数ファイル編集などが最初から組み込まれた別製品です。VS CodeにAI拡張を足したものと同一ではありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CursorとGitHub Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GitHub Copilotは主にエディタ内のコード補完（オートコンプリート）やチャット拡張として動くAI支援です。CursorはエディタそのものがAI前提で設計され、チャットから複数ファイルをまとめて編集するComposerやコードベース全体の文脈参照が中心機能です。補完特化か、エディタ一体型か、という整理が試験・実務の両方で役立ちます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CursorはChatGPTのプラグインですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。CursorはAnysphereが提供するスタンドアロンのコードエディタであり、ChatGPTのブラウザ版やプラグインではありません。裏側ではOpenAIやAnthropicなど複数のモデルを選んで使えますが、製品としては独立したデスクトップアプリです。ChatGPTでコード相談するのと、Cursorでプロジェクト全体を編集するのは用途が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Cursorは誰が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Anysphere（エニースフィア）が開発・提供しています。Microsoft製のGitHub CopilotやOpenAIのChatGPTとは別会社の製品です。試験では「AIコーディング支援ツールの一例」として名前が出ることがあり、提供元をAnysphereと覚えておくとよいです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Cursor</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Anysphere · コーディング</p>
+          <h1>Cursorとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">AIチャットでコード全体を編集できるエディタ</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">AIコーディング</span>
+        <span class="tool-category">VS Code互換</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>macOS</li>
+          <li>Windows</li>
+          <li>Linux</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/cursor/og-hero.png" alt="Cursorの公式ロゴ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Cursor公式（cursor.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Cursor</strong>（カーソル）は、<strong>Anysphere</strong>（エニースフィア）が提供する<strong>AIネイティブのコードエディタ</strong>です。<strong>Visual Studio Code</strong>（VS Code）をベースにしつつ、チャットから<strong>複数ファイルをまとめて編集</strong>できる<strong>Composer</strong>や、プロジェクト全体を参照する<strong>コードベースコンテキスト</strong>が最初から組み込まれています。本記事は全機能の網羅ではなく、<strong>試験で押さえる位置づけ</strong>（AIコーディング支援・スタンドアロンエディタ）と<strong>GitHub Copilot・Windsurf・ChatGPTとの違い</strong>に絞って書いています。料金や利用枠は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金プラン</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Cursorとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#pricing">料金プランの考え方</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">GitHub Copilot・Windsurfとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<strong>AIコーディング支援</strong>や<strong>業務利用の注意点</strong>が問われることがあります。Cursorは「チャットでコードを書き換えられるエディタ」として、<a href="../chatgpt/">ChatGPT</a>でコード相談する例と並んで覚えると整理しやすいです。ただし試験では製品名そのものより、<strong>機密情報の入力禁止</strong>や<strong>利用規約・商用条件</strong>を問う設問の方が多い点に注意してください。
+      </p>
+      <p>
+        よくある誤解は3つあります。<strong>「Cursor＝ChatGPTのプラグイン」</strong>と思い込むこと（Anysphere製の独立したデスクトップエディタです）。<strong>「Cursor＝VS Code」</strong>と同一視すること（VS Codeフォークですが別アプリです）。そして<strong>「AIが書いたコードはそのまま本番に出してよい」</strong>と考えること（人のレビューとテストが必須です）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：GitHub Copilot · Windsurf · <a href="../chatgpt/">ChatGPT</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Cursorとは</h2>
+      <p>
+        Cursorは2023年頃から注目を集めた<strong>AI前提で設計されたコードエディタ</strong>です。従来のエディタにAI補完を足すのではなく、<strong>チャット・エージェント・コードベース参照</strong>が編集体験の中心に置かれています。開発者は自然言語で「このAPIのエラーハンドリングを追加して」と指示し、複数ファイルにまたがる変更案を受け取れます。
+      </p>
+      <p>
+        技術的には<strong>VS Codeをフォーク</strong>したデスクトップアプリです。キーバインドや多くの拡張機能に慣れている人は移行しやすい一方、同期やライセンスはCursorアカウント側で管理されます。試験では「VS Codeの派生だが、AI機能が本体に統合された別製品」と整理すると混乱が減ります。
+      </p>
+      <p>
+        裏側のモデルはOpenAI、Anthropic、Googleなど<strong>複数のLLMを切り替えて利用</strong>できます（プランと時期で選択肢は変わります）。<a href="../chatgpt/">ChatGPT</a>のWeb版でコード片を相談するのとは異なり、Cursorは<strong>ローカルのプロジェクトフォルダを開いた状態</strong>でファイルを直接編集する点が本質的な違いです。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <p>コーディング支援に関わる主な機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>AIチャット（Chat）</h3>
+          <p>エディタ横のチャットでコードの説明・修正・リファクタリングを依頼できます。選択中のコードやエラー出力を文脈に含められます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Composer（複数ファイル編集）</h3>
+          <p>1つの指示から複数ファイルをまとめて変更するモード。機能追加やバグ修正をプロジェクト単位で進めやすいです。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コードベースコンテキスト</h3>
+          <p>リポジトリ全体をインデックスし、関連ファイルをAIが参照しながら回答・編集します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>インライン編集（Cmd/Ctrl+K）</h3>
+          <p>カーソル位置のコード块に対し、その場で生成・置換するショートカット編集が使えます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>タブ補完（Tab）</h3>
+          <p>次に書きそうなコードを予測して提案する補完。GitHub Copilotに近い体験もCursor内に含まれます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>VS Code互換の拡張</h3>
+          <p>多くのVS Code系拡張やテーマを利用できる場合があります（互換性は拡張ごとに要確認）。</p>
+        </div>
+      </div>
+
+      <h3>AIコーディングツールとの位置づけ</h3>
+      <p>
+        GitHub Copilotが<strong>補完とチャット拡張</strong>を既存エディタに足すスタイルなら、Cursorは<strong>エディタそのものがAIワークスペース</strong>です。Windsurfも同様にAIネイティブエディタとして比較対象になります。いずれも<a href="../../glossary/generative-ai/">生成AI</a>のLLMを開発フローに組み込むツールですが、<strong>製品の形（プラグインか専用エディタか）</strong>で覚え分けると試験・選定の両方で役立ちます。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プランの考え方</h2>
+      <p>Cursorは無料枠から始められますが、本格利用では月額プランが前提になることが多いです（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Hobby（無料）</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">限られたAIリクエスト</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">$20/月前後</p>
+          <p class="tool-plan-note">個人の本格利用向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Business</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">チーム・組織向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Ultra</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">大量利用・上位モデル向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hobby（無料）</strong></td>
+            <td>エディタは使えるが、高性能モデルやComposerの回数に上限あり。</td>
+            <td>お試し・学習・個人の軽い開発</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>月額課金でAI利用枠が拡大。個人開発の定番プラン。</td>
+            <td>毎日コーディングするエンジニア</td>
+          </tr>
+          <tr>
+            <td><strong>Business</strong></td>
+            <td>チーム管理・ポリシー設定など組織向け機能（詳細は公式確認）。</td>
+            <td>会社での標準ツール検討</td>
+          </tr>
+          <tr>
+            <td><strong>GitHub Copilot Individual</strong></td>
+            <td>別製品。VS Code等のエディタに補完を足す月額プラン。</td>
+            <td>今のエディタを変えずAI補完だけ欲しい人</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        商用・クライアント案件では、生成コードの権利関係とAnysphereの利用規約、社内のセキュリティポリシーを必ず確認してください。機密リポジトリを無料個人アカウントで開くのは避けるべきです。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>デスクトップアプリをインストールし、プロジェクトフォルダを開くだけで始められます。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>公式サイトからインストール</strong>
+            cursor.com からOS向けインストーラを入手し、Cursorアカウントでサインインします。
+          </li>
+          <li>
+            <strong>プロジェクトフォルダを開く</strong>
+            既存のGitリポジトリまたは新規フォルダを開き、コードベースのインデックスを待ちます。
+          </li>
+          <li>
+            <strong>Chatで質問・修正を依頼</strong>
+            例：「この関数のユニットテストを追加して」「型エラーの原因を説明して」
+          </li>
+          <li>
+            <strong>Composerで複数ファイル変更</strong>
+            機能追加などはComposerモードで関連ファイルをまとめて編集させます。
+          </li>
+          <li>
+            <strong>差分を確認してから適用</strong>
+            AI提案は必ず人がレビューし、テストを実行してからコミットします。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/cursor/app-icon.png" alt="Cursorの公式アイコン" width="600" height="338" loading="lazy">
+            <figcaption>出典：Cursor公式（cursor.com）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドラインと利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>ソフトウェア開発</h3>
+          <ul>
+            <li>ボイラープレートコードの生成</li>
+            <li>リファクタリング・テスト追加</li>
+            <li>不慣れな言語・フレームワークの学習補助</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>社内ツール・自動化</h3>
+          <ul>
+            <li>スクリプトや社内ダッシュボードの改修</li>
+            <li>API連携コードのたたき台作成</li>
+            <li>ドキュメントとコードの同期</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>教育・資格学習</h3>
+          <ul>
+            <li>AIコーディング支援の体験教材</li>
+            <li>生成AIパスポートのケース演習の補助</li>
+            <li>プロンプト設計とレビュー習慣の練習</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>チャットから複数ファイルを一括編集しやすい</td>
+            <td>無料枠ではAI利用回数に制限がある</td>
+          </tr>
+          <tr>
+            <td>コードベース全体を文脈に含められる</td>
+            <td>VS Codeからの移行・設定の差分に慣れが必要</td>
+          </tr>
+          <tr>
+            <td>VS Codeに近い操作感で導入しやすい</td>
+            <td>生成コードの品質は一定ではなくレビュー必須</td>
+          </tr>
+          <tr>
+            <td>補完からエージェントまで1アプリに集約</td>
+            <td>会社の情報セキュリティ審査が別途必要な場合がある</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>GitHub Copilot・Windsurfとの比較</h2>
+      <p>AIコーディング支援で名前が並びやすい3つを整理します。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Cursor</th>
+            <th>GitHub Copilot</th>
+            <th>Windsurf</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>Anysphere</td>
+            <td>GitHub（Microsoft）</td>
+            <td>Codeium（会社名は変更あり）</td>
+          </tr>
+          <tr>
+            <td>製品の形</td>
+            <td>AIネイティブの専用エディタ</td>
+            <td>エディタ拡張・補完サービス</td>
+            <td>AIネイティブの専用エディタ</td>
+          </tr>
+          <tr>
+            <td>主な強み</td>
+            <td>Composer・コードベース参照</td>
+            <td>インライン補完の精度と普及</td>
+            <td>エージェント型の編集フロー</td>
+          </tr>
+          <tr>
+            <td>エディタ</td>
+            <td>Cursor本体（VS Codeフォーク）</td>
+            <td>VS Code・JetBrains等に追加</td>
+            <td>Windsurf本体（VS Code系）</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>Anysphere製・スタンドアロン</td>
+            <td>Microsoft/GitHub製・補完支援</td>
+            <td>競合のAIエディタ例</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        今のエディタを変えず補完だけ欲しいならGitHub Copilot、プロジェクト単位でAIに編集させたいならCursorやWindsurf、コード片の相談や非エンジニア向けなら<a href="../chatgpt/">ChatGPT</a>、という使い分けが現実的です。いずれも<strong>出力の検証は人が行う</strong>点は共通です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>VS Codeユーザーで、AIに複数ファイルをまとめて直してほしいエンジニア</strong></li>
+        <li><strong>生成AIパスポートでAIコーディング支援の具体例を知りたい受験生</strong></li>
+        <li><strong>GitHub Copilotと「エディタ一体型」の違いを整理したい人</strong></li>
+        <li><strong>チャットだけでなく、ローカルリポジトリを直接編集したい開発者</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>エディタを増やしたくない</strong>場合（既存IDE＋Copilotで足りる）や、<strong>会社が外部AIツールへのコード送信を禁止している</strong>場合（社内承認と代替手段の検討が先）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Cursorは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。Hobby（無料）プランがあり、基本的なエディタ機能と限られたAIリクエストが利用できます。ただし高性能モデルやComposerの利用回数には制限があり、本格的に使う場合はProなどの有料プランが必要になることが多いです。最新の枠と料金はCursor公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>CursorとVisual Studio Codeの関係は何ですか？</summary>
+          <p class="tool-faq-a">CursorはVisual Studio Code（VS Code）をフォーク（派生）したデスクトップエディタです。見た目や拡張機能の互換性はVS Codeに近い一方、AIチャット・コードベース参照・複数ファイル編集などが最初から組み込まれた別製品です。VS CodeにAI拡張を足したものと同一ではありません。</p>
+        </details>
+        <details>
+          <summary>CursorとGitHub Copilotの違いは？</summary>
+          <p class="tool-faq-a">GitHub Copilotは主にエディタ内のコード補完（オートコンプリート）やチャット拡張として動くAI支援です。CursorはエディタそのものがAI前提で設計され、チャットから複数ファイルをまとめて編集するComposerやコードベース全体の文脈参照が中心機能です。補完特化か、エディタ一体型か、という整理が試験・実務の両方で役立ちます。</p>
+        </details>
+        <details>
+          <summary>CursorはChatGPTのプラグインですか？</summary>
+          <p class="tool-faq-a">いいえ。CursorはAnysphereが提供するスタンドアロンのコードエディタであり、ChatGPTのブラウザ版やプラグインではありません。裏側ではOpenAIやAnthropicなど複数のモデルを選んで使えますが、製品としては独立したデスクトップアプリです。ChatGPTでコード相談するのと、Cursorでプロジェクト全体を編集するのは用途が異なります。</p>
+        </details>
+        <details>
+          <summary>Cursorは誰が提供していますか？</summary>
+          <p class="tool-faq-a">Anysphere（エニースフィア）が開発・提供しています。Microsoft製のGitHub CopilotやOpenAIのChatGPTとは別会社の製品です。試験では「AIコーディング支援ツールの一例」として名前が出ることがあり、提供元をAnysphereと覚えておくとよいです。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://www.cursor.com" target="_blank" rel="noopener noreferrer">Cursor（cursor.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://docs.cursor.com" target="_blank" rel="noopener noreferrer">Cursor Docs</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li class="tool-related-list__soon">GitHub Copilot <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">Windsurf <span class="tool-soon-badge">準備中</span></li>
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../copilot/"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Microsoft Copilot</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">LLM <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

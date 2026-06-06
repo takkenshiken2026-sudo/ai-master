@@ -108,6 +108,9 @@ DIRECT_ICON_URL = {
     "ideogram": "https://ideogram.ai/favicon.ico",
     "canva": "https://www.canva.com/favicon.ico",
     "bing-image-creator": "https://www.bing.com/sa/simg/favicon-2x.ico",
+    "github-copilot": "https://github.com/apple-touch-icon.png",
+    "cursor": "https://cursor.com/apple-touch-icon.png",
+    "windsurf": "https://www.google.com/s2/favicons?domain=codeium.com&sz=256",
 }
 
 
