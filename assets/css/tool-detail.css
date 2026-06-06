@@ -550,13 +550,11 @@
   border: none;
   color: var(--ink);
   line-height: 1.4;
-  min-height: 2.8em;
 }
 .tool-feature-card p {
   font-size: var(--text-base);
   line-height: 1.75;
   margin: 0;
-  margin-top: auto;
   color: var(--ink);
 }
 

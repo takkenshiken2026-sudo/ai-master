@@ -42,7 +42,7 @@
         "description": "ChatGPT（OpenAI）の機能・料金・使い方を徹底解説。無料プランとPlusの違い、Claude・Geminiとの比較、ビジネスでの活用法まで。",
         "url": "https://ai-master.jp/tools/chatgpt/",
         "datePublished": "2026-06-06",
-        "dateModified": "2026-06-06",
+        "dateModified": "2026-06-07",
         "inLanguage": "ja",
         "image": "https://ai-master.jp/assets/images/tools/chatgpt/og-hero.png",
         "author": { "@type": "Organization", "name": "AI Master" },
@@ -188,18 +188,19 @@
   </header>
 
   <div class="tool-meta-bar">
-    <span>更新日：<time datetime="2026-06-06">2026年6月6日</time></span>
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
     <span>読了目安：約8分</span>
   </div>
 
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>ChatGPT</strong>は、OpenAIが提供する対話型の生成AIアプリです。「AIツールって結局どれを使えばいいの？」と迷っている方の多くが、最初に名前を聞くのがChatGPTでしょう。本記事では、ChatGPTの基本から料金プランの違い、具体的な使い方、競合ツールとの比較まで、はじめて使う方にもわかるように解説します。
+      <strong>ChatGPT</strong>は、OpenAIが提供する対話型の生成AIアプリです。本記事は「機能を全部並べる」ためのものではなく、<strong>はじめて1つ入れるなら何が違うのか</strong>と、<strong>G検定・生成AIパスポートの勉強と実務利用をどう切り分けるか</strong>に絞って書いています。料金やモデル名は<strong>2026年6月時点</strong>の情報です。リリースや値上げは頻繁にあるので、最終判断は必ず<a href="https://openai.com/chatgpt/pricing" target="_blank" rel="noopener noreferrer">公式サイト</a>で確認してください。
     </p>
 
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
       <ol>
+        <li><a href="#exam-study">資格勉強と実務の切り口</a></li>
         <li><a href="#what-is">ChatGPTとは</a></li>
         <li><a href="#features">ChatGPTでできること（主な機能）</a></li>
         <li><a href="#pricing">料金プラン一覧</a></li>
@@ -212,16 +213,40 @@
       </ol>
     </nav>
 
+    <section id="exam-study">
+      <h2>資格勉強と実務の切り口</h2>
+      <p>
+        試験では「ChatGPTというサービス名」より、<strong>LLM・自然言語処理・生成AIの位置づけ</strong>が問われることが多いです。G検定なら「GPTはどんなモデルか」「生成AIと従来AIの違い」、生成AIパスポートなら「ChatGPTで何ができて、業務利用で何に注意するか」という切り口が中心です。実務で毎日触る必要はありませんが、<strong>試験のケース問題はサービス名がそのまま出る</strong>こともあります。
+      </p>
+      <p>
+        よくある誤解は、「ChatGPT＝AIそのもの」と覚えてしまうこと。ChatGPTは<strong>生成AI技術を使ったアプリの1つ</strong>にすぎません。逆に、実務では「試験で覚えた定義」だけでは足りず、<strong>無料アカウントに社内メールを貼らない</strong>といった運用判断が別途必要です。
+      </p>
+      <div class="glossary-exam-box">
+        <p>
+          <strong>このサイトの演習で確認する</strong>（読んだあとに解いてみてください）
+        </p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0115/">一問一答 TF-0115（ChatGPT）</a>、<a href="../../exams/genai-passport/practice/q/hq-0166/">実践演習 HQ-0166（ChatGPTのケース）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-428/">一問一答 TF-428（GPT）</a>、<a href="../../exams/g-kentei/drill/q/tf-170/">TF-170（生成AI）</a>、<a href="../../exams/g-kentei/drill/q/tf-260/">TF-260（生成AIと著作権）</a>
+        </p>
+        <p>
+          まとめて演習する：<a href="../../exams/genai-passport/drill/">生成AIパスポート 一問一答</a> · <a href="../../exams/g-kentei/drill/">G検定 一問一答</a>
+        </p>
+      </div>
+    </section>
+
     <section id="what-is">
       <h2>ChatGPTとは</h2>
       <p>
-        ChatGPTは、2022年11月にOpenAIが公開した<strong>対話型AIチャットサービス</strong>です。ユーザーが自然な日本語や英語で質問を入力すると、AIが文脈を理解したうえで回答を返してくれます。
+        ChatGPTは、2022年11月にOpenAIが公開した<strong>対話型AIチャットサービス</strong>です。日本語で質問すると、文脈を踏まえた回答が返ってきます。ただし、裏側で常に同じモデルが動いているわけではなく、プランや時期によって使えるモデルは入れ替わります。
       </p>
       <p>
-        もともとはテキストのやり取りが中心でしたが、現在は<strong>画像生成</strong>、<strong>ファイルの読み込み・分析</strong>、<strong>コード生成</strong>、<strong>音声会話</strong>など、1つのアプリで多様なタスクをこなせるようになっています。個人利用から企業の業務効率化まで、世界で最も利用者の多いAIツールのひとつです。
+        いまのChatGPTは、テキストに加えて<strong>画像生成</strong>、<strong>ファイル分析</strong>、<strong>コード生成</strong>、<strong>音声会話</strong>まで1つのアプリにまとまっています。一方で、検索エンジンのように「いまこの瞬間のニュース」が常に正確とは限りません。最新事実が必要なときは、回答をそのまま鵜呑みにしないのが安全です。
       </p>
       <p>
-        ChatGPTの頭脳となるのは、OpenAIが開発する大規模言語モデル（LLM）です。GPT-4oシリーズをはじめ、用途に応じて複数のモデルが使い分けられており、有料プランではより高性能なモデルや推論特化モデルにもアクセスできます。
+        頭脳となるのはOpenAIの大規模言語モデル（LLM）です。試験用語の<a href="../../glossary/generative-ai/">生成AI</a>の話と接続すると理解しやすくなります。用語の定義だけ暗記しても、ケース問題で「業務利用として適切か」を問われると迷う人が多いので、上の演習問題もあわせて見ておくとよいです。
       </p>
     </section>
 
@@ -231,32 +256,26 @@
 
       <div class="tool-feature-grid">
         <div class="tool-feature-card">
-          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
           <h3>テキスト生成・編集</h3>
           <p>メール下書き、報告書、ブログ記事、SNS投稿などを生成。トーンや文字数の指定も可能です。</p>
         </div>
         <div class="tool-feature-card">
-          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
           <h3>要約・翻訳</h3>
           <p>長文ドキュメントの要点抽出、日英など多言語間の翻訳に対応。会議メモの整理にも使えます。</p>
         </div>
         <div class="tool-feature-card">
-          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
           <h3>画像生成</h3>
           <p>テキストの指示からイラストや写真風の画像を生成（有料プラン）。プレゼン資料の素材づくりに便利です。</p>
         </div>
         <div class="tool-feature-card">
-          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
           <h3>コード生成・デバッグ</h3>
           <p>Python、JavaScript、SQLなどのコード作成やエラー修正、コードの説明を依頼できます。</p>
         </div>
         <div class="tool-feature-card">
-          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
           <h3>ファイル・画像の分析</h3>
           <p>PDF、Excel、画像をアップロードして内容の要約やデータ抽出を依頼できます（有料プラン）。</p>
         </div>
         <div class="tool-feature-card">
-          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
           <h3>カスタムGPT</h3>
           <p>特定の用途に特化したAIアシスタントを自分で作成・共有できます（Plus以上）。</p>
         </div>
@@ -275,7 +294,7 @@
 
     <section id="pricing">
       <h2>料金プラン一覧</h2>
-      <p>ChatGPTには個人向け・チーム向け・企業向けの複数プランがあります。まずは無料プランで試し、必要に応じてアップグレードするのが一般的です。</p>
+      <p>ChatGPTには個人向け・チーム向け・企業向けの複数プランがあります。個人的には、<strong>資格勉強だけなら無料プランで十分</strong>なことが多いです。毎日の業務でファイル分析や画像生成まで使うならPlusを検討、チームで使うなら最初からTeamを見る、という判断が現実的です（2026年6月時点）。</p>
 
       <div class="tool-plan-grid">
         <div class="tool-plan-card">
@@ -333,7 +352,7 @@
       </table>
 
       <p>
-        個人で試すなら<strong>無料プラン</strong>で十分です。日常的に業務で使う場合は<strong>Plus</strong>への加入を検討するユーザーが多いです。チームや会社での本格導入には<strong>Team・Enterprise</strong>が向いています。料金は為替や地域により変動するため、最新情報は<a href="https://openai.com/chatgpt/pricing" target="_blank" rel="noopener noreferrer">公式サイト</a>でご確認ください。
+        注意点として、<strong>「無料だから会社の資料を入れてもいい」は誤り</strong>です。無料版は学習利用ポリシーがビジネス向けプランと異なります。社内文書や顧客データを扱うなら、個人の無料アカウントではなくTeam・Enterpriseの検討と社内ルールの整備が先です。料金表の数字も為替で変動するため、契約前に必ず<a href="https://openai.com/chatgpt/pricing" target="_blank" rel="noopener noreferrer">公式の料金ページ</a>を開いて確認してください。
       </p>
     </section>
 
@@ -375,6 +394,7 @@
         <li><strong>段階的に依頼する</strong> — 複雑なタスクは「まず構成案を出して」→「各章を書いて」と分ける</li>
         <li><strong>出力を必ず確認する</strong> — AIの回答には誤りが含まれることがあるため、特に数値・法律・医療情報は要検証</li>
       </ul>
+      <p>試験対策としては、「プロンプトの書き方」より<strong>出力を検証する姿勢</strong>と<strong>機密情報を入れない判断</strong>のほうが点数に直結することがあります。生成AIパスポートの実践演習では、こうしたケース形式が多いです。</p>
     </section>
 
     <section id="use-cases">
@@ -528,19 +548,19 @@
       </table>
 
       <p>
-        結論として、<strong>はじめて1つ選ぶならChatGPT</strong>が無難です。長文の読み込みが多いなら<a href="../claude/">Claude</a>、GmailやGoogleドキュメントと連携したいなら<a href="../gemini/">Gemini</a>も検討する価値があります。複数ツールを使い分けるユーザーも増えています。
+        個人的なおすすめは、<strong>最初の1本はChatGPT</strong>です。情報量が多く、資格勉強の用語調べにも使いやすいからです。ただし、数百ページのPDFを一気に読ませたいならClaude、Google Workspace中心ならGeminiのほうがしっくりくる場面もあります（各ツールの記事は順次公開予定）。試験では「どれが一番優れているか」より、<strong>用途とリスクの説明ができるか</strong>が問われます。
       </p>
     </section>
 
     <section id="recommend">
       <h2>こんな人におすすめ</h2>
       <ul>
-        <li><strong>AIツールを初めて使う方</strong> — 情報が豊富で、トラブル時の解決策も見つけやすい</li>
-        <li><strong>文章作成・調査・コードなど幅広く使いたい方</strong> — 1つのアプリで多くのタスクをこなせる</li>
-        <li><strong>画像生成も試してみたい方</strong> — Plus加入でテキストから画像を生成可能</li>
-        <li><strong>チームでAI活用を進めたい方</strong> — Team・Enterpriseプランで組織導入がしやすい</li>
+        <li><strong>生成AIパスポート・G検定をこれから始める方</strong> — 試験で頻出のサービス名を、実際に触って覚えられる</li>
+        <li><strong>まず1つだけ試したい個人</strong> — 無料で始められ、情報も多い</li>
+        <li><strong>メール下書きや議事録整理を時短したい方</strong> — ただし機密データは入れない前提で</li>
+        <li><strong>社内でAI導入を検討している担当者</strong> — Team・Enterpriseの比較材料にできる（最終契約は情報システム部門と）</li>
       </ul>
-      <p>一方、<strong>大量のPDFを一度に分析したい</strong>場合や、<strong>Google Workspace中心の環境</strong>では、ClaudeやGeminiのほうが向いていることもあります。</p>
+      <p>あえて向いていないのは、<strong>社内の未公開データを個人の無料アカウントに流したい</strong>ケースです。ここはツール選び以前の問題で、生成AIパスポートでも「ガバナンス」の文脈で問われます。</p>
     </section>
 
     <section id="faq">

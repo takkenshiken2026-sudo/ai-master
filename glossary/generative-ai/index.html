@@ -52,7 +52,7 @@
         "description": "生成AIの意味、仕組み、具体例、従来AIとの違いをわかりやすく解説。",
         "url": "https://ai-master.jp/glossary/generative-ai/",
         "datePublished": "2026-06-06",
-        "dateModified": "2026-06-06",
+        "dateModified": "2026-06-07",
         "inLanguage": "ja",
         "author": { "@type": "Organization", "name": "AI Master" },
         "publisher": { "@id": "https://ai-master.jp/#organization" },
@@ -132,18 +132,19 @@
   </header>
 
   <div class="tool-meta-bar">
-    <span>更新日：<time datetime="2026-06-06">2026年6月6日</time></span>
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
     <span>読了目安：約6分</span>
   </div>
 
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>生成AI</strong>（ジェネレーティブAI）は、AI関連のニュースや資格試験でいちばんよく目にするキーワードのひとつです。本記事では、生成AIの意味から仕組み、身近な活用例、従来のAIとの違いまで、ITの専門知識がなくても理解できるように解説します。
+      <strong>生成AI</strong>（ジェネレーティブAI）は、G検定・生成AIパスポートのどちらでも「最初に押さえる用語」です。本記事は百科事典的な網羅より、<strong>試験で点を取るための定義の切り口</strong>と、<strong>実務で誤解しやすいポイント</strong>を中心に書いています。技術の最新動向は日々変わるため、具体例は<strong>2026年6月時点</strong>のものです。
     </p>
 
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
       <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
         <li><a href="#what-is">生成AIとは</a></li>
         <li><a href="#types">生成AIの主な種類</a></li>
         <li><a href="#examples">具体例</a></li>
@@ -154,16 +155,38 @@
       </ol>
     </nav>
 
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では「生成AI」は<strong>ディープラーニングの応用</strong>の文脈で出ます。定義を1行覚えるだけでなく、<strong>画像認識のような判別型AIと何が違うか</strong>を説明できるかがポイントです。生成AIパスポートでは、技術の仕組みに加えて<strong>ビジネス利用・著作権・ハルシネーション</strong>など、ケース問題として出やすいです。
+      </p>
+      <p>
+        受験生がよく落とすのは、「生成AI＝ChatGPT」と同一視してしまうパターンです。試験上は、<strong>生成AIは概念、ChatGPTはサービス名</strong>と分けて答える必要があります。実務でも同様で、ツール名を変えても消えないのは「出力を人が確認する」「機密を入れない」という原則です。
+      </p>
+      <div class="glossary-exam-box">
+        <p><strong>用語を読んだあと、演習で確認する</strong></p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>、<a href="../../exams/g-kentei/drill/q/tf-171/">TF-171</a>、<a href="../../exams/g-kentei/drill/q/tf-260/">TF-260（生成AIと著作権）</a>
+        </p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0091/">一問一答 TF-0091（生成AIの誕生まで）</a>、<a href="../../exams/genai-passport/practice/q/hq-0151/">実践演習 HQ-0151（生成モデルの誕生）</a>
+        </p>
+        <p>
+          関連ツールの話は<a href="../../tools/chatgpt/">ChatGPTの解説記事</a>へ。試験トップは<a href="../../exams/g-kentei/">G検定</a> · <a href="../../exams/genai-passport/">生成AIパスポート</a>
+        </p>
+      </div>
+    </section>
+
     <section id="what-is">
       <h2>生成AIとは</h2>
       <p>
-        生成AIとは、<strong>Generative AI</strong>（ジェネレーティブAI）のことで、大量のデータからパターンを学習し、<strong>これまで存在しなかった新しいコンテンツを生成する</strong>AI技術を指します。
+        生成AIとは、<strong>Generative AI</strong>（ジェネレーティブAI）のことで、学習したパターンにもとづき、<strong>新しいコンテンツを作り出す</strong>AI技術を指します。試験ではこの一文が骨格になります。
       </p>
       <p>
-        「生成」とは、文章を書く、絵を描く、音楽を作るといった<strong>創作・出力</strong>のイメージです。一方、従来よく使われてきたAIの多くは、画像の分類や売上予測のように「入力に対して答えや数値を返す」用途が中心でした。生成AIは、こうした<strong>創出型</strong>のタスクに特化して発展してきた領域です。
+        ただし現場では「生成」と聞くと画像や文章だけを想像しがちです。売上予測のような従来型AIと並べて説明するときは、<strong>出力が「新規のサンプル」か「ラベルや数値」か</strong>で切り分けると迷いにくいです。
       </p>
       <p>
-        技術的には、<a href="../llm/">大規模言語モデル（LLM）</a>や拡散モデルなどが生成AIの中核を担います。ChatGPTのようなチャットツールは、LLMを応用した生成AIサービスの代表例です。
+        技術的には、大規模言語モデル（LLM）や拡散モデルなどが中核です。<a href="../../tools/chatgpt/">ChatGPT</a>は、そのLLMを使ったサービスの代表例にすぎません。用語と製品名を混同しないことが、試験でも実務でも最初の関門になります。
       </p>
     </section>
 
@@ -183,7 +206,7 @@
           <tr>
             <td><strong>テキスト生成</strong></td>
             <td>文章・要約・翻訳・コード</td>
-            <td><a href="../../tools/chatgpt/">ChatGPT</a>、<a href="../../tools/claude/">Claude</a></td>
+            <td><a href="../../tools/chatgpt/">ChatGPT</a>、Claude など</td>
           </tr>
           <tr>
             <td><strong>画像生成</strong></td>
@@ -231,7 +254,7 @@
 
     <section id="vs-traditional">
       <h2>従来のAIとの違い</h2>
-      <p>「AI」とひとくくりにされがちですが、生成AIと従来型のAIでは目的が異なります。</p>
+      <p>「AI」とひとくくりにされがちですが、生成AIと従来型のAIでは目的が異なります。試験の正誤問題では、<strong>「需要予測も生成AI」</strong>のように役割を取り違える選択肢がよく出ます。</p>
 
       <table class="tool-spec-table">
         <thead>
@@ -278,7 +301,7 @@
         <tbody>
           <tr>
             <td>アイデア出しや下書きの時間を大幅に短縮できる</td>
-            <td>事実と異なる内容（<a href="../hallucination/">ハルシネーション</a>）を出力することがある</td>
+            <td>事実と異なる内容（ハルシネーション）を出力することがある</td>
           </tr>
           <tr>
             <td>専門スキルがなくても一定品質の成果物が得られる</td>
@@ -302,16 +325,16 @@
 
     <section id="exam">
       <h2>資格試験との関係</h2>
-      <p>生成AIは、AI関連資格の出題範囲でも重要なテーマです。</p>
+      <p>同じ「生成AI」でも、試験ごとに求められる深さが違います。ここを混ぜると勉強が二度手間になります。</p>
       <div class="glossary-exam-box">
         <p>
-          <strong>G検定</strong>では、ディープラーニングや自然言語処理の基礎知識のなかで、生成モデルの概要や応用が問われます。生成AIの仕組みを理解しておくと、試験対策の土台になります。
+          <strong>G検定</strong>は、生成モデル・自然言語処理・画像生成など<strong>技術の位置づけ</strong>が中心です。「GANと拡散モデルの違い」まで踏み込む問題もあります。まずは<a href="../../exams/g-kentei/drill/domain/domain-05/">ディープラーニングの応用例</a>の一問一答で量を確保するのが現実的です。
         </p>
         <p>
-          <strong>生成AIパスポート</strong>は、名前のとおり生成AIのビジネス活用・倫理・リスク管理を中心に学ぶ資格です。本記事で押さえた基礎知識が、そのまま学習の出発点になります。
+          <strong>生成AIパスポート</strong>は、<strong>活用シーン・リスク・法令・社内ルール</strong>のケースが多いです。定義を読んだだけでは点数に直結しにくく、<a href="../../exams/genai-passport/practice/">実践演習</a>で「不適切な利用例を選ぶ」形式に慣れておくとよいです。
         </p>
         <p>
-          関連：<a href="../../exams/g-kentei/">G検定対策</a>、<a href="../../exams/genai-passport/">生成AIパスポート対策</a>
+          学習の順番の例：本記事 → <a href="../../exams/g-kentei/drill/q/tf-170/">G検定 TF-170</a> → <a href="../../exams/genai-passport/drill/q/tf-0091/">生成AIパスポート TF-0091</a> → 各試験の演習モード
         </p>
       </div>
     </section>
@@ -321,7 +344,7 @@
       <div class="tool-faq">
         <details>
           <summary>生成AIとAIは同じ意味ですか？</summary>
-          <p class="tool-faq-a">同じではありません。AI（人工知能）は広い概念で、画像認識や需要予測なども含みます。生成AIはその中の一分野で、「新しいコンテンツを作る」ことに特化したAIを指します。</p>
+          <p class="tool-faq-a">同じではありません。AI（人工知能）は広い概念で、画像認識や需要予測なども含みます。生成AIはその中の一分野です。試験では「すべてのAIが生成AI」と言う選択肢が×になることが多いので、<a href="../../exams/g-kentei/drill/q/tf-170/">TF-170</a>で確認しておくと安心です。</p>
         </details>
         <details>
           <summary>生成AIとChatGPTの違いは何ですか？</summary>
@@ -342,11 +365,11 @@
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
-          <li><a href="../llm/">大規模言語モデル（LLM）</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
-          <li><a href="../gpt/">GPT</a></li>
-          <li><a href="../hallucination/">ハルシネーション</a></li>
-          <li><a href="../rag/">RAG</a></li>
+          <li class="tool-related-list__soon">大規模言語モデル（LLM） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">GPT <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">RAG <span class="tool-soon-badge">準備中</span></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>
@@ -354,10 +377,10 @@
         <h2 class="tool-related-heading">関連するAIツール</h2>
         <ul class="tool-related-list">
           <li><a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
-          <li><a href="../../tools/claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
-          <li><a href="../../tools/gemini/"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> Gemini</a></li>
-          <li><a href="../../tools/midjourney/">Midjourney</a></li>
-          <li><a href="../../tools/runway/">Runway</a></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> Gemini <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">Midjourney <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">Runway <span class="tool-soon-badge">準備中</span></li>
           <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
         </ul>
       </div>
