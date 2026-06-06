@@ -106,6 +106,7 @@ DIRECT_ICON_URL = {
     "stable-diffusion": "https://stability.ai/favicon.ico",
     "flux": "https://blackforestlabs.ai/favicon.ico",
     "ideogram": "https://ideogram.ai/favicon.ico",
+    "canva": "https://www.canva.com/favicon.ico",
 }
 
 

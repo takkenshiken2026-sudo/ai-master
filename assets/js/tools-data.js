@@ -198,6 +198,7 @@ const TOOLS = [
     logo: "canva.svg",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "デザインツールにAI生成を統合。非デザイナー向け",
     url: "https://www.canva.com",
   },
