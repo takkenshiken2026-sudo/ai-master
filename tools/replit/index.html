@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Replitの機能・料金・使い方を解説。ブラウザ完結のクラウドIDE、ホスティング、Replit Agent。Cursor・Bolt.newとの違い、オンラインメモ帳ではない点、試験ポイントまで。">
+  <title>Replitとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/replit/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Replitとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Replitの機能・料金・使い方を解説。ブラウザ完結のクラウドIDE、Replit Agent、Cursor・Bolt.newとの違い、実行環境とデプロイまで含む点も整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/replit/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/replit/og-hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/replit/og-hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/replit/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Replit", "item": "https://ai-master.jp/tools/replit/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/replit/#article",
+        "headline": "Replitとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Replitの機能・料金・使い方を解説。ブラウザ完結のクラウドIDE、Replit Agent、Cursor・Bolt.newとの違い、実行環境とデプロイまで含む点も整理。",
+        "url": "https://ai-master.jp/tools/replit/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/replit/og-hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/replit/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Replit" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/replit/#webpage",
+        "url": "https://ai-master.jp/tools/replit/",
+        "name": "Replitとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Replitの機能・料金・使い方を解説。ブラウザ完結のクラウドIDE、Replit Agent、Cursor・Bolt.newとの違い、実行環境とデプロイまで含む点も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/replit/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Replit",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "description": "Replitが提供するブラウザ完結型のクラウド開発環境。IDE、実行ランタイム、ホスティング、Replit AgentによるAI支援を一体化したプラットフォーム。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料プランあり。Core等の有料プランも提供（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Replit",
+          "url": "https://replit.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Replitは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。無料プランがあり、Repl（プロジェクト）の作成、基本的なIDE、一定範囲の実行・公開を試せます。ただしReplit Agentの利用量、CPU・メモリ、プライベートReplなどには上限があり、本格利用ではCore等の有料プランが必要になることが多いです。最新の枠と料金はReplit公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ReplitとCursorの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CursorはローカルPCにインストールするAIネイティブのコードエディタです。Replitはブラウザ上で動くクラウド開発環境で、IDEに加え実行ランタイムとホスティングまで含みます。どちらもAIでコーディング支援できますが、Replitは「環境ごとクラウド」、Cursorは「手元のリポジトリを編集」という整理が試験・実務の両方で役立ちます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Replitはオンラインのメモ帳のようなものですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Replitはテキストを書くだけのメモ帳ではなく、PythonやNode.jsなどのランタイムでコードを実行し、Webアプリとして公開（デプロイ）できるクラウドIDEです。ファイル管理、ターミナル、データベース連携、Replit Agentによるアプリ生成まで含む開発プラットフォームとして位置づけます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Replit Agentとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Replit Agentは、自然言語の指示からRepl内のコード作成・修正・デバッグを支援するAIエージェント機能です。チャットで要件を伝えると、ファイル追加や依存関係の設定、実行確認まで進められる場合があります。生成結果は必ず人がレビューし、機密情報を入力しない運用が試験でも重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Replitは誰が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Replit社（Replit, Inc.）が提供するクラウド開発プラットフォームです。GitHub CopilotやCursorとは別会社の製品で、ブラウザ完結のIDE＋ホスティングが特徴です。試験では「クラウド上で開発から公開まで行える環境の一例」として名前が出ることがあります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Replit</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/replit/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Replit · コーディング</p>
+          <h1>Replitとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">ブラウザだけで開発・実行・公開まで完結</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">クラウドIDE</span>
+        <span class="tool-category">Replit Agent</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Webブラウザ</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/replit/og-hero.jpg" alt="Replitの公式ロゴ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Replit公式（replit.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Replit</strong>（レプリット）は、<strong>Replit社</strong>が提供する<strong>ブラウザ完結型のクラウド開発環境</strong>です。コードエディタ（IDE）に加え、<strong>実行ランタイム</strong>・<strong>ホスティング</strong>・<strong>Replit Agent</strong>（AIエージェント）が一体化しており、PCに開発環境を構築しなくても<strong>作成から公開まで</strong>を進められます。本記事は全機能の網羅ではなく、<strong>試験で押さえる位置づけ</strong>（クラウドIDE・AIコーディング支援）と<strong>Cursor・Bolt.new・GitHub Copilotとの違い</strong>に絞って書いています。料金や利用枠は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金プラン</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Replitとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#pricing">料金プランの考え方</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Cursor・Bolt.newとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<strong>AIコーディング支援</strong>や<strong>業務利用の注意点</strong>が問われることがあります。Replitは「<strong>クラウド上でコードを書き実行・公開できる環境</strong>」として、<a href="../cursor/">Cursor</a>（ローカルAIエディタ）や<a href="../chatgpt/">ChatGPT</a>（チャット相談）と並べて整理すると覚えやすいです。ただし試験では製品名そのものより、<strong>機密情報の入力禁止</strong>や<strong>利用規約・商用条件</strong>を問う設問の方が多い点に注意してください。
+      </p>
+      <p>
+        よくある誤解は3つあります。<strong>「Replit＝オンラインのメモ帳」</strong>と思い込むこと（実行環境とデプロイまで含む開発プラットフォームです）。<strong>「Replit＝CursorやGitHub Copilotと同じ」</strong>と同一視すること（ReplitはクラウドIDE＋ホスティング、Cursorはローカルエディタ、Copilotは既存IDE向け補完です）。そして<strong>「AIが作ったアプリはそのまま本番に出してよい」</strong>と考えること（人のレビューとテストが必須です）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：Cursor · GitHub Copilot · Bolt.new · <a href="../chatgpt/">ChatGPT</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Replitとは</h2>
+      <p>
+        Replitは2010年代から普及した<strong>クラウドIDE</strong>の代表格です。ユーザーはブラウザで<strong>Repl</strong>（プロジェクト）を開き、複数言語のコードを編集・実行します。ローカルPCにPythonやNode.jsをインストールする代わりに、Replit側の<strong>コンテナ上のランタイム</strong>で動かす点が本質です。
+      </p>
+      <p>
+        近年は<strong>Replit Agent</strong>が追加され、自然言語からWebアプリやAPIのたたき台を生成・修正する<strong>AIエージェント型</strong>の開発も可能になりました。CursorやGitHub Copilotが「手元のエディタを強化する」方向なのに対し、Replitは<strong>開発環境そのものをクラウドに置く</strong>製品です。試験では「ブラウザ完結・実行・公開まで一体化」と覚えると他ツールと混同しにくくなります。
+      </p>
+      <p>
+        公開（デプロイ）もRepl内から行え、URLを発行してプロトタイプを共有できます。教育現場やハッカソン、個人の学習で使われる一方、企業案件では<strong>コードがクラウドに置かれる</strong>点と<strong>生成AIの利用規約</strong>を必ず確認する必要があります。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <p>クラウド開発とAI支援に関わる主な機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>ブラウザIDE</h3>
+          <p>ファイルツリー、エディタ、ターミナル、Git連携などをブラウザ上で利用。OSを問わず同じ環境で開発できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>実行ランタイム</h3>
+          <p>Python、JavaScript、Goなど多数の言語をRepl上で実行。依存パッケージのインストールもクラウド側で完結します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ホスティング・デプロイ</h3>
+          <p>作成したアプリをReplから公開し、URLで共有。プロトタイプのデモや小規模サービスに使われます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Replit Agent</h3>
+          <p>自然言語の指示からコード生成・修正・デバッグを支援するAIエージェント。要件に沿ったファイル追加や設定変更を任せられます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>AI補完・Ghostwriter</h3>
+          <p>エディタ内でのコード補完や説明生成（Ghostwriter等）。Replit Agentとは別枠のAI支援として提供される場合があります。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>共同編集・テンプレート</h3>
+          <p>複数人でのRepl共有や、言語・フレームワーク別のテンプレートから素早く開始できます。</p>
+        </div>
+      </div>
+
+      <h3>AIコーディングツールとの位置づけ</h3>
+      <p>
+        <a href="../cursor/">Cursor</a>や<a href="../github-copilot/">GitHub Copilot</a>が<strong>エディタ・補完の強化</strong>に重心を置くのに対し、Replitは<strong>IDE＋実行＋公開</strong>まで含むクラウドプラットフォームです。Bolt.newのように<strong>ブラウザでアプリ全体を生成</strong>するツールとも近いですが、Replitは従来からの<strong>Replベースの開発ワークフロー</strong>にAgentを足した形と整理すると試験・選定の両方で役立ちます。いずれも<a href="../../glossary/generative-ai/">生成AI</a>のLLMを開発に組み込む例です。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プランの考え方</h2>
+      <p>Replitは無料枠から始められますが、Agentの利用量やリソースには上限があります（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Free（無料）</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">基本的なRepl・実行</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Core</p>
+          <p class="tool-plan-price">月額課金</p>
+          <p class="tool-plan-note">個人の本格利用向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Teams</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">チーム・組織向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">大規模・セキュリティ要件向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free（無料）</strong></td>
+            <td>Repl作成・実行は可能。Agent利用量、CPU・メモリ、公開Replに制限あり。</td>
+            <td>学習・お試し・小さなプロトタイプ</td>
+          </tr>
+          <tr>
+            <td><strong>Core</strong></td>
+            <td>月額課金でAgent枠・リソース・プライベートRepl等が拡張。</td>
+            <td>個人開発者・継続利用</td>
+          </tr>
+          <tr>
+            <td><strong>Teams / Enterprise</strong></td>
+            <td>組織管理・請求・セキュリティ機能（詳細は公式確認）。</td>
+            <td>チーム開発・会社での導入検討</td>
+          </tr>
+          <tr>
+            <td><strong>Cursor Pro</strong></td>
+            <td>別製品。ローカルAIエディタの月額プラン。</td>
+            <td>手元のリポジトリをAIで編集したい人</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        商用・クライアント案件では、生成コードの権利関係とReplitの利用規約、社内のセキュリティポリシー（クラウドへのコード送信可否）を必ず確認してください。機密データを無料個人Replに置くのは避けるべきです。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>アカウント登録後、ブラウザだけでReplを作成して開発を始められます。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>Replitアカウントを作成</strong>
+            replit.com からサインアップし、ダッシュボードにログインします。
+          </li>
+          <li>
+            <strong>Replを新規作成</strong>
+            言語やテンプレート（Python、Node.js、Web等）を選び、プロジェクトを開きます。
+          </li>
+          <li>
+            <strong>コードを編集・実行</strong>
+            エディタでファイルを書き、Runでクラウド上のランタイムで実行します。
+          </li>
+          <li>
+            <strong>Replit Agentに依頼（任意）</strong>
+            例：「TODOアプリのAPIを追加して」「このエラーを直して」
+          </li>
+          <li>
+            <strong>公開・共有</strong>
+            DeployでURLを発行し、動作確認後に共有。Agentの変更は必ず人がレビューします。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/replit/app-icon.png" alt="Replitの公式アイコン" width="600" height="338" loading="lazy">
+            <figcaption>出典：Replit公式（replit.com）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドラインと利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>プロトタイプ・PoC</h3>
+          <ul>
+            <li>WebアプリやAPIのたたき台を短時間で公開</li>
+            <li>Replit AgentでUI・バックエンドの初版生成</li>
+            <li>ステークホルダーへのデモURL共有</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>教育・研修</h3>
+          <ul>
+            <li>プログラミング教室で環境構築を省略</li>
+            <li>生成AIパスポートのAIコーディング演習</li>
+            <li>言語学習とレビュー習慣の並行指導</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>個人・副業開発</h3>
+          <ul>
+            <li>小規模ツールやボットのホスティング</li>
+            <li>ハッカソン・学習プロジェクト</li>
+            <li>ローカル環境を持たない端末での開発</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ブラウザだけで開発・実行・公開まで完結</td>
+            <td>無料枠ではAgent・リソースに制限がある</td>
+          </tr>
+          <tr>
+            <td>OSやローカル環境構築が不要</td>
+            <td>コードがクラウドに置かれるためセキュリティ審査が必要</td>
+          </tr>
+          <tr>
+            <td>Replit Agentで要件からアプリ生成を支援</td>
+            <td>大規模・本番システムには向かない場合がある</td>
+          </tr>
+          <tr>
+            <td>教育・プロトタイプに導入しやすい</td>
+            <td>生成コードの品質は一定ではなくレビュー必須</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Cursor・Bolt.newとの比較</h2>
+      <p>AIコーディングで名前が並びやすい3つを整理します。いずれも2026年6月時点の一般的な位置づけです。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Replit</th>
+            <th>Cursor</th>
+            <th>Bolt.new</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>Replit</td>
+            <td>Anysphere</td>
+            <td>StackBlitz等（要公式確認）</td>
+          </tr>
+          <tr>
+            <td>製品の形</td>
+            <td>クラウドIDE＋実行＋ホスティング</td>
+            <td>ローカルAIネイティブエディタ</td>
+            <td>ブラウザでアプリ全体を生成</td>
+          </tr>
+          <tr>
+            <td>主な強み</td>
+            <td>環境構築不要・Replから公開</td>
+            <td>コードベース参照・複数ファイル編集</td>
+            <td>プロンプトからフルスタック生成</td>
+          </tr>
+          <tr>
+            <td>実行環境</td>
+            <td>Replitクラウド上</td>
+            <td>ローカルPC</td>
+            <td>ブラウザ内（WebContainer等）</td>
+          </tr>
+          <tr>
+            <td>AI機能</td>
+            <td>Replit Agent・Ghostwriter</td>
+            <td>Chat・Composer・Agent</td>
+            <td>プロンプト駆動のアプリ生成</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>クラウド開発プラットフォーム</td>
+            <td>Anysphere製ローカルエディタ</td>
+            <td>ブラウザ完結のアプリ生成例</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        手元のGitリポジトリをAIで深く編集したいなら<a href="../cursor/">Cursor</a>、環境構築なしでReplから公開したいならReplit、プロンプト一発でWebアプリの骨組みを作りたいならBolt.new、既存IDEに補完だけ足したいなら<a href="../github-copilot/">GitHub Copilot</a>、という切り分けが現実的です。いずれも<strong>出力の検証は人が行う</strong>点は共通です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>PCに開発環境を入れず、ブラウザだけでコードを書き実行したい人</strong></li>
+        <li><strong>プロトタイプをURLで素早く共有したい個人・チーム</strong></li>
+        <li><strong>生成AIパスポートでクラウドIDEとAI Agentの具体例を知りたい受験生</strong></li>
+        <li><strong>Replit Agentで要件からアプリのたたき台を作りたい学習者</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>コードを社外クラウドに置けない</strong>場合（社内ポリシー・機密案件）や、<strong>大規模本番システムをローカル／自社インフラで管理したい</strong>場合（Cursor＋自社CI/CD等の検討が先）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Replitは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。無料プランがあり、Repl（プロジェクト）の作成、基本的なIDE、一定範囲の実行・公開を試せます。ただしReplit Agentの利用量、CPU・メモリ、プライベートReplなどには上限があり、本格利用ではCore等の有料プランが必要になることが多いです。最新の枠と料金はReplit公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>ReplitとCursorの違いは？</summary>
+          <p class="tool-faq-a">CursorはローカルPCにインストールするAIネイティブのコードエディタです。Replitはブラウザ上で動くクラウド開発環境で、IDEに加え実行ランタイムとホスティングまで含みます。どちらもAIでコーディング支援できますが、Replitは「環境ごとクラウド」、Cursorは「手元のリポジトリを編集」という整理が試験・実務の両方で役立ちます。</p>
+        </details>
+        <details>
+          <summary>Replitはオンラインのメモ帳のようなものですか？</summary>
+          <p class="tool-faq-a">いいえ。Replitはテキストを書くだけのメモ帳ではなく、PythonやNode.jsなどのランタイムでコードを実行し、Webアプリとして公開（デプロイ）できるクラウドIDEです。ファイル管理、ターミナル、データベース連携、Replit Agentによるアプリ生成まで含む開発プラットフォームとして位置づけます。</p>
+        </details>
+        <details>
+          <summary>Replit Agentとは何ですか？</summary>
+          <p class="tool-faq-a">Replit Agentは、自然言語の指示からRepl内のコード作成・修正・デバッグを支援するAIエージェント機能です。チャットで要件を伝えると、ファイル追加や依存関係の設定、実行確認まで進められる場合があります。生成結果は必ず人がレビューし、機密情報を入力しない運用が試験でも重要です。</p>
+        </details>
+        <details>
+          <summary>Replitは誰が提供していますか？</summary>
+          <p class="tool-faq-a">Replit社（Replit, Inc.）が提供するクラウド開発プラットフォームです。GitHub CopilotやCursorとは別会社の製品で、ブラウザ完結のIDE＋ホスティングが特徴です。試験では「クラウド上で開発から公開まで行える環境の一例」として名前が出ることがあります。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://replit.com" target="_blank" rel="noopener noreferrer">Replit（replit.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://docs.replit.com" target="_blank" rel="noopener noreferrer">Replit Docs</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/github.svg" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../windsurf/"><img src="../../assets/images/tools/windsurf/app-icon.png" alt="" width="16" height="16"> Windsurf</a></li>
+          <li><a href="../bolt-new/"><img src="../../assets/images/tools/bolt-new/app-icon.png" alt="" width="16" height="16"> Bolt.new</a></li>
+          <li><a href="../v0/"><img src="../../assets/images/tools/v0/app-icon.png" alt="" width="16" height="16"> v0</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">LLM <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

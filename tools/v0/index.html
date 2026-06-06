@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="v0の機能・料金・使い方を解説。Vercel製のAI UIジェネレーター。React/Next.js/shadcn/uiコンポーネントをテキスト指示で生成。Bolt.new・Replit・Cursorとの違い、Vercelホスティングとの混同も整理。生成AIパスポート・G検定対策にも。">
+  <title>v0とは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/v0/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="v0とは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="v0の機能・料金・使い方を解説。Vercel製のAI UIジェネレーター。Reactコンポーネント生成、Bolt.new・Replitとの違い、Vercelホスティングとの混同も整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/v0/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/v0/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/v0/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/v0/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "v0", "item": "https://ai-master.jp/tools/v0/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/v0/#article",
+        "headline": "v0とは？機能・料金・使い方をわかりやすく解説",
+        "description": "v0の機能・料金・使い方を解説。Vercel製のAI UIジェネレーター。Reactコンポーネント生成、Bolt.new・Replitとの違い、Vercelホスティングとの混同も整理。",
+        "url": "https://ai-master.jp/tools/v0/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/v0/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/v0/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "v0" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/v0/#webpage",
+        "url": "https://ai-master.jp/tools/v0/",
+        "name": "v0とは？機能・料金・使い方をわかりやすく解説",
+        "description": "v0の機能・料金・使い方を解説。Vercel製のAI UIジェネレーター。Reactコンポーネント生成、Bolt.new・Replitとの違い、Vercelホスティングとの混同も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/v0/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "v0",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "description": "Vercelが提供するAI UIジェネレーター。テキスト指示からReact/Next.js/shadcn/uiベースのUIコンポーネントを生成するデザイン-to-コードツール。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料枠あり。有料プランは月額課金（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Vercel",
+          "url": "https://vercel.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "v0は無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。無料枠があり、一定量のUI生成を試せます。ただし生成回数や高度な機能には上限があり、継続利用では有料プラン（v0 Premium等）が必要になることが多いです。最新の枠と料金はv0公式（v0.dev）で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "v0とVercelホスティングの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VercelはNext.js等のWebアプリをデプロイ・ホスティングするクラウドプラットフォームです。v0は同じVercel社が提供する別製品で、テキストからReact UIコンポーネントのコードを生成するデザイン-to-コードツールです。v0＝ホスティングそのもの、という理解は誤りです。生成したUIをVercelにデプロイできる連携はありますが、製品の役割は異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "v0とBolt.newの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "v0は主にReact/Next.js/shadcn/uiのUIコンポーネントや画面断片の生成に特化しています。Bolt.newはブラウザ上でフルスタックアプリ全体（フロント・バックエンド・実行環境）をAIで組み立てる方向性が強いです。UI部品のたたき台ならv0、丸ごと動くアプリの試作ならBolt.new、という使い分けが現実的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "v0は何が生成できますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "v0は主にReactベースのUIコンポーネント、ダッシュボード、フォーム、ランディングページのセクションなどフロントエンドの見た目とコードを生成します。APIやデータベースを含むバックエンド全体の構築は主目的ではありません。生成コードはコピーして既存プロジェクトに組み込むか、Vercelエコシステムへ展開する形が一般的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "v0は誰が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Vercel（バーセル）が提供しています。Next.jsの開発・ホスティングで知られる同社のAI製品で、試験では「Vercel製のUI生成ツール」として整理するとよいです。CursorやBolt.newとは別会社・別製品です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">v0</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/v0/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Vercel · コーディング</p>
+          <h1>v0とは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">テキスト指示でReact UIコンポーネントを即生成</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">UI生成</span>
+        <span class="tool-category">React/Next.js</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Webブラウザ</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/v0/og-hero.png" alt="v0の公式UI。テキスト指示からReactコンポーネントを生成する画面" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：v0公式（v0.dev）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>v0</strong>（ブイゼロ）は、<strong>Vercel</strong>（バーセル）が提供する<strong>AI UIジェネレーター</strong>です。自然言語の指示から<strong>React / Next.js / shadcn/ui</strong>ベースのUIコンポーネントや画面断片を生成し、プレビュー確認のうえコードとして取り出せます。本記事は全機能の網羅ではなく、<strong>試験で押さえる位置づけ</strong>（デザイン-to-コード・Vercelエコシステム）と<strong>Bolt.new・Replit・Cursorとの違い</strong>、<strong>「v0＝Vercelホスティング」という誤解</strong>の整理に絞って書いています。料金や生成枠は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金プラン</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">v0とは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#pricing">料金プランの考え方</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Bolt.new・Replit・Cursorとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<strong>AIコーディング支援</strong>や<strong>業務利用の注意点</strong>が問われることがあります。v0は「テキストからUIコードを生成するWebツール」として、<a href="../cursor/">Cursor</a>（エディタ一体型）や<a href="../chatgpt/">ChatGPT</a>（汎用チャット）と並べて整理すると覚えやすいです。試験では製品名そのものより、<strong>機密情報の入力禁止</strong>や<strong>生成物のレビュー義務</strong>を問う設問の方が多い点に注意してください。
+      </p>
+      <p>
+        よくある誤解は3つあります。<strong>「v0＝Vercelのホスティングサービス」</strong>と同一視すること（v0はUI生成ツール、Vercel本体はデプロイ・ホスティング基盤です）。<strong>「v0でフルスタックアプリが完成する」</strong>と期待すること（主にフロントエンドのUIコンポーネント生成が中心です）。そして<strong>「AIが書いたUIはそのまま本番に出してよい」</strong>と考えること（アクセシビリティ・セキュリティ・デザインガイドの確認が必須です）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：Bolt.new · Replit · <a href="../cursor/">Cursor</a> · <a href="../chatgpt/">ChatGPT</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>v0とは</h2>
+      <p>
+        v0は2023年頃から公開された、<strong>Vercel社のAI UIジェネレーター</strong>です。デザイナーやエンジニアが「ログインフォーム」「ダッシュボードのサイドバー」などを日本語・英語で指示すると、<strong>Reactコンポーネントのコードとライブプレビュー</strong>が返ってきます。出力は<strong>Next.js</strong>や<strong>shadcn/ui</strong>（Tailwind CSSベースのUI部品）と相性がよく、Vercelが推すフロントエンドスタックと一体で語られることが多いです。
+      </p>
+      <p>
+        製品の本質は<strong>デザイン-to-コード</strong>（デザイン案をコードに変換する）ツールです。Figmaのモックをそのままインポートする専用デザインツールではありませんが、プロンプトと反復修正（「ボタンを大きく」「ダークモード対応」など）でUIのたたき台を素早く作れます。試験では「Vercelが提供するUI生成AI」と覚えると、ホスティングサービスとの混同を避けられます。
+      </p>
+      <p>
+        v0は<strong>ブラウザ上のWebアプリ</strong>として動作し、ローカルにエディタをインストールする必要はありません。生成したコードはクリップボードにコピーして既存のNext.jsプロジェクトへ貼り付けるか、Vercelアカウントと連携してデプロイする流れが一般的です。<a href="../cursor/">Cursor</a>のようにリポジトリ全体をAIが編集するタイプとは、<strong>UI部品の生成に特化</strong>している点が大きな違いです。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <p>UI生成に関わる主な機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>テキストからUI生成</h3>
+          <p>自然言語の指示からReactコンポーネントを生成。ランディングページのヒーロー、カード一覧、設定画面などを試作できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ライブプレビュー</h3>
+          <p>生成結果をブラウザ上で即座に確認。指示を追加・修正してUIを反復改善できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>shadcn/ui・Tailwind CSS</h3>
+          <p>モダンなReact UIスタック（shadcn/ui、Tailwind CSS）を前提としたコード出力。Next.jsプロジェクトへの組み込みがしやすい設計です。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コードのエクスポート</h3>
+          <p>生成コードをコピーして自分のプロジェクトに取り込めます。コンポーネント単位で再利用する想定です。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Vercelエコシステム連携</h3>
+          <p>同じVercelアカウントで生成物をデプロイしたり、Next.jsホスティングと組み合わせやすい導線があります（詳細は公式確認）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>画像・参照UIからの生成</h3>
+          <p>スクリーンショットや参考デザインを添付して、近いUIを生成する機能も提供されています（時期により仕様は変動）。</p>
+        </div>
+      </div>
+
+      <h3>フルスタック生成ツールとの位置づけ</h3>
+      <p>
+        Bolt.newやReplit Agentは<strong>アプリ全体（実行環境・バックエンド含む）</strong>をブラウザ上で組み立てる方向性が強いです。v0は<strong>UIコンポーネントとフロントの見た目</strong>にフォーカスします。API設計、認証基盤、データベーススキーマまで一括で任せたい場合は別ツールの方が向いていることが多く、v0は「画面のたたき台を速く作る」用途で選ばれます。いずれも<a href="../../glossary/generative-ai/">生成AI</a>を開発フローに組み込む例ですが、<strong>生成範囲（UI部品かアプリ全体か）</strong>で覚え分けると試験・選定の両方で役立ちます。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プランの考え方</h2>
+      <p>v0は無料枠から試せますが、継続利用では有料プランが前提になることが多いです（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">無料枠</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">月あたりの生成回数に上限</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">v0 Premium</p>
+          <p class="tool-plan-price">$20/月前後</p>
+          <p class="tool-plan-note">個人の本格利用向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Team / Enterprise</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">チーム・組織向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>無料枠</strong></td>
+            <td>一定回数までUI生成を試せる。上限到達後は有料プランへ。</td>
+            <td>お試し・学習・たまにUI案を作る人</td>
+          </tr>
+          <tr>
+            <td><strong>v0 Premium</strong></td>
+            <td>月額課金で生成枠・機能が拡大。個人開発の定番プラン。</td>
+            <td>定期的にUIプロトタイプを作るエンジニア・デザイナー</td>
+          </tr>
+          <tr>
+            <td><strong>Team / Enterprise</strong></td>
+            <td>チーム共有・組織向け機能（詳細は公式確認）。</td>
+            <td>会社での標準ツール検討</td>
+          </tr>
+          <tr>
+            <td><strong>Vercelホスティング</strong></td>
+            <td>別サービス。Next.js等のデプロイ・CDN・サーバーレス実行。</td>
+            <td>生成したアプリを公開・運用したい人</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        商用・クライアント案件では、生成UIの利用規約とVercelのポリシー、社内のセキュリティガイドラインを必ず確認してください。顧客データや未公開デザインを無料個人アカウントに入力するのは避けるべきです。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>ブラウザからv0.devにアクセスし、Vercelアカウントでサインインするだけで始められます。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>v0.dev にアクセス</strong>
+            Vercelアカウント（GitHub等連携可）でログインします。初回は無料枠で試せます。
+          </li>
+          <li>
+            <strong>UIの指示を入力</strong>
+            例：「SaaS向けの料金表コンポーネント。3プラン、月額/年額切替付き」
+          </li>
+          <li>
+            <strong>プレビューで確認・修正</strong>
+            生成結果を見ながら「モバイル対応にして」「プライマリカラーを青に」など追加指示します。
+          </li>
+          <li>
+            <strong>コードをコピー</strong>
+            満足したらReact/TSXコードをコピーし、既存のNext.jsプロジェクトに貼り付けます。
+          </li>
+          <li>
+            <strong>人がレビューしてから本番反映</strong>
+            依存関係・スタイル・a11yを確認し、テスト後にデプロイします。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/v0/app-icon.png" alt="v0の公式アイコン" width="600" height="338" loading="lazy">
+            <figcaption>出典：Vercel公式</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドラインと利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>フロントエンド開発</h3>
+          <ul>
+            <li>ダッシュボード・管理画面のUIたたき台</li>
+            <li>ランディングページのセクション生成</li>
+            <li>shadcn/uiベースのフォーム・モーダル</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>デザイン・プロダクト</h3>
+          <ul>
+            <li>企画段階のUIモックをコード付きで共有</li>
+            <li>A/Bテスト用の画面バリエーション試作</li>
+            <li>デザインシステムに沿った部品の素案</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>教育・資格学習</h3>
+          <ul>
+            <li>AI UI生成の体験教材</li>
+            <li>生成AIパスポートのケース演習の補助</li>
+            <li>React/Next.js学習の入り口</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>React/Next.js/shadcn/uiに最適化された出力</td>
+            <td>バックエンド・DBまでは生成しない</td>
+          </tr>
+          <tr>
+            <td>ブラウザだけで始められインストール不要</td>
+            <td>無料枠では生成回数に制限がある</td>
+          </tr>
+          <tr>
+            <td>Vercelエコシステムへスムーズに展開しやすい</td>
+            <td>生成UIの品質は一定ではなくレビュー必須</td>
+          </tr>
+          <tr>
+            <td>UIプロトタイプを短時間で試せる</td>
+            <td>React/Next.js以外のスタックには向きにくい</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Bolt.new・Replit・Cursorとの比較</h2>
+      <p>AIコーディング・生成で名前が並びやすい4つを整理します。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>v0</th>
+            <th>Bolt.new</th>
+            <th>Replit</th>
+            <th>Cursor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>Vercel</td>
+            <td>StackBlitz</td>
+            <td>Replit</td>
+            <td>Anysphere</td>
+          </tr>
+          <tr>
+            <td>製品の形</td>
+            <td>Web上のUIジェネレーター</td>
+            <td>ブラウザIDE＋AIアプリ生成</td>
+            <td>クラウドIDE＋AI Agent</td>
+            <td>AIネイティブのデスクトップエディタ</td>
+          </tr>
+          <tr>
+            <td>主な生成対象</td>
+            <td>React UIコンポーネント</td>
+            <td>フルスタックアプリ全体</td>
+            <td>アプリ・スクリプト全体</td>
+            <td>既存リポジトリのコード編集</td>
+          </tr>
+          <tr>
+            <td>実行環境</td>
+            <td>プレビューのみ（コードはエクスポート）</td>
+            <td>ブラウザ内で即実行</td>
+            <td>クラウド上で実行・ホスティング</td>
+            <td>ローカルプロジェクトを編集</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>Vercel製・UI生成特化</td>
+            <td>丸ごとアプリ生成の例</td>
+            <td>クラウドIDE＋AIの例</td>
+            <td>Anysphere製・エディタ一体型</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        UI部品のたたき台ならv0、ブラウザで動くアプリ全体を素早く試すならBolt.newやReplit、既存コードベースをAIに編集させるなら<a href="../cursor/">Cursor</a>、コード片の相談や非エンジニア向けなら<a href="../chatgpt/">ChatGPT</a>、という使い分けが現実的です。いずれも<strong>出力の検証は人が行う</strong>点は共通です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>Next.js / shadcn/ui でUIプロトタイプを速く作りたいフロントエンドエンジニア</strong></li>
+        <li><strong>生成AIパスポートでAI UI生成の具体例を知りたい受験生</strong></li>
+        <li><strong>v0とVercelホスティングの違いを整理したい人</strong></li>
+        <li><strong>デザイン案をReactコードに変換するデザイン-to-コードツールを探している人</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>API・DB込みのフルスタックを一発生成したい</strong>場合（Bolt.newやReplitの方が近い）や、<strong>Vue・Angular等React以外が中心</strong>の場合（出力スタックがReact前提）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>v0は無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。無料枠があり、一定量のUI生成を試せます。ただし生成回数や高度な機能には上限があり、継続利用では有料プラン（v0 Premium等）が必要になることが多いです。最新の枠と料金はv0公式（v0.dev）で確認してください。</p>
+        </details>
+        <details>
+          <summary>v0とVercelホスティングの違いは？</summary>
+          <p class="tool-faq-a">VercelはNext.js等のWebアプリをデプロイ・ホスティングするクラウドプラットフォームです。v0は同じVercel社が提供する別製品で、テキストからReact UIコンポーネントのコードを生成するデザイン-to-コードツールです。v0＝ホスティングそのもの、という理解は誤りです。生成したUIをVercelにデプロイできる連携はありますが、製品の役割は異なります。</p>
+        </details>
+        <details>
+          <summary>v0とBolt.newの違いは？</summary>
+          <p class="tool-faq-a">v0は主にReact/Next.js/shadcn/uiのUIコンポーネントや画面断片の生成に特化しています。Bolt.newはブラウザ上でフルスタックアプリ全体（フロント・バックエンド・実行環境）をAIで組み立てる方向性が強いです。UI部品のたたき台ならv0、丸ごと動くアプリの試作ならBolt.new、という使い分けが現実的です。</p>
+        </details>
+        <details>
+          <summary>v0は何が生成できますか？</summary>
+          <p class="tool-faq-a">v0は主にReactベースのUIコンポーネント、ダッシュボード、フォーム、ランディングページのセクションなどフロントエンドの見た目とコードを生成します。APIやデータベースを含むバックエンド全体の構築は主目的ではありません。生成コードはコピーして既存プロジェクトに組み込むか、Vercelエコシステムへ展開する形が一般的です。</p>
+        </details>
+        <details>
+          <summary>v0は誰が提供していますか？</summary>
+          <p class="tool-faq-a">Vercel（バーセル）が提供しています。Next.jsの開発・ホスティングで知られる同社のAI製品で、試験では「Vercel製のUI生成ツール」として整理するとよいです。CursorやBolt.newとは別会社・別製品です。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://v0.dev" target="_blank" rel="noopener noreferrer">v0（v0.dev）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">Vercel</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bolt-new/"><img src="../../assets/images/tools/bolt-new/app-icon.png" alt="" width="16" height="16"> Bolt.new</a></li>
+          <li><a href="../replit/"><img src="../../assets/images/tools/replit/app-icon.png" alt="" width="16" height="16"> Replit</a></li>
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">LLM <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

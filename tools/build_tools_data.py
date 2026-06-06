@@ -111,6 +111,9 @@ DIRECT_ICON_URL = {
     "github-copilot": "https://github.com/apple-touch-icon.png",
     "cursor": "https://cursor.com/apple-touch-icon.png",
     "windsurf": "https://www.google.com/s2/favicons?domain=codeium.com&sz=256",
+    "replit": "https://replit.com/public/images/replit-logo-small.png",
+    "v0": "https://www.google.com/s2/favicons?domain=v0.dev&sz=256",
+    "bolt-new": "https://cdn.simpleicons.org/stackblitz/1389FD",
 }
 
 

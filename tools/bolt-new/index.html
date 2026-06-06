@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bolt.newの機能・料金・使い方を解説。StackBlitz製のブラウザ完結型AIアプリビルダー。WebContainerでフルスタック生成、v0・Replit・Cursorとの違い、StackBlitz IDEとの混同も整理。生成AIパスポート・G検定対策にも。">
+  <title>Bolt.newとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/bolt-new/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Bolt.newとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Bolt.newの機能・料金・使い方を解説。WebContainerでブラウザ上にフルスタックアプリをAI生成。v0・Replit・Cursorとの違い、StackBlitz IDEとの混同も整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/bolt-new/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/bolt-new/og-hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/bolt-new/og-hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/bolt-new/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Bolt.new", "item": "https://ai-master.jp/tools/bolt-new/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/bolt-new/#article",
+        "headline": "Bolt.newとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Bolt.newの機能・料金・使い方を解説。WebContainerでブラウザ上にフルスタックアプリをAI生成。v0・Replit・Cursorとの違い、StackBlitz IDEとの混同も整理。",
+        "url": "https://ai-master.jp/tools/bolt-new/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/bolt-new/og-hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/bolt-new/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Bolt.new" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/bolt-new/#webpage",
+        "url": "https://ai-master.jp/tools/bolt-new/",
+        "name": "Bolt.newとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Bolt.newの機能・料金・使い方を解説。WebContainerでブラウザ上にフルスタックアプリをAI生成。v0・Replit・Cursorとの違い、StackBlitz IDEとの混同も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/bolt-new/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Bolt.new",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "description": "StackBlitzが提供するブラウザ完結型のAIアプリビルダー。WebContainer上でNode.js環境を動かし、プロンプトからフルスタックアプリを生成・編集できる。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料枠あり。有料プランは月額課金（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "StackBlitz",
+          "url": "https://bolt.new"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Bolt.newは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。無料枠があり、プロンプトからアプリの生成・編集を試せます。ただしAI利用量やトークン、公開・デプロイ機能などに上限があり、継続利用では有料プランが必要になることが多いです。最新の枠と料金はBolt.new公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Bolt.newとStackBlitzの関係は何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもStackBlitz社の製品ですが、用途が異なります。StackBlitzは従来からブラウザ上でコードを編集・実行できるオンラインIDEです。Bolt.newは同社のWebContainer技術を土台に、AIがプロンプトからアプリ全体を生成・改修するサービスに特化しています。Bolt.new＝StackBlitz IDEだけ、という理解は誤りです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Bolt.newとv0の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "v0（Vercel）は主にReact UIコンポーネントの生成・プレビューに強みがあります。Bolt.newはフロントエンドに加えバックエンドやデータベース連携まで含めたフルスタックアプリを、ブラウザ内で生成・実行する点が中心です。UI部品を素早く作るか、アプリ全体を丸ごと作るか、という整理が試験・選定の両方で役立ちます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Bolt.newとCursorの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CursorはローカルPCにインストールするAIネイティブのコードエディタで、既存リポジトリを開いて複数ファイルを編集します。Bolt.newはブラウザだけで完結し、プロンプトから新規アプリを生成する体験が中心です。既存プロジェクトの日常開発ならCursor、ゼロから素早く試作するならBolt.new、という使い分けが現実的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "WebContainerとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "StackBlitzが開発した、ブラウザ内でNode.jsなどの開発環境を動かす技術です。従来クラウドVMやローカルインストールが必要だった処理を、タブ内のWebAssembly上で実行できます。Bolt.newはこのWebContainer上で依存関係のインストールや開発サーバー起動まで行い、生成したアプリをその場でプレビューできる仕組みです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Bolt.new</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/bolt-new/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">StackBlitz · コーディング</p>
+          <h1>Bolt.newとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">ブラウザ上でフルスタックアプリをAIで丸ごと生成</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">AIコーディング</span>
+        <span class="tool-category">ブラウザ完結</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Webブラウザ</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/bolt-new/og-hero.jpg" alt="Bolt.newの公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Bolt.new公式（bolt.new）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Bolt.new</strong>（ボルトニュー）は、<strong>StackBlitz</strong>（スタックブリッツ）が提供する<strong>ブラウザ完結型のAIアプリビルダー</strong>です。自然言語のプロンプトから<strong>フルスタックアプリ</strong>（フロント・バックエンド・依存関係）を生成し、<strong>WebContainer</strong>技術でタブ内に開発環境を立ち上げてその場でプレビューできます。本記事は全機能の網羅ではなく、<strong>試験で押さえる位置づけ</strong>（AIコーディング支援・ブラウザ上の生成）と<strong>v0・Replit・Cursorとの違い</strong>、<strong>StackBlitz IDEとの混同</strong>に絞って書いています。料金や利用枠は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金プラン</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Bolt.newとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#pricing">料金プランの考え方</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">v0・Replit・Cursorとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<strong>AIコーディング支援</strong>や<strong>業務利用の注意点</strong>が問われることがあります。Bolt.newは「プロンプトからアプリを生成するブラウザツール」として、<a href="../cursor/">Cursor</a>（ローカルエディタ）や<a href="../chatgpt/">ChatGPT</a>（汎用チャット）と並べて覚えると整理しやすいです。ただし試験では製品名そのものより、<strong>機密情報の入力禁止</strong>や<strong>利用規約・商用条件</strong>を問う設問の方が多い点に注意してください。
+      </p>
+      <p>
+        よくある誤解は3つあります。<strong>「Bolt.new＝StackBlitz IDE」</strong>と同一視すること（同社製品ですが、Bolt.newはAIによるアプリ生成に特化した別サービスです）。<strong>「Bolt.new＝v0と同じUI生成ツール」</strong>と思い込むこと（v0はUIコンポーネント中心、Bolt.newはフルスタック生成が強みです）。そして<strong>「AIが作ったアプリはそのまま本番に出してよい」</strong>と考えること（セキュリティレビューとテストが必須です）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：v0 · Replit · <a href="../cursor/">Cursor</a> · <a href="../windsurf/">Windsurf</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Bolt.newとは</h2>
+      <p>
+        Bolt.newは2024年頃から注目を集めた<strong>プロンプト駆動のAIアプリビルダー</strong>です。ユーザーが「ToDoアプリを作って」「Stripe連携の決済ページを追加して」と指示すると、AIがファイル構成・コード・依存関係を生成し、<strong>ブラウザ内の開発環境</strong>で即座に動作確認できます。ローカルへのNode.jsインストールやリポジトリのクローンが不要な点が大きな特徴です。
+      </p>
+      <p>
+        技術基盤はStackBlitzが開発した<strong>WebContainer</strong>です。WebAssembly上でNode.js互換のランタイムを動かし、<code>npm install</code>や開発サーバー起動をブラウザタブ内で完結させます。従来のオンラインIDEがクラウドVMに接続する方式と異なり、<strong>クライアント側で実行環境を構築</strong>するアプローチです。試験では「ブラウザ上で開発環境を動かすStackBlitzの技術」と覚えるとよいです。
+      </p>
+      <p>
+        提供元は<strong>StackBlitz</strong>です。同社はStackBlitz IDE（ブラウザ上のコードエディタ）でも知られますが、<strong>Bolt.newはAI生成に特化した別プロダクト</strong>です。既存プロジェクトをIDEで編集する用途と、ゼロからAIにアプリを作らせる用途は分けて理解してください。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <p>AIアプリ生成に関わる主な機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>プロンプトからフルスタック生成</h3>
+          <p>自然言語の指示からフロントエンド・API・設定ファイルまで一式を生成。React、Vue、Node.jsなどのスタックをAIが選定・構築します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>WebContainer上のライブプレビュー</h3>
+          <p>生成直後にブラウザ内でアプリを起動。コード変更とプレビューが同一タブで完結し、環境構築の手間を省けます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>チャットによる反復編集</h3>
+          <p>「ボタンの色を変えて」「認証機能を追加して」など、会話形式でアプリを改修。生成→確認→修正のループが短いです。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ファイルエクスポート・連携</h3>
+          <p>生成したプロジェクトをダウンロードしたり、GitHub連携やデプロイ先へ公開したりできます（プラン・時期で機能は変動）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>依存関係の自動管理</h3>
+          <p>package.jsonの更新やnpmパッケージのインストールをAIとWebContainerが自動処理。ライブラリ選定の負担を減らせます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ノーコードに近い体験</h3>
+          <p>コーディング経験が浅くてもプロトタイプを試せます。ただし本番運用にはコード理解とレビューが依然として必要です。</p>
+        </div>
+      </div>
+
+      <h3>AIコーディングツールとの位置づけ</h3>
+      <p>
+        v0が<strong>UIコンポーネントの生成</strong>に強みを持つなら、Bolt.newは<strong>アプリ全体の生成と実行</strong>が中心です。Replitは<strong>クラウドIDE＋ホスティング</strong>の総合プラットフォーム、Cursorは<strong>ローカルリポジトリのAI編集</strong>が本質、という整理が試験・選定の両方で役立ちます。いずれも<a href="../../glossary/generative-ai/">生成AI</a>のLLMを開発フローに組み込むツールですが、<strong>出力の粒度（部品かアプリ全体か）と実行環境（ブラウザかローカルか）</strong>で覚え分けましょう。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プランの考え方</h2>
+      <p>Bolt.newは無料枠から始められますが、継続利用や本格開発では有料プランが前提になることが多いです（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Free（無料）</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">限られたAI利用量</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">月額課金</p>
+          <p class="tool-plan-note">個人の本格利用向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Teams</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">チーム・組織向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free（無料）</strong></td>
+            <td>プロンプト生成や編集を試せるが、AIトークンや公開回数に上限あり。</td>
+            <td>お試し・学習・プロトタイプの体験</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>月額課金でAI利用枠が拡大。個人開発の定番プラン。</td>
+            <td>継続的にアプリを生成・改修する人</td>
+          </tr>
+          <tr>
+            <td><strong>Teams</strong></td>
+            <td>チーム管理・共有機能など組織向け（詳細は公式確認）。</td>
+            <td>会社での標準ツール検討</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        商用・クライアント案件では、生成コードの権利関係とStackBlitzの利用規約、社内のセキュリティポリシーを必ず確認してください。APIキーや顧客データをプロンプトに含めないなど、機密情報の取り扱いには特に注意が必要です。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>アカウント登録後、ブラウザだけで始められます。ローカル環境のセットアップは不要です。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>公式サイトにアクセス</strong>
+            bolt.new を開き、StackBlitzアカウントでサインインします（Google/GitHub連携など）。
+          </li>
+          <li>
+            <strong>プロンプトでアプリを指示</strong>
+            例：「ReactとTailwindでシンプルなToDoアプリを作って」「天気APIを使うダッシュボードを追加して」
+          </li>
+          <li>
+            <strong>生成とプレビューを確認</strong>
+            AIがファイルを生成し、WebContainer上で開発サーバーが起動。プレビュー画面で動作を確認します。
+          </li>
+          <li>
+            <strong>チャットで反復改修</strong>
+            デザイン変更・機能追加・バグ修正を会話形式で依頼し、都度プレビューで検証します。
+          </li>
+          <li>
+            <strong>エクスポートまたはデプロイ</strong>
+            必要に応じてコードをダウンロード、GitHubへプッシュ、またはホスティング先へ公開します。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/bolt-new/bolt-new.svg" alt="Bolt.newの公式ロゴ" width="600" height="338" loading="lazy">
+            <figcaption>出典：Bolt.new公式（bolt.new）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドラインと利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>プロトタイピング</h3>
+          <ul>
+            <li>新機能のUI/UXを数時間で試作</li>
+            <li>社内デモ用のMVP（最小実用製品）作成</li>
+            <li>ハッカソンや企画会議のたたき台</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>非エンジニアの学習</h3>
+          <ul>
+            <li>プロダクトマネージャーのアイデア可視化</li>
+            <li>生成AIパスポートのケース演習の補助</li>
+            <li>Webアプリの仕組みを体験する教材</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>開発の前段階</h3>
+          <ul>
+            <li>要件確認用の動くモック作成</li>
+            <li>技術選定前のスタック比較</li>
+            <li>生成コードを起点に本番開発へ引き継ぎ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ローカル環境不要でブラウザだけで完結</td>
+            <td>無料枠ではAI利用量に制限がある</td>
+          </tr>
+          <tr>
+            <td>プロンプトからフルスタックを一気に生成</td>
+            <td>複雑な既存コードベースの日常開発には向きにくい</td>
+          </tr>
+          <tr>
+            <td>WebContainerで即座にプレビュー可能</td>
+            <td>生成コードの品質は一定ではなくレビュー必須</td>
+          </tr>
+          <tr>
+            <td>非エンジニアでもプロトタイプを試せる</td>
+            <td>機密データをプロンプトに含めるリスクがある</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>v0・Replit・Cursorとの比較</h2>
+      <p>AIコーディング・ブラウザ開発で名前が並びやすい4つを整理します。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Bolt.new</th>
+            <th>v0</th>
+            <th>Replit</th>
+            <th>Cursor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>StackBlitz</td>
+            <td>Vercel</td>
+            <td>Replit</td>
+            <td>Anysphere</td>
+          </tr>
+          <tr>
+            <td>製品の形</td>
+            <td>AIアプリビルダー（ブラウザ）</td>
+            <td>UIコンポーネント生成</td>
+            <td>クラウドIDE＋ホスティング</td>
+            <td>AIネイティブのローカルエディタ</td>
+          </tr>
+          <tr>
+            <td>主な強み</td>
+            <td>フルスタックをプロンプトから生成</td>
+            <td>React UIの高速生成・プレビュー</td>
+            <td>多言語対応・実行・公開の総合環境</td>
+            <td>既存リポジトリの複数ファイル編集</td>
+          </tr>
+          <tr>
+            <td>実行環境</td>
+            <td>WebContainer（ブラウザ内）</td>
+            <td>ブラウザプレビュー中心</td>
+            <td>クラウドVM</td>
+            <td>ローカルPC</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>StackBlitz製・ブラウザ完結</td>
+            <td>Vercel製・UI生成</td>
+            <td>クラウドIDEの代表例</td>
+            <td>Anysphere製・ローカルエディタ</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        UI部品を素早く作るならv0、ゼロからアプリ全体をブラウザで試すならBolt.new、多言語のクラウド開発環境ならReplit、既存プロジェクトの日常開発なら<a href="../cursor/">Cursor</a>、という使い分けが現実的です。いずれも<strong>出力の検証は人が行う</strong>点は共通です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>ローカル環境を構築せず、ブラウザだけでアプリの試作をしたい人</strong></li>
+        <li><strong>プロンプトからフルスタックのMVPを素早く作りたい起業家・PM</strong></li>
+        <li><strong>生成AIパスポートでAIコーディング支援の具体例を知りたい受験生</strong></li>
+        <li><strong>v0（UI）とBolt.new（アプリ全体）の違いを整理したい人</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>大規模な既存リポジトリの日常開発</strong>（<a href="../cursor/">Cursor</a>やReplitの方が適する）や、<strong>会社が外部AIツールへのコード送信を禁止している</strong>場合（社内承認と代替手段の検討が先）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Bolt.newは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。無料枠があり、プロンプトからアプリの生成・編集を試せます。ただしAI利用量やトークン、公開・デプロイ機能などに上限があり、継続利用では有料プランが必要になることが多いです。最新の枠と料金はBolt.new公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>Bolt.newとStackBlitzの関係は何ですか？</summary>
+          <p class="tool-faq-a">どちらもStackBlitz社の製品ですが、用途が異なります。StackBlitzは従来からブラウザ上でコードを編集・実行できるオンラインIDEです。Bolt.newは同社のWebContainer技術を土台に、AIがプロンプトからアプリ全体を生成・改修するサービスに特化しています。Bolt.new＝StackBlitz IDEだけ、という理解は誤りです。</p>
+        </details>
+        <details>
+          <summary>Bolt.newとv0の違いは？</summary>
+          <p class="tool-faq-a">v0（Vercel）は主にReact UIコンポーネントの生成・プレビューに強みがあります。Bolt.newはフロントエンドに加えバックエンドやデータベース連携まで含めたフルスタックアプリを、ブラウザ内で生成・実行する点が中心です。UI部品を素早く作るか、アプリ全体を丸ごと作るか、という整理が試験・選定の両方で役立ちます。</p>
+        </details>
+        <details>
+          <summary>Bolt.newとCursorの違いは？</summary>
+          <p class="tool-faq-a">CursorはローカルPCにインストールするAIネイティブのコードエディタで、既存リポジトリを開いて複数ファイルを編集します。Bolt.newはブラウザだけで完結し、プロンプトから新規アプリを生成する体験が中心です。既存プロジェクトの日常開発ならCursor、ゼロから素早く試作するならBolt.new、という使い分けが現実的です。</p>
+        </details>
+        <details>
+          <summary>WebContainerとは何ですか？</summary>
+          <p class="tool-faq-a">StackBlitzが開発した、ブラウザ内でNode.jsなどの開発環境を動かす技術です。従来クラウドVMやローカルインストールが必要だった処理を、タブ内のWebAssembly上で実行できます。Bolt.newはこのWebContainer上で依存関係のインストールや開発サーバー起動まで行い、生成したアプリをその場でプレビューできる仕組みです。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://bolt.new" target="_blank" rel="noopener noreferrer">Bolt.new（bolt.new）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://stackblitz.com" target="_blank" rel="noopener noreferrer">StackBlitz</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../v0/"><img src="../../assets/images/tools/v0/app-icon.png" alt="" width="16" height="16"> v0</a></li>
+          <li><a href="../replit/"><img src="../../assets/images/tools/replit/app-icon.png" alt="" width="16" height="16"> Replit</a></li>
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../windsurf/"><img src="../../assets/images/tools/windsurf/app-icon.png" alt="" width="16" height="16"> Windsurf</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
