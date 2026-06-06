@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ChatGPT（OpenAI）の機能・料金・使い方を徹底解説。無料プランとPlusの違い、Claude・Geminiとの比較、ビジネスでの活用法まで。AIツール入門の定番記事。">
+  <title>ChatGPTとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/chatgpt/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="ChatGPTとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="ChatGPT（OpenAI）の機能・料金・使い方を徹底解説。無料プランとPlusの違い、Claude・Geminiとの比較まで。">
+  <meta property="og:url" content="https://ai-master.jp/tools/chatgpt/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/chatgpt/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/chatgpt/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/chatgpt/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "ChatGPT", "item": "https://ai-master.jp/tools/chatgpt/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/chatgpt/#article",
+        "headline": "ChatGPTとは？機能・料金・使い方をわかりやすく解説",
+        "description": "ChatGPT（OpenAI）の機能・料金・使い方を徹底解説。無料プランとPlusの違い、Claude・Geminiとの比較、ビジネスでの活用法まで。",
+        "url": "https://ai-master.jp/tools/chatgpt/",
+        "datePublished": "2026-06-06",
+        "dateModified": "2026-06-06",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/chatgpt/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/chatgpt/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "ChatGPT" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/chatgpt/#webpage",
+        "url": "https://ai-master.jp/tools/chatgpt/",
+        "name": "ChatGPTとは？機能・料金・使い方をわかりやすく解説",
+        "description": "ChatGPT（OpenAI）の機能・料金・使い方を徹底解説。無料プランとPlusの違い、Claude・Geminiとの比較、ビジネスでの活用法まで。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/chatgpt/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "ChatGPT",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, iOS, Android, macOS, Windows",
+        "description": "OpenAIが提供する対話型の生成AIアプリ。文章生成、画像生成、コード作成など幅広い用途に対応。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料プランあり。Plus $20/月"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "OpenAI",
+          "url": "https://openai.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ChatGPTは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。無料プランで基本的なチャット機能を利用できます。ただし、利用できるモデルの性能や1日の利用回数に制限があり、画像生成や高度な推論モデルは有料プラン（Plus以上）で提供されています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ChatGPT Plusはいくらですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChatGPT Plusは月額20ドル（約3,000円前後）です。高性能モデルへの優先アクセス、画像生成、ファイル分析、カスタムGPTの作成などが利用できます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ChatGPTとClaudeの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChatGPTはOpenAI製で、画像生成・音声会話・カスタムGPTなど機能の幅が広いのが特徴です。ClaudeはAnthropic製で、長文の読み込みや丁寧な文章生成に強みがあります。用途に応じて使い分けるのがおすすめです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "会社の業務でChatGPTを使っても大丈夫ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "個人の無料アカウントで機密情報を入力するのは避けるべきです。業務利用ではTeam・Enterpriseプランの利用や、社内ガイドラインの整備が推奨されます。データの学習利用ポリシーもプランごとに異なるため、利用前に公式の規約を確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "スマホでもChatGPTは使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。iOS・Android向けの公式アプリが提供されており、音声会話モードも利用できます。ブラウザからchat.openai.comにアクセスしても利用可能です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">ChatGPT</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/chatgpt/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">OpenAI · チャットAI</p>
+          <h1>ChatGPTとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">会話感覚で使える、世界で最も利用者の多い生成AIアプリ</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料プランあり</span>
+        <span class="tool-category">Plus $20/月</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web</li>
+          <li>iOS</li>
+          <li>Android</li>
+          <li>macOS</li>
+          <li>Windows</li>
+        </ul>
+      </div>
+      <p class="tool-product-links">
+        <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://apps.apple.com/app/chatgpt/id6448311069" target="_blank" rel="noopener noreferrer">App Store</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://play.google.com/store/apps/details?id=com.openai.chatgpt" target="_blank" rel="noopener noreferrer">Google Play</a>
+      </p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/chatgpt/og-hero.png" alt="ChatGPTのチャット画面。質問を入力するとAIが回答を返す" width="800" height="450" fetchpriority="high">
+      <figcaption>公式画面イメージ（出典：OpenAI）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-06">2026年6月6日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ChatGPT</strong>は、OpenAIが提供する対話型の生成AIアプリです。「AIツールって結局どれを使えばいいの？」と迷っている方の多くが、最初に名前を聞くのがChatGPTでしょう。本記事では、ChatGPTの基本から料金プランの違い、具体的な使い方、競合ツールとの比較まで、はじめて使う方にもわかるように解説します。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#what-is">ChatGPTとは</a></li>
+        <li><a href="#features">ChatGPTでできること（主な機能）</a></li>
+        <li><a href="#pricing">料金プラン一覧</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Claude・Geminiとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="what-is">
+      <h2>ChatGPTとは</h2>
+      <p>
+        ChatGPTは、2022年11月にOpenAIが公開した<strong>対話型AIチャットサービス</strong>です。ユーザーが自然な日本語や英語で質問を入力すると、AIが文脈を理解したうえで回答を返してくれます。
+      </p>
+      <p>
+        もともとはテキストのやり取りが中心でしたが、現在は<strong>画像生成</strong>、<strong>ファイルの読み込み・分析</strong>、<strong>コード生成</strong>、<strong>音声会話</strong>など、1つのアプリで多様なタスクをこなせるようになっています。個人利用から企業の業務効率化まで、世界で最も利用者の多いAIツールのひとつです。
+      </p>
+      <p>
+        ChatGPTの頭脳となるのは、OpenAIが開発する大規模言語モデル（LLM）です。GPT-4oシリーズをはじめ、用途に応じて複数のモデルが使い分けられており、有料プランではより高性能なモデルや推論特化モデルにもアクセスできます。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>ChatGPTでできること（主な機能）</h2>
+      <p>ChatGPTは「チャットツール」という名前ですが、実際にはさまざまな作業を任せられます。主な機能をカテゴリ別に整理しました。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
+          <h3>テキスト生成・編集</h3>
+          <p>メール下書き、報告書、ブログ記事、SNS投稿などを生成。トーンや文字数の指定も可能です。</p>
+        </div>
+        <div class="tool-feature-card">
+          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
+          <h3>要約・翻訳</h3>
+          <p>長文ドキュメントの要点抽出、日英など多言語間の翻訳に対応。会議メモの整理にも使えます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
+          <h3>画像生成</h3>
+          <p>テキストの指示からイラストや写真風の画像を生成（有料プラン）。プレゼン資料の素材づくりに便利です。</p>
+        </div>
+        <div class="tool-feature-card">
+          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
+          <h3>コード生成・デバッグ</h3>
+          <p>Python、JavaScript、SQLなどのコード作成やエラー修正、コードの説明を依頼できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
+          <h3>ファイル・画像の分析</h3>
+          <p>PDF、Excel、画像をアップロードして内容の要約やデータ抽出を依頼できます（有料プラン）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <img src="../../assets/images/tools/chatgpt/logo.svg" alt="" width="36" height="36" class="tool-feature-card__icon">
+          <h3>カスタムGPT</h3>
+          <p>特定の用途に特化したAIアシスタントを自分で作成・共有できます（Plus以上）。</p>
+        </div>
+      </div>
+
+      <h3>音声会話モード</h3>
+      <p>
+        スマホアプリでは、マイクを通じてAIと<strong>リアルタイムで会話</strong>するモードが使えます。英語の練習相手や、アイデア出しの壁打ち相手としても活用されています。
+      </p>
+
+      <h3>メモリ機能</h3>
+      <p>
+        有料プランでは、過去の会話からユーザーの好みや文脈を記憶する<strong>メモリ機能</strong>が利用できます。毎回同じ前提を説明し直す手間が減り、パーソナライズされた回答が得られます。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン一覧</h2>
+      <p>ChatGPTには個人向け・チーム向け・企業向けの複数プランがあります。まずは無料プランで試し、必要に応じてアップグレードするのが一般的です。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">¥0<small>無料</small></p>
+          <p class="tool-plan-note">基本チャット</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Plus</p>
+          <p class="tool-plan-price">$20<small>約3,000円/月</small></p>
+          <p class="tool-plan-note">個人向け定番</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Team</p>
+          <p class="tool-plan-price">$25〜<small>1人あたり/月</small></p>
+          <p class="tool-plan-note">チーム利用</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要相談</p>
+          <p class="tool-plan-note">大規模組織向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額料金</th>
+            <th>主な特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free（無料）</strong></td>
+            <td>0円</td>
+            <td>基本的なチャット機能。モデルや利用回数に制限あり。画像生成・ファイル分析は不可。</td>
+          </tr>
+          <tr>
+            <td><strong>Plus</strong></td>
+            <td>$20/月<br><small>（約3,000円前後）</small></td>
+            <td>高性能モデルへの優先アクセス、画像生成、ファイル分析、カスタムGPT、メモリ機能。</td>
+          </tr>
+          <tr>
+            <td><strong>Team</strong></td>
+            <td>$25〜30/人/月</td>
+            <td>チーム向け管理機能、共有ワークスペース。業務データの取り扱いポリシーが個人版より厳格。</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>要問い合わせ</td>
+            <td>大規模組織向け。SSO、高度なセキュリティ、専用サポート。データ学習への利用なし。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        個人で試すなら<strong>無料プラン</strong>で十分です。日常的に業務で使う場合は<strong>Plus</strong>への加入を検討するユーザーが多いです。チームや会社での本格導入には<strong>Team・Enterprise</strong>が向いています。料金は為替や地域により変動するため、最新情報は<a href="https://openai.com/chatgpt/pricing" target="_blank" rel="noopener noreferrer">公式サイト</a>でご確認ください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>ChatGPTの利用開始は数分で完了します。以下の手順で進めてみてください。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+        <li>
+          <strong>アカウントを作成する</strong>
+          <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">chat.openai.com</a>にアクセスし、メールアドレスまたはGoogle・Appleアカウントでサインアップします。
+        </li>
+        <li>
+          <strong>最初の質問を入力する</strong>
+          画面下部の入力欄に、やりたいことを自然な言葉で書きます。例：「新入社員向けの歓迎メールの下書きを作って」
+        </li>
+        <li>
+          <strong>回答を確認し、追加指示を出す</strong>
+          回答が出たら「もっとカジュアルに」「3行にまとめて」など、会話を続けて調整できます。
+        </li>
+        <li>
+          <strong>用途に合わせて機能を使い分ける</strong>
+          画像が必要なら画像生成を、資料の分析ならファイルをアップロード。Plus加入後はカスタムGPTの作成も試してみましょう。
+        </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/chatgpt/og-hero.png" alt="ChatGPTの入力欄。自然な言葉で質問を入力する" width="600" height="338" loading="lazy">
+            <figcaption>画面下部の入力欄に質問を入力するだけで使い始められます</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <h3>うまく使うためのコツ</h3>
+      <ul>
+        <li><strong>具体的に指示する</strong> — 「良い感じにして」より「300字以内、敬語、結論ファーストで」など条件を明示する</li>
+        <li><strong>役割を与える</strong> — 「あなたはマーケティングの専門家です」と前置きすると回答の質が上がる</li>
+        <li><strong>段階的に依頼する</strong> — 複雑なタスクは「まず構成案を出して」→「各章を書いて」と分ける</li>
+        <li><strong>出力を必ず確認する</strong> — AIの回答には誤りが含まれることがあるため、特に数値・法律・医療情報は要検証</li>
+      </ul>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>ChatGPTは職種を問わず幅広い業務に活用されています。代表的なユースケースを紹介します。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>事務・管理部門</h3>
+          <ul>
+            <li>議事録の整形・要約</li>
+            <li>社内通知・お知らせ文の下書き</li>
+            <li>Excel関数やマクロの作成補助</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>マーケティング・広報</h3>
+          <ul>
+            <li>キャッチコピー・SNS投稿文の案出し</li>
+            <li>ブログ記事の構成案・下書き</li>
+            <li>競合調査の整理（公開情報をもとに）</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>エンジニア・開発</h3>
+          <ul>
+            <li>コードの生成・リファクタリング</li>
+            <li>エラーメッセージの原因調査</li>
+            <li>技術ドキュメントの下書き</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>営業・カスタマーサポート</h3>
+          <ul>
+            <li>提案書・見積メールの下書き</li>
+            <li>FAQ回答文の作成</li>
+            <li>顧客メールの返信案</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>いずれの用途でも、<strong>機密情報や個人情報の入力は避ける</strong>ことが重要です。社内ルールがない場合は、情報セキュリティ担当者と相談のうえ利用範囲を決めましょう。</p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>無料で始められる</td>
+            <td>無料版は利用制限がある</td>
+          </tr>
+          <tr>
+            <td>日本語の理解・生成精度が高い</td>
+            <td>回答に誤り（ハルシネーション）が含まれることがある</td>
+          </tr>
+          <tr>
+            <td>テキスト・画像・コードなど多機能</td>
+            <td>最新情報は常に反映されない場合がある</td>
+          </tr>
+          <tr>
+            <td>ユーザー数が多く情報・ノウハウが豊富</td>
+            <td>機密データの取り扱いに注意が必要</td>
+          </tr>
+          <tr>
+            <td>カスタムGPTで業務特化が可能。Web・iOS・Androidでも利用可能</td>
+            <td>有料版でも長文の一括処理はClaudeに劣る場面がある</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Claude・Geminiとの比較</h2>
+      <p>AIチャットツールを選ぶ際、ChatGPTと並んで比較されるのが<strong>Claude</strong>（Anthropic）と<strong>Gemini</strong>（Google）です。ざっくりとした違いを表にまとめました。</p>
+
+      <div class="tool-compare-brands">
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/openai.svg" alt="ChatGPT">
+          <span>ChatGPT</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/anthropic.svg" alt="Claude">
+          <span>Claude</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/google.svg" alt="Gemini">
+          <span>Gemini</span>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th><img src="../../assets/images/tools/openai.svg" alt="" class="tool-table-logo" width="22" height="22">ChatGPT</th>
+            <th><img src="../../assets/images/tools/anthropic.svg" alt="" class="tool-table-logo" width="22" height="22">Claude</th>
+            <th><img src="../../assets/images/tools/google.svg" alt="" class="tool-table-logo" width="22" height="22">Gemini</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>開発元</td>
+            <td>OpenAI</td>
+            <td>Anthropic</td>
+            <td>Google</td>
+          </tr>
+          <tr>
+            <td>無料プラン</td>
+            <td>あり</td>
+            <td>あり</td>
+            <td>あり</td>
+          </tr>
+          <tr>
+            <td>画像生成</td>
+            <td>◎（Plus以上）</td>
+            <td>△（限定的）</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>長文処理</td>
+            <td>○</td>
+            <td>◎</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td>Google連携</td>
+            <td>△</td>
+            <td>△</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>カスタムAI作成</td>
+            <td>◎（GPTs）</td>
+            <td>○（Projects）</td>
+            <td>○（Gems）</td>
+          </tr>
+          <tr>
+            <td>向いている用途</td>
+            <td>汎用・多機能</td>
+            <td>長文・丁寧な文章</td>
+            <td>Googleサービス連携</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        結論として、<strong>はじめて1つ選ぶならChatGPT</strong>が無難です。長文の読み込みが多いなら<a href="../claude/">Claude</a>、GmailやGoogleドキュメントと連携したいなら<a href="../gemini/">Gemini</a>も検討する価値があります。複数ツールを使い分けるユーザーも増えています。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>AIツールを初めて使う方</strong> — 情報が豊富で、トラブル時の解決策も見つけやすい</li>
+        <li><strong>文章作成・調査・コードなど幅広く使いたい方</strong> — 1つのアプリで多くのタスクをこなせる</li>
+        <li><strong>画像生成も試してみたい方</strong> — Plus加入でテキストから画像を生成可能</li>
+        <li><strong>チームでAI活用を進めたい方</strong> — Team・Enterpriseプランで組織導入がしやすい</li>
+      </ul>
+      <p>一方、<strong>大量のPDFを一度に分析したい</strong>場合や、<strong>Google Workspace中心の環境</strong>では、ClaudeやGeminiのほうが向いていることもあります。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ChatGPTは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。無料プランで基本的なチャット機能を利用できます。ただし、利用できるモデルの性能や1日の利用回数に制限があり、画像生成や高度な推論モデルは有料プラン（Plus以上）で提供されています。</p>
+        </details>
+        <details>
+          <summary>ChatGPT Plusはいくらですか？</summary>
+          <p class="tool-faq-a">ChatGPT Plusは月額20ドル（約3,000円前後）です。高性能モデルへの優先アクセス、画像生成、ファイル分析、カスタムGPTの作成などが利用できます。最新の料金は公式サイトでご確認ください。</p>
+        </details>
+        <details>
+          <summary>ChatGPTとClaudeの違いは何ですか？</summary>
+          <p class="tool-faq-a">ChatGPTはOpenAI製で、画像生成・音声会話・カスタムGPTなど機能の幅が広いのが特徴です。ClaudeはAnthropic製で、長文の読み込みや丁寧な文章生成に強みがあります。用途に応じて使い分けるのがおすすめです。</p>
+        </details>
+        <details>
+          <summary>会社の業務でChatGPTを使っても大丈夫ですか？</summary>
+          <p class="tool-faq-a">個人の無料アカウントで機密情報を入力するのは避けるべきです。業務利用ではTeam・Enterpriseプランの利用や、社内ガイドラインの整備が推奨されます。データの学習利用ポリシーもプランごとに異なるため、利用前に公式の規約を確認してください。</p>
+        </details>
+        <details>
+          <summary>スマホでもChatGPTは使えますか？</summary>
+          <p class="tool-faq-a">はい。iOS・Android向けの公式アプリが提供されており、音声会話モードも利用できます。ブラウザからchat.openai.comにアクセスしても利用可能です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
+          <li><a href="../gemini/"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> Gemini</a></li>
+          <li><a href="../copilot/"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Copilot</a></li>
+          <li><a href="../perplexity/"><img src="../../assets/images/tools/perplexity.svg" alt="" width="16" height="16"> Perplexity</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github.svg" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/llm/">大規模言語モデル（LLM）</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li><a href="../../glossary/hallucination/">ハルシネーション</a></li>
+          <li><a href="../../glossary/gpt/">GPT</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

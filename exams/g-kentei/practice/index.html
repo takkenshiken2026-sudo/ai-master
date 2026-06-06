@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="G検定の実践演習。500問の四肢択一を1問ずつ解いて本番形式を練習できます。">
+  <title>G検定 実践演習 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/exams/g-kentei/practice/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/main.css">
+  <link rel="stylesheet" href="../../../assets/css/hub.css">
+  <link rel="stylesheet" href="../../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../../assets/css/exam-player.css">
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="active">試験対策</a></li>
+    <li><a href="../../../glossary/">用語辞典</a></li>
+    <li><a href="../../../tools/">AIツール</a></li>
+    <li><a href="../../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article page-wrap--quiz">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../../index.html">ホーム</a></li>
+      <li><a href="../../index.html">試験対策</a></li>
+      <li><a href="../index.html">G検定</a></li>
+      <li aria-current="page">実践演習</li>
+    </ol>
+  </nav>
+
+  <header class="hub-header">
+    <h1>G検定 実践演習</h1>
+    <p class="hub-intro">分野を選んで演習できます。出題順は毎回ランダムです。</p>
+  </header>
+
+  <div id="exam-player" class="quiz" data-config='{"mode":"choice","dataUrl":"../../../assets/data/g-kentei/practice.json","storageKey":"practice","backUrl":"../index.html"}'>
+    <div class="quiz-bar" hidden>
+      <div class="quiz-progress"></div>
+      <div class="quiz-timer" hidden></div>
+    </div>
+
+    <div class="quiz-stage" hidden>
+      <article class="quiz-question-card">
+        <div class="quiz-question-card__head">
+          <p class="quiz-meta"></p>
+          <button type="button" class="quiz-bookmark" aria-pressed="false">
+            <svg class="quiz-bookmark__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 2.5h8v11l-4-3-4 3v-11z" stroke-linejoin="round"/></svg>
+            ブックマーク
+          </button>
+        </div>
+        <p class="quiz-prompt"></p>
+      </article>
+
+      <p class="quiz-hint quiz-hint--tf" hidden></p>
+      <p class="quiz-hint quiz-hint--choice" hidden></p>
+
+      <div class="quiz-choices"></div>
+
+      <div class="quiz-feedback" hidden>
+        <p class="quiz-feedback__verdict"></p>
+        <p class="quiz-feedback__body"></p>
+      </div>
+      <div class="quiz-actions" hidden>
+        <p class="quiz-hint quiz-hint--next">キーボード <kbd>Enter</kbd> で次へ</p>
+        <button type="button" class="quiz-btn quiz-btn--primary quiz-next">次の問題</button>
+      </div>
+    </div>
+
+    <div class="quiz-complete quiz-panel" hidden>
+      <h2>完了</h2>
+      <p class="quiz-complete__score"></p>
+      <div class="quiz-panel__actions">
+        <button type="button" class="quiz-btn quiz-complete__retry">もう一度挑戦</button>
+        <button type="button" class="quiz-btn quiz-btn--primary quiz-complete__back">G検定トップへ戻る</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="../../../assets/js/exam-player.js"></script>
+</body>
+</html>

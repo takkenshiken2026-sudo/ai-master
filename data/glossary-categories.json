@@ -1,0 +1,48 @@
+{
+  "totalTarget": { "min": 950, "max": 1050, "recommended": 1000 },
+  "taxonomy": "B",
+  "categories": {
+    "basics": {
+      "label": "基礎・機械学習",
+      "target": 220,
+      "description": "AI概論・探索・古典的ML・評価指標（ニューラルネット以前〜一般ML）"
+    },
+    "models-tech": {
+      "label": "モデル・技術",
+      "target": 420,
+      "description": "NN構造・学習手法・固有名詞モデル・NLP/CV/音声の技術用語"
+    },
+    "genai-use": {
+      "label": "生成AI活用",
+      "target": 120,
+      "description": "プロンプト・RAG・エージェント・推論設定・開発フレームワーク"
+    },
+    "data-ops": {
+      "label": "データ・運用",
+      "target": 100,
+      "description": "データセット・特徴量基盤・ベクトルDB・MLOps・監視"
+    },
+    "governance": {
+      "label": "倫理・ビジネス",
+      "target": 180,
+      "description": "倫理・法規・著作権・組織・ROI・キャリア"
+    }
+  },
+  "inclusionRules": [
+    "G検定シラバス2024改訂版のキーワードを優先",
+    "生成AIパスポートの出題範囲をカバー",
+    "同義語は1ページに統合（別URLにしない）",
+    "1用語1カテゴリ（MECE）。分類軸はユーザー意図（案B）",
+    "固有名詞のモデル・ファミリー → models-tech（モデル・技術）",
+    "プロンプト・RAG・エージェント・推論API → genai-use（生成AI活用）",
+    "製品・サービス名は原則 tools/ に集約。LangChain・Bedrock等は genai-use に概念ページ",
+    "倫理・法規・ビジネス・組織は governance（倫理・ビジネス）に統合",
+    "英略語は日本語名または正式英語名を併記"
+  ],
+  "exclusionExamples": [
+    "ENIAC",
+    "第五世代コンピュータ",
+    "ChatGPT・Ollama等の製品ページ（tools/へ）",
+    "既に別用語ページでカバーする完全同義語"
+  ]
+}

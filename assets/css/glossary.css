@@ -1,0 +1,15 @@
+/* 用語辞典 — 詳細ページ等の後方互換タグ */
+.tag-basics       { background: var(--surface-table-head); color: var(--text-body); }
+.tag-models-tech  { background: var(--blue-soft); color: var(--blue); }
+.tag-genai-use    { background: #EAF3DE; color: #3B6D11; }
+.tag-data-ops     { background: #F3EEFF; color: #4A1EA0; }
+.tag-governance   { background: #FBEAF0; color: #993556; }
+.tag-dl     { background: var(--blue-soft); color: var(--blue); }
+.tag-genai  { background: #EAF3DE; color: #3B6D11; }
+.tag-ml     { background: #FAEEDA; color: #854F0B; }
+.tag-basic  { background: var(--surface-table-head); color: var(--text-body); }
+.tag-ethics { background: #FBEAF0; color: #993556; }
+.tag-data   { background: #F3EEFF; color: #4A1EA0; }
+.tag-nlp    { background: #E8F4FC; color: #0B6E99; }
+.tag-cv     { background: #FFF0E5; color: #9A4F00; }
+.tag-biz    { background: #F0EBFF; color: #5B3FA0; }

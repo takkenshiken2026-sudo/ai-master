@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ChatGPT・Claude・Geminiなど、国内外のAIツールを用途別に網羅。チャット・画像生成・コーディング・文字起こしなど、目的に合ったツールが見つかります。">
+  <title>AIツール一覧 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="AIツール一覧 — AI Master">
+  <meta property="og:description" content="ChatGPT・Claude・Geminiなど、国内外のAIツールを用途別に網羅。目的に合ったツールが見つかります。">
+  <meta property="og:url" content="https://ai-master.jp/tools/">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/hub.css">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <link rel="stylesheet" href="../assets/css/seo.css">
+  <script type="application/ld+json" id="breadcrumb-ld">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+      { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "AIツール一覧",
+    "description": "国内外のAIツールを用途別に掲載した一覧ページ",
+    "url": "https://ai-master.jp/tools/",
+    "isPartOf": { "@id": "https://ai-master.jp/#website" },
+    "inLanguage": "ja"
+  }
+  </script>
+</head>
+<body class="page-body" data-page="tools-list">
+
+<nav class="site-nav">
+  <a href="../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../exams/">試験対策</a></li>
+    <li><a href="../glossary/">用語辞典</a></li>
+    <li><a href="index.html" class="active">AIツール</a></li>
+    <li><a href="../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" id="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../index.html">ホーム</a></li>
+      <li aria-current="page">AIツール</li>
+    </ol>
+  </nav>
+
+  <header class="hub-header">
+    <h1>AIツール一覧</h1>
+    <p class="hub-intro">国内外のAIツールを用途別に掲載。各ツールの詳細ページで機能・料金・使い方を解説しています。</p>
+    <div class="search-wrap hub-search">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5l3 3" stroke-linecap="round"/>
+      </svg>
+      <input type="search" id="searchInput" name="q" placeholder="ツール名・メーカー・用途で検索…" autocomplete="off" aria-label="ツールを検索">
+    </div>
+  </header>
+
+  <div class="hub-filter-row" id="toolsCategoryFilters" aria-label="カテゴリで絞り込み"></div>
+
+  <section class="featured-section" id="featuredSection">
+    <p class="featured-label">人気のAIツール</p>
+    <div class="featured-grid" id="featuredGrid"></div>
+  </section>
+
+  <div class="hub-meta-row">
+    <div>
+      <p class="hub-result-meta" id="resultMeta"></p>
+      <p class="hub-result-range" id="resultRange"></p>
+    </div>
+  </div>
+
+  <ul class="tool-list" id="toolList" aria-label="AIツール一覧"></ul>
+  <nav class="hub-pagination" id="pagination" aria-label="ページナビゲーション"></nav>
+
+  <details class="tool-sitemap" id="toolSitemap">
+    <summary>掲載ツールの全リンク</summary>
+    <ul class="tool-sitemap-list" id="toolSitemapList"></ul>
+  </details>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">AI<em>マスター</em></div>
+        <p class="foot-tagline">AIスキルを、キャリアの武器に。</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <p class="foot-col-h">学ぶ</p>
+          <a href="../glossary/">AI用語辞典</a>
+          <a href="index.html">AIツール</a>
+        </div>
+        <div class="foot-col">
+          <p class="foot-col-h">試験対策</p>
+          <a href="../exams/g-kentei/">G検定対策</a>
+          <a href="../exams/genai-passport/">生成AIパスポート対策</a>
+          <a href="../exams/">資格一覧</a>
+        </div>
+        <div class="foot-col">
+          <p class="foot-col-h">キャリア</p>
+          <a href="../career/">AI職種ガイド</a>
+        </div>
+      </div>
+    </div>
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/site-config.js"></script>
+<script src="../assets/js/seo.js"></script>
+<script src="../assets/js/tools-data.js"></script>
+<script src="../assets/js/tools-list.js"></script>
+</body>
+</html>

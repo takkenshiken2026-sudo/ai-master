@@ -1,0 +1,54 @@
+/* キャリア — 一覧固有 */
+
+.career-cta {
+  margin-top: 48px;
+  padding: 28px 32px;
+  background: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.career-cta h2 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin-bottom: 6px;
+}
+.career-cta p {
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  margin: 0;
+}
+.career-cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.career-cta-links a {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  border: 1px solid var(--gray-300);
+  background: var(--white);
+  color: var(--ink);
+  transition: border-color 0.12s, color 0.12s;
+}
+.career-cta-links a:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.career-cta-links a.is-primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--white);
+}
+.career-cta-links a.is-primary:hover {
+  background: var(--blue-hover);
+  border-color: var(--blue-hover);
+  color: var(--white);
+}

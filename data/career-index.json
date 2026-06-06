@@ -1,0 +1,395 @@
+{
+  "categories": {
+    "role": "職種・比較",
+    "learn": "学ぶ・資格",
+    "move": "転職・チェンジ",
+    "market": "市場・その他"
+  },
+  "articles": [
+    {
+      "id": "ai-engineer",
+      "name": "AIエンジニアとは？仕事内容・年収・必要スキル",
+      "yomi": "AI Engineer",
+      "summary": "機械学習モデルの設計・学習・本番運用までを担う。Pythonとクラウドが中心。",
+      "category": "role",
+      "salaryMin": 500,
+      "salaryMax": 1200,
+      "tags": [
+        "未経験可",
+        "G検定"
+      ],
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "machine-learning-engineer",
+      "name": "機械学習エンジニアとは？仕事内容・年収・キャリアパス",
+      "yomi": "Machine Learning Engineer",
+      "summary": "特徴量設計からモデル評価・デプロイまで。データパイプラインとセットで動くことが多い。",
+      "category": "role",
+      "salaryMin": 550,
+      "salaryMax": 1300,
+      "tags": [
+        "Python",
+        "クラウド"
+      ],
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "data-scientist",
+      "name": "データサイエンティストとは？分析業務とキャリア像",
+      "yomi": "Data Scientist",
+      "summary": "データ分析・モデル構築・意思決定支援。統計と機械学習の両方が求められる。",
+      "category": "role",
+      "salaryMin": 500,
+      "salaryMax": 1100,
+      "tags": [
+        "統計",
+        "Python"
+      ],
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "generative-ai-engineer",
+      "name": "生成AIエンジニアとは？LLM・RAG・エージェント開発",
+      "yomi": "Generative AI Engineer",
+      "summary": "LLM・RAG・エージェントの設計実装。プロンプト設計と評価も担当範囲。",
+      "category": "role",
+      "salaryMin": 600,
+      "salaryMax": 1400,
+      "tags": [
+        "LLM",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "mlops-engineer",
+      "name": "MLOpsエンジニアとは？AIエンジニアとの違い",
+      "yomi": "MLOps Engineer",
+      "summary": "モデルの継続的デリバリー・監視・再学習パイプラインを構築する専門職。",
+      "category": "role",
+      "salaryMin": 600,
+      "salaryMax": 1350,
+      "tags": [
+        "DevOps",
+        "クラウド"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "prompt-engineer",
+      "name": "プロンプトエンジニアとは？仕事内容と需要の現状",
+      "yomi": "Prompt Engineer",
+      "summary": "LLMの指示設計・評価・改善。業務プロセスへの組み込みをリードする。",
+      "category": "role",
+      "salaryMin": 450,
+      "salaryMax": 900,
+      "tags": [
+        "LLM",
+        "未経験可"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "data-analyst",
+      "name": "データアナリストとは？DSとの違いと必要スキル",
+      "yomi": "Data Analyst",
+      "summary": "SQL・BI・可視化で業務課題を分析。AIツール活用が差別化ポイントに。",
+      "category": "role",
+      "salaryMin": 400,
+      "salaryMax": 800,
+      "tags": [
+        "SQL",
+        "未経験可"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "ai-product-manager",
+      "name": "AIプロダクトマネージャー（AI PM）とは？",
+      "yomi": "AI Product Manager",
+      "summary": "AI機能の企画・要件定義・ロードマップ策定。技術とビジネスの橋渡し役。",
+      "category": "role",
+      "salaryMin": 600,
+      "salaryMax": 1300,
+      "tags": [
+        "企画",
+        "PoC"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "data-scientist-vs-analyst",
+      "name": "データサイエンティストとデータアナリストの違い",
+      "yomi": "DS vs Analyst",
+      "summary": "どちらを目指すべきか。業務範囲・スキル・年収の違いを整理する。",
+      "category": "role",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "比較"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "ai-engineer-vs-mlops",
+      "name": "AIエンジニア・MLエンジニア・MLOpsの選び方",
+      "yomi": "Engineer Roles Compare",
+      "summary": "エンジニア系3職種の役割分担と、キャリア上の違いを比較する。",
+      "category": "role",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "比較"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "beginner-ai-roles-top5",
+      "name": "未経験者が最初に狙うべきAI職種5つ",
+      "yomi": "Beginner AI Roles",
+      "summary": "未経験から現実的に狙える職種と、選定の考え方をまとめる。",
+      "category": "role",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "比較",
+        "未経験"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "g-kentei-career",
+      "name": "G検定のキャリアへの活かし方",
+      "yomi": "G-Kentei Career",
+      "summary": "G検定取得後に狙える職種・履歴書の書き方・面接でのアピールポイント。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "G検定",
+        "資格"
+      ],
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "genai-passport-career",
+      "name": "生成AIパスポート取得後の学習ロードマップ",
+      "yomi": "GenAI Passport Career",
+      "summary": "取得後に伸ばすべきスキルと、社内でのアピール方法を解説する。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "生成AIパスポート",
+        "資格"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "beginner-learning-roadmap",
+      "name": "未経験からAI職へ必要な学習順序（全体版）",
+      "yomi": "AI Learning Roadmap",
+      "summary": "何から手を付けるか。基礎数学・Python・ML・生成AIまでの段階的な学習順。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "未経験",
+        "ロードマップ"
+      ],
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "ai-portfolio-guide",
+      "name": "AI職向けポートフォリオの作り方",
+      "yomi": "AI Portfolio",
+      "summary": "GitHub・Kaggle・業務に近い題材の見せ方。採用側が見るポイント。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "ポートフォリオ"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "ai-side-job-prep",
+      "name": "AI副業を始める前の準備と時間の使い方",
+      "yomi": "AI Side Job Prep",
+      "summary": "本業と両立しながらスキルを活かす。案件獲得前に整えるべきこと。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "副業"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "manufacturing-to-ai-engineer",
+      "name": "製造業・メーカーからAIエンジニアへ転職する方法",
+      "yomi": "Manufacturing to AI",
+      "summary": "現場知識を強みに転職する。準備すべきスキルと求人の探し方。",
+      "category": "move",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "製造業",
+        "転職"
+      ],
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "finance-data-scientist-career",
+      "name": "金融業界からデータサイエンティスト職へ移るには",
+      "yomi": "Finance to DS",
+      "summary": "金融ドメイン知識の活かし方と、DS職へのギャップを埋める学習。",
+      "category": "move",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "金融",
+        "転職"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "liberal-arts-to-ai",
+      "name": "文系・非エンジニアからAI職へキャリアチェンジするルート",
+      "yomi": "Liberal Arts to AI",
+      "summary": "文系出身者が現実的に狙える職種と、学習・転職のステップ。",
+      "category": "move",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "文系",
+        "未経験",
+        "転職"
+      ],
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "sier-to-ai-startup",
+      "name": "SIer・SESからスタートアップのAI企業へ転職する現実",
+      "yomi": "SIer to Startup",
+      "summary": "大手法人からスタートアップAI企業へ。準備期間とリスクの整理。",
+      "category": "move",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "SIer",
+        "転職"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "second-career-ai",
+      "name": "第二新卒でAI業界に転職｜25〜29歳のタイムライン",
+      "yomi": "Second Career AI",
+      "summary": "社会人経験を活かしつつAI業界へ。年齢別の戦略と注意点。",
+      "category": "move",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "第二新卒",
+        "転職"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "ai-career-outlook-2026",
+      "name": "AI関連職の将来性2026",
+      "yomi": "AI Career Outlook",
+      "summary": "伸びる職種・需給の見方。 hype 後も残るスキルとは。",
+      "category": "market",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "将来性"
+      ],
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "ai-engineer-salary-trend",
+      "name": "AIエンジニア年収の推移と相場の見方",
+      "yomi": "AI Engineer Salary Trend",
+      "summary": "企業規模・地域・経験年数別の傾向。個別職種ページとの使い分け。",
+      "category": "market",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "年収"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "overseas-ai-engineer-salary",
+      "name": "海外のAIエンジニア年収と日本の違い",
+      "yomi": "Overseas AI Salary",
+      "summary": "米国・欧州との比較。リモートワークの現実と日本からのキャリア。",
+      "category": "market",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "海外",
+        "年収"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "ai-freelance-market",
+      "name": "AIフリーランスの単価と案件の現実",
+      "yomi": "AI Freelance Market",
+      "summary": "業務委託・副業の相場感。スキル別の単価レンジと案件の取り方。",
+      "category": "market",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "フリーランス",
+        "副業"
+      ],
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "grad-school-ai-worth",
+      "name": "大学院（AI・ML）に進むべき？就職への影響",
+      "yomi": "Grad School AI",
+      "summary": "修士・博士コースのメリットとデメリット。研究職以外のキャリアも含めて整理。",
+      "category": "market",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "大学院",
+        "研究"
+      ],
+      "featured": false,
+      "published": false
+    }
+  ]
+}

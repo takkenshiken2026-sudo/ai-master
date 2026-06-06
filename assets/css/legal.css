@@ -1,0 +1,36 @@
+.legal-content {
+  max-width: 720px;
+  padding-bottom: 48px;
+}
+
+.legal-content h2 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin: 32px 0 10px;
+}
+
+.legal-content h2:first-child {
+  margin-top: 0;
+}
+
+.legal-content p,
+.legal-content li {
+  font-size: var(--text-sm);
+  line-height: 1.75;
+  color: var(--text-body);
+}
+
+.legal-content ul {
+  margin: 8px 0 16px;
+  padding-left: 1.25em;
+}
+
+.legal-content li + li {
+  margin-top: 6px;
+}
+
+.legal-updated {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: 0 0 24px;
+}
