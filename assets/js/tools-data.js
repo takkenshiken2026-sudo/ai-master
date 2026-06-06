@@ -65,6 +65,7 @@ const TOOLS = [
     logo: "meta-ai.ico",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "WhatsApp・Instagram・Facebookから直接利用可",
     url: "https://www.meta.ai",
   },

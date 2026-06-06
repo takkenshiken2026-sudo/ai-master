@@ -95,6 +95,7 @@ DIRECT_ICON_URL = {
     "gemini": "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg",
     "copilot": "https://copilot.microsoft.com/favicon.ico",
     "grok": "https://grok.com/apple-touch-icon.png",
+    "meta-ai": "https://static.xx.fbcdn.net/assets/?set=meta_ai_assets&name=meta-ai-orbit-favicon-180px-raster&density=4x&mode=light",
 }
 
 
