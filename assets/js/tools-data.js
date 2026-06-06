@@ -132,6 +132,7 @@ const TOOLS = [
     logo: "openai.svg",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "ChatGPTのチャット内から指示するだけで画像生成",
     url: "https://openai.com/dall-e-3",
   },

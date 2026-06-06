@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DALL·Eの機能・料金・使い方を解説。OpenAIの画像生成モデル、ChatGPTとの関係、Midjourneyとの違い、Text-to-Imageの試験ポイントまで。生成AIパスポート・G検定対策にも。">
+  <title>DALL·Eとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/dalle/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="DALL·Eとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="DALL·Eの機能・料金・使い方を解説。ChatGPTとの関係、Midjourneyとの違い、試験で押さえるText-to-Imageまで。">
+  <meta property="og:url" content="https://ai-master.jp/tools/dalle/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/dalle/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/dalle/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/dalle/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "DALL·E", "item": "https://ai-master.jp/tools/dalle/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/dalle/#article",
+        "headline": "DALL·Eとは？機能・料金・使い方をわかりやすく解説",
+        "description": "DALL·Eの機能・料金・使い方を解説。ChatGPTとの関係、Midjourneyとの違い、試験で押さえるText-to-Imageまで。",
+        "url": "https://ai-master.jp/tools/dalle/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/dalle/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/dalle/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "DALL·E" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/dalle/#webpage",
+        "url": "https://ai-master.jp/tools/dalle/",
+        "name": "DALL·Eとは？機能・料金・使い方をわかりやすく解説",
+        "description": "DALL·Eの機能・料金・使い方を解説。ChatGPTとの関係、Midjourneyとの違い、試験で押さえるText-to-Imageまで。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/dalle/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "DALL·E",
+        "alternateName": "DALL-E 3",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "description": "OpenAIが提供するテキストから画像を生成する拡散モデル系列。ChatGPTやAPIから利用できる。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "ChatGPT無料枠で一定数利用可能。APIは従量課金（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "OpenAI",
+          "url": "https://openai.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "DALL·Eは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChatGPTの無料プランでも、一定の範囲で画像生成（DALL·E）を試せる場合があります。ただし回数や解像度には制限があり、多く使う場合は有料プランやAPIの従量課金が必要です。最新条件はOpenAI公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DALL·EとChatGPTの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChatGPTは対話型のチャットサービス、DALL·Eは画像を生成するモデル（機能）の名前です。日常ではChatGPTの画面から「画像を作って」と指示すると、裏側でDALL·Eが動く、という関係が一般的です。試験ではサービス名とモデル名を分けて覚えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DALL·Eは何社が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OpenAI（オープンエーアイ）が開発・提供する画像生成モデルです。GPTシリーズと同じ開発元である点が試験でよく問われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DALL·EとMidjourneyの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもText-to-Imageですが、DALL·EはOpenAI製でChatGPTから手軽に使える点が強みです。Midjourneyは画像生成専用の有料サービスで、芸術的な画質に定評があるとされることが多いです。無料で試すならDALL·E、本格的なビジュアル探索ならMidjourney、という整理がよくされます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DALL·EはText-to-Imageの例として正しいですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。テキストの説明から画像を生成するText-to-Image（テキストto画像）の代表例として、G検定などで名前が挙がることがあります。音声特徴量のMFCCなど、別分野の用語と混同しないよう注意してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">DALL·E</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/dalle/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">OpenAI · 画像生成</p>
+          <h1>DALL·Eとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">テキストから画像を生成する、OpenAIの拡散モデル系列（現行はDALL·E 3が中心）</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">ChatGPT連携</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web</li>
+          <li>API</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/dalle/og-hero.png" alt="OpenAI ChatGPTの公式ビジュアル" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：OpenAI公式（openai.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>DALL·E</strong>（ダルイー）は、<strong>OpenAI</strong>が開発する<a href="../../glossary/generative-ai/">生成AI</a>の<strong>画像生成モデル</strong>です。テキストの説明（プロンプト）からイラストや写真風の画像を作る<strong>Text-to-Image</strong>（テキストto画像）の代表例として、資格試験でも名前が挙がります。一般ユーザーは<a href="../chatgpt/">ChatGPT</a>の画面から「猫のイラストを作って」と指示する形で触れることが多く、<strong>チャットの会話の流れの中で画像が返ってくる</strong>のが特徴です。本記事は全バージョンの技術史ではなく、<strong>試験で押さえる定義</strong>（OpenAI製・Text-to-Image・ChatGPTとの関係）と<strong>実務の誤解</strong>に絞って書いています。料金・利用枠は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金の整理</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">DALL·Eとは</a></li>
+        <li><a href="#features">DALL·Eでできること（主な機能）</a></li>
+        <li><a href="#pricing">料金・利用の仕組み</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Midjourney・Stable Diffusionとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、<strong>Text-to-Image</strong>の説明としてDALL·Eが例に挙がることがあります。「テキストから画像を生成する」タスクであり、拡散モデル（Diffusion Model）やマルチモーダルAIの文脈とセットで出題されます。生成AIパスポートでも、<a href="../chatgpt/">ChatGPT</a>の機能として画像生成に触れる章があり、<strong>チャットAIと画像生成の関係</strong>を理解しておくとよいです。
+      </p>
+      <p>
+        よくある誤解は、<strong>「DALL·E＝ChatGPT」</strong>と同一視することです。ChatGPTは<strong>対話サービス</strong>、DALL·Eは<strong>画像を作るモデル（機能）の名前</strong>です。また<strong>「DALL·Eは音声処理の技術」</strong>のような選択肢は不正解です。MFCCなど音声特徴量と混同しないよう、<strong>入出力がテキスト→画像</strong>である点を押さえます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/practice/q/g-391/">実践演習 G-391（Text-To-Image）</a>、<a href="../../exams/g-kentei/practice/q/g-394/">G-394（DALL-E）</a>、<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0115/">一問一答 TF-0115（ChatGPT）</a>
+        </p>
+        <p>
+          まとめて：<a href="../../exams/g-kentei/practice/">G検定 実践演習一覧</a> · <a href="../../exams/genai-passport/drill/">生成AIパスポート 一問一答一覧</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>DALL·Eとは</h2>
+      <p>
+        DALL·Eは、2021年にOpenAIが発表した画像生成モデル系列の名称です。名前は画家の<strong>ダリ（Dalí）</strong>とロボット映画<strong>WALL·E</strong>を掛け合わせた造語と言われます。DALL·E 2、<strong>DALL·E 3</strong>と世代が進み、2026年時点ではChatGPTやAPI経由で使われるのは主にDALL·E 3です。
+      </p>
+      <p>
+        技術的には<strong>拡散モデル</strong>を用いたText-to-Imageが中心です。ユーザーが自然言語で「夕焼けの富士山、水彩画風」と書くと、その内容に沿った画像が生成されます。ChatGPTと統合されているため、<strong>会話で要件を詰めながら画像を直す</strong>使い方がしやすいのが特徴です。
+      </p>
+      <p>
+        試験では、<strong>「OpenAIが提供する画像生成」</strong>と<strong>「Text-to-Imageの事例」</strong>の2点をセットで覚えると十分なことが多いです。<a href="../chatgpt/">ChatGPT</a>と開発元が同じである点も重要です。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>DALL·Eでできること（主な機能）</h2>
+      <p>DALL·E単体の能力と、ChatGPT経由で使うときの体験を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>テキストから画像生成</h3>
+          <p>プロンプトの説明から、イラスト・写真風・図解風などの画像を生成します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>会話での修正（ChatGPT連携）</h3>
+          <p>「もっと明るく」「文字を入れて」など、チャットで指示を重ねて調整できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>画像の編集・部分変更</h3>
+          <p>既存画像の一部を書き換えるなど、編集系の機能（名称・範囲は変更あり）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>スタイル・構図の指定</h3>
+          <p>画風、色調、被写体の配置などを自然言語で指定できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>API連携</h3>
+          <p>開発者はOpenAI APIからDALL·Eを呼び出し、アプリや業務フローに組み込めます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コンテンツポリシー</h3>
+          <p>著作権・有害コンテンツなど、OpenAIのポリシーに沿った生成制限があります。</p>
+        </div>
+      </div>
+
+      <h3>ChatGPTとの関係</h3>
+      <p>
+        エンドユーザーが触る入口は、多くの場合<strong>ChatGPTのWebアプリ</strong>です。裏側でDALL·Eが動き、表向きは「ChatGPTが画像を返した」ように見えます。試験や実務の説明では、<strong>サービス（ChatGPT）とモデル名（DALL·E）</strong>を区別して書くと誤解が減ります。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金・利用の仕組み</h2>
+      <p>DALL·E単体の月額プランというより、<strong>ChatGPTのプラン</strong>や<strong>APIの従量課金</strong>でコストが決まります（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">ChatGPT 無料</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">画像生成に制限あり</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">ChatGPT Plus 等</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">多めの生成・高機能</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">API（DALL·E 3）</p>
+          <p class="tool-plan-price">従量課金</p>
+          <p class="tool-plan-note">解像度ごとに単価</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要相談</p>
+          <p class="tool-plan-note">法人向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>利用方法</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ChatGPT（個人）</strong></td>
+            <td>無料枠＋有料プラン。画像の回数・速度に差。</td>
+            <td>まず試したい・資料用にたまに使う</td>
+          </tr>
+          <tr>
+            <td><strong>OpenAI API</strong></td>
+            <td>生成1枚あたりの従量課金（サイズにより異なる）。</td>
+            <td>アプリ開発・業務自動化</td>
+          </tr>
+          <tr>
+            <td><strong>法人契約</strong></td>
+            <td>ChatGPT Team / Enterprise 等。データ取り扱いは別途確認。</td>
+            <td>社内ガイドラインのもとで使うチーム</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        契約前は<a href="https://openai.com/dall-e-3" target="_blank" rel="noopener noreferrer">OpenAI DALL·E 3</a>と<a href="https://openai.com/pricing" target="_blank" rel="noopener noreferrer">料金ページ</a>で最新条件を確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>個人で試すなら、ChatGPTから始めるのが最も簡単です。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>ChatGPTにアクセスする</strong>
+            <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">chatgpt.com</a>でアカウントを作成・ログインします。
+          </li>
+          <li>
+            <strong>画像生成を依頼する</strong>
+            例：「白背景にシンプルなコーヒーカップのイラストを作って。フラットデザインで」
+          </li>
+          <li>
+            <strong>会話で直す</strong>
+            「色をもう少し暖かく」「横長のバナー向けに」など、追加指示で調整します。
+          </li>
+          <li>
+            <strong>用途に合わせて保存</strong>
+            ダウンロードや再利用の可否は利用規約と社内ルールを確認します。
+          </li>
+          <li>
+            <strong>業務利用はガイドラインを確認</strong>
+            クライアント素材や社外公開では、商用条件とクレジット表記を必ず確認します。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/dalle/openai.svg" alt="OpenAIの公式ロゴ" width="600" height="338" loading="lazy">
+            <figcaption>出典：OpenAI公式（openai.com）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>著作権・商用利用・社内情報の入力禁止など、ガイドライン確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>マーケ・広告</h3>
+          <ul>
+            <li>SNS投稿用ビジュアルのたたき台</li>
+            <li>キャンペーンコンセプトの可視化</li>
+            <li>バナー案の素早いブレスト</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>資料・教育</h3>
+          <ul>
+            <li>説明用イラストの下書き</li>
+            <li>教材の図解イメージ</li>
+            <li>資格学習用の概念図（要確認）</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>プロダクト開発</h3>
+          <ul>
+            <li>UIモックの雰囲気作り</li>
+            <li>アイデアスケッチの共有</li>
+            <li>API経由の画像自動生成</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>試験対策</h3>
+          <ul>
+            <li>Text-to-Imageの定義理解</li>
+            <li>OpenAI製ツールの整理</li>
+            <li>他画像AIとの比較</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ChatGPTから手軽に試せる（無料枠あり）</td>
+            <td>生成回数・品質はプラン次第</td>
+          </tr>
+          <tr>
+            <td>会話で要件を詰めやすい</td>
+            <td>Midjourneyほど「芸術的」に特化はしていない</td>
+          </tr>
+          <tr>
+            <td>試験で名前が出やすい（OpenAI・Text-to-Image）</td>
+            <td>サービス名とモデル名の混同に注意</td>
+          </tr>
+          <tr>
+            <td>APIで業務システムに組み込める</td>
+            <td>商用・著作権は規約と案件ごとに要確認</td>
+          </tr>
+          <tr>
+            <td>GPTと同じ開発元で説明しやすい</td>
+            <td>ローカル完結・オフラインには不向き</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Midjourney・Stable Diffusionとの比較</h2>
+      <p>主要な画像生成とのざっくりした違いです。</p>
+
+      <div class="tool-compare-brands">
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/dalle/app-icon.png" alt="DALL·E" width="40" height="40">
+          <span>DALL·E</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/midjourney/app-icon.png" alt="Midjourney" width="40" height="40">
+          <span>Midjourney</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/stable-diffusion.ico" alt="Stable Diffusion" width="40" height="40">
+          <span>Stable Diffusion</span>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th><img src="../../assets/images/tools/openai.svg" alt="" class="tool-table-logo" width="22" height="22">DALL·E</th>
+            <th><img src="../../assets/images/tools/midjourney/app-icon.png" alt="" class="tool-table-logo" width="22" height="22">Midjourney</th>
+            <th>Stable Diffusion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>開発元</td>
+            <td>OpenAI</td>
+            <td>Midjourney社</td>
+            <td>Stability AI 等</td>
+          </tr>
+          <tr>
+            <td>主な入口</td>
+            <td>ChatGPT・API</td>
+            <td>midjourney.com</td>
+            <td>各種アプリ・ローカル</td>
+          </tr>
+          <tr>
+            <td>無料で試す</td>
+            <td>○（枠あり）</td>
+            <td>×</td>
+            <td>○（環境による）</td>
+          </tr>
+          <tr>
+            <td>会話で調整</td>
+            <td>◎（ChatGPT経由）</td>
+            <td>△</td>
+            <td>△</td>
+          </tr>
+          <tr>
+            <td>画質・芸術性</td>
+            <td>○</td>
+            <td>◎</td>
+            <td>○（設定次第）</td>
+          </tr>
+          <tr>
+            <td>試験での出方</td>
+            <td>Text-to-Imageの例</td>
+            <td>画像生成AIの代表</td>
+            <td>オープンソースの例</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        手軽さと試験対策ならDALL·E（<a href="../chatgpt/">ChatGPT</a>経由）、本格的なビジュアル探索なら<a href="../midjourney/">Midjourney</a>、自前環境でのカスタムならStable Diffusion、という使い分けが現実的です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>無料〜低コストで画像生成を試したい方</strong></li>
+        <li><strong>すでにChatGPTを使っており、画像も同じ画面で作りたい方</strong></li>
+        <li><strong>G検定でText-to-Image・DALL·Eの問題を押さえたい受験生</strong></li>
+        <li><strong>APIでアプリに画像生成を組み込みたい開発者</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>画像品質だけを最優先するプロのビジュアル制作</strong>（<a href="../midjourney/">Midjourney</a>等との比較検討が先）や、<strong>完全オフラインで動かしたい</strong>ケースです。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>DALL·Eは無料で使えますか？</summary>
+          <p class="tool-faq-a">ChatGPTの無料プランでも、一定の範囲で画像生成（DALL·E）を試せる場合があります。ただし回数や解像度には制限があり、多く使う場合は有料プランやAPIの従量課金が必要です。最新条件はOpenAI公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>DALL·EとChatGPTの違いは何ですか？</summary>
+          <p class="tool-faq-a">ChatGPTは対話型のチャットサービス、DALL·Eは画像を生成するモデル（機能）の名前です。日常ではChatGPTの画面から「画像を作って」と指示すると、裏側でDALL·Eが動く、という関係が一般的です。試験ではサービス名とモデル名を分けて覚えます。</p>
+        </details>
+        <details>
+          <summary>DALL·Eは何社が提供していますか？</summary>
+          <p class="tool-faq-a">OpenAI（オープンエーアイ）が開発・提供する画像生成モデルです。GPTシリーズと同じ開発元である点が試験でよく問われます。</p>
+        </details>
+        <details>
+          <summary>DALL·EとMidjourneyの違いは？</summary>
+          <p class="tool-faq-a">どちらもText-to-Imageですが、DALL·EはOpenAI製でChatGPTから手軽に使える点が強みです。Midjourneyは画像生成専用の有料サービスで、芸術的な画質に定評があるとされることが多いです。無料で試すならDALL·E、本格的なビジュアル探索ならMidjourney、という整理がよくされます。</p>
+        </details>
+        <details>
+          <summary>DALL·EはText-to-Imageの例として正しいですか？</summary>
+          <p class="tool-faq-a">はい。テキストの説明から画像を生成するText-to-Image（テキストto画像）の代表例として、G検定などで名前が挙がることがあります。音声特徴量のMFCCなど、別分野の用語と混同しないよう注意してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://openai.com/dall-e-3" target="_blank" rel="noopener noreferrer">DALL·E 3（openai.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://platform.openai.com/docs/guides/images" target="_blank" rel="noopener noreferrer">API ドキュメント</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../midjourney/"><img src="../../assets/images/tools/midjourney/app-icon.png" alt="" width="16" height="16"> Midjourney</a></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/adobe.svg" alt="" width="16" height="16"> Adobe Firefly <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">Stable Diffusion <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
