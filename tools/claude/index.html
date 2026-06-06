@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude（Anthropic）の機能・料金・使い方を解説。長文処理の強み、ChatGPT・Geminiとの違い、業務利用の注意点まで。G検定・生成AIパスポート対策にも。">
+  <title>Claudeとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/claude/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Claudeとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Claude（Anthropic）の機能・料金・使い方を解説。長文処理の強み、ChatGPT・Geminiとの違い、業務利用の注意点まで。">
+  <meta property="og:url" content="https://ai-master.jp/tools/claude/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/claude/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/claude/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/claude/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Claude", "item": "https://ai-master.jp/tools/claude/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/claude/#article",
+        "headline": "Claudeとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Claude（Anthropic）の機能・料金・使い方を解説。長文処理の強み、ChatGPT・Geminiとの違い、業務利用の注意点まで。",
+        "url": "https://ai-master.jp/tools/claude/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/claude/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/claude/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Claude" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/claude/#webpage",
+        "url": "https://ai-master.jp/tools/claude/",
+        "name": "Claudeとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Claude（Anthropic）の機能・料金・使い方を解説。長文処理の強み、ChatGPT・Geminiとの違い、業務利用の注意点まで。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/claude/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Claude",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, iOS, Android, macOS",
+        "description": "Anthropicが提供する対話型の生成AIアプリ。長文の読み込みと丁寧な文章生成に強み。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料プランあり。Pro $20/月前後"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Anthropic",
+          "url": "https://www.anthropic.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claudeは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。無料プランで基本的なチャット機能を利用できます。ただし、1日の利用量や使えるモデルに制限があり、長文の大量処理や高度な機能は有料プラン（Pro以上）向けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude Proはいくらですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude Proは月額20ドル前後（為替で約3,000円前後）が目安です。高性能モデルへの優先利用や、より多くのメッセージ送信が可能になります。最新料金は公式サイトで確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ClaudeとChatGPTの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ClaudeはAnthropic製で、長文の読み込みや丁寧な文章生成・分析に強みがあります。ChatGPTはOpenAI製で、画像生成・音声会話・カスタムGPTなど機能の幅が広いのが特徴です。用途に応じて使い分けるのがおすすめです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claudeは何社が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Anthropic（アンソロピック）が提供する主要な生成AIサービス・モデル群です。試験では開発元とサービス名をセットで覚えることが多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "会社の業務でClaudeを使っても大丈夫ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "個人の無料アカウントに機密情報を入力するのは避けるべきです。業務利用ではTeam・Enterpriseプランの検討と社内ガイドラインの整備が推奨されます。データの学習利用ポリシーはプランごとに異なるため、利用前に公式の規約を確認してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Claude</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/claude/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Anthropic · チャットAI</p>
+          <h1>Claudeとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">長文の読み込みと丁寧な文章生成に強い、安全性重視の生成AI</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料プランあり</span>
+        <span class="tool-category">Pro $20/月前後</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web</li>
+          <li>iOS</li>
+          <li>Android</li>
+          <li>macOS</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/claude/og-hero.png" alt="Claudeのチャット画面。長文の質問に対して丁寧な回答を返す" width="800" height="450" fetchpriority="high">
+      <figcaption>画面イメージ（Anthropic公式UIを参考）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude</strong>は、Anthropic（アンソロピック）が提供する対話型の<a href="../../glossary/generative-ai/">生成AI</a>アプリです。本記事は機能の総ざらいではなく、<strong>試験でどう問われるか</strong>（開発元とサービス名の対応）と、<strong>ChatGPTと何が違うか</strong>に絞って書いています。料金やモデル名は<strong>2026年6月時点</strong>の情報です。契約前は<a href="#pricing">料金表</a>を見たうえで、公式でも最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Claudeとは</a></li>
+        <li><a href="#features">Claudeでできること（主な機能）</a></li>
+        <li><a href="#pricing">料金プラン一覧</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">ChatGPT・Geminiとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Claudeは<strong>「Anthropicが提供する主要な生成AIサービス・モデル群」</strong>として扱われます。ChatGPT（OpenAI）やGemini（Google）と並ぶ代表例として、名称と開発元の組み合わせがそのまま出題されます。G検定でも<a href="../../glossary/generative-ai/">生成AI</a>の文脈で主要サービスとして触れることがありますが、深掘りの仕方は試験ごとに異なります。
+      </p>
+      <p>
+        よくある誤解は2つあります。1つ目は<strong>「Claude＝CNNの畳み込み」</strong>のような技術用語と混同すること（Claudeはサービス名です）。2つ目は<strong>「Claude＝AI全体」</strong>と捉えること。試験では「どの会社の、どんな種類のツールか」を短く説明できるかが問われます。実務でも、ツール名だけ覚えて開発元やデータ取り扱いを確認しないと、契約・ガバナンスの判断を誤りやすくなります。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong>（読んだあとに解いてみてください）</p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">一問一答 TF-0142（主要生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0145/">TF-0145（Claudeの誤解）</a>、<a href="../../exams/genai-passport/practice/q/hq-0317/">実践演習 HQ-0317（Claudeの説明）</a>、<a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316（Geminiとの違い）</a>
+        </p>
+        <p>
+          関連：<a href="../../exams/genai-passport/drill/q/tf-0115/">TF-0115（ChatGPT）</a> · <a href="../../exams/g-kentei/drill/q/tf-170/">G検定 TF-170（生成AI）</a>
+        </p>
+        <p>
+          まとめて演習する：<a href="../../exams/genai-passport/drill/">生成AIパスポート 一問一答</a> · <a href="../../exams/genai-passport/practice/">実践演習</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Claudeとは</h2>
+      <p>
+        Claudeは、2023年から順次公開された<strong>Anthropic製のAIチャットサービス</strong>です。人名の「クロード・シャノン」にちなんだ名称で、背後では大規模言語モデル（LLM）が動いています。モデル名は時期により更新されるため、試験勉強では「最新の型番」より<strong>開発元・用途・リスク</strong>を優先して覚えると安定します。
+      </p>
+      <p>
+        Anthropicは「安全性を重視したAI開発」で知られ、回答が拒否されたり、注意書きが付いたりする場面がChatGPTより目立つことがあります。これは不具合ではなく、<strong>有害・不正利用を抑える設計</strong>の表れです。生成AIパスポートのケース問題では、「なぜ業務利用に社内ルールが必要か」とセットで考えると理解が深まります。
+      </p>
+      <p>
+        機能面の印象として強いのは<strong>長い資料を一度に読ませて要約・分析できること</strong>と、<strong>ビジネス文書らしい丁寧な文体</strong>です。画像生成や音声会話の充実度はChatGPTに譲る場面もありますが、「読む・書く・考える」作業の相棒として選ばれることが多いツールです。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Claudeでできること（主な機能）</h2>
+      <p>Claudeも汎用チャットAIですが、得意な作業には傾きがあります。資格勉強では「何ができるツールか」をカテゴリで整理しておくと比較問題に強くなります。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>長文の要約・分析</h3>
+          <p>PDFや長いレポートをアップロードし、要点抽出・論点整理・リスク洗い出しを依頼できます（プランにより上限あり）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>文章の起草・推敲</h3>
+          <p>メール、報告書、提案書の下書きや、トーン調整・敬語の統一など、読み手を意識した文章生成に強みがあります。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コードの生成・説明</h3>
+          <p>Python、SQL、JavaScriptなどのコード作成や、既存コードの解説・リファクタリング案を出せます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Projects（プロジェクト）</h3>
+          <p>資料や指示をまとめて保持し、同じ文脈で繰り返し作業する機能（有料プラン中心）。業務の「案件単位」で使いやすいです。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>画像の理解</h3>
+          <p>チャートやスライド画像の内容説明など、画像入力による分析に対応。ただし画像生成の主役は他ツールのことが多いです。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Web検索連携</h3>
+          <p>最新情報が必要な質問で、検索結果を踏まえた回答を得られる場合があります。回答は依然として要確認です。</p>
+        </div>
+      </div>
+
+      <h3>コンテキストウィンドウ（長文対応）</h3>
+      <p>
+        Claudeの差別化ポイントのひとつが、<strong>一度に扱えるテキスト量の大きさ</strong>です。契約書や研究資料のようにページ数が多い文書を、分割せずに渡せる場面があります（上限はモデル・プラン依存）。試験では数値暗記より「長文に強いチャットAIの代表例」として覚える程度で十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン一覧</h2>
+      <p>個人利用の目安は、<strong>無料で試す → 毎日使うならPro</strong>です。チーム・企業ではTeam・Enterpriseの管理機能とデータポリシーが重要になります（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">¥0<small>無料</small></p>
+          <p class="tool-plan-note">基本チャット</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">$20<small>約3,000円/月</small></p>
+          <p class="tool-plan-note">個人向け定番</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Team</p>
+          <p class="tool-plan-price">要確認<small>人数課金</small></p>
+          <p class="tool-plan-note">チーム利用</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要相談</p>
+          <p class="tool-plan-note">大規模組織向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額料金</th>
+            <th>主な特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free（無料）</strong></td>
+            <td>0円</td>
+            <td>基本的なチャット。利用量・モデルに制限あり。</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>$20/月前後<br><small>（為替で変動）</small></td>
+            <td>高性能モデル、より多くのメッセージ、Projectsなど。</td>
+          </tr>
+          <tr>
+            <td><strong>Team</strong></td>
+            <td>要確認</td>
+            <td>チーム管理、共有、業務向けのデータ取り扱い。</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>要問い合わせ</td>
+            <td>SSO、監査、セキュリティ要件への対応。大規模導入向け。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        <strong>「無料だから社内資料を入れてよい」は誤り</strong>です。業務データを扱う場合は、個人の無料アカウントではなくTeam・Enterpriseと社内ルールの整備を先に検討してください。料金は為替やキャンペーンで変わるため、契約前に<a href="https://www.anthropic.com/pricing" target="_blank" rel="noopener noreferrer">公式の料金ページ</a>を確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>Claudeも、ブラウザまたはアプリから数分で始められます。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>アカウントを作成する</strong>
+            <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">claude.ai</a>にアクセスし、メールまたはGoogleアカウントで登録します。
+          </li>
+          <li>
+            <strong>目的を一文で伝える</strong>
+            例：「以下の議事録から決定事項とToDoだけ箇条書きで抽出して」
+          </li>
+          <li>
+            <strong>資料がある場合は添付する</strong>
+            PDFやテキストをアップロードし、分析範囲（章・ページ）を指定すると精度が上がります。
+          </li>
+          <li>
+            <strong>回答を確認し、追質問する</strong>
+            「根拠はどの段落か」「反対意見も述べて」など、会話を続けて深掘りできます。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/claude/og-hero.png" alt="Claudeの入力欄。質問やファイルを添付して送信する" width="600" height="338" loading="lazy">
+            <figcaption>入力欄に指示を書くか、ファイルを添付して使います</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <h3>うまく使うためのコツ</h3>
+      <ul>
+        <li><strong>読者と目的を書く</strong> — 「経営層向けに1ページ要約」「法務チェック用の論点リスト」など</li>
+        <li><strong>資料のどこを見るか指定する</strong> — 長文ほど「第3章のみ」「表だけ」など範囲を絞る</li>
+        <li><strong>出力形式を決める</strong> — 表形式、箇条書き、メール文などフォーマットを先に指定</li>
+        <li><strong>事実は必ず人が確認する</strong> — 引用・数値・法務判断はAI任せにしない</li>
+      </ul>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>Claudeが特に選ばれやすいのは、「読む量が多い」「文章の質が重要」な業務です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>法務・コンプライアンス</h3>
+          <ul>
+            <li>契約書ドラフトの論点整理（最終判断は人間）</li>
+            <li>社内規程との整合チェックの下準備</li>
+            <li>ポリシー文書の平易化</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>企画・コンサル</h3>
+          <ul>
+            <li>長い調査レポートの要約</li>
+            <li>提案書の構成案・Executive Summary</li>
+            <li>競合情報の整理（公開情報ベース）</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>エンジニア・データ</h3>
+          <ul>
+            <li>仕様書からの要件抽出</li>
+            <li>コードレビュー補助</li>
+            <li>技術文書の翻訳・整形</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>人事・総務</h3>
+          <ul>
+            <li>就業規則・マニュアルの要約</li>
+            <li>社内アンケート結果の傾向整理</li>
+            <li>研修資料のたたき台作成</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>いずれも<strong>個人情報・未公開情報の入力は社内ルールに従う</strong>ことが前提です。生成AIパスポートでは、こうしたガバナンスの判断がケース形式で問われます。</p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>長文資料の要約・分析に強い</td>
+            <td>無料版は利用量に制限がある</td>
+          </tr>
+          <tr>
+            <td>丁寧で読みやすい文章を生成しやすい</td>
+            <td>ハルシネーション（誤回答）の可能性はある</td>
+          </tr>
+          <tr>
+            <td>安全性を意識した設計・拒否回答がある</td>
+            <td>拒否が多いと「使えない」と感じる場面も</td>
+          </tr>
+          <tr>
+            <td>無料で始められる</td>
+            <td>画像生成など多機能さはChatGPTに劣る場面がある</td>
+          </tr>
+          <tr>
+            <td>Projectsで案件単位の作業に向く</td>
+            <td>Google Workspace連携はGeminiが有利な場面がある</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>ChatGPT・Geminiとの比較</h2>
+      <p>チャットAIの代表3社を、試験でも実務でも押さえやすい軸で比較しました。詳細は各ツールの記事もあわせて参照してください。</p>
+
+      <div class="tool-compare-brands">
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/anthropic.svg" alt="Claude">
+          <span>Claude</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/openai.svg" alt="ChatGPT">
+          <span>ChatGPT</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/google.svg" alt="Gemini">
+          <span>Gemini</span>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th><img src="../../assets/images/tools/anthropic.svg" alt="" class="tool-table-logo" width="22" height="22">Claude</th>
+            <th><img src="../../assets/images/tools/openai.svg" alt="" class="tool-table-logo" width="22" height="22">ChatGPT</th>
+            <th><img src="../../assets/images/tools/google.svg" alt="" class="tool-table-logo" width="22" height="22">Gemini</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>開発元</td>
+            <td>Anthropic</td>
+            <td>OpenAI</td>
+            <td>Google</td>
+          </tr>
+          <tr>
+            <td>無料プラン</td>
+            <td>あり</td>
+            <td>あり</td>
+            <td>あり</td>
+          </tr>
+          <tr>
+            <td>長文処理</td>
+            <td>◎</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td>画像生成</td>
+            <td>△</td>
+            <td>◎</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>Google連携</td>
+            <td>△</td>
+            <td>△</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>向いている用途</td>
+            <td>長文・分析・丁寧な文章</td>
+            <td>汎用・多機能</td>
+            <td>Google製品連携</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        2本目を選ぶなら、<strong>長い資料を読ませたいならClaude</strong>、<strong>最初の1本・多機能さなら<a href="../chatgpt/">ChatGPT</a></strong>、<strong>Gmailやドキュメント中心なら<a href="../gemini/">Gemini</a></strong>という整理が現実的です。試験では「どれが最強か」より、<strong>開発元・用途・リスク</strong>をセットで説明できるかが評価されます。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>生成AIパスポートで主要サービス名を整理したい方</strong> — AnthropicとClaudeの対応が試験に直結</li>
+        <li><strong>長いPDF・報告書を要約したい方</strong> — ただし機密データは社内ルールの範囲で</li>
+        <li><strong>ビジネスメールや提案書のたたき台を丁寧に作りたい方</strong></li>
+        <li><strong>ChatGPTと使い分けたい方</strong> — 読む作業はClaude、画像・音声はChatGPTなど</li>
+      </ul>
+      <p>あえて向いていないのは、<strong>画像生成やカスタムボット量産を主目的にする</strong>ケースです。その用途はChatGPTやGeminiのほうが選択肢が多いことが多いです。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Claudeは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。無料プランで基本的なチャット機能を利用できます。ただし、1日の利用量や使えるモデルに制限があり、長文の大量処理や高度な機能は有料プラン（Pro以上）向けです。</p>
+        </details>
+        <details>
+          <summary>Claude Proはいくらですか？</summary>
+          <p class="tool-faq-a">Claude Proは月額20ドル前後（為替で約3,000円前後）が目安です。高性能モデルへの優先利用や、より多くのメッセージ送信が可能になります。最新料金は公式サイトでご確認ください。</p>
+        </details>
+        <details>
+          <summary>ClaudeとChatGPTの違いは何ですか？</summary>
+          <p class="tool-faq-a">ClaudeはAnthropic製で、長文の読み込みや丁寧な文章生成・分析に強みがあります。ChatGPTはOpenAI製で、画像生成・音声会話・カスタムGPTなど機能の幅が広いのが特徴です。用途に応じて使い分けるのがおすすめです。</p>
+        </details>
+        <details>
+          <summary>Claudeは何社が提供していますか？</summary>
+          <p class="tool-faq-a">Anthropic（アンソロピック）が提供する主要な生成AIサービス・モデル群です。試験では開発元とサービス名をセットで覚えることが多いです。</p>
+        </details>
+        <details>
+          <summary>会社の業務でClaudeを使っても大丈夫ですか？</summary>
+          <p class="tool-faq-a">個人の無料アカウントに機密情報を入力するのは避けるべきです。業務利用ではTeam・Enterpriseプランの検討と社内ガイドラインの整備が推奨されます。データの学習利用ポリシーはプランごとに異なるため、利用前に公式の規約を確認してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://apps.apple.com/app/claude-by-anthropic/id6473753684" target="_blank" rel="noopener noreferrer">App Store</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://play.google.com/store/apps/details?id=com.anthropic.claude" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../gemini/"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> Gemini</a></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Copilot <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/perplexity.svg" alt="" width="16" height="16"> Perplexity <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">大規模言語モデル（LLM） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

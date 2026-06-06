@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gemini（Google）の機能・料金・使い方を解説。Google連携の強み、ChatGPT・Claudeとの違い、業務利用の注意点まで。G検定・生成AIパスポート対策にも。">
+  <title>Geminiとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/gemini/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Geminiとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Gemini（Google）の機能・料金・使い方を解説。Google連携の強み、ChatGPT・Claudeとの違い、業務利用の注意点まで。">
+  <meta property="og:url" content="https://ai-master.jp/tools/gemini/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/gemini/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/gemini/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/gemini/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Gemini", "item": "https://ai-master.jp/tools/gemini/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/gemini/#article",
+        "headline": "Geminiとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Gemini（Google）の機能・料金・使い方を解説。Google連携の強み、ChatGPT・Claudeとの違い、業務利用の注意点まで。",
+        "url": "https://ai-master.jp/tools/gemini/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/gemini/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/gemini/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Gemini" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/gemini/#webpage",
+        "url": "https://ai-master.jp/tools/gemini/",
+        "name": "Geminiとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Gemini（Google）の機能・料金・使い方を解説。Google連携の強み、ChatGPT・Claudeとの違い、業務利用の注意点まで。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/gemini/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Gemini",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, iOS, Android",
+        "description": "Googleが提供する対話型の生成AIアプリ。GmailやドキュメントなどGoogleサービスとの連携に強み。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料プランあり。有料プランはGoogle One AI Premium等"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Google",
+          "url": "https://google.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Geminiは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Googleアカウントがあれば無料で基本的なチャット機能を利用できます。ただし、高性能モデルや追加機能は有料プラン（Google One AI Premiumなど）向けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GeminiとBard（バード）の関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BardはGeminiへの旧名称です。現在はGeminiとして提供されており、試験でもGeminiの名称で主要生成AIとして扱われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GeminiとChatGPTの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GeminiはGoogle製で、Gmail・ドキュメント・検索などGoogleサービスとの連携が強みです。ChatGPTはOpenAI製で、カスタムGPTや音声会話など機能の幅が広いのが特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Geminiは何社が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Google（グーグル）が提供する主要な生成AIサービス・モデル群です。試験では開発元とサービス名の組み合わせが問われることが多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "会社の業務でGeminiを使っても大丈夫ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "個人の無料アカウントに機密情報を入力するのは避けるべきです。業務利用ではGoogle Workspace向けプランや社内ガイドラインの整備が推奨されます。データの取り扱いはプランごとに異なるため、利用前に公式の規約を確認してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Gemini</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/gemini/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Google · チャットAI</p>
+          <h1>Geminiとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">Gmailやドキュメントと連携しやすい、Google発の生成AI</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料プランあり</span>
+        <span class="tool-category">Google One AI Premium</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web</li>
+          <li>iOS</li>
+          <li>Android</li>
+          <li>Google Workspace</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/gemini/og-hero.png" alt="Geminiのチャット画面。Googleアカウントで質問に答える" width="800" height="450" fetchpriority="high">
+      <figcaption>画面イメージ（Google公式UIを参考）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Gemini</strong>（ジェミニ）は、Googleが提供する対話型の<a href="../../glossary/generative-ai/">生成AI</a>アプリです。旧名称のBard（バード）から改称され、現在はGoogleアカウントで利用するチャットAIとして展開されています。本記事は機能一覧ではなく、<strong>試験での定義</strong>（GoogleとGeminiの対応）と、<strong>Google Workspaceユーザーにとっての強み</strong>に絞って書いています。料金やプラン名は<strong>2026年6月時点</strong>の情報です。契約前は<a href="#pricing">料金表</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Geminiとは</a></li>
+        <li><a href="#features">Geminiでできること（主な機能）</a></li>
+        <li><a href="#pricing">料金プラン一覧</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">ChatGPT・Claudeとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Geminiは<strong>「Googleが提供する主要な生成AIサービス・モデル群」</strong>として覚えるのが基本です。<a href="../chatgpt/">ChatGPT</a>（OpenAI）や<a href="../claude/">Claude</a>（Anthropic）と並ぶ代表例として、名称と開発元のペアがそのまま出題されます。比較問題では、定義の前半だけ正しくても後半で開発元を入れ替える選択肢に注意が必要です。
+      </p>
+      <p>
+        よくある誤解は、<strong>「Gemini＝AIの冬」</strong>と混同することです。AIの冬は研究が停滞した時期を指す歴史用語であり、Geminiとは別概念です。また<strong>「Gemini＝Google検索そのもの」</strong>とも限りません。Geminiは生成AIチャットサービスであり、検索結果の表示方法やWorkspace内のAI機能とは文脈を分けて理解するとよいです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong>（読んだあとに解いてみてください）</p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0141/">一問一答 TF-0141（主要生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0144/">TF-0144（Geminiの誤解）</a>、<a href="../../exams/genai-passport/practice/q/hq-0316/">実践演習 HQ-0316（Claudeとの違い）</a>
+        </p>
+        <p>
+          関連：<a href="../../exams/genai-passport/drill/q/tf-0115/">TF-0115（ChatGPT）</a>、<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claude）</a> · <a href="../../exams/g-kentei/drill/q/tf-170/">G検定 TF-170（生成AI）</a>
+        </p>
+        <p>
+          まとめて演習する：<a href="../../exams/genai-passport/drill/">生成AIパスポート 一問一答</a> · <a href="../../exams/genai-passport/practice/">実践演習</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Geminiとは</h2>
+      <p>
+        Geminiは、2023年にBardとして始まり、その後<strong>Geminiへと名称統一</strong>されたGoogle製のAIチャットです。gemini.google.comからブラウザで使え、スマホアプリからも同じGoogleアカウントでアクセスできます。背後ではGoogleの大規模言語モデルが動いており、モデル世代は時期により更新されます。
+      </p>
+      <p>
+        他社チャットAIとの差別化ポイントは、<strong>Googleのサービス群との親和性</strong>です。Gmailの下書き、Googleドキュメントの要約、Googleドライブ内のファイル参照、検索連携など、すでにGoogleで仕事をしている人にとって導線が短い場面があります。一方、Microsoft 365中心の組織ではCopilotのほうが自然なこともあり、試験でも「どのエコシステムか」を意識した説明が求められます。
+      </p>
+      <p>
+        マルチモーダル（テキスト・画像など）にも対応しており、画像の説明や画像生成系の機能も提供されています。ただし、試験勉強では最新機能の暗記より、<strong>開発元・用途・データ取り扱い</strong>を優先したほうが安定します。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Geminiでできること（主な機能）</h2>
+      <p>Geminiも汎用チャットAIですが、Googleユーザーにとって効きやすい機能があります。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>チャット・文章生成</h3>
+          <p>質問への回答、メール下書き、要約、翻訳など。日本語のビジネス文書も扱いやすいです。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Google検索連携</h3>
+          <p>最新情報が必要な話題で、検索結果を踏まえた回答を得られる場合があります（回答は要確認）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>画像の理解・生成</h3>
+          <p>画像を添付して内容を説明させたり、テキストから画像を生成したりできます（プランにより異なる）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Gmail・ドキュメント連携</h3>
+          <p>Workspace内の文書やメールの要約・下書き支援。組織の設定により利用範囲は変わります。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Gems（カスタム）</h3>
+          <p>特定の役割や手順を覚えさせたカスタムチャット（有料プラン中心）。GPTsに近い使い方です。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>スマホアプリ</h3>
+          <p>iOS・Androidアプリから利用可能。移動中の音声入力や簡単な質問に向きます。</p>
+        </div>
+      </div>
+
+      <h3>Google Workspaceとの関係</h3>
+      <p>
+        会社でGoogle Workspaceを使っている場合、Geminiは<strong>サイドパネルからドキュメントやスプレッドシートを扱う</strong>形で登場することがあります。個人の無料Geminiと、組織向けWorkspaceのAI機能はプラン・管理者設定が異なるため、「家のPCで試した無料版と、会社の環境は同じとは限らない」と覚えておくと実務と試験の両方で迷いにくくなります。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン一覧</h2>
+      <p>個人は<strong>無料で試す → 毎日使うなら有料プラン</strong>が目安です。Googleはプラン名やバンドル（Google Oneとのセット）を変更することがあるため、数字は参考程度にしてください（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">¥0<small>無料</small></p>
+          <p class="tool-plan-note">基本チャット</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">AI Premium</p>
+          <p class="tool-plan-price">要確認<small>Google One等</small></p>
+          <p class="tool-plan-note">個人向け上位</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Workspace</p>
+          <p class="tool-plan-price">要確認<small>ビジネス向け</small></p>
+          <p class="tool-plan-note">組織利用</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要相談</p>
+          <p class="tool-plan-note">大規模組織向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額料金</th>
+            <th>主な特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free（無料）</strong></td>
+            <td>0円</td>
+            <td>Googleアカウントで基本チャット。モデル・回数に制限あり。</td>
+          </tr>
+          <tr>
+            <td><strong>Google One AI Premium 等</strong></td>
+            <td>要確認<br><small>（地域・為替で変動）</small></td>
+            <td>高性能モデル、追加ストレージ、Gemsなど。名称は変更されることがあります。</td>
+          </tr>
+          <tr>
+            <td><strong>Google Workspace 向け</strong></td>
+            <td>要確認</td>
+            <td>組織アカウントでの利用、管理コンソール、データ取り扱いのポリシー。</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>要問い合わせ</td>
+            <td>大規模導入、セキュリティ・コンプライアンス要件への対応。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        業務データを扱う場合は、<strong>個人の無料アカウントではなくWorkspace向けプランと社内ルール</strong>を先に確認してください。料金・機能は変更が多いため、契約前に<a href="https://one.google.com/about/plans" target="_blank" rel="noopener noreferrer">Google Oneのプラン</a>や<a href="https://workspace.google.com/" target="_blank" rel="noopener noreferrer">Google Workspace</a>の公式情報を参照してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>GeminiはGoogleアカウントがあればすぐ始められます。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>Googleアカウントでログインする</strong>
+            <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">gemini.google.com</a>にアクセスし、Googleアカウントでサインインします。
+          </li>
+          <li>
+            <strong>やりたいことを具体的に書く</strong>
+            例：「この議事録の要点を3つにまとめて」「英語メールの丁寧な下書きを作って」
+          </li>
+          <li>
+            <strong>必要ならファイルや画像を添付する</strong>
+            資料の要約や画像の説明を依頼できます（プラン・形式により上限あり）。
+          </li>
+          <li>
+            <strong>回答を確認し、追質問する</strong>
+            「表形式で」「もっと短く」など、会話を続けて調整します。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/gemini/og-hero.png" alt="Geminiの入力欄。質問を入力して送信する" width="600" height="338" loading="lazy">
+            <figcaption>Googleアカウントでログイン後、入力欄から使い始められます</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <h3>うまく使うためのコツ</h3>
+      <ul>
+        <li><strong>Google連携を意識する</strong> — ドライブやGmailの文脈がある作業はGeminiの得意分野</li>
+        <li><strong>最新情報は出典を確認</strong> — 検索連携があっても、重要な数字は原典を開く</li>
+        <li><strong>会社データはルール順守</strong> — 個人アカウントに社内ファイルを入れない</li>
+        <li><strong>出力は人が最終確認</strong> — ハルシネーションの可能性は他ツールと同様</li>
+      </ul>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>Google Workspaceをすでに使っているチームほど、導入のハードルが低い傾向があります。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>事務・管理部門</h3>
+          <ul>
+            <li>Gmail返信の下書き</li>
+            <li>Googleドキュメントの要約</li>
+            <li>スプレッドシートの関数・説明補助</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>マーケティング</h3>
+          <ul>
+            <li>キャンペーン文案の案出し</li>
+            <li>ブログ構成のたたき台</li>
+            <li>画像素材の生成・説明</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>企画・リサーチ</h3>
+          <ul>
+            <li>公開情報の整理・比較表の下書き</li>
+            <li>会議資料の要点抽出</li>
+            <li>英語資料の要約</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>教育・資格学習</h3>
+          <ul>
+            <li>用語の平易な説明</li>
+            <li>模擬問題の解説補助（正誤は教材で確認）</li>
+            <li>暗記用の例文生成</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>生成AIパスポートでは、こうした活用例とあわせて<strong>入力してはいけない情報</strong>や<strong>確認義務</strong>がケース問題として問われます。</p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Googleアカウントですぐ始められる</td>
+            <td>プラン体系が変更されやすく分かりにくい</td>
+          </tr>
+          <tr>
+            <td>Gmail・ドキュメント・ドライブと連携しやすい</td>
+            <td>Microsoft 365中心の環境では優位性が下がる</td>
+          </tr>
+          <tr>
+            <td>検索連携で比較的新しい話題に強い場面がある</td>
+            <td>回答の正確性は依然として要確認</td>
+          </tr>
+          <tr>
+            <td>無料プランあり</td>
+            <td>無料版は利用制限がある</td>
+          </tr>
+          <tr>
+            <td>画像理解・生成にも対応</td>
+            <td>長文一括分析はClaudeに劣る場面もある</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>ChatGPT・Claudeとの比較</h2>
+      <p>チャットAI三強を、試験でも実務でも押さえやすい軸で比較しました。</p>
+
+      <div class="tool-compare-brands">
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/google.svg" alt="Gemini">
+          <span>Gemini</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/openai.svg" alt="ChatGPT">
+          <span>ChatGPT</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/anthropic.svg" alt="Claude">
+          <span>Claude</span>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th><img src="../../assets/images/tools/google.svg" alt="" class="tool-table-logo" width="22" height="22">Gemini</th>
+            <th><img src="../../assets/images/tools/openai.svg" alt="" class="tool-table-logo" width="22" height="22">ChatGPT</th>
+            <th><img src="../../assets/images/tools/anthropic.svg" alt="" class="tool-table-logo" width="22" height="22">Claude</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>開発元</td>
+            <td>Google</td>
+            <td>OpenAI</td>
+            <td>Anthropic</td>
+          </tr>
+          <tr>
+            <td>無料プラン</td>
+            <td>あり</td>
+            <td>あり</td>
+            <td>あり</td>
+          </tr>
+          <tr>
+            <td>Google連携</td>
+            <td>◎</td>
+            <td>△</td>
+            <td>△</td>
+          </tr>
+          <tr>
+            <td>長文処理</td>
+            <td>○</td>
+            <td>○</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>画像生成</td>
+            <td>◎</td>
+            <td>◎</td>
+            <td>△</td>
+          </tr>
+          <tr>
+            <td>向いている用途</td>
+            <td>Google中心の業務</td>
+            <td>汎用・多機能</td>
+            <td>長文・分析・丁寧な文章</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        使い分けの目安は、<strong>Gmail・ドキュメント中心ならGemini</strong>、<strong>最初の1本・機能の広さなら<a href="../chatgpt/">ChatGPT</a></strong>、<strong>長い資料の読み込みなら<a href="../claude/">Claude</a></strong>です。試験では最強の1つを選ぶより、<strong>開発元と用途とリスク</strong>を説明できるかがポイントになります。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>Google Workspaceで仕事をしている方</strong> — 既存のGoogleアカウントで始めやすい</li>
+        <li><strong>生成AIパスポートで主要サービス名を整理したい方</strong> — GoogleとGeminiの対応が試験に直結</li>
+        <li><strong>Gmail・ドキュメントの下書きを時短したい方</strong> — 機密データは社内ルールの範囲で</li>
+        <li><strong>ChatGPTと併用して比較したい方</strong> — 検索連携とGoogle連携の違いを体感できる</li>
+      </ul>
+      <p>あえて向いていないのは、<strong>すでにMicrosoft 365とCopilotで統一されている組織で、個人のGeminiを業務に持ち込みたい</strong>ケースです。ツール選定以前に、情報管理ポリシーの確認が必要です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Geminiは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。Googleアカウントがあれば無料で基本的なチャット機能を利用できます。ただし、高性能モデルや追加機能は有料プラン（Google One AI Premiumなど）向けです。</p>
+        </details>
+        <details>
+          <summary>GeminiとBard（バード）の関係は？</summary>
+          <p class="tool-faq-a">BardはGeminiへの旧名称です。現在はGeminiとして提供されており、試験でもGeminiの名称で主要生成AIとして扱われます。</p>
+        </details>
+        <details>
+          <summary>GeminiとChatGPTの違いは何ですか？</summary>
+          <p class="tool-faq-a">GeminiはGoogle製で、Gmail・ドキュメント・検索などGoogleサービスとの連携が強みです。ChatGPTはOpenAI製で、カスタムGPTや音声会話など機能の幅が広いのが特徴です。</p>
+        </details>
+        <details>
+          <summary>Geminiは何社が提供していますか？</summary>
+          <p class="tool-faq-a">Google（グーグル）が提供する主要な生成AIサービス・モデル群です。試験では開発元とサービス名の組み合わせが問われることが多いです。</p>
+        </details>
+        <details>
+          <summary>会社の業務でGeminiを使っても大丈夫ですか？</summary>
+          <p class="tool-faq-a">個人の無料アカウントに機密情報を入力するのは避けるべきです。業務利用ではGoogle Workspace向けプランや社内ガイドラインの整備が推奨されます。データの取り扱いはプランごとに異なるため、利用前に公式の規約を確認してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://apps.apple.com/app/google-gemini/id6477489729" target="_blank" rel="noopener noreferrer">App Store</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.bard" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Copilot <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/perplexity.svg" alt="" width="16" height="16"> Perplexity <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">大規模言語モデル（LLM） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
