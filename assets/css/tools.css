@@ -45,8 +45,7 @@
   gap: 8px;
   padding: 16px;
   background: var(--surface-inset);
-  border: 1px solid var(--border-subtle);
-  border-top: 3px solid var(--blue);
+  border: 2px solid var(--blue);
   border-radius: 0;
   text-decoration: none;
   color: inherit;
@@ -54,7 +53,7 @@
 }
 .featured-card:hover {
   background: var(--blue-soft);
-  border-color: var(--border-subtle);
+  border-color: var(--blue-hover);
 }
 .featured-card:hover .featured-name {
   color: var(--blue);
@@ -65,7 +64,7 @@
 }
 .featured-card--soon:hover {
   background: var(--surface-inset);
-  border-color: var(--border-subtle);
+  border-color: var(--blue);
 }
 .featured-card--soon:hover .featured-name {
   color: var(--ink);
