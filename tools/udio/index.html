@@ -1,0 +1,440 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Udioの機能・料金・使い方を解説。テキストから楽曲を生成するAI音楽サービス、Standard/Proプラン、UMG提携後の変更点、Sunoとの違いを2026年6月時点で整理。">
+          <title>Udioとは？AI音楽生成の機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/udio/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="Udioとは？AI音楽生成の機能・料金・使い方を解説">
+          <meta property="og:description" content="Udioをわかりやすく解説。スタイル指定付き楽曲生成、クレジット制料金、ダウンロード制限とSuno比較を2026年6月時点で整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/udio/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/udio/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/udio/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/udio/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+        { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Udio", "item": "https://ai-master.jp/tools/udio/" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/udio/#article",
+      "headline": "Udioとは？AI音楽生成の機能・料金・使い方を解説",
+      "description": "Udioをわかりやすく解説。スタイル指定付き楽曲生成、クレジット制料金、ダウンロード制限とSuno比較を2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/udio/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/udio/og-hero.png",
+      "author": { "@type": "Organization", "name": "AI Master" },
+      "publisher": { "@id": "https://ai-master.jp/#organization" },
+      "isPartOf": { "@id": "https://ai-master.jp/#website" },
+      "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/udio/#webpage" },
+      "about": { "@type": "SoftwareApplication", "name": "Udio" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ai-master.jp/tools/udio/#webpage",
+      "url": "https://ai-master.jp/tools/udio/",
+      "name": "Udioとは？AI音楽生成の機能・料金・使い方を解説",
+      "description": "Udioをわかりやすく解説。スタイル指定付き楽曲生成、クレジット制料金、ダウンロード制限とSuno比較を2026年6月時点で整理。",
+      "isPartOf": { "@id": "https://ai-master.jp/#website" },
+      "breadcrumb": { "@id": "https://ai-master.jp/tools/udio/#breadcrumb" },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Udio",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser, iOS",
+      "description": "テキストプロンプトから歌詞・メロディ・ボーカル付きの楽曲を生成するAI音楽サービス。スタイルやジャンルの細かい指定が可能。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free $0。Standard $10/月・2,400クレジット、Pro $30/月・6,000クレジット（2026年6月時点）"
+      },
+      "provider": { "@type": "Organization", "name": "Udio", "url": "https://www.udio.com" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Udioは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。Freeプラン（$0）で日次・月次のクレジット枠内で試作できます。本格的な制作や商用利用にはStandard（$10/月）やPro（$30/月）が必要です。詳細は公式Pricingを確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "UdioとSunoの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "どちらもテキストから楽曲を生成するAI音楽サービスです。Udioはスタイル・ジャンル指定の細かさで知られ、Sunoはモデル世代とクレジット設計が異なります。試験では両方を音楽生成AIの代表例として押さえると整理しやすいです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Udioのクレジットは繰り越されますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "サブスクリプションに含まれる月次クレジットは繰り越されません（公式ヘルプ）。別途購入したクレジットの扱いは公式ヘルプで確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Udioで楽曲をダウンロードできますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2025年10月のUniversal Music Group提携以降、公式ヘルプでは音声・動画・ステムのダウンロードが無効化されていると案内されています。最新の利用可否は契約前に公式情報で必ず確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Udioは動画生成AIですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。Udioは音楽（楽曲）生成AIです。RunwayやPikaなどの動画生成AI、ElevenLabsなどの音声合成とはカテゴリが異なります。"
+          }
+        }
+      ]
+    }
+  ]
+}
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">Udio</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/udio/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">Udio · 音声・動画・音楽</p>
+                  <h1>Udioとは？AI音楽生成の機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">テキストからスタイルを細かく指定して楽曲を生成できるAI音楽サービス（Sunoの主要競合）</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">無料枠あり</span>
+                <span class="tool-category">音楽生成AI</span>
+                <span class="tool-category">クレジット制</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Web（udio.com）</li><li>iOSアプリ</li><li>Standard / Pro</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/udio/og-hero.png" alt="Udioの公式イメージ" width="1200" height="630" fetchpriority="high">
+              <figcaption>出典：Udio公式（udio.com）</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>Udio</strong>は、テキストプロンプトから<strong>歌詞・メロディ・ボーカル</strong>を含む<strong>楽曲</strong>を生成する<strong>AI音楽サービス</strong>です。Sunoと並ぶ代表例で、ジャンルやムードの<strong>スタイル指定</strong>の細かさで知られます。本記事では、<a href="#pricing">公式の料金プラン</a>、<a href="#umg">UMG提携後のサービス変更</a>、<a href="#misconception">試験での誤解</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+                <li><a href="#what-is">Udioとは</a></li>
+                <li><a href="#features">できること（主な機能）</a></li>
+                <li><a href="#misconception">よくある誤解</a></li>
+                <li><a href="#umg">UMG提携とサービス変更</a></li>
+                <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+                <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+                <li><a href="#use-cases">ビジネスでの活用例</a></li>
+                <li><a href="#pros-cons">メリット・デメリット</a></li>
+                <li><a href="#comparison">主要ツールとの比較</a></li>
+                <li><a href="#recommend">こんな人におすすめ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+              <h2>試験で問われる見方</h2>
+              <p>生成AIパスポートでは、音声・音楽生成AIの存在と、商用利用・著作権・利用規約の確認が論点になります。Udioは「テキストから楽曲を作るAI」の代表例として、Sunoと並べて押さえると整理しやすいです。</p>
+              <p>「Udio＝動画生成AI」「Udio＝Sunoと同一サービス」といった混同に注意してください。音楽生成は別カテゴリであり、両者は競合する別プロダクトです。</p>
+              <div class="tool-callout">
+                <p><strong>このサイトの演習で確認する</strong></p>
+                <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0194/">一問一答 TF-0194（音声生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0195/">TF-0195（音声生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a></p>
+                <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+              </div>
+            </section>
+
+            <section id="what-is">
+              <h2>Udioとは</h2>
+              <p>Udioは、udio.comおよびiOSアプリから利用できるAI音楽生成サービスです。ジャンル・テンポ・雰囲気・楽器構成などをテキストで指定すると、短い楽曲が生成されます。</p>
+              <p>生成は<strong>クレジット制</strong>で、曲の長さや生成回数に応じて消費します。有料プランでは同時生成数や月間クレジット上限が拡張されます。</p>
+              <p>2025年10月にはUniversal Music Group（UMG）との提携が発表され、クレジット上限の引き上げやダウンロード機能の一時停止など、サービス仕様に大きな変更がありました（後述）。</p>
+            </section>
+
+            <section id="features">
+              <h2>できること（主な機能）</h2>
+              <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+  <h3>Text-to-Music</h3>
+  <p>プロンプトから歌詞・メロディ・ボーカルを含む楽曲を生成します。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>スタイル指定</h3>
+  <p>ジャンル・ムード・楽器・テンポなどを細かく記述し、意図に沿った曲を狙えます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>拡張・リミックス</h3>
+  <p>生成曲を延長したり、セクションを差し替えたりする編集機能（プランにより制限あり）。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>同時生成</h3>
+  <p>複数セットを並行生成。Proでは同時10曲（5セット）まで（2026年2月時点の公式ヘルプ）。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>クレジット・トップアップ</h3>
+  <p>月次クレジットに加え、別途クレジットを購入可能（公式Pricing・ヘルプで確認）。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>学生割引</h3>
+  <p>認定大学の学生向けに、Standard/Proの50%オフ（6か月）が公式ヘルプで案内されています。</p>
+</div>
+              </div>
+            </section>
+
+            <section id="misconception">
+              <h2>よくある誤解</h2>
+              <p>代表的な誤解は「<strong>Udio＝Sunoの別名</strong>」です。どちらも音楽生成AIですが、別会社・別モデル・別料金体系の独立サービスです。</p>
+              <p>もう1つは「<strong>有料プランならいつでもダウンロードできる</strong>」です。UMG提携後、公式ヘルプでは音声・動画・ステムの<strong>ダウンロードが無効化</strong>されていると明記されています。納品前に最新の公式案内を必ず確認してください。</p>
+            </section>
+
+            <section id="umg">
+              <h2>UMG提携とサービス変更</h2>
+              <p>2025年10月29日、UdioはUniversal Music Groupとの提携を発表しました。公式ヘルプ（2026年2月17日更新）では、次の変更が記載されています。</p>
+              <ul class="tool-example-list">
+                <li><strong>クレジット上限の引き上げ</strong>：Standardは月2,400、Proは月6,000クレジットに増加</li>
+                <li><strong>既存加入者への付与</strong>：失効しない1,000クレジットの一回限り付与</li>
+                <li><strong>ダウンロードの無効化</strong>：音声・動画・ステムのダウンロードが停止</li>
+              </ul>
+              <p>ラベル提携に伴う権利整理の過渡期である可能性が高く、今後仕様が再変更される場合があります。案件で使う際は、生成時点の公式情報を記録しておくと安全です。</p>
+            </section>
+
+            <section id="pricing">
+              <h2>料金プラン（2026年6月時点）</h2>
+              <p>以下は公式Pricing（udio.com/pricing）および公式ヘルプに基づく<strong>2026年6月時点</strong>の整理です。年払い・月払いの選択が可能です。</p>
+              <div class="tool-plan-grid">
+        <div class="tool-plan-card"><p class="tool-plan-name">Free</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">日次・月次クレジット</p></div>
+<div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Standard</p><p class="tool-plan-price">$10/月</p><p class="tool-plan-note">2,400クレジット/月</p></div>
+<div class="tool-plan-card"><p class="tool-plan-name">Pro</p><p class="tool-plan-price">$30/月</p><p class="tool-plan-note">6,000クレジット/月</p></div>
+              </div>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>プラン</th>
+                    <th>料金（2026年6月時点）</th>
+                    <th>月次クレジット</th>
+                    <th>主な条件</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td><strong>Free</strong></td><td><strong>$0</strong></td><td>日次・月次枠（公式Pricingで確認）</td><td>試作向け・機能制限あり</td></tr>
+<tr><td><strong>Standard</strong></td><td><strong>$10/月</strong>（公式ヘルプ・USD表記）</td><td><strong>2,400/月</strong></td><td>本格利用の入口・年払い割引あり</td></tr>
+<tr><td><strong>Pro</strong></td><td><strong>$30/月</strong>（公式ヘルプ・USD表記）</td><td><strong>6,000/月</strong></td><td>大量生成・同時生成数拡張</td></tr>
+                </tbody>
+              </table>
+              <p>サブスクリプションに含まれる月次クレジットは<strong>繰り越されません</strong>（公式ヘルプ「Do credits roll over?」）。アップグレードは即時反映・日割り精算、ダウングレードは次回更新時から適用される旨が公式ヘルプに記載されています。</p>
+            </section>
+
+            <section id="how-to">
+              <h2>はじめ方・基本的な使い方</h2>
+              <div class="tool-split">
+                <ol class="tool-steps">
+        <li><strong>アカウント作成</strong>udio.comで登録し、Free枠またはトライアル条件を確認します。</li>
+<li><strong>スタイルを書く</strong>ジャンル・BPM・ボーカル性・参考アーティストの「雰囲気」などを具体的に指定します。</li>
+<li><strong>生成と選別</strong>複数案を生成し、用途に合う曲を選びます。</li>
+<li><strong>編集・拡張</strong>気に入ったセクションを延長・差し替えします。</li>
+<li><strong>権利・ダウンロード確認</strong>UMG提携後のダウンロード制限と利用規約を必ず確認します。</li>
+                </ol>
+                <div class="tool-split__media">
+                  <figure class="tool-figure">
+                    <img src="../../assets/images/tools/udio/og-hero.png" alt="Udioの公式イメージ" width="600" height="315" loading="lazy">
+                    <figcaption>出典：Udio公式（udio.com）</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <section id="use-cases">
+              <h2>ビジネスでの活用例</h2>
+              <div class="tool-usecase-grid">
+              <div class="tool-usecase-card">
+        <h3>BGM・ジングル試作</h3>
+        <ul>
+                <li>動画・ポッドキャスト用の方向性合わせ</li>
+<li>ジャンル違いを短時間で比較</li>
+<li>本番作曲前のたたき台</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>スタイル探索</h3>
+        <ul>
+                <li>細かいプロンプトでサウンドを詰める</li>
+<li>Sunoと並行してA/B比較</li>
+<li>クレジット消費を見ながら量産</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>試験・学習</h3>
+        <ul>
+                <li>音楽生成AIの具体例として名称を暗記</li>
+<li>商用・著作権の論点整理</li>
+<li>UMG提携と権利整理の事例学習</li>
+        </ul>
+      </div>
+              </div>
+            </section>
+
+            <section id="pros-cons">
+              <h2>メリット・デメリット</h2>
+              <table class="tool-pros-cons-table">
+                <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+                <tbody>
+        <tr><td>スタイル指定が細かく方向性を出しやすい</td><td>月次クレジットは繰り越されない</td></tr>
+<tr><td>Standard $10/月から本格利用可能</td><td>UMG提携後、ダウンロードが制限されている</td></tr>
+<tr><td>Sunoと並ぶ試験の定番名称</td><td>権利・商用条件は規約と時点で変動しやすい</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="comparison">
+              <h2>主要ツールとの比較</h2>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr><th>項目</th><th>Udio</th><th>Suno</th><th>ElevenLabs</th></tr>
+                </thead>
+                <tbody>
+        <tr><td>主な出力</td><td>楽曲（歌詞＋伴奏）</td><td>楽曲（歌詞＋伴奏）</td><td>音声・短尺音楽</td></tr>
+<tr><td>有料目安</td><td>Standard $10/月</td><td>Pro $8/月（年払い）</td><td>Starter $5/月〜</td></tr>
+<tr><td>月次クレジット</td><td>2,400〜6,000</td><td>2,500〜10,000</td><td>プランにより異なる</td></tr>
+<tr><td>強み</td><td>スタイル指定の細かさ</td><td>モデル世代・UIの充実</td><td>音声合成・吹き替え</td></tr>
+<tr><td>試験での位置づけ</td><td>音楽生成AI代表</td><td>音楽生成AI代表</td><td>音声生成AI代表</td></tr>
+                </tbody>
+              </table>
+              <p>楽曲制作ならUdioと<a href="../suno/">Suno</a>、ナレーションなら<a href="../elevenlabs/">ElevenLabs</a>、動画編集なら<a href="../descript/">Descript</a>など、カテゴリで使い分けます。</p>
+            </section>
+
+            <section id="recommend">
+              <h2>こんな人におすすめ</h2>
+              <ul>
+                      <li><strong>ジャンル・スタイルを細かく指定して楽曲試作したいクリエイター</strong></li>
+              <li><strong>Sunoと並行して音楽生成AIを比較検証したい人</strong></li>
+              <li><strong>試験対策で音楽生成AIの代表名を押さえたい受験生</strong></li>
+              </ul>
+              <p>あえて向いていないのは、今すぐ高品質ファイルをダウンロードして納品したいケース（UMG提携後の制限を要確認）や、実在アーティストの楽曲を無断で再現したい場合です。</p>
+            </section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+        <details><summary>Udioは無料で使えますか？</summary><p class="tool-faq-a">Freeプラン（$0）で日次・月次のクレジット枠内で試作できます。本格利用はStandard（$10/月）以上が目安です。</p></details>
+<details><summary>UdioとSunoの違いは？</summary><p class="tool-faq-a">どちらも音楽生成AIですが、別サービスです。モデル・料金・UIが異なり、試験では両方を代表例として覚えます。</p></details>
+<details><summary>クレジットは繰り越されますか？</summary><p class="tool-faq-a">サブスクの月次クレジットは繰り越されません。別途購入分は公式ヘルプで確認してください。</p></details>
+<details><summary>楽曲をダウンロードできますか？</summary><p class="tool-faq-a">UMG提携後、公式ヘルプでは音声・動画・ステムのダウンロードが無効化されていると案内されています。最新情報を確認してください。</p></details>
+<details><summary>動画生成AIですか？</summary><p class="tool-faq-a">いいえ。音楽生成AIです。動画生成とは別カテゴリです。</p></details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://www.udio.com" target="_blank" rel="noopener noreferrer">Udio（udio.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.udio.com/pricing" target="_blank" rel="noopener noreferrer">料金ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://help.udio.com/en/articles/12683565-changes-associated-with-the-universal-music-group-umg-partnership" target="_blank" rel="noopener noreferrer">UMG提携に関する公式ヘルプ</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../suno/"><img src="../../assets/images/tools/suno/app-icon.png" alt="" width="16" height="16"> Suno</a></li>
+          <li><a href="../elevenlabs/"><img src="../../assets/images/tools/elevenlabs/app-icon.png" alt="" width="16" height="16"> ElevenLabs</a></li>
+          <li><a href="../descript/"><img src="../../assets/images/tools/descript/app-icon.png" alt="" width="16" height="16"> Descript</a></li>
+          <li><a href="../heygen/"><img src="../../assets/images/tools/heygen/app-icon.png" alt="" width="16" height="16"> HeyGen</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Speech（音声合成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        <script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+        </html>

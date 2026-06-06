@@ -121,6 +121,12 @@ DIRECT_ICON_URL = {
     "elevenlabs": "https://elevenlabs.io/apple-icon.png",
     "runway": "https://runwayml.com/icon.png",
     "kling-ai": "https://s16-kling.klingai.com/kos/s101/nlav112918/kling-homepage-aio/logo-180x180.png",
+    "pika": "https://pika.art/images/landing/footer-pika-icon.webp",
+    "luma-dream-machine": "https://lumalabs.ai/images/brand/luma-ai/logo-black.svg",
+    "heygen": "https://cdn.sanity.io/images/pdhqcmb1/production/9326953a01da96181ed910f1ad68214477fe9846-264x264.png",
+    "suno": "https://cdn-o.suno.com/apple-touch-icon.png",
+    "udio": "https://www.udio.com/favicon.ico?favicon.0wbc3vz33genq.ico",
+    "descript": "https://static-cdn.descript.com/web/icons/apple-touch-icon.png",
 }
 
 

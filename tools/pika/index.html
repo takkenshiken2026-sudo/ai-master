@@ -1,0 +1,432 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Pikaの機能・料金・使い方を解説。Pika Labsの動画生成AI、クレジット制、Pikaffects、Runway・Kling AIとの違いを2026年6月時点で整理。">
+          <title>Pikaとは？動画生成AIの機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/pika/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="Pikaとは？動画生成AIの機能・料金・使い方を解説">
+          <meta property="og:description" content="Pikaをわかりやすく解説。クレジット制の料金プラン、Pika 2.5とPikaffects、実務活用、主要動画生成AIとの比較を2026年6月時点で整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/pika/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/pika/og-hero.jpg">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/pika/og-hero.jpg">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/pika/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+        { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Pika", "item": "https://ai-master.jp/tools/pika/" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/pika/#article",
+      "headline": "Pikaとは？動画生成AIの機能・料金・使い方を解説",
+      "description": "Pikaをわかりやすく解説。クレジット制の料金プラン、Pika 2.5とPikaffects、実務活用、主要動画生成AIとの比較を2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/pika/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/pika/og-hero.jpg",
+      "author": { "@type": "Organization", "name": "AI Master" },
+      "publisher": { "@id": "https://ai-master.jp/#organization" },
+      "isPartOf": { "@id": "https://ai-master.jp/#website" },
+      "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/pika/#webpage" },
+      "about": { "@type": "SoftwareApplication", "name": "Pika" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ai-master.jp/tools/pika/#webpage",
+      "url": "https://ai-master.jp/tools/pika/",
+      "name": "Pikaとは？動画生成AIの機能・料金・使い方を解説",
+      "description": "Pikaをわかりやすく解説。クレジット制の料金プラン、Pika 2.5とPikaffects、実務活用、主要動画生成AIとの比較を2026年6月時点で整理。",
+      "isPartOf": { "@id": "https://ai-master.jp/#website" },
+      "breadcrumb": { "@id": "https://ai-master.jp/tools/pika/#breadcrumb" },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Pika",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser, iOS",
+      "description": "Pika Labsが提供する動画生成AI。Text-to-VideoやPikaffectsで短尺動画をクレジット制で生成できる。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Basic（無料）$0・80クレジット/月。Standard $8/月（年払い）・700クレジット、Pro $28/月（年払い）、Fancy $76/月（年払い）。月払いは異なる場合あり（2026年6月時点）"
+      },
+      "provider": { "@type": "Organization", "name": "Pika Labs", "url": "https://pika.art" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Pikaは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。Basic（無料）プランで月80クレジットが付与されます。ただし2026年6月時点では480p・ウォーターマーク付き・非商用に限定されるため、本番利用には有料プランが必要です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PikaとRunwayの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "どちらも動画生成AIですが、PikaはPikaffectsなどエフェクト特化の機能が強く、RunwayはGen-4系と編集UIの統合が強みです。クレジットの消費単位とプラン設計も異なるため、用途に合わせて比較してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pikaのクレジットはどのくらい消費しますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "機能とモデル（Turbo/Pro）によって異なります。公式Pricingの例では、TurboモデルでPikascenes等は10クレジット、ProモデルでPikatwistsは最大80クレジットなどが示されています。生成前に公式ページで最新の消費表を確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pikaは商用利用できますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "商用利用は有料プラン（Standard以上）で提供されています。無料のBasicプランは非商用です。案件利用前に最新の利用規約とプラン条件を公式で確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pikaは画像生成AIですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "主軸は動画生成AIです。試験では動画生成AIの具体例としてRunwayやVeoと並べて覚えるのが適切で、静止画専用ツール（Midjourneyなど）と混同しないよう注意してください。"
+          }
+        }
+      ]
+    }
+  ]
+}
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">Pika</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/pika/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">Pika · Pika Labs · 音声・動画</p>
+                  <h1>Pikaとは？動画生成AIの機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">Pikaffectsで映像に独自の動きを加えられる、クレジット制の動画生成AI</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">無料枠あり</span>
+                <span class="tool-category">動画生成AI</span>
+                <span class="tool-category">クレジット制</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Web（pika.art）</li><li>iOSアプリ</li><li>Pika 2.5</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/pika/og-hero.jpg" alt="Pikaの公式イメージ" width="1200" height="630" fetchpriority="high">
+              <figcaption>出典：Pika公式（pika.art）</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>Pika</strong>は、<strong>Pika Labs</strong>が提供する<strong>動画生成AI</strong>サービスです。<strong>Text-to-Video</strong>に加え、<strong>Pikaffects</strong>（Pikascenes・Pikadditions・Pikaswapsなど）で短尺動画に独自の演出を加えられます。本記事では、<a href="#pricing">公式の料金プラン</a>、<a href="#comparison">Runway・Kling AIとの比較</a>、<a href="#misconception">試験で混乱しやすい点</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+                <li><a href="#what-is">Pikaとは</a></li>
+                <li><a href="#features">できること（主な機能）</a></li>
+                <li><a href="#misconception">よくある誤解</a></li>
+                <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+                <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+                <li><a href="#use-cases">ビジネスでの活用例</a></li>
+                <li><a href="#pros-cons">メリット・デメリット</a></li>
+                <li><a href="#comparison">主要ツールとの比較</a></li>
+                <li><a href="#recommend">こんな人におすすめ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+              <h2>試験で問われる見方</h2>
+              <p>生成AIパスポートでは動画生成AIの特徴と利用上の注意が問われます。PikaはRunwayやVeoと並ぶ「動画生成AIの具体例」として、クレジット制と商用条件の確認が論点になりやすいです。</p>
+              <p>「動画生成AI＝すべて同じ料金」「Pika＝画像生成専用ツール」といった混同に注意してください。Pikaは動画が主軸で、プランごとに解像度・ウォーターマーク・商用可否が変わります。</p>
+              <div class="tool-callout">
+                <p><strong>このサイトの演習で確認する</strong></p>
+                <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0196/">一問一答 TF-0196（動画生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0197/">TF-0197（動画生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a></p>
+                <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+              </div>
+            </section>
+
+            <section id="what-is">
+              <h2>Pikaとは</h2>
+              <p>Pikaは、pika.art上で動画を生成・編集できるWebサービス（iOSアプリも提供）です。最新世代の<strong>Pika 2.5</strong>を中心に、テキストや画像から短尺クリップを作れます。</p>
+              <p>特徴的なのは<strong>Pikaffects</strong>と呼ばれる演出機能群です。被写体の膨張・溶融・クラッシュなど、SNS向けの目を引く動きを比較的少ない手順で付けられます。</p>
+              <p>利用は<strong>月次クレジット制</strong>です。無料のBasicから有料のStandard・Pro・Fancyまで段階があり、機能ごとに消費クレジットが異なるため、試験でも「定額無制限」と誤解されやすい点に注意が必要です。</p>
+            </section>
+
+            <section id="features">
+              <h2>できること（主な機能）</h2>
+              <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+  <h3>Text-to-Video</h3>
+  <p>テキストプロンプトから短尺動画を生成。Turboモデルで素早く試作できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Pikaffects</h3>
+  <p>Pikascenes・Pikadditions・Pikaswaps・Pikatwistsなど、映像に特殊効果や置換を加えられます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Pika 2.5</h3>
+  <p>最新モデルで解像度や品質を選択。プランにより480pのみ、または全解像度が利用可能です。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Image-to-Video</h3>
+  <p>静止画を起点に動きを付与し、商品写真やイラストから動画案を作れます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>クレジット管理</h3>
+  <p>月次クレジットと機能別消費でコストを見える化。有料プランでは追加クレジット購入も可能です。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>商用ライセンス</h3>
+  <p>Standard以上でウォーターマークなし・商用利用が可能（2026年6月時点の公式Pricing）。</p>
+</div>
+              </div>
+            </section>
+
+            <section id="misconception">
+              <h2>よくある誤解</h2>
+              <p>代表的な誤解は「<strong>Pika＝Runwayと同じ</strong>」です。どちらも動画生成AIですが、PikaはPikaffectsなどエフェクト訴求が強く、RunwayはGen-4系と編集タイムラインの統合が強みです。クレジット単価も機能単位で異なります。</p>
+              <p>もう1つは「<strong>無料プラン＝商用OK</strong>」です。Basic（無料）は非商用・ウォーターマーク付きが前提です。試験・実務とも、プランと利用規約の確認が必須です。</p>
+            </section>
+
+            <section id="pricing">
+              <h2>料金プラン（2026年6月時点）</h2>
+              <p>Pikaの料金は公式Pricingページに基づく<strong>2026年6月時点</strong>の整理です。年払いは月払いより約20%安くなる設計が示されています。</p>
+              <div class="tool-plan-grid">
+        <div class="tool-plan-card"><p class="tool-plan-name">Basic</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">80クレジット/月</p></div>
+<div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Standard</p><p class="tool-plan-price">$8/月（年払い）</p><p class="tool-plan-note">700クレジット/月</p></div>
+<div class="tool-plan-card"><p class="tool-plan-name">Pro</p><p class="tool-plan-price">$28/月（年払い）</p><p class="tool-plan-note">2,300クレジット/月</p></div>
+              </div>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>プラン</th>
+                    <th>料金（2026年6月時点）</th>
+                    <th>月次クレジット</th>
+                    <th>主な位置づけ</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td><strong>Basic</strong></td><td><strong>$0</strong></td><td>80</td><td>480p・ウォーターマーク・非商用で試す</td></tr>
+<tr><td><strong>Standard</strong></td><td><strong>$8/月（年払い）</strong>／月払いは<strong>$10/月</strong>相当</td><td>700</td><td>商用・ウォーターマークなしの入口</td></tr>
+<tr><td><strong>Pro</strong></td><td><strong>$28/月（年払い）</strong>／月払いは<strong>$35/月</strong>相当</td><td>2,300</td><td>より高速・高頻度の生成</td></tr>
+<tr><td><strong>Fancy</strong></td><td><strong>$76/月（年払い）</strong>／月払いは<strong>$95/月</strong>相当</td><td>6,000</td><td>最優先速度・大量生成</td></tr>
+                </tbody>
+              </table>
+              <p>クレジット消費は機能により異なります。公式の例では、TurboモデルでPikascenes・Pikadditions・Pikaswapsは<strong>10クレジット</strong>、ProモデルでPikatwistsは<strong>最大80クレジット</strong>などが示されています。契約前に<a href="https://pika.art/pricing">公式Pricing</a>で最新の消費表を確認してください。</p>
+            </section>
+
+            <section id="how-to">
+              <h2>はじめ方・基本的な使い方</h2>
+              <div class="tool-split">
+                <ol class="tool-steps">
+        <li><strong>アカウント作成</strong>pika.artで登録し、付与クレジットを確認します。</li>
+<li><strong>目的とプランを決める</strong>試作のみならBasic、商用ならStandard以上を検討します。</li>
+<li><strong>プロンプトまたは画像を入力</strong>被写体・動き・スタイルを具体的に記述します。</li>
+<li><strong>Pikaffectsを試す</strong>訴求に合うエフェクトを選び、消費クレジットを確認してから生成します。</li>
+<li><strong>出力を検品</strong>商用案件ではウォーターマークの有無とライセンス条件を再確認します。</li>
+                </ol>
+                <div class="tool-split__media">
+                  <figure class="tool-figure">
+                    <img src="../../assets/images/tools/pika/og-hero.jpg" alt="Pikaの公式イメージ" width="600" height="315" loading="lazy">
+                    <figcaption>出典：Pika公式（pika.art）</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <section id="use-cases">
+              <h2>ビジネスでの活用例</h2>
+              <div class="tool-usecase-grid">
+              <div class="tool-usecase-card">
+        <h3>SNS・バイラル動画</h3>
+        <ul>
+                <li>Pikaffectsで目を引く短尺クリップを量産</li>
+<li>商品写真から動きのある紹介動画を試作</li>
+<li>A/Bテスト用に複数パターンを高速生成</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>広告クリエイティブ</h3>
+        <ul>
+                <li>撮影前のコンセプト動画を関係者と共有</li>
+<li>キャンペーンごとに演出バリエーションを展開</li>
+<li>Standard以上で商用素材として納品</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>個人・小規模制作</h3>
+        <ul>
+                <li>無料枠で手触りを確認してから有料化</li>
+<li>クレジット消費表に沿って予算を管理</li>
+<li>他ツール（Runway等）との比較検証</li>
+        </ul>
+      </div>
+              </div>
+            </section>
+
+            <section id="pros-cons">
+              <h2>メリット・デメリット</h2>
+              <table class="tool-pros-cons-table">
+                <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+                <tbody>
+        <tr><td>PikaffectsでSNS向け演出が作りやすい</td><td>機能ごとにクレジット消費が大きく変わる</td></tr>
+<tr><td>無料枠で月80クレジット試せる</td><td>無料は480p・非商用に限定</td></tr>
+<tr><td>年払いで約20%割引の設計</td><td>長尺・本格編集は別ツールとの併用が必要な場合がある</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="comparison">
+              <h2>主要ツールとの比較</h2>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr><th>項目</th><th>Pika</th><th>Runway</th><th>Kling AI</th></tr>
+                </thead>
+                <tbody>
+        <tr><td>開発元</td><td>Pika Labs</td><td>Runway</td><td>Kuaishou</td></tr>
+<tr><td>得意領域</td><td>Pikaffects・短尺エフェクト</td><td>Gen-4・編集UI</td><td>高品質T2V/I2V</td></tr>
+<tr><td>無料枠</td><td>80クレジット/月（制限あり）</td><td>125クレジット初回</td><td>ログインクレジット等</td></tr>
+<tr><td>課金</td><td>月次クレジット</td><td>月次クレジット</td><td>クレジット制会員</td></tr>
+                </tbody>
+              </table>
+              <p>エフェクト重視ならPika、制作スタジオ型なら<a href="../runway/">Runway</a>、クレジット単価の比較なら<a href="../kling-ai/">Kling AI</a>や<a href="../veo-3/">Veo 3</a>も候補です。</p>
+            </section>
+
+            <section id="recommend">
+              <h2>こんな人におすすめ</h2>
+              <ul>
+                      <li><strong>SNS向けの目立つ動画を素早く試したいクリエイター</strong></li>
+              <li><strong>無料枠で動画生成AIを比較したい個人</strong></li>
+              <li><strong>試験対策で動画生成AIの具体例を増やしたい受験生</strong></li>
+              </ul>
+              <p>あえて向いていないのは、長尺の本格編集だけで完結したいケースや、クレジット管理なしで大量生成したい場合です。</p>
+            </section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+        <details><summary>Pikaは無料で使えますか？</summary><p class="tool-faq-a">はい。Basic（無料）で月80クレジットがありますが、480p・ウォーターマーク・非商用に限定されます。</p></details>
+<details><summary>PikaとRunwayの違いは何ですか？</summary><p class="tool-faq-a">どちらも動画生成AIですが、PikaはPikaffectsなどエフェクト特化、RunwayはGen-4と編集統合が強みです。</p></details>
+<details><summary>Pikaのクレジットはどのくらい消費しますか？</summary><p class="tool-faq-a">機能とモデルにより異なります。Turboで10クレジット、ProのPikatwistsで最大80クレジットなど。公式Pricingで確認してください。</p></details>
+<details><summary>Pikaは商用利用できますか？</summary><p class="tool-faq-a">Standard以上で商用・ウォーターマークなしが可能です。無料Basicは非商用です。</p></details>
+<details><summary>Pikaは画像生成AIですか？</summary><p class="tool-faq-a">主軸は動画生成です。試験では動画生成AIの代表例として覚え、画像専用ツールと混同しないでください。</p></details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://pika.art" target="_blank" rel="noopener noreferrer">Pika（pika.art）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://pika.art/pricing" target="_blank" rel="noopener noreferrer">料金ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://pika.art/api" target="_blank" rel="noopener noreferrer">API情報</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../runway/"><img src="../../assets/images/tools/runway/app-icon.png" alt="" width="16" height="16"> Runway</a></li>
+          <li><a href="../kling-ai/"><img src="../../assets/images/tools/kling-ai/app-icon.png" alt="" width="16" height="16"> Kling AI</a></li>
+          <li><a href="../luma-dream-machine/"><img src="../../assets/images/tools/luma-dream-machine/icon.svg" alt="" width="16" height="16"> Luma Dream Machine</a></li>
+          <li><a href="../heygen/"><img src="../../assets/images/tools/heygen/app-icon.png" alt="" width="16" height="16"> HeyGen</a></li>
+          <li><a href="../suno/"><img src="../../assets/images/tools/suno/app-icon.png" alt="" width="16" height="16"> Suno</a></li>
+          <li><a href="../udio/"><img src="../../assets/images/tools/udio/app-icon.png" alt="" width="16" height="16"> Udio</a></li>
+          <li><a href="../descript/"><img src="../../assets/images/tools/descript/app-icon.png" alt="" width="16" height="16"> Descript</a></li>
+          <li><a href="../veo-3/"><img src="../../assets/images/tools/veo-3/icon.svg" alt="" width="16" height="16"> Veo 3</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Video（動画生成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        <script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+        </html>
