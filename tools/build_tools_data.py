@@ -100,6 +100,7 @@ DIRECT_ICON_URL = {
     "deepseek-chat": "https://cdn.deepseek.com/chat/icon.png",
     "le-chat": "https://chat.mistral.ai/favicons/apple-touch-icon.png",
     "pi": "https://framerusercontent.com/images/Hu7aeJCxpUvwSxyA5mfRMSPAqAU.svg",
+    "midjourney": "https://www.midjourney.com/public/apple-touch-icon.png",
 }
 
 

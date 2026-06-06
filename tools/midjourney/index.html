@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Midjourneyの機能・料金・使い方を解説。画像品質の強み、DALL·E・Stable Diffusionとの違い、プロンプトのコツ、商用利用の注意点まで。生成AIパスポート対策にも。">
+  <title>Midjourneyとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/midjourney/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Midjourneyとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Midjourneyの機能・料金・使い方を解説。画像品質の強み、DALL·Eとの違い、商用利用の注意点まで。">
+  <meta property="og:url" content="https://ai-master.jp/tools/midjourney/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/midjourney/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/midjourney/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/midjourney/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Midjourney", "item": "https://ai-master.jp/tools/midjourney/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/midjourney/#article",
+        "headline": "Midjourneyとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Midjourneyの機能・料金・使い方を解説。画像品質の強み、DALL·Eとの違い、商用利用の注意点まで。",
+        "url": "https://ai-master.jp/tools/midjourney/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/midjourney/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/midjourney/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Midjourney" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/midjourney/#webpage",
+        "url": "https://ai-master.jp/tools/midjourney/",
+        "name": "Midjourneyとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Midjourneyの機能・料金・使い方を解説。画像品質の強み、DALL·Eとの違い、商用利用の注意点まで。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/midjourney/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Midjourney",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "description": "Midjourneyが提供するテキストから画像を生成するAIサービス。芸術的な画質で知られる。",
+        "offers": {
+          "@type": "Offer",
+          "price": "10",
+          "priceCurrency": "USD",
+          "description": "有料サブスクリプション。無料枠なし（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Midjourney",
+          "url": "https://www.midjourney.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Midjourneyは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。2026年6月時点では、Midjourneyに無料プランはありません。有料サブスクリプションへの加入が必要です。最新の料金は公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MidjourneyとDALL·Eの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MidjourneyはMidjourney社の画像生成専用サービスで、芸術的・写真的な画質に強いとされることが多いです。DALL·EはOpenAI製で、ChatGPTからも利用できます。開発元と用途の切り口が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Midjourneyは何社が提供していますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Midjourney社（独立系の研究ラボ）が提供する画像生成AIサービスです。サービス名と開発元が同じ名称である点に注意が必要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MidjourneyとStable Diffusionの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Midjourneyはクラウドの有料サービスとして完結します。Stable Diffusionはオープンソースのモデルで、ローカルや各種アプリから利用する形が一般的です。「画像生成AI」という大分類は同じでも、提供形態が大きく異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Midjourneyで作った画像は商用利用できますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "プランによって商用利用の範囲が異なります。有料プランでは一定の商用利用が認められる場合がありますが、社外利用・クライアントワークでは必ず公式の利用規約を確認し、必要なら法務チェックを行ってください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Midjourney</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/midjourney/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Midjourney · 画像生成</p>
+          <h1>Midjourneyとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">テキストから高品質な画像を生成する、画像生成AIの代表格</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">有料のみ</span>
+        <span class="tool-category">Web対応</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web</li>
+          <li>Discord</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/midjourney/og-hero.png" alt="Midjourneyのロゴ。帆船のアイコン" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Midjourney公式（midjourney.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Midjourney</strong>（ミッドジャーニー）は、<strong>Midjourney社</strong>が提供する<a href="../../glossary/generative-ai/">生成AI</a>の<strong>画像生成</strong>サービスです。テキストの指示（プロンプト）から、イラスト・写真風・コンセプトアートなどの画像を生成します。当初はDiscord上での利用が中心でしたが、現在は<strong>Web版</strong>も整備されています。本記事は全バージョンの技術解説ではなく、<strong>試験で押さえる位置づけ</strong>（画像生成AIの代表例、有料サービス）と<strong>他ツールとの違い</strong>に絞って書いています。料金は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金表</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Midjourneyとは</a></li>
+        <li><a href="#features">Midjourneyでできること（主な機能）</a></li>
+        <li><a href="#pricing">料金プラン一覧</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">DALL·E・Stable Diffusionとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<a href="../chatgpt/">ChatGPT</a>などのチャットAIに加え、<strong>画像・音声などメディアを生成するAI</strong>が第2章以降で扱われます。Midjourneyは<strong>画像生成の代表例</strong>として名前を聞くことがあり、「テキストプロンプトから画像を作る」「著作権・商用利用に注意」といった論点とセットで覚えるとよいです。
+      </p>
+      <p>
+        よくある誤解は、<strong>「Midjourney＝Stable Diffusion」</strong>と同一視することです。どちらも画像生成ですが、Midjourneyは<strong>クラウドの有料サービス</strong>、Stable Diffusionは<strong>オープンソースのモデル</strong>として使われることが多いです。また<strong>「生成した画像は自由に商用できる」</strong>とも限りません。プランと利用規約の確認が試験でも実務でも重要です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0115/">一問一答 TF-0115（ChatGPT）</a> · 画像生成はチャット内の<a href="../chatgpt/">ChatGPT</a>（DALL·E）とも比較して復習
+        </p>
+        <p>
+          まとめて：<a href="../../exams/genai-passport/drill/">一問一答一覧</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Midjourneyとは</h2>
+      <p>
+        Midjourneyは、2022年に公開が始まった<strong>テキストto画像（Text-to-Image）</strong>の生成AIサービスです。開発元は独立系の研究ラボであるMidjourney社で、ロゴの帆船マークでも知られています。美術的な仕上がりの良さから、デザイナーやクリエイターに早期から支持されました。
+      </p>
+      <p>
+        初期はDiscordのボット経由での利用が主流でしたが、その後<strong>midjourney.comのWeb UI</strong>が充実し、ブラウザからの操作が一般的になっています。チャットAIのように会話で雑用をこなすのではなく、<strong>画像生成に特化</strong>している点が大きな違いです。
+      </p>
+      <p>
+        試験では、<strong>「Midjourney＝画像生成AI」</strong>と<strong>「有料サブスクリプション」</strong>の2点をセットで覚えると十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Midjourneyでできること（主な機能）</h2>
+      <p>Midjourneyの中心機能は、プロンプトからの画像生成と、その後処理です。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>テキストから画像生成</h3>
+          <p>英語・日本語などのプロンプトで、イラストや写真風画像を生成します。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>バリエーション（Vary）</h3>
+          <p>気に入った画像のバリエーションを複数生成し、方向性を絞り込みます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>アップスケール</h3>
+          <p>解像度を上げて仕上げ用の画像を得ます（プラン・機能により異なる）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>画像からの生成（Image Prompt）</h3>
+          <p>参考画像を元に、似た雰囲気や構図の画像を生成できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>パラメータ調整</h3>
+          <p>アスペクト比・スタイル強度など、プロンプト末尾のパラメータで調整。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Web・Discord</h3>
+          <p>Web版とDiscordの両方から利用可能（UIは変更され得る）。</p>
+        </div>
+      </div>
+
+      <h3>プロンプトの重要性</h3>
+      <p>
+        Midjourneyは<strong>プロンプトの書き方で結果が大きく変わります</strong>。生成AIパスポートでも、プロンプト設計は横断的なテーマです。ただしチャットAIのように長文で指示を積み重ねるより、<strong>キーワードとスタイル指定</strong>が効く傾向があります。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン一覧</h2>
+      <p>Midjourneyは<strong>無料プランがありません</strong>。有料サブスクリプションへの加入が必要です。料金は変動しやすいため、数字は参考程度にしてください（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Basic</p>
+          <p class="tool-plan-price">要確認<small>/月</small></p>
+          <p class="tool-plan-note">入門向け</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Standard</p>
+          <p class="tool-plan-price">要確認<small>/月</small></p>
+          <p class="tool-plan-note">個人の定番</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">要確認<small>/月</small></p>
+          <p class="tool-plan-note">多めの生成</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Mega</p>
+          <p class="tool-plan-price">要確認<small>/月</small></p>
+          <p class="tool-plan-note">ヘビーユーザー</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額料金（目安）</th>
+            <th>主な特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Basic</strong></td>
+            <td>約$10前後</td>
+            <td>少ない生成量。お試し・ライト利用向け。</td>
+          </tr>
+          <tr>
+            <td><strong>Standard</strong></td>
+            <td>約$30前後</td>
+            <td>個人クリエイター向けの定番プラン。</td>
+          </tr>
+          <tr>
+            <td><strong>Pro / Mega</strong></td>
+            <td>約$60〜$120前後</td>
+            <td>生成量・同時実行数が増える上位プラン。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        契約前は<a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer">Midjourney公式</a>で最新の料金と商用利用条件を確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>Web版から始めるのが現在は一般的です。</p>
+
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>アカウントを作成する</strong>
+            <a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer">midjourney.com</a>でサインアップし、有料プランを選択します。
+          </li>
+          <li>
+            <strong>プロンプトを入力する</strong>
+            例：「a minimalist logo of a coffee shop, flat design, white background」
+          </li>
+          <li>
+            <strong>4枚の候補から選ぶ</strong>
+            生成されたグリッドから気に入った方向を選び、バリエーションやアップスケールを行います。
+          </li>
+          <li>
+            <strong>パラメータを調整する</strong>
+            縦横比（--ar）やスタイル強度など、公式ドキュメントのパラメータを試します。
+          </li>
+          <li>
+            <strong>商用利用は規約を確認</strong>
+            クライアント案件では、プランと利用規約を必ず確認します。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/midjourney/app-icon.png" alt="Midjourneyの公式ロゴ" width="600" height="338" loading="lazy">
+            <figcaption>出典：Midjourney公式（midjourney.com）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>商用利用はプランと規約が最優先です。参考として、公開・社内検討で使える例を挙げます。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>デザイン・広告</h3>
+          <ul>
+            <li>コンセプトビジュアルのたたき台</li>
+            <li>バナー・SNS画像の案出し</li>
+            <li>ムードボード作成</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>マーケティング</h3>
+          <ul>
+            <li>キャンペーン画像のブレスト</li>
+            <li>商品イメージの可視化</li>
+            <li>A/Bテスト用の複数案</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>ゲーム・エンタメ</h3>
+          <ul>
+            <li>キャラクター案の探索</li>
+            <li>背景・世界観のラフ</li>
+            <li>キービジュアルの方向出し</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>学習・資格対策</h3>
+          <ul>
+            <li>画像生成AIの事例理解</li>
+            <li>プロンプト練習</li>
+            <li>他ツールとの比較</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>画質・芸術的仕上がりに定評</td>
+            <td>無料で試せない</td>
+          </tr>
+          <tr>
+            <td>プロンプトだけで高品質な案が得やすい</td>
+            <td>日本語プロンプトは英語より不安定なことも</td>
+          </tr>
+          <tr>
+            <td>Web UIが整備され操作しやすい</td>
+            <td>チャットAIのような汎用性はない</td>
+          </tr>
+          <tr>
+            <td>画像生成の試験・事例として有名</td>
+            <td>商用条件はプラン次第で要確認</td>
+          </tr>
+          <tr>
+            <td>コミュニティのノウハウが豊富</td>
+            <td>ローカル実行や完全オフラインには不向き</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>DALL·E・Stable Diffusionとの比較</h2>
+      <p>主要な画像生成ツールとのざっくりした違いです。</p>
+
+      <div class="tool-compare-brands">
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/midjourney/app-icon.png" alt="Midjourney" width="40" height="40">
+          <span>Midjourney</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/openai.svg" alt="DALL·E">
+          <span>DALL·E</span>
+        </div>
+        <div class="tool-compare-brand">
+          <img src="../../assets/images/tools/stable-diffusion.ico" alt="Stable Diffusion" width="40" height="40">
+          <span>Stable Diffusion</span>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th><img src="../../assets/images/tools/midjourney/app-icon.png" alt="" class="tool-table-logo" width="22" height="22">Midjourney</th>
+            <th><img src="../../assets/images/tools/openai.svg" alt="" class="tool-table-logo" width="22" height="22">DALL·E</th>
+            <th>Stable Diffusion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>開発元</td>
+            <td>Midjourney社</td>
+            <td>OpenAI</td>
+            <td>Stability AI 等</td>
+          </tr>
+          <tr>
+            <td>提供形態</td>
+            <td>クラウド有料</td>
+            <td>ChatGPT経由など</td>
+            <td>オープンソースモデル</td>
+          </tr>
+          <tr>
+            <td>無料で試す</td>
+            <td>×</td>
+            <td>○（枠あり）</td>
+            <td>○（環境による）</td>
+          </tr>
+          <tr>
+            <td>画質・芸術性</td>
+            <td>◎</td>
+            <td>○</td>
+            <td>○（設定次第）</td>
+          </tr>
+          <tr>
+            <td>ローカル実行</td>
+            <td>×</td>
+            <td>×</td>
+            <td>◎</td>
+          </tr>
+          <tr>
+            <td>向いている用途</td>
+            <td>高品質なビジュアル探索</td>
+            <td>ChatGPTと一体で試す</td>
+            <td>カスタム・自前環境</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        まず無料で画像生成を試すなら<a href="../chatgpt/">ChatGPT</a>（DALL·E）が手軽です。本格的なビジュアル探索ならMidjourney、自分で環境を構築したいならStable Diffusion、という整理が現実的です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>高品質なコンセプトアートを量産したいデザイナー</strong></li>
+        <li><strong>画像生成AIの代表例を試験用に押さえたい受験生</strong></li>
+        <li><strong>SNS・広告のビジュアル案を素早く出したい方</strong></li>
+        <li><strong>すでにDALL·Eを使い、画質の違いを比較したい方</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>無料だけで手軽に試したい</strong>場合や、<strong>社内のオンプレミスで完結させたい</strong>ケースです。前者は<a href="../chatgpt/">ChatGPT</a>、後者はStable Diffusion系を検討します。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Midjourneyは無料で使えますか？</summary>
+          <p class="tool-faq-a">いいえ。2026年6月時点では、Midjourneyに無料プランはありません。有料サブスクリプションへの加入が必要です。最新の料金は公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>MidjourneyとDALL·Eの違いは何ですか？</summary>
+          <p class="tool-faq-a">MidjourneyはMidjourney社の画像生成専用サービスで、芸術的・写真的な画質に強いとされることが多いです。DALL·EはOpenAI製で、ChatGPTからも利用できます。開発元と用途の切り口が異なります。</p>
+        </details>
+        <details>
+          <summary>Midjourneyは何社が提供していますか？</summary>
+          <p class="tool-faq-a">Midjourney社（独立系の研究ラボ）が提供する画像生成AIサービスです。サービス名と開発元が同じ名称である点に注意が必要です。</p>
+        </details>
+        <details>
+          <summary>MidjourneyとStable Diffusionの違いは？</summary>
+          <p class="tool-faq-a">Midjourneyはクラウドの有料サービスとして完結します。Stable Diffusionはオープンソースのモデルで、ローカルや各種アプリから利用する形が一般的です。提供形態が大きく異なります。</p>
+        </details>
+        <details>
+          <summary>Midjourneyで作った画像は商用利用できますか？</summary>
+          <p class="tool-faq-a">プランによって商用利用の範囲が異なります。有料プランでは一定の商用利用が認められる場合がありますが、社外利用・クライアントワークでは必ず公式の利用規約を確認し、必要なら法務チェックを行ってください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer">Midjourney（midjourney.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://docs.midjourney.com/" target="_blank" rel="noopener noreferrer">ドキュメント</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT（DALL·E）</a></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> DALL·E <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon"><img src="../../assets/images/tools/adobe.svg" alt="" width="16" height="16"> Adobe Firefly <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">Stable Diffusion <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
