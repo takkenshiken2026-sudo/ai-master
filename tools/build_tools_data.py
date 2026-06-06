@@ -90,6 +90,10 @@ DIRECT_ICON_URL = {
     "devin": "https://devin.ai/favicon.ico",
     "ollama": "https://ollama.com/public/apple-touch-icon.png",
     "bolt-new": "https://cdn.simpleicons.org/stackblitz/1389FD",
+    # 記事用ヒーローアイコン（各社公式）
+    "claude": "https://claude.ai/apple-touch-icon.png",
+    "gemini": "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg",
+    "copilot": "https://copilot.microsoft.com/favicon.ico",
 }
 
 

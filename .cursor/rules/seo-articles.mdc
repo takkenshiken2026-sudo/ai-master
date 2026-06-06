@@ -62,6 +62,14 @@ main.page-wrap.page-wrap--article
 - **演習導線**: 最初の h2 セクション（`#exam-study`）に `.tool-callout` で自作問題へリンク（slugは実在URLのみ）
 - **リードに外部リンクを置かない**（ページ内アンカーは可）。公式URLはツール記事の `.tool-product-links--footer` のみ
 
+## アイコン・画像（公式のみ）
+
+- **ロゴ・アプリアイコンは自作しない**。各社公式（`apple-touch-icon`、公式 favicon、公式 CDN の SVG/OG 画像）を `assets/images/tools/{id}/` に保存して使う
+- ヒーロー左のアイコン: `app-icon.png` または公式 SVG（例: Gemini は `icon.svg`）
+- OG・ヒーロー右の画像: 各サービスの `og:image` 相当（例: `og-hero.png` / `og-hero.jpg`）。**UIの模擬画像は作らない**
+- 比較表・関連リンクのロゴ: `assets/images/tools/{maker}.svg` など既存の公式由来アセットを使う（Simple Icons 等の第三者製ロゴを新規追加しない）
+- `figcaption` は「出典：{社名}公式」形式。出典元URLは記事末尾の公式リンクまたはダウンロード元を控える
+
 ## リンクルール
 
 - **公開済みのみリンク**: 未公開の用語・ツールは `tool-related-list__soon`（リンク不可）
