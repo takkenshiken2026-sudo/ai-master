@@ -105,6 +105,7 @@ DIRECT_ICON_URL = {
     "adobe-firefly": "https://www.adobe.com/favicon.ico",
     "stable-diffusion": "https://stability.ai/favicon.ico",
     "flux": "https://blackforestlabs.ai/favicon.ico",
+    "ideogram": "https://ideogram.ai/favicon.ico",
 }
 
 

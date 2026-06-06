@@ -187,6 +187,7 @@ const TOOLS = [
     logo: "ideogram.ico",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "画像内の文字描写が得意。ロゴ・バナー制作向き",
     url: "https://ideogram.ai",
   },
