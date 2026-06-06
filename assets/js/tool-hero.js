@@ -10,11 +10,14 @@
     if (!body || !visual) return;
 
     if (window.matchMedia(MQ).matches) {
+      visual.style.height = '';
       visual.style.maxHeight = '';
       return;
     }
 
-    visual.style.maxHeight = body.offsetHeight + 'px';
+    var h = body.offsetHeight + 'px';
+    visual.style.height = h;
+    visual.style.maxHeight = h;
   }
 
   function initHeroSync() {
