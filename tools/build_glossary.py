@@ -313,11 +313,10 @@ def scaffold_term_page(term: dict, categories: dict) -> None:
   <meta property="og:locale" content="ja_JP">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/main.css">
   <link rel="stylesheet" href="../../assets/css/seo.css">
   <link rel="stylesheet" href="../../assets/css/tool-detail.css">
-  <link rel="stylesheet" href="../../assets/css/glossary-detail.css">
 </head>
 <body class="page-body">
 
@@ -340,15 +339,14 @@ def scaffold_term_page(term: dict, categories: dict) -> None:
     </ol>
   </nav>
 
-  <header class="glossary-hero">
-    <p class="glossary-hero-cat">{cat}</p>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">{cat}</p>
     <h1>{html.escape(title)}</h1>
-    <p class="glossary-hero-reading">読み：{yomi}</p>
-    <p class="glossary-hero-def">{summary}</p>
+    <p class="tool-hero-sub">読み：{yomi}</p>
   </header>
 
   <article class="tool-content">
-    <p class="tool-lead">この用語の詳細記事は現在準備中です。一覧に戻るか、関連する<strong>生成AI</strong>の解説記事をご覧ください。</p>
+    <p class="tool-lead">{summary} この用語の詳細記事は現在準備中です。一覧に戻るか、関連する<strong>生成AI</strong>の解説記事をご覧ください。</p>
     <p><a href="../generative-ai/">生成AIの解説記事へ</a> · <a href="../index.html">用語辞典一覧へ</a></p>
   </article>
 </main>

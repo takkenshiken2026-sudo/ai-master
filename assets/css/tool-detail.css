@@ -1,3 +1,8 @@
+/* SEO記事共通 — 本文400、リードは青ボックス（.tool-lead） */
+.page-wrap--article {
+  font-weight: 400;
+}
+
 .tool-hero {
   display: flex;
   gap: 20px;
@@ -5,6 +10,19 @@
   margin-bottom: 32px;
   padding-bottom: 28px;
   border-bottom: 1px solid var(--gray-200);
+}
+.tool-hero--article {
+  display: block;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+}
+.tool-hero--article h1 {
+  margin-bottom: 10px;
+}
+.tool-hero-sub {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: 14px;
 }
 .tool-hero--split {
   display: grid;
@@ -334,7 +352,6 @@
 
 .tool-lead {
   font-size: var(--text-base);
-  font-weight: 400;
   line-height: 1.9;
   color: var(--ink);
   margin-bottom: 28px;
@@ -344,7 +361,10 @@
   border: 1px solid var(--blue-mid);
   border-left: 4px solid var(--blue);
 }
-.tool-lead strong {
+.tool-lead strong,
+.tool-content strong,
+.tool-callout strong,
+.tool-example-list strong {
   color: var(--ink);
   font-weight: var(--font-bold);
 }
@@ -430,7 +450,6 @@
 .tool-content li,
 .tool-content td {
   font-size: var(--text-base);
-  font-weight: 400;
   line-height: 1.85;
   color: var(--ink);
 }
@@ -447,11 +466,6 @@
 .tool-content li + li { margin-top: 8px; }
 .tool-steps li + li { margin-top: 0; }
 
-/* 記事内の強調 — 本文(400)より太く */
-.tool-content strong {
-  font-weight: var(--font-bold);
-  color: var(--ink);
-}
 .tool-content a {
   color: var(--ink);
   text-decoration: underline;
@@ -670,9 +684,52 @@
 .tool-faq .tool-faq-a {
   padding: 0 18px 16px;
   font-size: var(--text-base);
-  font-weight: 400;
   line-height: 1.85;
   color: var(--ink);
+}
+
+.tool-callout {
+  margin-top: 16px;
+  padding: 18px 22px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+}
+.tool-callout p {
+  font-size: var(--text-base);
+  line-height: 1.8;
+  color: var(--ink);
+  margin: 0;
+}
+.tool-callout p + p {
+  margin-top: 10px;
+}
+.tool-callout a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.tool-callout a:hover {
+  color: var(--blue);
+}
+
+.tool-example-list {
+  margin-top: 14px;
+  padding: 0;
+  list-style: none;
+}
+.tool-example-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: var(--text-base);
+  line-height: 1.75;
+  color: var(--ink);
+}
+.tool-example-list li:last-child {
+  border-bottom: none;
+}
+.tool-example-list strong {
+  display: block;
+  margin-bottom: 4px;
 }
 
 .tool-related-wrap {
@@ -734,7 +791,6 @@
   width: 100%;
   padding: 10px 0;
   font-size: var(--text-base);
-  font-weight: var(--font-regular);
   line-height: 1.6;
   color: var(--ink);
   background: none;
@@ -794,7 +850,8 @@
 }
 @media (max-width: 640px) {
   .tool-hero-body { --hero-text-indent: 0; }
-  .tool-hero h1 { font-size: var(--text-xl); }
+  .tool-hero h1,
+  .tool-hero--article h1 { font-size: var(--text-xl); }
   .tool-content > section h2 { font-size: var(--text-lg); }
   .tool-related-wrap { grid-template-columns: 1fr; gap: 28px; }
   .tool-feature-grid,
