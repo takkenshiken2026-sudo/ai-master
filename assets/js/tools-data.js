@@ -76,6 +76,7 @@ const TOOLS = [
     logo: "poe.ico",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "GPT・Claude・Gemini等を1画面で試し比べできる",
     url: "https://poe.com",
   },

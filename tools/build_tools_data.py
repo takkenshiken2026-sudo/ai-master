@@ -96,6 +96,7 @@ DIRECT_ICON_URL = {
     "copilot": "https://copilot.microsoft.com/favicon.ico",
     "grok": "https://grok.com/apple-touch-icon.png",
     "meta-ai": "https://static.xx.fbcdn.net/assets/?set=meta_ai_assets&name=meta-ai-orbit-favicon-180px-raster&density=4x&mode=light",
+    "poe": "https://psc2.cf2.poecdn.net/assets/apple-touch-icon.png",
 }
 
 
