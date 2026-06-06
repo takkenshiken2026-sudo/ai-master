@@ -54,6 +54,7 @@ const TOOLS = [
     logo: "grok.ico",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "X（旧Twitter）と連携。リアルタイム情報に強い",
     url: "https://grok.com",
   },
