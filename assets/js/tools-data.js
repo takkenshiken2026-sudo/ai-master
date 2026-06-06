@@ -165,6 +165,7 @@ const TOOLS = [
     logo: "flux.ico",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "Stable Diffusion後継として急成長中の高品質モデル",
     url: "https://blackforestlabs.ai",
   },

@@ -104,6 +104,7 @@ DIRECT_ICON_URL = {
     "dalle": "https://chatgpt.com/cdn/assets/favicon-32x32.png",
     "adobe-firefly": "https://www.adobe.com/favicon.ico",
     "stable-diffusion": "https://stability.ai/favicon.ico",
+    "flux": "https://blackforestlabs.ai/favicon.ico",
 }
 
 
