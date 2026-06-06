@@ -1,0 +1,565 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Devinの機能・料金・使い方を解説。Cognitionが提供する自律型AIソフトウェアエンジニアの概要、GitHub Copilot・Cursor・Windsurf/Devin Desktopとの違い、導入時の注意点を整理。">
+          <title>Devinとは？自律型AIソフトウェアエンジニアの機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/devin/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="Devinとは？自律型AIソフトウェアエンジニアの機能・料金・使い方を解説">
+          <meta property="og:description" content="CognitionのDevinをわかりやすく解説。自律型AIエージェントとしての特徴、料金プラン、使い方、GitHub Copilot・Cursor・Windsurf/Devin Desktopとの違いを整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/devin/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/devin/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/devin/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "BreadcrumbList",
+                "@id": "https://ai-master.jp/tools/devin/#breadcrumb",
+                "itemListElement": [
+                  { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+                  { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+                  { "@type": "ListItem", "position": 3, "name": "Devin", "item": "https://ai-master.jp/tools/devin/" }
+                ]
+              },
+              {
+                "@type": "Article",
+                "@id": "https://ai-master.jp/tools/devin/#article",
+                "headline": "Devinとは？自律型AIソフトウェアエンジニアの機能・料金・使い方を解説",
+                "description": "CognitionのDevinをわかりやすく解説。自律型AIエージェントとしての特徴、料金プラン、使い方、GitHub Copilot・Cursor・Windsurf/Devin Desktopとの違いを整理。",
+                "url": "https://ai-master.jp/tools/devin/",
+                "datePublished": "2026-06-08",
+                "dateModified": "2026-06-08",
+                "inLanguage": "ja",
+                "image": "https://ai-master.jp/assets/images/tools/devin/og-hero.png",
+                "author": { "@type": "Organization", "name": "AI Master" },
+                "publisher": { "@id": "https://ai-master.jp/#organization" },
+                "isPartOf": { "@id": "https://ai-master.jp/#website" },
+                "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/devin/#webpage" },
+                "about": { "@type": "SoftwareApplication", "name": "Devin" }
+              },
+              {
+                "@type": "WebPage",
+                "@id": "https://ai-master.jp/tools/devin/#webpage",
+                "url": "https://ai-master.jp/tools/devin/",
+                "name": "Devinとは？自律型AIソフトウェアエンジニアの機能・料金・使い方を解説",
+                "description": "CognitionのDevinをわかりやすく解説。自律型AIエージェントとしての特徴、料金プラン、使い方、GitHub Copilot・Cursor・Windsurf/Devin Desktopとの違いを整理。",
+                "isPartOf": { "@id": "https://ai-master.jp/#website" },
+                "breadcrumb": { "@id": "https://ai-master.jp/tools/devin/#breadcrumb" },
+                "inLanguage": "ja"
+              },
+              {
+                "@type": "SoftwareApplication",
+                "name": "Devin",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "Web Browser, CLI",
+                "description": "Cognitionが提供する自律型AIソフトウェアエンジニア。タスク計画、実装、検証、修正までを一連のワークフローとして進められる。",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD",
+                  "description": "Free $0、Pro $20/月、Max $200/月、Teams $80/月 minimum + $40/full seat（2026年6月時点）"
+                },
+                "provider": {
+                  "@type": "Organization",
+                  "name": "Cognition",
+                  "url": "https://cognition.ai"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+          {
+                    "@type": "Question",
+                    "name": "Devinは無料で使えますか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "はい。Freeプラン（$0）があります。2026年6月時点では軽量エージェント枠と限定モデルが中心ですが、inline editsやTab completionsは利用できます。業務利用前に最新の上限と条件を公式ページで確認してください。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "DevinとGitHub Copilotは同じですか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "同じではありません。GitHub Copilotは主にIDE内のコード補完、Devinはタスク分解から実装・検証までを進める自律型エージェントという違いがあります。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "DevinとCursorの違いは？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "CursorはAIネイティブなエディタ体験が中心で、Devinはエージェントとしてタスク実行を進める点が主な違いです。併用する場合は、Cursorで編集し、Devinで独立タスクを回す運用が現実的です。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "WindsurfとDevin Desktopの関係は？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "2026年の再編文脈では、Cognitionによる買収後にWindsurfがDevin Desktopとして語られるケースが増えています。名称やプランは変わる可能性があるため、最新アナウンスを確認してください。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "Devinを業務導入するときの注意点は？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "機密情報を不用意に入力しないこと、出力コードの権利関係と利用規約を確認すること、最終レビュー責任を人間が持つことの3点が重要です。特に本番反映前のテストとコードレビューは必須です。"
+                    }
+          }
+]
+              }
+            ]
+          }
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">Devin</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/devin/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">Cognition · 自律型AIエージェント</p>
+                  <h1>Devinとは？自律型AIソフトウェアエンジニアの機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">タスク単位で実装・検証まで進める自律型AIソフトウェアエンジニア</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">無料プランあり</span>
+                <span class="tool-category">自律実行</span>
+                <span class="tool-category">開発支援</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Web（app.devin.ai）</li>
+                  <li>Devin CLI</li>
+                  <li>Devin Cloud</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/devin/og-hero.png" alt="Devinの公式イメージ" width="960" height="540" fetchpriority="high">
+              <figcaption>出典：Cognition公式</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>Devin</strong>は、<strong>Cognition</strong>が提供する<strong>自律型AIソフトウェアエンジニア</strong>です。チャットで指示するだけでなく、タスクの分解、実装、テスト、修正までを連続的に進められる点が特徴です。<strong>GitHub Copilotのようなインライン補完中心ツール</strong>や<strong>CursorのようなAIエディタ</strong>とは役割が異なります。本記事では、試験で押さえるべき位置づけ、<a href="#pricing">料金プラン</a>、<a href="#comparison">主要ツール比較</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+<li><a href="#what-is">Devinとは</a></li>
+<li><a href="#features">できること（主な機能）</a></li>
+<li><a href="#misconception">よくある誤解</a></li>
+<li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+<li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+<li><a href="#use-cases">ビジネスでの活用例</a></li>
+<li><a href="#pros-cons">メリット・デメリット</a></li>
+<li><a href="#comparison">Cursor・GitHub Copilot・Windsurf/Devin Desktopとの比較</a></li>
+<li><a href="#recommend">こんな人におすすめ</a></li>
+<li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+  <h2>試験で問われる見方</h2>
+  <p>
+    生成AIパスポートやG検定では、AIコーディング支援ツールの種類と役割の違いが問われます。Devinは「自律実行型の開発エージェント」として、補完中心のツールと区別して覚えるのがポイントです。
+  </p>
+  <p>
+    特に「Devin = GitHub Copilot」「Devin = AI IDE」という混同は頻出です。DevinはIDEの1機能ではなく、タスク完了を目指す独立エージェントとして整理すると正確です。
+  </p>
+  <div class="tool-callout">
+    <p><strong>このサイトの演習で確認する</strong></p>
+    <p>
+      生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+    </p>
+    <p>
+      G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+    </p>
+  </div>
+</section>
+
+    <section id="what-is">
+  <h2>Devinとは</h2>
+  <p>
+    DevinはCognitionが提供する自律型AIソフトウェアエンジニアです。主な利用画面は<strong>app.devin.ai</strong>で、タスクの要件を入力すると、実装計画、コード変更、テスト実行、修正提案までを段階的に進められます。
+  </p>
+  <p>
+    2026年にはCognitionによるWindsurf買収後の再編で、Windsurfは<strong>Devin Desktop</strong>として位置づけが明確化されました。両者は別体験ですが、ブランドとしては連続性があります（詳細は<a href="../windsurf/">Windsurf/Devin Desktop記事</a>を参照）。
+  </p>
+  <p>
+    DevinはDevin Cloud、Devin CLI、組み込みIDEワークスペースを通じて、単発補完ではなくタスク単位の進行管理に強みがあります。
+  </p>
+</section>
+
+    <section id="features">
+  <h2>できること（主な機能）</h2>
+  <div class="tool-feature-grid">
+    <div class="tool-feature-card">
+      <h3>タスク分解と実行計画</h3>
+      <p>要求を複数ステップに分解し、実装順序を提示してから作業に着手できます。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>実装と検証の往復</h3>
+      <p>コード変更だけでなく、テスト実行や失敗時の再提案まで一連で実施できます。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>Devin Cloud</h3>
+      <p>クラウド上での作業実行により、ローカルPC負荷を抑えつつ並列タスクを回せます。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>Devin CLI</h3>
+      <p>ターミナル中心の開発フローでも、指示・確認・修正をCLI経由で進められます。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>埋め込みIDEワークスペース</h3>
+      <p>Devinの作業状況を可視化し、途中で人間が介入して方針修正できます。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>チーム運用向け管理</h3>
+      <p>Teams以上のプランでは、座席管理や利用統制を前提にした導入が可能です。</p>
+    </div>
+  </div>
+</section>
+
+    <section id="misconception">
+  <h2>よくある誤解</h2>
+  <p>
+    代表的な誤解は「DevinはGitHub Copilotと同じ」という見方です。GitHub Copilotはエディタ内補完が中心で、Devinはタスク全体を進める自律エージェントです。
+  </p>
+  <p>
+    もう1つは「WindsurfとDevinは完全に別会社の無関係製品」という理解です。2026年の買収・再編後は、WindsurfがDevin Desktopとして連続的に扱われる文脈が増えています。
+  </p>
+</section>
+
+    <section id="pricing">
+  <h2>料金プラン（2026年6月時点）</h2>
+  <p>
+    Devinのセルフサーブ料金はFree / Pro / Max / Teams / Enterpriseで構成されています。金額は公式のpricingおよびdocsに基づく<strong>2026年6月時点</strong>の整理です。契約条件は更新されるため、導入前に公式ページで再確認してください。
+  </p>
+  <div class="tool-plan-grid">
+    <div class="tool-plan-card tool-plan-card--highlight">
+      <p class="tool-plan-name">Free</p>
+      <p class="tool-plan-price">$0</p>
+      <p class="tool-plan-note">軽量エージェント枠・限定モデル</p>
+    </div>
+    <div class="tool-plan-card">
+      <p class="tool-plan-name">Pro</p>
+      <p class="tool-plan-price">$20/月</p>
+      <p class="tool-plan-note">個人の継続利用向け</p>
+    </div>
+    <div class="tool-plan-card">
+      <p class="tool-plan-name">Max</p>
+      <p class="tool-plan-price">$200/月</p>
+      <p class="tool-plan-note">高負荷利用向け</p>
+    </div>
+  </div>
+  <table class="tool-spec-table">
+    <thead>
+      <tr>
+        <th>プラン</th>
+        <th>料金（2026年6月時点）</th>
+        <th>主な位置づけ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Free</strong></td>
+        <td><strong>$0</strong></td>
+        <td>まず試したい個人ユーザー</td>
+      </tr>
+      <tr>
+        <td><strong>Pro</strong></td>
+        <td><strong>$20/月</strong></td>
+        <td>日常開発で自律エージェントを使う開発者</td>
+      </tr>
+      <tr>
+        <td><strong>Max</strong></td>
+        <td><strong>$200/月</strong></td>
+        <td>大量タスクを高速に回すヘビーユーザー</td>
+      </tr>
+      <tr>
+        <td><strong>Teams</strong></td>
+        <td><strong>$80/月 minimum + $40/月 per full seat</strong></td>
+        <td>チーム運用・座席管理が必要な組織</td>
+      </tr>
+      <tr>
+        <td><strong>Enterprise</strong></td>
+        <td>個別見積もり</td>
+        <td>統制要件が厳しい大規模導入</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Freeでは「light agent quota」「limited models」が中心ですが、inline editsやTab completionsは広く使えます。上限や仕様は改定されるため、必ず公式の最新情報を確認してください。
+  </p>
+</section>
+
+    <section id="how-to">
+  <h2>はじめ方・基本的な使い方</h2>
+  <p>最短で試す流れは次のとおりです。</p>
+  <div class="tool-split">
+    <ol class="tool-steps">
+      <li>
+        <strong>アカウント作成</strong>
+        devin.ai からサインアップし、app.devin.aiへログインします。
+      </li>
+      <li>
+        <strong>タスクを明文化</strong>
+        目的、制約、完了条件を短く定義して最初の指示を出します。
+      </li>
+      <li>
+        <strong>実行計画をレビュー</strong>
+        Devinが提示するステップを確認し、不要な前提を修正します。
+      </li>
+      <li>
+        <strong>途中介入で精度を上げる</strong>
+        テスト失敗や仕様ずれがあれば途中で方向修正します。
+      </li>
+      <li>
+        <strong>成果物を検証して採用</strong>
+        差分、テスト結果、設計意図を人間が確認してから取り込みます。
+      </li>
+    </ol>
+    <div class="tool-split__media">
+      <figure class="tool-figure">
+        <img src="../../assets/images/tools/devin/og-hero.png" alt="Devinの公式イメージ" width="600" height="338" loading="lazy">
+        <figcaption>出典：Cognition公式</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+    <section id="use-cases">
+  <h2>ビジネスでの活用例</h2>
+  <div class="tool-usecase-grid">
+    <div class="tool-usecase-card">
+      <h3>バックログ消化の高速化</h3>
+      <ul>
+        <li>小〜中規模タスクの並列実行</li>
+        <li>リファクタリング候補の探索</li>
+        <li>テスト追加までの自動化</li>
+      </ul>
+    </div>
+    <div class="tool-usecase-card">
+      <h3>調査・再現タスク</h3>
+      <ul>
+        <li>不具合の再現条件整理</li>
+        <li>ログとコードの突合</li>
+        <li>修正案の複数提示</li>
+      </ul>
+    </div>
+    <div class="tool-usecase-card">
+      <h3>ドキュメント整備</h3>
+      <ul>
+        <li>変更内容の説明文作成</li>
+        <li>セットアップ手順の更新</li>
+        <li>レビュー観点の下書き</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+    <section id="pros-cons">
+  <h2>メリット・デメリット</h2>
+  <table class="tool-pros-cons-table">
+    <thead>
+      <tr>
+        <th>メリット</th>
+        <th>デメリット</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>タスク完了までの一連フローを自律実行しやすい</td>
+        <td>指示が曖昧だと意図とずれた実装になりやすい</td>
+      </tr>
+      <tr>
+        <td>Devin Cloud/CLIで作業形態を選べる</td>
+        <td>高負荷運用ではMaxやTeamsのコストが大きい</td>
+      </tr>
+      <tr>
+        <td>レビュー前提の作業下書きを短時間で作れる</td>
+        <td>最終品質は人間レビューが必須</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+    <section id="comparison">
+  <h2>Cursor・GitHub Copilot・Windsurf/Devin Desktopとの比較</h2>
+  <table class="tool-spec-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>Devin</th>
+        <th>Cursor</th>
+        <th>GitHub Copilot</th>
+        <th>Windsurf / Devin Desktop</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>提供元</td>
+        <td>Cognition</td>
+        <td>Anysphere</td>
+        <td>GitHub（Microsoft）</td>
+        <td>Cognition（再編後）</td>
+      </tr>
+      <tr>
+        <td>主な形態</td>
+        <td>自律エージェント</td>
+        <td>AIエディタ</td>
+        <td>IDE補完</td>
+        <td>AIデスクトップ環境</td>
+      </tr>
+      <tr>
+        <td>強み</td>
+        <td>タスク分解〜実装〜検証の連続実行</td>
+        <td>コード編集体験の統合</td>
+        <td>日常補完の軽快さ</td>
+        <td>ローカル作業導線とエージェント連携</td>
+      </tr>
+      <tr>
+        <td>向いている場面</td>
+        <td>まとまった開発タスクの自動化</td>
+        <td>日常の実装生産性向上</td>
+        <td>既存IDEの補完強化</td>
+        <td>デスクトップ主導のAI開発</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+    <section id="recommend">
+  <h2>こんな人におすすめ</h2>
+  <ul>
+    <li><strong>レビュー前提で開発タスクを並列化したいチーム</strong></li>
+    <li><strong>「補完」ではなく「タスク実行」までAIに任せたい人</strong></li>
+    <li><strong>CursorやGitHub Copilotとの役割分担を明確にしたい人</strong></li>
+    <li><strong>Windsurf/Devin Desktopとの違いを整理して導入判断したい人</strong></li>
+  </ul>
+</section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+                <details>
+  <summary>Devinは無料で使えますか？</summary>
+  <p class="tool-faq-a">はい。Freeプラン（$0）があります。2026年6月時点では軽量エージェント枠と限定モデルが中心ですが、inline editsやTab completionsは利用できます。業務利用前に最新の上限と条件を公式ページで確認してください。</p>
+</details>
+        <details>
+  <summary>DevinとGitHub Copilotは同じですか？</summary>
+  <p class="tool-faq-a">同じではありません。GitHub Copilotは主にIDE内のコード補完、Devinはタスク分解から実装・検証までを進める自律型エージェントという違いがあります。</p>
+</details>
+        <details>
+  <summary>DevinとCursorの違いは？</summary>
+  <p class="tool-faq-a">CursorはAIネイティブなエディタ体験が中心で、Devinはエージェントとしてタスク実行を進める点が主な違いです。併用する場合は、Cursorで編集し、Devinで独立タスクを回す運用が現実的です。</p>
+</details>
+        <details>
+  <summary>WindsurfとDevin Desktopの関係は？</summary>
+  <p class="tool-faq-a">2026年の再編文脈では、Cognitionによる買収後にWindsurfがDevin Desktopとして語られるケースが増えています。名称やプランは変わる可能性があるため、最新アナウンスを確認してください。</p>
+</details>
+        <details>
+  <summary>Devinを業務導入するときの注意点は？</summary>
+  <p class="tool-faq-a">機密情報を不用意に入力しないこと、出力コードの権利関係と利用規約を確認すること、最終レビュー責任を人間が持つことの3点が重要です。特に本番反映前のテストとコードレビューは必須です。</p>
+</details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://devin.ai" target="_blank" rel="noopener noreferrer">Devin</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://docs.devin.ai" target="_blank" rel="noopener noreferrer">公式ドキュメント</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://devin.ai/pricing" target="_blank" rel="noopener noreferrer">料金（Devin公式）</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github.svg" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../windsurf/"><img src="../../assets/images/tools/windsurf/app-icon.png" alt="" width="16" height="16"> Windsurf / Devin Desktop</a></li>
+          <li><a href="../amazon-q-developer/"><img src="../../assets/images/tools/amazon-q-developer/app-icon.jpg" alt="" width="16" height="16"> Amazon Q Developer</a></li>
+                  <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/ai-agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+                  <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a>
+                ·
+                <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+
+        </body>
+        </html>

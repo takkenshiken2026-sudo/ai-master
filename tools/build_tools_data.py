@@ -87,7 +87,7 @@ ICON_DOMAIN_OVERRIDE = {
 
 # 直接ダウンロードURL（Bot対策で favicon が HTML になる場合）
 DIRECT_ICON_URL = {
-    "devin": "https://devin.ai/favicon.ico",
+    "devin": "https://devin.ai/icon.png",
     "ollama": "https://ollama.com/public/apple-touch-icon.png",
     "bolt-new": "https://cdn.simpleicons.org/stackblitz/1389FD",
     # 記事用ヒーローアイコン（各社公式）
@@ -117,6 +117,7 @@ DIRECT_ICON_URL = {
     "lovable": "https://lovable.dev/apple-touch-icon.png",
     "tabnine": "https://www.tabnine.com/wp-content/uploads/2024/09/cropped-tabnine-favicon-270x270.png",
     "amazon-q-developer": "https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/product-categories/business-application/approved/images/qdev_merch_qdev_v1_1280x1280.e0fc098598c9a070a7a5c866716c387fba743c1e.jpg",
+    "warp": "https://www.warp.dev/android-chrome-512x512.png",
 }
 
 

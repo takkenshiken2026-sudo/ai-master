@@ -1,0 +1,565 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Warpの機能・料金・使い方を解説。Warp AgentやWarp Drive、クラウドエージェントの特徴、Cursor・GitHub Copilot・Devinとの違い、導入時の注意点を整理。">
+          <title>Warpとは？AIネイティブターミナルの機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/warp/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="Warpとは？AIネイティブターミナルの機能・料金・使い方を解説">
+          <meta property="og:description" content="WarpはIDEではなくAIネイティブターミナル。料金プラン（Free/Build/Max/Business/Enterprise）、Warp Agent、Warp Drive、主要ツール比較を2026年6月時点で解説。">
+          <meta property="og:url" content="https://ai-master.jp/tools/warp/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/warp/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/warp/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "BreadcrumbList",
+                "@id": "https://ai-master.jp/tools/warp/#breadcrumb",
+                "itemListElement": [
+                  { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+                  { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+                  { "@type": "ListItem", "position": 3, "name": "Warp", "item": "https://ai-master.jp/tools/warp/" }
+                ]
+              },
+              {
+                "@type": "Article",
+                "@id": "https://ai-master.jp/tools/warp/#article",
+                "headline": "Warpとは？AIネイティブターミナルの機能・料金・使い方を解説",
+                "description": "WarpはIDEではなくAIネイティブターミナル。料金プラン（Free/Build/Max/Business/Enterprise）、Warp Agent、Warp Drive、主要ツール比較を2026年6月時点で解説。",
+                "url": "https://ai-master.jp/tools/warp/",
+                "datePublished": "2026-06-08",
+                "dateModified": "2026-06-08",
+                "inLanguage": "ja",
+                "image": "https://ai-master.jp/assets/images/tools/warp/og-hero.png",
+                "author": { "@type": "Organization", "name": "AI Master" },
+                "publisher": { "@id": "https://ai-master.jp/#organization" },
+                "isPartOf": { "@id": "https://ai-master.jp/#website" },
+                "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/warp/#webpage" },
+                "about": { "@type": "SoftwareApplication", "name": "Warp" }
+              },
+              {
+                "@type": "WebPage",
+                "@id": "https://ai-master.jp/tools/warp/#webpage",
+                "url": "https://ai-master.jp/tools/warp/",
+                "name": "Warpとは？AIネイティブターミナルの機能・料金・使い方を解説",
+                "description": "WarpはIDEではなくAIネイティブターミナル。料金プラン（Free/Build/Max/Business/Enterprise）、Warp Agent、Warp Drive、主要ツール比較を2026年6月時点で解説。",
+                "isPartOf": { "@id": "https://ai-master.jp/#website" },
+                "breadcrumb": { "@id": "https://ai-master.jp/tools/warp/#breadcrumb" },
+                "inLanguage": "ja"
+              },
+              {
+                "@type": "SoftwareApplication",
+                "name": "Warp",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "macOS, Linux, Windows",
+                "description": "Warpが提供するAIネイティブターミナル。Warp Agent、クラウドエージェント、Warp Driveでコマンド実行と共有を強化できる。",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD",
+                  "description": "Free $0、Build $20/月、Max $200/月、Business $50/月、Enterprise custom（2026年6月時点）"
+                },
+                "provider": {
+                  "@type": "Organization",
+                  "name": "Warp",
+                  "url": "https://www.warp.dev"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+          {
+                    "@type": "Question",
+                    "name": "Warpは無料で使えますか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "はい。Freeプラン（$0）があります。追加機能やクレジット枠が必要な場合はBuild（from $20/月）以上を検討します。料金は2026年6月時点の情報です。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "WarpはIDEですか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "いいえ。WarpはAIネイティブターミナルであり、IDEそのものではありません。VS CodeやCursorと併用して使う設計が一般的です。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "Warpとpnpmのwarpは同じですか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "同じではありません。本記事のWarpはwarp.devの開発者向けターミナル製品を指し、パッケージマネージャー文脈のwarpとは別です。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "Warpの年額価格はありますか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "あります。2026年6月時点ではBuildが$18/月相当、Businessが$45/月相当、Maxが$180/月相当です。適用条件は公式料金ページで確認してください。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "Warpのセキュリティ面での特徴は？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "WarpはSOC 2対応や、LLMプロバイダーへのzero data retention方針を訴求しています。ただし実運用では社内のデータ分類と送信ポリシーを必ず確認してください。"
+                    }
+          }
+]
+              }
+            ]
+          }
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">Warp</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/warp/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">Warp · AIネイティブターミナル</p>
+                  <h1>Warpとは？AIネイティブターミナルの機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">エージェント実行とチーム共有を備えた開発者向けターミナル</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">無料プランあり</span>
+                <span class="tool-category">AIターミナル</span>
+                <span class="tool-category">チーム共有</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>macOS</li>
+                  <li>Linux</li>
+                  <li>Windows</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/warp/og-hero.png" alt="Warpの公式イメージ" width="1200" height="630" fetchpriority="high">
+              <figcaption>出典：Warp公式</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>Warp</strong>は、<strong>Warp</strong>が提供する<strong>AIネイティブターミナル</strong>です。IDEそのものではなく、コマンド実行と履歴管理にAI機能を統合した開発者向け端末として使います。<strong>pnpmのパッケージマネージャー「warp」</strong>とは別物です。本記事では、<a href="#pricing">料金プラン</a>、<a href="#comparison">主要ツール比較</a>、導入時の注意点を試験観点で整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+<li><a href="#what-is">Warpとは</a></li>
+<li><a href="#features">できること（主な機能）</a></li>
+<li><a href="#misconception">よくある誤解</a></li>
+<li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+<li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+<li><a href="#use-cases">ビジネスでの活用例</a></li>
+<li><a href="#pros-cons">メリット・デメリット</a></li>
+<li><a href="#comparison">Cursor・GitHub Copilot・Devinとの比較</a></li>
+<li><a href="#recommend">こんな人におすすめ</a></li>
+<li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+  <h2>試験で問われる見方</h2>
+  <p>
+    Warpは「AI付きIDE」ではなく「AIネイティブターミナル」です。試験ではツール分類の違いを問われるため、エディタ系（Cursor）と端末系（Warp）を混同しないことが重要です。
+  </p>
+  <p>
+    また「warp = pnpmのwarpパッケージマネージャー」という誤解も要注意です。文脈上のWarpはwarp.devの開発者向けターミナルを指します。
+  </p>
+  <div class="tool-callout">
+    <p><strong>このサイトの演習で確認する</strong></p>
+    <p>
+      生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+    </p>
+    <p>
+      G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+    </p>
+  </div>
+</section>
+
+    <section id="what-is">
+  <h2>Warpとは</h2>
+  <p>
+    Warpはwarp.devが提供するAIネイティブターミナルです。ターミナル上でのコマンド作成・実行・振り返りを、Warp Agentと組み合わせて高速化できます。
+  </p>
+  <p>
+    WarpはIDEではないため、エディタ機能全体を置き換える製品ではありません。VS CodeやCursorと併用し、ターミナル作業を専門的に強化する位置づけです。
+  </p>
+  <p>
+    セキュリティ面ではSOC 2対応や、LLMプロバイダーに対するzero data retention方針が訴求されています。導入時は社内ポリシーとの整合を確認してください。
+  </p>
+</section>
+
+    <section id="features">
+  <h2>できること（主な機能）</h2>
+  <div class="tool-feature-grid">
+    <div class="tool-feature-card">
+      <h3>Warp Agent</h3>
+      <p>自然言語からコマンド候補を生成し、実行手順を段階的に提案します。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>Cloud Agents</h3>
+      <p>クラウド側のエージェント実行により、重い処理を分離して運用できます。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>Warp Drive</h3>
+      <p>チームでコマンドやRunbookを共有し、再現性の高い運用フローを作れます。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>コマンドブロック管理</h3>
+      <p>出力をブロック単位で扱い、過去実行の検索・再利用をしやすくします。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>クロスプラットフォーム</h3>
+      <p>macOS、Linux、Windowsで同一体験に近い操作を提供します。</p>
+    </div>
+    <div class="tool-feature-card">
+      <h3>企業向け統制</h3>
+      <p>Business/Enterpriseでチーム管理、監査、セキュリティ要件に対応します。</p>
+    </div>
+  </div>
+</section>
+
+    <section id="misconception">
+  <h2>よくある誤解</h2>
+  <p>
+    「WarpはIDE」という理解は誤りです。Warpはターミナル体験を進化させる製品であり、コード編集全体を担うIDEとは役割が違います。
+  </p>
+  <p>
+    さらに「pnpmのwarp（パッケージマネージャー）と同じ」という混同もあります。ここで扱うWarpはwarp.devのAIターミナルです。
+  </p>
+</section>
+
+    <section id="pricing">
+  <h2>料金プラン（2026年6月時点）</h2>
+  <p>
+    Warpの月額プランはFree / Build / Max / Business / Enterpriseで構成されます。年額払いではBuild、Business、Maxに割引価格が用意されています。以下は<strong>2026年6月時点</strong>の整理で、最新条件は公式ページで確認してください。
+  </p>
+  <div class="tool-plan-grid">
+    <div class="tool-plan-card tool-plan-card--highlight">
+      <p class="tool-plan-name">Free</p>
+      <p class="tool-plan-price">$0</p>
+      <p class="tool-plan-note">基本機能を試せる無料枠</p>
+    </div>
+    <div class="tool-plan-card">
+      <p class="tool-plan-name">Build</p>
+      <p class="tool-plan-price">from $20/月</p>
+      <p class="tool-plan-note">1,500 credits/月</p>
+    </div>
+    <div class="tool-plan-card">
+      <p class="tool-plan-name">Max</p>
+      <p class="tool-plan-price">from $200/月</p>
+      <p class="tool-plan-note">高負荷なAI利用向け</p>
+    </div>
+  </div>
+  <table class="tool-spec-table">
+    <thead>
+      <tr>
+        <th>プラン</th>
+        <th>月額（2026年6月時点）</th>
+        <th>年額換算の目安</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Free</strong></td>
+        <td><strong>$0</strong></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td><strong>Build</strong></td>
+        <td><strong>from $20/月</strong>（1,500 credits/月）</td>
+        <td><strong>$18/月</strong>相当</td>
+      </tr>
+      <tr>
+        <td><strong>Business</strong></td>
+        <td><strong>from $50/月</strong></td>
+        <td><strong>$45/月</strong>相当</td>
+      </tr>
+      <tr>
+        <td><strong>Max</strong></td>
+        <td><strong>from $200/月</strong></td>
+        <td><strong>$180/月</strong>相当</td>
+      </tr>
+      <tr>
+        <td><strong>Enterprise</strong></td>
+        <td>個別見積もり</td>
+        <td>個別契約</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    料金体系はクレジット消費量と機能開放範囲で変わります。評価時は、チーム人数と1人あたりのコマンド実行負荷を先に見積もると判断しやすくなります。
+  </p>
+</section>
+
+    <section id="how-to">
+  <h2>はじめ方・基本的な使い方</h2>
+  <p>初期導入の基本ステップは次のとおりです。</p>
+  <div class="tool-split">
+    <ol class="tool-steps">
+      <li>
+        <strong>Warpをインストール</strong>
+        macOS / Linux / Windows向けの公式配布から導入します。
+      </li>
+      <li>
+        <strong>Warp Agentを有効化</strong>
+        アカウント連携後、自然言語プロンプトでコマンド提案を使います。
+      </li>
+      <li>
+        <strong>よく使うRunbookを保存</strong>
+        繰り返し実行する手順をWarp Driveに蓄積します。
+      </li>
+      <li>
+        <strong>クラウドエージェントを試す</strong>
+        重い処理や定型ワークフローをCloud Agentsで切り出します。
+      </li>
+      <li>
+        <strong>権限と監査を設定</strong>
+        チーム導入時はBusiness以上で運用ルールを明確化します。
+      </li>
+    </ol>
+    <div class="tool-split__media">
+      <figure class="tool-figure">
+        <img src="../../assets/images/tools/warp/og-hero.png" alt="Warpの公式イメージ" width="600" height="315" loading="lazy">
+        <figcaption>出典：Warp公式</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+    <section id="use-cases">
+  <h2>ビジネスでの活用例</h2>
+  <div class="tool-usecase-grid">
+    <div class="tool-usecase-card">
+      <h3>開発チーム共通の実行手順化</h3>
+      <ul>
+        <li>デプロイ前チェックの標準化</li>
+        <li>障害一次対応コマンドの共有</li>
+        <li>オンボーディング短縮</li>
+      </ul>
+    </div>
+    <div class="tool-usecase-card">
+      <h3>SRE/運用タスクの効率化</h3>
+      <ul>
+        <li>ログ調査コマンドの再利用</li>
+        <li>復旧手順のテンプレート化</li>
+        <li>手順の属人化防止</li>
+      </ul>
+    </div>
+    <div class="tool-usecase-card">
+      <h3>AI補助による学習コスト低減</h3>
+      <ul>
+        <li>コマンド候補の文脈提示</li>
+        <li>失敗時の修正提案</li>
+        <li>初心者の安全な実行補助</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+    <section id="pros-cons">
+  <h2>メリット・デメリット</h2>
+  <table class="tool-pros-cons-table">
+    <thead>
+      <tr>
+        <th>メリット</th>
+        <th>デメリット</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>AI補助つきでターミナル操作を高速化できる</td>
+        <td>IDE編集機能そのものは代替できない</td>
+      </tr>
+      <tr>
+        <td>Warp Driveでチーム共有と再現性を高められる</td>
+        <td>クレジット消費量によっては上位プランが必要</td>
+      </tr>
+      <tr>
+        <td>macOS/Linux/Windowsで統一運用しやすい</td>
+        <td>社内セキュリティ要件との擦り合わせが必要</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+    <section id="comparison">
+  <h2>Cursor・GitHub Copilot・Devinとの比較</h2>
+  <table class="tool-spec-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>Warp</th>
+        <th>Cursor</th>
+        <th>GitHub Copilot</th>
+        <th>Devin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>製品カテゴリ</td>
+        <td>AIネイティブターミナル</td>
+        <td>AIネイティブIDE</td>
+        <td>IDE補完</td>
+        <td>自律型エージェント</td>
+      </tr>
+      <tr>
+        <td>提供元</td>
+        <td>Warp</td>
+        <td>Anysphere</td>
+        <td>GitHub（Microsoft）</td>
+        <td>Cognition</td>
+      </tr>
+      <tr>
+        <td>得意領域</td>
+        <td>コマンド実行・Runbook共有</td>
+        <td>コード編集とAI対話の統合</td>
+        <td>コード補完と提案</td>
+        <td>タスク単位の自律実行</td>
+      </tr>
+      <tr>
+        <td>向いている使い方</td>
+        <td>ターミナル運用の標準化</td>
+        <td>日常開発の生産性向上</td>
+        <td>既存IDEへの軽量導入</td>
+        <td>大きめタスクの自動化</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+    <section id="recommend">
+  <h2>こんな人におすすめ</h2>
+  <ul>
+    <li><strong>ターミナル作業をチームで標準化したい開発組織</strong></li>
+    <li><strong>IDEはそのままにCLI運用だけを強化したい人</strong></li>
+    <li><strong>Warp AgentやCloud Agentsを使って運用負荷を下げたい人</strong></li>
+    <li><strong>Cursor・GitHub Copilot・Devinとの役割分担を明確にしたい人</strong></li>
+  </ul>
+</section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+                <details>
+  <summary>Warpは無料で使えますか？</summary>
+  <p class="tool-faq-a">はい。Freeプラン（$0）があります。追加機能やクレジット枠が必要な場合はBuild（from $20/月）以上を検討します。料金は2026年6月時点の情報です。</p>
+</details>
+        <details>
+  <summary>WarpはIDEですか？</summary>
+  <p class="tool-faq-a">いいえ。WarpはAIネイティブターミナルであり、IDEそのものではありません。VS CodeやCursorと併用して使う設計が一般的です。</p>
+</details>
+        <details>
+  <summary>Warpとpnpmのwarpは同じですか？</summary>
+  <p class="tool-faq-a">同じではありません。本記事のWarpはwarp.devの開発者向けターミナル製品を指し、パッケージマネージャー文脈のwarpとは別です。</p>
+</details>
+        <details>
+  <summary>Warpの年額価格はありますか？</summary>
+  <p class="tool-faq-a">あります。2026年6月時点ではBuildが$18/月相当、Businessが$45/月相当、Maxが$180/月相当です。適用条件は公式料金ページで確認してください。</p>
+</details>
+        <details>
+  <summary>Warpのセキュリティ面での特徴は？</summary>
+  <p class="tool-faq-a">WarpはSOC 2対応や、LLMプロバイダーへのzero data retention方針を訴求しています。ただし実運用では社内のデータ分類と送信ポリシーを必ず確認してください。</p>
+</details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://www.warp.dev" target="_blank" rel="noopener noreferrer">Warp</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.warp.dev/pricing" target="_blank" rel="noopener noreferrer">料金（Warp公式）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://docs.warp.dev" target="_blank" rel="noopener noreferrer">公式ドキュメント</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github.svg" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../devin/"><img src="../../assets/images/tools/devin/app-icon.png" alt="" width="16" height="16"> Devin</a></li>
+          <li><a href="../replit/"><img src="../../assets/images/tools/replit/app-icon.png" alt="" width="16" height="16"> Replit</a></li>
+                  <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/ai-agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+                  <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a>
+                ·
+                <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+
+        </body>
+        </html>
