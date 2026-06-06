@@ -505,8 +505,7 @@
 .tool-spec-table thead th {
   background: var(--surface-table-head);
   color: var(--ink);
-  font-weight: 600;
-  font-size: var(--text-sm);
+  font-weight: 700;
   white-space: nowrap;
 }
 .tool-spec-table tbody th {

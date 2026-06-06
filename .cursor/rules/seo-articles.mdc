@@ -1,0 +1,95 @@
+---
+description: SEO記事（AIツール・用語辞典）の作成・量産ルール
+globs: tools/*/index.html,glossary/*/index.html
+alwaysApply: false
+---
+
+# SEO記事 作成ルール
+
+参照実装: `tools/chatgpt/index.html`（ツール）、`glossary/generative-ai/index.html`（用語）。
+スタイルは `assets/css/tool-detail.css` のみ。記事専用CSSを新設しない。
+
+## 記事の種類
+
+| 種類 | パス | ヒーロー |
+|------|------|---------|
+| AIツール | `tools/{id}/index.html` | `tool-hero tool-hero--split`（アイコン・画像あり） |
+| 用語辞典 | `glossary/{id}/index.html` | `tool-hero tool-hero--article`（テキストのみ） |
+
+## ページ骨格（この順序を守る）
+
+```
+main.page-wrap.page-wrap--article
+  nav.breadcrumb
+  header.tool-hero
+  div.tool-meta-bar（更新日 time + 読了目安）
+  article.tool-content
+    p.tool-lead          ← 1つだけ（青ボックス）
+    nav.tool-toc
+    section[id] × N
+    section#faq + .tool-faq
+    [ツールのみ] p.tool-product-links--footer（公式リンク・記事末尾）
+    aside.tool-related-wrap
+```
+
+## タイポ・色
+
+- 本文: `font-weight: 400`、色 `--ink`（`.page-wrap--article` で継承）
+- リード: `.tool-lead` のみ。青背景（`--blue-soft`）+ 左4px青線。**記事内に1つ**
+- 強調 `<strong>`: 700 + `--ink`（青にしない）
+- 見出し h2: 24px/700、左青バー。h3: 20px/700
+- 表 `.tool-spec-table`: 全体16px、thead は700（14pxにしない）
+
+## 使えるコンポーネント（これ以外は増やさない）
+
+| クラス | 用途 |
+|--------|------|
+| `tool-callout` | 演習・試験への導線（灰ボックス） |
+| `tool-spec-table` | 比較表・仕様表 |
+| `tool-pros-cons-table` | メリット/デメリット（緑/赤上線） |
+| `tool-feature-grid` / `tool-feature-card` | 機能カード |
+| `tool-usecase-grid` / `tool-usecase-card` | 活用例 |
+| `tool-steps` | 手順（番号付き） |
+| `tool-example-list` | カテゴリ別具体例リスト |
+| `tool-faq` + `details/summary` | FAQ（JSON-LDと文言を一致させる） |
+| `tool-related-list__soon` + `tool-soon-badge` | 未公開ページ |
+
+## コンテンツ方針
+
+- **切り口**: 百科事典的網羅ではなく「G検定・生成AIパスポートで点を取る定義」と「実務の誤解」
+- **但し書き**: 料金・機能は `YYYY年M月時点` を明記。変動しやすい情報は公式確認を促す
+- **誤解の指摘**: 概念とサービス名の混同（例: 生成AI ≠ ChatGPT）を各記事で1回以上
+- **演習導線**: 最初の h2 セクション（`#exam-study`）に `.tool-callout` で自作問題へリンク（slugは実在URLのみ）
+- **リードに外部リンクを置かない**（ページ内アンカーは可）。公式URLはツール記事の `.tool-product-links--footer` のみ
+
+## リンクルール
+
+- **公開済みのみリンク**: 未公開の用語・ツールは `tool-related-list__soon`（リンク不可）
+- **内部**: 相対パス `../../exams/...` 形式。ホバーで青
+- **外部**: `target="_blank" rel="noopener noreferrer"`。記事冒頭・リードは避ける
+
+## head / SEO 必須
+
+- `title`: `{記事タイトル} — AI Master`
+- `meta description`（120〜160字目安）、`link rel=canonical`（`https://ai-master.jp/.../`）
+- OG: `article`, `og:locale=ja_JP`。ツールは `og:image` あり
+- フォント: `Noto Sans JP wght@400;500;600;700`
+- CSS: `main.css` + `seo.css` + `tool-detail.css`（ツールは `tools.css` も可）
+- JSON-LD `@graph`: `BreadcrumbList` + `Article` + `WebPage` + 種別固有（`SoftwareApplication` / `DefinedTerm`）+ `FAQPage`
+
+## 公開チェックリスト
+
+**ツール記事**
+1. `tools/{id}/index.html` を配置
+2. `python3 tools/build_tools_data.py` → `article: true` が付く
+3. `sitemap.xml` に URL を手動追加
+4. 一覧・関連リンクが記事ページを指すことを確認
+
+**用語記事（フル記事）**
+1. `glossary/{id}/index.html` を手書き（スキャフォールド上書き）
+2. `python3 tools/build_glossary.py` → 一覧・sitemap 更新
+
+**共通**
+- 関連セクションに存在しないページへの `<a>` がないか
+- FAQ の JSON-LD と HTML の回答文が一致しているか
+- コミット・push はユーザー指示時のみ
