@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lovableの機能・料金・使い方を解説。プロンプトからWebアプリを生成するノーコード系AIビルダー。v0・Bolt.newとの違い、Supabase連携も整理。生成AIパスポート・G検定対策にも。">
+  <title>Lovableとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/lovable/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Lovableとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Lovableの機能・料金・使い方を解説。プロンプトからWebアプリを生成するノーコード系AIビルダー。v0・Bolt.newとの違い、Supabase連携も整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/lovable/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/lovable/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/lovable/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/lovable/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Lovable", "item": "https://ai-master.jp/tools/lovable/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/lovable/#article",
+        "headline": "Lovableとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Lovableの機能・料金・使い方を解説。プロンプトからWebアプリを生成するノーコード系AIビルダー。v0・Bolt.newとの違い、Supabase連携も整理。",
+        "url": "https://ai-master.jp/tools/lovable/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/lovable/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/lovable/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Lovable" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/lovable/#webpage",
+        "url": "https://ai-master.jp/tools/lovable/",
+        "name": "Lovableとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Lovableの機能・料金・使い方を解説。プロンプトからWebアプリを生成するノーコード系AIビルダー。v0・Bolt.newとの違い、Supabase連携も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/lovable/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Lovable",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "description": "プロンプトからWebアプリを生成・編集できるノーコード系のAIアプリビルダー。Supabase連携を含むデータ付きアプリ構築が特徴。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料枠あり。有料プランは月額課金（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Lovable",
+          "url": "https://lovable.dev"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Lovableは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。無料枠があり、プロンプトからアプリの生成・編集を試せます。ただしAI利用量や公開回数などに上限があり、継続利用では有料プランが必要になることが多いです。最新の枠と料金はLovable公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Lovableとv0の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "v0（Vercel）は主にReact UIコンポーネントの生成・プレビューに強みがあります。Lovableはアプリ全体の生成に加え、Supabase連携を含むデータ付きアプリの構築体験が中心です。UI部品を素早く作るか、アプリ全体を丸ごと作るか、という整理が試験・選定の両方で役立ちます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LovableとBolt.newの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもブラウザ上でプロンプトからアプリを生成しますが、技術基盤が異なります。Bolt.newはStackBlitzのWebContainer上でフルスタックを生成・実行します。LovableはSupabase連携を前提としたアプリ構築が特徴です。ゼロからフルスタックをWebContainerで試すか、Supabase連携込みで構築するか、という観点で選びます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LovableはLoveableと同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同一サービスを指すことが多いです。公式サイトのドメインはlovable.devです。試験や資料では「Lovable（ラバブル）」表記が一般的ですが、英語表記のLoveableと混同しないよう、公式名称を確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ノーコードで作ったアプリはそのまま本番に出せますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。生成アプリはプロトタイプや検証用の出発点として扱い、セキュリティレビュー・テスト・利用規約の確認が必須です。認証・データ保護・商用条件は公式ドキュメントと社内ポリシーで必ず確認してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Lovable</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/lovable/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Lovable · コーディング</p>
+          <h1>Lovableとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">プロンプトからWebアプリをAIで生成するノーコードビルダー</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">AIコーディング</span>
+        <span class="tool-category">ノーコード</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Webブラウザ</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/lovable/og-hero.png" alt="Lovableの公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Lovable公式（lovable.dev）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Lovable</strong>（ラバブル）は、自然言語のプロンプトから<strong>Webアプリ</strong>を生成・編集できる<strong>ノーコード系のAIアプリビルダー</strong>です。<strong>v0</strong>や<strong>Bolt.new</strong>と並ぶ「プロンプト駆動の開発ツール」として知られ、フロントエンド生成に加え<strong>Supabase</strong>などのバックエンド連携を組み込んだアプリ構築が特徴です。本記事は全機能の網羅ではなく、<strong>試験で押さえる位置づけ</strong>（AIコーディング支援・ノーコード生成）と<strong>v0・Bolt.newとの違い</strong>、<strong>「ノーコード＝品質保証不要」という誤解</strong>に絞って書いています。料金や利用枠は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金プラン</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Lovableとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#pricing">料金プランの考え方</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">v0・Bolt.new・Replitとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<strong>AIコーディング支援</strong>や<strong>業務利用の注意点</strong>が問われることがあります。Lovableは「プロンプトからアプリを作るブラウザツール」の代表例の一つとして、<a href="../v0/">v0</a>（UI生成）や<a href="../bolt-new/">Bolt.new</a>（フルスタック生成）と並べて覚えると整理しやすいです。試験では製品名そのものより、<strong>機密情報の入力禁止</strong>や<strong>利用規約・商用条件</strong>を問う設問の方が多い点に注意してください。
+      </p>
+      <p>
+        よくある誤解は3つあります。<strong>「Lovable＝v0と同じUI生成ツール」</strong>と同一視すること（v0はコンポーネント中心、Lovableはアプリ全体の生成・編集に寄せた体験です）。<strong>「Lovable＝Bolt.newと完全に同じ」</strong>と思い込むこと（どちらもブラウザ完結ですが、技術基盤や連携先・料金体系は異なります）。そして<strong>「ノーコードで作ったアプリはそのまま本番に出してよい」</strong>と考えること（セキュリティレビューとテストが必須です）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：v0 · Bolt.new · <a href="../replit/">Replit</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Lovableとは</h2>
+      <p>
+        Lovableは、ユーザーが「予約サイトを作って」「ダッシュボードにグラフを追加して」と指示すると、AIが画面・ロジック・データ連携を含むWebアプリを生成する<strong>プロンプト駆動の開発プラットフォーム</strong>です。コーディング経験が浅くてもプロトタイプを試せる点が訴求されています。
+      </p>
+      <p>
+        バックエンドには<strong>Supabase</strong>（認証・データベース）などの連携が組み込まれやすく、フロントだけでなく<strong>データを持つアプリ</strong>まで一気通貫で作る体験が特徴です。試験では「ノーコード系AIアプリビルダー」「v0・Bolt.newと並ぶ生成ツール」として覚えるとよいです。
+      </p>
+      <p>
+        提供元は<strong>Lovable</strong>（lovable.dev）です。名称は「愛される・作れる」といった英語のlovableに由来し、<strong>Loveable</strong>と表記されることもありますが、公式ドメインはlovable.devです。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <p>主な機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>プロンプトからアプリ生成</h3>
+          <p>自然言語の指示から画面レイアウト・コンポーネント・ロジックを生成。チャットで反復改修できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Supabase連携</h3>
+          <p>認証・データベース・ストレージを組み込んだアプリを、プロンプトから構築しやすい設計です。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ライブプレビュー</h3>
+          <p>生成したアプリをブラウザ上で即座に確認。デザイン変更や機能追加を短いサイクルで試せます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コードのエクスポート</h3>
+          <p>生成物をダウンロードしたり、GitHubへ連携したりできます（プラン・時期で機能は変動）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ノーコードに近い体験</h3>
+          <p>非エンジニアでもMVPを試作できますが、本番運用にはコード理解とレビューが依然として必要です。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>デプロイ・公開</h3>
+          <p>ワンクリック公開やホスティング連携が用意されていることがあります（詳細は公式確認）。</p>
+        </div>
+      </div>
+
+      <h3>AIコーディングツールとの位置づけ</h3>
+      <p>
+        v0が<strong>React UIコンポーネント</strong>の生成に強みを持つなら、Lovableは<strong>アプリ全体の生成とデータ連携</strong>に寄せた体験です。Bolt.newは<strong>WebContainer</strong>でブラウザ内に開発環境を構築する点が特徴で、Lovableは<strong>Supabase連携を前提としたアプリ構築</strong>が訴求されています。いずれも<a href="../../glossary/generative-ai/">生成AI</a>のLLMを開発フローに組み込むツールですが、<strong>出力の粒度とバックエンドの扱い</strong>で覚え分けましょう。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プランの考え方</h2>
+      <p>Lovableは無料枠から始められますが、継続利用や本格開発では有料プランが前提になることが多いです（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Free（無料）</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">限られたAI利用量</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">月額課金</p>
+          <p class="tool-plan-note">個人の本格利用向け</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Teams</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">チーム・組織向け</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free（無料）</strong></td>
+            <td>限られたAI利用量</td>
+            <td>お試し・学習・プロトタイプ</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>個人の本格利用向け</td>
+            <td>継続的にアプリを生成・改修する人</td>
+          </tr>
+          <tr>
+            <td><strong>Teams</strong></td>
+            <td>チーム・組織向け</td>
+            <td>会社での標準ツール検討</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        商用・クライアント案件では、生成コードの権利関係と利用規約、社内のセキュリティポリシーを必ず確認してください。APIキーや顧客データをプロンプトに含めないなど、機密情報の取り扱いには特に注意が必要です。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>アカウント登録後、基本的な流れは次のとおりです。</p>
+
+      <ol class="tool-steps">
+          <li>
+            <strong>公式サイトにアクセス</strong>
+            lovable.dev を開き、アカウントを作成します（Google/GitHub連携など）。
+          </li>
+          <li>
+            <strong>プロンプトでアプリを指示</strong>
+            例：「予約管理アプリを作って」「ユーザー認証付きのToDoリストを追加して」
+          </li>
+          <li>
+            <strong>生成とプレビューを確認</strong>
+            AIが画面とロジックを生成。プレビューで動作とデザインを確認します。
+          </li>
+          <li>
+            <strong>チャットで反復改修</strong>
+            デザイン変更・機能追加・バグ修正を会話形式で依頼し、都度プレビューで検証します。
+          </li>
+          <li>
+            <strong>エクスポートまたは公開</strong>
+            必要に応じてコードをダウンロード、GitHubへプッシュ、またはホスティング先へ公開します。
+          </li>
+      </ol>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドラインと利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>プロトタイピング</h3>
+          <ul>
+            <li>新機能のUI/UXを数時間で試作</li>
+            <li>社内デモ用のMVP作成</li>
+            <li>企画会議のたたき台</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>非エンジニアの学習</h3>
+          <ul>
+            <li>プロダクトマネージャーのアイデア可視化</li>
+            <li>生成AIパスポートのケース演習の補助</li>
+            <li>Webアプリの仕組みを体験する教材</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>開発の前段階</h3>
+          <ul>
+            <li>要件確認用の動くモック作成</li>
+            <li>Supabase連携の検証</li>
+            <li>生成コードを起点に本番開発へ引き継ぎ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>プロンプトからアプリ全体を素早く生成</td>
+            <td>無料枠ではAI利用量に制限がある</td>
+          </tr>
+          <tr>
+            <td>Supabase連携でデータ付きアプリを構築しやすい</td>
+            <td>複雑な既存コードベースの日常開発には向きにくい</td>
+          </tr>
+          <tr>
+            <td>ノーコードに近い体験で非エンジニアも試せる</td>
+            <td>生成コードの品質は一定ではなくレビュー必須</td>
+          </tr>
+          <tr>
+            <td>v0・Bolt.newと並ぶ選択肢として比較検討しやすい</td>
+            <td>機密データをプロンプトに含めるリスクがある</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>v0・Bolt.new・Replitとの比較</h2>
+      <p>ノーコード系AIアプリ生成で名前が並びやすい4つを整理します。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Lovable</th>
+            <th>v0</th>
+            <th>Bolt.new</th>
+            <th>Replit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>Lovable</td>
+            <td>Vercel</td>
+            <td>StackBlitz</td>
+            <td>Replit</td>
+          </tr>
+          <tr>
+            <td>製品の形</td>
+            <td>AIアプリビルダー（ブラウザ）</td>
+            <td>UIコンポーネント生成</td>
+            <td>AIアプリビルダー（WebContainer）</td>
+            <td>クラウドIDE＋ホスティング</td>
+          </tr>
+          <tr>
+            <td>主な強み</td>
+            <td>アプリ全体＋Supabase連携</td>
+            <td>React UIの高速生成</td>
+            <td>フルスタックをブラウザ内で生成</td>
+            <td>多言語対応・実行・公開の総合環境</td>
+          </tr>
+          <tr>
+            <td>バックエンド</td>
+            <td>Supabase連携が中心</td>
+            <td>UI中心（APIは別途）</td>
+            <td>フルスタック生成</td>
+            <td>クラウドVM上で実行</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>ノーコード系アプリ生成</td>
+            <td>Vercel製・UI生成</td>
+            <td>StackBlitz製・ブラウザ完結</td>
+            <td>クラウドIDEの代表例</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        UI部品を素早く作るならv0、Supabase連携込みでアプリ全体を試すならLovable、WebContainerでフルスタックをブラウザ内生成するならBolt.new、多言語のクラウド開発環境ならReplit、という使い分けが現実的です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>プロンプトからデータ連携付きのWebアプリを素早く試したい人</strong></li>
+        <li><strong>v0（UI）とLovable（アプリ全体）の違いを整理したい受験生</strong></li>
+        <li><strong>非エンジニアでもMVPを作りたい起業家・PM</strong></li>
+        <li><strong>Supabaseを使った認証・DB付きアプリのたたき台を作りたい人</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>大規模な既存リポジトリの日常開発</strong>（<a href="../cursor/">Cursor</a>の方が適する）や、<strong>会社が外部AIツールへのコード送信を禁止している</strong>場合（社内承認と代替手段の検討が先）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Lovableは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。無料枠があり、プロンプトからアプリの生成・編集を試せます。ただしAI利用量や公開回数などに上限があり、継続利用では有料プランが必要になることが多いです。最新の枠と料金はLovable公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>Lovableとv0の違いは？</summary>
+          <p class="tool-faq-a">v0（Vercel）は主にReact UIコンポーネントの生成・プレビューに強みがあります。Lovableはアプリ全体の生成に加え、Supabase連携を含むデータ付きアプリの構築体験が中心です。UI部品を素早く作るか、アプリ全体を丸ごと作るか、という整理が試験・選定の両方で役立ちます。</p>
+        </details>
+        <details>
+          <summary>LovableとBolt.newの違いは？</summary>
+          <p class="tool-faq-a">どちらもブラウザ上でプロンプトからアプリを生成しますが、技術基盤が異なります。Bolt.newはStackBlitzのWebContainer上でフルスタックを生成・実行します。LovableはSupabase連携を前提としたアプリ構築が特徴です。ゼロからフルスタックをWebContainerで試すか、Supabase連携込みで構築するか、という観点で選びます。</p>
+        </details>
+        <details>
+          <summary>LovableはLoveableと同じですか？</summary>
+          <p class="tool-faq-a">同一サービスを指すことが多いです。公式サイトのドメインはlovable.devです。試験や資料では「Lovable（ラバブル）」表記が一般的ですが、英語表記のLoveableと混同しないよう、公式名称を確認してください。</p>
+        </details>
+        <details>
+          <summary>ノーコードで作ったアプリはそのまま本番に出せますか？</summary>
+          <p class="tool-faq-a">いいえ。生成アプリはプロトタイプや検証用の出発点として扱い、セキュリティレビュー・テスト・利用規約の確認が必須です。認証・データ保護・商用条件は公式ドキュメントと社内ポリシーで必ず確認してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer">Lovable（lovable.dev）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../v0/"><img src="../../assets/images/tools/v0/app-icon.png" alt="" width="16" height="16"> v0</a></li>
+          <li><a href="../bolt-new/"><img src="../../assets/images/tools/bolt-new/app-icon.png" alt="" width="16" height="16"> Bolt.new</a></li>
+          <li><a href="../replit/"><img src="../../assets/images/tools/replit/app-icon.png" alt="" width="16" height="16"> Replit</a></li>
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

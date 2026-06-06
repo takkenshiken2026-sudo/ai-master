@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Amazon Q Developerの機能・料金・使い方を解説。AWS環境のコーディング・運用支援に特化した生成AI。GitHub Copilot・Microsoft Copilotとの違い、CodeWhispererからの移行も整理。生成AIパスポート・G検定対策にも。">
+  <title>Amazon Q Developerとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/amazon-q-developer/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Amazon Q Developerとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Amazon Q Developerの機能・料金・使い方を解説。AWS環境のコーディング・運用支援に特化。GitHub Copilot・Microsoft Copilotとの違い、CodeWhispererからの移行も整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/amazon-q-developer/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/amazon-q-developer/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/amazon-q-developer/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/amazon-q-developer/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Amazon Q Developer", "item": "https://ai-master.jp/tools/amazon-q-developer/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/amazon-q-developer/#article",
+        "headline": "Amazon Q Developerとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Amazon Q Developerの機能・料金・使い方を解説。AWS環境のコーディング・運用支援に特化。GitHub Copilot・Microsoft Copilotとの違い、CodeWhispererからの移行も整理。",
+        "url": "https://ai-master.jp/tools/amazon-q-developer/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/amazon-q-developer/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/amazon-q-developer/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Amazon Q Developer" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/amazon-q-developer/#webpage",
+        "url": "https://ai-master.jp/tools/amazon-q-developer/",
+        "name": "Amazon Q Developerとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Amazon Q Developerの機能・料金・使い方を解説。AWS環境のコーディング・運用支援に特化。GitHub Copilot・Microsoft Copilotとの違い、CodeWhispererからの移行も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/amazon-q-developer/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Amazon Q Developer",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "description": "AWSが提供する開発者向け生成AI。IDE内コード補完に加え、AWSリソースの設計・運用・セキュリティ支援に特化。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料枠あり。有料プランは月額課金（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Amazon Web Services",
+          "url": "https://aws.amazon.com/q/developer/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Amazon Q Developerは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Free tierなどの無料枠があり、基本的なコード補完や支援を試せます。利用量や高度な機能には上限があり、継続利用では有料プランが必要になることがあります。最新の枠はAWS公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Amazon Q DeveloperとMicrosoft Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Amazon Q DeveloperはAWSが提供する開発者向けのコーディング・運用支援AIです。Microsoft CopilotはMicrosoftが提供するチャットやMicrosoft 365連携を含む生成AI支援の総称で、名称は似る場面がありますが提供元・主な画面・用途が異なります。試験では開発元を分けて覚えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Amazon Q DeveloperとGitHub Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもIDE内のコード補完を提供しますが、Amazon Q DeveloperはAWSサービス・SDK・運用支援との連携が深い点が特徴です。GitHub CopilotはGitHub（Microsoft）製で汎用的なコード補完に強みがあります。AWS中心の開発なら前者、GitHub中心の汎用開発なら後者、という整理が現実的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CodeWhispererとの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Amazon CodeWhispererはAWSのコード補完AIとして提供されていました。Amazon Q Developerはその機能を含みつつ、AWS運用支援やセキュリティスキャンなどを統合した後継的な位置づけです。試験では「CodeWhisperer→Amazon Q Developerへ発展」と覚えるとよいです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AWSの機密情報をAmazon Qに入力しても大丈夫ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。アクセスキー、顧客データ、未公開のソースコードなど機密情報は入力しないでください。AWSのデータ処理方針と社内のセキュリティポリシーを必ず確認し、許可された範囲でのみ利用してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Amazon Q Developer</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/amazon-q-developer/app-icon.jpg" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">AWS · コーディング</p>
+          <h1>Amazon Q Developerとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">AWS環境のコーディング・運用支援に特化した生成AI</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">AIコーディング</span>
+        <span class="tool-category">AWS連携</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>AWSコンソール</li>
+          <li>IDE拡張</li>
+          <li>CLI</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/amazon-q-developer/og-hero.png" alt="Amazon Q Developerの公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：AWS公式（aws.amazon.com/q/developer/）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Amazon Q Developer</strong>（アマゾン キュー デベロッパー）は、<strong>AWS</strong>が提供する<strong>開発者向け生成AI</strong>です。IDE内の<strong>コード補完</strong>に加え、<strong>AWSリソースの設計・トラブルシュート</strong>、<strong>コード変換</strong>（例：Java版アップグレード）など、<strong>AWSエコシステムに特化</strong>した支援が特徴です。前身の<strong>Amazon CodeWhisperer</strong>（コードウィスパラー）からブランド統合・機能拡張された経緯があります。本記事は全機能の網羅ではなく、<strong>試験で押さえる位置づけ</strong>（AWS製のコーディング支援AI）と<strong>GitHub Copilot・Microsoft Copilotとの違い</strong>、<strong>「Q＝Copilotの別名」という誤解</strong>に絞って書いています。料金や機能は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金プラン</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Amazon Q Developerとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#pricing">料金プランの考え方</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">GitHub Copilot・Microsoft Copilot・Cursorとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<strong>主要な生成AI支援ツール</strong>や<strong>業務利用の注意点</strong>が問われることがあります。Amazon Q Developerは「AWS製の開発者向けAI」として、<a href="../github-copilot/">GitHub Copilot</a>（GitHub/Microsoft）や<a href="../copilot/">Microsoft Copilot</a>（チャット・Office連携）と<strong>名称・用途を混同しない</strong>ことが重要です。試験では提供元（AWS）と主な用途（コーディング・AWS運用支援）をセットで覚えましょう。
+      </p>
+      <p>
+        よくある誤解は3つあります。<strong>「Amazon Q Developer＝Microsoft Copilot」</strong>と混同すること（名称にCopilotが無くても「Q」系は複数あり、Microsoft Copilotは別製品です）。<strong>「Amazon Q Developer＝GitHub Copilotと同じ」</strong>と同一視すること（どちらも補完AIですが、AWS連携の深さと提供元が異なります）。そして<strong>「CodeWhispererは別サービスとして残っている」</strong>と古い情報のまま覚えること（CodeWhispererはAmazon Q Developerへ統合・発展したと整理するのが現状に近いです）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：<a href="../github-copilot/">GitHub Copilot</a> · <a href="../copilot/">Microsoft Copilot</a> · <a href="../cursor/">Cursor</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Amazon Q Developerとは</h2>
+      <p>
+        Amazon Q Developerは、開発者がコードを書く・デバッグする・AWS上のアプリを運用する場面で、<strong>生成AIによる提案と支援</strong>を受けられるAWSのサービス群です。IDE拡張（VS Code、JetBrains等）での<strong>インラインコード補完</strong>、AWSコンソールやCLIでの<strong>リソース設計・障害調査の支援</strong>が含まれます。
+      </p>
+      <p>
+        前身の<strong>Amazon CodeWhisperer</strong>がコード補完中心だったのに対し、Amazon Q Developerは<strong>コーディングに加えAWS運用・セキュリティスキャン・コード変換</strong>など幅を広げています。試験では「AWS製・開発者向け・CodeWhispererの後継」と覚えるとよいです。
+      </p>
+      <p>
+        提供元は<strong>Amazon Web Services（AWS）</strong>です。<strong>Amazon Q</strong>はビジネスユーザー向けのチャット機能なども含むブランドですが、Developer版は<strong>開発者・インフラ担当者</strong>向けに特化しています。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <p>主な機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>IDE内コード補完</h3>
+          <p>VS CodeやJetBrains等で、文脈に応じたコード行・関数を提案。AWS SDKの利用パターンにも強み。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>AWSリソース支援</h3>
+          <p>コンソールやCLIで、設計・設定・トラブルシュートに関する質問と提案を受けられる。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>セキュリティスキャン</h3>
+          <p>コード内の脆弱性を検出する機能（プラン・設定により異なる）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コード変換</h3>
+          <p>例：Javaのバージョンアップやレガシーコードの移行支援。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>チャットによる支援</h3>
+          <p>コードやAWSアーキテクチャに関する質問に回答（画面・プランにより異なる）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>AWS Builder ID連携</h3>
+          <p>AWSアカウントと連携し、利用量や権限を管理。</p>
+        </div>
+      </div>
+
+      <h3>AIコーディングツールとの位置づけ</h3>
+      <p>
+        GitHub Copilotが<strong>GitHub/Microsoftエコシステム</strong>中心なのに対し、Amazon Q Developerは<strong>AWSサービス・SDK・運用</strong>に最適化されています。<a href="../copilot/">Microsoft Copilot</a>は<strong>チャットとMicrosoft 365連携</strong>が中心で、開発者向けIDE補完とは主用途が異なります。AWSを本番環境に使うチームでは、<strong>インフラとコードの両方</strong>をAWS公式AIで支援できる点が選定理由になります。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プランの考え方</h2>
+      <p>Amazon Q Developerは無料枠（Free tier等）があり、AWSアカウントやBuilder IDで利用を開始できます（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Free tier</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">限定的な利用枠</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">月額課金</p>
+          <p class="tool-plan-note">拡張された利用枠</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">組織向け管理機能</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free tier</strong></td>
+            <td>限定的な利用枠</td>
+            <td>個人のお試し・学習</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>拡張された利用枠</td>
+            <td>本格的な開発利用</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>組織向け管理機能</td>
+            <td>企業・大規模チーム</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        商用・クライアント案件では、生成コードの権利関係と利用規約、社内のセキュリティポリシーを必ず確認してください。APIキーや顧客データをプロンプトに含めないなど、機密情報の取り扱いには特に注意が必要です。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>アカウント登録後、基本的な流れは次のとおりです。</p>
+
+      <ol class="tool-steps">
+          <li>
+            <strong>AWS Builder IDまたはAWSアカウント準備</strong>
+            aws.amazon.com/q/developer/ から利用開始。Builder IDでサインインできます。
+          </li>
+          <li>
+            <strong>IDE拡張をインストール</strong>
+            VS CodeやJetBrainsのマーケットプレイスからAmazon Q拡張をインストール。
+          </li>
+          <li>
+            <strong>認証・リージョン設定</strong>
+            AWSアカウントと連携し、利用リージョンと権限を確認します。
+          </li>
+          <li>
+            <strong>コーディング中に補完を利用</strong>
+            コード入力時に候補が表示。AWS SDK利用時のボイラープレート生成に便利です。
+          </li>
+          <li>
+            <strong>コンソール・CLIで運用支援</strong>
+            インフラ設計や障害調査の際、Amazon Qに質問して提案を受けます。
+          </li>
+      </ol>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドラインと利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>AWS上のアプリ開発</h3>
+          <ul>
+            <li>Lambda・S3・DynamoDBのコード補完</li>
+            <li>IAMポリシーの下書き</li>
+            <li>CloudFormation/CDKの支援</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>レガシー移行</h3>
+          <ul>
+            <li>Javaバージョンアップ</li>
+            <li>フレームワーク移行の下書き</li>
+            <li>コードベースの段階的モダナイズ</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>運用・セキュリティ</h3>
+          <ul>
+            <li>障害時のログ分析支援</li>
+            <li>セキュリティスキャン</li>
+            <li>コスト最適化の提案</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AWS SDK・サービスに強い補完</td>
+            <td>AWS以外のクラウド特化機能は限定的</td>
+          </tr>
+          <tr>
+            <td>コーディングと運用支援を一体利用</td>
+            <td>無料枠では利用量に制限</td>
+          </tr>
+          <tr>
+            <td>CodeWhispererからの移行・統合</td>
+            <td>Microsoft/GitHub製ツールとはエコシステムが異なる</td>
+          </tr>
+          <tr>
+            <td>セキュリティスキャン等の付加機能</td>
+            <td>機密コード・認証情報の入力には注意が必要</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>GitHub Copilot・Microsoft Copilot・Cursorとの比較</h2>
+      <p>名称や用途が混同されやすい4つを整理します。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Amazon Q Developer</th>
+            <th>GitHub Copilot</th>
+            <th>Microsoft Copilot</th>
+            <th>Cursor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>AWS</td>
+            <td>GitHub（Microsoft）</td>
+            <td>Microsoft</td>
+            <td>Anysphere</td>
+          </tr>
+          <tr>
+            <td>主な用途</td>
+            <td>AWS開発・運用支援</td>
+            <td>IDE内コード補完</td>
+            <td>チャット・365連携</td>
+            <td>AIネイティブエディタ</td>
+          </tr>
+          <tr>
+            <td>AWS連携</td>
+            <td>深い（公式）</td>
+            <td>一般的な補完</td>
+            <td>直接連携は限定的</td>
+            <td>プラグイン経由</td>
+          </tr>
+          <tr>
+            <td>製品の形</td>
+            <td>IDE拡張＋コンソール/CLI</td>
+            <td>IDE拡張</td>
+            <td>チャットアプリ・ブラウザ</td>
+            <td>デスクトップエディタ</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>AWS製・開発者向け</td>
+            <td>Microsoft/GitHub製</td>
+            <td>Microsoft製・汎用チャット</td>
+            <td>Anysphere製・エディタ</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        AWS開発・運用が中心ならAmazon Q Developer、汎用のIDE補完ならGitHub Copilot、Office連携のチャットならMicrosoft Copilot、エディタごとAIネイティブに移行するならCursor、という使い分けが現実的です。名称に「Copilot」「Q」が含まれる製品は複数あるため、<strong>提供元と画面</strong>で区別してください。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>AWSを本番環境に使っている開発者・インフラ担当者</strong></li>
+        <li><strong>CodeWhispererから移行・統合された機能を整理したい人</strong></li>
+        <li><strong>GitHub CopilotとMicrosoft Copilotの違いを試験用に覚えたい受験生</strong></li>
+        <li><strong>AWS SDKを多用するプロジェクトで補完AIを試したいチーム</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>AWSを使わないプロジェクトのみ</strong>を担当する場合（汎用補完の<a href="../github-copilot/">GitHub Copilot</a>の方が適する可能性）や、<strong>チャットだけで大規模リポジトリを丸ごと書き換えたい</strong>場合（<a href="../cursor/">Cursor</a>等の方が向くことが多い）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Amazon Q Developerは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。Free tierなどの無料枠があり、基本的なコード補完や支援を試せます。利用量や高度な機能には上限があり、継続利用では有料プランが必要になることがあります。最新の枠はAWS公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>Amazon Q DeveloperとMicrosoft Copilotの違いは？</summary>
+          <p class="tool-faq-a">Amazon Q DeveloperはAWSが提供する開発者向けのコーディング・運用支援AIです。Microsoft CopilotはMicrosoftが提供するチャットやMicrosoft 365連携を含む生成AI支援の総称で、名称は似る場面がありますが提供元・主な画面・用途が異なります。試験では開発元を分けて覚えます。</p>
+        </details>
+        <details>
+          <summary>Amazon Q DeveloperとGitHub Copilotの違いは？</summary>
+          <p class="tool-faq-a">どちらもIDE内のコード補完を提供しますが、Amazon Q DeveloperはAWSサービス・SDK・運用支援との連携が深い点が特徴です。GitHub CopilotはGitHub（Microsoft）製で汎用的なコード補完に強みがあります。AWS中心の開発なら前者、GitHub中心の汎用開発なら後者、という整理が現実的です。</p>
+        </details>
+        <details>
+          <summary>CodeWhispererとの関係は？</summary>
+          <p class="tool-faq-a">Amazon CodeWhispererはAWSのコード補完AIとして提供されていました。Amazon Q Developerはその機能を含みつつ、AWS運用支援やセキュリティスキャンなどを統合した後継的な位置づけです。試験では「CodeWhisperer→Amazon Q Developerへ発展」と覚えるとよいです。</p>
+        </details>
+        <details>
+          <summary>AWSの機密情報をAmazon Qに入力しても大丈夫ですか？</summary>
+          <p class="tool-faq-a">いいえ。アクセスキー、顧客データ、未公開のソースコードなど機密情報は入力しないでください。AWSのデータ処理方針と社内のセキュリティポリシーを必ず確認し、許可された範囲でのみ利用してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://aws.amazon.com/q/developer/" target="_blank" rel="noopener noreferrer">Amazon Q Developer</a>
+      <span aria-hidden="true">·</span>
+      
+      <a href="https://docs.aws.amazon.com/signin/latest/userguide/sign-in-aws_builder_id.html" target="_blank" rel="noopener noreferrer">AWS Builder ID</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/app-icon.png" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../copilot/"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Microsoft Copilot</a></li>
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../tabnine/"><img src="../../assets/images/tools/tabnine/app-icon.png" alt="" width="16" height="16"> Tabnine</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

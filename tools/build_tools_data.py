@@ -114,6 +114,9 @@ DIRECT_ICON_URL = {
     "replit": "https://replit.com/public/images/replit-logo-small.png",
     "v0": "https://www.google.com/s2/favicons?domain=v0.dev&sz=256",
     "bolt-new": "https://cdn.simpleicons.org/stackblitz/1389FD",
+    "lovable": "https://lovable.dev/apple-touch-icon.png",
+    "tabnine": "https://www.tabnine.com/favicon.ico",
+    "amazon-q-developer": "https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/product-categories/business-application/approved/images/qdev_merch_qdev_v1_1280x1280.e0fc098598c9a070a7a5c866716c387fba743c1e.jpg",
 }
 
 

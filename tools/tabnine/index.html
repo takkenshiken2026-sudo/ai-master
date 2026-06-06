@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tabnineの機能・料金・使い方を解説。コード補完に特化したAIコーディング支援。オンプレ対応とプライバシー重視の位置づけ、GitHub Copilotとの違いも整理。生成AIパスポート・G検定対策にも。">
+  <title>Tabnineとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/tabnine/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Tabnineとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Tabnineの機能・料金・使い方を解説。コード補完に特化したAIコーディング支援。オンプレ対応とプライバシー重視の位置づけ、GitHub Copilotとの違いも整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/tabnine/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/tabnine/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/tabnine/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/tabnine/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Tabnine", "item": "https://ai-master.jp/tools/tabnine/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/tabnine/#article",
+        "headline": "Tabnineとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Tabnineの機能・料金・使い方を解説。コード補完に特化したAIコーディング支援。オンプレ対応とプライバシー重視の位置づけ、GitHub Copilotとの違いも整理。",
+        "url": "https://ai-master.jp/tools/tabnine/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/tabnine/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/tabnine/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Tabnine" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/tabnine/#webpage",
+        "url": "https://ai-master.jp/tools/tabnine/",
+        "name": "Tabnineとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Tabnineの機能・料金・使い方を解説。コード補完に特化したAIコーディング支援。オンプレ対応とプライバシー重視の位置づけ、GitHub Copilotとの違いも整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/tabnine/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Tabnine",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "description": "IDE内でコード補完・インライン提案に特化したAIコーディング支援ツール。プライバシー保護とオンプレミス対応を訴求。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料枠あり。有料プランは月額課金（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Tabnine",
+          "url": "https://www.tabnine.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Tabnineは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Basicなどの無料枠があり、基本的なコード補完を試せます。高度な補完・チャット・エンタープライズ機能は有料プランが必要です。最新のプランはTabnine公式で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TabnineとGitHub Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもIDE内のコード補完AIですが、提供元とデータポリシーが異なります。GitHub CopilotはGitHub（Microsoft）製で広く普及しています。Tabnineはプライバシー保護やオンプレミス対応を訴求する点が特徴です。企業のセキュリティ要件に応じて選びます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Tabnineはオンプレミスで使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Enterpriseプランなどで、自社環境にモデルを配置しコードを外部に出さずに利用するオプションが用意されています。詳細な構成と条件は公式のエンタープライズ資料で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TabnineとCursorの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tabnineは既存IDEへの拡張機能として、主にインライン補完を提供します。CursorはAI機能を前提にしたエディタ本体で、チャットから複数ファイルを編集する使い方が強みです。補完中心か、エディタ一体型かで選びます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "コード補完AIに機密コードを入力しても大丈夫ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。社内のセキュリティポリシーとツールのデータ処理方針を必ず確認してください。オンプレ対応やプライバシーモードがあっても、設定・プラン次第で挙動は異なります。機密情報は入力しないのが原則です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Tabnine</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/tabnine/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Tabnine · コーディング</p>
+          <h1>Tabnineとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">コード補完特化。プライバシー重視のAIコーディング支援</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">AIコーディング</span>
+        <span class="tool-category">オンプレ対応</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>VS Code</li>
+          <li>JetBrains</li>
+          <li>その他IDE</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/tabnine/og-hero.png" alt="Tabnineの公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Tabnine公式（tabnine.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Tabnine</strong>（タブナイン）は、IDE内で<strong>コード補完・インライン提案</strong>に特化した<strong>AIコーディング支援ツール</strong>です。<a href="../github-copilot/">GitHub Copilot</a>や<a href="../cursor/">Cursor</a>と並ぶ「開発者向け生成AI」ですが、<strong>プライバシー保護</strong>や<strong>オンプレミス（自社環境）での利用</strong>を訴求する点が特徴です。本記事は全機能の網羅ではなく、<strong>試験で押さえる位置づけ</strong>（AIコーディング支援・データ送信の考え方）と<strong>GitHub Copilotとの違い</strong>、<strong>「補完AI＝チャットで丸ごと書き換え」という誤解</strong>に絞って書いています。料金や機能は<strong>2026年6月時点</strong>の情報です。利用前は<a href="#pricing">料金プラン</a>と公式の最新情報を確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Tabnineとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#pricing">料金プランの考え方</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">GitHub Copilot・Cursor・Windsurfとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、<strong>AIコーディング支援</strong>や<strong>機密情報の取り扱い</strong>が問われることがあります。Tabnineは「IDE内のコード補完AI」として、<a href="../github-copilot/">GitHub Copilot</a>と並べて覚えると整理しやすいです。特に<strong>コードを外部に送らない運用</strong>や<strong>企業のセキュリティポリシー</strong>に関する設問では、Tabnineのようなプライバシー訴求型ツールが選択肢に出ることがあります。
+      </p>
+      <p>
+        よくある誤解は3つあります。<strong>「Tabnine＝GitHub Copilotと同じ」</strong>と同一視すること（どちらも補完AIですが、提供元・データポリシー・オンプレ対応は異なります）。<strong>「コード補完AIはチャットで大規模改修が主用途」</strong>と思い込むこと（Tabnineの中心はインライン補完であり、<a href="../cursor/">Cursor</a>のようなエディタ一体型チャットとは用途が異なります）。そして<strong>「オンプレ対応＝一切データが外部に出ない」</strong>と短絡すること（プランと設定次第で挙動は変わるため、公式のデータ処理方針を必ず確認します）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">実践演習 HQ-0318（業務利用のケース）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：<a href="../github-copilot/">GitHub Copilot</a> · <a href="../cursor/">Cursor</a> · <a href="../windsurf/">Windsurf</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Tabnineとは</h2>
+      <p>
+        Tabnineは、Visual Studio CodeやJetBrains系IDEなどに拡張機能として組み込み、入力中のコード文脈から<strong>次の行や関数を予測・提案</strong>するAIコーディング支援ツールです。開発者がキーを打つたびに候補が表示され、Tabキーで採用する<strong>インライン補完</strong>が中心の体験です。
+      </p>
+      <p>
+        他の補完AIと差別化されるのは、<strong>プライバシーとエンタープライズ向け機能</strong>です。コードを学習に使わない設定、プライベートモデルの利用、オンプレミス環境での展開など、企業のセキュリティ要件に応じたオプションが用意されています（プランにより異なります）。
+      </p>
+      <p>
+        提供元は<strong>Tabnine</strong>（旧Codota）です。長年コード補完の研究・製品化を行ってきたベンダーで、試験では「コード補完特化・プライバシー重視のAIコーディング支援」として覚えるとよいです。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <p>主な機能を整理します。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>インラインコード補完</h3>
+          <p>入力文脈から次のコード行・関数・ブロックを予測。Tabキーで素早く採用できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>複数言語・複数IDE対応</h3>
+          <p>Python、JavaScript、Java、Goなど主要言語と、VS Code・JetBrains・Vim等に対応。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>プライバシーモード</h3>
+          <p>コードを学習データに使わない設定や、送信ポリシーの管理が可能（プランにより異なる）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>エンタープライズ・オンプレ</h3>
+          <p>自社環境にモデルを配置し、コードを外部に出さずに補完を利用するオプション。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>チーム向けモデル</h3>
+          <p>組織内のコードスタイルに合わせたカスタムモデル（Enterprise向け）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>チャット補助（プランによる）</h3>
+          <p>コードに関する質問や説明をチャットで行う機能も拡充されています（製品版により異なる）。</p>
+        </div>
+      </div>
+
+      <h3>AIコーディングツールとの位置づけ</h3>
+      <p>
+        GitHub Copilotが<strong>Microsoft/GitHub傘下</strong>で広く普及しているのに対し、Tabnineは<strong>プライバシーとオンプレ対応</strong>を前面に出す選択肢です。<a href="../cursor/">Cursor</a>が<strong>エディタ本体にAIを統合</strong>するのに対し、Tabnineは<strong>既存IDEに拡張として組み込む補完特化型</strong>です。いずれも<a href="../../glossary/generative-ai/">生成AI</a>をコーディングに使うツールですが、<strong>データの扱いと製品形態</strong>で覚え分けましょう。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プランの考え方</h2>
+      <p>Tabnineは無料枠（Basic等）から始められますが、本格利用やエンタープライズ機能では有料プランが必要です（2026年6月時点）。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Basic（無料）</p>
+          <p class="tool-plan-price">¥0</p>
+          <p class="tool-plan-note">限定的な補完</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">月額課金</p>
+          <p class="tool-plan-note">高度な補完・チャット</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要見積</p>
+          <p class="tool-plan-note">オンプレ・カスタムモデル</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金の考え方</th>
+            <th>向いている人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Basic（無料）</strong></td>
+            <td>限定的な補完</td>
+            <td>個人のお試し</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>高度な補完・チャット</td>
+            <td>個人開発者向け</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>オンプレ・カスタムモデル</td>
+            <td>企業・セキュリティ重視チーム</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        商用・クライアント案件では、生成コードの権利関係と利用規約、社内のセキュリティポリシーを必ず確認してください。APIキーや顧客データをプロンプトに含めないなど、機密情報の取り扱いには特に注意が必要です。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>アカウント登録後、基本的な流れは次のとおりです。</p>
+
+      <ol class="tool-steps">
+          <li>
+            <strong>公式サイトでプラン確認</strong>
+            tabnine.com でプランと対応IDEを確認し、アカウントを作成します。
+          </li>
+          <li>
+            <strong>IDEに拡張機能をインストール</strong>
+            VS CodeやIntelliJ等のマーケットプレイスからTabnine拡張をインストール。
+          </li>
+          <li>
+            <strong>認証・設定</strong>
+            アカウントでログインし、プライバシー設定やチームポリシーを確認します。
+          </li>
+          <li>
+            <strong>コーディング中に補完を利用</strong>
+            コードを書くと灰色の候補が表示。Tabキーで採用、Escで却下します。
+          </li>
+          <li>
+            <strong>チーム・Enterprise設定（任意）</strong>
+            組織管理者はオンプレ展開やカスタムモデルの設定を行います。
+          </li>
+      </ol>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドラインと利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>日常のコーディング効率化</h3>
+          <ul>
+            <li>ボイラープレートの自動生成</li>
+            <li>API呼び出しコードの補完</li>
+            <li>テストコードの下書き</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>セキュリティ重視の企業</h3>
+          <ul>
+            <li>コードを外部送信したくないチーム</li>
+            <li>オンプレ環境での補完利用</li>
+            <li>コンプライアンス要件への対応</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>既存IDEの維持</h3>
+          <ul>
+            <li>VS Code/JetBrainsを変えずにAI補完を導入</li>
+            <li>チーム全体への段階的ロールアウト</li>
+            <li>Copilot以外の選択肢検討</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IDE内インライン補完で開発速度向上</td>
+            <td>無料枠では機能が限定的</td>
+          </tr>
+          <tr>
+            <td>プライバシー・オンプレ対応の選択肢</td>
+            <td>大規模リポジトリのチャット編集には向きにくい</td>
+          </tr>
+          <tr>
+            <td>既存IDEに拡張として導入可能</td>
+            <td>プランによってデータポリシーが異なる</td>
+          </tr>
+          <tr>
+            <td>GitHub Copilotの代替として比較検討しやすい</td>
+            <td>生成コードの品質は文脈次第でレビュー必須</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>GitHub Copilot・Cursor・Windsurfとの比較</h2>
+      <p>AIコーディング支援で名前が並びやすい4つを整理します。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Tabnine</th>
+            <th>GitHub Copilot</th>
+            <th>Cursor</th>
+            <th>Windsurf</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>Tabnine</td>
+            <td>GitHub（Microsoft）</td>
+            <td>Anysphere</td>
+            <td>Codeium</td>
+          </tr>
+          <tr>
+            <td>製品の形</td>
+            <td>IDE拡張（補完特化）</td>
+            <td>IDE拡張（補完中心）</td>
+            <td>AIネイティブエディタ</td>
+            <td>AIネイティブエディタ</td>
+          </tr>
+          <tr>
+            <td>主な強み</td>
+            <td>プライバシー・オンプレ</td>
+            <td>普及率・GitHub連携</td>
+            <td>チャットから複数ファイル編集</td>
+            <td>高速補完・エディタ一体型</td>
+          </tr>
+          <tr>
+            <td>データの扱い</td>
+            <td>プライバシー訴求・Enterprise</td>
+            <td>GitHub/Microsoftのポリシー</td>
+            <td>クラウド送信（設定による）</td>
+            <td>Codeiumのポリシー</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>補完特化・プライバシー</td>
+            <td>Microsoft/GitHub製</td>
+            <td>Anysphere製・ローカルエディタ</td>
+            <td>Codeium製・エディタ一体型</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        補完中心でプライバシーを重視するならTabnine、GitHub連携と普及率ならGitHub Copilot、エディタごとAIネイティブに移行するならCursorやWindsurf、という使い分けが現実的です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>既存IDEを変えずにAIコード補完を試したい開発者</strong></li>
+        <li><strong>コードの外部送信を抑えたい企業・チーム</strong></li>
+        <li><strong>GitHub Copilotとの違いを試験用に整理したい受験生</strong></li>
+        <li><strong>オンプレ環境でのAI補完を検討しているIT管理者</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>チャットだけで大規模リポジトリを丸ごと書き換えたい</strong>場合（<a href="../cursor/">Cursor</a>等の方が向くことが多い）や、<strong>無料枠だけで高度なEnterprise機能を使いたい</strong>場合です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Tabnineは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。Basicなどの無料枠があり、基本的なコード補完を試せます。高度な補完・チャット・エンタープライズ機能は有料プランが必要です。最新のプランはTabnine公式で確認してください。</p>
+        </details>
+        <details>
+          <summary>TabnineとGitHub Copilotの違いは？</summary>
+          <p class="tool-faq-a">どちらもIDE内のコード補完AIですが、提供元とデータポリシーが異なります。GitHub CopilotはGitHub（Microsoft）製で広く普及しています。Tabnineはプライバシー保護やオンプレミス対応を訴求する点が特徴です。企業のセキュリティ要件に応じて選びます。</p>
+        </details>
+        <details>
+          <summary>Tabnineはオンプレミスで使えますか？</summary>
+          <p class="tool-faq-a">Enterpriseプランなどで、自社環境にモデルを配置しコードを外部に出さずに利用するオプションが用意されています。詳細な構成と条件は公式のエンタープライズ資料で確認してください。</p>
+        </details>
+        <details>
+          <summary>TabnineとCursorの違いは？</summary>
+          <p class="tool-faq-a">Tabnineは既存IDEへの拡張機能として、主にインライン補完を提供します。CursorはAI機能を前提にしたエディタ本体で、チャットから複数ファイルを編集する使い方が強みです。補完中心か、エディタ一体型かで選びます。</p>
+        </details>
+        <details>
+          <summary>コード補完AIに機密コードを入力しても大丈夫ですか？</summary>
+          <p class="tool-faq-a">いいえ。社内のセキュリティポリシーとツールのデータ処理方針を必ず確認してください。オンプレ対応やプライバシーモードがあっても、設定・プラン次第で挙動は異なります。機密情報は入力しないのが原則です。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://www.tabnine.com" target="_blank" rel="noopener noreferrer">Tabnine（tabnine.com）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/app-icon.png" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../windsurf/"><img src="../../assets/images/tools/windsurf/app-icon.png" alt="" width="16" height="16"> Windsurf</a></li>
+          <li><a href="../bolt-new/"><img src="../../assets/images/tools/bolt-new/app-icon.png" alt="" width="16" height="16"> Bolt.new</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
