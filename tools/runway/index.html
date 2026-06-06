@@ -1,0 +1,507 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Runwayの機能・料金・使い方を解説。Gen-4/Gen-4.5、image-to-video、動画編集機能、クレジット制の考え方、Midjourney・DALL·E・Adobe Fireflyとの違いを整理。">
+          <title>Runwayとは？動画生成AIの機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/runway/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="Runwayとは？動画生成AIの機能・料金・使い方を解説">
+          <meta property="og:description" content="Runwayをわかりやすく解説。動画生成AIとしての特徴、Gen-4/Gen-4.5、料金プラン、使い方、主要ツール比較を2026年6月時点で整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/runway/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/runway/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/runway/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/runway/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ホーム",
+          "item": "https://ai-master.jp/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AIツール",
+          "item": "https://ai-master.jp/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Runway",
+          "item": "https://ai-master.jp/tools/runway/"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/runway/#article",
+      "headline": "Runwayとは？動画生成AIの機能・料金・使い方を解説",
+      "description": "Runwayをわかりやすく解説。動画生成AIとしての特徴、Gen-4/Gen-4.5、料金プラン、使い方、主要ツール比較を2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/runway/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/runway/og-hero.png",
+      "author": {
+        "@type": "Organization",
+        "name": "AI Master"
+      },
+      "publisher": {
+        "@id": "https://ai-master.jp/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://ai-master.jp/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://ai-master.jp/tools/runway/#webpage"
+      },
+      "about": {
+        "@type": "SoftwareApplication",
+        "name": "Runway"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ai-master.jp/tools/runway/#webpage",
+      "url": "https://ai-master.jp/tools/runway/",
+      "name": "Runwayとは？動画生成AIの機能・料金・使い方を解説",
+      "description": "Runwayをわかりやすく解説。動画生成AIとしての特徴、Gen-4/Gen-4.5、料金プラン、使い方、主要ツール比較を2026年6月時点で整理。",
+      "isPartOf": {
+        "@id": "https://ai-master.jp/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ai-master.jp/tools/runway/#breadcrumb"
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Runway",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser",
+      "description": "Runwayが提供する動画・画像生成AIプラットフォーム。Gen-4/Gen-4.5、image-to-video、動画編集機能を統合し、映像制作フローを効率化できる。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free $0（125 credits・初回のみ）、Standard $12/ユーザー/月（年契約）、Pro $28/月（年契約）、Max $76/月（年契約）、Enterpriseは個別見積。月払いは異なる場合あり（2026年6月時点）"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "Runway",
+        "url": "https://runwayml.com"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Runwayは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。Freeプラン（$0）がありますが、2026年6月時点では125クレジットの初回付与が中心です。継続運用には有料プランの検討が必要です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "RunwayとMidjourneyの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Runwayは動画生成・編集が主軸で、Midjourneyは主に画像生成が主軸です。動画制作を重視するならRunway、静止画品質を重視するならMidjourneyが候補になります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Runwayの料金は月額固定ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "クレジット制のため、プランごとの上限と消費量で実質コストが変わります。年払いは月額換算で約20%安い設計ですが、月払いの条件は異なる場合があるため公式ページで確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Runwayは従来の動画編集ソフトと同じですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "同じではありません。編集機能はありますが、Runwayの中核は生成モデルを活用した動画制作フローです。従来NLEの代替というより、生成工程を組み込むための新しい選択肢と捉えるのが適切です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Runwayで作った動画は商用利用できますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "商用利用の可否はプランと利用規約に依存します。案件利用前に最新のライセンス条件、クレジット上限、禁止事項を公式ドキュメントで必ず確認してください。"
+          }
+        }
+      ]
+    }
+  ]
+}
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">Runway</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/runway/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">Runway · 音声・動画</p>
+                  <h1>Runwayとは？動画生成AIの機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">Gen-4/Gen-4.5やimage-to-videoを使って映像制作を高速化できる動画生成AI</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">無料プランあり</span>
+                <span class="tool-category">動画生成AI</span>
+                <span class="tool-category">クレジット制</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Web（runwayml.com）</li><li>Gen-4 / Gen-4.5</li><li>Video Editor</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/runway/og-hero.png" alt="Runwayの公式イメージ" width="2400" height="1260" fetchpriority="high">
+              <figcaption>出典：Runway公式（runwayml.com）</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>Runway</strong>は、<strong>動画生成AI</strong>と<strong>動画編集</strong>を統合した制作プラットフォームです。<strong>Gen-4/Gen-4.5</strong>や<strong>image-to-video</strong>を使い、短尺動画の企画から試作までを高速化できます。本記事では、<a href="#pricing">料金プラン</a>、<a href="#comparison">主要ツール比較</a>、<a href="#misconception">誤解しやすいポイント</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+                <li><a href="#what-is">Runwayとは</a></li>
+                <li><a href="#features">できること（主な機能）</a></li>
+                <li><a href="#misconception">よくある誤解</a></li>
+                <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+                <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+                <li><a href="#use-cases">ビジネスでの活用例</a></li>
+                <li><a href="#pros-cons">メリット・デメリット</a></li>
+                <li><a href="#comparison">主要ツールとの比較</a></li>
+                <li><a href="#recommend">こんな人におすすめ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+              <h2>試験で問われる見方</h2>
+              <p>生成AIパスポートでは画像生成だけでなく動画生成AIの特徴や利用上の注意点が問われます。Runwayは動画生成ワークフローの代表例として押さえると整理しやすいです。</p>
+              <p>試験では「Runwayは従来の動画編集ソフトと同じ」「RunwayはMidjourneyと同じ画像生成専用」という混同が出やすいため、クレジット制と用途の違いを区別して覚えるのがポイントです。</p>
+              <div class="tool-callout">
+                <p><strong>このサイトの演習で確認する</strong></p>
+                <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0196/">一問一答 TF-0196（動画生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0197/">TF-0197（動画生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a></p>
+                <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+              </div>
+            </section>
+
+            <section id="what-is">
+              <h2>Runwayとは</h2>
+              <p>Runwayは、テキストや画像から動画を生成するモデル群（Gen-4/Gen-4.5）と編集機能を提供するWebサービスです。制作現場での動画プロトタイピングを短時間で進められます。</p>
+              <p>image-to-videoを使えば、静止画の世界観を保ちながら動画化しやすく、広告バナーやコンセプトアートから動画を起こす導線を作れます。</p>
+              <p>利用はクレジット制で、プランごとに使える上限が異なります。特に年払いと月払いで単価が変わるため、予算設計では請求サイクルを確認しておく必要があります。</p>
+            </section>
+
+            <section id="features">
+              <h2>できること（主な機能）</h2>
+              <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+  <h3>Gen-4 / Gen-4.5</h3>
+  <p>最新世代モデルでテキストから動画シーンを生成し、短尺コンテンツを高速に試作できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Image-to-Video</h3>
+  <p>1枚の画像を起点にカメラワークや動きを付け、静止画素材を動画化できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Video Editor</h3>
+  <p>生成した素材のトリミングやタイムライン編集を同一画面で行い、制作往復を減らせます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Style一貫性の調整</h3>
+  <p>プロンプト・参照素材でトーンを揃え、シリーズ動画の統一感を保ちやすくなります。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>チーム運用</h3>
+  <p>プランに応じて共有・コラボレーションし、制作フローをチームで回せます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>クレジット管理</h3>
+  <p>生成量をクレジット単位で管理し、実験と本番の予算配分を調整できます。</p>
+</div>
+              </div>
+            </section>
+
+            <section id="misconception">
+              <h2>よくある誤解</h2>
+              <p>代表的な誤解は「Runwayは従来のNLE（ノンリニア編集ソフト）と同じ」という見方です。Runwayは編集機能も持ちますが、核は生成モデルを使った映像生成ワークフローです。</p>
+              <p>もう1つは「Runway = Midjourney」の混同です。Midjourneyは主に画像生成、Runwayは動画生成と編集が中心です。また、利用はクレジット制なので、回数無制限の定額サービスと同じ感覚で使うと見積もりがずれやすくなります。</p>
+            </section>
+
+            <section id="pricing">
+              <h2>料金プラン（2026年6月時点）</h2>
+              <p>Runwayの料金はFreeと有料プラン（Standard/Pro/Max/Enterprise）で構成されています。以下は公式Pricingに基づく<strong>2026年6月時点</strong>の整理です。</p>
+              <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Free</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">125 credits（初回付与）</p></div>
+<div class="tool-plan-card"><p class="tool-plan-name">Standard</p><p class="tool-plan-price">$12/ユーザー/月（年契約）</p><p class="tool-plan-note">$144/年</p></div>
+<div class="tool-plan-card"><p class="tool-plan-name">Pro</p><p class="tool-plan-price">$28/月（年契約）</p><p class="tool-plan-note">$336/年</p></div>
+              </div>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>プラン</th>
+                    <th>料金（2026年6月時点）</th>
+                    <th>主な位置づけ</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td><strong>Free</strong></td><td><strong>$0</strong>（125 credits・one-time）</td><td>まず試したい個人ユーザー</td></tr>
+<tr><td><strong>Standard</strong></td><td><strong>$12/ユーザー/月（年契約）</strong>（$144/年）</td><td>動画生成を定常利用する個人・小規模チーム</td></tr>
+<tr><td><strong>Pro</strong></td><td><strong>$28/月（年契約）</strong>（$336/年）</td><td>より高頻度に生成・編集する制作者</td></tr>
+<tr><td><strong>Max</strong></td><td><strong>$76/月（年契約）</strong>（$912/年）</td><td>大量生成を行うヘビーユーザー</td></tr>
+<tr><td><strong>Enterprise</strong></td><td>個別見積もり</td><td>管理統制を要する企業導入</td></tr>
+                </tbody>
+              </table>
+              <p>年払いでは月額換算で約20%安くなる設計が示されています。月払い（pay-as-you-go）の金額や付与クレジットは異なる場合があるため、契約前に公式Pricingページで最新条件を確認してください。</p>
+            </section>
+
+            <section id="how-to">
+              <h2>はじめ方・基本的な使い方</h2>
+              <p>最短で試す流れは次のとおりです。</p>
+              <div class="tool-split">
+                <ol class="tool-steps">
+        <li>
+  <strong>アカウントを作成</strong>
+  runwayml.comで登録し、ワークスペースを用意します。
+</li>
+<li>
+  <strong>制作目的を定義</strong>
+  SNS広告、商品紹介、社内説明など用途を明確にして尺を決めます。
+</li>
+<li>
+  <strong>Gen-4/Gen-4.5で試作</strong>
+  テキストまたは画像から動画を生成し、複数案を短時間で比較します。
+</li>
+<li>
+  <strong>編集と整音を実施</strong>
+  Video Editorでトリミングや調整を行い、必要に応じて別ツールで音声を補強します。
+</li>
+<li>
+  <strong>クレジット消費を最適化</strong>
+  本番前に生成回数と品質基準を決め、コスト超過を防ぎます。
+</li>
+                </ol>
+                <div class="tool-split__media">
+                  <figure class="tool-figure">
+                    <img src="../../assets/images/tools/runway/og-hero.png" alt="Runwayの公式イメージ" width="600" height="315" loading="lazy">
+                    <figcaption>出典：Runway公式（runwayml.com）</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <section id="use-cases">
+              <h2>ビジネスでの活用例</h2>
+              <div class="tool-usecase-grid">
+              <div class="tool-usecase-card">
+        <h3>広告クリエイティブ試作</h3>
+        <ul>
+                <li>短尺動画案を複数生成してA/Bテスト素材を準備</li>
+<li>撮影前の絵コンテを動画で可視化</li>
+<li>社内レビュー速度を向上</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>SNS向け動画制作</h3>
+        <ul>
+                <li>画像素材から縦型動画を量産</li>
+<li>キャンペーンごとに訴求パターンを高速展開</li>
+<li>運用チームが編集まで一貫対応</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>企画・提案フェーズ</h3>
+        <ul>
+                <li>新規企画のイメージを動画で共有</li>
+<li>顧客提案時に完成イメージを提示</li>
+<li>撮影予算の事前検証に活用</li>
+        </ul>
+      </div>
+              </div>
+            </section>
+
+            <section id="pros-cons">
+              <h2>メリット・デメリット</h2>
+              <table class="tool-pros-cons-table">
+                <thead>
+                  <tr>
+                    <th>メリット</th>
+                    <th>デメリット</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td>動画生成と編集を同一サービスで回せる</td><td>クレジット消費を管理しないと費用が増えやすい</td></tr>
+<tr><td>Gen-4/Gen-4.5で短時間に複数案を作れる</td><td>生成結果の品質ブレを人間が選別する必要がある</td></tr>
+<tr><td>image-to-videoで既存素材を動画展開しやすい</td><td>料金は年払い・月払いで条件差があり比較が必要</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="comparison">
+              <h2>主要ツールとの比較</h2>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>項目</th>
+                    <th>Runway</th>
+                    <th>Midjourney</th>
+                    <th>DALL·E</th>
+                    <th>Adobe Firefly</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td>主な対象</td><td>動画生成・動画編集</td><td>画像生成</td><td>画像生成（ChatGPT連携）</td><td>画像/一部動画・Adobe連携</td></tr>
+<tr><td>得意領域</td><td>Gen-4/Gen-4.5、image-to-video</td><td>高品質ビジュアル探索</td><td>手軽な画像生成</td><td>制作ツールとの連携</td></tr>
+<tr><td>課金モデル</td><td>クレジット制（プラン別）</td><td>有料サブスク中心</td><td>無料枠+プラン/API課金</td><td>クレジット・製品連携型</td></tr>
+<tr><td>向いている用途</td><td>動画プロトタイプ・SNS動画</td><td>静止画クリエイティブ</td><td>文章+画像の一体運用</td><td>Adobe中心の制作現場</td></tr>
+                </tbody>
+              </table>
+              <p>動画を主軸にするならRunway、静止画重視なら<a href="../midjourney/">Midjourney</a>や<a href="../dalle/">DALL·E</a>、既存のAdobe制作フロー中心なら<a href="../adobe-firefly/">Adobe Firefly</a>が候補です。用途と課金モデルの両方で比較すると判断しやすくなります。</p>
+            </section>
+
+            <section id="recommend">
+              <h2>こんな人におすすめ</h2>
+              <ul>
+                      <li><strong>動画生成AIを実務に取り入れたいマーケ・制作チーム</strong></li>
+              <li><strong>撮影前に動画プロトタイプを高速で作りたい担当者</strong></li>
+              <li><strong>画像から動画化するワークフローを構築したいクリエイター</strong></li>
+              <li><strong>試験対策で動画生成AIの代表例を押さえたい受験生</strong></li>
+              </ul>
+              <p>あえて向いていないのは、画像生成だけで完結する用途や、クレジット管理なしで無計画に大量生成したいケースです。Runwayは運用設計をセットで導入すると効果が出やすいツールです。</p>
+            </section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+        <details>
+  <summary>Runwayは無料で使えますか？</summary>
+  <p class="tool-faq-a">はい。Freeプラン（$0）がありますが、2026年6月時点では125クレジットの初回付与が中心です。継続運用には有料プランの検討が必要です。</p>
+</details>
+<details>
+  <summary>RunwayとMidjourneyの違いは何ですか？</summary>
+  <p class="tool-faq-a">Runwayは動画生成・編集が主軸で、Midjourneyは主に画像生成が主軸です。動画制作を重視するならRunway、静止画品質を重視するならMidjourneyが候補になります。</p>
+</details>
+<details>
+  <summary>Runwayの料金は月額固定ですか？</summary>
+  <p class="tool-faq-a">クレジット制のため、プランごとの上限と消費量で実質コストが変わります。年払いは月額換算で約20%安い設計ですが、月払いの条件は異なる場合があるため公式ページで確認してください。</p>
+</details>
+<details>
+  <summary>Runwayは従来の動画編集ソフトと同じですか？</summary>
+  <p class="tool-faq-a">同じではありません。編集機能はありますが、Runwayの中核は生成モデルを活用した動画制作フローです。従来NLEの代替というより、生成工程を組み込むための新しい選択肢と捉えるのが適切です。</p>
+</details>
+<details>
+  <summary>Runwayで作った動画は商用利用できますか？</summary>
+  <p class="tool-faq-a">商用利用の可否はプランと利用規約に依存します。案件利用前に最新のライセンス条件、クレジット上限、禁止事項を公式ドキュメントで必ず確認してください。</p>
+</details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://runwayml.com" target="_blank" rel="noopener noreferrer">Runway（runwayml.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://runwayml.com/pricing" target="_blank" rel="noopener noreferrer">料金ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://help.runwayml.com" target="_blank" rel="noopener noreferrer">ヘルプセンター</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../midjourney/"><img src="../../assets/images/tools/midjourney/app-icon.png" alt="" width="16" height="16"> Midjourney</a></li>
+          <li><a href="../dalle/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> DALL·E</a></li>
+          <li><a href="../adobe-firefly/"><img src="../../assets/images/tools/adobe.svg" alt="" width="16" height="16"> Adobe Firefly</a></li>
+          <li><a href="../elevenlabs/"><img src="../../assets/images/tools/elevenlabs/app-icon.png" alt="" width="16" height="16"> ElevenLabs</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Image（画像生成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a>
+                ·
+                <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        </body>
+        </html>

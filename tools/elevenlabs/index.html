@@ -1,0 +1,508 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="ElevenLabsの機能・料金・使い方を解説。Text-to-Speech、Speech-to-Text、音声クローン、吹き替え、効果音・音楽生成まで、実務導入での誤解や比較ポイントを整理。">
+          <title>ElevenLabsとは？音声生成AIの機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/elevenlabs/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="ElevenLabsとは？音声生成AIの機能・料金・使い方を解説">
+          <meta property="og:description" content="ElevenLabsをわかりやすく解説。音声合成・文字起こし・音声クローン・吹き替えの特徴、料金プラン、実務活用、他ツール比較を2026年6月時点で整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/elevenlabs/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/elevenlabs/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/elevenlabs/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/elevenlabs/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ホーム",
+          "item": "https://ai-master.jp/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AIツール",
+          "item": "https://ai-master.jp/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "ElevenLabs",
+          "item": "https://ai-master.jp/tools/elevenlabs/"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/elevenlabs/#article",
+      "headline": "ElevenLabsとは？音声生成AIの機能・料金・使い方を解説",
+      "description": "ElevenLabsをわかりやすく解説。音声合成・文字起こし・音声クローン・吹き替えの特徴、料金プラン、実務活用、他ツール比較を2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/elevenlabs/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/elevenlabs/og-hero.png",
+      "author": {
+        "@type": "Organization",
+        "name": "AI Master"
+      },
+      "publisher": {
+        "@id": "https://ai-master.jp/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://ai-master.jp/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://ai-master.jp/tools/elevenlabs/#webpage"
+      },
+      "about": {
+        "@type": "SoftwareApplication",
+        "name": "ElevenLabs"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ai-master.jp/tools/elevenlabs/#webpage",
+      "url": "https://ai-master.jp/tools/elevenlabs/",
+      "name": "ElevenLabsとは？音声生成AIの機能・料金・使い方を解説",
+      "description": "ElevenLabsをわかりやすく解説。音声合成・文字起こし・音声クローン・吹き替えの特徴、料金プラン、実務活用、他ツール比較を2026年6月時点で整理。",
+      "isPartOf": {
+        "@id": "https://ai-master.jp/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ai-master.jp/tools/elevenlabs/#breadcrumb"
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "ElevenLabs",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser, API",
+      "description": "ElevenLabsが提供する音声生成プラットフォーム。Text-to-Speech、Speech-to-Text、Voice Cloning、Dubbing、Sound Effects、Music生成を統合的に扱える。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free $0（10k credits/月）、Starter $6（30k）、Creator $11初月プロモ後$22（121k）、Pro $99（600k）、Scale $299（1.8M・3席）、Business $990（6M・10席）、Enterpriseは個別見積（2026年6月時点）"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "ElevenLabs",
+        "url": "https://elevenlabs.io"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "ElevenLabsは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。Freeプラン（$0）があり、月10,000クレジットで基本機能を試せます。制作量が増える場合は有料プランへの移行が前提になります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ElevenLabsはChatGPTの音声機能と同じですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "同じではありません。ElevenLabsは独立した音声生成プラットフォームで、Text-to-SpeechだけでなくSpeech-to-Text、Voice Cloning、Dubbing、Sound Effects、Music生成まで扱えます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ElevenLabsは商用利用できますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2026年6月時点ではStarter以上で商用ライセンスが案内されています。ただし具体的な利用条件は契約内容や用途で変わるため、公式の規約とプラン説明を必ず確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Voice Cloningを使うときの注意点は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "本人同意を得た音声のみを使い、権利処理と利用範囲を明確にすることが重要です。なりすましや無断利用は重大なリスクになるため、運用ルールを事前に整備してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ElevenLabsとRunwayはどう使い分けますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "音声生成を主軸にするならElevenLabs、動画生成・編集を主軸にするならRunwayが向いています。実務では、Runwayで動画を作りElevenLabsでナレーションや吹き替えを作る組み合わせも有効です。"
+          }
+        }
+      ]
+    }
+  ]
+}
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">ElevenLabs</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/elevenlabs/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">ElevenLabs · 音声・動画</p>
+                  <h1>ElevenLabsとは？音声生成AIの機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">音声合成から吹き替え・効果音・音楽まで扱える音声生成AIプラットフォーム</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">無料プランあり</span>
+                <span class="tool-category">音声生成AI</span>
+                <span class="tool-category">商用利用可（Starter以上）</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Web（elevenlabs.io）</li><li>API</li><li>Studio</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/elevenlabs/og-hero.png" alt="ElevenLabsの公式イメージ" width="1200" height="630" fetchpriority="high">
+              <figcaption>出典：ElevenLabs公式（elevenlabs.io）</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>ElevenLabs</strong>は、<strong>音声合成（Text-to-Speech）</strong>だけでなく、<strong>文字起こし（Speech-to-Text）</strong>、<strong>Voice Cloning</strong>、<strong>Dubbing</strong>、<strong>Sound Effects</strong>、<strong>Music</strong>まで対応する音声生成AIです。試験対策では「音声分野の生成AI」として位置づけるのがポイントです。本記事では、<a href="#pricing">料金プラン</a>、<a href="#comparison">比較</a>、<a href="#misconception">誤解しやすい点</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+                <li><a href="#what-is">ElevenLabsとは</a></li>
+                <li><a href="#features">できること（主な機能）</a></li>
+                <li><a href="#misconception">よくある誤解</a></li>
+                <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+                <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+                <li><a href="#use-cases">ビジネスでの活用例</a></li>
+                <li><a href="#pros-cons">メリット・デメリット</a></li>
+                <li><a href="#comparison">主要ツールとの比較</a></li>
+                <li><a href="#recommend">こんな人におすすめ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+              <h2>試験で問われる見方</h2>
+              <p>生成AIパスポートやG検定では、画像生成と音声生成の違い、商用利用時の規約確認、同意取得の重要性が問われます。ElevenLabsは音声生成AIの代表例として整理すると覚えやすくなります。</p>
+              <p>特に「ElevenLabs = ChatGPTの音声機能」という誤解は要注意です。ElevenLabsは独立した音声生成プラットフォームで、APIや吹き替え機能まで含む広い用途を持ちます。</p>
+              <div class="tool-callout">
+                <p><strong>このサイトの演習で確認する</strong></p>
+                <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0194/">一問一答 TF-0194（音声生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0195/">TF-0195（音声生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a></p>
+                <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+              </div>
+            </section>
+
+            <section id="what-is">
+              <h2>ElevenLabsとは</h2>
+              <p>ElevenLabsは、自然な読み上げ音声を作るText-to-Speechに強みを持つ生成AIサービスです。多言語対応や話者スタイルの調整ができ、ナレーション制作や音声UIに使われています。</p>
+              <p>近年はSpeech-to-Text、Dubbing、Voice Cloning、Sound Effects、Music生成まで機能が広がり、動画制作や海外展開コンテンツのローカライズでも利用されています。</p>
+              <p>商用利用を前提にする場合は、プランごとのライセンス条件と利用規約の確認が重要です。Starter以上で商用ライセンスが明記されていますが、用途別の制約は都度確認してください。</p>
+            </section>
+
+            <section id="features">
+              <h2>できること（主な機能）</h2>
+              <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+  <h3>Text-to-Speech</h3>
+  <p>自然なイントネーションの読み上げ音声を生成し、ナレーションや動画音声を短時間で作成できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Speech-to-Text</h3>
+  <p>音声データを高精度に文字起こしし、議事録や字幕作成の前処理を効率化できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Voice Cloning</h3>
+  <p>同意を得た音声をもとに話者スタイルを再現でき、ブランド音声や継続運用に活用できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Dubbing</h3>
+  <p>既存動画の吹き替えを多言語で生成し、海外向けコンテンツ展開の制作工数を下げられます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Sound Effects</h3>
+  <p>プロンプトから効果音を生成し、動画や配信向けの音作りを補助できます。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Music</h3>
+  <p>短尺のBGMや楽曲素材を生成し、試作段階の音源を素早く準備できます。</p>
+</div>
+              </div>
+            </section>
+
+            <section id="misconception">
+              <h2>よくある誤解</h2>
+              <p>代表的な誤解は「ElevenLabsはChatGPTの音声読み上げ機能そのもの」という理解です。実際には、独立した音声生成AIプラットフォームで、API・吹き替え・音響生成までを提供します。</p>
+              <p>もう1つは「Voice Cloningは誰の声でも自由に作ってよい」という誤解です。本人同意や権利処理、倫理的運用が必須で、無断利用は大きなリスクになります。加えて、商用利用条件はStarter以上などプラン依存のため、契約前の確認が欠かせません。</p>
+            </section>
+
+            <section id="pricing">
+              <h2>料金プラン（2026年6月時点）</h2>
+              <p>ElevenLabsの料金はクレジット制で、FreeからBusinessまで段階的に拡張できます。以下は公式Pricingに基づく<strong>2026年6月時点</strong>の整理であり、最新条件は必ず公式ページで再確認してください。</p>
+              <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Free</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">10,000 credits/月</p></div>
+<div class="tool-plan-card"><p class="tool-plan-name">Starter</p><p class="tool-plan-price">$6/月</p><p class="tool-plan-note">30,000 credits/月・商用利用可</p></div>
+<div class="tool-plan-card"><p class="tool-plan-name">Creator</p><p class="tool-plan-price">$11初月（通常$22）</p><p class="tool-plan-note">121,000 credits/月</p></div>
+              </div>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>プラン</th>
+                    <th>料金（2026年6月時点）</th>
+                    <th>主な位置づけ</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td><strong>Free</strong></td><td><strong>$0</strong>（10,000 credits/月）</td><td>まず試したい個人ユーザー</td></tr>
+<tr><td><strong>Starter</strong></td><td><strong>$6/月</strong>（30,000 credits/月）</td><td>小規模な継続利用・商用利用の入口</td></tr>
+<tr><td><strong>Creator</strong></td><td><strong>$11初月（通常$22）</strong>（121,000 credits/月）</td><td>動画・SNS運用で継続的に音声制作する人</td></tr>
+<tr><td><strong>Pro</strong></td><td><strong>$99/月</strong>（600,000 credits/月）</td><td>制作量が多い個人/小規模チーム</td></tr>
+<tr><td><strong>Scale</strong></td><td><strong>$299/月</strong>（1,800,000 credits/月・3 seats）</td><td>チーム運用で多言語音声を大量生成</td></tr>
+<tr><td><strong>Business</strong></td><td><strong>$990/月</strong>（6,000,000 credits/月・10 seats）</td><td>組織横断で利用する企業</td></tr>
+<tr><td><strong>Enterprise</strong></td><td>個別見積もり</td><td>ガバナンス要件が厳しい大規模導入</td></tr>
+                </tbody>
+              </table>
+              <p>Starter以上で商用ライセンスが案内されていますが、生成物の利用条件や禁止事項は用途によって異なります。料金・付与クレジット・契約条件は変わり得るため、導入前に公式PricingとDocsを確認してください。</p>
+            </section>
+
+            <section id="how-to">
+              <h2>はじめ方・基本的な使い方</h2>
+              <p>最短で試す流れは次のとおりです。</p>
+              <div class="tool-split">
+                <ol class="tool-steps">
+        <li>
+  <strong>アカウントを作成</strong>
+  elevenlabs.ioでサインアップし、ダッシュボードにログインします。
+</li>
+<li>
+  <strong>用途を決める</strong>
+  読み上げ、文字起こし、吹き替えなど目的を先に固定し、必要クレジットを見積もります。
+</li>
+<li>
+  <strong>音声を生成する</strong>
+  テキスト・話者・言語設定を指定して試作し、トーンと速度を調整します。
+</li>
+<li>
+  <strong>権利と同意を確認</strong>
+  Voice Cloning利用時は同意取得・利用規約・公開範囲を必ずチェックします。
+</li>
+<li>
+  <strong>本番運用へ展開</strong>
+  API連携や制作フローへの組み込みを行い、コスト監視を定着させます。
+</li>
+                </ol>
+                <div class="tool-split__media">
+                  <figure class="tool-figure">
+                    <img src="../../assets/images/tools/elevenlabs/og-hero.png" alt="ElevenLabsの公式イメージ" width="600" height="315" loading="lazy">
+                    <figcaption>出典：ElevenLabs公式（elevenlabs.io）</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <section id="use-cases">
+              <h2>ビジネスでの活用例</h2>
+              <div class="tool-usecase-grid">
+              <div class="tool-usecase-card">
+        <h3>動画ナレーション制作</h3>
+        <ul>
+                <li>YouTube・eラーニング向け音声を短時間で作成</li>
+<li>複数言語ナレーションを同一ワークフローで管理</li>
+<li>修正依頼に対して再生成で迅速対応</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>カスタマーサポート音声</h3>
+        <ul>
+                <li>FAQ読み上げやIVR音声の試作</li>
+<li>音声トーンをブランド基準に統一</li>
+<li>更新時の収録コストを削減</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>コンテンツの海外展開</h3>
+        <ul>
+                <li>Dubbingで既存動画を多言語化</li>
+<li>字幕と音声を合わせてローカライズ</li>
+<li>現地向けテスト配信を高速化</li>
+        </ul>
+      </div>
+              </div>
+            </section>
+
+            <section id="pros-cons">
+              <h2>メリット・デメリット</h2>
+              <table class="tool-pros-cons-table">
+                <thead>
+                  <tr>
+                    <th>メリット</th>
+                    <th>デメリット</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td>音声生成から吹き替えまで機能が広く、一つの基盤で運用しやすい</td><td>クレジット管理を誤るとコストが想定より増えやすい</td></tr>
+<tr><td>Starter以上で商用利用を前提にしやすい</td><td>Voice Cloningは同意・倫理・権利処理が必須</td></tr>
+<tr><td>API連携で継続運用に組み込みやすい</td><td>最終品質は人間による監修とチェックが必要</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="comparison">
+              <h2>主要ツールとの比較</h2>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>項目</th>
+                    <th>ElevenLabs</th>
+                    <th>OpenAI Whisper/TTS</th>
+                    <th>Adobe Firefly</th>
+                    <th>Runway</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td>主な対象</td><td>音声生成全般（TTS/STT/吹き替え）</td><td>音声認識・音声生成API</td><td>画像・動画制作中心</td><td>動画生成・編集中心</td></tr>
+<tr><td>提供形態</td><td>Web + API</td><td>API中心</td><td>Creative Cloud連携</td><td>Webアプリ</td></tr>
+<tr><td>強み</td><td>話者品質と機能の幅</td><td>開発組み込みのしやすさ</td><td>デザイン制作ワークフロー</td><td>生成動画ワークフロー</td></tr>
+<tr><td>向いている用途</td><td>ナレーション・吹き替え運用</td><td>プロダクト実装・実験</td><td>クリエイティブ素材制作</td><td>動画広告・SNS動画制作</td></tr>
+                </tbody>
+              </table>
+              <p>アプリに組み込むならOpenAIのWhisper/TTS系API、音声制作を総合運用するならElevenLabs、画像や動画の制作導線を重視するなら<a href="../adobe-firefly/">Adobe Firefly</a>や<a href="../runway/">Runway</a>が候補になります。OpenAI系の全体像は<a href="../chatgpt/">ChatGPT記事</a>も合わせて確認してください。</p>
+            </section>
+
+            <section id="recommend">
+              <h2>こんな人におすすめ</h2>
+              <ul>
+                      <li><strong>読み上げ・吹き替え・文字起こしを1つの基盤で運用したいチーム</strong></li>
+              <li><strong>商用利用を見据えて音声生成AIを導入したい担当者</strong></li>
+              <li><strong>Voice Cloningを同意管理込みで安全に運用したい組織</strong></li>
+              <li><strong>試験対策で音声生成AIの代表サービスを押さえたい受験生</strong></li>
+              </ul>
+              <p>あえて向いていないのは、同意管理や権利処理を行わずに音声クローンを使いたいケースです。技術選定以前に、倫理・法務・運用ルールを先に整えることが必須です。</p>
+            </section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+        <details>
+  <summary>ElevenLabsは無料で使えますか？</summary>
+  <p class="tool-faq-a">はい。Freeプラン（$0）があり、月10,000クレジットで基本機能を試せます。制作量が増える場合は有料プランへの移行が前提になります。</p>
+</details>
+<details>
+  <summary>ElevenLabsはChatGPTの音声機能と同じですか？</summary>
+  <p class="tool-faq-a">同じではありません。ElevenLabsは独立した音声生成プラットフォームで、Text-to-SpeechだけでなくSpeech-to-Text、Voice Cloning、Dubbing、Sound Effects、Music生成まで扱えます。</p>
+</details>
+<details>
+  <summary>ElevenLabsは商用利用できますか？</summary>
+  <p class="tool-faq-a">2026年6月時点ではStarter以上で商用ライセンスが案内されています。ただし具体的な利用条件は契約内容や用途で変わるため、公式の規約とプラン説明を必ず確認してください。</p>
+</details>
+<details>
+  <summary>Voice Cloningを使うときの注意点は？</summary>
+  <p class="tool-faq-a">本人同意を得た音声のみを使い、権利処理と利用範囲を明確にすることが重要です。なりすましや無断利用は重大なリスクになるため、運用ルールを事前に整備してください。</p>
+</details>
+<details>
+  <summary>ElevenLabsとRunwayはどう使い分けますか？</summary>
+  <p class="tool-faq-a">音声生成を主軸にするならElevenLabs、動画生成・編集を主軸にするならRunwayが向いています。実務では、Runwayで動画を作りElevenLabsでナレーションや吹き替えを作る組み合わせも有効です。</p>
+</details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer">ElevenLabs（elevenlabs.io）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://elevenlabs.io/pricing" target="_blank" rel="noopener noreferrer">料金ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://elevenlabs.io/docs" target="_blank" rel="noopener noreferrer">公式ドキュメント</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../runway/"><img src="../../assets/images/tools/runway/app-icon.png" alt="" width="16" height="16"> Runway</a></li>
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../adobe-firefly/"><img src="../../assets/images/tools/adobe.svg" alt="" width="16" height="16"> Adobe Firefly</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Speech（音声合成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a>
+                ·
+                <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        </body>
+        </html>

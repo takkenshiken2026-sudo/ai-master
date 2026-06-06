@@ -118,6 +118,8 @@ DIRECT_ICON_URL = {
     "tabnine": "https://www.tabnine.com/wp-content/uploads/2024/09/cropped-tabnine-favicon-270x270.png",
     "amazon-q-developer": "https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/product-categories/business-application/approved/images/qdev_merch_qdev_v1_1280x1280.e0fc098598c9a070a7a5c866716c387fba743c1e.jpg",
     "warp": "https://www.warp.dev/android-chrome-512x512.png",
+    "elevenlabs": "https://elevenlabs.io/apple-icon.png",
+    "runway": "https://runwayml.com/icon.png",
 }
 
 
