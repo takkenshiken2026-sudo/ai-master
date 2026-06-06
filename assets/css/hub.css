@@ -154,7 +154,7 @@
   gap: 8px;
   padding: 16px;
   background: var(--surface-inset);
-  border: 2px solid var(--blue);
+  border: 1px solid var(--border-subtle);
   border-radius: 0;
   text-decoration: none;
   color: inherit;
@@ -162,7 +162,7 @@
 }
 .hub-featured-card:hover {
   background: var(--blue-soft);
-  border-color: var(--blue-hover);
+  border-color: var(--border-subtle);
 }
 .hub-featured-card:hover .hub-featured-name {
   color: var(--blue);
