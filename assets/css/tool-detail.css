@@ -343,7 +343,10 @@
   border: 1px solid var(--blue-mid);
   border-left: 4px solid var(--blue);
 }
-.tool-lead strong { color: var(--ink); }
+.tool-lead strong {
+  color: var(--blue);
+  font-weight: var(--font-bold);
+}
 
 .tool-toc {
   margin-bottom: 36px;
@@ -442,10 +445,10 @@
 .tool-content li + li { margin-top: 8px; }
 .tool-steps li + li { margin-top: 0; }
 
-/* 記事内の強調 — 本文(500)との差をはっきり */
+/* 記事内の強調 — 青で本文と差をつける */
 .tool-content strong {
   font-weight: var(--font-bold);
-  color: var(--ink);
+  color: var(--blue);
 }
 .tool-content a {
   color: var(--ink);
@@ -606,6 +609,7 @@
   font-weight: var(--font-bold);
   line-height: 1.4;
   margin-bottom: 2px;
+  color: var(--blue);
 }
 .tool-steps li::before {
   content: counter(step);

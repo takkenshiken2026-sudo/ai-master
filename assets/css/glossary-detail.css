@@ -54,12 +54,13 @@
   font-size: var(--text-base);
   font-weight: var(--font-bold);
   margin-bottom: 4px;
-  color: var(--ink);
+  color: var(--blue);
 }
 
 .glossary-hero-def strong,
 .glossary-exam-box strong {
   font-weight: var(--font-bold);
+  color: var(--blue);
 }
 
 .glossary-exam-box {
