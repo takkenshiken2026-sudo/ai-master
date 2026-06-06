@@ -27,6 +27,7 @@
 }
 .glossary-hero-def {
   font-size: var(--text-base);
+  font-weight: 400;
   line-height: 1.85;
   color: var(--ink);
   padding: 14px 18px;
@@ -43,6 +44,7 @@
   padding: 12px 0;
   border-bottom: 1px solid var(--gray-200);
   font-size: var(--text-base);
+  font-weight: 400;
   line-height: 1.75;
   color: var(--ink);
 }
@@ -54,13 +56,13 @@
   font-size: var(--text-base);
   font-weight: var(--font-bold);
   margin-bottom: 4px;
-  color: var(--blue);
+  color: var(--ink);
 }
 
 .glossary-hero-def strong,
 .glossary-exam-box strong {
   font-weight: var(--font-bold);
-  color: var(--blue);
+  color: var(--ink);
 }
 
 .glossary-exam-box {
@@ -71,6 +73,7 @@
 }
 .glossary-exam-box p {
   font-size: var(--text-base);
+  font-weight: 400;
   line-height: 1.8;
   color: var(--ink);
   margin: 0;
