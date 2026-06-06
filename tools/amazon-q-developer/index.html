@@ -42,7 +42,7 @@
         "description": "Amazon Q Developerの機能・料金・使い方を解説。AWS環境のコーディング・運用支援に特化。GitHub Copilot・Microsoft Copilotとの違い、CodeWhispererからの移行も整理。",
         "url": "https://ai-master.jp/tools/amazon-q-developer/",
         "datePublished": "2026-06-07",
-        "dateModified": "2026-06-07",
+        "dateModified": "2026-06-08",
         "inLanguage": "ja",
         "image": "https://ai-master.jp/assets/images/tools/amazon-q-developer/og-hero.png",
         "author": { "@type": "Organization", "name": "AI Master" },
@@ -71,7 +71,7 @@
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD",
-          "description": "無料枠あり。有料プランは月額課金（2026年6月時点）"
+          "description": "Free Tier（$0）とPro（$19/ユーザー・月、2026年6月時点）"
         },
         "provider": {
           "@type": "Organization",
@@ -87,7 +87,7 @@
             "name": "Amazon Q Developerは無料で使えますか？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "はい。Free tierなどの無料枠があり、基本的なコード補完や支援を試せます。利用量や高度な機能には上限があり、継続利用では有料プランが必要になることがあります。最新の枠はAWS公式で確認してください。"
+              "text": "はい。Free Tier（$0）でIDE・CLIのコード補完やエージェント支援を試せます。例として、IDE/CLIのエージェントリクエストは月50回まで、Javaコード変換は月1,000行まで（2026年6月時点）。上限を超える利用や管理機能が必要ならPro Tier（$19/ユーザー・月）への移行を検討します。最新の枠はAWS公式の料金ページで確認してください。"
             }
           },
           {
@@ -180,7 +180,7 @@
   </header>
 
   <div class="tool-meta-bar">
-    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
     <span>読了目安：約8分</span>
   </div>
 
@@ -279,49 +279,49 @@
 
     <section id="pricing">
       <h2>料金プランの考え方</h2>
-      <p>Amazon Q Developerは無料枠（Free tier等）があり、AWSアカウントやBuilder IDで利用を開始できます（2026年6月時点）。</p>
+      <p>Amazon Q Developerは<strong>Free Tier</strong>と<strong>Pro Tier</strong>の2段階です。AWS Builder IDまたはIAMユーザーで利用を開始できます（2026年6月時点。詳細は<a href="https://aws.amazon.com/q/developer/pricing/" target="_blank" rel="noopener noreferrer">AWS公式の料金ページ</a>を確認してください）。</p>
 
       <div class="tool-plan-grid">
         <div class="tool-plan-card tool-plan-card--highlight">
-          <p class="tool-plan-name">Free tier</p>
-          <p class="tool-plan-price">¥0</p>
-          <p class="tool-plan-note">限定的な利用枠</p>
+          <p class="tool-plan-name">Free Tier</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">月50エージェントリクエスト等</p>
         </div>
         <div class="tool-plan-card">
-          <p class="tool-plan-name">Pro</p>
-          <p class="tool-plan-price">月額課金</p>
-          <p class="tool-plan-note">拡張された利用枠</p>
+          <p class="tool-plan-name">Pro Tier</p>
+          <p class="tool-plan-price">$19/ユーザー・月</p>
+          <p class="tool-plan-note">上限拡大・管理機能・IP補償</p>
         </div>
         <div class="tool-plan-card">
-          <p class="tool-plan-name">Enterprise</p>
-          <p class="tool-plan-price">要確認</p>
-          <p class="tool-plan-note">組織向け管理機能</p>
+          <p class="tool-plan-name">組織管理</p>
+          <p class="tool-plan-price">Pro × 人数</p>
+          <p class="tool-plan-note">IAM Identity Center連携</p>
         </div>
       </div>
 
       <table class="tool-spec-table">
         <thead>
           <tr>
-            <th>プラン</th>
-            <th>料金の考え方</th>
+            <th>ティア</th>
+            <th>料金・主な枠（2026年6月時点）</th>
             <th>向いている人</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Free tier</strong></td>
-            <td>限定的な利用枠</td>
-            <td>個人のお試し・学習</td>
+            <td><strong>Free Tier</strong></td>
+            <td><strong>$0</strong>。IDE/CLIのエージェントリクエスト<strong>月50回</strong>、Javaコード変換<strong>月1,000行/ユーザー</strong>など。Builder ID利用時はIDEの無料枠が利用可能。</td>
+            <td>個人のお試し・学習・AWS開発の体験</td>
           </tr>
           <tr>
-            <td><strong>Pro</strong></td>
-            <td>拡張された利用枠</td>
-            <td>本格的な開発利用</td>
+            <td><strong>Pro Tier</strong></td>
+            <td><strong>$19/ユーザー・月</strong>。エージェントリクエスト上限の拡大、Java変換4,000行/月/ユーザー（アカウント合算）、管理者ダッシュボード、IP補償（IP indemnity）など。</td>
+            <td>日常開発で継続利用する開発者・チーム</td>
           </tr>
           <tr>
-            <td><strong>Enterprise</strong></td>
-            <td>組織向け管理機能</td>
-            <td>企業・大規模チーム</td>
+            <td><strong>組織でのPro</strong></td>
+            <td>IAM Identity Centerと連携し、ユーザー単位でProを割り当て。管理者がポリシー・利用状況を管理。</td>
+            <td>企業での標準ツールとして導入するチーム</td>
           </tr>
         </tbody>
       </table>
@@ -335,7 +335,8 @@
       <h2>はじめ方・基本的な使い方</h2>
       <p>アカウント登録後、基本的な流れは次のとおりです。</p>
 
-      <ol class="tool-steps">
+      <div class="tool-split">
+        <ol class="tool-steps">
           <li>
             <strong>AWS Builder IDまたはAWSアカウント準備</strong>
             aws.amazon.com/q/developer/ から利用開始。Builder IDでサインインできます。
@@ -356,7 +357,14 @@
             <strong>コンソール・CLIで運用支援</strong>
             インフラ設計や障害調査の際、Amazon Qに質問して提案を受けます。
           </li>
-      </ol>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/amazon-q-developer/og-hero.png" alt="Amazon Q Developerの公式イメージ" width="600" height="338" loading="lazy">
+            <figcaption>出典：AWS公式（aws.amazon.com/q/developer/）</figcaption>
+          </figure>
+        </div>
+      </div>
     </section>
 
     <section id="use-cases">
@@ -407,7 +415,7 @@
           </tr>
           <tr>
             <td>コーディングと運用支援を一体利用</td>
-            <td>無料枠では利用量に制限</td>
+            <td>Free Tierは月50エージェントリクエスト等の上限あり</td>
           </tr>
           <tr>
             <td>CodeWhispererからの移行・統合</td>
@@ -495,7 +503,7 @@
       <div class="tool-faq">
         <details>
           <summary>Amazon Q Developerは無料で使えますか？</summary>
-          <p class="tool-faq-a">はい。Free tierなどの無料枠があり、基本的なコード補完や支援を試せます。利用量や高度な機能には上限があり、継続利用では有料プランが必要になることがあります。最新の枠はAWS公式で確認してください。</p>
+          <p class="tool-faq-a">はい。Free Tier（$0）でIDE・CLIのコード補完やエージェント支援を試せます。例として、IDE/CLIのエージェントリクエストは月50回まで、Javaコード変換は月1,000行まで（2026年6月時点）。上限を超える利用や管理機能が必要ならPro Tier（$19/ユーザー・月）への移行を検討します。最新の枠はAWS公式の料金ページで確認してください。</p>
         </details>
         <details>
           <summary>Amazon Q DeveloperとMicrosoft Copilotの違いは？</summary>
@@ -520,7 +528,8 @@
       公式リンク：
       <a href="https://aws.amazon.com/q/developer/" target="_blank" rel="noopener noreferrer">Amazon Q Developer</a>
       <span aria-hidden="true">·</span>
-      
+      <a href="https://aws.amazon.com/q/developer/pricing/" target="_blank" rel="noopener noreferrer">料金（AWS公式）</a>
+      <span aria-hidden="true">·</span>
       <a href="https://docs.aws.amazon.com/signin/latest/userguide/sign-in-aws_builder_id.html" target="_blank" rel="noopener noreferrer">AWS Builder ID</a>
     </p>
 
@@ -528,7 +537,7 @@
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連するAIツール</h2>
         <ul class="tool-related-list">
-          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/app-icon.png" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github.svg" alt="" width="16" height="16"> GitHub Copilot</a></li>
           <li><a href="../copilot/"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Microsoft Copilot</a></li>
           <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
           <li><a href="../tabnine/"><img src="../../assets/images/tools/tabnine/app-icon.png" alt="" width="16" height="16"> Tabnine</a></li>

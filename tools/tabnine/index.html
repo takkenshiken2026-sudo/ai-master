@@ -42,7 +42,7 @@
         "description": "Tabnineの機能・料金・使い方を解説。コード補完に特化したAIコーディング支援。オンプレ対応とプライバシー重視の位置づけ、GitHub Copilotとの違いも整理。",
         "url": "https://ai-master.jp/tools/tabnine/",
         "datePublished": "2026-06-07",
-        "dateModified": "2026-06-07",
+        "dateModified": "2026-06-08",
         "inLanguage": "ja",
         "image": "https://ai-master.jp/assets/images/tools/tabnine/og-hero.png",
         "author": { "@type": "Organization", "name": "AI Master" },
@@ -65,13 +65,13 @@
         "@type": "SoftwareApplication",
         "name": "Tabnine",
         "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web Browser",
+        "operatingSystem": "VS Code, JetBrains 等のIDE",
         "description": "IDE内でコード補完・インライン提案に特化したAIコーディング支援ツール。プライバシー保護とオンプレミス対応を訴求。",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD",
-          "description": "無料枠あり。有料プランは月額課金（2026年6月時点）"
+          "description": "組織向け年間契約が中心。Code Assistant $39/ユーザー・月、Agentic Platform $59/ユーザー・月（2026年6月時点）"
         },
         "provider": {
           "@type": "Organization",
@@ -84,10 +84,10 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Tabnineは無料で使えますか？",
+            "name": "Tabnineの料金はいくらですか？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "はい。Basicなどの無料枠があり、基本的なコード補完を試せます。高度な補完・チャット・エンタープライズ機能は有料プランが必要です。最新のプランはTabnine公式で確認してください。"
+              "text": "公式サイトの料金は組織向けの年間契約が中心です（Tabnine Code Assistant Platform $39/ユーザー・月、Tabnine Agentic Platform $59/ユーザー・月、2026年6月時点）。IDE拡張の個人向け枠は時期により異なるため、導入前にTabnine公式の料金ページで最新を確認してください。"
             }
           },
           {
@@ -103,7 +103,7 @@
             "name": "Tabnineはオンプレミスで使えますか？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Enterpriseプランなどで、自社環境にモデルを配置しコードを外部に出さずに利用するオプションが用意されています。詳細な構成と条件は公式のエンタープライズ資料で確認してください。"
+              "text": "SaaS・VPC・オンプレミス・エアギャップなどのデプロイ形態を選べ、自社環境にモデルを配置してコードを外部に出さずに利用する構成が可能です（プラン・契約による）。詳細な構成と条件は公式のエンタープライズ資料で確認してください。"
             }
           },
           {
@@ -160,7 +160,7 @@
       </div>
       <p class="tool-hero-maker">コード補完特化。プライバシー重視のAIコーディング支援</p>
       <div class="tool-hero-meta">
-        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">エンタープライズ向け</span>
         <span class="tool-category">AIコーディング</span>
         <span class="tool-category">オンプレ対応</span>
       </div>
@@ -180,7 +180,7 @@
   </header>
 
   <div class="tool-meta-bar">
-    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
     <span>読了目安：約8分</span>
   </div>
 
@@ -279,23 +279,23 @@
 
     <section id="pricing">
       <h2>料金プランの考え方</h2>
-      <p>Tabnineは無料枠（Basic等）から始められますが、本格利用やエンタープライズ機能では有料プランが必要です（2026年6月時点）。</p>
+      <p>Tabnineは<strong>企業向けAIコーディング基盤</strong>として位置づけられ、公式料金は組織単位の年間契約が中心です（2026年6月時点。詳細は<a href="https://www.tabnine.com/pricing/" target="_blank" rel="noopener noreferrer">Tabnine公式の料金ページ</a>を確認してください）。</p>
 
       <div class="tool-plan-grid">
         <div class="tool-plan-card tool-plan-card--highlight">
-          <p class="tool-plan-name">Basic（無料）</p>
-          <p class="tool-plan-price">¥0</p>
-          <p class="tool-plan-note">限定的な補完</p>
+          <p class="tool-plan-name">Code Assistant Platform</p>
+          <p class="tool-plan-price">$39/ユーザー・月</p>
+          <p class="tool-plan-note">年間契約・補完＋チャット</p>
         </div>
         <div class="tool-plan-card">
-          <p class="tool-plan-name">Pro</p>
-          <p class="tool-plan-price">月額課金</p>
-          <p class="tool-plan-note">高度な補完・チャット</p>
+          <p class="tool-plan-name">Agentic Platform</p>
+          <p class="tool-plan-price">$59/ユーザー・月</p>
+          <p class="tool-plan-note">年間契約・エージェント機能付き</p>
         </div>
         <div class="tool-plan-card">
-          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-name">デプロイ形態</p>
           <p class="tool-plan-price">要見積</p>
-          <p class="tool-plan-note">オンプレ・カスタムモデル</p>
+          <p class="tool-plan-note">SaaS / VPC / オンプレ / エアギャップ</p>
         </div>
       </div>
 
@@ -303,25 +303,25 @@
         <thead>
           <tr>
             <th>プラン</th>
-            <th>料金の考え方</th>
+            <th>内容（2026年6月時点）</th>
             <th>向いている人</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Basic（無料）</strong></td>
-            <td>限定的な補完</td>
-            <td>個人のお試し</td>
+            <td><strong>Tabnine Code Assistant Platform</strong></td>
+            <td><strong>$39/ユーザー・月</strong>（年間契約）。IDE内のコード補完・AIチャット、複数LLM、ゼロコード保持、SSO、SaaS／VPC／オンプレ／エアギャップ対応。</td>
+            <td>補完とチャットで生産性を上げたい開発チーム</td>
           </tr>
           <tr>
-            <td><strong>Pro</strong></td>
-            <td>高度な補完・チャット</td>
-            <td>個人開発者向け</td>
+            <td><strong>Tabnine Agentic Platform</strong></td>
+            <td><strong>$59/ユーザー・月</strong>（年間契約）。Code Assistantの全機能に加え、Context Engine・MCP連携・CLIエージェント・エージェントワークフロー。</td>
+            <td>エージェント活用と組織コンテキスト統合が必要な企業</td>
           </tr>
           <tr>
-            <td><strong>Enterprise</strong></td>
-            <td>オンプレ・カスタムモデル</td>
-            <td>企業・セキュリティ重視チーム</td>
+            <td><strong>カスタム見積</strong></td>
+            <td>Headless Agentsなどのオプション、大規模導入、専用サポートは要問い合わせ。</td>
+            <td>セキュリティ・コンプライアンス要件が厳しい組織</td>
           </tr>
         </tbody>
       </table>
@@ -335,10 +335,11 @@
       <h2>はじめ方・基本的な使い方</h2>
       <p>アカウント登録後、基本的な流れは次のとおりです。</p>
 
-      <ol class="tool-steps">
+      <div class="tool-split">
+        <ol class="tool-steps">
           <li>
             <strong>公式サイトでプラン確認</strong>
-            tabnine.com でプランと対応IDEを確認し、アカウントを作成します。
+            tabnine.com/pricing で組織向けプランとデプロイ形態を確認します。
           </li>
           <li>
             <strong>IDEに拡張機能をインストール</strong>
@@ -350,13 +351,20 @@
           </li>
           <li>
             <strong>コーディング中に補完を利用</strong>
-            コードを書くと灰色の候補が表示。Tabキーで採用、Escで却下します。
+            コードを書くと候補が表示。Tabキーで採用、Escで却下します。
           </li>
           <li>
-            <strong>チーム・Enterprise設定（任意）</strong>
-            組織管理者はオンプレ展開やカスタムモデルの設定を行います。
+            <strong>組織管理者による展開（任意）</strong>
+            SSO、オンプレ展開、Context Engineの接続などを管理者が設定します。
           </li>
-      </ol>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/tabnine/og-hero.png" alt="Tabnine AI Coding Platformの公式イメージ" width="600" height="338" loading="lazy">
+            <figcaption>出典：Tabnine公式（tabnine.com）</figcaption>
+          </figure>
+        </div>
+      </div>
     </section>
 
     <section id="use-cases">
@@ -403,7 +411,7 @@
         <tbody>
           <tr>
             <td>IDE内インライン補完で開発速度向上</td>
-            <td>無料枠では機能が限定的</td>
+            <td>公式料金は組織向け年間契約が中心</td>
           </tr>
           <tr>
             <td>プライバシー・オンプレ対応の選択肢</td>
@@ -487,15 +495,15 @@
         <li><strong>GitHub Copilotとの違いを試験用に整理したい受験生</strong></li>
         <li><strong>オンプレ環境でのAI補完を検討しているIT管理者</strong></li>
       </ul>
-      <p>あえて向いていないのは、<strong>チャットだけで大規模リポジトリを丸ごと書き換えたい</strong>場合（<a href="../cursor/">Cursor</a>等の方が向くことが多い）や、<strong>無料枠だけで高度なEnterprise機能を使いたい</strong>場合です。</p>
+      <p>あえて向いていないのは、<strong>チャットだけで大規模リポジトリを丸ごと書き換えたい</strong>場合（<a href="../cursor/">Cursor</a>等の方が向くことが多い）や、<strong>個人の無料お試しだけでエンタープライズ機能を使いたい</strong>場合です。</p>
     </section>
 
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
         <details>
-          <summary>Tabnineは無料で使えますか？</summary>
-          <p class="tool-faq-a">はい。Basicなどの無料枠があり、基本的なコード補完を試せます。高度な補完・チャット・エンタープライズ機能は有料プランが必要です。最新のプランはTabnine公式で確認してください。</p>
+          <summary>Tabnineの料金はいくらですか？</summary>
+          <p class="tool-faq-a">公式サイトの料金は組織向けの年間契約が中心です（Tabnine Code Assistant Platform $39/ユーザー・月、Tabnine Agentic Platform $59/ユーザー・月、2026年6月時点）。IDE拡張の個人向け枠は時期により異なるため、導入前にTabnine公式の料金ページで最新を確認してください。</p>
         </details>
         <details>
           <summary>TabnineとGitHub Copilotの違いは？</summary>
@@ -503,7 +511,7 @@
         </details>
         <details>
           <summary>Tabnineはオンプレミスで使えますか？</summary>
-          <p class="tool-faq-a">Enterpriseプランなどで、自社環境にモデルを配置しコードを外部に出さずに利用するオプションが用意されています。詳細な構成と条件は公式のエンタープライズ資料で確認してください。</p>
+          <p class="tool-faq-a">SaaS・VPC・オンプレミス・エアギャップなどのデプロイ形態を選べ、自社環境にモデルを配置してコードを外部に出さずに利用する構成が可能です（プラン・契約による）。詳細な構成と条件は公式のエンタープライズ資料で確認してください。</p>
         </details>
         <details>
           <summary>TabnineとCursorの違いは？</summary>
@@ -525,7 +533,7 @@
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連するAIツール</h2>
         <ul class="tool-related-list">
-          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/app-icon.png" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github.svg" alt="" width="16" height="16"> GitHub Copilot</a></li>
           <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
           <li><a href="../windsurf/"><img src="../../assets/images/tools/windsurf/app-icon.png" alt="" width="16" height="16"> Windsurf</a></li>
           <li><a href="../bolt-new/"><img src="../../assets/images/tools/bolt-new/app-icon.png" alt="" width="16" height="16"> Bolt.new</a></li>
