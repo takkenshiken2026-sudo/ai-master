@@ -98,6 +98,7 @@ DIRECT_ICON_URL = {
     "meta-ai": "https://static.xx.fbcdn.net/assets/?set=meta_ai_assets&name=meta-ai-orbit-favicon-180px-raster&density=4x&mode=light",
     "poe": "https://psc2.cf2.poecdn.net/assets/apple-touch-icon.png",
     "deepseek-chat": "https://cdn.deepseek.com/chat/icon.png",
+    "le-chat": "https://chat.mistral.ai/favicons/apple-touch-icon.png",
 }
 
 

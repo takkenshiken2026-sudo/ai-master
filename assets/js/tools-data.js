@@ -98,6 +98,7 @@ const TOOLS = [
     logo: "le-chat.ico",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "欧州発のオープンモデル。商用利用に柔軟",
     url: "https://chat.mistral.ai",
   },
