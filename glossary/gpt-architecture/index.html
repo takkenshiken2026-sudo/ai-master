@@ -64,7 +64,9 @@
         <li><a href="#autoregressive">自己回帰生成の流れ</a></li>
         <li><a href="#vs-bert">BERT（エンコーダ）との対比</a></li>
         <li><a href="#training">学習パイプライン</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -133,6 +135,18 @@
       </ul>
       <p>アーキテクチャは<strong>構造</strong>、RLHFは<strong>調整手法</strong>、ChatGPTは<strong>サービス</strong>——層を混同しないでください。</p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GPT＝Encoder-Decoder全体</td><td>デコーダ中心の自己回帰型（<a href="../../exams/g-kentei/drill/q/tf-427/">TF-427</a>）</td></tr>
+          <tr><td>GPT＝BERT</td><td>デコーダ型 vs エンコーダ型（<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>）</td></tr>
+          <tr><td>BERT＝GANや画像専用</td><td>TransformerエンコーダのNLPモデル（<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426</a>）</td></tr>
+          <tr><td>GPTアーキテクチャ＝ChatGPT</td><td>構造 vs サービス。RLHFは別層</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -141,7 +155,16 @@
         <details><summary>画像GPTもある？</summary><p class="tool-faq-a">試験の典型文脈は自然言語のGPT系列です。画像は別アーキテクチャ（<a href="../text-to-image/">拡散モデル</a>等）が主流です（TF-428）。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-427/">TF-427 · デコーダ型GPT</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-425/">TF-425 · BERTはエンコーダ</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-426/">TF-426 · BERTの誤解</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0261/">HQ-0261 · GPTの定義</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

@@ -50,7 +50,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -64,8 +64,9 @@
         <li><a href="#flow">処理の流れ</a></li>
         <li><a href="#with-cot">CoTとの組み合わせ</a></li>
         <li><a href="#tradeoffs">コストと限界</a></li>
-        <li><a href="#confusions">混同しやすい用語</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -121,15 +122,15 @@
         <li><strong>検証は依然必要</strong> — <a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>のとおり、整合した誤推論がありうる</li>
       </ul>
     </section>
-    <section id="confusions">
-      <h2>混同しやすい用語</h2>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
       <table class="tool-spec-table">
-        <thead><tr><th>用語</th><th>違い</th></tr></thead>
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
         <tbody>
-          <tr><td><strong>アライメント</strong></td><td>モデル調整・価値整合の広い概念（<a href="../alignment/">アライメント</a>）</td></tr>
-          <tr><td><strong>アンサンブル学習</strong></td><td>複数<strong>モデル</strong>の組み合わせ（機械学習一般）</td></tr>
-          <tr><td><strong>自己回帰</strong></td><td>トークンを順に生成するモデルの性質（<a href="../gpt-architecture/">GPT</a>）</td></tr>
-          <tr><td><strong>ファクトチェック</strong></td><td>外部事実との照合（<a href="../hallucination-mitigation/">ハルシネーション対策</a>）</td></tr>
+          <tr><td>自己整合性＝アライメント</td><td>多数決推論 vs 価値整合（<a href="../alignment/">アライメント</a>）</td></tr>
+          <tr><td>自己整合性＝RAG</td><td>複数生成の多数決 vs 外部検索</td></tr>
+          <tr><td>多数決でハルシネーション消滅</td><td>全経路が同じ誤りなら誤る（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）</td></tr>
+          <tr><td>自己整合性＝自己回帰</td><td>推論技法 vs モデルの生成性質（<a href="../gpt-architecture/">GPT</a>）</td></tr>
         </tbody>
       </table>
     </section>
@@ -141,7 +142,16 @@
         <details><summary>プロンプトエンジニアリングの一部？</summary><p class="tool-faq-a">はい。<a href="../prompt-engineering/">プロンプトエンジニアリング</a>の技法ツールボックスの一つです。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 説明≠正確</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-171/">TF-171 · 正確性の保証なし</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-385/">G-385 · Few-shot技法</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476 · 段階的依頼</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

@@ -44,7 +44,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -58,7 +58,9 @@
         <li><a href="#conditions">制御条件の例</a></li>
         <li><a href="#stack">Stable Diffusionとの組み合わせ</a></li>
         <li><a href="#limits">限界と注意</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -112,6 +114,18 @@
         <li>ベースモデル・ControlNetの組み合わせ互換に注意</li>
       </ul>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ControlNet＝単体の画像生成AI</td><td>拡散モデルへの追加制御モジュール</td></tr>
+          <tr><td>ControlNet＝Text-to-Image</td><td>タスク名 vs 制御技法（<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>）</td></tr>
+          <tr><td>ControlNetでプロンプト不要</td><td>プロンプトと併用が一般的</td></tr>
+          <tr><td>ControlNet＝DALL·Eの機能名</td><td>主にSDオープンエコシステムの用語</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -120,7 +134,16 @@
         <details><summary>DALL·Eにもある？</summary><p class="tool-faq-a">製品によっては参考画像やマスクで編集できますが、ControlNetは主にオープン系SDエコシステムの用語として知られます。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184 · 拡散と画像生成</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190 · Text-to-Image定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211 · 権利・肖像</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-377/">G-377 · ノイズ付加と除去</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
