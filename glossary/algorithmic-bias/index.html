@@ -88,7 +88,9 @@
         <li><a href="#data-myth">「データを増やせば解決」神話</a></li>
         <li><a href="#genai">生成AI特有の偏り</a></li>
         <li><a href="#mitigation">対策の方向性</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -203,6 +205,19 @@
       </ul>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>バイアス＝学習データだけの問題</td><td>ラベル・評価・運用など多段階で生じうる（<a href="../../exams/g-kentei/drill/q/tf-283/">TF-283</a>）</td></tr>
+          <tr><td>データ量を増やせば必ず解消</td><td>偏った収集のままでは残る（<a href="../../exams/g-kentei/drill/q/tf-284/">TF-284</a>）</td></tr>
+          <tr><td>Human-in-the-loopで完全除去</td><td>人間の判断にも偏りがありうる（<a href="../../exams/g-kentei/drill/q/tf-200/">TF-200</a>）</td></tr>
+          <tr><td>データシートで自動消去</td><td>把握の手がかりであり魔法ではない（<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -225,7 +240,16 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-283/">TF-283 · 原因の多様性</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-284/">TF-284 · データ量の神話</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-200/">TF-200 · Human-in-the-loop</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414 · データシート</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
