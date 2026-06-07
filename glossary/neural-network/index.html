@@ -61,7 +61,9 @@
         <li><a href="#forward">順伝播</a></li>
         <li><a href="#learning">学習の流れ</a></li>
         <li><a href="#vs-dl">ディープラーニングとの関係</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -122,15 +124,36 @@
         ニューラルネットは<strong>モデルの形</strong>、ディープラーニングは<strong>隠れ層を深くしたNNを学習する分野・手法</strong>です。1層のパーセプトロンから始まり、多層化・畳み込み・注意機構へと発展してきました。
       </p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>学習率も誤差逆伝播で学習</td><td>ハイパーパラメータ（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）</td></tr>
+          <tr><td>NN＝ルール手入力の決定木</td><td>データからパラメータを学習（<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a>）</td></tr>
+          <tr><td>NN＝ディープラーニング</td><td>モデルの形 vs 深い層を学習する分野</td></tr>
+          <tr><td>推論時もドロップアウト</td><td>学習時のみ（TF-395の誤答パターン）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
-        <details><summary>パーセプトロンとニューラルネットの違いは？</summary><p class="tool-faq-a">単層パーセプトロンは最も単純な形。試験では多層パーセプトロン（隠れ層あり）がニューラルネットの代表として出ます。</p></details>
+        <details><summary>パーセプトロンとニューラルネットの違いは？</summary><p class="tool-faq-a">単層パーセプトロンは最も単純な形。試験では多層パーセプトロン（隠れ層あり）がニューラルネットの代表として出ます（<a href="../../exams/g-kentei/drill/q/tf-053/">TF-053</a>）。</p></details>
         <details><summary>推論時もドロップアウトする？</summary><p class="tool-faq-a">いいえ。ドロップアウトは学習時のみ。推論時は通常すべてのユニットを使います（TF-395の誤答パターン）。</p></details>
         <details><summary>NNは教師ありだけ？</summary><p class="tool-faq-a">教師ありが典型ですが、オートエンコーダなど教師なし、強化学習でもNNは広く使われます。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-053/">TF-053 · 多層パーセプトロン</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-052/">TF-052 · ハイパーパラメータ</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-416/">TF-416 · NNはデータから学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-117/">G-117 · 順伝播と学習</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

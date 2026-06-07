@@ -61,7 +61,9 @@
         <li><a href="#why-deep">深い層の意味</a></li>
         <li><a href="#requirements">実用化の三条件</a></li>
         <li><a href="#representatives">代表アーキテクチャ</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -120,6 +122,18 @@
         <li><strong>GAN・拡散モデル</strong> — <a href="../generative-ai/">生成AI</a>（<a href="../stable-diffusion/">Stable Diffusion</a>など）</li>
       </ul>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>DLはMLと無関係</td><td>MLの一分野（<a href="../../exams/g-kentei/drill/q/tf-004/">TF-004</a>）</td></tr>
+          <tr><td>DLはGPUと無関係</td><td>大規模行列演算でGPUが重要（<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>）</td></tr>
+          <tr><td>DLなら常に最高精度</td><td>データ・設計次第で単純MLが実用的なことも（<a href="../../exams/g-kentei/drill/q/tf-054/">TF-054</a>）</td></tr>
+          <tr><td>DL＝生成AI</td><td>手法 vs 目的。交差はあるが同一ではない</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -128,7 +142,16 @@
         <details><summary>生成AIはすべてDL？</summary><p class="tool-faq-a">現状の主要な生成AI（LLM、画像生成）はディープラーニングが中核です。ただし生成AIは「目的」（生成）、DLは「手法」の軸で、概念は交差します。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-004/">TF-004 · DLはMLの一分野</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-053/">TF-053 · 多層パーセプトロン</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-054/">TF-054 · 単純MLが実用的な場合</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-335/">TF-335 · GPUとの関係</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
