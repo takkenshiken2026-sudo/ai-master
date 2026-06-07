@@ -13,11 +13,13 @@ import html
 import json
 import re
 import shutil
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SITE_ORIGIN = "https://ai-master.jp"
-SITE_OG_IMAGE = f"{SITE_ORIGIN}/assets/images/og-default.jpg"
+sys.path.insert(0, str(ROOT / "tools"))
+
+from site_meta import SITE_ICONS_HTML, SITE_ORIGIN, render_og_meta
 SITEMAP = ROOT / "sitemap.xml"
 INDEX_JSON = ROOT / "data" / "question-index.json"
 GLOSSARY_TERMS_JSON = ROOT / "data" / "glossary-terms.json"
@@ -150,27 +152,6 @@ def render_footer(rel: str) -> str:
     return FOOTER.format(legal=f"{rel}legal/")
 
 
-def render_og_meta(
-    title: str,
-    description: str,
-    canonical: str,
-    *,
-    og_type: str = "website",
-) -> str:
-    esc_title = html.escape(title, quote=True)
-    esc_desc = html.escape(description, quote=True)
-    return f"""  <meta property="og:type" content="{og_type}">
-  <meta property="og:site_name" content="AI Master">
-  <meta property="og:title" content="{esc_title}">
-  <meta property="og:description" content="{esc_desc}">
-  <meta property="og:url" content="{canonical}">
-  <meta property="og:locale" content="ja_JP">
-  <meta property="og:image" content="{SITE_OG_IMAGE}">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="{SITE_OG_IMAGE}">
-"""
-
-
 def page_shell(
     *,
     rel: str,
@@ -202,7 +183,7 @@ def page_shell(
   <meta name="description" content="{esc_desc}">
   <title>{esc_title}</title>
   <link rel="canonical" href="{canonical}">
-{og_block}  <link rel="preconnect" href="https://fonts.googleapis.com">
+{SITE_ICONS_HTML}{og_block}  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{css}main.css">

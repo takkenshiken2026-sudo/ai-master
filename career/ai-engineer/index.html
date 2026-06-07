@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AIエンジニアの仕事内容・年収相場・必要スキル・キャリアパスを解説。機械学習エンジニアやデータサイエンティストとの違い、未経験からの学習順序も整理。G検定取得者向け。">
+  <title>AIエンジニアとは？仕事内容・年収・必要スキルを解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/career/ai-engineer/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="AIエンジニアとは？仕事内容・年収・必要スキルを解説">
+  <meta property="og:description" content="AIエンジニアの仕事内容・年収・スキル・キャリアパスをわかりやすく解説。未経験からの道のりと関連職種との違いも整理。">
+  <meta property="og:url" content="https://ai-master.jp/career/ai-engineer/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/career/ai-engineer/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIキャリア", "item": "https://ai-master.jp/career/" },
+          { "@type": "ListItem", "position": 3, "name": "AIエンジニア", "item": "https://ai-master.jp/career/ai-engineer/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/career/ai-engineer/#article",
+        "headline": "AIエンジニアとは？仕事内容・年収・必要スキルを解説",
+        "description": "AIエンジニアの仕事内容・年収・スキル・キャリアパスをわかりやすく解説。",
+        "url": "https://ai-master.jp/career/ai-engineer/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/og-default.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/career/ai-engineer/#webpage" },
+        "about": { "@type": "Occupation", "name": "AIエンジニア", "alternateName": "AI Engineer" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/career/ai-engineer/#webpage",
+        "url": "https://ai-master.jp/career/ai-engineer/",
+        "name": "AIエンジニアとは？仕事内容・年収・必要スキルを解説",
+        "description": "AIエンジニアの仕事内容・年収・スキル・キャリアパスをわかりやすく解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/career/ai-engineer/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "AIエンジニアは未経験からなれますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "可能なケースはありますが、Python・機械学習の基礎・実装経験のいずれかが求められることがほとんどです。生成AIツールの利用経験だけでは不十分な場合が多く、ポートフォリオや資格で基礎力を示す準備が必要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AIエンジニアとデータサイエンティストの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "データサイエンティストは分析・仮説検証・意思決定支援の比重が高く、AIエンジニアはモデルの設計・学習・本番運用までの実装比重が高い傾向があります。企業によって役割名と実務内容が一致しないことも多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "G検定はAIエンジニアに役立ちますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。AI・機械学習・ディープラーニングの基礎用語と考え方を体系的に学べるため、未経験者の土台作りや面接での説明力強化に役立ちます。ただし実装力は別途Pythonやプロジェクト経験で示す必要があります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AIエンジニアの年収相場はいくらですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "日本では経験・企業規模・職位により幅がありますが、おおむね500万〜1,200万円前後が目安となることが多いです。生成AI・LLM領域の需要が高い職種では上限が上がりやすい傾向があります（2026年6月時点の一般的な相場感）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../index.html" class="active">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIキャリア</a></li>
+      <li aria-current="page">AIエンジニア</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">職種ガイド · 職種・比較</p>
+    <h1>AIエンジニアとは？仕事内容・年収・必要スキルを解説</h1>
+    <p class="tool-hero-sub">年収目安 500〜1,200万円 · 英：AI Engineer</p>
+    <div class="tool-hero-meta">
+      <span class="tool-category">未経験可</span>
+      <span class="tool-category">G検定</span>
+      <span class="tool-category">Python</span>
+    </div>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>AIエンジニア</strong>は、機械学習や深層学習のモデルを<strong>設計・学習・評価し、本番環境で動かす</strong>エンジニア職です。ChatGPTのような生成AIツールを業務で使うだけのポジションとは役割が異なり、Pythonとクラウドを軸に「AIを動くシステムとして届ける」仕事が中心になります。本記事では、<a href="#salary">年収相場</a>、<a href="#skills">必要スキル</a>、<a href="#vs-roles">関連職種との違い</a>、<a href="#roadmap">未経験からの道のり</a>を<strong>2026年6月時点</strong>の市場感覚で整理します。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">資格・学習との関係</a></li>
+        <li><a href="#what-is">AIエンジニアとは</a></li>
+        <li><a href="#job">仕事内容</a></li>
+        <li><a href="#skills">必要スキル</a></li>
+        <li><a href="#salary">年収相場</a></li>
+        <li><a href="#career-path">キャリアパス</a></li>
+        <li><a href="#vs-roles">関連職種との違い</a></li>
+        <li><a href="#roadmap">未経験からの道のり</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>資格・学習との関係</h2>
+      <p>
+        AIエンジニアを目指すうえで、<strong>用語と概念の整理</strong>は最初の関門です。G検定では、AI・機械学習・ディープラーニングの包含関係や、教師あり学習の考え方などが問われます。実装スキルとは別軸ですが、面接で「何ができるエンジニアか」を説明する土台になります。
+      </p>
+      <p>
+        よくある誤解は、<strong>「生成AIツールが使えればAIエンジニア」</strong>と考えることです。業務でChatGPTを活用するスキルは価値がありますが、採用で求められるのは多くの場合、データ処理・モデル学習・API連携・本番運用のいずれかです。資格はそのギャップを埋める学習の地図として使うのが現実的です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>基礎概念を演習で確認する</strong></p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-003/">一問一答 TF-003（機械学習とAIの関係）</a>、<a href="../../exams/g-kentei/drill/q/tf-004/">TF-004（ディープラーニングと機械学習）</a>、<a href="../../exams/g-kentei/drill/q/tf-170/">TF-170（生成AI）</a>
+        </p>
+        <p>
+          試験トップ：<a href="../../exams/g-kentei/">G検定対策</a> · <a href="../../exams/genai-passport/">生成AIパスポート対策</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>AIエンジニアとは</h2>
+      <p>
+        AIエンジニア（AI Engineer）は、<strong>AI・機械学習モデルを実装し、プロダクトや業務システムに組み込む</strong>エンジニアの総称です。企業によって「機械学習エンジニア」「MLエンジニア」と呼び分けたり、生成AI領域ではLLM連携を担当するポジションを含めたりします。
+      </p>
+      <p>
+        研究職のように論文執筆が主目的ではなく、<strong>再現性のあるコード・パイプライン・API</strong>として価値を出す点がエンジニア職の特徴です。PoC（概念実証）で終わらせず、スケール・監視・再学習まで見据えるチームでは、MLOpsの知識も求められます。
+      </p>
+      <p>
+        また「AIエンジニア＝データサイエンティスト」と同一視されることもありますが、一般には<strong>実装・運用の比重が高い</strong>職種として捉えるのが実務的です。後述の比較表もあわせて確認してください。
+      </p>
+    </section>
+
+    <section id="job">
+      <h2>仕事内容</h2>
+      <p>会社・プロダクトフェーズによって差はありますが、典型的な業務は次のとおりです。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>要件の技術翻訳</h3>
+          <p>ビジネス課題を「分類・予測・推薦・生成」のどれで解くか整理し、精度とコストのトレードオフを説明する。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>データ前処理</h3>
+          <p>学習用データの収集・クレンジング・特徴量設計。品質問題がモデル性能を左右するため、ここに工数がかかることも多い。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>モデル開発・評価</h3>
+          <p>アルゴリズム選定、学習・検証、指標（精度・再現率・F1など）での評価。ベースラインとの比較が重要。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>本番実装</h3>
+          <p>API化、バッチ推論、リアルタイム推論のいずれかでサービスへ組み込み。レイテンシとコストを意識する。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>生成AI連携（近年増加）</h3>
+          <p>LLMのプロンプト設計、RAG（検索拡張生成）、エージェント連携、出力のガードレール設計など。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>運用・改善</h3>
+          <p>ログ監視、ドリフト検知、再学習、A/Bテスト。モデルはリリース後もメンテナンス対象になる。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>必要スキル</h2>
+      <p>求人票はバラつきますが、採用でよく見るスキルセットを整理します。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>領域</th>
+            <th>具体例</th>
+            <th>重要度の目安</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>プログラミング</strong></td>
+            <td>Python（NumPy / pandas / scikit-learn）、Git</td>
+            <td>必須に近い</td>
+          </tr>
+          <tr>
+            <td><strong>機械学習の基礎</strong></td>
+            <td>教師あり・教師なし、過学習、交差検証、評価指標</td>
+            <td>必須</td>
+          </tr>
+          <tr>
+            <td><strong>深層学習</strong></td>
+            <td>PyTorch / TensorFlow、CNN・Transformerの概要</td>
+            <td>職種・領域による</td>
+          </tr>
+          <tr>
+            <td><strong>クラウド・インフラ</strong></td>
+            <td>AWS / GCP / Azure、Docker、Kubernetes</td>
+            <td>中〜上級で重視</td>
+          </tr>
+          <tr>
+            <td><strong>生成AI</strong></td>
+            <td>LLM API、RAG、プロンプト設計、評価</td>
+            <td>2026年時点で需要増</td>
+          </tr>
+          <tr>
+            <td><strong>コミュニケーション</strong></td>
+            <td>非エンジニアへの説明、要件のすり合わせ</td>
+            <td>実務で差がつく</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        数学（線形代数・確率統計）は深く問われないポジションもありますが、<strong>学習の挙動を説明できる</strong>レベルはあると安心です。G検定で基礎用語を押さえ、実装は個人プロジェクトやKaggleで積み上げる学習パターンが多いです。
+      </p>
+    </section>
+
+    <section id="salary">
+      <h2>年収相場</h2>
+      <p>
+        日本国内のAIエンジニアの年収は、<strong>経験年数・企業規模・株式報酬の有無</strong>で大きく変わります。当サイトの職種マスタでは、おおむね<strong>500万〜1,200万円</strong>を目安レンジとして掲載しています（<strong>2026年6月時点</strong>の一般的な相場感。個別のオファーは企業・職位により異なります）。
+      </p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>区分</th>
+            <th>年収の目安（日本・一般論）</th>
+            <th>補足</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ジュニア（実務1〜3年）</strong></td>
+            <td>500万〜700万円前後</td>
+            <td>実装補助・既存モデルの改善から入るケースが多い</td>
+          </tr>
+          <tr>
+            <td><strong>ミドル（3〜7年）</strong></td>
+            <td>700万〜1,000万円前後</td>
+            <td>設計から運用まで一人称で回せると上限が上がりやすい</td>
+          </tr>
+          <tr>
+            <td><strong>シニア・リード</strong></td>
+            <td>1,000万〜1,200万円以上</td>
+            <td>スタートアップのSO・外資ではさらに上振れする例も</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        LLM・生成AIを扱うポジションは、同経験年数でも提示額が高めになる傾向があります。一方で「AI」と銘打った求人でも、実態がデータラベリングや単純運用のみの場合があるため、<strong>JD（職務記述）の中身</strong>を必ず確認してください。
+      </p>
+    </section>
+
+    <section id="career-path">
+      <h2>キャリアパス</h2>
+      <p>AIエンジニアから先に広がる代表的なルートです。</p>
+      <ol class="tool-steps">
+        <li>
+          <strong>スペシャリスト深化</strong>
+          <p>推薦・CV・NLP・生成AIなど特定領域の技術リード。アーキテクチャ設計や論文・OSSへの関与が増える。</p>
+        </li>
+        <li>
+          <strong>MLOps / プラットフォーム</strong>
+          <p>モデル配信・監視・Feature Storeなど、組織全体のML基盤を担う。インフラ寄りのスキルが中心になる。</p>
+        </li>
+        <li>
+          <strong>テックリード・EM</strong>
+          <p>複数エンジニアのマネジメント、採用・評価、技術選定。コードより組織づくりの比重が上がる。</p>
+        </li>
+        <li>
+          <strong>AIプロダクト寄り</strong>
+          <p>企画・PMと協業し、AI機能のロードマップを牽引。技術とビジネスの橋渡し役へ。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="vs-roles">
+      <h2>関連職種との違い</h2>
+      <p>名称は会社ごとに混在します。面接準備では「自分がどの工程を担うか」で整理すると伝わりやすいです。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>職種</th>
+            <th>主な焦点</th>
+            <th>AIエンジニアとの違い（一般論）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>機械学習エンジニア</strong></td>
+            <td>MLパイプライン・モデル実装</td>
+            <td>ほぼ同義で使われることも多い。データエンジニアリング寄りのJDもある。</td>
+          </tr>
+          <tr>
+            <td><strong>データサイエンティスト</strong></td>
+            <td>分析・仮説検証・意思決定支援</td>
+            <td>統計・可視化・ストーリーテリングの比重が高い。実装はチーム分担も。</td>
+          </tr>
+          <tr>
+            <td><strong>データアナリスト</strong></td>
+            <td>SQL・BI・レポーティング</td>
+            <td>モデル構築より業務KPIの可視化が中心。AIツール活用で差がつく領域も。</td>
+          </tr>
+          <tr>
+            <td><strong>生成AIエンジニア</strong></td>
+            <td>LLM・RAG・エージェント</td>
+            <td>AIエンジニアの中の専門分化。API連携と評価設計が主戦場。</td>
+          </tr>
+          <tr>
+            <td><strong>MLOpsエンジニア</strong></td>
+            <td>CI/CD・監視・再学習基盤</td>
+            <td>モデル精度より配信の信頼性・自動化が中心。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="roadmap">
+      <h2>未経験からの道のり</h2>
+      <p>ゼロから狙う場合の現実的なステップ例です。期間は個人差が大きく、<strong>6か月〜2年</strong>程度がよく聞く目安です。</p>
+      <ol class="tool-steps">
+        <li>
+          <strong>基礎の言語化（1〜2か月）</strong>
+          <p>Pythonの文法、G検定または同等のAI基礎用語。機械学習とディープラーニングの関係を説明できる状態にする。</p>
+        </li>
+        <li>
+          <strong>実装の型を身につける（2〜4か月）</strong>
+          <p>scikit-learnで分類・回帰の一連を回す。データ分割、評価指標、過学習への対処をコードで理解する。</p>
+        </li>
+        <li>
+          <strong>ポートフォリオを1つ完成させる（1〜2か月）</strong>
+          <p>GitHubにREADME付きで公開。再現手順・使用データ・限界の記載があると採用側は評価しやすい。</p>
+        </li>
+        <li>
+          <strong>生成AI or クラウドを足す（任意）</strong>
+          <p>LLM APIを使った小さなアプリ、またはAWS/GCP上でのデプロイ経験。求人と接続しやすい。</p>
+        </li>
+        <li>
+          <strong>応募・インターン・副業</strong>
+          <p>「未経験可」のジュニア枠、データ部門の横入り、受託の小規模案件など、入口は複数ある。</p>
+        </li>
+      </ol>
+      <p>
+        いきなり最先端のLLM論文実装を目指すより、<strong>小さく動くものを継続的に出す</strong>方が転職では評価されやすいです。
+      </p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>技術トレンドの中心に立て、市場需要が高い</td>
+            <td>ツール・フレームワークの更新が速く、学習コストが続く</td>
+          </tr>
+          <tr>
+            <td>成果がプロダクトに直結しやすく、裁量も得やすい</td>
+            <td>データ品質・組織理解不足でPoC止まりになりやすい</td>
+          </tr>
+          <tr>
+            <td>リモート・フルリモートの求人が他職種より多い傾向</td>
+            <td>「AI」名目の求人と実務内容のギャップに注意が必要</td>
+          </tr>
+          <tr>
+            <td>生成AI領域では新規ポジションが増えている</td>
+            <td>未経験枠は競争が激しく、ポートフォリオ差が出やすい</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>AIエンジニアは未経験からなれますか？</summary>
+          <p class="tool-faq-a">可能なケースはありますが、Python・機械学習の基礎・実装経験のいずれかが求められることがほとんどです。生成AIツールの利用経験だけでは不十分な場合が多く、ポートフォリオや資格で基礎力を示す準備が必要です。</p>
+        </details>
+        <details>
+          <summary>AIエンジニアとデータサイエンティストの違いは？</summary>
+          <p class="tool-faq-a">データサイエンティストは分析・仮説検証・意思決定支援の比重が高く、AIエンジニアはモデルの設計・学習・本番運用までの実装比重が高い傾向があります。企業によって役割名と実務内容が一致しないことも多いです。</p>
+        </details>
+        <details>
+          <summary>G検定はAIエンジニアに役立ちますか？</summary>
+          <p class="tool-faq-a">はい。AI・機械学習・ディープラーニングの基礎用語と考え方を体系的に学べるため、未経験者の土台作りや面接での説明力強化に役立ちます。ただし実装力は別途Pythonやプロジェクト経験で示す必要があります。</p>
+        </details>
+        <details>
+          <summary>AIエンジニアの年収相場はいくらですか？</summary>
+          <p class="tool-faq-a">日本では経験・企業規模・職位により幅がありますが、おおむね500万〜1,200万円前後が目安となることが多いです。生成AI・LLM領域の需要が高い職種では上限が上がりやすい傾向があります（2026年6月時点の一般的な相場感）。</p>
+        </details>
+        <details>
+          <summary>文系出身でもAIエンジニアになれますか？</summary>
+          <p class="tool-faq-a">文系出身で活躍している例はありますが、プログラミングと機械学習の実装を自習で積み上げる必要があります。最初はデータアナリストや社内のAI活用推進から入り、実装部門へ移るルートも現実的です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するキャリア記事</h2>
+        <ul class="tool-related-list">
+          <li class="tool-related-list__soon">機械学習エンジニアとは <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">データサイエンティストとは <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">生成AIエンジニアとは <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">G検定のキャリアへの活かし方 <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">未経験からAI職へ必要な学習順序 <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">キャリア記事一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/">G検定 試験対策</a></li>
+          <li><a href="../../exams/genai-passport/">生成AIパスポート 試験対策</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI（用語）</a></li>
+          <li><a href="../../tools/github-copilot/"><img src="../../assets/images/tools/github.svg" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../../tools/cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

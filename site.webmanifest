@@ -1,0 +1,21 @@
+{
+  "name": "AI Master",
+  "short_name": "AI Master",
+  "description": "AI関連資格の対策と学習プラットフォーム",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EEF3FC",
+  "theme_color": "#1A5CDB",
+  "icons": [
+    {
+      "src": "/assets/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
