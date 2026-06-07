@@ -47,11 +47,11 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>損失関数</strong>（Loss Function／損失）は、モデルの<strong>予測と正解のズレを一つの数値にまとめる</strong>関数です。<a href="../supervised-learning/">教師あり学習</a>では、この値を小さくする方向にパラメータを更新します。本記事は微分の導出ではなく、試験で問われる<strong>役割・代表例・勾配降下法との関係</strong>に焦点を当てます。
+      <strong>損失関数</strong>（Loss Function／損失）は、モデルの<strong>予測と正解のズレを一つの数値にまとめる</strong>関数です。<a href="../supervised-learning/">教師あり学習</a>では、この値を小さくする方向にパラメータを更新します。本記事は微分の導出ではなく、試験で問われる<strong>役割・代表例・勾配降下法との関係・評価指標とのすり替え</strong>に焦点を当てます。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
@@ -61,26 +61,37 @@
         <li><a href="#examples">代表例</a></li>
         <li><a href="#optimization">最小化の流れ</a></li>
         <li><a href="#vs-metrics">評価指標との違い</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
       <p>
-        ○：損失関数は<strong>予測と正解の差</strong>を測り、学習で<strong>最小化</strong>する目標（<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>周辺の最適化文脈）。
+        ○：損失関数は<strong>予測と正解の差</strong>を測り、学習で<strong>最小化</strong>する目標（<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>、<a href="../../exams/g-kentei/drill/q/tf-389/">TF-389</a>）。
       </p>
       <p>
-        ×：勾配が大きい方向へ<strong>常にパラメータを増やせば</strong>損失は必ず最小化される（<a href="../../exams/g-kentei/drill/q/tf-240/">TF-240</a>）。更新は勾配の<strong>反対方向</strong>（損失を減らす方向）が基本。
+        ○：回帰では<strong>MSE</strong>（平均二乗誤差）が損失・評価の代表例（<a href="../../exams/g-kentei/practice/q/g-471/">G-471</a>）。
+      </p>
+      <p>
+        ×：勾配が大きい方向へ<strong>常にパラメータを増やせば</strong>損失は必ず最小化される（<a href="../../exams/g-kentei/drill/q/tf-240/">TF-240</a>）。更新は勾配の<strong>反対方向</strong>が基本。
+      </p>
+      <p>
+        ×：損失関数の値は<strong>常に0</strong>である（TF-389は×）。モデルの状態で変わる。
       </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-240/">TF-240</a>、<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>、<a href="../../exams/g-kentei/drill/domain/domain-06/">ディープラーニングの概要</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-240/">TF-240</a>、<a href="../../exams/g-kentei/drill/q/tf-389/">TF-389</a>、<a href="../../exams/g-kentei/practice/q/g-471/">G-471</a>、<a href="../../exams/g-kentei/practice/q/g-442/">G-442</a></p>
       </div>
     </section>
     <section id="what-is">
       <h2>損失関数とは</h2>
       <p>
-        1サンプルごとの誤差を <em>L(y, ŷ)</em> と書き、ミニバッチでは平均をとって学習します。損失が小さいほど「正解に近い」予測です。深層学習ではこの損失に対する各重みの勾配を<a href="../backpropagation/">誤差逆伝播法</a>で求めます。
+        1サンプルごとの誤差を <em>L(y, ŷ)</em> と書き、ミニバッチでは平均をとって学習します。損失が小さいほど「正解に近い」予測です。深層学習ではこの損失に対する各重みの勾配を<a href="../backpropagation/">誤差逆伝播法</a>で求めます（G-442）。
+      </p>
+      <p>
+        損失は<strong>学習の羅針盤</strong>です。何を「良い予測」とみなすかを数式で定義し、勾配降下法がその方向へパラメータを動かします。
       </p>
     </section>
     <section id="examples">
@@ -88,7 +99,7 @@
       <table class="tool-spec-table">
         <thead><tr><th>タスク</th><th>損失の例</th><th>要点</th></tr></thead>
         <tbody>
-          <tr><td><strong>回帰</strong></td><td>二乗誤差（MSE）</td><td>予測と正解の差の二乗</td></tr>
+          <tr><td><strong>回帰</strong></td><td>二乗誤差（MSE）</td><td>予測と正解の差の二乗（G-471）</td></tr>
           <tr><td><strong>二値分類</strong></td><td>バイナリ交差エントロピー</td><td>確率出力との整合</td></tr>
           <tr><td><strong>多クラス分類</strong></td><td>交差エントロピー</td><td>正解クラスの確率を上げる</td></tr>
           <tr><td><strong>LLM</strong></td><td>次トークン交差エントロピー</td><td>正解トークンの尤度を最大化</td></tr>
@@ -105,14 +116,29 @@
         <li><a href="../gradient-descent/">勾配降下法</a>で w を更新（損失が下がる方向）</li>
       </ol>
       <p>
-        学習率が大きすぎると損失が発散し、小さすぎると収束が遅い（<a href="../gradient-descent/">勾配降下法</a>記事）。訓練損失だけ下がって検証損失が上がるのは<a href="../overfitting/">過学習</a>のサインです。
+        学習率が大きすぎると損失が発散し、小さすぎると収束が遅い。訓練損失だけ下がって検証損失が上がるのは<a href="../overfitting/">過学習</a>のサインです。
       </p>
     </section>
     <section id="vs-metrics">
       <h2>評価指標との違い</h2>
       <p>
-        <strong>損失</strong>は学習時に微分可能な目的関数、<strong>精度・F1・BLEU</strong>などは評価指標です。目的は似ていても、最適化に使う損失とビジネスで見る指標は一致しないことがあります（例：不均衡データで精度だけでは不十分）。
+        <strong>損失</strong>は学習時に微分可能な目的関数、<strong>精度・F1・MSE（評価として）</strong>などは評価指標です。MSEは損失にも評価にも使われますが、<a href="../f1-score/">F値</a>やRMSEなどは損失と別物としてすり替えられることがあります（G-470、TF-377）。
       </p>
+      <p>
+        ビジネスで見る指標と最適化に使う損失は一致しないこともあります。不均衡データでは正解率だけでは不十分、というのも同じ文脈です。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>勾配の大きい方向へ更新</td><td>損失を減らす＝勾配の反対方向（TF-240）</td></tr>
+          <tr><td>損失は常に0</td><td>モデル状態で変わる（TF-389は×）</td></tr>
+          <tr><td>F値＝MSE</td><td>F値は分類、MSEは回帰（G-470）</td></tr>
+          <tr><td>訓練損失ゼロ＝成功</td><td>過学習の可能性。検証損失を見る</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
@@ -120,9 +146,19 @@
         <details><summary>損失＝エラー？</summary><p class="tool-faq-a">日常語の「誤差」とほぼ同義ですが、機械学習では最適化可能な関数として設計されたものを損失関数と呼びます。</p></details>
         <details><summary>教師なしでも損失はある？</summary><p class="tool-faq-a">あります。再構成誤差（オートエンコーダ）やクラスタリングの目的関数など、ラベルなしでも最小化する量を定義します（TF-354）。</p></details>
         <details><summary>損失ゼロは良い？</summary><p class="tool-faq-a">訓練損失ゼロは過学習の可能性。テストでの損失・指標が重要です。</p></details>
+        <details><summary>正則化項は損失に足す？</summary><p class="tool-faq-a">L1/L2正則化は予測誤差にペナルティ項を足したものを最小化します（<a href="../regularization/">正則化</a>記事参照）。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-240/">TF-240 · 勾配と更新方向</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-389/">TF-389 · 損失は常に0（×）</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-075/">TF-075 · 最適化の目標</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-471/">G-471 · MSE（回帰）</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

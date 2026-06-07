@@ -61,7 +61,9 @@
         <li><a href="#signals">見分けるサイン</a></li>
         <li><a href="#mitigation">対策一覧</a></li>
         <li><a href="#underfitting">過学習の反対・未学習</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -116,6 +118,18 @@
         <strong>未学習（Underfitting）</strong>はモデルが単純すぎて、訓練データすら十分に当てはまらない状態です（<a href="../../exams/g-kentei/practice/q/g-175/">G-175</a>の（あ）過学習・（い）未学習の対比）。過学習対策を入れすぎると未学習に振れることもあり、バランスが重要です。
       </p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>交差検証すれば過学習は絶対に起きない</td><td>評価手法。対策の魔法ではない（G-112）</td></tr>
+          <tr><td>訓練誤差が小さい＝汎化性能が高い</td><td>過学習では訓練は良く見える（G-080）</td></tr>
+          <tr><td>ドロップアウト＝推論時に入力削除</td><td>学習時のユニット無効化（TF-395は×）</td></tr>
+          <tr><td>ドロップアウト＝L1/L2正則化の説明</td><td>メカニズムが異なる（HQ-0133）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -124,7 +138,16 @@
         <details><summary>アンサンブルは過学習対策？</summary><p class="tool-faq-a">ランダムフォレストなどは単木より過学習を抑えやすい、と説明されることがあります（G-038）。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-363/">TF-363 · 過学習の定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-044/">TF-044 · 過学習と対策</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-008/">G-008 · 過学習と対策</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-175/">G-175 · 過学習と未学習</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
@@ -132,9 +155,7 @@
           <li><a href="../regularization/">正則化</a></li>
           <li><a href="../early-stopping/">早期終了</a></li>
           <li><a href="../machine-learning/">機械学習</a></li>
-          <li><a href="../deep-learning/">ディープラーニング</a></li>
           <li><a href="../loss-function/">損失関数</a></li>
-          <li><a href="../gradient-descent/">勾配降下法</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>
