@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="機密情報漏洩とは？生成AIへの入力・外部連携で社外秘が流出するリスクと対策をG検定・生成AIパスポート向けに解説。">
+  <title>機密情報漏洩とは？生成AI利用時のリスクと防止策 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/confidential-data-leak/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="機密情報漏洩とは？生成AI利用時のリスクと防止策">
+  <meta property="og:description" content="プロンプト入力や外部API送信で社外秘・未公開情報が漏れるリスク。個人情報とは別軸で整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/confidential-data-leak/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"機密情報漏洩","alternateName":["Confidential Data Leak"],"description":"生成AIへの入力や外部連携により、社外秘・未公開情報が意図せず流出するリスク。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">機密情報漏洩</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・ビジネス</p>
+    <h1>機密情報漏洩とは？生成AI利用時のリスクと防止策</h1>
+    <p class="tool-hero-sub">読み：きみつじょうほうろうえい ／ 英：Confidential Data Leak</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>機密情報漏洩</strong>は、<a href="../generative-ai/">生成AI</a>の利用において、<strong>社外秘・未公開情報・契約上守秘すべきデータ</strong>が意図せず外部に渡るリスクを指します。本記事は<a href="../personal-information/">個人情報</a>や<a href="../appi/">個人情報保護法</a>の定義解説ではなく、<strong>漏洩の経路と防止の実務</strong>——何が起き、どう防ぐか——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">機密情報漏洩とは</a></li>
+        <li><a href="#vs-pii">個人情報との違い</a></li>
+        <li><a href="#paths">漏洩の経路</a></li>
+        <li><a href="#myths">よくある誤解</a></li>
+        <li><a href="#prevent">防止のチェックリスト</a></li>
+        <li><a href="#incident">漏洩が疑われたとき</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        <strong>「入力前に個人情報や機密情報が含まれていないか確認する」</strong>は○です（<a href="../../exams/genai-passport/drill/q/tf-0276/">TF-0276</a>）。逆に、<strong>機密を詳しく入れるほど安全</strong>、<strong>外部連携なら漏洩リスクなし</strong>、<strong>画像・音声ならリスクなし</strong>は×です（<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466</a>、<a href="../../exams/genai-passport/drill/q/tf-0249/">TF-0249</a>、<a href="../../exams/genai-passport/drill/q/tf-0289/">TF-0289</a>）。
+      </p>
+      <p>
+        社内資料の要約でも、<strong>権利関係と社外秘の扱い</strong>を確認する必要があります（<a href="../../exams/genai-passport/drill/q/tf-0407/">TF-0407</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0276/">TF-0276</a>、<a href="../../exams/genai-passport/drill/q/tf-0399/">TF-0399</a>、<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466</a>、<a href="../../exams/genai-passport/drill/q/tf-0249/">TF-0249</a>、<a href="../../exams/genai-passport/drill/q/tf-0407/">TF-0407</a>、<a href="../../exams/genai-passport/drill/q/tf-0475/">TF-0475</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-179/">TF-179（業務利用の確認）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>機密情報漏洩とは</h2>
+      <p>
+        機密情報とは、社内規程・契約・NDA（秘密保持契約）などにより<strong>外部に開示してはならない情報</strong>です。未発表の製品仕様、取引先の非公開資料、営業戦略、ソースコード、顧客リストなどが該当し得ます。
+      </p>
+      <p>
+        生成AIでは、プロンプトとして<strong>クラウド上のサービスに送信</strong>した時点で、保存・ログ・学習利用の対象になり得るため、従来のメール誤送信とは経路が異なる点に注意が必要です。
+      </p>
+    </section>
+
+    <section id="vs-pii">
+      <h2>個人情報との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>区分</th>
+            <th>機密情報</th>
+            <th>個人情報</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>典型例</strong></td>
+            <td>未公開の事業計画、設計図、契約条件</td>
+            <td>氏名・連絡先など個人を識別できる情報</td>
+          </tr>
+          <tr>
+            <td><strong>根拠</strong></td>
+            <td>社内規程、契約、NDA</td>
+            <td><a href="../appi/">個人情報保護法</a>など</td>
+          </tr>
+          <tr>
+            <td><strong>重なり</strong></td>
+            <td colspan="2">顧客リストは両方に該当し得る。どちらか一方だけ確認では不十分</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>詳細な個人情報の定義は<a href="../personal-information/">個人情報</a>の記事を参照してください。</p>
+    </section>
+
+    <section id="paths">
+      <h2>漏洩の経路</h2>
+      <ul class="tool-steps">
+        <li>
+          <strong>プロンプト入力</strong> — チャット欄・APIにそのまま送信（<a href="../../exams/genai-passport/drill/q/tf-0277/">TF-0277</a>）
+        </li>
+        <li>
+          <strong>ファイルアップロード</strong> — PDF・スプレッドシート・画像内の文字
+        </li>
+        <li>
+          <strong>外部連携・プラグイン</strong> — 第三者サービスへの自動送信（<a href="../../exams/genai-passport/drill/q/tf-0249/">TF-0249</a>）
+        </li>
+        <li>
+          <strong><a href="../rag/">RAG</a>・<a href="../agent/">エージェント</a></strong> — 社内文書を索引化・ツール経由で外部API呼び出し
+        </li>
+        <li>
+          <strong>出力の再共有</strong> — 生成結果に機密が含まれたまま社外へ
+        </li>
+        <li>
+          <strong>ログ・監査データ</strong> — 運用設計の不備による二次漏洩
+        </li>
+      </ul>
+    </section>
+
+    <section id="myths">
+      <h2>よくある誤解</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>誤解</th>
+            <th>正しい理解（試験向け）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>詳しく入れるほど安全</td>
+            <td>×。漏えい時の影響が大きくなる（<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466</a>）</td>
+          </tr>
+          <tr>
+            <td>無関係な機密も全部入れてよい</td>
+            <td>×。必要最小限（<a href="../../exams/genai-passport/drill/q/tf-0399/">TF-0399</a>）</td>
+          </tr>
+          <tr>
+            <td>画像・音声は文字ではないから安全</td>
+            <td>×。内容により機密・個人情報になり得る（<a href="../../exams/genai-passport/drill/q/tf-0289/">TF-0289</a>）</td>
+          </tr>
+          <tr>
+            <td>外部連携を使えばリスクゼロ</td>
+            <td>×。送信先・保存を確認（<a href="../../exams/genai-passport/drill/q/tf-0249/">TF-0249</a>）</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="prevent">
+      <h2>防止のチェックリスト</h2>
+      <ol class="tool-steps">
+        <li>
+          <strong>社内の生成AI利用ポリシー</strong> — 入力禁止リスト、承認フロー（<a href="../ai-governance/">AIガバナンス</a>）
+        </li>
+        <li>
+          <strong>サービス選定</strong> — 学習利用オプトアウト、データ保存期間、リージョン
+        </li>
+        <li>
+          <strong>必要最小限の入力</strong> — マスキング・匿名化・サンプルデータ化
+        </li>
+        <li>
+          <strong>エンタープライズ契約・DPA</strong> — 委託・第三者提供の整理
+        </li>
+        <li>
+          <strong>ログ・権限管理</strong> — 誰が何を入力したか追跡可能に（<a href="../../exams/genai-passport/drill/q/tf-0319/">TF-0319</a>）
+        </li>
+        <li>
+          <strong>教育</strong> — <a href="../ai-literacy/">AIリテラシー</a>で入力前確認を習慣化
+        </li>
+      </ol>
+    </section>
+
+    <section id="incident">
+      <h2>漏洩が疑われたとき</h2>
+      <p>
+        個人データの漏えい等は、事案により<strong>報告・本人通知</strong>が必要になることがあります（<a href="../../exams/genai-passport/drill/q/tf-0307/">TF-0307</a>）。生成AIが関与していても、対応を省略してはいけません（<a href="../../exams/genai-passport/drill/q/tf-0308/">TF-0308</a>は×の論点）。
+      </p>
+      <p>
+        機密情報のみの漏洩は法令と契約の両面で対応が変わるため、<strong>社内インシデント手順・法務</strong>に沿ってエスカレーションします。試験では「事前に手順を整えておく」重要性が問われます。
+      </p>
+      <p>
+        <a href="../deepfake/">ディープフェイク</a>音声による詐欺は、機密を<strong>騙して開示させる</strong>経路でもあります（<a href="../../exams/genai-passport/drill/q/tf-0251/">TF-0251</a>）。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>機密情報と個人情報はどちらを先に確認？</summary>
+          <p class="tool-faq-a">両方です。顧客データは重なることも多く、片方だけでは不十分です。</p>
+        </details>
+        <details>
+          <summary>社内専用の生成AIなら入力自由？</summary>
+          <p class="tool-faq-a">社内でも規程・契約・権限は残ります。オンプレでも無制限入力が許されるとは限りません。</p>
+        </details>
+        <details>
+          <summary>プロンプトを工夫すれば機密確認は不要？</summary>
+          <p class="tool-faq-a">いいえ。出力前に目的・事実・権利・機密を確認します（<a href="../../exams/genai-passport/drill/q/tf-0475/">TF-0475</a>）。</p>
+        </details>
+        <details>
+          <summary>個人情報保護法の記事とどう使い分ける？</summary>
+          <p class="tool-faq-a">法令上の個人情報は<a href="../appi/">個人情報保護法</a>と<a href="../personal-information/">個人情報</a>、社外秘・契約上の秘密は本記事、という役割分担です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../personal-information/">個人情報</a></li>
+          <li><a href="../appi/">個人情報保護法</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../ai-literacy/">AIリテラシー</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../deepfake/">ディープフェイク</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">当サイトは各試験の公式サイトではありません。本記事は一般的な整理であり、法的助言ではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

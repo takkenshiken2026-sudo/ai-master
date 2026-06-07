@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="人工知能（AI）とは？定義、弱いAI・強いAI、機械学習との包含関係、生成AIとの違いをG検定・生成AIパスポート向けに概念地図として整理。">
+  <title>人工知能（AI）とは？定義・弱いAIと強いAI・機械学習との関係 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/artificial-intelligence/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="人工知能（AI）とは？定義・弱いAIと強いAI・機械学習との関係">
+  <meta property="og:description" content="AIの意味、ANIとAGIの対比、AI・機械学習・ディープラーニングの包含関係を試験対策向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/artificial-intelligence/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/glossary/artificial-intelligence/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "用語辞典", "item": "https://ai-master.jp/glossary/" },
+          { "@type": "ListItem", "position": 3, "name": "人工知能（AI）", "item": "https://ai-master.jp/glossary/artificial-intelligence/" }
+        ]
+      },
+      {
+        "@type": "DefinedTerm",
+        "@id": "https://ai-master.jp/glossary/artificial-intelligence/#term",
+        "name": "人工知能",
+        "alternateName": ["AI", "Artificial Intelligence"],
+        "description": "人間の知的活動に相当する処理を機械で扱おうとする技術・研究分野の総称。",
+        "inDefinedTermSet": {
+          "@type": "DefinedTermSet",
+          "name": "AI Master 用語辞典",
+          "url": "https://ai-master.jp/glossary/"
+        }
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/glossary/artificial-intelligence/#article",
+        "headline": "人工知能（AI）とは？定義・弱いAIと強いAI・機械学習との関係",
+        "description": "AIの意味、ANIとAGIの対比、AI・機械学習・ディープラーニングの包含関係を試験対策向けに整理。",
+        "url": "https://ai-master.jp/glossary/artificial-intelligence/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/glossary/artificial-intelligence/#webpage" },
+        "about": { "@id": "https://ai-master.jp/glossary/artificial-intelligence/#term" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "人工知能には意識や感情が必要？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "必ずしも必要ではありません。画像分類や翻訳など、意識を持たないシステムもAIに含まれます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "弱いAI（ANI）と強いAI（AGI）の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "弱いAIは特定タスクに特化したAI、強いAIは幅広い課題に汎用的に対応できるAIという概念です。現実に広く使われているのは弱いAIです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AIと生成AIは同じ？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。AIは広い概念で、生成AIはその中の「新しいコンテンツを作る」分野です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">人工知能（AI）</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>人工知能（AI）とは？定義・弱いAIと強いAI・機械学習との関係</h1>
+    <p class="tool-hero-sub">読み：じんこうちのう ／ 英：Artificial Intelligence（AI）</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>人工知能</strong>（Artificial Intelligence／AI）は、人間の知的活動に相当する処理を<strong>機械で実現しようとする技術・研究分野の総称</strong>です。本記事は個別アルゴリズムの解説ではなく、試験でつまずきやすい<strong>概念地図</strong>——AIの中に機械学習や生成AIがどう位置づくか、弱いAIと強いAIの違い——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#definition">人工知能の定義</a></li>
+        <li><a href="#taxonomy">概念の包含関係</a></li>
+        <li><a href="#weak-strong">弱いAIと強いAI</a></li>
+        <li><a href="#subfields">AIの主な分野（地図）</a></li>
+        <li><a href="#vs-genai">生成AIとの違い</a></li>
+        <li><a href="#history">歴史のざっくり整理</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、<strong>「AI＝意識や感情を持つもの」</strong>という言い切りが×になることが多いです。また、機械学習がAIの代表的アプローチの一つであること、弱いAIが現実に広く使われていることも頻出です。
+      </p>
+      <p>
+        生成AIパスポート第1章では、弱いAI（ANI）と強いAI（AGI）の<strong>定義の入れ替え</strong>に注意が必要です。ChatGPTのようなサービスは強力ですが、試験上は<strong>弱いAIの文脈</strong>で説明されることが多いです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-001/">TF-001（定義）</a>、<a href="../../exams/g-kentei/drill/q/tf-002/">TF-002（意識・感情）</a>、<a href="../../exams/g-kentei/drill/q/tf-003/">TF-003（機械学習との関係）</a>、<a href="../../exams/g-kentei/drill/q/tf-010/">TF-010（弱いAI）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0015/">HQ-0015（弱いAI）</a>、<a href="../../exams/genai-passport/practice/q/hq-0036/">HQ-0036（強いAI）</a>、<a href="../../exams/g-kentei/drill/domain/domain-08/">人工知能とは（一問一答ドメイン）</a></p>
+      </div>
+    </section>
+
+    <section id="definition">
+      <h2>人工知能の定義</h2>
+      <p>
+        人工知能は、<strong>人の知的活動に相当する処理を機械で扱おうとする</strong>広い概念です。学習・推論・知識表現・言語理解・画像認識など、多様なテーマを含みます。
+      </p>
+      <p>
+        重要なのは、現在実用化されているAIの多くが<strong>特定タスクに特化</strong>している点です。人間のようにあらゆる場面で万能に活躍するシステムは、まだ一般には存在しません。
+      </p>
+    </section>
+
+    <section id="taxonomy">
+      <h2>概念の包含関係</h2>
+      <p>試験でよく問われるのは、次の<strong>入れ子構造</strong>です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>位置づけ</th>
+            <th>例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>人工知能（AI）</strong></td>
+            <td>最も広い概念</td>
+            <td>探索、推論、機械学習、生成AIすべてを含む</td>
+          </tr>
+          <tr>
+            <td><strong>機械学習</strong></td>
+            <td>AIの一分野。データから学習</td>
+            <td>回帰、分類、クラスタリング</td>
+          </tr>
+          <tr>
+            <td><strong>ディープラーニング</strong></td>
+            <td>機械学習の一分野。多層ニューラルネット</td>
+            <td>CNN、Transformer</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../generative-ai/">生成AI</a></strong></td>
+            <td>AIの一分野。新規コンテンツ生成</td>
+            <td>テキスト・画像・音声の生成</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../llm/">LLM</a></strong></td>
+            <td>生成AIの中核技術の一つ</td>
+            <td>大規模言語モデル</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        「機械学習はAIの外にある」「生成AIがAI全体を占める」といった説明は試験では×になりやすいです。<a href="../../exams/g-kentei/drill/q/tf-170/">TF-170</a>で生成AIの位置づけもあわせて確認してください。
+      </p>
+    </section>
+
+    <section id="weak-strong">
+      <h2>弱いAIと強いAI</h2>
+      <p>AIの「強さ」は性能の話ではなく、<strong>汎用性の話</strong>として覚えると整理しやすいです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>区分</th>
+            <th>英語</th>
+            <th>意味</th>
+            <th>現状</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>弱いAI</strong></td>
+            <td>ANI（Artificial Narrow Intelligence）</td>
+            <td>特定の課題・用途に特化して能力を発揮するAI</td>
+            <td>画像認識、翻訳、推薦、<a href="../generative-ai/">生成AI</a>など実用例が多数</td>
+          </tr>
+          <tr>
+            <td><strong>強いAI</strong></td>
+            <td>AGI（Artificial General Intelligence）</td>
+            <td>幅広い課題に人間のように汎用的に対応できる知能</td>
+            <td>研究・概念上の目標。現時点では未実現</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        「ChatGPTは強いAIだからAGI」——このような混同は避けてください。会話が自然でも、試験では<strong>特化型AI（弱いAI）</strong>として扱われる設問が多いです。
+      </p>
+    </section>
+
+    <section id="subfields">
+      <h2>AIの主な分野（地図）</h2>
+      <p>人工知能という大きな傘の下には、次のような領域があります。すべてを深く学ぶ必要はありませんが、<strong>名前と役割</strong>だけ押さえておくと他の用語記事につながります。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>知識表現・推論</h3>
+          <p>ルールや知識ベースによる推論。シンボリックAIの系譜。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>機械学習</h3>
+          <p>データからパターンを学習。教師あり・なし、強化学習など。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>自然言語処理</h3>
+          <p>テキストの理解・生成。<a href="../llm/">LLM</a>はその中核。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コンピュータビジョン</h3>
+          <p>画像・動画の認識・生成。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ロボティクス</h3>
+          <p>物理世界での知覚・行動。<a href="../agent/">エージェント</a>と組み合わされることも。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>倫理・安全・ガバナンス</h3>
+          <p>社会への影響の整理。<a href="../ai-ethics-overview/">AI倫理</a>、<a href="../ai-safety/">AI安全性</a>へ。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="vs-genai">
+      <h2>生成AIとの違い</h2>
+      <p>
+        <a href="../generative-ai/">生成AI</a>は人工知能の<strong>一分野</strong>です。需要予測、異常検知、画像分類など「生成しないAI」も多数あり、<strong>すべてのAIが生成AIではありません</strong>。
+      </p>
+      <p>
+        逆に、生成AIは人工知能研究の成果を業務に持ち込む入口になっており、<a href="../ai-literacy/">AIリテラシー</a>や<a href="../prompt/">プロンプト</a>設計など、利用者側の知識も重要になっています。
+      </p>
+    </section>
+
+    <section id="history">
+      <h2>歴史のざっくり整理</h2>
+      <p>試験では年代の暗記より、<strong>ブームと冬の時代</strong>の流れが問われることがあります。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>1950年代〜</strong> — 「人工知能」という言葉が登場。シンボリックAIが中心。
+        </li>
+        <li>
+          <strong>1980年代〜</strong> — エキスパートシステムのブームののち、期待と失望のサイクル（AI冬の時代）。
+        </li>
+        <li>
+          <strong>2010年代〜</strong> — 深層学習の実用化。画像認識で大きな進展。
+        </li>
+        <li>
+          <strong>2020年代〜</strong> — <a href="../llm/">LLM</a>と<a href="../generative-ai/">生成AI</a>の普及。社会実装と規制議論が加速。
+        </li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>人工知能には意識や感情が必要？</summary>
+          <p class="tool-faq-a">必ずしも必要ではありません。<a href="../../exams/g-kentei/drill/q/tf-002/">TF-002</a>の論点です。画像分類や翻訳もAIに含まれます。</p>
+        </details>
+        <details>
+          <summary>弱いAI（ANI）と強いAI（AGI）の違いは？</summary>
+          <p class="tool-faq-a">弱いAIは特定タスク特化、強いAIは汎用知能の概念です。<a href="../../exams/genai-passport/practice/q/hq-0015/">HQ-0015</a>と<a href="../../exams/genai-passport/practice/q/hq-0036/">HQ-0036</a>で定義の取り違えに慣れましょう。</p>
+        </details>
+        <details>
+          <summary>AIと生成AIは同じ？</summary>
+          <p class="tool-faq-a">同じではありません。生成AIはAIの一分野です。<a href="../generative-ai/">生成AIの記事</a>と<a href="../../exams/g-kentei/drill/q/tf-170/">TF-170</a>を参照してください。</p>
+        </details>
+        <details>
+          <summary>機械学習とAIの関係は？</summary>
+          <p class="tool-faq-a">機械学習はAIを実現する代表的アプローチの一つです（<a href="../../exams/g-kentei/drill/q/tf-003/">TF-003</a>）。すべてのAIが機械学習ベースというわけではありませんが、現代の実用AIの多くは機械学習を利用します。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../llm/">LLM（大規模言語モデル）</a></li>
+          <li><a href="../ai-literacy/">AIリテラシー</a></li>
+          <li><a href="../ai-safety/">AI安全性</a></li>
+          <li class="tool-related-list__soon">AGI <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

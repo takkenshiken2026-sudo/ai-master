@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chain-of-Thought（CoT）とは？段階的推論を促すプロンプト技法の意味、使いどころ、限界をG検定・生成AIパスポート向けに解説。">
+  <title>Chain-of-Thought（CoT）とは？段階的推論プロンプトの書き方 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/chain-of-thought/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="Chain-of-Thought（CoT）とは？段階的推論プロンプトの書き方">
+  <meta property="og:description" content="思考過程を段階的に出力させるプロンプト技法。理由が書けることと正確さは別。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/chain-of-thought/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"Chain-of-Thought","alternateName":["CoT","思考の連鎖","段階的推論"],"description":"LLMに中間の推論ステップを出力させ、複雑な問題の精度を高めやすくするプロンプト技法。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Chain-of-Thought（CoT）</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>Chain-of-Thought（CoT）とは？段階的推論プロンプトの書き方</h1>
+    <p class="tool-hero-sub">読み：ちぇーん・おぶ・そーと ／ 略：CoT</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Chain-of-Thought</strong>（思考の連鎖／CoT）は、<a href="../llm/">LLM</a>に<strong>答えだけでなく中間の推論ステップ</strong>を出力させる<a href="../prompt/">プロンプト</a>技法です。本記事は<a href="../prompt/">プロンプト</a>全般の書き方ではなく、<strong>「段階的に考えさせる」一手</strong>——いつ効き、いつ効かないか——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Chain-of-Thoughtとは</a></li>
+        <li><a href="#how-to">プロンプトの書き方</a></li>
+        <li><a href="#variants">ゼロショットとFew-shot</a></li>
+        <li><a href="#vs-decompose">タスク分割との違い</a></li>
+        <li><a href="#limits">限界（重要）</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        CoT専用の問題IDは少ないですが、関連する論点は頻出です。<strong>「理由を言葉で説明できる＝計算や事実が常に正確」</strong>は×です（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）。推論っぽい出力と正確性は別です。
+      </p>
+      <p>
+        複雑な依頼は<strong>手順を分けて段階的に</strong>進めると確認しやすい、という実務原則（<a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476</a>）は、CoTやタスク分割と思想が近いです。また、<strong>プロンプト</strong>（入力文）と<strong>プロンプトエンジニアリング</strong>（工夫する技術）の定義すり替えにも注意（<a href="../../exams/genai-passport/practice/q/hq-0726/">HQ-0726</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（説明できる≠正確）</a>、<a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476（段階的依頼）</a>、<a href="../../exams/genai-passport/practice/q/hq-0726/">HQ-0726（PEとの区別）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-385/">G-385（Few-shot／Zero-shot）</a>、<a href="../../exams/g-kentei/drill/q/tf-171/">TF-171（正確性の保証なし）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Chain-of-Thoughtとは</h2>
+      <p>
+        Chain-of-Thought（CoT）は、算数・論理・多段階の判断などで、モデルに<strong>「まず考えの過程を書いてから結論を述べる」</strong>よう促す技法です。英語では "Let's think step by step"（段階的に考えて）のような一文を足すだけでも効果が報告されたことで知られています（ゼロショットCoT）。
+      </p>
+      <p>
+        人間がメモを取りながら問題を解くのに似て、<a href="../llm/">LLM</a>がいきなり最終答えだけを出すより、<strong>中間ステップを経由した方が誤りにくい</strong>タスクがあります。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>プロンプトの書き方</h2>
+      <p>試験・実務で再現しやすいパターンです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>パターン</th>
+            <th>プロンプト例</th>
+            <th>狙い</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>明示指示</strong></td>
+            <td>「推論の過程を段階的に示してから、最後に答えを書いて」</td>
+            <td>出力形式の指定</td>
+          </tr>
+          <tr>
+            <td><strong>ゼロショットCoT</strong></td>
+            <td>「Let's think step by step」／「段階的に考えて」</td>
+            <td>短い一言で推論を誘発</td>
+          </tr>
+          <tr>
+            <td><strong>出力フォーマット</strong></td>
+            <td>「①前提 ②計算 ③結論」の見出しを付ける</td>
+            <td>レビューしやすい構造</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>基本の4要素（目的・読者・形式・制約）は<a href="../prompt/">プロンプト</a>の記事と共通です。CoTは<strong>形式・制約</strong>の一部として追加するイメージです。</p>
+    </section>
+
+    <section id="variants">
+      <h2>ゼロショットとFew-shot</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>方式</th>
+            <th>内容</th>
+            <th>試験との関係</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ゼロショットCoT</strong></td>
+            <td>例示なしで「段階的に」と指示するだけ</td>
+            <td>手軽だが効果はタスク依存</td>
+          </tr>
+          <tr>
+            <td><strong>Few-shot CoT</strong></td>
+            <td>推論過程付きの例を数件プロンプトに含める</td>
+            <td>Few-shot学習の考え方と接続（<a href="../../exams/g-kentei/practice/q/g-385/">G-385</a>）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Few-shotは「少数の例でタスクに適応する」広い概念で、CoT専用ではありません。試験では<strong>用語の主語と説明が対応しているか</strong>を確認してください。</p>
+    </section>
+
+    <section id="vs-decompose">
+      <h2>タスク分割との違い</h2>
+      <p>CoTと混同しやすいのが、<strong>複雑作業を複数のプロンプトに分ける</strong>やり方です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Chain-of-Thought</th>
+            <th>タスク分割</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>単位</strong></td>
+            <td>1回の応答の中で推論を段階化</td>
+            <td>依頼自体を複数回に分ける</td>
+          </tr>
+          <tr>
+            <td><strong>例</strong></td>
+            <td>「計算過程を書いてから答えを」</td>
+            <td>「まず要件整理→次に下書き→最後に校正」</td>
+          </tr>
+          <tr>
+            <td><strong>試験</strong></td>
+            <td>推論技法としてのCoT</td>
+            <td><a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476</a>の段階的依頼</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>実務では<strong>両方を組み合わせる</strong>ことも多いです。</p>
+    </section>
+
+    <section id="limits">
+      <h2>限界（重要）</h2>
+      <ul class="tool-example-list">
+        <li><strong>もっともらしい誤推論</strong> — 段階を書いても各ステップが誤っていれば結論も誤る</li>
+        <li><strong><a href="../hallucination/">ハルシネーション</a></strong> — 根拠のない「理由付け」が増えることも</li>
+        <li><strong>トークン消費</strong> — 中間出力が長くなり<a href="../token/">トークン</a>・コスト増</li>
+        <li><strong>単純タスクでは不要</strong> — 雑談や一行要約にCoTは過剰</li>
+      </ul>
+      <p>
+        「CoTを使えば検証不要」は誤りです。人による確認と、必要なら<a href="../rag/">RAG</a>での根拠付けが引き続き重要です（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>、<a href="../../exams/g-kentei/drill/q/tf-171/">TF-171</a>）。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>CoTとプロンプトエンジニアリングは同じ？</summary>
+          <p class="tool-faq-a">CoTは技法の一つ、プロンプトエンジニアリングは指示を工夫する技術全体です。プロンプト（名詞）との混同にも注意（<a href="../../exams/genai-passport/practice/q/hq-0726/">HQ-0726</a>）。</p>
+        </details>
+        <details>
+          <summary>段階的に考えさせれば常に正確？</summary>
+          <p class="tool-faq-a">いいえ。説明ができることと正確さは別です（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）。</p>
+        </details>
+        <details>
+          <summary>日本語でも効く？</summary>
+          <p class="tool-faq-a">「段階的に考えて」「理由を順に示して」など日本語指示でも同様の狙いで使えます。モデル・タスクにより効果は異なります。</p>
+        </details>
+        <details>
+          <summary><a href="../agent/">AIエージェント</a>との関係は？</summary>
+          <p class="tool-faq-a">エージェントはツール呼び出しやループでタスクを進めます。CoTは1回の生成内の推論構造化であり、別レイヤーの技術です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../agent/">AIエージェント</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

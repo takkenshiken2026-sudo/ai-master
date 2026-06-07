@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="個人情報とは？定義、個人データ・要配慮個人情報との違い、生成AIへの入力で押さえる線引きをG検定・生成AIパスポート向けに解説。">
+  <title>個人情報とは？定義・関連概念・生成AI入力の線引き — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/personal-information/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="個人情報とは？定義・関連概念・生成AI入力の線引き">
+  <meta property="og:description" content="生存する個人を識別できる情報。個人データ・要配慮個人情報との区別と、プロンプト入力の判断材料。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/personal-information/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "個人情報",
+        "alternateName": ["Personal Information"],
+        "description": "生存する個人に関する情報で、特定の個人を識別できるものなど。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "個人情報と個人データは同じ？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "法令上は区別して理解します。個人情報は広い概念で、個人データは事業者がデータベース等で扱う個人情報の集合などとして定義されます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">個人情報</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・ビジネス</p>
+    <h1>個人情報とは？定義・関連概念・生成AI入力の線引き</h1>
+    <p class="tool-hero-sub">読み：こじんじょうほう ／ 英：Personal Information</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>個人情報</strong>は、<strong>生存する個人に関する情報</strong>のうち、氏名・生年月日などにより<strong>特定の個人を識別できる</strong>ものなどを指す基本概念です。本記事は<a href="../appi/">個人情報保護法</a>の条文解説ではなく、<strong>用語の定義と関連概念の地図</strong>——何が個人情報か、何と混同しやすいか——に焦点を当てます。生成AIのプロンプト入力判断の土台になります。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#definition">個人情報の定義</a></li>
+        <li><a href="#taxonomy">関連概念の整理</a></li>
+        <li><a href="#sensitive">要配慮個人情報</a></li>
+        <li><a href="#genai-input">生成AIへの入力判断</a></li>
+        <li><a href="#vs-law">個人情報保護法との関係</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、個人情報の<strong>定義そのもの</strong>（<a href="../../exams/genai-passport/drill/q/tf-0295/">TF-0295</a>）に加え、<strong>個人データとの区別</strong>（<a href="../../exams/genai-passport/drill/q/tf-0297/">TF-0297</a>）、<strong>要配慮個人情報の取扱い</strong>（<a href="../../exams/genai-passport/drill/q/tf-0310/">TF-0310</a>）が頻出です。
+      </p>
+      <p>
+        「入力前に個人情報かどうか確認する」は○、「精度向上のためなら要配慮個人情報も自由に入力してよい」は×、という<strong>実務判断</strong>も問われます（<a href="../../exams/genai-passport/drill/q/tf-0276/">TF-0276</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0295/">TF-0295</a>、<a href="../../exams/genai-passport/drill/q/tf-0297/">TF-0297</a>、<a href="../../exams/genai-passport/drill/q/tf-0310/">TF-0310</a>、<a href="../../exams/genai-passport/drill/q/tf-0276/">TF-0276</a>、<a href="../../exams/genai-passport/practice/q/hq-0670/">HQ-0670（要配慮との比較）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-482/">G-482（個人情報保護法）</a></p>
+      </div>
+    </section>
+
+    <section id="definition">
+      <h2>個人情報の定義</h2>
+      <p>日本の<a href="../appi/">個人情報保護法</a>における個人情報の骨格は、次のとおりです（試験向けの要約）。</p>
+      <blockquote class="tool-callout">
+        <p><strong>個人情報</strong> — 生存する個人に関する情報で、氏名・生年月日・住所・電話番号・顔写真・メールアドレスなどにより<strong>特定の個人を識別できる</strong>もの（ほか、個人識別符号を含む情報など）。</p>
+      </blockquote>
+      <p>
+        「識別できる」とは、単独でも、他の情報と<strong>容易に照合</strong>して特定できる場合も含みます。匿名だと思っても、組み合わせで特定されるリスクに注意が必要です。
+      </p>
+    </section>
+
+    <section id="taxonomy">
+      <h2>関連概念の整理</h2>
+      <p>試験で混同しやすい用語を、<strong>概念の地図</strong>として並べます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>要点（試験向け）</th>
+            <th>生成AIとの関係</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>個人情報</strong></td>
+            <td>広い概念。識別できる個人に関する情報</td>
+            <td>プロンプト入力の可否判断の起点</td>
+          </tr>
+          <tr>
+            <td><strong>個人データ</strong></td>
+            <td>個人情報のうち、個人データベース等で扱われるもの（法令上の区分）</td>
+            <td>事業者のデータベース管理と関連（<a href="../../exams/genai-passport/drill/q/tf-0297/">TF-0297</a>）</td>
+          </tr>
+          <tr>
+            <td><strong>要配慮個人情報</strong></td>
+            <td>人種・信条・病歴など、特に配慮が必要な個人情報</td>
+            <td>安易な入力は×（<a href="../../exams/genai-passport/drill/q/tf-0310/">TF-0310</a>）</td>
+          </tr>
+          <tr>
+            <td><strong>匿名加工情報</strong></td>
+            <td>特定個人を識別できないよう加工し、復元できないようにした情報</td>
+            <td>個人情報の定義そのものではない（<a href="../../exams/genai-passport/practice/q/hq-0661/">HQ-0661</a>系の区別問題と関連）</td>
+          </tr>
+          <tr>
+            <td><strong>機密情報</strong></td>
+            <td>社内規程・契約上の非公開情報（法令用語とは別枠）</td>
+            <td>個人情報でなくても入力禁止のことが多い</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>個人情報＝個人データ</strong>と同一視する選択肢は誤りになりやすいです（<a href="../../exams/genai-passport/drill/q/tf-0297/">TF-0297</a>）。また、要配慮個人情報の説明にインターネットリテラシーや匿名加工情報の定義が混ざる問題にも注意（<a href="../../exams/genai-passport/practice/q/hq-0670/">HQ-0670</a>）。
+      </p>
+    </section>
+
+    <section id="sensitive">
+      <h2>要配慮個人情報</h2>
+      <p>
+        <strong>要配慮個人情報</strong>は、人種、信条、社会的身分、病歴、犯罪の経歴、被害の事実など、本人に<strong>不利益が生じないよう特に配慮</strong>が必要な個人情報です。
+      </p>
+      <p>
+        生成AIの精度向上を理由に、同意や利用目的の確認なしにプロンプトへ入力してよい、という考え方は試験では×です。倫理（<a href="../ai-ethics-overview/">AI倫理</a>のプライバシー）と法令（<a href="../appi/">個人情報保護法</a>）の両面で問題になります。
+      </p>
+    </section>
+
+    <section id="genai-input">
+      <h2>生成AIへの入力判断</h2>
+      <p>個人情報かどうかの判断は、次の3層で行うと実務・試験の両方に役立ちます。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>法令・契約</strong> — 個人情報保護法、委託・第三者提供の枠組み
+        </li>
+        <li>
+          <strong>社内ルール</strong> — 生成AI利用ポリシー、入力禁止リスト（<a href="../../exams/genai-passport/drill/q/tf-0376/">TF-0376</a>）
+        </li>
+        <li>
+          <strong>技術的リスク</strong> — 外部API送信、ログ保存、再識別の可能性（<a href="../../exams/genai-passport/drill/q/tf-0276/">TF-0276</a>）
+        </li>
+      </ul>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>入力例</th>
+            <th>判断の目安</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>顧客の氏名＋購買履歴</td>
+            <td>個人情報。原則入力を避ける</td>
+          </tr>
+          <tr>
+            <td>社員のメール全文</td>
+            <td>個人・機密が含まれるため要注意</td>
+          </tr>
+          <tr>
+            <td>架空のサンプル人物</td>
+            <td>実在個人と無関係ならリスク低（社内規程は別途確認）</td>
+          </tr>
+          <tr>
+            <td>病歴・信条など</td>
+            <td>要配慮個人情報。特に慎重に</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        入力しなくても、<a href="../hallucination/">ハルシネーション</a>により学習データ由来の個人名が出力に現れることはあります。入力対策と出力確認の両方が<a href="../ai-literacy/">AIリテラシー</a>に含まれます。
+      </p>
+    </section>
+
+    <section id="vs-law">
+      <h2>個人情報保護法との関係</h2>
+      <p>
+        個人情報は<strong>法律が規律する対象の概念</strong>、個人情報保護法はその<strong>取扱いルールを定める法律</strong>です。本記事で定義を押さえたうえで、事業者義務・生成AI入力の詳細は<a href="../appi/">個人情報保護法</a>の記事へ進んでください。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>個人情報（本記事）</th>
+            <th>個人情報保護法</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>性質</strong></td>
+            <td>データ・情報の種類</td>
+            <td>国内法（APPI）</td>
+          </tr>
+          <tr>
+            <td><strong>焦点</strong></td>
+            <td>何が個人情報か、関連概念の区別</td>
+            <td>事業者の義務、生成AI利用の線引き</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>個人情報と個人データは同じ？</summary>
+          <p class="tool-faq-a">法令上は区別します（<a href="../../exams/genai-passport/drill/q/tf-0297/">TF-0297</a>）。個人情報の方が広い概念として理解することが多いです。</p>
+        </details>
+        <details>
+          <summary>匿名加工情報は個人情報？</summary>
+          <p class="tool-faq-a">個人情報の定義そのものではありません。別の法制下の概念として整理します。説明文の入れ替え問題に注意。</p>
+        </details>
+        <details>
+          <summary>ChatGPTに顧客名を入れてよい？</summary>
+          <p class="tool-faq-a">原則として避け、社内ポリシーと利用目的・送信先を確認します。安易な入力は試験でも×の論点です。</p>
+        </details>
+        <details>
+          <summary>個人情報保護法の記事とどちらを先に読む？</summary>
+          <p class="tool-faq-a">定義・関連概念は本記事、法令上の義務と生成AI実務は<a href="../appi/">個人情報保護法</a>の順がおすすめです。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../appi/">個人情報保護法</a></li>
+          <li><a href="../ai-ethics-overview/">AI倫理</a></li>
+          <li><a href="../ai-literacy/">AIリテラシー</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../confidential-data-leak/">機密情報漏洩</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。本記事は一般的な整理であり、法的助言ではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

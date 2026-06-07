@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="アルゴリズムバイアスとは？学習データ・ラベル・設計・運用から生じる偏りと、公平性・対策の考え方をG検定・生成AIパスポート向けに解説。">
+  <title>アルゴリズムバイアスとは？原因・データ偏り・対策の要点 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/algorithmic-bias/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="アルゴリズムバイアスとは？原因・データ偏り・対策の要点">
+  <meta property="og:description" content="AIが特定集団に不利な結果を生む偏り。データ量を増やすだけでは解消しない場合も。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/algorithmic-bias/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "アルゴリズムバイアス",
+        "alternateName": ["Algorithmic Bias", "AIバイアス"],
+        "description": "アルゴリズムやAIが、特定の属性・集団に不利・有利な結果を偏って生み出す現象。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "データを増やせばバイアスは必ず消える？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "必ずしも消えません。偏った収集方法のまま件数だけ増やすと偏りは残ります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">アルゴリズムバイアス</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・ビジネス</p>
+    <h1>アルゴリズムバイアスとは？原因・データ偏り・対策の要点</h1>
+    <p class="tool-hero-sub">読み：あるごりずむばいあす ／ 英：Algorithmic Bias</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>アルゴリズムバイアス</strong>（Algorithmic Bias）は、AIやアルゴリズムが<strong>特定の属性・集団に不利（または不当に有利）な結果を偏って生む</strong>現象です。本記事は<a href="../fairness/">公平性</a>の原則解説ではなく、<strong>偏りがどこから生じるか</strong>——データから運用までの因果チェーン——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">アルゴリズムバイアスとは</a></li>
+        <li><a href="#sources">偏りの発生源（ライフサイクル）</a></li>
+        <li><a href="#data-myth">「データを増やせば解決」神話</a></li>
+        <li><a href="#genai">生成AI特有の偏り</a></li>
+        <li><a href="#mitigation">対策の方向性</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、バイアスは<strong>学習データだけでなく</strong>、ラベル付け、問題設定、特徴量選択、評価指標、運用からも生じうる、という全体像が問われます（<a href="../../exams/g-kentei/drill/q/tf-283/">TF-283</a>）。
+      </p>
+      <p>
+        「学習データの件数を増やせば偏りは必ず消える」「Human-in-the-loopを入れればバイアスは完全除去」——こうした<strong>言い切り</strong>は×です（<a href="../../exams/g-kentei/drill/q/tf-284/">TF-284</a>、<a href="../../exams/g-kentei/drill/q/tf-200/">TF-200</a>）。また、データシートを作れば偏りが自動的に消える、という説明も×（<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-283/">TF-283（原因の多様性）</a>、<a href="../../exams/g-kentei/drill/q/tf-284/">TF-284（データ量の神話）</a>、<a href="../../exams/g-kentei/drill/q/tf-200/">TF-200（Human-in-the-loop）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414（データシート）</a>、<a href="../../exams/g-kentei/drill/q/tf-264/">TF-264（公平性との接続）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>アルゴリズムバイアスとは</h2>
+      <p>
+        アルゴリズムバイアスは、モデルの予測・分類・生成が、性別・年齢・人種・地域・障害などの属性に関連して<strong>系統的に偏る</strong>状態を指します。意図せず差別的な結果につながることがあり、<a href="../fairness/">公平性</a>の観点から問題視されます。
+      </p>
+      <p>
+        統計学の「バイアス（推定の偏り）」と日常語の「偏見」が混ざって語られることもありますが、試験では<strong>AIの結果が特定集団に不利になっていないか</strong>という実務的な意味で押さえれば十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="sources">
+      <h2>偏りの発生源（ライフサイクル）</h2>
+      <p>偏りは「データが悪い」だけでは説明できません。開発・運用の各段階で入り込みます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>段階</th>
+            <th>偏りの例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>問題設定</strong></td>
+            <td>何を予測対象とするかで、既存の社会的不平等を再現する</td>
+          </tr>
+          <tr>
+            <td><strong>データ収集</strong></td>
+            <td>特定地域・層だけが多く、欠落集団がある</td>
+          </tr>
+          <tr>
+            <td><strong>ラベル付け</strong></td>
+            <td>アノテーターの主観・ステレオタイプがラベルに反映</td>
+          </tr>
+          <tr>
+            <td><strong>特徴量・モデル</strong></td>
+            <td>代理変数（郵便番号など）が属性を間接的に表す</td>
+          </tr>
+          <tr>
+            <td><strong>評価指標</strong></td>
+            <td>全体精度のみで評価し、少数集団の誤りを見逃す</td>
+          </tr>
+          <tr>
+            <td><strong>運用・利用</strong></td>
+            <td>閾値設定や人間の解釈で偏りが増幅</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>原因を分解して確認することが、対策の第一歩です（<a href="../../exams/g-kentei/drill/q/tf-283/">TF-283</a>）。</p>
+    </section>
+
+    <section id="data-myth">
+      <h2>「データを増やせば解決」神話</h2>
+      <p>
+        データ量の増加は性能向上に寄与することがありますが、<strong>収集方法が偏ったまま</strong>では偏りは残ります。例えば、ある性別のサンプルだけを大量に追加しても、他の属性の代表性は自動的には改善しません（<a href="../../exams/g-kentei/drill/q/tf-284/">TF-284</a>）。
+      </p>
+      <p>確認すべきは件数だけでなく、次のような点です。</p>
+      <ul class="tool-example-list">
+        <li>データは対象集団を<strong>代表</strong>しているか</li>
+        <li>ラベルの品質・一貫性は十分か</li>
+        <li>欠落している集団・条件はないか</li>
+        <li>属性別の性能・影響を評価したか（<a href="../fairness/">公平性</a>）</li>
+      </ul>
+    </section>
+
+    <section id="genai">
+      <h2>生成AI特有の偏り</h2>
+      <p>
+        <a href="../llm/">LLM</a>はインターネット規模のテキストで学習するため、<strong>社会に存在する偏見・ステレオタイプ</strong>を出力に反映しやすい側面があります。画像生成でも職業と性別の固定化などが指摘されています。
+      </p>
+      <p>
+        プロンプトで「偏りのない出力を」と指示するだけでは不十分なことも多く、<strong>出力のレビュー</strong>、<a href="../ai-governance/">ガバナンス</a>、モデル提供者の安全調整が組み合わされます。
+      </p>
+    </section>
+
+    <section id="mitigation">
+      <h2>対策の方向性</h2>
+      <p>単一の技法で完全解消は難しく、試験でも「これだけで十分」は疑ってください。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>データ監査</strong> — 分布・代表性・ラベル品質の確認。データシートは<strong>把握の手がかり</strong>であり、偏りを自動消去するものではない（<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414</a>）
+        </li>
+        <li>
+          <strong>公平性指標</strong> — 属性別の性能・影響評価（<a href="../fairness/">公平性</a>）
+        </li>
+        <li>
+          <strong>モデル・後処理</strong> — 再重み付け、閾値調整など（詳細は専門領域）
+        </li>
+        <li>
+          <strong>人の関与</strong> — レビュー基準・教育・異議申立て（<a href="../../exams/g-kentei/drill/q/tf-200/">TF-200</a>）
+        </li>
+        <li>
+          <strong>継続監視</strong> — 本番運用後もドリフト・偏りをモニタリング
+        </li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>アルゴリズムバイアスと公平性の違いは？</summary>
+          <p class="tool-faq-a">バイアスは偏りの現象、公平性はそれを避けるための原則です。<a href="../fairness/">公平性</a>の記事を参照。</p>
+        </details>
+        <details>
+          <summary>データを増やせばバイアスは必ず消える？</summary>
+          <p class="tool-faq-a">いいえ。偏った収集のままでは残ります（<a href="../../exams/g-kentei/drill/q/tf-284/">TF-284</a>）。</p>
+        </details>
+        <details>
+          <summary>Human-in-the-loopでバイアスはゼロになる？</summary>
+          <p class="tool-faq-a">完全除去とは限りません。人間の判断にも偏りがありうるため、仕組み全体で対策します（<a href="../../exams/g-kentei/drill/q/tf-200/">TF-200</a>）。</p>
+        </details>
+        <details>
+          <summary>生成AIにもバイアスは関係ある？</summary>
+          <p class="tool-faq-a">あります。学習データ由来のステレオタイプが出力に現れることがあり、<a href="../ai-literacy/">AIリテラシー</a>と出力確認が重要です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../fairness/">公平性</a></li>
+          <li><a href="../ai-ethics-overview/">AI倫理</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__soon">データシート <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

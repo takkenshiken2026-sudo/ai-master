@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="アライメント（Alignment）とは？AIの出力を人間の意図・価値観に沿わせる考え方。RLHF・ファインチューニングとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>アライメント（Alignment）とは？人間の意図との整合・RLHFとの違い — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/alignment/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="アライメント（Alignment）とは？人間の意図との整合・RLHFとの違い">
+  <meta property="og:description" content="AIの出力や行動を人間の意図や価値観に沿うよう調整する考え方。RLHFやChatGPTとは別概念。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/alignment/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "アライメント",
+        "alternateName": ["Alignment", "AIアライメント"],
+        "description": "AIの出力や行動を人間の意図や価値観に沿うよう調整する考え方。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "アライメントとRLHFは同じ？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。アライメントは目的・考え方、RLHFは人間のフィードバックで調整する具体的な手法の一つです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">アライメント</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>アライメント（Alignment）とは？人間の意図との整合・RLHFとの違い</h1>
+    <p class="tool-hero-sub">読み：あらいんめんと ／ 英：Alignment</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>アライメント</strong>（Alignment）は、<a href="../llm/">LLM</a>などのAIの<strong>出力や行動を、人間の意図や価値観に沿うよう調整する</strong>考え方です。本記事は<a href="../ai-safety/">AI安全性</a>の脅威モデル全体ではなく、<strong>「望ましい振る舞いにどう寄せるか」</strong>——目的と実装手法の地図——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">アライメントとは</a></li>
+        <li><a href="#why">なぜ必要か</a></li>
+        <li><a href="#methods">実現手法の地図</a></li>
+        <li><a href="#vs-others">似た用語との違い</a></li>
+        <li><a href="#chatgpt">ChatGPTとの関係</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポート第2章では、定義を一言で言えることが重要です。<strong>「AIの出力や行動を人間の意図や価値観に沿うよう調整する考え方」</strong>——この文が正解になる問題が多数あります（<a href="../../exams/genai-passport/drill/q/tf-0124/">TF-0124</a>、<a href="../../exams/genai-passport/practice/q/hq-0240/">HQ-0240</a>、<a href="../../exams/genai-passport/practice/q/hq-0288/">HQ-0288</a>）。
+      </p>
+      <p>
+        誤答では、<strong>物理的にモデルを並べる作業</strong>（<a href="../../exams/genai-passport/drill/q/tf-0125/">TF-0125</a>）、<strong>ChatGPTそのもの</strong>、<strong>マルチモーダル性</strong>、<strong>RLHFの説明をアライメントの定義にする</strong>（<a href="../../exams/genai-passport/practice/q/hq-0288/">HQ-0288</a>のD選択肢）など、別概念のすり替えに注意してください。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0124/">TF-0124</a>、<a href="../../exams/genai-passport/drill/q/tf-0125/">TF-0125</a>、<a href="../../exams/genai-passport/practice/q/hq-0216/">HQ-0216（ChatGPTとの比較）</a>、<a href="../../exams/genai-passport/drill/q/tf-0166/">TF-0166（RLHFの誤解）</a></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0126/">TF-0126（InstructGPTとアライメント）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>アライメントとは</h2>
+      <p>
+        アライメントは、AIが<strong>人間が望む目的</strong>に沿って動くようにすること、広い意味では<strong>人間の価値観・倫理</strong>との整合を目指す考え方です。英語の align（一直線に揃える）から、モデルの振る舞いを人間の意図に「揃える」イメージです。
+      </p>
+      <p>
+        試験では研究用語としての厳密な理論より、<strong>指示追従・安全な拒否・有害出力の抑制</strong>といった実務的な意味で理解すれば十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="why">
+      <h2>なぜ必要か</h2>
+      <p>
+        事前学習だけの<a href="../llm/">LLM</a>は、次トークン予測で「もっともらしい続き」を生成しますが、<strong>有害・違法・差別的な内容</strong>や、<strong>ユーザー意図とずれた回答</strong>も出力しうります。
+      </p>
+      <ul class="tool-example-list">
+        <li>危険な行為の具体的助言を拒否したい</li>
+        <li>丁寧で一貫した対話スタイルにしたい</li>
+        <li>プロンプトの指示（形式・制約）に従わせたい</li>
+        <li><a href="../fairness/">公平性</a>や<a href="../ai-ethics-overview/">AI倫理</a>に反する出力を減らしたい</li>
+      </ul>
+      <p>これらをまとめて「アライメント」の課題として捉え、<a href="../ai-safety/">AI安全性</a>対策の中核の一つになります。</p>
+    </section>
+
+    <section id="methods">
+      <h2>実現手法の地図</h2>
+      <p>アライメントは<strong>単一のボタン</strong>ではなく、複数の手法の組み合わせです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>手法・要素</th>
+            <th>役割</th>
+            <th>アライメントとの関係</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>教師ありファインチューニング（SFT）</strong></td>
+            <td>良い応答例で学習</td>
+            <td>指示追従の基礎</td>
+          </tr>
+          <tr>
+            <td><strong>RLHF</strong></td>
+            <td>人間の好みを報酬に反映</td>
+            <td>アライメントの<strong>実装手法の一つ</strong>（定義そのものではない）</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../system-prompt/">システムプロンプト</a></strong></td>
+            <td>役割・拒否ルールの明示</td>
+            <td>推論時のガードレール</td>
+          </tr>
+          <tr>
+            <td><strong>安全フィルタ・モデレーション</strong></td>
+            <td>有害出力の検出・ブロック</td>
+            <td>運用層のアライメント</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../lora/">LoRA</a>等</strong></td>
+            <td>ドメイン適応</td>
+            <td>用途特化（安全調整とは目的が異なることも）</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="vs-others">
+      <h2>似た用語との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>性質</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>アライメント</strong></td>
+            <td>目的・考え方。「意図に沿わせる」</td>
+          </tr>
+          <tr>
+            <td><strong>RLHF</strong></td>
+            <td>具体的な学習手法</td>
+          </tr>
+          <tr>
+            <td><strong>ファインチューニング</strong></td>
+            <td>追加学習全般（用途適応も含む）</td>
+          </tr>
+          <tr>
+            <td><strong>ChatGPT</strong></td>
+            <td>対話型サービス（製品名）</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../ai-safety/">AI安全性</a></strong></td>
+            <td>害・誤用防止の研究・実践（アライメントと重なる領域あり）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>比較問題では2語の定義を<strong>入れ替えた選択肢</strong>が頻出です（<a href="../../exams/genai-passport/practice/q/hq-0216/">HQ-0216</a>）。</p>
+    </section>
+
+    <section id="chatgpt">
+      <h2>ChatGPTとの関係</h2>
+      <p>
+        ChatGPTは、GPT系列のモデルに<strong>アライメントを含む調整</strong>を施した上で提供されるサービスです。したがって「ChatGPT＝アライメント」ではなく、<strong>アライメントはモデル調整の考え方・工程</strong>、ChatGPTは<strong>製品</strong>です。
+      </p>
+      <p>
+        InstructGPTの系譜は、指示追従とRLHFを通じたアライメントの歴史として試験に出ることがあります（<a href="../../exams/genai-passport/drill/q/tf-0126/">TF-0126</a>）。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>アライメントとRLHFは同じ？</summary>
+          <p class="tool-faq-a">同じではありません。アライメントは考え方、RLHFは手法の一つです（<a href="../../exams/genai-passport/practice/q/hq-0288/">HQ-0288</a>）。</p>
+        </details>
+        <details>
+          <summary>アライメントは物理的にモデルを並べる作業？</summary>
+          <p class="tool-faq-a">いいえ。比喩的な「揃える」という意味です（<a href="../../exams/genai-passport/drill/q/tf-0125/">TF-0125</a>）。</p>
+        </details>
+        <details>
+          <summary>アライメントが完璧なら出力は常に正確？</summary>
+          <p class="tool-faq-a">いいえ。有害性の抑制と、<a href="../hallucination/">ハルシネーション</a>（事実誤り）の防止は別問題です。</p>
+        </details>
+        <details>
+          <summary>AI安全性との違いは？</summary>
+          <p class="tool-faq-a">安全性は害・誤用防止の広い領域、アライメントは人間の意図・価値への整合に焦点を当てる概念です。重なりはあります。<a href="../ai-safety/">AI安全性</a>も参照。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../ai-safety/">AI安全性</a></li>
+          <li><a href="../system-prompt/">システムプロンプト</a></li>
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../../tools/chatgpt/">ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

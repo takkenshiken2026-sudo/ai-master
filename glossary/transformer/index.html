@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Transformer（トランスフォーマー）とは？自己注意機構・LLMの基盤・RNNとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Transformer（トランスフォーマー）とは？自己注意・LLMの基盤 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/transformer/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="Transformer（トランスフォーマー）とは？自己注意・LLMの基盤">
+  <meta property="og:description" content="Self-Attentionで系列内の関係を捉える深層学習アーキテクチャ。現代LLMの土台。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/transformer/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Transformer",
+        "alternateName": ["トランスフォーマー"],
+        "description": "自己注意機構を用いて系列内の依存関係を捉える深層学習モデル。LLMの基盤アーキテクチャ。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "TransformerとLLMは同じ？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Transformerはアーキテクチャ（構造）、LLMはその構造を用いた大規模言語モデルです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Transformer</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Transformer（トランスフォーマー）とは？自己注意・LLMの基盤</h1>
+    <p class="tool-hero-sub">読み：とらんすふぉーまー ／ 英：Transformer</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Transformer</strong>（トランスフォーマー）は、<strong>自己注意（Self-Attention）</strong>機構を中心に、系列データの関係を捉える深層学習の<strong>アーキテクチャ</strong>です。本記事は<a href="../backpropagation/">誤差逆伝播法</a>の学習手順ではなく、<strong>構造とLLMとの関係</strong>——なぜ現代の言語モデルの土台になったか——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Transformerとは</a></li>
+        <li><a href="#self-attention">自己注意機構</a></li>
+        <li><a href="#blocks">構成要素（試験向け）</a></li>
+        <li><a href="#vs-rnn">RNNとの対比</a></li>
+        <li><a href="#llm">LLM・GPTとの関係</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の骨格は<strong>「自己注意機構を用いて系列内の関係を捉える深層学習モデル」</strong>（<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>）。現代の<a href="../llm/">LLM</a>の基盤として重要、という文脈で出ます。
+      </p>
+      <p>
+        誤答では、<strong>位置エンコーディング＝個人情報の匿名加工</strong>（<a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112</a>）、<strong>GPT＝GANの生成器・識別器</strong>（<a href="../../exams/genai-passport/drill/q/tf-0140/">TF-0140</a>）、<strong>Transformer＝ChatGPT</strong>など、別概念のすり替えに注意してください。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>、<a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112</a>、<a href="../../exams/genai-passport/drill/q/tf-0140/">TF-0140</a>、<a href="../../exams/genai-passport/practice/q/hq-0284/">HQ-0284</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-295/">G-295（Attention）</a>、<a href="../../exams/g-kentei/practice/q/g-443/">G-443（勾配と連鎖律は別論点）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Transformerとは</h2>
+      <p>
+        Transformerは2017年頃に提案されたアーキテクチャで、機械翻訳などの<strong>エンコーダ・デコーダ</strong>構造として知られています。その後、<strong>デコーダのみ</strong>の大規模言語モデル（GPT系列）や、<strong>エンコーダのみ</strong>のモデル（BERT系列）など、派生が広がりました。
+      </p>
+      <p>
+        試験では層の詳細より、<strong>Self-Attentionで文脈の依存を捉える</strong>ことと、<strong>LLMの基盤</strong>であることが押さえ目標です。
+      </p>
+    </section>
+
+    <section id="self-attention">
+      <h2>自己注意機構</h2>
+      <p>
+        <strong>Attention（注意）</strong>は、入力系列の中で<strong>どの部分を重視するか</strong>に重みを付ける仕組みです。<strong>Self-Attention</strong>は、同じ系列内の要素同士の関係を見ます。
+      </p>
+      <p>
+        例えば「彼はりんごを食べ、それを片付けた」の「それ」が何を指すか——遠い位置の語同士も、ある程度まとめて関連づけられるのが利点です（<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>）。
+      </p>
+      <p>
+        「パディング値を必ず1にするルール」など、Attentionの誤った説明が×になる問題もあります（G-295のD選択肢）。
+      </p>
+    </section>
+
+    <section id="blocks">
+      <h2>構成要素（試験向け）</h2>
+      <p>細部は試験範囲外のことも多いですが、名前だけ遭遇しやすい要素です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>要素</th>
+            <th>役割（ざっくり）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Multi-Head Attention</strong></td>
+            <td>複数の注意の視点を並列に計算</td>
+          </tr>
+          <tr>
+            <td><strong>位置エンコーディング</strong></td>
+            <td>語順・位置情報をモデルに与える（匿名加工ではない：TF-0112）</td>
+          </tr>
+          <tr>
+            <td><strong>Feed-Forward Network（FFN）</strong></td>
+            <td>各位置で非線形変換</td>
+          </tr>
+          <tr>
+            <td><strong>残差接続・層正規化</strong></td>
+            <td>学習の安定化</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="vs-rnn">
+      <h2>RNNとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>RNN / LSTM</th>
+            <th>Transformer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>系列の扱い</strong></td>
+            <td>時系列に沿って順次処理</td>
+            <td>注意機構で並列的に関係を計算</td>
+          </tr>
+          <tr>
+            <td><strong>長距離依存</strong></td>
+            <td>勾配消失などで苦労しやすい</td>
+            <td>Attentionで直接つなぎやすい</td>
+          </tr>
+          <tr>
+            <td><strong>試験</strong></td>
+            <td>古典的系列モデル</td>
+            <td>現代LLMの基盤（<a href="../llm/">LLM</a>）</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="llm">
+      <h2>LLM・GPTとの関係</h2>
+      <p>
+        <a href="../llm/">LLM</a>は大規模な言語モデルという<strong>モデルのクラス</strong>、Transformerはその中核になりうる<strong>ネットワーク構造</strong>です。GPTはTransformerを基盤とする自己回帰型の言語モデル系列として説明されます（<a href="../../exams/genai-passport/drill/q/tf-0140/">TF-0140</a>、<a href="../../exams/genai-passport/practice/q/hq-0247/">HQ-0247</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>層</th>
+            <th>例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>アーキテクチャ</strong></td>
+            <td>Transformer</td>
+          </tr>
+          <tr>
+            <td><strong>モデル</strong></td>
+            <td>GPT、BERT、<a href="../llm/">LLM</a></td>
+          </tr>
+          <tr>
+            <td><strong>サービス</strong></td>
+            <td><a href="../../tools/chatgpt/">ChatGPT</a>など</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>学習の仕組みは<a href="../backpropagation/">誤差逆伝播法</a>、振る舞い調整は<a href="../alignment/">アライメント</a>、効率適応は<a href="../lora/">LoRA</a>など、別の記事で補完します。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>TransformerとLLMは同じ？</summary>
+          <p class="tool-faq-a">同じではありません。Transformerは構造、LLMは大規模言語モデルです。多くのLLMがTransformer系です。</p>
+        </details>
+        <details>
+          <summary>位置エンコーディングは個人情報の匿名加工？</summary>
+          <p class="tool-faq-a">いいえ。系列の位置情報を与える技術です（<a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112</a>）。</p>
+        </details>
+        <details>
+          <summary>画像生成にも使われる？</summary>
+          <p class="tool-faq-a">はい。ViTなど画像をパッチ列としてTransformerに入れる手法もあります。<a href="../text-to-image/">テキスト画像生成</a>とも関連します。</p>
+        </details>
+        <details>
+          <summary>決定木やn-gramと混同しないには？</summary>
+          <p class="tool-faq-a"><a href="../llm/">LLM</a>の記事で「LLM≠決定木」「LLM≠n-gram」の対比を確認してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li class="tool-related-list__soon">Attention <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

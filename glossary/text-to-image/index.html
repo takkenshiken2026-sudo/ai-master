@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="テキスト画像生成（Text-to-Image）とは？文章から画像を作るAIタスクの意味、画像生成AIとの関係、注意点をG検定・生成AIパスポート向けに解説。">
+  <title>テキスト画像生成（Text-to-Image）とは？タスク・技術・リスク — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/text-to-image/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="テキスト画像生成（Text-to-Image）とは？タスク・技術・リスク">
+  <meta property="og:description" content="テキスト指示から画像を生成する生成AIタスク。DALL·Eや拡散モデルなどと関連。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/text-to-image/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"テキスト画像生成","alternateName":["Text-to-Image","Text to Image"],"description":"テキストによる指示から画像を生成する生成AIのタスク・技術。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Text-to-Imageと画像生成AIは同じ？","acceptedAnswer":{"@type":"Answer","text":"Text-to-Imageはテキストから画像を作るタスクの名前。画像生成AIはそれを実現するシステム・サービスを指すことが多い。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">テキスト画像生成</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>テキスト画像生成（Text-to-Image）とは？タスク・技術・リスク</h1>
+    <p class="tool-hero-sub">読み：てきすとがぞうせいせい ／ 英：Text-to-Image</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>テキスト画像生成</strong>（Text-to-Image）は、<strong>文章による指示（プロンプト）から画像を生成する</strong><a href="../generative-ai/">生成AI</a>のタスクです。本記事は拡散モデルの数式解説ではなく、<strong>入出力のモダリティと実務リスク</strong>——何が「Text-to-Image」で、何と混同しやすいか——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">テキスト画像生成とは</a></li>
+        <li><a href="#modality">モダリティの地図</a></li>
+        <li><a href="#models">代表的な技術（概要）</a></li>
+        <li><a href="#vs-image-gen">画像生成AIとの違い</a></li>
+        <li><a href="#risks">利用時の注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義は<strong>「文章による指示から画像を生成する技術やサービス」</strong>（<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>）。<strong>画像を見て人間が文章を書き写す手作業</strong>や、入力と出力が逆の説明は×です（<a href="../../exams/genai-passport/drill/q/tf-0191/">TF-0191</a>）。
+      </p>
+      <p>
+        画像生成AI全般では、プロンプトや参考画像から生成・編集する用途（<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a>）、<strong>権利・肖像・商標の確認</strong>が必要、という論点もセットです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>、<a href="../../exams/genai-passport/drill/q/tf-0191/">TF-0191</a>、<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a>、<a href="../../exams/genai-passport/practice/q/hq-0343/">HQ-0343</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-394/">G-394（DALL·EとText-to-Image）</a>、<a href="../../exams/g-kentei/practice/q/g-377/">G-377（拡散モデル）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>テキスト画像生成とは</h2>
+      <p>
+        Text-to-Imageは、<strong>入力がテキスト、出力が画像</strong>という方向の生成タスクを指します。「夕焼けの富士山を水彩風で」といったプロンプトを渡すと、それに沿った画像が得られるイメージです。
+      </p>
+      <p>
+        製品名（DALL·E、Midjourney、Stable Diffusionなど）は<a href="../../tools/">AIツール一覧</a>に集約し、本記事では<strong>タスク・概念</strong>として整理します。
+      </p>
+    </section>
+
+    <section id="modality">
+      <h2>モダリティの地図</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>タスク例</th>
+            <th>入力 → 出力</th>
+            <th>試験での注意</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Text-to-Image</strong></td>
+            <td>テキスト → 画像</td>
+            <td>本記事の主題</td>
+          </tr>
+          <tr>
+            <td>Image-to-Text</td>
+            <td>画像 → テキスト（キャプション等）</td>
+            <td>方向が逆。混同×</td>
+          </tr>
+          <tr>
+            <td><a href="../llm/">LLM</a>（テキスト生成）</td>
+            <td>テキスト → テキスト</td>
+            <td>画像は出力しない</td>
+          </tr>
+          <tr>
+            <td>マルチモーダルAI</td>
+            <td>複数種類を統合</td>
+            <td>Text-to-Imageを含み得る（<a href="../../exams/g-kentei/practice/q/g-389/">G-389</a>）</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="models">
+      <h2>代表的な技術（概要）</h2>
+      <p>試験では実装詳細より<strong>家族の名前と特徴</strong>が問われます。</p>
+      <ul class="tool-example-list">
+        <li><strong>GAN</strong> — 生成器と識別器の対抗学習（古典的な画像生成）</li>
+        <li><strong>拡散モデル（Diffusion Model）</strong> — ノイズ付加と復元で生成（<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>）。近年の高品質画像生成で主流</li>
+        <li><strong>CLIP等</strong> — テキストと画像の対応学習。プロンプト理解に寄与</li>
+      </ul>
+      <p>いずれも<a href="../generative-ai/">生成AI</a>の一分野であり、<a href="../llm/">LLM</a>そのものとは別です。</p>
+    </section>
+
+    <section id="vs-image-gen">
+      <h2>画像生成AIとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>焦点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Text-to-Image</strong></td>
+            <td>テキスト入力から画像を作る<strong>タスク名</strong></td>
+          </tr>
+          <tr>
+            <td><strong>画像生成AI</strong></td>
+            <td>画像を生成する<strong>システム・サービス</strong>全般（参考画像入力も含む）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>試験文脈では近い語として使われることもありますが、<strong>定義問題では入出力の方向</strong>を確認してください。</p>
+    </section>
+
+    <section id="risks">
+      <h2>利用時の注意</h2>
+      <ul class="tool-steps">
+        <li>
+          <strong>著作権・類似</strong> — <a href="../copyright/">著作権</a>、<a href="../ai-generated-copyright/">AI生成物の著作権</a>
+        </li>
+        <li>
+          <strong>肖像権・商標</strong> — 実在人物・ロゴの生成（<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a>）
+        </li>
+        <li>
+          <strong><a href="../deepfake/">ディープフェイク</a></strong> — 顔・声のなりすまし悪用
+        </li>
+        <li>
+          <strong>自動保証はない</strong> — 権利関係をサービスが保証するわけではない（<a href="../../exams/genai-passport/practice/q/hq-0343/">HQ-0343</a>）
+        </li>
+      </ul>
+      <p>プロンプト設計は<a href="../prompt/">プロンプト</a>の記事と併用してください。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Text-to-Imageは手作業で文章を書き写すこと？</summary>
+          <p class="tool-faq-a">いいえ。AIがテキストから画像を生成します（<a href="../../exams/genai-passport/drill/q/tf-0191/">TF-0191</a>）。</p>
+        </details>
+        <details>
+          <summary>LLMと同じ？</summary>
+          <p class="tool-faq-a">別タスクです。LLMは主にテキスト生成、Text-to-Imageは画像生成です。</p>
+        </details>
+        <details>
+          <summary>DALL·Eとの関係は？</summary>
+          <p class="tool-faq-a">DALL·EはText-to-Imageの代表例の一つとして試験に出ます（<a href="../../exams/g-kentei/practice/q/g-394/">G-394</a>）。</p>
+        </details>
+        <details>
+          <summary>生成した画像は自由に使える？</summary>
+          <p class="tool-faq-a">サービス規約・権利確認が必要です。自動的に安全とは限りません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../deepfake/">ディープフェイク</a></li>
+          <li><a href="../copyright/">著作権</a></li>
+          <li class="tool-related-list__soon">拡散モデル <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

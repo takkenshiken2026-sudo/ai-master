@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RLHFとは？人間のフィードバックを用いた強化学習でLLMを調整する3段階の流れ。アライメント・ChatGPT・ファインチューニングとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>RLHFとは？人間フィードバック強化学習・3段階パイプライン — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/rlhf/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="RLHFとは？人間フィードバック強化学習・3段階パイプライン">
+  <meta property="og:description" content="人間の好みを報酬に変換し、LLMの出力を望ましい方向へ調整する学習手法。ChatGPTやアライメントとは別概念。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/rlhf/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "RLHF",
+        "alternateName": ["Reinforcement Learning from Human Feedback", "人間のフィードバックを用いた強化学習"],
+        "description": "人間のフィードバックを用いた強化学習により、モデルの出力を望ましい方向へ調整する手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "RLHFとChatGPTは同じ？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。RLHFはモデル調整の学習手法、ChatGPTは対話型のテキスト生成AIサービスです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RLHFとアライメントは同じ？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。アライメントは人間の意図に沿わせる考え方、RLHFはその実現手法の一つです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">RLHF</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>RLHFとは？人間フィードバック強化学習・3段階パイプライン</h1>
+    <p class="tool-hero-sub">読み：あーるえいちえふ ／ 英：RLHF（Reinforcement Learning from Human Feedback）</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>RLHF</strong>（Reinforcement Learning from Human Feedback／人間のフィードバックを用いた強化学習）は、人が「どちらの回答が良いか」を示した信号を使い、<a href="../llm/">LLM</a>の<strong>出力を望ましい方向へ調整する学習手法</strong>です。本記事は<a href="../alignment/">アライメント</a>の理念全体ではなく、<strong>InstructGPT以降よく語られる3段階の工程</strong>——何を・どの順で学習するか——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">RLHFとは</a></li>
+        <li><a href="#pipeline">3段階パイプライン</a></li>
+        <li><a href="#vs-others">似た用語との違い</a></li>
+        <li><a href="#limits">限界と誤解</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポート第2章では、定義文をそのまま覚えるのが近道です。<strong>「人間のフィードバックを用いた強化学習により、出力を望ましい方向へ調整する手法」</strong>——この文が正解になる問題が多数あります（<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311</a>、<a href="../../exams/genai-passport/practice/q/hq-0191/">HQ-0191</a>、<a href="../../exams/genai-passport/practice/q/hq-0215/">HQ-0215</a>）。
+      </p>
+      <p>
+        比較問題では、<strong>ChatGPTの説明をRLHFに当てはめる</strong>（<a href="../../exams/genai-passport/practice/q/hq-0262/">HQ-0262</a>）、<strong>アライメントの定義をRLHFにする</strong>（HQ-0311のD）、<strong>ファインチューニングの定義をRLHFにする</strong>（HQ-0311のA）など、主語と説明のすり替えに注意してください。
+      </p>
+      <p>
+        G検定では、不適切な説明を選ぶ形式も出ます（<a href="../../exams/g-kentei/practice/q/g-370/">G-370</a>）。「対話サービス」「教師なしクラスタリング」「紙に書き写す作業」（<a href="../../exams/genai-passport/drill/q/tf-0166/">TF-0166</a>、<a href="../../exams/genai-passport/drill/q/tf-0123/">TF-0123</a>）はいずれも×です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311</a>、<a href="../../exams/genai-passport/practice/q/hq-0262/">HQ-0262（ChatGPT比較）</a>、<a href="../../exams/genai-passport/drill/q/tf-0166/">TF-0166</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-370/">G-370（不適切な説明）</a></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0126/">TF-0126（InstructGPTとアライメント）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>RLHFとは</h2>
+      <p>
+        RLHFは、モデルが複数の候補回答を生成したとき、<strong>人間がより良い方を選ぶ</strong>（または順位づけする）データを集め、その好みを<strong>報酬信号</strong>として学習に反映させる手法です。略称のとおり<strong>強化学習</strong>の枠組みを使いますが、試験では「人間の評価で出力を良くする学習」と理解すれば十分なことが多いです。
+      </p>
+      <p>
+        ChatGPTのような対話モデルは、大規模な事前学習に加え、指示追従の調整やRLHFなどの工程を経て提供されることがあります（<a href="../../exams/genai-passport/drill/q/tf-0126/">TF-0126</a>）。ただし<strong>RLHF＝ChatGPT</strong>ではありません。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>3段階パイプライン</h2>
+      <p>教科書的な流れは、おおむね次の3段階に分けて説明されます（細部は研究・製品で異なります）。</p>
+      <ol class="tool-steps">
+        <li>
+          <strong>教師ありファインチューニング（SFT）</strong>
+          <p>人間が書いた「良い応答」の例でモデルを追加学習し、<strong>指示に従う基礎</strong>を作る。<a href="../fine-tuning/">ファインチューニング</a>の一形態。</p>
+        </li>
+        <li>
+          <strong>報酬モデル（Reward Model）の学習</strong>
+          <p>同じプロンプトに対する複数回答について、人がどちらが良いかを選んだデータから、<strong>回答の質を数値化するモデル</strong>を学習する。</p>
+        </li>
+        <li>
+          <strong>強化学習による方針最適化</strong>
+          <p>報酬モデルのスコアが高くなるよう、言語モデルの出力方針を更新する（PPOなどの手法が使われることが多い）。<strong>有害・無関係な出力を減らし、好ましい文体・拒否を強化</strong>するイメージ。</p>
+        </li>
+      </ol>
+      <p>このパイプライン全体が、<a href="../alignment/">アライメント</a>を実現する代表的な実装の一つとして語られます。アライメントそのものではなく、<strong>手段</strong>である点を押さえてください。</p>
+    </section>
+
+    <section id="vs-others">
+      <h2>似た用語との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>一言で</th>
+            <th>RLHFとの関係</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>RLHF</strong></td>
+            <td>人間の好みで出力を調整する学習手法</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../alignment/">アライメント</a></strong></td>
+            <td>意図・価値観に沿わせる考え方</td>
+            <td>RLHFは<strong>実装の一つ</strong></td>
+          </tr>
+          <tr>
+            <td><strong><a href="../fine-tuning/">ファインチューニング</a></strong></td>
+            <td>事前学習後の追加学習全般</td>
+            <td>SFTはFTの一部。RLHFは<strong>好み最適化</strong>に特化</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../lora/">LoRA</a></strong></td>
+            <td>少パラメータで効率適応</td>
+            <td>目的はドメイン適応など。安全調整とは別文脈も</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../../tools/chatgpt/">ChatGPT</a></strong></td>
+            <td>対話型AIサービス</td>
+            <td>調整工程にRLHFが使われうる<strong>製品</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="limits">
+      <h2>限界と誤解</h2>
+      <ul class="tool-example-list">
+        <li><strong>重みを変えない</strong>わけではない — 学習手法であり、手作業の転記ではない（TF-0166）</li>
+        <li><strong>事実の正確さ</strong>は別問題 — <a href="../hallucination/">ハルシネーション</a>はRLHFだけでは解決しない</li>
+        <li><strong>人間の評価者の偏り</strong>が報酬に入り込む可能性がある</li>
+        <li><strong>最新情報の取得</strong>とは無関係 — 知識更新は<a href="../rag/">RAG</a>や再学習など別の話</li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>RLHFとChatGPTは同じ？</summary>
+          <p class="tool-faq-a">いいえ。RLHFは手法、ChatGPTはサービスです（<a href="../../exams/genai-passport/practice/q/hq-0262/">HQ-0262</a>）。</p>
+        </details>
+        <details>
+          <summary>RLHFとアライメントは同じ？</summary>
+          <p class="tool-faq-a">いいえ。アライメントは考え方、RLHFはその実現手法の一つです（<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311</a>のDは誤り）。</p>
+        </details>
+        <details>
+          <summary>RLHFはファインチューニングと同じ？</summary>
+          <p class="tool-faq-a">包含関係ではありません。パイプラインの第1段階にSFT（FTの一種）が含まれることはありますが、RLHF全体を「追加学習全般」とは言い換えられません。</p>
+        </details>
+        <details>
+          <summary>DPOなどRLHF以外の手法は試験に出る？</summary>
+          <p class="tool-faq-a">G検定・生成AIパスポートの範囲では、RLHFの定義と誤解の排除が中心です。詳細アルゴリズム名は深掘り不要なことが多いです。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../../tools/chatgpt/">ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="誤差逆伝播法（Backpropagation）とは？勾配計算・連鎖律・重み更新の流れをG検定向けに解説。">
+  <title>誤差逆伝播法とは？Backpropagation・勾配・学習の流れ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/backpropagation/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="誤差逆伝播法とは？Backpropagation・勾配・学習の流れ">
+  <meta property="og:description" content="損失の勾配を層ごとに逆方向へ伝播し、ニューラルネットの重みを更新する基本手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/backpropagation/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"誤差逆伝播法","alternateName":["Backpropagation","バックプロパゲーション"],"description":"損失関数の勾配を出力側から入力側へ伝播し、各層の重みを効率的に更新する学習法。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">誤差逆伝播法</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>誤差逆伝播法とは？Backpropagation・勾配・学習の流れ</h1>
+    <p class="tool-hero-sub">読み：ごさぎゃくでんぱほう ／ 英：Backpropagation</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>誤差逆伝播法</strong>（Backpropagation／バックプロパゲーション）は、ニューラルネットワークで<strong>損失（誤差）の勾配を各層の重みに効率的に伝える</strong>学習の基本手法です。本記事は<a href="../transformer/">Transformer</a>などの構造解説ではなく、<strong>「どうやって重みを更新するか」</strong>——順伝播・逆伝播のパイプライン——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">誤差逆伝播法とは</a></li>
+        <li><a href="#pipeline">学習の1ステップ</a></li>
+        <li><a href="#chain-rule">連鎖律が鍵</a></li>
+        <li><a href="#vs-others">混同しやすい用語</a></li>
+        <li><a href="#issues">勾配消失・爆発</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、誤差逆伝播法が<strong>連鎖律で勾配を計算する</strong>こと（<a href="../../exams/g-kentei/drill/q/tf-072/">TF-072</a>）、<strong>出力側の誤差を重み更新に反映する</strong>こと（<a href="../../exams/g-kentei/drill/q/tf-390/">TF-390</a>）が○として問われます。
+      </p>
+      <p>
+        逆に、<strong>学習率やバッチサイズも誤差逆伝播で重みと同様に更新される</strong>は×です。これらはハイパーパラメータで、学習前に設定します（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-072/">TF-072</a>、<a href="../../exams/g-kentei/drill/q/tf-390/">TF-390</a>、<a href="../../exams/g-kentei/practice/q/g-172/">G-172（連鎖律）</a>、<a href="../../exams/g-kentei/practice/q/g-136/">G-136（勾配爆発）</a>、<a href="../../exams/g-kentei/drill/domain/domain-06/">ディープラーニングの概要</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>誤差逆伝播法とは</h2>
+      <p>
+        ニューラルネットは、入力から出力まで<strong>層を重ねた合成関数</strong>とみなせます。誤差逆伝播法は、最終出力と正解の差（損失）から出発し、<strong>出力側から入力側へ向かって</strong>各重みに対する勾配（偏微分）を計算する方法です。
+      </p>
+      <p>
+        勾配が分かれば、<strong>勾配降下法</strong>などで重みを少しずつ更新し、損失を減らしていきます。深層学習の実用化を支えた中核技術の一つです。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>学習の1ステップ</h2>
+      <p>試験・入門で押さえる流れは次の4段階です。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>順伝播（フォワード）</strong>
+          <p>入力データをネットワークに通し、予測値を計算する。</p>
+        </li>
+        <li>
+          <strong>損失の計算</strong>
+          <p>予測と正解の差を損失関数（例：交差エントロピー、二乗誤差）で数値化する。</p>
+        </li>
+        <li>
+          <strong>逆伝播（バックワード）</strong>
+          <p>損失から各重みへの勾配を逆方向に伝播させる（誤差逆伝播法の本体）。</p>
+        </li>
+        <li>
+          <strong>重みの更新</strong>
+          <p>勾配の方向に学習率をかけてパラメータを更新する。</p>
+        </li>
+      </ul>
+      <p>このサイクルをエポック（データ全体の繰り返し）・バッチ単位で繰り返します。</p>
+    </section>
+
+    <section id="chain-rule">
+      <h2>連鎖律が鍵</h2>
+      <p>
+        多層ネットワークでは、層が連鎖した合成関数になるため、微分には<strong>連鎖律（チェインルール）</strong>が使われます（<a href="../../exams/g-kentei/practice/q/g-014/">G-014</a>、<a href="../../exams/g-kentei/practice/q/g-172/">G-172</a>）。
+      </p>
+      <p>
+        誤差逆伝播法の「逆」とは、<strong>計算の向き</strong>——出力に近い層から入力に近い層へ勾配を渡していく——を指します。物理的に信号が逆流するわけではなく、数学的に勾配を効率よく求めるアルゴリズムです。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>混同しやすい用語</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>関係</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>勾配降下法</strong></td>
+            <td>勾配の方向にパラメータを更新する<strong>最適化の考え方</strong>。誤差逆伝播は勾配を<strong>求める方法</strong></td>
+          </tr>
+          <tr>
+            <td><strong>ハイパーパラメータ</strong></td>
+            <td>学習率、バッチサイズなど。誤差逆伝播では<strong>直接更新しない</strong>（TF-052）</td>
+          </tr>
+          <tr>
+            <td><strong>損失関数</strong></td>
+            <td>誤差逆伝播の<strong>起点</strong>になるスカラー値</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../transformer/">Transformer</a></strong></td>
+            <td>ネットワークの<strong>構造</strong>。学習手法とは別レイヤー</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="issues">
+      <h2>勾配消失・爆発</h2>
+      <p>
+        層が深い、または時間方向に長く展開される（RNNなど）と、逆伝播で勾配が<strong>極端に小さくなる（消失）</strong>、または<strong>大きくなる（爆発）</strong>ことがあります（<a href="../../exams/g-kentei/practice/q/g-136/">G-136</a>）。
+      </p>
+      <p>
+        対策として、ReLUなどの活性化関数、正則化、勾配クリッピング、<a href="../transformer/">Transformer</a>のようなアーキテクチャの採用などが研究・実務で使われます。試験では現象の名前と「学習が不安定になる」という理解で十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>誤差逆伝播法と勾配降下法は同じ？</summary>
+          <p class="tool-faq-a">同じではありません。勾配降下法は更新の考え方、誤差逆伝播は深いネットで勾配を求める具体的な手法です。セットで使われます。</p>
+        </details>
+        <details>
+          <summary>LLMの学習でも使われる？</summary>
+          <p class="tool-faq-a">はい。基本的には誤差（損失）に対する勾配で重みを更新します。規模が大きいため分散学習などの技術が加わります。</p>
+        </details>
+        <details>
+          <summary>学習率も誤差逆伝播で更新される？</summary>
+          <p class="tool-faq-a">通常は更新されません（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）。ハイパーパラメータとして別に設定します。</p>
+        </details>
+        <details>
+          <summary>生成AIパスポートでも出る？</summary>
+          <p class="tool-faq-a">深い技術詳細はG検定寄りです。生成AIパスポートは活用・リスクが中心で、本記事はG検定の土台として読むのがおすすめです。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../artificial-intelligence/">人工知能（AI）</a></li>
+          <li class="tool-related-list__soon">勾配降下法 <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

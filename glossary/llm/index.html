@@ -183,7 +183,7 @@
         LLMは、<strong>大量のテキストコーパス</strong>を用いて学習した言語モデルで、与えられた文脈に続く<strong>次のトークン（語の断片）の確率分布</strong>を推定します。人間が「次に何と言いそうか」を予測するイメージに近いですが、数学的には確率モデルとして実装されています。
       </p>
       <p>
-        現代のLLMの多くは<strong>Transformer</strong>アーキテクチャを基盤とし、長い文脈の依存関係を効率よく扱えます。学習後に<strong>ファインチューニング</strong>や<strong>RLHF</strong>（人間のフィードバックによる強化学習）で、対話向けの振る舞いに調整されることもあります。
+        現代のLLMの多くは<strong><a href="../transformer/">Transformer</a></strong>アーキテクチャを基盤とし、長い文脈の依存関係を効率よく扱えます。学習後に<strong><a href="../fine-tuning/">ファインチューニング</a></strong>（効率化には<a href="../lora/">LoRA</a>など）や<strong><a href="../alignment/">アライメント</a></strong>（<a href="../rlhf/">RLHF</a>等）で、対話向けの振る舞いに調整されることもあります。
       </p>
     </section>
 
@@ -327,7 +327,7 @@
         </details>
         <details>
           <summary>プロンプトやトークンは別の記事で学べる？</summary>
-          <p class="tool-faq-a">はい。入力の書き方は<a href="../prompt/">プロンプト</a>、処理単位と料金は<a href="../token/">トークン</a>を参照してください。</p>
+          <p class="tool-faq-a">はい。入力の書き方は<a href="../prompt/">プロンプト</a>、処理単位と料金は<a href="../token/">トークン</a>、文脈の上限は<a href="../context-window/">コンテキストウィンドウ</a>を参照してください。</p>
         </details>
       </div>
     </section>
@@ -339,10 +339,13 @@
           <li><a href="../generative-ai/">生成AI</a></li>
           <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../token/">トークン</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
           <li><a href="../rag/">RAG</a></li>
           <li><a href="../hallucination/">ハルシネーション</a></li>
           <li class="tool-related-list__soon">GPT <span class="tool-soon-badge">準備中</span></li>
-          <li class="tool-related-list__soon">Transformer <span class="tool-soon-badge">準備中</span></li>
+          <li><a href="../transformer/">Transformer</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

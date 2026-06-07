@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LoRA（Low-Rank Adaptation）とは？低ランク行列で効率よくファインチューニングする技法の意味と、全パラメータ更新との違いをG検定向けに解説。">
+  <title>LoRAとは？低ランク適応・効率的ファインチューニング — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/lora/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="LoRAとは？低ランク適応・効率的ファインチューニング">
+  <meta property="og:description" content="事前学習済みモデルに低ランクの追加行列を学習させ、少ない計算・保存コストで適応する技法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/lora/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"LoRA","alternateName":["Low-Rank Adaptation","低ランク適応"],"description":"低ランク行列の追加学習で、事前学習済みモデルを効率的にファインチューニングする技法。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">LoRA</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>LoRAとは？低ランク適応・効率的ファインチューニング</h1>
+    <p class="tool-hero-sub">読み：ろーら ／ 英：LoRA（Low-Rank Adaptation）</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>LoRA</strong>（Low-Rank Adaptation／低ランク適応）は、巨大な<a href="../llm/">LLM</a>を<strong>少ない追加パラメータ</strong>で用途に合わせて調整するファインチューニング技法です。本記事は<a href="../prompt/">プロンプト</a>設計の話ではなく、<strong>モデル重みをどう更新するか</strong>——全パラメータ更新とのコスト比較——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">LoRAとは</a></li>
+        <li><a href="#how">ざっくり仕組み</a></li>
+        <li><a href="#compare">手法の比較</a></li>
+        <li><a href="#use-cases">使われる場面</a></li>
+        <li><a href="#limits">限界・注意点</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、<strong>「LoRAは全パラメータを必ず完全更新する」</strong>は×です。低ランク行列を追加して学習する<strong>効率的な適応手法</strong>であり、計算量・保存容量を抑えやすい点が特徴です（<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177</a>）。
+      </p>
+      <p>
+        ファインチューニング全般として、事前学習済みモデルを特定用途に<strong>追加調整</strong>する方法である、という定義も押さえておきます（<a href="../../exams/genai-passport/drill/q/tf-0164/">TF-0164</a>、<a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177（LoRAの定義）</a>、<a href="../../exams/g-kentei/practice/q/g-383/">G-383（事前学習とファインチューニング）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0164/">TF-0164</a>、<a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127</a>、<a href="../../exams/genai-passport/drill/q/tf-0128/">TF-0128（FTの誤解）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>LoRAとは</h2>
+      <p>
+        LoRAは、大規模な事前学習済みモデルの<strong>元の重みを固定</strong>したまま、層に<strong>小さな低ランク行列</strong>を足し込み、その追加部分だけを学習する手法です。Full Fine-tuning（全パラメータ更新）より、GPUメモリや学習時間を大幅に抑えられることが多いです。
+      </p>
+      <p>
+        PEFT（Parameter-Efficient Fine-Tuning／パラメータ効率的ファインチューニング）の代表的な一つとして、オープンソースの<a href="../llm/">LLM</a>を社内データに合わせて調整する場面で広く使われています。
+      </p>
+    </section>
+
+    <section id="how">
+      <h2>ざっくり仕組み</h2>
+      <p>試験レベルでは、次のイメージで十分です。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>巨大な重み行列 W</strong>はそのまま凍結（更新しない）
+        </li>
+        <li>
+          <strong>小さな行列 A・B</strong>を追加し、ΔW ≈ A×B の形で変化分を表現
+        </li>
+        <li>
+          <strong>学習するのは A・B などの追加部分</strong>だけ
+        </li>
+        <li>
+          <strong>推論時</strong>は W + ΔW として元モデルにマージするか、アダプタを載せる
+        </li>
+      </ul>
+      <p>「低ランク」とは、行列の<strong>情報を圧縮した近似</strong>で更新を表す、という理解で試験には足ります。数学の詳細はG検定の範囲外であることが多いです。</p>
+    </section>
+
+    <section id="compare">
+      <h2>手法の比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>手法</th>
+            <th>更新対象</th>
+            <th>コスト感</th>
+            <th>試験での注意</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>プロンプトのみ</strong></td>
+            <td>モデル重みは変更しない</td>
+            <td>最も低い</td>
+            <td>ファインチューニングではない</td>
+          </tr>
+          <tr>
+            <td><strong>LoRA</strong></td>
+            <td>低ランクの追加パラメータ</td>
+            <td>中程度（FTより軽い）</td>
+            <td>全パラメータ更新ではない</td>
+          </tr>
+          <tr>
+            <td><strong>Full Fine-tuning</strong></td>
+            <td>モデルの重み全体</td>
+            <td>高い</td>
+            <td>データ・計算が大量に必要</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../alignment/">アライメント</a>（RLHF等）</strong></td>
+            <td>振る舞い・価値観の調整</td>
+            <td>目的が異なる</td>
+            <td>社内ドメイン適応とは別文脈も</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="use-cases">
+      <h2>使われる場面</h2>
+      <ul class="tool-example-list">
+        <li>社内文書のトーンに合わせたチャットボット</li>
+        <li>特定業界用語・フォーマットへの適応</li>
+        <li>複数用途ごとに<strong>アダプタを切り替え</strong>（ベースモデルは共通）</li>
+      </ul>
+      <p>
+        一方、<a href="../rag/">RAG</a>で外部知識を渡せる場合は、ファインチューニングなしで要件を満たすこともあります。LoRAは万能ではなく、<strong>データ量・更新頻度・コスト</strong>で選びます。
+      </p>
+    </section>
+
+    <section id="limits">
+      <h2>限界・注意点</h2>
+      <p>
+        LoRAは効率的ですが、<strong>学習データの品質・権利・偏り</strong>の問題は残ります。また、ベースモデルの能力を超える知識を「学習し足す」わけではなく、<strong>振る舞いや表現の適応</strong>が中心です。
+      </p>
+      <p>
+        機密データで学習する場合は、<a href="../personal-information/">個人情報</a>や社内規程の確認が別途必要です。技法の話とコンプライアンスは切り分けて考えてください。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>LoRAは全パラメータを更新する？</summary>
+          <p class="tool-faq-a">いいえ。追加の低ランクパラメータを学習する手法です（<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177</a>）。</p>
+        </details>
+        <details>
+          <summary>LoRAとファインチューニングは同じ？</summary>
+          <p class="tool-faq-a">LoRAはファインチューニングの<strong>一手法</strong>です。ファインチューニングには全パラメータ更新など別方式もあります。</p>
+        </details>
+        <details>
+          <summary>LoRAとRLHFの違いは？</summary>
+          <p class="tool-faq-a">LoRAは主にドメイン適応などの重み調整、RLHFは人間フィードバックによる振る舞い調整の手法です。<a href="../alignment/">アライメント</a>の記事も参照。</p>
+        </details>
+        <details>
+          <summary>生成AIパスポートでも出る？</summary>
+          <p class="tool-faq-a">LoRA単独の問題は少ないですが、ファインチューニングの定義（第2章）は頻出です。本記事と<a href="../../exams/genai-passport/drill/domain/chapter-02/">第2章一問一答</a>を併用してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

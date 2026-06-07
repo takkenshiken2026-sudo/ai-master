@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ファインチューニング（Fine-tuning）とは？事前学習済みモデルの追加学習。プロンプト・LoRA・RLHFとの使い分けをG検定・生成AIパスポート向けに解説。">
+  <title>ファインチューニングとは？Fine-tuning・事前学習後の追加学習 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/fine-tuning/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ファインチューニングとは？Fine-tuning・事前学習後の追加学習">
+  <meta property="og:description" content="ゼロから学び直すのではなく、事前学習済みモデルを特定用途向けに追加調整する手法。LoRAやRLHFとの違いも整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/fine-tuning/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": "ファインチューニング",
+    "alternateName": ["Fine-tuning", "FT"],
+    "description": "事前学習済みモデルを特定のタスクや用途向けに追加学習させること。"
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ファインチューニング</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ファインチューニングとは？Fine-tuning・事前学習後の追加学習</h1>
+    <p class="tool-hero-sub">読み：ふぁいんちゅーにんぐ ／ 英：Fine-tuning</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ファインチューニング</strong>（Fine-tuning／FT）は、大規模に事前学習された<a href="../llm/">LLM</a>などを、<strong>特定のタスク・業務・文体に合わせて追加学習する</strong>手法の総称です。本記事は<a href="../backpropagation/">誤差逆伝播法</a>の数学的詳細ではなく、<strong>「いつFTを選び、何と混同しないか」</strong>——調整手法の選択マップ——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ファインチューニングとは</a></li>
+        <li><a href="#when">いつ使うか</a></li>
+        <li><a href="#compare">調整手法の比較</a></li>
+        <li><a href="#risks">注意点</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の核はシンプルです。<strong>「事前学習済みモデルを特定用途のデータで追加学習させること」</strong>（<a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127</a>、<a href="../../exams/genai-passport/drill/q/tf-0164/">TF-0164</a>）。ゼロから学び直す事前学習とは区別します。
+      </p>
+      <p>
+        比較問題では、<strong>ChatGPTの説明をファインチューニングに当てはめる</strong>誤答が頻出です（<a href="../../exams/genai-passport/practice/q/hq-0193/">HQ-0193</a>）。ChatGPTはサービス、ファインチューニングは学習手法です。
+      </p>
+      <p>
+        G検定では、事前学習とファインチューニングの関係（<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>）、<a href="../lora/">LoRA</a>が全パラメータを必ず更新するわけではない点（<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177</a>）もセットで問われます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127</a>、<a href="../../exams/genai-passport/drill/q/tf-0164/">TF-0164</a>、<a href="../../exams/genai-passport/drill/q/tf-0128/">TF-0128（誤解）</a>、<a href="../../exams/genai-passport/practice/q/hq-0193/">HQ-0193（ChatGPT比較）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>、<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177（LoRA）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>ファインチューニングとは</h2>
+      <p>
+        現代の<a href="../generative-ai/">生成AI</a>は、まずインターネット規模のテキストなどで<strong>事前学習（Pre-training）</strong>され、言語の一般能力を獲得します。その後、社内マニュアルに合わせた応答、医療用語への適応、コード生成の強化など、<strong>目的に沿った追加学習</strong>がファインチューニングです。
+      </p>
+      <p>
+        全パラメータを更新する<strong>Full Fine-tuning</strong>から、<a href="../lora/">LoRA</a>のような<strong>パラメータ効率的</strong>な手法まで、広い意味で「FT」と呼ばれることがあります。試験では、まず<strong>追加調整の概念</strong>を正しく答えられることが優先です。
+      </p>
+    </section>
+
+    <section id="when">
+      <h2>いつ使うか</h2>
+      <p>次のような場面で検討されます（すべてFTが最適とは限りません）。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>ドメイン特化</h3>
+          <p>法律・医療・社内用語など、一般モデルに足りない知識・文体を埋めたい</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>タスク特化</h3>
+          <p>要約・分類・フォーマット出力など、同じ形式を安定して出したい</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>指示追従の強化</h3>
+          <p>良い応答例（SFT）で、プロンプトへの従順さを高める — <a href="../rlhf/">RLHF</a>の前段にもなる</p>
+        </div>
+      </div>
+      <p>
+        一方、単発の依頼や軽い体裁変更なら、まず<a href="../prompt/">プロンプト</a>設計や<a href="../rag/">RAG</a>で足りることも多いです。FTはデータ準備・計算コスト・品質評価が必要です。
+      </p>
+    </section>
+
+    <section id="compare">
+      <h2>調整手法の比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>手法</th>
+            <th>何をするか</th>
+            <th>コスト感</th>
+            <th>試験での区別</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>プロンプト</strong></td>
+            <td>推論時の指示・例示</td>
+            <td>低（学習不要）</td>
+            <td>重みは変えない</td>
+          </tr>
+          <tr>
+            <td><strong>RAG</strong></td>
+            <td>外部知識を検索して渡す</td>
+            <td>中（インフラ）</td>
+            <td>モデル学習そのものではない</td>
+          </tr>
+          <tr>
+            <td><strong>ファインチューニング</strong></td>
+            <td>追加学習で重みを更新</td>
+            <td>高〜中</td>
+            <td>事前学習後の調整全般</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../lora/">LoRA</a></strong></td>
+            <td>低ランク行列だけ学習</td>
+            <td>FTより低め</td>
+            <td>FTの効率版。全重み更新とは限らない</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../rlhf/">RLHF</a></strong></td>
+            <td>人間の好みで最適化</td>
+            <td>高</td>
+            <td>FTの一種を含みうるが、同義ではない</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../alignment/">アライメント</a></strong></td>
+            <td>意図に沿わせる考え方</td>
+            <td>—</td>
+            <td>手法名ではなく目的</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="risks">
+      <h2>注意点</h2>
+      <ul class="tool-example-list">
+        <li><strong>データ品質</strong> — 偏った学習データは出力の偏りを増幅する</li>
+        <li><strong>汎化性能の低下</strong> — 特化しすぎると他タスクで性能が落ちる（catastrophic forgetting）</li>
+        <li><strong>プライバシー</strong> — 学習データに<a href="../personal-information/">個人情報</a>や<a href="../confidential-data-leak/">機密</a>を入れない</li>
+        <li><strong>評価の必要性</strong> — FT後も<a href="../hallucination/">ハルシネーション</a>は残りうる</li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ファインチューニングとChatGPTは同じ？</summary>
+          <p class="tool-faq-a">いいえ。FTは学習手法、ChatGPTはサービスです（<a href="../../exams/genai-passport/practice/q/hq-0193/">HQ-0193</a>）。</p>
+        </details>
+        <details>
+          <summary>ファインチューニングとLoRAは同じ？</summary>
+          <p class="tool-faq-a">LoRAはファインチューニングの効率的な実装の一つです。FT全般とLoRAを同一視しないでください。</p>
+        </details>
+        <details>
+          <summary>ファインチューニングとRLHFは同じ？</summary>
+          <p class="tool-faq-a">RLHFは人間の好みを反映する調整パイプラインで、SFT（FTの一形態）を含みますが、FT全体と同義ではありません。</p>
+        </details>
+        <details>
+          <summary>少量データでも効果がある？</summary>
+          <p class="tool-faq-a">LoRAなどでは少データでも適応しやすいとされますが、品質はデータと評価設計に依存します。試験では「追加学習で用途に合わせる」定義が中心です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

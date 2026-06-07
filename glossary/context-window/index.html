@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="コンテキストウィンドウとは？LLMが一度に扱えるトークン上限の意味、長文・会話履歴との関係、よくある誤解をG検定・生成AIパスポート向けに解説。">
+  <title>コンテキストウィンドウとは？Context Window・文脈上限と実務 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/context-window/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="コンテキストウィンドウとは？Context Window・文脈上限と実務">
+  <meta property="og:description" content="モデルが一度に参照できる入力・会話履歴の範囲。大きいほど長文に強いが、最新情報の自動検索とは別。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/context-window/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "コンテキストウィンドウ",
+        "alternateName": ["Context Window", "文脈ウィンドウ"],
+        "description": "モデルが一度に処理・参照できるトークン数の上限。入力・会話履歴・出力を含む文脈の範囲。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "コンテキストウィンドウが大きいと最新ニュースを自動検索できる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。文脈の長さの上限であり、インターネット検索や最新情報の自動取得を意味しません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">コンテキストウィンドウ</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>コンテキストウィンドウとは？Context Window・文脈上限と実務</h1>
+    <p class="tool-hero-sub">読み：こんてきすとうぃんどう ／ 英：Context Window</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>コンテキストウィンドウ</strong>（Context Window）は、<a href="../llm/">LLM</a>が<strong>一度の推論で参照できる文脈の長さの上限</strong>——ふつう<a href="../token/">トークン</a>数で表されます。本記事は<a href="../token/">トークン</a>の分割ルールの復習ではなく、<strong>上限に達したとき何が起き、何と混同しないか</strong>——実務チェックリスト——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">コンテキストウィンドウとは</a></li>
+        <li><a href="#what-counts">何が枠を消費するか</a></li>
+        <li><a href="#misconceptions">よくある誤解</a></li>
+        <li><a href="#practice">実務チェックリスト</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        正しい理解の核は、<strong>「モデルが一度に扱える入力や会話履歴の長さに関係する」</strong>ことです（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>は○）。
+      </p>
+      <p>
+        代表的な誤答は、<strong>ウィンドウが大きいほど最新情報を自動検索できる</strong>という説明です（<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169</a>は×）。長い文脈を扱いやすくなるだけで、ウェブ検索やリアルタイム知識更新とは別です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170（定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169（誤解）</a></p>
+        <p>関連：<a href="../token/">トークン</a>の記事、<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>コンテキストウィンドウとは</h2>
+      <p>
+        LLMは応答を作る際、プロンプト・会話の過去ログ・システム指示・生成中の出力などをまとめて<strong>文脈（コンテキスト）</strong>として扱います。コンテキストウィンドウは、その文脈が収まる<strong>トークン数の上限</strong>です。
+      </p>
+      <p>
+        モデルやバージョンごとに「128Kトークン」などと公表されます。大きいほど<strong>長いPDF・長いチャット</strong>を一度に渡しやすくなりますが、無制限ではありません。
+      </p>
+    </section>
+
+    <section id="what-counts">
+      <h2>何が枠を消費するか</h2>
+      <p>上限にカウントされやすい要素を整理します（サービス実装で細部は異なります）。</p>
+      <ul class="tool-example-list">
+        <li><strong>ユーザーの入力</strong> — 貼り付けた長文・添付テキストの要約前原文</li>
+        <li><strong>会話履歴</strong> — 過去の質問と回答のやり取り</li>
+        <li><strong>システム・開発者指示</strong> — <a href="../system-prompt/">システムプロンプト</a>など</li>
+        <li><strong>モデルの出力</strong> — 生成される回答も枠を使う</li>
+        <li><strong><a href="../rag/">RAG</a>で渡す検索結果</strong> — 引用チャンクも入力の一部</li>
+      </ul>
+      <p>日本語は英語より<a href="../token/">トークン</a>消費が大きくなりやすいため、同じ文字数でも枠を早く使い切ることがあります。</p>
+    </section>
+
+    <section id="misconceptions">
+      <h2>よくある誤解</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>誤解</th>
+            <th>実際</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>大きい＝最新ニュースを自動取得</td>
+            <td>×。渡した文脈の範囲の話（TF-0169）</td>
+          </tr>
+          <tr>
+            <td>大きい＝常に正確</td>
+            <td>長文を読めるだけ。<a href="../hallucination/">ハルシネーション</a>は別問題</td>
+          </tr>
+          <tr>
+            <td>大きい＝料金は同じ</td>
+            <td>入力トークン課金なら、使うほどコスト増のことが多い</td>
+          </tr>
+          <tr>
+            <td>会話を続ければ永遠に覚えている</td>
+            <td>上限を超えると古い発言が切り捨てられる・要約される</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="practice">
+      <h2>実務チェックリスト</h2>
+      <p>長文・長期プロジェクトで枠を意識するときの確認項目です。</p>
+      <ol class="tool-steps">
+        <li><strong>モデルの上限を確認</strong> — サービス仕様のトークン数・文字数目安</li>
+        <li><strong>全文貼りより要約・抜粋</strong> — 必要段落だけ渡す</li>
+        <li><strong>話題が変わったら新規チャット</strong> — 履歴の累積を防ぐ</li>
+        <li><strong>出力長を指定</strong> — 「5項目まで」などで枠とコストを抑える</li>
+        <li><strong>社内文書は<a href="../rag/">RAG</a>で分割取得</strong> — 関連部分だけ検索して渡す</li>
+        <li><strong>機密データを無制限に履歴へ</strong> — <a href="../confidential-data-leak/">漏洩リスク</a>。不要なら履歴を残さない</li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>コンテキストウィンドウとトークンは同じ？</summary>
+          <p class="tool-faq-a">別概念です。トークンは処理単位、コンテキストウィンドウはその単位で測る<strong>上限</strong>です。<a href="../token/">トークン</a>の記事も参照してください。</p>
+        </details>
+        <details>
+          <summary>大きいウィンドウなら検索不要？</summary>
+          <p class="tool-faq-a">最新・社内・非公開の情報は、枠が大きくても学習データに無ければ知りません。RAGや検索連携が別途必要です。</p>
+        </details>
+        <details>
+          <summary>上限を超えるとどうなる？</summary>
+          <p class="tool-faq-a">エラーになる、古い履歴が切られる、自動要約されるなど、製品次第です。長い会話では意図せず文脈が失われることがあります。</p>
+        </details>
+        <details>
+          <summary>G検定でも出る？</summary>
+          <p class="tool-faq-a">生成AIパスポート第2章で重点的に出ます。G検定では<a href="../llm/">LLM</a>・学習の基礎と合わせて、トークン・文脈の理解があるとよいです。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../../tools/claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

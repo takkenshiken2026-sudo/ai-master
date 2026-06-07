@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI安全性（AI Safety）とは？誤用・有害出力・暴走を防ぐ研究と実践。倫理・セキュリティ攻撃との違い、多層の対策をG検定・生成AIパスポート向けに解説。">
+  <title>AI安全性（AI Safety）とは？誤用防止・有害出力・多層対策 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/ai-safety/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="AI安全性（AI Safety）とは？誤用防止・有害出力・多層対策">
+  <meta property="og:description" content="AIの誤用・暴走・有害出力を防ぐ研究・実践。アライメント、レッドチーミング、運用統制との関係を整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/ai-safety/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"AI安全性","alternateName":["AI Safety"],"description":"AIの誤用・暴走・有害出力を防ぐ研究・実践。モデル調整から運用統制まで多層で扱う。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">AI安全性</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>AI安全性（AI Safety）とは？誤用防止・有害出力・多層対策</h1>
+    <p class="tool-hero-sub">読み：えーあいあんぜんせい ／ 英：AI Safety</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>AI安全性</strong>（AI Safety）は、AIの<strong>誤用・暴走・有害出力</strong>を防ぎ、意図しない害を減らすための研究・実践の総称です。本記事は<a href="../jailbreak/">ジェイルブレイク</a>の個別攻撃解説ではなく、<strong>脅威の種類と対策の層</strong>——モデル・利用者・組織・社会——を横断して整理します。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">AI安全性とは</a></li>
+        <li><a href="#threats">主な脅威の類型</a></li>
+        <li><a href="#layers">多層の対策</a></li>
+        <li><a href="#vs-others">倫理・セキュリティとの違い</a></li>
+        <li><a href="#org">組織・利用者の役割</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、<strong>レッドチーミング</strong>が「画面を赤くするデザイン作業」ではなく、攻撃者視点で弱点を検証する取り組みであることが問われます（<a href="../../exams/genai-passport/drill/q/tf-0422/">TF-0422</a>）。また、機密情報を詳しくプロンプトに入れるほど安全、という言い方は×です（<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466</a>）。
+      </p>
+      <p>
+        G検定では、AI倫理の「安全性」原則と、生成AIの<strong>有害出力・誤情報</strong>への対策が横断的に出ます。単一の技術で完璧に防げる、という選択肢は疑ってください。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0421/">TF-0421（レッドチーミング）</a>、<a href="../../exams/genai-passport/drill/q/tf-0422/">TF-0422</a>、<a href="../../exams/genai-passport/practice/q/hq-0240/">HQ-0240（アライメント）</a>、<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466（機密入力）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-275/">TF-275（人間中心のAI）</a>、<a href="../../exams/g-kentei/drill/domain/domain-04/">AI倫理・ガバナンス</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>AI安全性とは</h2>
+      <p>
+        AI安全性は、AIシステムが<strong>意図した目的の範囲で動き、害を与えにくい</strong>ようにするための取り組みです。研究コミュニティでは将来の汎用AI（AGI）のリスクも議論されますが、試験・実務では主に次が中心です。
+      </p>
+      <ul class="tool-example-list">
+        <li>危険・違法・差別的な<strong>有害出力</strong>の抑制</li>
+        <li><strong>誤情報・ハルシネーション</strong>による被害の低減</li>
+        <li><strong>誤用・悪用</strong>（なりすまし、詐欺、自動攻撃など）への備え</li>
+        <li>機密・個人情報の<strong>漏えい</strong>防止</li>
+      </ul>
+      <p>
+        「安全＝出力が常に正確」ではありません。正確性は<a href="../hallucination-mitigation/">ハルシネーション対策</a>の話であり、安全性は<strong>害の防止</strong>という別軸でも捉えます。
+      </p>
+    </section>
+
+    <section id="threats">
+      <h2>主な脅威の類型</h2>
+      <p>対策を考える前に、何に備えるかを分類すると整理しやすいです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>類型</th>
+            <th>内容</th>
+            <th>関連用語</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>モデル出力の害</strong></td>
+            <td>暴力・違法行為の助長、差別的表現</td>
+            <td><a href="../system-prompt/">システムプロンプト</a>、安全フィルタ</td>
+          </tr>
+          <tr>
+            <td><strong>信頼性の欠如</strong></td>
+            <td>もっともらしい誤情報、捏造引用</td>
+            <td><a href="../hallucination/">ハルシネーション</a></td>
+          </tr>
+          <tr>
+            <td><strong>利用者による回避</strong></td>
+            <td>安全制限の意図的な突破</td>
+            <td><a href="../jailbreak/">ジェイルブレイク</a></td>
+          </tr>
+          <tr>
+            <td><strong>第三者による攻撃</strong></td>
+            <td>外部データ経由の命令混入</td>
+            <td><a href="../prompt-injection/">プロンプトインジェクション</a></td>
+          </tr>
+          <tr>
+            <td><strong>データ・プライバシー</strong></td>
+            <td>学習データ漏えい、プロンプト流出</td>
+            <td><a href="../appi/">個人情報保護法</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="layers">
+      <h2>多層の対策</h2>
+      <p>AI安全性は<strong>一つの技法で完結しません</strong>。試験では「RLHFだけで十分」「RAGだけで安全」といった言い切りに注意してください。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>モデル層</strong> — 安全な学習データ、<strong><a href="../alignment/">アライメント</a></strong>（人間の意図・価値観への調整）、RLHFなど（<a href="../../exams/genai-passport/practice/q/hq-0240/">HQ-0240</a>）
+        </li>
+        <li>
+          <strong>プロンプト・ポリシー層</strong> — <a href="../system-prompt/">システムプロンプト</a>、利用規約、拒否ルール
+        </li>
+        <li>
+          <strong>検証層</strong> — <strong>レッドチーミング</strong>、有害出力の評価、回帰テスト（<a href="../../exams/genai-passport/drill/q/tf-0421/">TF-0421</a>）
+        </li>
+        <li>
+          <strong>アクセス・運用層</strong> — 権限管理、ログ監視、API制限、<a href="../ai-governance/">AIガバナンス</a>
+        </li>
+        <li>
+          <strong>人の層</strong> — 出力確認、承認フロー、<a href="../ai-literacy/">AIリテラシー</a>教育
+        </li>
+      </ul>
+      <p>
+        <a href="../hallucination-mitigation/">ハルシネーション対策</a>記事と合わせると、「正確性」と「有害性」の両方を多層で扱う全体像が見えます。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>倫理・セキュリティとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>概念</th>
+            <th>問い</th>
+            <th>例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>AI安全性</strong></td>
+            <td>害・誤用・暴走をどう防ぐか</td>
+            <td>有害出力抑制、レッドチーミング</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../ai-ethics-overview/">AI倫理</a></strong></td>
+            <td>どの価値を大切にするか</td>
+            <td>公平性、人間中心、説明責任</td>
+          </tr>
+          <tr>
+            <td><strong>AIセキュリティ（攻撃）</strong></td>
+            <td>悪意ある入力・混入をどう防ぐか</td>
+            <td><a href="../prompt-injection/">プロンプトインジェクション</a>、<a href="../jailbreak/">ジェイルブレイク</a></td>
+          </tr>
+          <tr>
+            <td><strong><a href="../ai-governance/">AIガバナンス</a></strong></td>
+            <td>組織としてどう統治するか</td>
+            <td>方針、評価、監査、改善サイクル</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>重なりはありますが、試験では<strong>定義のすり替え</strong>に注意してください。</p>
+    </section>
+
+    <section id="org">
+      <h2>組織・利用者の役割</h2>
+      <p>
+        安全性は開発者だけの責任ではありません。導入企業は利用範囲の限定、教育、インシデント対応を整備し、利用者は<strong>入力内容と出力の確認</strong>を行います。
+      </p>
+      <p>
+        「AIが安全だから人間の確認は不要」は、<a href="../ai-ethics-overview/">AI倫理</a>の人間中心の考え方とも矛盾し、試験では×になりやすいです（<a href="../../exams/g-kentei/drill/q/tf-275/">TF-275</a>）。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>AI安全性とAI倫理の違いは？</summary>
+          <p class="tool-faq-a">倫理は価値・原則の枠組み、安全性は害・誤用の防止に焦点を当てる実践・研究領域です。両方とも「安全」という語を使いますが、試験では文脈で区別します。</p>
+        </details>
+        <details>
+          <summary>アライメントはAI安全性の一部？</summary>
+          <p class="tool-faq-a">モデルを人間の意図に沿わせる考え方として、安全性対策の重要な要素です。詳細は<a href="../alignment/">アライメント</a>の記事を参照。RLHFはその実装手法の一つとして別概念です（<a href="../../exams/genai-passport/practice/q/hq-0288/">HQ-0288</a>）。</p>
+        </details>
+        <details>
+          <summary>レッドチーミングとは？</summary>
+          <p class="tool-faq-a">攻撃者・悪用者の視点で弱点を探す検証です。デザイン用語ではありません（<a href="../../exams/genai-passport/drill/q/tf-0422/">TF-0422</a>）。</p>
+        </details>
+        <details>
+          <summary>ジェイルブレイク対策だけで十分？</summary>
+          <p class="tool-faq-a">不十分です。<a href="../jailbreak/">ジェイルブレイク</a>は利用者回避の一例であり、インジェクション・データ漏えい・誤情報など他の脅威もあります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../jailbreak/">ジェイルブレイク</a></li>
+          <li><a href="../prompt-injection/">プロンプトインジェクション</a></li>
+          <li><a href="../hallucination-mitigation/">ハルシネーション対策</a></li>
+          <li><a href="../ai-literacy/">AIリテラシー</a></li>
+          <li><a href="../ai-ethics-overview/">AI倫理</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

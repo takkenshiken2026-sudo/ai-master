@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="公平性（Fairness）とは？AI倫理の原則としての意味、バイアスとの違い、属性別評価の要点をG検定・生成AIパスポート向けに解説。">
+  <title>公平性（Fairness）とは？AI倫理の原則・評価の考え方 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/fairness/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="公平性（Fairness）とは？AI倫理の原則・評価の考え方">
+  <meta property="og:description" content="不当な差別や偏りを避けるAI倫理の原則。全体精度だけでなく属性別の影響評価が重要。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/fairness/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"公平性","alternateName":["Fairness"],"description":"AIが属性に関わらず公正な結果を出すよう配慮する原則。不当な差別や偏りを避ける。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">公平性</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・ビジネス</p>
+    <h1>公平性（Fairness）とは？AI倫理の原則・評価の考え方</h1>
+    <p class="tool-hero-sub">読み：こうへいせい ／ 英：Fairness</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>公平性</strong>（Fairness）は、<a href="../ai-ethics-overview/">AI倫理</a>の主要原則の一つで、<strong>AIの利用で不当な差別や偏りが生じないよう配慮する</strong>考え方です。本記事は<a href="../algorithmic-bias/">アルゴリズムバイアス</a>の技術的原因の解説ではなく、<strong>「何を目指し、どう評価するか」</strong>——原則と指標の視点——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">公平性とは</a></li>
+        <li><a href="#vs-bias">バイアスとの違い</a></li>
+        <li><a href="#vs-principles">他の倫理原則との違い</a></li>
+        <li><a href="#evaluation">評価で押さえること</a></li>
+        <li><a href="#genai">生成AIでの例</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、公平性を<strong>「AIの利用で不当な差別や偏りが生じないよう配慮する原則」</strong>として覚えると、定義問題と実務問題の両方に対応しやすいです（<a href="../../exams/genai-passport/practice/q/hq-0563/">HQ-0563</a>）。
+      </p>
+      <p>
+        G検定では、<strong>全体の正解率が高くても特定集団で誤判定が多い</strong>可能性がある、という論点が公平性と結びつきます（<a href="../../exams/g-kentei/drill/q/tf-443/">TF-443</a>）。「精度が高い＝公平」と短絡しないことが重要です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-264/">TF-264（属性別の確認）</a>、<a href="../../exams/g-kentei/drill/q/tf-443/">TF-443（全体精度の落とし穴）</a>、<a href="../../exams/g-kentei/drill/domain/domain-04/">AI倫理・ガバナンス</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0563/">HQ-0563</a>、<a href="../../exams/genai-passport/practice/q/hq-0593/">HQ-0593（人間中心との比較）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>公平性とは</h2>
+      <p>
+        公平性は、性別・年齢・地域・障害の有無などの<strong>属性に関わらず</strong>、AIの判断や生成結果が不当に不利・有利にならないよう配慮する原則です。法律の条文名ではなく、<strong>価値・方針</strong>として<a href="../ai-governance/">AIガバナンス</a>や社内ガイドラインに落とし込まれます。
+      </p>
+      <p>
+        完全に「数値1つで公平」と定義できるわけではなく、文脈（採用、融資、医療、広告など）によって何を公平とみなすかが異なります。試験では、<strong>偏りが起きうること</strong>と<strong>確認・配慮が必要なこと</strong>を正しく選べれば十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="vs-bias">
+      <h2>バイアスとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>性質</th>
+            <th>問い</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>公平性</strong></td>
+            <td>目指す<strong>原則・価値</strong></td>
+            <td>公正か？差別や偏りを避けているか？</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../algorithmic-bias/">アルゴリズムバイアス</a></strong></td>
+            <td>起きうる<strong>現象・問題</strong></td>
+            <td>どこから偏りが生じたか？</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>公平性は「あるべき姿」、バイアスは「起きている偏り」——この対比で覚えると、倫理原則と技術・データ問題の記事を行き来しやすくなります。</p>
+    </section>
+
+    <section id="vs-principles">
+      <h2>他の倫理原則との違い</h2>
+      <p>AI倫理の原則は名称が似ているため、試験では<strong>定義の入れ替え</strong>に注意します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>原則</th>
+            <th>焦点（試験向け）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>公平性</strong></td>
+            <td>不当な差別・偏りを避ける</td>
+          </tr>
+          <tr>
+            <td><strong>人間中心</strong></td>
+            <td>人間の尊厳・意思決定・関与を尊重する</td>
+          </tr>
+          <tr>
+            <td><strong>透明性</strong></td>
+            <td>AI利用や限界を分かりやすく示す</td>
+          </tr>
+          <tr>
+            <td><strong>安全性</strong></td>
+            <td>害・誤用・有害出力を防ぐ（<a href="../ai-safety/">AI安全性</a>）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><a href="../../exams/genai-passport/practice/q/hq-0593/">HQ-0593</a>では、公平性と人間中心の説明が入れ替わった選択肢が誤りになります。</p>
+    </section>
+
+    <section id="evaluation">
+      <h2>評価で押さえること</h2>
+      <p>公平性を「確認した」と言うには、少なくとも次の視点が試験・実務で問われます。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>属性・集団別の性能</strong>
+          <p>全体平均だけでなく、グループごとの誤判定率・影響を見る（<a href="../../exams/g-kentei/drill/q/tf-443/">TF-443</a>）。</p>
+        </li>
+        <li>
+          <strong>データの代表性</strong>
+          <p>学習・評価データに特定集団が欠けていないか。<a href="../algorithmic-bias/">バイアス</a>の記事と連動。</p>
+        </li>
+        <li>
+          <strong>出力内容の偏り</strong>
+          <p>差別的・ステレオタイプ的な表現がないか。生成AIではプロンプトと出力の両方を確認。</p>
+        </li>
+        <li>
+          <strong>継続的な見直し</strong>
+          <p>一度クリアしても、データ更新・モデル変更で偏りは再発しうる。</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="genai">
+      <h2>生成AIでの例</h2>
+      <ul class="tool-example-list">
+        <li>人物像の生成で特定の性別・人種に偏った描写が続く</li>
+        <li>採用支援プロンプトの出力が年齢・学歴で不当に不利な助言になる</li>
+        <li>翻訳・要約で尊称や性別表現が一方的に固定される</li>
+      </ul>
+      <p>
+        対策はモデル側の安全学習だけでは不十分で、<strong>利用者の確認</strong>と<a href="../ai-literacy/">AIリテラシー</a>、組織の<a href="../ai-governance/">ガバナンス</a>がセットになります。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>公平性とバイアスは同じ？</summary>
+          <p class="tool-faq-a">同じではありません。公平性は目指す原則、バイアスは偏りの現象です。<a href="../algorithmic-bias/">アルゴリズムバイアス</a>を参照。</p>
+        </details>
+        <details>
+          <summary>精度が高ければ公平と言える？</summary>
+          <p class="tool-faq-a">必ずしもそうではありません。特定集団で性能が低い場合があります（<a href="../../exams/g-kentei/drill/q/tf-443/">TF-443</a>）。</p>
+        </details>
+        <details>
+          <summary>公平性と人間中心は同じ？</summary>
+          <p class="tool-faq-a">別の原則です。<a href="../../exams/genai-passport/practice/q/hq-0593/">HQ-0593</a>で区別を確認してください。</p>
+        </details>
+        <details>
+          <summary>法令違反と公平性の関係は？</summary>
+          <p class="tool-faq-a">公平性は倫理原則。差別禁止などは<a href="../appi/">個人情報保護法</a>以外の法令・ガイドラインとも関連しますが、本記事は法的助言ではありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../algorithmic-bias/">アルゴリズムバイアス</a></li>
+          <li><a href="../ai-ethics-overview/">AI倫理</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../ai-literacy/">AIリテラシー</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。本記事は一般的な整理であり、法的助言ではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

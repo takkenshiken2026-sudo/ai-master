@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ディープフェイクとは？AIによる顔・声・映像の合成、悪用リスクと確認のポイントをG検定・生成AIパスポート向けに解説。">
+  <title>ディープフェイク（Deepfake）とは？合成技術・悪用・見分け方 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/deepfake/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ディープフェイク（Deepfake）とは？合成技術・悪用・見分け方">
+  <meta property="og:description" content="AIで人物の顔・声・映像を本物らしく合成・改変する技術。誤情報・詐欺リスクも押さえる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/deepfake/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ディープフェイク",
+        "alternateName": ["Deepfake", "ディープフェーク"],
+        "description": "AIで人物の顔・声・映像などを本物らしく合成・改変する技術。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ディープフェイクは違法？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "用途・同意・内容により問題になり得ます。試験では悪用リスクと確認の必要性を理解することが重要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ディープフェイク</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>ディープフェイク（Deepfake）とは？合成技術・悪用・見分け方</h1>
+    <p class="tool-hero-sub">読み：でぃーぷふぇいく ／ 英：Deepfake</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ディープフェイク</strong>（Deepfake）は、<a href="../generative-ai/">生成AI</a>を使って<strong>人物の顔・声・映像</strong>などを本物らしく合成・改変する技術です。本記事は技術史の解説ではなく、<strong>悪用シナリオと確認の実務</strong>——何に騙されやすく、どう備えるか——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ディープフェイクとは</a></li>
+        <li><a href="#vs-others">似た概念との違い</a></li>
+        <li><a href="#misuse">悪用の典型</a></li>
+        <li><a href="#verify">確認のポイント</a></li>
+        <li><a href="#org">組織・業務での対策</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義は<strong>「AIで人物の顔・声・映像などを本物らしく合成・改変する技術」</strong>（<a href="../../exams/genai-passport/drill/q/tf-0221/">TF-0221</a>、<a href="../../exams/genai-passport/practice/q/hq-0467/">HQ-0467</a>）。創作・エンタメ用途がある一方、<strong>誤情報や悪用のリスク</strong>もセットで理解するのが試験の流れです。
+      </p>
+      <p>
+        「高品質なら同意なく自由に公開してよい」「声が似ていれば本人確認として十分」——こうした言い切りは×です（<a href="../../exams/genai-passport/drill/q/tf-0224/">TF-0224</a>、<a href="../../exams/genai-passport/drill/q/tf-0252/">TF-0252</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0221/">TF-0221</a>、<a href="../../exams/genai-passport/drill/q/tf-0224/">TF-0224</a>、<a href="../../exams/genai-passport/drill/q/tf-0251/">TF-0251（音声詐欺）</a>、<a href="../../exams/genai-passport/drill/q/tf-0252/">TF-0252</a>、<a href="../../exams/genai-passport/practice/q/hq-0467/">HQ-0467</a></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0388/">TF-0388（本物らしさへの警戒）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>ディープフェイクとは</h2>
+      <p>
+        ディープフェイクは、深層学習を用いて、動画の顔を差し替えたり、音声を本人らしく合成したりする技術の総称です。<a href="../text-to-image/">テキスト画像生成</a>や動画生成の進歩とともに、<strong>品質が向上し、作成のハードルが下がっている</strong>ことが社会問題になっています。
+      </p>
+      <p>
+        試験では、チャンク分割（RAG）、フェイクニュースの定義そのもの、検索拡張生成など、<strong>別概念の説明がディープフェイクにすり替え</strong>られた選択肢に注意してください（<a href="../../exams/genai-passport/practice/q/hq-0467/">HQ-0467</a>）。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>似た概念との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>要点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ディープフェイク</strong></td>
+            <td>人物の顔・声・映像の合成・改変<strong>技術</strong></td>
+          </tr>
+          <tr>
+            <td><strong>フェイクニュース</strong></td>
+            <td>意図的に誤った情報を広める<strong>情報行為</strong>（技術名ではない）</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../hallucination/">ハルシネーション</a></strong></td>
+            <td>LLMの事実誤り出力（映像合成とは別）</td>
+          </tr>
+          <tr>
+            <td><strong>一般の画像生成</strong></td>
+            <td>人物以外も含む。必ずしも「なりすまし」目的ではない</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="misuse">
+      <h2>悪用の典型</h2>
+      <ul class="tool-example-list">
+        <li><strong>なりすまし動画・音声</strong> — 著名人や上司が話しているように見せる</li>
+        <li><strong>詐欺</strong> — 本人の声で送金や<a href="../confidential-data-leak/">機密情報</a>の開示を求める（<a href="../../exams/genai-passport/drill/q/tf-0251/">TF-0251</a>）</li>
+        <li><strong>名誉毀損</strong> — 不適切な映像の捏造</li>
+        <li><strong>誤情報の拡散</strong> — 本物の報道と混ぜて信頼性を装う</li>
+      </ul>
+      <p>創作・パロディ・研究目的でも、<strong>同意・表示・利用規約</strong>の観点は別途必要です（<a href="../../exams/genai-passport/drill/q/tf-0224/">TF-0224</a>）。</p>
+    </section>
+
+    <section id="verify">
+      <h2>確認のポイント</h2>
+      <p>AI生成物は本物らしく見える場合があります（<a href="../../exams/genai-passport/drill/q/tf-0388/">TF-0388</a>）。印象だけで判断しないことが試験・実務の共通点です。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>発信元・文脈</strong> — 公式チャネルか、時系列は自然か
+        </li>
+        <li>
+          <strong>複数情報源</strong> — 他メディア・関係者の確認
+        </li>
+        <li>
+          <strong>本人確認の多要素化</strong> — 音声だけで送金・機密共有をしない（<a href="../../exams/genai-passport/drill/q/tf-0252/">TF-0252</a>）
+        </li>
+        <li>
+          <strong>生成・加工の表示</strong> — ラベルやメタデータの有無
+        </li>
+        <li>
+          <strong>違和感のチェック</strong> — 口の動き、まばたき、照明の不自然さ（完全ではない）</li>
+      </ul>
+    </section>
+
+    <section id="org">
+      <h2>組織・業務での対策</h2>
+      <p>
+        <a href="../ai-literacy/">AIリテラシー</a>教育に加え、次のような<strong>運用ルール</strong>が有効です。
+      </p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>本人確認手順</h3>
+          <p>高額送金・機密開示は別チャネルで再確認</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>社内通報</h3>
+          <p>不審な音声・動画の共有ルートを明示</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>公開ポリシー</h3>
+          <p>合成メディアの社外利用・同意の基準</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>権利・倫理</h3>
+          <p><a href="../copyright/">著作権</a>・肖像権・<a href="../ai-generated-copyright/">AI生成物</a>の確認</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ディープフェイクとフェイクニュースは同じ？</summary>
+          <p class="tool-faq-a">同じではありません。ディープフェイクは合成技術、フェイクニュースは誤情報の拡散行為です（<a href="../../exams/genai-passport/practice/q/hq-0467/">HQ-0467</a>）。</p>
+        </details>
+        <details>
+          <summary>高品質なら同意なく公開してよい？</summary>
+          <p class="tool-faq-a">いいえ。同意・社会的影響の確認が必要です（<a href="../../exams/genai-passport/drill/q/tf-0224/">TF-0224</a>）。</p>
+        </details>
+        <details>
+          <summary>音声が似ていれば本人とみなせる？</summary>
+          <p class="tool-faq-a">十分ではありません。別手段で確認します（<a href="../../exams/genai-passport/drill/q/tf-0252/">TF-0252</a>）。</p>
+        </details>
+        <details>
+          <summary>画像生成AIとディープフェイクの違いは？</summary>
+          <p class="tool-faq-a">重なりはありますが、ディープフェイクは特に<strong>実在人物のなりすまし</strong>文脈で問題視されます。用途とリスクで区別します。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../ai-generated-copyright/">AI生成物の著作権</a></li>
+          <li><a href="../confidential-data-leak/">機密情報漏洩</a></li>
+          <li><a href="../ai-safety/">AI安全性</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
