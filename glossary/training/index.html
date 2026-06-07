@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="学習（Training）とは？データからモデルのパラメータを最適化するプロセス。推論との違いをG検定・生成AIパスポート向けに解説。">
+  <title>学習（Training）とは？モデル訓練・汎化性能 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/training/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="学習（Training）とは？モデル訓練・汎化性能">
+  <meta property="og:description" content="データからモデルのパラメータを最適化する機械学習のプロセス。訓練データと検証の要点。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/training/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"学習","alternateName":["Training","訓練","トレーニング"],"description":"データからモデルのパラメータを最適化するプロセス。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">学習</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>学習（Training）とは？モデル訓練・汎化性能</h1>
+    <p class="tool-hero-sub">読み：がくしゅう ／ 英：Training</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>学習</strong>（Training／訓練）は、<a href="../machine-learning/">機械学習</a>において<strong>データから<a href="../model/">モデル</a>のパラメータを最適化する</strong>プロセスです。本記事は特定アルゴリズムの実装ではなく、<strong>学習と推論の分離・汎化の視点</strong>——試験で問われる基本構造——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">学習とは</a></li>
+        <li><a href="#vs-inference">推論との違い</a></li>
+        <li><a href="#data">データと検証</a></li>
+        <li><a href="#regularization">過学習への対策</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        訓練データで精度が高くても、<strong>未知データで同じ性能が保証されるわけではない</strong>（<a href="../../exams/genai-passport/drill/q/tf-0058/">TF-0058</a>×）。過学習で汎化性能が落ちうる、という論点が頻出です。
+      </p>
+      <p>
+        <a href="../early-stopping/">早期終了</a>では訓練データだけでなく<strong>検証データ</strong>の推移を見て学習を止める（<a href="../../exams/g-kentei/practice/q/g-185/">G-185</a>）。<a href="../dropout/">ドロップアウト</a>は<strong>学習時</strong>に一部ユニットを無効化する（<a href="../../exams/g-kentei/drill/q/tf-070/">TF-070</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0058/">TF-0058</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-185/">G-185</a>、<a href="../../exams/g-kentei/drill/q/tf-070/">TF-070</a>、<a href="../../exams/g-kentei/drill/q/tf-370/">TF-370</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>学習とは</h2>
+      <p>
+        学習は、入力データと正解（ラベル）などから、<a href="../loss-function/">損失関数</a>を最小化するよう重みを更新する段階です。<a href="../supervised-learning/">教師あり学習</a>では正解との誤差、<a href="../reinforcement-learning/">強化学習</a>では報酬信号が指標になります。
+      </p>
+      <p>
+        学習が終わると<strong>学習済みモデル</strong>が得られ、本番では<a href="../inference/">推論</a>フェーズで予測に使います。LLMの事前学習・<a href="../fine-tuning/">ファインチューニング</a>も、この「学習」の延長上に位置づけられます。
+      </p>
+    </section>
+    <section id="vs-inference">
+      <h2>推論との違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>フェーズ</th><th>目的</th><th>典型操作</th></tr></thead>
+        <tbody>
+          <tr><td><strong>学習</strong></td><td>パラメータを最適化</td><td>損失計算、<a href="../backpropagation/">誤差逆伝播</a>、重み更新</td></tr>
+          <tr><td><strong><a href="../inference/">推論</a></strong></td><td>学習済みモデルで予測</td><td>順伝播、出力生成（重みは固定）</td></tr>
+        </tbody>
+      </table>
+      <p>データを集める作業そのものが学習ではありません（<a href="../../exams/g-kentei/drill/q/tf-309/">TF-309</a>の誤答パターン）。</p>
+    </section>
+    <section id="data">
+      <h2>データと検証</h2>
+      <ul class="tool-steps">
+        <li><strong>訓練データ</strong> — パラメータ更新に使う</li>
+        <li><strong>検証データ</strong> — ハイパーパラメータ調整・早期終了の判断</li>
+        <li><strong>テストデータ</strong> — 最終的な汎化性能の評価（学習に使わない）</li>
+      </ul>
+      <p>検証やテストの情報が学習に漏れると、評価が楽観的になります（<a href="../../exams/g-kentei/drill/q/tf-370/">TF-370</a>）。</p>
+    </section>
+    <section id="regularization">
+      <h2>過学習への対策</h2>
+      <p>学習を長く回しすぎると<a href="../overfitting/">過学習</a>しやすくなります。代表的な対策です。</p>
+      <ul class="tool-example-list">
+        <li><a href="../regularization/">正則化</a>、<a href="../dropout/">ドロップアウト</a></li>
+        <li><a href="../early-stopping/">早期終了</a></li>
+        <li>データ量・多様性の確保</li>
+      </ul>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>訓練精度高＝未知データも同精度</td><td>汎化は保証されない（<a href="../../exams/genai-passport/drill/q/tf-0058/">TF-0058</a>）</td></tr>
+          <tr><td>学習＝データ収集</td><td>パラメータ最適化のプロセス</td></tr>
+          <tr><td>学習＝推論</td><td>重み更新 vs 予測実行</td></tr>
+          <tr><td>訓練データだけ見れば十分</td><td>検証データで過学習を監視（<a href="../../exams/g-kentei/practice/q/g-185/">G-185</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>学習とファインチューニングの違いは？</summary><p class="tool-faq-a">ファインチューニングも学習の一種です。事前学習済みモデルを特定タスク用データで追加学習する、という位置づけです。</p></details>
+        <details><summary>エポックとは？</summary><p class="tool-faq-a">訓練データ全体を1周学習した単位です。試験では名前の暗記より「何度も回すと過学習しうる」のイメージで十分なことが多いです。</p></details>
+        <details><summary>学習率は学習で更新される？</summary><p class="tool-faq-a">いいえ。<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>のとおり学習率はハイパーパラメータで、人が設定します。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0058/">TF-0058 · 訓練精度と汎化</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-185/">G-185 · 早期終了と検証</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-070/">TF-070 · ドロップアウト</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-370/">TF-370 · データ漏洩</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../inference/">推論</a></li>
+          <li><a href="../model/">モデル</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../overfitting/">過学習</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

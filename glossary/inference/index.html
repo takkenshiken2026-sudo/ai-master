@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="推論（Inference）とは？学習済みモデルで新しい入力に対し予測する処理。学習との違い・同音異義をG検定向けに解説。">
+  <title>推論（Inference）とは？学習済みモデルでの予測 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/inference/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="推論（Inference）とは？学習済みモデルでの予測">
+  <meta property="og:description" content="学習済みモデルで新しい入力に対し予測を行う処理。学習フェーズとの違いと試験の注意点。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/inference/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"推論","alternateName":["Inference","インファレンス"],"description":"学習済みモデルで新しい入力に対し予測を行う処理。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">推論</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>推論（Inference）とは？学習済みモデルでの予測</h1>
+    <p class="tool-hero-sub">読み：すいろん ／ 英：Inference</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>推論</strong>（Inference）は、<a href="../training/">学習</a>済みの<a href="../model/">モデル</a>に新しい入力を与え、<strong>予測・分類・生成などの出力を得る処理</strong>です。本記事はインフラ詳細ではなく、<strong>学習との対比と「推論」という語のすり替え</strong>——試験で混同されやすい点——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">推論とは</a></li>
+        <li><a href="#homonym">同音異義の整理</a></li>
+        <li><a href="#vs-training">学習との違い</a></li>
+        <li><a href="#ops">実務での論点</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        機械学習文脈では、推論は<strong>学習済みモデルを用いて判断や結論を出す処理</strong>です。データ収集そのものではない（<a href="../../exams/g-kentei/drill/q/tf-309/">TF-309</a>×）。
+      </p>
+      <p>
+        <a href="../dropout/">ドロップアウト</a>は学習時の正則化であり、推論時に入力データを削除する手法ではない（<a href="../../exams/g-kentei/drill/q/tf-395/">TF-395</a>）。量子化などは推論の高速化に役立つことがある（<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-309/">TF-309</a>、<a href="../../exams/g-kentei/drill/q/tf-395/">TF-395</a>、<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>、<a href="../../exams/g-kentei/drill/q/tf-308/">TF-308（記号AIの推論）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>推論とは</h2>
+      <p>
+        学習で得た重みを固定し、新しい入力に対して順伝播（または生成ステップ）を実行して出力します。画像分類ならラベル確率、<a href="../llm/">LLM</a>なら次の<a href="../token/">トークン</a>、画像生成ならピクセル列——いずれも推論フェーズの成果です。
+      </p>
+      <p>本番APIでユーザーが体験するのは、多くの場合<strong>推論</strong>です。学習はオフライン・バッチで行われることが多いです。</p>
+    </section>
+    <section id="homonym">
+      <h2>同音異義の整理</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>文脈</th><th>推論の意味</th><th>試験</th></tr></thead>
+        <tbody>
+          <tr><td><strong>機械学習</strong></td><td>学習済みモデルでの予測（本記事）</td><td>TF-309</td></tr>
+          <tr><td><strong>記号AI・古典AI</strong></td><td>ルールや知識から結論を導く</td><td><a href="../../exams/g-kentei/drill/q/tf-308/">TF-308</a>○</td></tr>
+          <tr><td><strong>統計・因果</strong></td><td>因果推論など別の専門用法</td><td>文脈で判断</td></tr>
+        </tbody>
+      </table>
+      <p>問題文の分野（ディープラーニング vs 人工知能概論）でどちらの「推論」かを見分けます。</p>
+    </section>
+    <section id="vs-training">
+      <h2>学習との違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th></th><th><a href="../training/">学習</a></th><th>推論</th></tr></thead>
+        <tbody>
+          <tr><td><strong>重み</strong></td><td>更新する</td><td>固定（通常）</td></tr>
+          <tr><td><strong>損失・逆伝播</strong></td><td>使う</td><td>使わない（通常）</td></tr>
+          <tr><td><strong>ドロップアウト</strong></td><td>有効化しうる</td><td>通常オフ（TF-395）</td></tr>
+          <tr><td><strong>コスト</strong></td><td>長時間・大量データ</td><td>レイテンシ・スループットが課題</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="ops">
+      <h2>実務での論点</h2>
+      <ul class="tool-example-list">
+        <li><strong>レイテンシ</strong> — 対話型AIでは応答速度が重要</li>
+        <li><strong>スケール</strong> — 同時リクエスト数に応じた<a href="../gpu/">GPU</a>等の割当</li>
+        <li><strong>コスト</strong> — 推論1回あたりのトークン・電力</li>
+        <li><strong>品質</strong> — 推論結果の監視・<a href="../hallucination/">ハルシネーション</a>対策</li>
+      </ul>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>推論＝データ収集</td><td>学習済みモデルで予測（<a href="../../exams/g-kentei/drill/q/tf-309/">TF-309</a>）</td></tr>
+          <tr><td>推論時もドロップアウトで入力削除</td><td>学習時の正則化（<a href="../../exams/g-kentei/drill/q/tf-395/">TF-395</a>）</td></tr>
+          <tr><td>推論＝学習</td><td>予測実行 vs パラメータ更新</td></tr>
+          <tr><td>MLの推論＝記号論理のみ</td><td>文脈により意味が異なる（TF-308）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>推論と予測は同じ？</summary><p class="tool-faq-a">日常ではほぼ同義です。回帰・分類・生成いずれも推論フェーズの出力と言えます。</p></details>
+        <details><summary>エッジ推論とは？</summary><p class="tool-faq-a">クラウドではなく端末側で推論すること。遅延・プライバシーの観点で使われます。試験では詳細実装より概念で十分なことが多いです。</p></details>
+        <details><summary>ChatGPTの応答は推論？</summary><p class="tool-faq-a">はい。学習済みLLMにプロンプトを入力しトークンを生成するのが推論です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-309/">TF-309 · 推論の定義（×）</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-395/">TF-395 · 推論時のドロップアウト</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-406/">G-406 · 推論の高速化</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-308/">TF-308 · 記号AIの推論</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../training/">学習</a></li>
+          <li><a href="../model/">モデル</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

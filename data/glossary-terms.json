@@ -1744,7 +1744,7 @@
       "summary": "入力から出力への変換を表す数学的・計算的な表現。",
       "category": "basics",
       "sortKey": "も",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -2290,7 +2290,7 @@
       "summary": "データからモデルのパラメータを最適化するプロセス。",
       "category": "basics",
       "sortKey": "が",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",

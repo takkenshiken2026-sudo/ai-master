@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="モデル（Model）とは？入力から出力への変換を表す数学的・計算的表現。学習・推論・モデルカードとの関係をG検定向けに解説。">
+  <title>モデル（Model）とは？学習済み表現とAIシステム — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="モデル（Model）とは？学習済み表現とAIシステム">
+  <meta property="og:description" content="入力から出力への変換を表す数学的・計算的表現。アルゴリズム・ウェイト・製品名との違い。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"モデル","alternateName":["Model","AIモデル"],"description":"入力から出力への変換を表す数学的・計算的な表現。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">モデル</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>モデル（Model）とは？学習済み表現とAIシステム</h1>
+    <p class="tool-hero-sub">読み：もでる ／ 英：Model</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>モデル</strong>（Model）は、<strong>入力から出力への変換を表す数学的・計算的な表現</strong>です。本記事は個別製品のベンチマークではなく、<strong>アルゴリズム・学習済みウェイト・サービス名</strong>——試験で層が混同されやすい用語——の整理に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">モデルとは</a></li>
+        <li><a href="#layers">混同しやすい層</a></li>
+        <li><a href="#lifecycle">学習と推論</a></li>
+        <li><a href="#docs">モデルカード等</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        <a href="../neural-network/">ニューラルネットワーク</a>は、データからパラメータを<strong>学習</strong>するモデルです。ルールを人が手入力するだけの決定木説明と混同しない（<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a>）。
+      </p>
+      <p>
+        学習率などの<strong>ハイパーパラメータ</strong>は誤差逆伝播で自動学習されるわけではない（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）。モデルの「学習されるもの」と「人が設定するもの」を分けます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a>、<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>、<a href="../../exams/g-kentei/practice/q/g-118/">G-118</a>、<a href="../../exams/g-kentei/drill/q/tf-003/">TF-003</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>モデルとは</h2>
+      <p>
+        モデルは、データのパターンを捉える<strong>関数＋パラメータ</strong>の組です。線形回帰、決定木、<a href="../neural-network/">ニューラルネット</a>、<a href="../transformer/">Transformer</a>——構造（アーキテクチャ）が異なっても、入力を出力に写す「モデル」という点は共通です。
+      </p>
+      <p>
+        <a href="../training/">学習</a>でパラメータが決まり、<a href="../inference/">推論</a>でそのモデルを使って予測します。ファイルとして保存されたウェイト（チェックポイント）も、日常語では「モデル」と呼ばれます。
+      </p>
+    </section>
+    <section id="layers">
+      <h2>混同しやすい層</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>指すもの</th></tr></thead>
+        <tbody>
+          <tr><td><strong>モデル（本記事）</strong></td><td>入力→出力の計算表現（構造＋パラメータ）</td></tr>
+          <tr><td><strong>アルゴリズム</strong></td><td>学習手順・最適化の方法（例：勾配降下）</td></tr>
+          <tr><td><strong>アーキテクチャ</strong></td><td>層のつながり方（例：<a href="../gpt-architecture/">GPT</a>）</td></tr>
+          <tr><td><strong>製品・サービス</strong></td><td>ChatGPTなどUI・APIを含む提供形態</td></tr>
+        </tbody>
+      </table>
+      <p>「GPT-4というモデル」と言うときは製品世代名であり、厳密にはウェイト・設定・サービスの束です。</p>
+    </section>
+    <section id="lifecycle">
+      <h2>学習と推論</h2>
+      <ol class="tool-steps">
+        <li><strong>設計</strong> — アーキテクチャと損失関数を選ぶ</li>
+        <li><strong>学習</strong> — データでパラメータを更新</li>
+        <li><strong>評価</strong> — 検証・テストで性能を測る</li>
+        <li><strong>推論</strong> — 本番入力で予測・生成</li>
+        <li><strong>更新</strong> — <a href="../fine-tuning/">ファインチューニング</a>や再学習</li>
+      </ol>
+      <p>規模が大きいほど学習時間・電力が問題になりうる（<a href="../../exams/g-kentei/practice/q/g-118/">G-118</a>）。</p>
+    </section>
+    <section id="docs">
+      <h2>モデルカード等</h2>
+      <p>
+        実務では<a href="../model-card/">モデルカード</a>や<a href="../data-sheet/">データシート</a>に、用途・限界・学習データの概要が記載されます。モデル単体の性能だけでなく、<strong>どこで使ってよいか</strong>がガバナンスの論点です。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>NN＝ルール手入力の決定木</td><td>データからパラメータを学習（<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a>）</td></tr>
+          <tr><td>学習率もモデルが学習</td><td>ハイパーパラメータ（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）</td></tr>
+          <tr><td>モデル＝ChatGPTサービス</td><td>計算表現 vs 製品</td></tr>
+          <tr><td>モデル＝データセット</td><td>データは学習に使う。モデルは変換の表現</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>基盤モデルとは？</summary><p class="tool-faq-a">大規模データで事前学習したモデルで、下流タスクに適応させる起点、という意味で使われます。<a href="../llm/">LLM</a>の文脈で頻出です。</p></details>
+        <details><summary>オープンモデルとは？</summary><p class="tool-faq-a">ウェイトや仕様が公開され、ローカル推論などがしやすいモデルです。ライセンスは製品ごとに確認が必要です。</p></details>
+        <details><summary>モデルとAIは同じ？</summary><p class="tool-faq-a">AIは広い概念、モデルはその中核となる計算表現の一つです（<a href="../../exams/g-kentei/drill/q/tf-003/">TF-003</a>）。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-416/">TF-416 · NNはデータから学習</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-052/">TF-052 · ハイパーパラメータ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-118/">G-118 · 規模とコスト</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-003/">TF-003 · MLとAIの関係</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../training/">学習</a></li>
+          <li><a href="../inference/">推論</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../model-card/">モデルカード</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
