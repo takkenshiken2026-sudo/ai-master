@@ -17,7 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
-    {"@type":"DefinedTerm","name":"教師なし学習","alternateName":["Unsupervised Learning"],"description":"ラベルなしデータからパターンや構造を発見する機械学習。"}
+    {"@type":"DefinedTerm","name":"教師なし学習","alternateName":["Unsupervised Learning"],"description":"ラベルなしデータからパターンや構造を発見する機械学習。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"教師なし学習に正解ラベルは必要？","acceptedAnswer":{"@type":"Answer","text":"不要。データの構造やパターンをラベルなしで発見する。"}}]}
   ]}
   </script>
 </head>
@@ -42,11 +43,11 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>教師なし学習</strong>（Unsupervised Learning）は、<strong>正解ラベルなし</strong>のデータから、構造やパターンを自動的に見つける<a href="../machine-learning/">機械学習</a>です。本記事はアルゴリズムの網羅ではなく、試験で問われる<strong>教師ありとの対比・代表タスク・損失の考え方</strong>に焦点を当てます。
+      <strong>教師なし学習</strong>（Unsupervised Learning）は、<strong>正解ラベルなし</strong>のデータから、構造やパターンを自動的に見つける<a href="../machine-learning/">機械学習</a>です。本記事はアルゴリズムの網羅ではなく、試験で問われる<strong>教師あり・強化学習との対比・代表タスク・損失の考え方・自己教師ありとの違い</strong>に焦点を当てます。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
@@ -54,43 +55,89 @@
         <li><a href="#exam-study">試験で問われる見方</a></li>
         <li><a href="#what-is">教師なし学習とは</a></li>
         <li><a href="#tasks">代表タスク</a></li>
-        <li><a href="#vs-supervised">教師ありとの違い</a></li>
+        <li><a href="#vs-supervised">3つの学習パラダイム</a></li>
+        <li><a href="#loss">損失・評価の考え方</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related-exams">関連する試験問題</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
-      <p>○：教師なし学習は<strong>ラベルなし</strong>でパターンを発見。クラスタリング・次元削減が代表（<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a>）。</p>
-      <p>×：教師なしでも<strong>ラベルとの誤差を直接最小化</strong>するとは限らない（<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>）。再構成誤差やクラスタ内のまとまりなど別基準。</p>
+      <p>
+        ○：教師なし学習は<strong>ラベルなし</strong>でパターンを発見。クラスタリング・次元削減が代表（<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a>、<a href="../../exams/g-kentei/practice/q/g-097/">G-097</a>）。
+      </p>
+      <p>
+        ○：生成AIパスポートでも「正解データを与えず、データの構造やパターンを見つける手法」が定番（<a href="../../exams/genai-passport/practice/q/hq-0106/">HQ-0106</a>、<a href="../../exams/genai-passport/practice/q/hq-0126/">HQ-0126</a>）。
+      </p>
+      <p>
+        ×：教師なしでも<strong>ラベルとの誤差を直接最小化</strong>するとは限らない（<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>）。再構成誤差やクラスタ内のまとまりなど別基準。
+      </p>
+      <p>
+        ×：教師なし＝教師ありの説明を入れ替えた選択肢（HQ-0126の誤答パターン）。
+      </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a>、<a href="../../exams/g-kentei/practice/q/g-045/">G-045</a>、<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>、<a href="../../exams/g-kentei/drill/q/tf-032/">TF-032（k-means）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a>、<a href="../../exams/g-kentei/practice/q/g-097/">G-097</a>、<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>、<a href="../../exams/g-kentei/drill/q/tf-353/">TF-353</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0106/">HQ-0106</a>、<a href="../../exams/genai-passport/practice/q/hq-0126/">HQ-0126</a></p>
       </div>
     </section>
     <section id="what-is">
       <h2>教師なし学習とは</h2>
-      <p>入力データだけが与えられ、「正解 y」がありません。データの<strong>似たもの同士のまとまり</strong>や<strong>低次元の構造</strong>を探すのが典型です。ラベル付けコストが高い場面で有効です。</p>
+      <p>
+        入力データだけが与えられ、「正解 y」がありません。データの<strong>似たもの同士のまとまり</strong>や<strong>低次元の構造</strong>を探すのが典型です。
+      </p>
+      <p>
+        ラベル付けには人手コストがかかるため、大量の未ラベルデータから顧客セグメントや異常パターンを見つけるなど、実務でも重要な位置づけです。試験では「何が教師（正解）として与えられないか」を明確にすることが鍵です。
+      </p>
     </section>
     <section id="tasks">
       <h2>代表タスク</h2>
       <table class="tool-spec-table">
         <thead><tr><th>タスク</th><th>目的</th><th>例</th></tr></thead>
         <tbody>
-          <tr><td><strong>クラスタリング</strong></td><td>グループ分け</td><td><a href="../k-means/">k-means法</a></td></tr>
-          <tr><td><strong>次元削減</strong></td><td>特徴を圧縮</td><td>PCA</td></tr>
+          <tr><td><strong>クラスタリング</strong></td><td>似たデータをグループ分け</td><td><a href="../k-means/">k-means法</a>、階層的クラスタリング</td></tr>
+          <tr><td><strong>次元削減</strong></td><td>特徴を圧縮・可視化</td><td>PCA、t-SNE</td></tr>
           <tr><td><strong>異常検知</strong></td><td>通常と異なる点を検出</td><td>—</td></tr>
-          <tr><td><strong>表現学習</strong></td><td>特徴量の獲得</td><td>オートエンコーダ</td></tr>
+          <tr><td><strong>表現学習</strong></td><td>有用な特徴量の獲得</td><td>オートエンコーダ</td></tr>
+          <tr><td><strong>トピックモデル</strong></td><td>文書の潜在トピック推定</td><td>LDA</td></tr>
         </tbody>
       </table>
+      <p>「分類」は教師あり学習のタスクです。クラスタリングはラベルなしでグループを<strong>発見</strong>する点が異なります（G-061）。</p>
     </section>
     <section id="vs-supervised">
-      <h2>教師ありとの違い</h2>
+      <h2>3つの学習パラダイム</h2>
       <table class="tool-spec-table">
-        <thead><tr><th>区分</th><th>ラベル</th><th>損失のイメージ</th></tr></thead>
+        <thead><tr><th>区分</th><th>教師（信号）</th><th>損失のイメージ</th><th>代表例</th></tr></thead>
         <tbody>
-          <tr><td><strong><a href="../supervised-learning/">教師あり</a></strong></td><td>あり</td><td>予測と正解の差</td></tr>
-          <tr><td><strong>教師なし</strong></td><td>なし</td><td>クラスタ内距離・再構成誤差など</td></tr>
-          <tr><td><strong><a href="../reinforcement-learning/">強化学習</a></strong></td><td>報酬</td><td>累積報酬の最大化</td></tr>
+          <tr><td><strong><a href="../supervised-learning/">教師あり</a></strong></td><td>正解ラベル</td><td>予測と正解の差</td><td>分類・回帰</td></tr>
+          <tr><td><strong>教師なし</strong></td><td>なし</td><td>クラスタ内距離・再構成誤差など</td><td>k-means、PCA</td></tr>
+          <tr><td><strong><a href="../reinforcement-learning/">強化学習</a></strong></td><td>報酬</td><td>累積報酬の最大化</td><td>Q学習、方策勾配</td></tr>
+        </tbody>
+      </table>
+      <p>試験では3つを混同する選択肢が頻出です。特に「報酬を手がかりに学習」は強化学習（HQ-0106の誤答D）です。</p>
+    </section>
+    <section id="loss">
+      <h2>損失・評価の考え方</h2>
+      <p>
+        教師ありでは「予測 ŷ と正解 y の差」を最小化します。教師なしでは目的関数の形が異なります。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>クラスタリング</strong> — クラスタ内の距離を小さく、クラスタ間を離す</li>
+        <li><strong>次元削減</strong> — 情報を保ちながら次元を減らす（分散の最大化など）</li>
+        <li><strong>オートエンコーダ</strong> — 入力を再構成する誤差（再構成誤差）を最小化</li>
+      </ul>
+      <p>TF-354は「教師なしでもラベル誤差を最小化する」と言い切る誤答に注意してください。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>教師なし＝入力と正解のペアで学習</td><td>教師ありの定義（HQ-0126）</td></tr>
+          <tr><td>教師なし＝報酬で行動を学習</td><td>強化学習の定義</td></tr>
+          <tr><td>クラスタリング＝分類</td><td>分類はラベルありの教師あり学習</td></tr>
+          <tr><td>LLMの事前学習は純粋な教師なし</td><td>次トークン予測は自己教師ありと呼ばれることが多い</td></tr>
         </tbody>
       </table>
     </section>
@@ -98,7 +145,41 @@
       <h2>よくある質問</h2>
       <div class="tool-faq">
         <details><summary>LLMの事前学習は教師なし？</summary><p class="tool-faq-a">次トークン予測は正解トークンがあるため<strong>自己教師あり</strong>と呼ばれることが多いです。純粋な教師なしとは区別します。</p></details>
-        <details><summary>クラスタ数はどう決める？</summary><p class="tool-faq-a">k-meansでは k を事前指定（TF-032）。エルボー法などで探索することもあります。</p></details>
+        <details><summary>クラスタ数はどう決める？</summary><p class="tool-faq-a"><a href="../k-means/">k-means</a>では k を事前指定（TF-032）。エルボー法やシルエット係数などで探索することもあります。</p></details>
+        <details><summary>教師なしの結果はどう使う？</summary><p class="tool-faq-a">顧客セグメントの発見、異常検知、特徴量の前処理など。発見したクラスタに後からラベルを付ける運用もあります。</p></details>
+        <details><summary>半教師あり学習とは？</summary><p class="tool-faq-a">少量のラベル付きデータと大量の未ラベルデータを併用する手法です。G検定では3パラダイムの区別が中心です。</p></details>
+      </div>
+    </section>
+    <section id="related-exams" class="tool-exam-section" aria-labelledby="related-exams-heading">
+      <h2 id="related-exams-heading" class="tool-related-heading">関連する試験問題</h2>
+      <p class="tool-exam-section__lead">教師なし学習・クラスタリングの定義が出る演習です。</p>
+      <div class="tool-exam-groups">
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 一問一答</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/drill/q/tf-353/">TF-353 · 教師なし学習</a></li>
+            <li><a href="../../exams/g-kentei/drill/q/tf-354/">TF-354 · 教師なしの損失（すり替え）</a></li>
+            <li><a href="../../exams/g-kentei/drill/q/tf-032/">TF-032 · k-means法</a></li>
+          </ul>
+        </div>
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 実践演習</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/practice/q/g-068/">G-068 · 教師なし学習の代表タスク</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-097/">G-097 · 教師なしの定義</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-045/">G-045 · 学習の種類</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-061/">G-061 · 分類とクラスタリング</a></li>
+          </ul>
+          <p class="tool-exam-group__hub"><a href="../../exams/g-kentei/practice/domain/domain-09/">機械学習の要素技術（実践演習）</a></p>
+        </div>
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">生成AIパスポート · 実践演習</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/genai-passport/practice/q/hq-0106/">HQ-0106 · 教師なし学習の定義</a></li>
+            <li><a href="../../exams/genai-passport/practice/q/hq-0126/">HQ-0126 · 教師ありとの比較</a></li>
+            <li><a href="../../exams/genai-passport/practice/q/hq-0146/">HQ-0146 · 教師なし学習の説明</a></li>
+          </ul>
+        </div>
       </div>
     </section>
     <aside class="tool-related-wrap">

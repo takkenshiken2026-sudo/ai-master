@@ -17,7 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
-    {"@type":"DefinedTerm","name":"k-means法","alternateName":["k-means","k平均法"],"description":"クラスタ数kを指定し重心更新でデータを分割するクラスタリング手法。"}
+    {"@type":"DefinedTerm","name":"k-means法","alternateName":["k-means","k平均法"],"description":"クラスタ数kを指定し重心更新でデータを分割するクラスタリング手法。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"k-meansは教師あり学習？","acceptedAnswer":{"@type":"Answer","text":"いいえ。正解ラベルは使わない教師なし学習のクラスタリング手法。"}}]}
   ]}
   </script>
 </head>
@@ -42,52 +43,141 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>k-means法</strong>（k-means／k平均法）は、<strong>クラスタ数 k を事前に指定</strong>し、各データを最も近い重心に割り当てながら重心を更新する<a href="../unsupervised-learning/">教師なし学習</a>の代表的手法です。本記事は収束証明の数学ではなく、試験で問われる<strong>手順・k の意味・他手法との違い</strong>に焦点を当てます。
+      <strong>k-means法</strong>（k-means／k平均法）は、<strong>クラスタ数 k を事前に指定</strong>し、各データを最も近い重心に割り当てながら重心を更新する<a href="../unsupervised-learning/">教師なし学習</a>の代表的手法です。本記事は収束証明の数学ではなく、試験で問われる<strong>手順・k の意味・分類との違い・他手法との使い分け</strong>に焦点を当てます。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
       <ol>
         <li><a href="#exam-study">試験で問われる見方</a></li>
         <li><a href="#algorithm">アルゴリズムの流れ</a></li>
+        <li><a href="#objective">最小化する量</a></li>
         <li><a href="#k-choice">クラスタ数k</a></li>
+        <li><a href="#vs-others">他手法との違い</a></li>
         <li><a href="#limits">限界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related-exams">関連する試験問題</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
-      <p>○：k-meansは<strong>あらかじめ指定した数のクラスタ</strong>にデータを分ける（<a href="../../exams/g-kentei/drill/q/tf-032/">TF-032</a>）。割り当てと重心更新を繰り返す<strong>教師なし学習</strong>。</p>
+      <p>
+        ○：k-meansは<strong>あらかじめ指定した数のクラスタ</strong>にデータを分ける（<a href="../../exams/g-kentei/drill/q/tf-032/">TF-032</a>）。割り当てと重心更新を繰り返す<strong>教師なし学習</strong>。
+      </p>
+      <p>
+        ○：誤差逆伝播法はニューラルネットの勾配計算であり、<strong>クラスタ中心の更新はk-meansの話</strong>（<a href="../../exams/g-kentei/drill/q/tf-073/">TF-073</a>のすり替え）。
+      </p>
+      <p>
+        ×：k-means＝分類、 k-means＝ロジスティック回帰、など他手法の説明（G-032、G-117の誤答パターン）。
+      </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-032/">TF-032</a>、<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a>、<a href="../../exams/g-kentei/drill/domain/domain-09/">機械学習の要素技術</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-032/">TF-032</a>、<a href="../../exams/g-kentei/drill/q/tf-073/">TF-073</a>、<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a></p>
       </div>
     </section>
     <section id="algorithm">
       <h2>アルゴリズムの流れ</h2>
       <ol class="tool-example-list">
-        <li><strong>k 個の重心</strong>を初期化（ランダムなど）</li>
+        <li><strong>k 個の重心</strong>を初期化（ランダムにデータ点を選ぶなど）</li>
         <li>各点を<strong>最も近い重心</strong>のクラスタへ割り当て</li>
-        <li>各クラスタの<strong>重心を再計算</strong>（平均位置）</li>
-        <li>収束するまで 2–3 を繰り返す</li>
+        <li>各クラスタの<strong>重心を再計算</strong>（メンバーの平均位置）</li>
+        <li>割り当てが変わらなくなるまで 2–3 を繰り返す</li>
       </ol>
+      <p>
+        各ステップでクラスタ内の二乗誤差和が単調減少するため、局所最適解に収束します。初期値によって結果が変わるため、複数回実行して最良を選ぶこともあります。
+      </p>
+    </section>
+    <section id="objective">
+      <h2>最小化する量</h2>
+      <p>
+        k-meansは、各データ点と所属クラスタ重心との<strong>距離の二乗和</strong>（クラスタ内誤差）を小さくするようにクラスタを形成します。
+      </p>
+      <p>
+        正解ラベルは使いません。<a href="../supervised-learning/">教師あり学習</a>の分類が「既知のクラス名に割り当てる」ことに対し、k-meansはラベルなしでグループを<strong>発見</strong>します。
+      </p>
     </section>
     <section id="k-choice">
       <h2>クラスタ数k</h2>
-      <p>k は<strong>人が事前に決める</strong>ハイパーパラメータです。k が小さすぎると粗い分類、大きすぎると過分割になります。エルボー法やシルエット係数などで探索することがあります。</p>
+      <p>
+        k は<strong>人が事前に決める</strong>ハイパーパラメータです（TF-032）。k が小さすぎると粗い分類、大きすぎると過分割になります。
+      </p>
+      <table class="tool-spec-table">
+        <thead><tr><th>手法</th><th>概要</th></tr></thead>
+        <tbody>
+          <tr><td><strong>エルボー法</strong></td><td>クラスタ内誤差の曲線が折れ曲がる点を探す</td></tr>
+          <tr><td><strong>シルエット係数</strong></td><td>クラスタの分離度と凝集度を評価</td></tr>
+          <tr><td><strong>ドメイン知識</strong></td><td>「顧客を3セグメントに分けたい」など業務要件</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="vs-others">
+      <h2>他手法との違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>手法</th><th>学習の種類</th><th>特徴</th></tr></thead>
+        <tbody>
+          <tr><td><strong>k-means</strong></td><td>教師なし</td><td>k を指定、重心ベース、高速</td></tr>
+          <tr><td><strong>階層的クラスタリング</strong></td><td>教師なし</td><td>デンドログラム、ウォード法など（G-069）</td></tr>
+          <tr><td><strong>DBSCAN</strong></td><td>教師なし</td><td>密度ベース、k不要、任意形状</td></tr>
+          <tr><td><strong>ロジスティック回帰</strong></td><td>教師あり</td><td>分類。k-meansとは別（G-032）</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="limits">
       <h2>限界</h2>
-      <p>クラスタが球状・サイズが近いときに向きます。細長いクラスタや密度差が大きいデータでは DBSCAN など別手法が選ばれることもあります。</p>
+      <p>
+        k-meansはクラスタが<strong>球状でサイズが近い</strong>ときに向きます。細長いクラスタや密度差が大きいデータでは DBSCAN など別手法が選ばれることもあります。
+      </p>
+      <p>
+        外れ値に敏感で、スケールの異なる特徴量では正規化が必要です。試験では「万能のクラスタリング手法」ではない点を押さえておきましょう。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>k-meansは教師あり学習</td><td>正解ラベル不要の教師なし</td></tr>
+          <tr><td>k-means＝誤差逆伝播で中心更新</td><td>誤差逆伝播はNN用（TF-073）</td></tr>
+          <tr><td>k-means＝分類手法</td><td>分類は教師あり。クラスタリングはラベルなし</td></tr>
+          <tr><td>クラスタ数は自動決定</td><td>k は事前指定が基本（TF-032）</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
-        <details><summary>k-meansは教師あり？</summary><p class="tool-faq-a">いいえ。正解ラベルは使いません。教師なし学習のクラスタリングです。</p></details>
-        <details><summary>分類とクラスタリングの違いは？</summary><p class="tool-faq-a">分類は教師ありで既知のクラス名に割り当て、クラスタリングはラベルなしでグループを発見します。</p></details>
+        <details><summary>k-meansは教師あり？</summary><p class="tool-faq-a">いいえ。正解ラベルは使いません。<a href="../unsupervised-learning/">教師なし学習</a>のクラスタリングです。</p></details>
+        <details><summary>分類とクラスタリングの違いは？</summary><p class="tool-faq-a">分類は教師ありで既知のクラス名に割り当て、クラスタリングはラベルなしでグループを発見します（G-061）。</p></details>
+        <details><summary>k-means++とは？</summary><p class="tool-faq-a">初期重心の選び方を改善する手法です。ランダム初期化より安定しやすいことが多いです。G検定では基本手順が中心です。</p></details>
+        <details><summary>発見したクラスタに名前を付けられる？</summary><p class="tool-faq-a">アルゴリズムは名前を付けません。分析者がクラスタの特徴を見て「若年層」「高頻度購入」などと解釈します。</p></details>
+      </div>
+    </section>
+    <section id="related-exams" class="tool-exam-section" aria-labelledby="related-exams-heading">
+      <h2 id="related-exams-heading" class="tool-related-heading">関連する試験問題</h2>
+      <p class="tool-exam-section__lead">k-means・クラスタリング・教師なし学習が出る演習です。</p>
+      <div class="tool-exam-groups">
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 一問一答</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/drill/q/tf-032/">TF-032 · k-means法</a></li>
+            <li><a href="../../exams/g-kentei/drill/q/tf-073/">TF-073 · 誤差逆伝播のすり替え（×）</a></li>
+            <li><a href="../../exams/g-kentei/drill/q/tf-353/">TF-353 · 教師なし学習</a></li>
+          </ul>
+        </div>
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 実践演習</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/practice/q/g-068/">G-068 · 教師なし学習の代表タスク</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-069/">G-069 · 階層的クラスタリング（ウォード法）</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-061/">G-061 · 分類とクラスタリング</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-032/">G-032 · k-meansとの区別（ロジスティック回帰）</a></li>
+          </ul>
+          <p class="tool-exam-group__hub"><a href="../../exams/g-kentei/drill/domain/domain-09/">機械学習の要素技術（一問一答）</a></p>
+        </div>
       </div>
     </section>
     <aside class="tool-related-wrap">

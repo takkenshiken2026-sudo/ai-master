@@ -17,7 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
-    {"@type":"DefinedTerm","name":"早期終了","alternateName":["Early Stopping"],"description":"検証性能が悪化し始めた時点で学習を打ち切る過学習対策。"}
+    {"@type":"DefinedTerm","name":"早期終了","alternateName":["Early Stopping"],"description":"検証性能が悪化し始めた時点で学習を打ち切る過学習対策。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"早期終了は正則化？","acceptedAnswer":{"@type":"Answer","text":"広い意味では過学習対策の一つ。検証データを見て学習の長さ（エポック）を制御する手法。"}}]}
   ]}
   </script>
 </head>
@@ -42,51 +43,101 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>早期終了</strong>（Early Stopping）は、学習を延ばしすぎて<a href="../overfitting/">過学習</a>に入る前に、<strong>検証データの性能悪化を手がかりに学習を打ち切る</strong>手法です。本記事はハイパーパラメータの細部ではなく、試験で問われる<strong>「何を見て止めるか」「ドロップアウトとの対比」</strong>に焦点を当てます。
+      <strong>早期終了</strong>（Early Stopping）は、学習を延ばしすぎて<a href="../overfitting/">過学習</a>に入る前に、<strong>検証データの性能悪化を手がかりに学習を打ち切る</strong>手法です。本記事は patience などの実装細部ではなく、試験で問われる<strong>「何を見て止めるか」「ドロップアウト・L2正則化との役割分担」「訓練曲線の読み方」</strong>に焦点を当てます。<a href="../regularization/">正則化</a>記事とあわせて読むと整理しやすいです。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
       <ol>
         <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#why">なぜ必要か</a></li>
         <li><a href="#mechanism">どう動くか</a></li>
         <li><a href="#what-to-watch">参照する指標</a></li>
         <li><a href="#vs-others">他手法との違い</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related-exams">関連する試験問題</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
-      <p>○：早期終了は<strong>検証データの損失や評価指標</strong>を見て、過学習が始まる前に学習を止める（<a href="../../exams/g-kentei/practice/q/g-185/">G-185</a>）。訓練データだけでは不十分。</p>
-      <p>○：ドロップアウトと早期終了は<strong>別の正則化手法</strong>（<a href="../../exams/g-kentei/practice/q/g-168/">G-168</a>の（あ）ドロップアウト・（い）早期終了）。</p>
+      <p>
+        ○：早期終了は<strong>検証データの損失や評価指標</strong>を見て、過学習が始まる前に学習を止める（<a href="../../exams/g-kentei/practice/q/g-185/">G-185</a>、<a href="../../exams/g-kentei/practice/q/g-107/">G-107</a>）。訓練データだけでは不十分。
+      </p>
+      <p>
+        ○：ドロップアウトと早期終了は<strong>別の正則化手法</strong>（<a href="../../exams/g-kentei/practice/q/g-168/">G-168</a>の（あ）ドロップアウト・（い）早期終了）。
+      </p>
+      <p>
+        ○：過学習対策として<strong>正則化・データ拡張・早期終了・交差検証</strong>などを組み合わせて考える（<a href="../../exams/g-kentei/practice/q/g-008/">G-008</a>、<a href="../../exams/g-kentei/practice/q/g-112/">G-112</a>）。早期終了単体が万能ではない（<a href="../../exams/g-kentei/practice/q/g-205/">G-205</a>）。
+      </p>
+      <p>
+        ×：訓練損失だけを見て打ち切る、学習を途中で止めると必ず汎化性能が上がる、などのすり替え。
+      </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-185/">G-185</a>、<a href="../../exams/g-kentei/practice/q/g-168/">G-168</a>、<a href="../../exams/g-kentei/practice/q/g-008/">G-008</a>、<a href="../../exams/g-kentei/drill/domain/domain-10/">機械学習の概要</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-185/">G-185</a>、<a href="../../exams/g-kentei/practice/q/g-168/">G-168</a>、<a href="../../exams/g-kentei/practice/q/g-107/">G-107</a>、<a href="../../exams/g-kentei/practice/q/g-008/">G-008</a></p>
       </div>
+    </section>
+    <section id="why">
+      <h2>なぜ必要か</h2>
+      <p>
+        ニューラルネットの学習では、エポックを重ねるほど<strong>訓練誤差は下がり続ける</strong>ことが多いです。しかしある時点を過ぎると、検証データでの性能が悪化し始めます——これが<a href="../overfitting/">過学習</a>の典型パターンです。
+      </p>
+      <p>
+        事前に「最適なエポック数」が分かることは稀です。早期終了は、<strong>検証性能を監視しながら学習の長さを自動調整する</strong>実用的な手段として試験に頻出します。
+      </p>
     </section>
     <section id="mechanism">
       <h2>どう動くか</h2>
-      <p>エポックごとにモデルを更新しながら、<strong>検証セット</strong>で性能を測ります。検証損失が下がり止まったり上昇し始めたりした時点で学習を終了し、その直前の重みを採用するのが典型です。</p>
+      <p>典型的な流れは次のとおりです。</p>
+      <ol class="tool-example-list">
+        <li>データを<strong>訓練・検証</strong>に分割する</li>
+        <li>エポックごとにモデルを更新し、<strong>検証セット</strong>で性能を測る</li>
+        <li>検証損失が下がり止まったり上昇し始めたりした時点で学習を終了</li>
+        <li>検証性能が最も良かった<strong>直前の重み</strong>を採用する</li>
+      </ol>
+      <p>
+        ポイントは「訓練が完了した最後の重み」ではなく、<strong>検証で最良だった時点の重みを保存する</strong>ことです。フレームワークでは checkpoint や restore_best_weights などのオプションで実装されます。
+      </p>
     </section>
     <section id="what-to-watch">
       <h2>参照する指標</h2>
-      <ul class="tool-steps">
-        <li><strong>検証損失</strong> — 最も一般的な監視対象</li>
-        <li><strong>検証精度・F1など</strong> — タスクに応じた指標</li>
-        <li><strong>訓練だけ</strong> — ×。過学習の兆候を見逃す（G-185）</li>
-      </ul>
+      <table class="tool-spec-table">
+        <thead><tr><th>指標</th><th>使い方</th><th>試験での注意</th></tr></thead>
+        <tbody>
+          <tr><td><strong>検証損失</strong></td><td>最も一般的な監視対象</td><td>G-185の正解パターン</td></tr>
+          <tr><td><strong>検証精度・F1など</strong></td><td>タスクに応じた指標</td><td>損失と逆方向に動くこともある</td></tr>
+          <tr><td><strong>訓練損失だけ</strong></td><td>×</td><td>過学習の兆候を見逃す</td></tr>
+          <tr><td><strong>テストデータ</strong></td><td>最終評価用</td><td>早期終了の判断に使うとリーク</td></tr>
+        </tbody>
+      </table>
+      <p>テストデータは最終的な性能見積もり用です。検証データで打ち切りを決め、テストは一度だけ評価するのが基本です。</p>
     </section>
     <section id="vs-others">
       <h2>他手法との違い</h2>
       <table class="tool-spec-table">
-        <thead><tr><th>手法</th><th>働き</th></tr></thead>
+        <thead><tr><th>手法</th><th>働き</th><th>制御するもの</th></tr></thead>
         <tbody>
-          <tr><td><strong><a href="../dropout/">ドロップアウト</a></strong></td><td>各ステップでユニットをランダム無効化</td></tr>
-          <tr><td><strong><a href="../regularization/">L1/L2正則化</a></strong></td><td>重みにペナルティ</td></tr>
-          <tr><td><strong>早期終了</strong></td><td>学習の長さ（エポック）を制御</td></tr>
+          <tr><td><strong><a href="../dropout/">ドロップアウト</a></strong></td><td>学習時にユニットをランダム無効化</td><td>各ステップのネットワーク構造</td></tr>
+          <tr><td><strong><a href="../regularization/">L1/L2正則化</a></strong></td><td>重みにペナルティを課す</td><td>重みの大きさ</td></tr>
+          <tr><td><strong>早期終了</strong></td><td>検証性能で学習を打ち切る</td><td>学習の長さ（エポック数）</td></tr>
+          <tr><td><strong>データ拡張</strong></td><td>訓練データを人工的に増やす</td><td>見えるデータの多様性</td></tr>
+        </tbody>
+      </table>
+      <p>実務では複数を組み合わせます。試験では「ドロップアウト＝重みペナルティ」などの説明すり替えに注意（<a href="../regularization/">正則化</a>記事参照）。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>早期終了は訓練損失が最小の時点で止める</td><td>検証性能を基準にする（G-185）</td></tr>
+          <tr><td>早期終了＝ドロップアウト</td><td>別手法。G-168で区別される</td></tr>
+          <tr><td>早期終了すれば必ず汎化性能が上がる</td><td>対策の一つ。データやモデル次第（G-205）</td></tr>
+          <tr><td>交差検証と早期終了は同じ</td><td>交差検証は評価手法、早期終了は学習打ち切り（G-112）</td></tr>
         </tbody>
       </table>
     </section>
@@ -94,7 +145,33 @@
       <h2>よくある質問</h2>
       <div class="tool-faq">
         <details><summary>ベストなエポック数は事前に分かる？</summary><p class="tool-faq-a">一般には分かりません。検証監視か早期終了で決めるのが実務的です。</p></details>
-        <details><summary>LLMの学習でも使う？</summary><p class="tool-faq-a">はい。検証セットでの損失やベンチマーク性能で打ち切る運用があります。</p></details>
+        <details><summary>早期終了は正則化の一種？</summary><p class="tool-faq-a">広い意味では過学習対策の一族です。L1/L2のように損失に項を足すのではなく、学習時間を制御します。</p></details>
+        <details><summary>LLMの学習でも使う？</summary><p class="tool-faq-a">はい。検証セットでの損失やベンチマーク性能で打ち切る運用があります。ファインチューニングでも有効です。</p></details>
+        <details><summary>patience（我慢）とは？</summary><p class="tool-faq-a">検証損失が改善しないエポックを何回まで待つかの設定です。小さすぎると早く止まり、大きすぎると過学習に入りやすくなります。</p></details>
+      </div>
+    </section>
+    <section id="related-exams" class="tool-exam-section" aria-labelledby="related-exams-heading">
+      <h2 id="related-exams-heading" class="tool-related-heading">関連する試験問題</h2>
+      <p class="tool-exam-section__lead">早期終了・過学習対策が出る演習です。</p>
+      <div class="tool-exam-groups">
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 一問一答</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/drill/q/tf-044/">TF-044 · 過学習と対策</a></li>
+          </ul>
+        </div>
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 実践演習</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/practice/q/g-185/">G-185 · 早期終了で参照する情報</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-107/">G-107 · 早期終了の説明</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-168/">G-168 · ドロップアウトと早期終了</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-008/">G-008 · 過学習と対策</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-205/">G-205 · 過学習対策の限界</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-195/">G-195 · 過学習の兆候</a></li>
+          </ul>
+          <p class="tool-exam-group__hub"><a href="../../exams/g-kentei/practice/domain/domain-06/">ディープラーニングの概要（実践演習）</a></p>
+        </div>
       </div>
     </section>
     <aside class="tool-related-wrap">
@@ -105,6 +182,7 @@
           <li><a href="../regularization/">正則化</a></li>
           <li><a href="../dropout/">ドロップアウト</a></li>
           <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
           <li><a href="../machine-learning/">機械学習</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
