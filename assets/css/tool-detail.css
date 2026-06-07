@@ -38,7 +38,8 @@
 .tool-hero--career .tool-hero-visual {
   height: auto !important;
   max-height: none !important;
-  width: 100%;
+  width: 80%;
+  justify-self: end;
 }
 .tool-hero--career .tool-hero-visual img {
   flex: none;
@@ -863,6 +864,10 @@
     width: 100%;
     height: auto;
     object-fit: initial;
+  }
+  .tool-hero--career .tool-hero-visual {
+    width: 80%;
+    justify-self: center;
   }
   .tool-plan-grid { grid-template-columns: repeat(2, 1fr); }
 }

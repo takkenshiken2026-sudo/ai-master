@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -18,18 +19,50 @@ MUTED = "#64748B"
 BORDER = "#E2E8F0"
 ARROW_MUTED = "#94A3B8"
 
-STEPS = [
-    ("01", "データ", "収集", ""),
-    ("02", "前処理", "", "特徴量設計"),
-    ("03", "モデル", "学習", ""),
-    ("04", "評価", "", "精度・再現率"),
-    ("05", "本番", "実装", ""),
-    ("06", "運用", "・改善", ""),
-]
-
 DISPLAY_WIDTH = 960
 DISPLAY_HEIGHT = 300
 RENDER_SCALE = 3
+
+
+@dataclass(frozen=True)
+class FlowSpec:
+    title: str
+    subtitle: str
+    steps: list[tuple[str, str, str, str]]
+    highlight_index: int
+    loop_caption: str
+
+
+FLOWS: dict[str, FlowSpec] = {
+    "ai-engineer": FlowSpec(
+        title="AIエンジニアの典型的な業務フロー",
+        subtitle="PoCから本番運用まで、実装と改善を繰り返す",
+        steps=[
+            ("01", "データ", "収集", ""),
+            ("02", "前処理", "", "特徴量設計"),
+            ("03", "モデル", "学習", ""),
+            ("04", "評価", "", "精度・再現率"),
+            ("05", "本番", "実装", ""),
+            ("06", "運用", "・改善", ""),
+        ],
+        highlight_index=4,
+        loop_caption="監視・再学習・A/Bテストで継続改善",
+    ),
+    "machine-learning-engineer": FlowSpec(
+        title="機械学習エンジニアの典型的な業務フロー",
+        subtitle="データパイプラインとモデル配信を一連で回す",
+        steps=[
+            ("01", "データ", "取得", "ETL・連携"),
+            ("02", "特徴量", "設計", ""),
+            ("03", "モデル", "学習", "検証"),
+            ("04", "オフライン", "評価", ""),
+            ("05", "デプロイ", "", "推論API"),
+            ("06", "監視", "・再学習", ""),
+        ],
+        highlight_index=4,
+        loop_caption="メトリクス劣化を検知しパイプラインを更新",
+    ),
+}
 
 
 def hex_rgb(value: str) -> tuple[int, int, int]:
@@ -56,6 +89,7 @@ def draw_rounded_rect(
 
 def make_role_flow(
     path: Path,
+    spec: FlowSpec,
     width: int = DISPLAY_WIDTH,
     height: int = DISPLAY_HEIGHT,
     scale: int = RENDER_SCALE,
@@ -69,28 +103,22 @@ def make_role_flow(
     sub_font = noto(12 * s, 500)
     num_font = noto(13 * s, 700)
     label_font = noto(14 * s, 700)
-    note_font = noto(12 * s, 500)
+    note_font = noto(11 * s, 500)
 
-    draw.text((width * s // 2, 28 * s), "AIエンジニアの典型的な業務フロー", fill=hex_rgb(DARK), font=title_font, anchor="mm")
-    draw.text(
-        (width * s // 2, 50 * s),
-        "PoCから本番運用まで、実装と改善を繰り返す",
-        fill=hex_rgb(MUTED),
-        font=sub_font,
-        anchor="mm",
-    )
+    draw.text((width * s // 2, 28 * s), spec.title, fill=hex_rgb(DARK), font=title_font, anchor="mm")
+    draw.text((width * s // 2, 50 * s), spec.subtitle, fill=hex_rgb(MUTED), font=sub_font, anchor="mm")
 
     box_w, box_h = 128 * s, 88 * s
     gap = 24 * s
-    total_w = len(STEPS) * box_w + (len(STEPS) - 1) * gap
+    total_w = len(spec.steps) * box_w + (len(spec.steps) - 1) * gap
     start_x = (width * s - total_w) // 2
     y = 88 * s
 
     centers: list[int] = []
-    for i, (num, line1, line2, note) in enumerate(STEPS):
+    for i, (num, line1, line2, note) in enumerate(spec.steps):
         x = start_x + i * (box_w + gap)
         centers.append(x + box_w // 2)
-        highlight = i == 4
+        highlight = i == spec.highlight_index
         fill = hex_rgb(BLUE) if highlight else WHITE
         text_color = WHITE if highlight else hex_rgb(DARK)
         draw_rounded_rect(draw, (x, y, x + box_w, y + box_h), 12 * s, fill, BLUE, 2 * s)
@@ -101,12 +129,12 @@ def make_role_flow(
             font=num_font,
             anchor="mm",
         )
-        draw.text((x + box_w // 2, y + 46 * s), line1, fill=text_color, font=label_font, anchor="mm")
+        draw.text((x + box_w // 2, y + 44 * s), line1, fill=text_color, font=label_font, anchor="mm")
         if line2:
-            draw.text((x + box_w // 2, y + 66 * s), line2, fill=text_color, font=label_font, anchor="mm")
-        elif note:
+            draw.text((x + box_w // 2, y + 62 * s), line2, fill=text_color, font=label_font, anchor="mm")
+        if note:
             draw.text(
-                (x + box_w // 2, y + 66 * s),
+                (x + box_w // 2, y + 78 * s),
                 note,
                 fill=hex_rgb(MUTED) if not highlight else WHITE,
                 font=note_font,
@@ -129,23 +157,18 @@ def make_role_flow(
         [(88 * s, loop_y + 8 * s), (98 * s, loop_y + 2 * s), (98 * s, loop_y + 14 * s)],
         fill=hex_rgb(ARROW_MUTED),
     )
-    draw.text(
-        (width * s // 2, height * s - 22 * s),
-        "監視・再学習・A/Bテストで継続改善",
-        fill=hex_rgb(MUTED),
-        font=note_font,
-        anchor="mm",
-    )
+    draw.text((width * s // 2, height * s - 22 * s), spec.loop_caption, fill=hex_rgb(MUTED), font=note_font, anchor="mm")
 
     path.parent.mkdir(parents=True, exist_ok=True)
     img.save(path, format="PNG", compress_level=3)
 
 
 def main() -> None:
-    out = ROOT / "assets" / "images" / "career" / "ai-engineer" / "role-flow.png"
-    make_role_flow(out)
-    with Image.open(out) as im:
-        print(f"Generated {out.relative_to(ROOT)} ({im.size[0]}x{im.size[1]})")
+    for article_id, spec in FLOWS.items():
+        out = ROOT / "assets" / "images" / "career" / article_id / "role-flow.png"
+        make_role_flow(out, spec)
+        with Image.open(out) as im:
+            print(f"Generated {out.relative_to(ROOT)} ({im.size[0]}x{im.size[1]})")
 
 
 if __name__ == "__main__":
