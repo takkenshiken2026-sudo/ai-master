@@ -44,7 +44,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -58,7 +58,9 @@
         <li><a href="#flow">RAGでの流れ</a></li>
         <li><a href="#vs-keyword">キーワード検索との違い</a></li>
         <li><a href="#pitfalls">品質を左右する要因</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -113,6 +115,18 @@
         <li><strong>古い・誤った文書</strong> — 検索できても正答にならない（<a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171</a>）</li>
       </ul>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ベクトル検索＝RAG</td><td>検索方式 vs 検索＋生成の全体（<a href="../../exams/genai-passport/practice/q/hq-0370/">HQ-0370</a>）</td></tr>
+          <tr><td>ベクトル検索＝ベクトルDB</td><td>検索の処理 vs 格納・検索の基盤（<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>）</td></tr>
+          <tr><td>ベクトル検索＝チャンク</td><td>意味の近さで探す vs 文書の分割片</td></tr>
+          <tr><td>検索できれば回答100%正確</td><td>インデックス品質・生成段階にも依存（<a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -121,7 +135,16 @@
         <details><summary>LLMそのものが検索する？</summary><p class="tool-faq-a">RAGでは別コンポーネントが検索し、結果をLLMに渡す構成が一般的です。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232 · 埋め込みと意味検索</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0370/">HQ-0370 · RAGとの区別</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-174/">TF-174 · RAGの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171 · 100%正確は×</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
