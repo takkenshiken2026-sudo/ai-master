@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="システムプロンプトとは？LLMの振る舞いを決める上位指示、ユーザープロンプトとの違い、設計とセキュリティを解説。">
+  <title>システムプロンプトとは？役割・設計・セキュリティ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/system-prompt/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="システムプロンプトとは？役割・設計・セキュリティ">
+  <meta property="og:url" content="https://ai-master.jp/glossary/system-prompt/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"システムプロンプト","alternateName":["System Prompt"],"description":"モデルの振る舞い・役割・制約を規定する上位の指示文。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">システムプロンプト</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>システムプロンプトとは？役割・設計・セキュリティ</h1>
+    <p class="tool-hero-sub">読み：しすてむぷろんぷと ／ 英：System Prompt</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>システムプロンプト</strong>（System Prompt）は、<a href="../llm/">LLM</a>に対する<strong>「役割・方針・禁止事項」</strong>を先に渡す上位指示です。<a href="../prompt/">プロンプト</a>記事がユーザー入力の書き方中心なら、本記事は<strong>アプリ開発・運用側が固定する層</strong>——誰が書き、どこまで効くか、どう攻撃されるか——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">システムプロンプトとは</a></li>
+        <li><a href="#message-stack">メッセージの積み重ね</a></li>
+        <li><a href="#design">設計で書くこと</a></li>
+        <li><a href="#visibility">利用者から見えるか</a></li>
+        <li><a href="#security">セキュリティ上の注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        システムプロンプト単体の定義問題は少なく、<strong>プロンプト全般・出力確認・インジェクション</strong>の文脈で問われます。「条件をプロンプトに書けば出力確認は不要」は×（<a href="../../exams/genai-passport/drill/q/tf-0442/">TF-0442</a>）。システム指示があっても、ユーザー入力や外部文書で上書きを試みる攻撃があり得ます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0442/">TF-0442（条件だけでは不十分）</a>、<a href="../../exams/genai-passport/drill/q/tf-0437/">TF-0437（プロンプト4要素）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-204/">TF-204（プロンプトインジェクション）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>システムプロンプトとは</h2>
+      <p>
+        Chat Completions APIなどでは、<code>role: system</code>のメッセージがこれに相当します。例：「あなたは社内ITヘルプデスクの助手です。敬語で答え、未確認の情報は推測しないでください。」
+      </p>
+      <p>
+        利用者がチャット欄に打つ文章は多くの場合<strong>ユーザープロンプト</strong>です。システムプロンプトは<strong>プロダクトの性格</strong>を決める土台で、会話が続く限り（または都度）モデルに渡されます。
+      </p>
+    </section>
+
+    <section id="message-stack">
+      <h2>メッセージの積み重ね</h2>
+      <p>1回の推論でモデルが参照する典型構造です（製品により名称は異なります）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>層</th>
+            <th>誰が設定</th>
+            <th>役割</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>システム</strong></td>
+            <td>開発者・運営者</td>
+            <td>役割・トーン・禁止事項・出力形式の枠</td>
+          </tr>
+          <tr>
+            <td><strong>ユーザー</strong></td>
+            <td>利用者</td>
+            <td>そのターンの質問・依頼</td>
+          </tr>
+          <tr>
+            <td><strong>アシスタント</strong></td>
+            <td>モデル（過去）</td>
+            <td>会話履歴として次ターンに含まれる</td>
+          </tr>
+          <tr>
+            <td><strong>ツール結果</strong>（任意）</td>
+            <td><a href="../agent/">エージェント</a>等</td>
+            <td>検索・APIの返り値を文脈に注入</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>履歴が長いほど<a href="../token/">トークン</a>を消費します。システムプロンプトは毎回送られるため、冗長な固定文はコストに効きます。</p>
+    </section>
+
+    <section id="design">
+      <h2>設計で書くこと</h2>
+      <p>実務・プロダクト設計でシステムプロンプトに含める要素の例です。</p>
+      <ul class="tool-example-list">
+        <li><strong>ペルソナ</strong> — 「何の専門家か」「口調はどうか」</li>
+        <li><strong>スコープ</strong> — 答える範囲・答えない範囲（医療判断はしない等）</li>
+        <li><strong>出力形式</strong> — JSON、箇条書き、最大長</li>
+        <li><strong>根拠の扱い</strong> — <a href="../rag/">RAG</a>結果のみを根拠にする、不明時は「わからない」</li>
+        <li><strong>安全策</strong> — 機密・個人情報を繰り返さない、推測で埋めない</li>
+      </ul>
+      <p>
+        <a href="../../career/prompt-engineer/">プロンプトエンジニア</a>は、こうしたシステム層と評価ループの設計も担当領域に含みます。
+      </p>
+    </section>
+
+    <section id="visibility">
+      <h2>利用者から見えるか</h2>
+      <p>
+        消費者向けチャットUIでは、システムプロンプトは<strong>非表示</strong>が一般的です。一方、API利用や開発者向けツールでは編集・デバッグできます。
+      </p>
+      <p>
+        「システムプロンプトをユーザーに見せない＝改ざんできない」ではありません。攻撃者はユーザー入力経由で<strong>指示の上書き</strong>を試みます。秘匿はセキュリティ対策の一部にすぎません。
+      </p>
+    </section>
+
+    <section id="security">
+      <h2>セキュリティ上の注意</h2>
+      <ul class="tool-steps">
+        <li>
+          <strong>プロンプトインジェクション</strong>
+          <p>外部文書（<a href="../rag/">RAG</a>）やユーザー入力に「以前の指示を無視せよ」が混ざるリスク。</p>
+        </li>
+        <li>
+          <strong>ジェイルブレイク</strong>
+          <p>安全方針を迂回する入力。システムプロンプトだけでは防げないことも。</p>
+        </li>
+        <li>
+          <strong>過信しない</strong>
+          <p>システムで「絶対に誤答しない」と書いても保証にはならない（<a href="../hallucination/">ハルシネーション</a>）。</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>システムプロンプトとプロンプトの違いは？</summary>
+          <p class="tool-faq-a">広い「プロンプト」は入力全体。システムプロンプトはそのうち役割・方針を固定する上位層です。<a href="../prompt/">プロンプト</a>記事はユーザー入力の書き方中心です。</p>
+        </details>
+        <details>
+          <summary>書けば出力確認は不要？</summary>
+          <p class="tool-faq-a">いいえ。<a href="../../exams/genai-passport/drill/q/tf-0442/">TF-0442</a>のとおり、人による確認は依然必要です。</p>
+        </details>
+        <details>
+          <summary>社内チャットボットでは誰が書く？</summary>
+          <p class="tool-faq-a">多くは開発・プロダクトチームが初期版を書き、運用で改善します。利用者は通常ユーザープロンプトのみ入力します。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../prompt-injection/">プロンプトインジェクション</a></li>
+          <li><a href="../jailbreak/">ジェイルブレイク</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ハルシネーションとは？生成AIが事実と異なる内容を出力する現象の意味、種類、業務での確認ポイントをG検定・生成AIパスポート向けに解説。">
+  <title>ハルシネーションとは？意味・原因・業務での対処 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/hallucination/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ハルシネーションとは？意味・原因・業務での対処">
+  <meta property="og:description" content="ハルシネーションの定義、よくある誤解、確認チェックリストを試験・実務向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/hallucination/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ハルシネーション",
+        "alternateName": ["Hallucination", "幻覚"],
+        "description": "AIが事実と異なる内容を自信を持って出力してしまう現象。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ハルシネーションとは？",
+            "acceptedAnswer": { "@type": "Answer", "text": "生成AIが事実に基づかない内容をもっともらしく出力する現象です。存在しない文献や誤った数値などが含まれることがあります。" }
+          },
+          {
+            "@type": "Question",
+            "name": "ハルシネーションはマルチモーダルやChatGPTのこと？",
+            "acceptedAnswer": { "@type": "Answer", "text": "いいえ。試験では別概念の説明をハルシネーションと取り違える選択肢が出ます。AIの誤出力現象を指します。" }
+          },
+          {
+            "@type": "Question",
+            "name": "RAGを入れればハルシネーションはゼロになる？",
+            "acceptedAnswer": { "@type": "Answer", "text": "いいえ。減らす手段のひとつですが、検索ミスや生成の誤解釈で誤りは残ります。" }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ハルシネーション</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>ハルシネーションとは？意味・原因・業務での対処</h1>
+    <p class="tool-hero-sub">読み：はるしねーしょん ／ 英：Hallucination（幻覚）</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ハルシネーション</strong>（Hallucination／幻覚）は、<a href="../generative-ai/">生成AI</a>が<strong>事実と異なる内容を、あたかも正しいかのように出力する</strong>現象です。本記事は<a href="../rag/">RAG</a>の設計論ではなく、<strong>「何が起きているか」「業務でどう検証するか」</strong>に焦点を当てます。試験では、マルチモーダルやChatGPTの説明をハルシネーションとすり替える選択肢に注意が必要です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ハルシネーションとは</a></li>
+        <li><a href="#why">なぜ起きるのか</a></li>
+        <li><a href="#types">代表的なパターン</a></li>
+        <li><a href="#not-this">混同しやすい概念</a></li>
+        <li><a href="#verify">業務での確認チェックリスト</a></li>
+        <li><a href="#mitigate">減らす方向性（概要）</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        正しい定義は<strong>「事実と異なる内容をもっともらしく生成する現象」</strong>です。G検定では技術用語として、生成AIパスポートでは<strong>社内ポリシー・利用上のリスク</strong>として問われます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-172/">TF-172（定義）</a>、<a href="../../exams/g-kentei/drill/q/tf-171/">TF-171（正確性の保証なし）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0242/">HQ-0242（概念の識別）</a>、<a href="../../exams/genai-passport/practice/q/hq-0314/">HQ-0314（用語選択）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>ハルシネーションとは</h2>
+      <p>
+        医学の「幻覚」と同じ語源ですが、AIでは<strong>存在しない論文名</strong>、<strong>誤った法条番号</strong>、<strong>でっち上げの統計</strong>などが、自信ある文体で出力されることを指します。モデルは「わからない」と言うより、<strong>もっともらしい続きを生成しやすい</strong>——これが<a href="../llm/">LLM</a>の次トークン予測の性質と関係します。
+      </p>
+    </section>
+
+    <section id="why">
+      <h2>なぜ起きるのか</h2>
+      <p>原因は一つに絞れませんが、試験・実務で押さえるポイントは次のとおりです。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>学習データにない・古い情報</strong>
+          <p>最新事件や社内未公開データはモデル単体では知らない。</p>
+        </li>
+        <li>
+          <strong>確率的最な「続き」の生成</strong>
+          <p>正確さより文脈の自然さが優先されることがある。</p>
+        </li>
+        <li>
+          <strong>曖昧な質問</strong>
+          <p>前提が足りないと、モデルが勝手に穴埋めする。</p>
+        </li>
+        <li>
+          <strong>参照情報の誤り（RAG利用時）</strong>
+          <p>検索結果が誤っていれば、それを根拠に誤回答が強化される。</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="types">
+      <h2>代表的なパターン</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>パターン</th>
+            <th>例</th>
+            <th>危ない場面</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>事実の捏造</strong></td>
+            <td>存在しない論文・判例の引用</td>
+            <td>調査・法務・学術</td>
+          </tr>
+          <tr>
+            <td><strong>数値の誤り</strong></td>
+            <td>売上・統計のでたらめな数字</td>
+            <td>経営判断・財務</td>
+          </tr>
+          <tr>
+            <td><strong>手順の誤り</strong></td>
+            <td>存在しないAPIやコマンド</td>
+            <td>開発・運用</td>
+          </tr>
+          <tr>
+            <td><strong>過剰な一般化</strong></td>
+            <td>「必ず」「すべて」といった断定</td>
+            <td>ポリシー・コンプライアンス</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="not-this">
+      <h2>混同しやすい概念</h2>
+      <p>生成AIパスポートの選択肢問題で、次は<strong>ハルシネーションではない</strong>説明として出ます（<a href="../../exams/genai-passport/practice/q/hq-0242/">HQ-0242</a>）。</p>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th">ハルシネーション<strong>ではない</strong></th>
+            <th class="tool-pros-cons-th">正しくは</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>マルチモーダル（画像・音声も扱う性質）</td>
+            <td>入出力の形式に関する用語</td>
+          </tr>
+          <tr>
+            <td>ChatGPT（対話型サービス）</td>
+            <td>製品・サービス名</td>
+          </tr>
+          <tr>
+            <td>ファインチューニング</td>
+            <td>追加学習の手法</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="verify">
+      <h2>業務での確認チェックリスト</h2>
+      <p>RAGのパイプライン以前に、<strong>人が出力をどう扱うか</strong>が最後の防波堤です。</p>
+      <ol class="tool-steps">
+        <li><strong>一次情報で裏取り</strong> — 公式サイト・社内DB・原本文書</li>
+        <li><strong>数値・日付・固有名詞を重点確認</strong> — 誤りが出やすい</li>
+        <li><strong>「出典あり」と言っても信用しない</strong> — 引用そのものが捏造のことも</li>
+        <li><strong>高リスク領域は専門家確認</strong> — 医療・法律・税務など</li>
+        <li><strong>社内ガイドラインに沿う</strong> — 生成AI利用ポリシーの整備（<a href="../ai-ethics-overview/">AI倫理</a>・<a href="../appi/">個人情報保護法</a>）</li>
+      </ol>
+    </section>
+
+    <section id="mitigate">
+      <h2>減らす方向性（概要）</h2>
+      <p>完全消滅は現時点では期待しにくく、<strong>リスク低減</strong>の組み合わせが現実的です。</p>
+      <ul class="tool-example-list">
+        <li><strong><a href="../rag/">RAG</a></strong> — 参照文書を渡して根拠を足す（ただし万能ではない）</li>
+        <li><strong>プロンプトで根拠・不確実性を求める</strong> — 「わからない場合はそう答える」</li>
+        <li><strong>温度（temperature）を下げる</strong> — 出力のブレを抑える（製品による）</li>
+        <li><strong>評価・監視</strong> — 本番では回答品質のメトリクスを見る</li>
+      </ul>
+      <p>対策の体系は今後、<span class="tool-soon-badge">ハルシネーション対策</span>の記事で整理予定です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ハルシネーションとは？</summary>
+          <p class="tool-faq-a">事実と異なる内容をもっともらしく出力する現象です。<a href="../../exams/g-kentei/drill/q/tf-172/">TF-172</a>の定義を覚えましょう。</p>
+        </details>
+        <details>
+          <summary>自然な文章なら正しい？</summary>
+          <p class="tool-faq-a">いいえ。<a href="../../exams/g-kentei/drill/q/tf-171/">TF-171</a>のとおり、自然さと正確さは別です。</p>
+        </details>
+        <details>
+          <summary>RAGを入れればゼロになる？</summary>
+          <p class="tool-faq-a">いいえ。<a href="../rag/">RAG</a>は減らす手段のひとつにとどまります。</p>
+        </details>
+        <details>
+          <summary>生成AIのデメリットとの関係は？</summary>
+          <p class="tool-faq-a"><a href="../generative-ai/#pros-cons">生成AIのメリット・デメリット</a>でも触れています。本記事は現象に特化した解説です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../hallucination-mitigation/">ハルシネーション対策</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">試験対策</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/">G検定</a></li>
+          <li><a href="../../exams/genai-passport/">生成AIパスポート</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/">試験一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

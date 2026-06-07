@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="トークンとは？LLMが処理する最小単位の意味、日本語の目安、コンテキスト上限とAPI料金の関係をG検定・生成AIパスポート向けに解説。">
+  <title>トークンとは？LLMの処理単位・日本語の目安・料金との関係 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/token/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="トークンとは？LLMの処理単位・日本語の目安・料金との関係">
+  <meta property="og:description" content="トークンの意味、単語・文字との違い、コンテキストウィンドウとコストの実務感覚を整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/token/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/glossary/token/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "用語辞典", "item": "https://ai-master.jp/glossary/" },
+          { "@type": "ListItem", "position": 3, "name": "トークン", "item": "https://ai-master.jp/glossary/token/" }
+        ]
+      },
+      {
+        "@type": "DefinedTerm",
+        "@id": "https://ai-master.jp/glossary/token/#term",
+        "name": "トークン",
+        "alternateName": ["Token"],
+        "description": "LLMがテキストを処理する際の最小単位。単語・記号・語の一部などに分割される。",
+        "inDefinedTermSet": {
+          "@type": "DefinedTermSet",
+          "name": "AI Master 用語辞典",
+          "url": "https://ai-master.jp/glossary/"
+        }
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/glossary/token/#article",
+        "headline": "トークンとは？LLMの処理単位・日本語の目安・料金との関係",
+        "description": "トークンの意味、単語・文字との違い、コンテキストウィンドウとコストの実務感覚を整理。",
+        "url": "https://ai-master.jp/glossary/token/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/glossary/token/#webpage" },
+        "about": { "@id": "https://ai-master.jp/glossary/token/#term" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/glossary/token/#webpage",
+        "url": "https://ai-master.jp/glossary/token/",
+        "name": "トークンとは？LLMの処理単位・日本語の目安・料金との関係",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/glossary/token/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "トークンは1文＝1トークン？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。文章はより細かい単位に分割され、単語・語の一部・記号などがトークンになります。一文全体が1トークンになることはありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "日本語は1文字＝1トークン？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "必ずしもそうではありません。Tokenizerの仕様により、日本語は英語より1文字あたりのトークン数が多くなりやすい傾向があります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "トークン数とAPI料金の関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "多くのAPIは入力トークン数と出力トークン数に応じて課金されます。長いプロンプトや長い回答ほどコストが増えます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">トークン</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>トークンとは？LLMの処理単位・日本語の目安・料金との関係</h1>
+    <p class="tool-hero-sub">読み：とーくん ／ 英：Token</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>トークン</strong>（Token）は、<a href="../llm/">LLM</a>がテキストを処理するときの<strong>最小単位</strong>です。定義だけなら一行ですが、実務では<strong>料金・速度・入力可能な長さ</strong>すべてがトークン基準で決まります。本記事は<a href="../prompt/">プロンプトの書き方</a>やモデル構造ではなく、<strong>「何トークン使っているか」という運用の感覚</strong>に絞って整理します。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">トークンとは</a></li>
+        <li><a href="#not-same">単語・文字と同じではない</a></li>
+        <li><a href="#japanese">日本語の目安</a></li>
+        <li><a href="#context">コンテキスト上限との関係</a></li>
+        <li><a href="#billing">料金・コストの考え方</a></li>
+        <li><a href="#save-tokens">トークンを節約するコツ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、「トークン＝一文全体」といった<strong>過度に粗い定義</strong>が×になる問題があります（<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156</a>）。また、LLMが次のトークン確率を計算して出力する、という<strong>生成の仕組み</strong>と結びつく問題もあります。
+      </p>
+      <p>
+        G検定では、系列生成や教師強制の説明で「トークン」が登場します。NLPの文脈では<strong>系列の要素</strong>として理解しておくとよいです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156（定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178（次トークン生成）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-244/">G-244（教師強制とトークン）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>トークンとは</h2>
+      <p>
+        人間が文章を「単語」で読むように、LLMは入力を<strong>トークン列</strong>に変換して処理します。トークンは、英語の単語全体だったり、日本語の数文字だったり、記号や改行の一部だったりします。分割の仕方は<strong>Tokenizer（トークナイザ）</strong>という仕組みに依存し、モデルごとに異なります。
+      </p>
+      <p>
+        <a href="../llm/">LLM</a>の出力も、1トークンずつ（内部的には確率計算の上で）追加されていきます。だからこそ、出力が長いほど時間とコストが増えるのです。
+      </p>
+    </section>
+
+    <section id="not-same">
+      <h2>単語・文字と同じではない</h2>
+      <p>試験でよくある誤解を表にまとめます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>誤解</th>
+            <th>実際</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1文＝1トークン</td>
+            <td>×。文は多くのトークンに分割される</td>
+          </tr>
+          <tr>
+            <td>1単語＝1トークン</td>
+            <td>必ずしもそうではない（語の一部に分割されることも）</td>
+          </tr>
+          <tr>
+            <td>日本語1文字＝1トークン</td>
+            <td>Tokenizer次第。英語よりトークン効率が悪いことが多い</td>
+          </tr>
+          <tr>
+            <td>トークン数＝文字数</td>
+            <td>APIの課金・上限は文字数ではなくトークン基準が一般的</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="japanese">
+      <h2>日本語の目安</h2>
+      <p>
+        厳密な換算はモデルとTokenizerによりますが、実務の<strong>ざっくり感覚</strong>（2026年6月時点）として次を覚えておくと便利です。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>英語</strong> — おおよそ4文字前後が1トークン程度になることが多い</li>
+        <li><strong>日本語</strong> — 1文字あたりのトークン消費が英語より大きいことが多く、同じ意味でも日本語の方がトークン数が増えやすい</li>
+        <li><strong>コード・記号</strong> — インデントや記号もトークンになる。無駄な空行も積み重なる</li>
+      </ul>
+      <p>
+        長い日本語の<a href="../prompt/">プロンプト</a>を毎回丸ごと送ると、気づかないうちに上限や料金に効いてきます。
+      </p>
+    </section>
+
+    <section id="context">
+      <h2>コンテキスト上限との関係</h2>
+      <p>
+        モデルには<strong>コンテキストウィンドウ</strong>（一度に扱えるトークン数の上限）があります。入力（プロンプト＋会話履歴）と出力の合計がこの上限を超えると、古い履歴を切り捨てるか、エラーになるか、要約するか——製品の挙動は異なります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>消費されるもの</th>
+            <th>例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>システム指示</td>
+            <td>アプリが裏で入れる役割設定</td>
+          </tr>
+          <tr>
+            <td>ユーザー入力</td>
+            <td>貼り付けたPDF全文、長いコード</td>
+          </tr>
+          <tr>
+            <td>過去の会話</td>
+            <td>多ターン対話の履歴すべて</td>
+          </tr>
+          <tr>
+            <td>モデル出力</td>
+            <td>長文回答・コード生成</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>用語としての詳細は<span class="tool-soon-badge">コンテキストウィンドウ</span>の記事で今後整理予定です。</p>
+    </section>
+
+    <section id="billing">
+      <h2>料金・コストの考え方</h2>
+      <p>
+        クラウドAPIでは、多くの場合<strong>入力トークン単価</strong>と<strong>出力トークン単価</strong>が別です。出力の方が高いプランもあります。チャットUIの定額プランでも、裏側では同様の制約があると考えてよいです。
+      </p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>入力が長い</h3>
+          <p>毎回同じ長い指示を送ると、リクエストごとに課金が重なる</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>出力を長く要求</h3>
+          <p>「詳しく」「箇条書き100個」などはトークンと時間が増える</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>履歴を溜める</h3>
+          <p>会話が長いほどコンテキストが膨らむ。新規チャットも選択肢</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="save-tokens">
+      <h2>トークンを節約するコツ</h2>
+      <p>試験知識と実務の橋渡しとして、次を覚えておくと十分です。</p>
+      <ol class="tool-steps">
+        <li><strong>依頼は簡潔に、要件は明確に</strong> — <a href="../prompt/">プロンプト</a>の4要素は維持しつつ冗長表現を削る</li>
+        <li><strong>長文は要約してから渡す</strong> — 全文貼り付けより、必要段落だけ</li>
+        <li><strong>出力長の上限を指定</strong> — 「300字以内」「5項目まで」</li>
+        <li><strong>会話をリセット</strong> — 話題が変わったら新規スレッド</li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>トークンは1文＝1トークン？</summary>
+          <p class="tool-faq-a">いいえ。<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156</a>のとおり、より細かい単位に分割されます。</p>
+        </details>
+        <details>
+          <summary>日本語は1文字＝1トークン？</summary>
+          <p class="tool-faq-a">必ずしもそうではありません。日本語は英語よりトークン消費が大きくなりやすい傾向があります。</p>
+        </details>
+        <details>
+          <summary>トークン数とAPI料金の関係は？</summary>
+          <p class="tool-faq-a">入力・出力のトークン数に応じて課金されるのが一般的です。長いほど高くなります。</p>
+        </details>
+        <details>
+          <summary>LLMの仕組みはどこで学ぶ？</summary>
+          <p class="tool-faq-a">次トークン予測の説明は<a href="../llm/">LLMの記事</a>、指示の書き方は<a href="../prompt/">プロンプト</a>を参照してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM（大規模言語モデル）</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">コンテキストウィンドウ <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

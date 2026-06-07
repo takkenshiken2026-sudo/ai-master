@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ジェイルブレイクとは？生成AIの安全制限を回避して有害出力を引き出す試みの意味、プロンプトインジェクションとの違い、企業利用での注意点を解説。">
+  <title>ジェイルブレイクとは？安全制限の回避とプロンプトインジェクションとの違い — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/jailbreak/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ジェイルブレイクとは？安全制限の回避">
+  <meta property="og:url" content="https://ai-master.jp/glossary/jailbreak/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"ジェイルブレイク","alternateName":["Jailbreak"],"description":"安全制限を回避して有害・禁止出力を引き出す試み。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ジェイルブレイク</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>ジェイルブレイクとは？安全制限の回避とインジェクションとの違い</h1>
+    <p class="tool-hero-sub">読み：じぇいるぶれいく ／ 英：Jailbreak</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ジェイルブレイク</strong>（Jailbreak）は、チャット型AIの<strong>安全ガードレールを意図的に回避</strong>し、通常は拒否される出力を引き出す試みです。語源はスマホの「脱獄」ですが、試験・実務では<strong>利用者自身のプロンプト工夫</strong>が中心です。第三者が文書に命令を埋め込む<a href="../prompt-injection/">プロンプトインジェクション</a>とは、攻撃の主体とシナリオが異なります。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ジェイルブレイクとは</a></li>
+        <li><a href="#techniques">よく話題になる手口（概念）</a></li>
+        <li><a href="#why-models-fail">なぜ防ぎきれないのか</a></li>
+        <li><a href="#org-policy">企業・組織での扱い</a></li>
+        <li><a href="#comparison">関連用語との整理</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、セキュリティ全体の文脈で<strong>プロンプトインジェクションと並ぶリスク</strong>として理解します。「パスワード管理だけでAI特有のリスクは不要」は×です（<a href="../../exams/genai-passport/drill/q/tf-0366/">TF-0366</a>）。
+      </p>
+      <p>
+        ジェイルブレイク単独の問題が少ない場合も、<strong>「本来のルールを無視させる」</strong>という説明はプロンプトインジェクションの解説（<a href="../../exams/genai-passport/drill/q/tf-0323/">TF-0323</a>）と対比して学ぶとよいです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0323/">TF-0323（ルール無視のリスク）</a>、<a href="../../exams/genai-passport/drill/q/tf-0366/">TF-0366</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-204/">TF-204</a>（制約回避の攻撃文脈）</p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>ジェイルブレイクとは</h2>
+      <p>
+        サービス提供者が組み込んだ<strong>有害コンテンツ拒否・違法行為支援の禁止</strong>などの安全策を、ユーザー側のプロンプトで迂回しようとする行為です。研究目的で公開される「回避プロンプト」も話題になりますが、業務利用では<strong>利用規約違反・情報漏洩</strong>につながり得ます。
+      </p>
+    </section>
+
+    <section id="techniques">
+      <h2>よく話題になる手口（概念）</h2>
+      <p>具体的手順の共有は倫理・規約上問題になるため、試験では<strong>カテゴリ名と意図</strong>の理解で十分なことが多いです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>カテゴリ</th>
+            <th>狙い</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>役割演技</strong></td>
+            <td>「制限のないAIとして振る舞え」など架空設定で拒否を回避</td>
+          </tr>
+          <tr>
+            <td><strong>段階的誘導</strong></td>
+            <td>無害な質問から徐々に境界を越える</td>
+          </tr>
+          <tr>
+            <td><strong>エンコード・言語変換</strong></td>
+            <td>フィルタをすり抜ける表現に変換</td>
+          </tr>
+          <tr>
+            <td><strong>間接要求</strong></td>
+            <td>有害内容を「小説の台詞」などに擬装</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="why-models-fail">
+      <h2>なぜ防ぎきれないのか</h2>
+      <p>
+        <a href="../llm/">LLM</a>は自然言語のあらゆるパターンを学習しており、<strong>「拒否」と「従う」の境界</strong>は完全には定義できません。新しい回避手法はモデル更新のあとも次々試されます。だからこそ、技術対策だけでなく<strong>利用ポリシー・監査・教育</strong>がセットになります。
+      </p>
+    </section>
+
+    <section id="org-policy">
+      <h2>企業・組織での扱い</h2>
+      <ul class="tool-steps">
+        <li><strong>社内規程で禁止明示</strong> — 安全策の意図的回避、機密抽出の試み</li>
+        <li><strong>許可ツールのみ利用</strong> — シャドーITのチャット利用を防ぐ</li>
+        <li><strong>出力の用途制限</strong> — 業務判断は人が行う（<a href="../ai-ethics-overview/#human-centered">人間中心</a>）</li>
+        <li><strong>インシデント報告</strong> — 回避成功例の共有はセキュリティリスク</li>
+      </ul>
+      <p><a href="../ai-governance/">AIガバナンス</a>と<a href="../eu-ai-act/">EU AI Act</a>の高リスク区分も、安全・悪用の文脈で関連します。</p>
+    </section>
+
+    <section id="comparison">
+      <h2>関連用語との整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>一言で</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="../prompt-injection/">プロンプトインジェクション</a></td>
+            <td>第三者コンテンツ経由の命令混入</td>
+          </tr>
+          <tr>
+            <td><strong>ジェイルブレイク</strong></td>
+            <td>利用者が安全制限を回避する試み</td>
+          </tr>
+          <tr>
+            <td><a href="../system-prompt/">システムプロンプト</a></td>
+            <td>守ろうとする側の上位指示</td>
+          </tr>
+          <tr>
+            <td><a href="../ai-safety/">AI安全性</a></td>
+            <td>より広い安全・信頼性の領域（今後整理予定）</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ジェイルブレイクとプロンプトインジェクションの違いは？</summary>
+          <p class="tool-faq-a">ジェイルブレイクは利用者の回避試み、インジェクションは第三者による命令混入が典型です。詳細は各記事を参照。</p>
+        </details>
+        <details>
+          <summary>研究目的ならOK？</summary>
+          <p class="tool-faq-a">組織の規程・サービス利用規約・法令によります。試験では悪用リスクとして理解してください。</p>
+        </details>
+        <details>
+          <summary>対策は？</summary>
+          <p class="tool-faq-a">モデル側の安全学習に加え、ポリシー・監視・権限制御。インジェクション対策と多く重なります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../prompt-injection/">プロンプトインジェクション</a></li>
+          <li><a href="../system-prompt/">システムプロンプト</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li class="tool-related-list__soon">AI安全性 <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

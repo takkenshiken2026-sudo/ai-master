@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="プロンプトとは？AIへの指示文の意味、目的・読者・形式・制約の4要素、良い書き方と悪い例を生成AIパスポート・G検定向けに解説。">
+  <title>プロンプトとは？書き方のコツ・構成・試験のポイント — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/prompt/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="プロンプトとは？書き方のコツ・構成・試験のポイント">
+  <meta property="og:description" content="プロンプトの意味、4要素の構成、良い指示と悪い指示の違いを実例つきで解説。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/prompt/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/glossary/prompt/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "用語辞典", "item": "https://ai-master.jp/glossary/" },
+          { "@type": "ListItem", "position": 3, "name": "プロンプト", "item": "https://ai-master.jp/glossary/prompt/" }
+        ]
+      },
+      {
+        "@type": "DefinedTerm",
+        "@id": "https://ai-master.jp/glossary/prompt/#term",
+        "name": "プロンプト",
+        "alternateName": ["Prompt", "指示文"],
+        "description": "生成AIなどに与える指示文・質問文。書き方次第で出力の質が大きく変わる。",
+        "inDefinedTermSet": {
+          "@type": "DefinedTermSet",
+          "name": "AI Master 用語辞典",
+          "url": "https://ai-master.jp/glossary/"
+        }
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/glossary/prompt/#article",
+        "headline": "プロンプトとは？書き方のコツ・構成・試験のポイント",
+        "description": "プロンプトの意味、4要素の構成、良い指示と悪い指示の違いを実例つきで解説。",
+        "url": "https://ai-master.jp/glossary/prompt/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/glossary/prompt/#webpage" },
+        "about": { "@id": "https://ai-master.jp/glossary/prompt/#term" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/glossary/prompt/#webpage",
+        "url": "https://ai-master.jp/glossary/prompt/",
+        "name": "プロンプトとは？書き方のコツ・構成・試験のポイント",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/glossary/prompt/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "プロンプトとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "生成AIに入力する指示文・質問文のことです。目的、読者、出力形式、制約を明確にすると望む結果に近づきやすいです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "プロンプトに機密情報を入れても安全？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。詳しく入れるほど安全になるわけではなく、漏洩・学習利用のリスクがあります。未公開情報は入力しないのが原則です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "システムプロンプトとユーザープロンプトの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "システムプロンプトはアプリ側が設定する役割・方針、ユーザープロンプトは利用者が入力する質問・依頼です。APIや製品によって名称は異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">プロンプト</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>プロンプトとは？書き方のコツ・構成・試験のポイント</h1>
+    <p class="tool-hero-sub">読み：ぷろんぷと ／ 英：Prompt</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>プロンプト</strong>（Prompt）は、<a href="../llm/">LLM</a>などの生成AIに渡す<strong>指示文・質問文</strong>のことです。モデルの内部構造ではなく、<strong>「何をどう頼むか」という設計</strong>が本記事のテーマです。生成AIパスポートでは構成要素の明確化が、G検定ではプロンプトを介した<strong>セキュリティ</strong>（インジェクション等）も絡みます。職種として深掘りするなら<a href="../../career/prompt-engineer/">プロンプトエンジニア</a>の記事も参照してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">プロンプトとは</a></li>
+        <li><a href="#four-parts">4要素で組み立てる</a></li>
+        <li><a href="#good-vs-bad">良い指示と弱い指示</a></li>
+        <li><a href="#roles">システムとユーザー入力</a></li>
+        <li><a href="#safety">入力時の安全な考え方</a></li>
+        <li><a href="#iterate">改善のサイクル</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、<strong>目的・対象読者・出力形式・制約条件</strong>をプロンプトに含めると良い出力に近づく、という正誤が頻出です。逆に「機密を詳しく入れるほど安全」は×です。
+      </p>
+      <p>
+        G検定では、プロンプトそのものより<strong>プロンプトインジェクション</strong>（外部文書に悪意ある指示を混ぜる攻撃）が、<a href="../rag/">RAG</a>や<a href="../agent/">AIエージェント</a>文脈で問われることがあります。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0437/">TF-0437（4要素）</a>、<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466（機密入力は×）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-204/">TF-204（プロンプトインジェクション）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>プロンプトとは</h2>
+      <p>
+        プロンプトは、チャットの<strong>入力欄に打つ文章</strong>そのものです。API利用では、リクエストの<code>messages</code>や<code>prompt</code>フィールドに相当します。同じ<a href="../llm/">LLM</a>でも、プロンプトが曖昧だと回答がブレたり、意図と違う形式で返ってきたりします。
+      </p>
+      <p>
+        プロンプトは魔法の呪文ではなく、<strong>要件定義の短縮版</strong>と考えると書きやすくなります。「誰向けに、何を、どの形で、何をしてはいけないか」を言語化する作業です。
+      </p>
+    </section>
+
+    <section id="four-parts">
+      <h2>4要素で組み立てる</h2>
+      <p>生成AIパスポートで押さえる<strong>4要素</strong>を、実務でもそのまま使えます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>要素</th>
+            <th>書くこと</th>
+            <th>例（メール下書き依頼）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>目的</strong></td>
+            <td>何を達成したいか</td>
+            <td>取引先への納期変更のお詫びメールを作る</td>
+          </tr>
+          <tr>
+            <td><strong>対象読者</strong></td>
+            <td>誰が読むか</td>
+            <td>既存の取引先担当者（フォーマル）</td>
+          </tr>
+          <tr>
+            <td><strong>出力形式</strong></td>
+            <td>長さ・文体・箇条書き等</td>
+            <td>300字以内、敬体、件名案も3つ</td>
+          </tr>
+          <tr>
+            <td><strong>制約条件</strong></td>
+            <td>含める／避けること</td>
+            <td>具体的な日付は○月○日、社名は伏せる</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="good-vs-bad">
+      <h2>良い指示と弱い指示</h2>
+      <p>同じタスクでも、プロンプトの情報量で出力が変わります（<strong>2026年6月時点</strong>の一般的な挙動）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>弱いプロンプト</th>
+            <th>改善したプロンプト</th>
+            <th>改善ポイント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>「AIについて教えて」</td>
+            <td>「高校生向けに、生成AIと従来AIの違いを200字で説明して」</td>
+            <td>読者・範囲・長さを指定</td>
+          </tr>
+          <tr>
+            <td>「要約して」</td>
+            <td>「以下の議事録を、決定事項3つ＋TODO表形式で要約」</td>
+            <td>出力形式を固定</td>
+          </tr>
+          <tr>
+            <td>「コード書いて」</td>
+            <td>「Python 3.11で、CSVを読み欠損値を平均補完。関数化しdocstring付き」</td>
+            <td>言語・仕様・品質要件</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        長ければよいわけではありません。<a href="../token/">トークン</a>上限と料金の関係もあるため、必要十分な情報に絞るのが実務では重要です。
+      </p>
+    </section>
+
+    <section id="roles">
+      <h2>システムとユーザー入力</h2>
+      <p>APIやアプリでは、プロンプトが<strong>役割ごとに分かれる</strong>ことがあります。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>システムプロンプト（system）</strong>
+          <p>開発者・運営者が設定。「あなたは〜の助手」「敬語で答える」など振る舞いの枠。利用者は見えないことも多い。</p>
+        </li>
+        <li>
+          <strong>ユーザープロンプト（user）</strong>
+          <p>利用者が都度入力する質問・依頼。試験でいう「プロンプト」は多くの場合こちらを指す。</p>
+        </li>
+        <li>
+          <strong>アシスタントの過去出力</strong>
+          <p>多ターン対話では履歴も文脈に入る。長い会話ほどトークン消費が増える。</p>
+        </li>
+      </ul>
+      <p>詳細は<a href="../system-prompt/">システムプロンプト</a>の記事を参照してください。</p>
+    </section>
+
+    <section id="safety">
+      <h2>入力時の安全な考え方</h2>
+      <p>プロンプト設計はセキュリティと直結します。</p>
+      <ul class="tool-example-list">
+        <li><strong>未公開情報・個人情報は入力しない</strong> — 詳しく書くほど安全になるわけではない（<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466</a>）</li>
+        <li><strong>外部文書をそのまま命令として扱わない</strong> — RAGで取り込んだPDFに悪意ある指示が含まれるリスク</li>
+        <li><strong>出力をそのまま信頼しない</strong> — 特に数値・法令・医療は人が確認</li>
+      </ul>
+    </section>
+
+    <section id="iterate">
+      <h2>改善のサイクル</h2>
+      <p>プロンプトは一度で完成しません。実務・学習で使える短いループです。</p>
+      <ol class="tool-steps">
+        <li><strong>最小プロンプトで試す</strong> — まず出力を見る</li>
+        <li><strong>ズレた点を1つだけ修正</strong> — 形式・長さ・トーンなど</li>
+        <li><strong>成功例をテンプレ化</strong> — 社内では「プロンプト集」として共有</li>
+        <li><strong>試験では定義問題とケース問題を分ける</strong> — 4要素は定義、利用判断はケース</li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>プロンプトとは何ですか？</summary>
+          <p class="tool-faq-a">生成AIへの指示文・質問文です。4要素（目的・読者・形式・制約）を意識すると試験でも実務でも使えます。</p>
+        </details>
+        <details>
+          <summary>プロンプトに機密情報を入れても安全？</summary>
+          <p class="tool-faq-a">いいえ。入力は最小限にし、社内ルールに従ってください。<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466</a>が典型問題です。</p>
+        </details>
+        <details>
+          <summary>システムプロンプトとユーザープロンプトの違いは？</summary>
+          <p class="tool-faq-a">システムはアプリ側の役割設定、ユーザーは利用者の依頼です。製品によって表示・編集可否は異なります。</p>
+        </details>
+        <details>
+          <summary>プロンプトエンジニアになるには？</summary>
+          <p class="tool-faq-a">設計・評価・業務組み込みまで含みます。<a href="../../career/prompt-engineer/">プロンプトエンジニアの職種ガイド</a>を参照してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM（大規模言語モデル）</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../system-prompt/">システムプロンプト</a></li>
+          <li><a href="../prompt-injection/">プロンプトインジェクション</a></li>
+          <li><a href="../system-prompt/">システムプロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../../tools/claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

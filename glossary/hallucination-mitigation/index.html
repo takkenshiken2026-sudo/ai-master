@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ハルシネーション対策とは？事実誤りを減らす技法の総称。RAG・評価・人の確認など層別の対策をG検定・生成AIパスポート向けに解説。">
+  <title>ハルシネーション対策とは？減らす技法と限界 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/hallucination-mitigation/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ハルシネーション対策とは？減らす技法と限界">
+  <meta property="og:url" content="https://ai-master.jp/glossary/hallucination-mitigation/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"ハルシネーション対策","alternateName":["Hallucination Mitigation"],"description":"生成AIの事実誤り出力を減らす技法・運用の総称。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ハルシネーション対策</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>ハルシネーション対策とは？減らす技法と限界</h1>
+    <p class="tool-hero-sub">読み：はるしねーしょんたいさく ／ 英：Hallucination Mitigation</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ハルシネーション対策</strong>は、<a href="../hallucination/">ハルシネーション</a>（事実誤りの出力）を<strong>ゼロにはできなくても、リスクを下げる</strong>ための技法・運用の総称です。本記事は現象の定義ではなく、<strong>多層の対策スタック</strong>——どの層で何をするか——に焦点を当てます。「RAGを入れれば完璧」は試験では×です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#goal">対策のゴール設定</a></li>
+        <li><a href="#layers">4層の対策スタック</a></li>
+        <li><a href="#rag-limit">RAGは万能ではない</a></li>
+        <li><a href="#human">人による確認（最後の層）</a></li>
+        <li><a href="#eval">評価・監視</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        「生成AIの提案資料は必ず正確だから根拠確認不要」は×（<a href="../../exams/genai-passport/drill/q/tf-0452/">TF-0452</a>）。「断定的な口調だから正しい」も×（<a href="../../exams/genai-passport/drill/q/tf-0256/">TF-0256</a>）。対策の本質は<strong>技術＋人の検証</strong>の組み合わせです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0452/">TF-0452</a>、<a href="../../exams/genai-passport/drill/q/tf-0257/">TF-0257（ファクトチェック）</a>、<a href="../../exams/genai-passport/drill/q/tf-0390/">TF-0390（根拠の明示）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-171/">TF-171</a>、<a href="../../exams/g-kentei/drill/q/tf-175/">TF-175（RAGの限界）</a></p>
+      </div>
+    </section>
+
+    <section id="goal">
+      <h2>対策のゴール設定</h2>
+      <p>
+        実務・試験とも、目標は<strong>「幻覚ゼロ」ではなく「許容可能なリスク」</strong>です。医療・法務・対外公開ほど、要求される確認レベルが上がります。対策はユースケースごとに設計します。
+      </p>
+    </section>
+
+    <section id="layers">
+      <h2>4層の対策スタック</h2>
+      <p>下から上に積み上げるイメージで整理します（すべてを常に実施する必要はありません）。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>層1：プロンプト・推論設定</strong>
+          <p>「不明ならわからないと答える」、温度を下げる、出力形式を固定（<a href="../prompt/">プロンプト</a>）。</p>
+        </li>
+        <li>
+          <strong>層2：根拠の付与（RAG・検索）</strong>
+          <p>参照文書を渡して根拠性を高める（<a href="../rag/">RAG</a>）。検索ミスには注意。</p>
+        </li>
+        <li>
+          <strong>層3：自動検証</strong>
+          <p>引用の有無チェック、数値の再計算、別モデルによる批判的レビュー、ルールベース検証。</p>
+        </li>
+        <li>
+          <strong>層4：人のファクトチェック</strong>
+          <p>一次情報・複数ソースで確認（<a href="../../exams/genai-passport/drill/q/tf-0257/">TF-0257</a>）。</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="rag-limit">
+      <h2>RAGは万能ではない</h2>
+      <p>
+        <a href="../rag/">RAG</a>は対策の有力手段ですが、<strong>幻覚を完全に消すものではありません</strong>（<a href="../../exams/g-kentei/drill/q/tf-175/">TF-175</a>、<a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171</a>）。検索結果の誤り、無関係な段落の参照、モデルが資料を無視して捏造する、といった失敗モードがあります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>失敗モード</th>
+            <th>補助対策</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>検索ヒットが外れる</td>
+            <td>チャンク設計、リランキング</td>
+          </tr>
+          <tr>
+            <td>資料が誤っている</td>
+            <td>ナレッジの品質管理</td>
+          </tr>
+          <tr>
+            <td>引用を無視して生成</td>
+            <td>出典必須のプロンプト、後段検証</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="human">
+      <h2>人による確認（最後の層）</h2>
+      <p>
+        <a href="../ai-ethics-overview/#human-centered">人間中心のAI</a>の考え方どおり、重要な判断は人が担います。チェックの優先度は次のとおりが実務的です。
+      </p>
+      <ol class="tool-example-list">
+        <li>数値・日付・固有名詞</li>
+        <li>法規・契約・医療に関わる記述</li>
+        <li>対外公開・顧客向け資料</li>
+        <li>社外秘・個人情報の有無</li>
+      </ol>
+    </section>
+
+    <section id="eval">
+      <h2>評価・監視</h2>
+      <p>
+        本番運用では、対策の効果を<strong>継続的に測る</strong>ことが重要です（<a href="../ai-governance/">AIガバナンス</a>の監視・改善と接続）。
+      </p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>ベンチマーク</h3>
+          <p>社内FAQで正答率・引用一致率を測定</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ユーザーフィードバック</h3>
+          <p>誤回答報告の収集</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>回帰テスト</h3>
+          <p>モデル更新後に幻覚率が悪化していないか</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ハルシネーションは完全になくせる？</summary>
+          <p class="tool-faq-a">現時点では困難です。対策はリスク低減が目的です。</p>
+        </details>
+        <details>
+          <summary>RAGだけで十分？</summary>
+          <p class="tool-faq-a">不十分です。人の確認や評価と組み合わせます（<a href="../rag/">RAG</a>記事も参照）。</p>
+        </details>
+        <details>
+          <summary>ハルシネーションとの記事の違いは？</summary>
+          <p class="tool-faq-a"><a href="../hallucination/">ハルシネーション</a>は現象の説明、本記事は対策の整理です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

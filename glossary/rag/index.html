@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RAG（検索拡張生成）とは？仕組み・導入メリット・限界をG検定・生成AIパスポート向けに解説。ファインチューニングとの違いも整理。">
+  <title>RAG（検索拡張生成）とは？仕組み・メリット・限界 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/rag/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="RAG（検索拡張生成）とは？仕組み・メリット・限界">
+  <meta property="og:description" content="RAGの意味、検索→生成の流れ、導入時の注意点を試験対策向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/rag/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "用語辞典", "item": "https://ai-master.jp/glossary/" },
+          { "@type": "ListItem", "position": 3, "name": "RAG", "item": "https://ai-master.jp/glossary/rag/" }
+        ]
+      },
+      {
+        "@type": "DefinedTerm",
+        "name": "RAG",
+        "alternateName": ["Retrieval-Augmented Generation", "検索拡張生成"],
+        "description": "外部の知識を検索して取得し、その内容を踏まえて生成AIが回答する手法。",
+        "inDefinedTermSet": { "@type": "DefinedTermSet", "name": "AI Master 用語辞典", "url": "https://ai-master.jp/glossary/" }
+      },
+      {
+        "@type": "Article",
+        "headline": "RAG（検索拡張生成）とは？仕組み・メリット・限界",
+        "url": "https://ai-master.jp/glossary/rag/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "about": { "@type": "DefinedTerm", "name": "RAG" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "RAGとは何の略？",
+            "acceptedAnswer": { "@type": "Answer", "text": "Retrieval-Augmented Generation（検索拡張生成）の略です。検索で得た情報を生成の入力に加える手法を指します。" }
+          },
+          {
+            "@type": "Question",
+            "name": "RAGを入れれば回答は100%正確になる？",
+            "acceptedAnswer": { "@type": "Answer", "text": "いいえ。検索結果の品質やモデルの解釈により誤りは残ります。人による確認は引き続き必要です。" }
+          },
+          {
+            "@type": "Question",
+            "name": "RAGとファインチューニングの違いは？",
+            "acceptedAnswer": { "@type": "Answer", "text": "RAGは都度・外部データを参照して回答します。ファインチューニングはモデルの重みを追加学習で更新します。最新情報の反映にはRAGが向くことが多いです。" }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">RAG</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>RAG（検索拡張生成）とは？仕組み・メリット・限界</h1>
+    <p class="tool-hero-sub">読み：らぐ ／ 英：Retrieval-Augmented Generation</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>RAG</strong>（Retrieval-Augmented Generation／検索拡張生成）は、<a href="../llm/">LLM</a>が持たない<strong>社内文書・最新情報</strong>を、検索で取り込んでから回答する構成です。本記事は<a href="../hallucination/">ハルシネーション</a>の心理ではなく、<strong>システムのパイプライン</strong>——何を検索し、どう生成に渡すか——に焦点を当てます。試験では「正確性を100%保証する」といった言い過ぎが×になりやすい点も押さえます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">RAGとは</a></li>
+        <li><a href="#pipeline">処理の流れ（4ステップ）</a></li>
+        <li><a href="#use-cases">導入が向く場面</a></li>
+        <li><a href="#vs-finetuning">ファインチューニングとの違い</a></li>
+        <li><a href="#limits">限界と運用上の注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定・生成AIパスポートとも、RAGは<strong>「外部情報を検索し、生成の入力に加える」</strong>という定義が骨格です。一方で「RAGがあれば検証不要」「誤情報が検索にあっても必ず正答」は×です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-174/">TF-174（定義）</a>、<a href="../../exams/g-kentei/drill/q/tf-175/">TF-175（限界）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0172/">TF-0172（定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171（100%正確は×）</a>、<a href="../../exams/genai-passport/drill/q/tf-0228/">TF-0228（略称）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>RAGとは</h2>
+      <p>
+        RAGは、ユーザーの質問に対して<strong>まず関連文書を検索（Retrieval）</strong>し、得られた抜粋を<a href="../prompt/">プロンプト</a>に含めたうえで<strong>LLMが回答を生成（Generation）</strong>するパターンです。モデル単体の学習データだけに頼らず、<strong>根拠のある参照</strong>を足すのが目的です。
+      </p>
+      <p>
+        社内FAQ、マニュアル、議事録、製品仕様など、<strong>閉じたナレッジ</strong>をチャットで引けるようにする用途でよく採用されます。<a href="../generative-ai/">生成AI</a>の業務活用では、いま最も一般的なアーキテクチャのひとつです。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>処理の流れ（4ステップ）</h2>
+      <p>実装の細部は製品によりますが、概念として次の流れを覚えると試験・設計の両方に使えます。</p>
+      <ul class="tool-steps">
+        <li>
+          <strong>1. インデックス化（事前準備）</strong>
+          <p>文書を分割し、ベクトル化して検索用データベースに格納。埋め込み（Embedding）を使う構成が多い。</p>
+        </li>
+        <li>
+          <strong>2. 検索（Retrieval）</strong>
+          <p>ユーザーの質問と意味的に近いチャンクを上位k件取得。</p>
+        </li>
+        <li>
+          <strong>3. 拡張（Augment）</strong>
+          <p>検索結果をプロンプトに挿入。「以下の資料に基づいて答えよ」など指示とセット。</p>
+        </li>
+        <li>
+          <strong>4. 生成（Generation）</strong>
+          <p>LLMが参照文脈を踏まえて回答。出典表示を付ける製品もある。</p>
+        </li>
+      </ul>
+      <p>
+        検索が外れる（関係ない段落を拾う）と、<a href="../hallucination/">ハルシネーション</a>に似た誤回答が起きます。チャンク設計と検索精度が品質の鍵です。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>導入が向く場面</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>シーン</th>
+            <th>RAGが効きやすい理由</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>社内規程・手順の質問応答</td>
+            <td>根拠文書を明示しやすい</td>
+          </tr>
+          <tr>
+            <td>学習データ以降の情報</td>
+            <td>モデル再学習なしで資料を更新できる</td>
+          </tr>
+          <tr>
+            <td>顧客サポートのナレッジ検索</td>
+            <td>FAQ・チケット履歴を検索対象にできる</td>
+          </tr>
+          <tr>
+            <td>開発者向けドキュメントQA</td>
+            <td>API仕様など長文をチャンク検索</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="vs-finetuning">
+      <h2>ファインチューニングとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較</th>
+            <th>RAG</th>
+            <th>ファインチューニング</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>知識の更新</td>
+            <td>インデックスの差し替えで比較的容易</td>
+            <td>再学習が必要になりがち</td>
+          </tr>
+          <tr>
+            <td>根拠の提示</td>
+            <td>参照文書を示しやすい</td>
+            <td>モデル内部に埋もれやすい</td>
+          </tr>
+          <tr>
+            <td>コスト・難易度</td>
+            <td>検索基盤の構築が中心</td>
+            <td>学習データ整備・GPUコスト</td>
+          </tr>
+          <tr>
+            <td>試験の注意</td>
+            <td>「検索＋生成」の説明</td>
+            <td>「重みの追加学習」と混同しない</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="limits">
+      <h2>限界と運用上の注意</h2>
+      <ul class="tool-example-list">
+        <li><strong>検索ミス</strong> — 関係ない段落を拾うと誤回答の元になる</li>
+        <li><strong>資料の誤り</strong> — インデックスが誤情報なら出力も誤る（<a href="../../exams/g-kentei/drill/q/tf-175/">TF-175</a>）</li>
+        <li><strong>プロンプトインジェクション</strong> — 取り込んだPDFに悪意ある指示が含まれるリスク（<a href="../../exams/g-kentei/drill/q/tf-204/">TF-204</a>）</li>
+        <li><strong>人の確認は依然必要</strong> — 100%正確の保証はない（<a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171</a>）</li>
+      </ul>
+      <p>
+        <a href="../agent/">AIエージェント</a>と組み合わせると、検索・API呼び出しを自律的に繰り返す構成にも発展します。設計が複雑になるほど、ログと権限管理が重要になります。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>RAGとは何の略？</summary>
+          <p class="tool-faq-a">Retrieval-Augmented Generation（検索拡張生成）です。<a href="../../exams/genai-passport/drill/q/tf-0228/">TF-0228</a>も参照してください。</p>
+        </details>
+        <details>
+          <summary>RAGを入れれば回答は100%正確になる？</summary>
+          <p class="tool-faq-a">いいえ。根拠性は高めやすいですが、検索・生成のどちらでも誤りは起こり得ます。</p>
+        </details>
+        <details>
+          <summary>RAGとハルシネーション対策の関係は？</summary>
+          <p class="tool-faq-a">RAGは幻覚を<strong>減らす手段のひとつ</strong>ですが、消滅させる魔法ではありません。詳細は<a href="../hallucination/">ハルシネーション</a>を参照。</p>
+        </details>
+        <details>
+          <summary>生成AIエンジニアの仕事と関係ある？</summary>
+          <p class="tool-faq-a">RAGパイプラインの設計・評価は実務の中心タスクのひとつです。<a href="../../career/generative-ai-engineer/">生成AIエンジニア</a>も参照してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../agent/">AIエージェント</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li class="tool-related-list__soon">ベクトル検索 <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連記事</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../../career/generative-ai-engineer/">生成AIエンジニアとは</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/g-kentei/">G検定 試験対策</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

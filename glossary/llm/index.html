@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LLM（大規模言語モデル）とは？言語モデルとの違い、次トークン予測の仕組み、ChatGPTとの関係をG検定・生成AIパスポート向けにわかりやすく解説。">
+  <title>LLM（大規模言語モデル）とは？仕組み・特徴・言語モデルとの違い — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/llm/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="LLM（大規模言語モデル）とは？仕組み・特徴・言語モデルとの違い">
+  <meta property="og:description" content="LLMの意味、言語モデル（LM）との違い、次トークン予測の考え方を試験対策向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/llm/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/glossary/llm/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "用語辞典", "item": "https://ai-master.jp/glossary/" },
+          { "@type": "ListItem", "position": 3, "name": "LLM（大規模言語モデル）", "item": "https://ai-master.jp/glossary/llm/" }
+        ]
+      },
+      {
+        "@type": "DefinedTerm",
+        "@id": "https://ai-master.jp/glossary/llm/#term",
+        "name": "LLM",
+        "alternateName": ["大規模言語モデル", "Large Language Model"],
+        "description": "大量のテキストで学習した巨大な言語モデル。次に続くトークンの確率を予測して文章を生成する。",
+        "inDefinedTermSet": {
+          "@type": "DefinedTermSet",
+          "name": "AI Master 用語辞典",
+          "url": "https://ai-master.jp/glossary/"
+        }
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/glossary/llm/#article",
+        "headline": "LLM（大規模言語モデル）とは？仕組み・特徴・言語モデルとの違い",
+        "description": "LLMの意味、言語モデル（LM）との違い、次トークン予測の考え方を試験対策向けに整理。",
+        "url": "https://ai-master.jp/glossary/llm/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/glossary/llm/#webpage" },
+        "about": { "@id": "https://ai-master.jp/glossary/llm/#term" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/glossary/llm/#webpage",
+        "url": "https://ai-master.jp/glossary/llm/",
+        "name": "LLM（大規模言語モデル）とは？仕組み・特徴・言語モデルとの違い",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/glossary/llm/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "LLMと言語モデル（LM）の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらも「次の語を予測する」言語モデルですが、LLMはパラメータ数・学習データ規模が桁違いに大きいモデルを指すことが多いです。n-gramのような古典的手法はLMの一種ですが、LLMではありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LLMとChatGPTは同じもの？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。LLMはモデル（エンジン）の名称で、ChatGPTはそのLLMを使った対話型サービスです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LLMはなぜ事実と違う回答をすることがある？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "LLMは「もっともらしい次のトークン」を選ぶ仕組みのため、正確さより文脈の自然さが優先されることがあります。根拠確認やRAGなどの補助が必要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">LLM（大規模言語モデル）</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>LLM（大規模言語モデル）とは？仕組み・特徴・言語モデルとの違い</h1>
+    <p class="tool-hero-sub">読み：えるえるえむ ／ 英：Large Language Model</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>LLM</strong>（Large Language Model／大規模言語モデル）は、インターネット規模のテキストで学習した<strong>巨大な言語モデル</strong>のことです。<a href="../generative-ai/">生成AI</a>の中核を担い、<a href="../../tools/chatgpt/">ChatGPT</a>やClaude、Geminiなど多くのサービスの「頭脳」になっています。本記事はプロンプトの書き方ではなく、<strong>モデルが何をしているか</strong>——言語モデルの系譜、規模の意味、次トークン予測——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">LLMとは</a></li>
+        <li><a href="#lm-vs-llm">言語モデル（LM）との違い</a></li>
+        <li><a href="#next-token">次トークン予測という仕組み</a></li>
+        <li><a href="#why-large">「大規模」とは何が大きいのか</a></li>
+        <li><a href="#model-vs-service">モデルとサービスの違い</a></li>
+        <li><a href="#limits">LLMの限界（試験でも重要）</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、LLMを<strong>Transformerベースの大規模ニューラルネット</strong>として位置づけ、決定木やn-gramと混同しないことが問われます。また「自然な文章＝正確な内容」ではない点も頻出です。
+      </p>
+      <p>
+        生成AIパスポートでは、LMとLLMの<strong>定義の取り違え</strong>（n-gramの説明をLLMに当てはめる等）や、専門分野の最終判断をLLMに任せてよいか、といった<strong>活用の限界</strong>が出題されます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-132/">TF-132（LLMと決定木）</a>、<a href="../../exams/g-kentei/drill/q/tf-171/">TF-171（正確性の保証）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0741/">HQ-0741（LMとLLM）</a>、<a href="../../exams/genai-passport/drill/q/tf-0473/">TF-0473（不得意領域）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>LLMとは</h2>
+      <p>
+        LLMは、<strong>大量のテキストコーパス</strong>を用いて学習した言語モデルで、与えられた文脈に続く<strong>次のトークン（語の断片）の確率分布</strong>を推定します。人間が「次に何と言いそうか」を予測するイメージに近いですが、数学的には確率モデルとして実装されています。
+      </p>
+      <p>
+        現代のLLMの多くは<strong>Transformer</strong>アーキテクチャを基盤とし、長い文脈の依存関係を効率よく扱えます。学習後に<strong>ファインチューニング</strong>や<strong>RLHF</strong>（人間のフィードバックによる強化学習）で、対話向けの振る舞いに調整されることもあります。
+      </p>
+    </section>
+
+    <section id="lm-vs-llm">
+      <h2>言語モデル（LM）との違い</h2>
+      <p>「言語モデル」は広い概念で、LLMはその中の<strong>大規模版</strong>です。試験では次の対比が効きます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較</th>
+            <th>古典的LM（例：n-gram）</th>
+            <th>LLM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>予測の根拠</td>
+            <td>直前の数語の統計</td>
+            <td>文脈全体（アテンション等）</td>
+          </tr>
+          <tr>
+            <td>規模</td>
+            <td>比較的小さい</td>
+            <td>パラメータ・データが巨大</td>
+          </tr>
+          <tr>
+            <td>できること</td>
+            <td>次語予測・補完</td>
+            <td>要約・翻訳・推論風の出力など多様</td>
+          </tr>
+          <tr>
+            <td>試験での注意</td>
+            <td>「LLM＝n-gram」は×</td>
+            <td>「LLM＝決定木」も×</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="next-token">
+      <h2>次トークン予測という仕組み</h2>
+      <p>
+        LLMの生成は、おおまかに次のループで進みます。
+      </p>
+      <ul class="tool-steps">
+        <li>
+          <strong>入力（プロンプト）をトークン列に分割</strong>
+          <p>文字数と<a href="../token/">トークン数</a>は一致しません。詳細はトークンの記事を参照。</p>
+        </li>
+        <li>
+          <strong>各候補トークンの確率を計算</strong>
+          <p>文脈全体を見て「次に来やすい断片」をスコアリング。</p>
+        </li>
+        <li>
+          <strong>1つ選び、出力に追加</strong>
+          <p>温度（temperature）などの設定でランダム性が変わり、同じ入力でも出力が変わることがあります。</p>
+        </li>
+        <li>
+          <strong>終了条件まで繰り返す</strong>
+          <p>最大長や停止トークンで終了。長文ほど<a href="../token/">コンテキスト上限</a>の圧迫に注意。</p>
+        </li>
+      </ul>
+      <p>
+        この仕組みのため、LLMは<strong>「知識を検索している」わけではなく、統計的に続きを生成している</strong>と理解すると、ハルシネーション（事実誤り）の説明につながります。
+      </p>
+    </section>
+
+    <section id="why-large">
+      <h2>「大規模」とは何が大きいのか</h2>
+      <p>「大規模」は曖昧に使われますが、試験・実務で押さえるのは主に次の3点です。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>パラメータ数</h3>
+          <p>モデル内部の重みの数。数十億〜数千億規模のモデルがLLMと呼ばれることが多い。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>学習データ量</h3>
+          <p>Webテキスト、書籍、コードなど膨大なコーパス。データの偏りが出力の偏りにもつながる。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>計算資源</h3>
+          <p>学習・推論にGPUクラスタが必要。クラウドAPIの料金体系にも影響する。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="model-vs-service">
+      <h2>モデルとサービスの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>層</th>
+            <th>例</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>モデル（LLM）</strong></td>
+            <td>GPT系列、Claude、Gemini</td>
+            <td>推論エンジン本体。APIやアプリの裏側</td>
+          </tr>
+          <tr>
+            <td><strong>サービス</strong></td>
+            <td>ChatGPT、Claude.ai</td>
+            <td>UI・履歴・課金を含む製品。ツール解説は<a href="../../tools/">AIツール一覧</a>へ</td>
+          </tr>
+          <tr>
+            <td><strong>概念</strong></td>
+            <td><a href="../generative-ai/">生成AI</a></td>
+            <td>テキスト以外の生成も含む上位概念</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="limits">
+      <h2>LLMの限界（試験でも重要）</h2>
+      <ul class="tool-example-list">
+        <li><strong>事実の保証がない</strong> — もっともらしい誤り（<a href="../hallucination/">ハルシネーション</a>）が起きうる</li>
+        <li><strong>学習データの時点で知識が止まる</strong> — 最新ニュースは別途検索・<a href="../rag/">RAG</a>が必要なことも</li>
+        <li><strong>専門判断の代替にならない</strong> — 医療・法律・税務などは専門家確認が前提</li>
+        <li><strong>機密入力のリスク</strong> — プロンプトに社外秘を入れない運用が必要</li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>LLMと言語モデル（LM）の違いは？</summary>
+          <p class="tool-faq-a">LMは広い概念で、LLMはその大規模版です。n-gramはLMの一種ですがLLMではありません。<a href="../../exams/genai-passport/practice/q/hq-0741/">HQ-0741</a>で定義の取り違えに慣れておきましょう。</p>
+        </details>
+        <details>
+          <summary>LLMとChatGPTは同じもの？</summary>
+          <p class="tool-faq-a">LLMはモデル、ChatGPTはサービスです。<a href="../../tools/chatgpt/">ChatGPTの解説</a>と<a href="../generative-ai/">生成AI</a>の記事で層の違いを整理できます。</p>
+        </details>
+        <details>
+          <summary>LLMはなぜ事実と違う回答をすることがある？</summary>
+          <p class="tool-faq-a">次トークンを「自然さ」で選ぶため、正確さより文脈整合が優先されることがあります。<a href="../../exams/g-kentei/drill/q/tf-171/">G検定 TF-171</a>の論点です。</p>
+        </details>
+        <details>
+          <summary>プロンプトやトークンは別の記事で学べる？</summary>
+          <p class="tool-faq-a">はい。入力の書き方は<a href="../prompt/">プロンプト</a>、処理単位と料金は<a href="../token/">トークン</a>を参照してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li class="tool-related-list__soon">GPT <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">Transformer <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../../tools/claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
+          <li><a href="../../tools/gemini/"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> Gemini</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

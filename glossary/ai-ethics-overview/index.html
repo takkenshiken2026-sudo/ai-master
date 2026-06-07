@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI倫理とは？公平性・安全性・説明責任などの基本原則と、生成AI利用で押さえる視点をG検定・生成AIパスポート向けに解説。">
+  <title>AI倫理とは？基本原則・人間中心・試験のポイント — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/ai-ethics-overview/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="AI倫理とは？基本原則・人間中心・試験のポイント">
+  <meta property="og:url" content="https://ai-master.jp/glossary/ai-ethics-overview/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"AI倫理","alternateName":["AI Ethics"],"description":"AIの開発・利用における公平性・安全性・責任の枠組み。"}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">AI倫理</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・ビジネス</p>
+    <h1>AI倫理とは？基本原則・人間中心・試験のポイント</h1>
+    <p class="tool-hero-sub">読み：えーあいりんり ／ 英：AI Ethics</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>AI倫理</strong>は、AIを「技術だけ」ではなく<strong>社会に与える影響</strong>の観点で捉える枠組みです。本記事は<a href="../copyright/">著作権</a>や<a href="../appi/">個人情報保護法</a>の条文解説ではなく、<strong>価値・原則・責任</strong>——何を大切にし、誰が判断するか——に焦点を当てます。生成AIパスポート第4章やG検定のAI倫理・ガバナンス領域の土台になります。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">AI倫理とは</a></li>
+        <li><a href="#principles">よく挙げられる原則</a></li>
+        <li><a href="#human-centered">人間中心のAI</a></li>
+        <li><a href="#stakeholders">関係者ごとの責任</a></li>
+        <li><a href="#vs-law">法令・ガバナンスとの違い</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        正誤問題では、<strong>「倫理＝完全自動化が正義」</strong>のような言い過ぎが×になります。人間の関与・確認を重視するのが試験の流れです。また、リスクは法令・権利・セキュリティ・倫理・品質が<strong>横断</strong>して起きる、という全体像も問われます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-275/">TF-275（人間中心のAI）</a>、<a href="../../exams/g-kentei/drill/domain/domain-04/">AI倫理・AIガバナンス（一問一答）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0400/">TF-0400（横断的確認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0430/">TF-0430（実務の確認）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>AI倫理とは</h2>
+      <p>
+        AI倫理は、AIの開発・提供・利用において、<strong>公平性・安全性・透明性・説明責任</strong>などをどう確保するかを考える領域です。法律で全部が決まっているわけではなく、<strong>組織の方針・設計・運用</strong>として具体化していくものです。
+      </p>
+      <p>
+        <a href="../generative-ai/">生成AI</a>の普及で、<a href="../hallucination/">ハルシネーション</a>、偏り、差別的出力、プライバシー侵害など、<strong>技術的な精度以外の問題</strong>が前面に出ています。AI倫理はそうした論点を整理する語彙を提供します。
+      </p>
+    </section>
+
+    <section id="principles">
+      <h2>よく挙げられる原則</h2>
+      <p>国・団体・企業で文言は異なりますが、試験・実務で繰り返し出る軸は次のとおりです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>原則</th>
+            <th>意味（試験・実務向け）</th>
+            <th>生成AIでの例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>公平性</strong></td>
+            <td>特定の群体への不当な不利を避ける</td>
+            <td>差別的・偏った出力のチェック</td>
+          </tr>
+          <tr>
+            <td><strong>透明性</strong></td>
+            <td>AI利用であること、限界を明示</td>
+            <td>「AI生成」とラベル表示</td>
+          </tr>
+          <tr>
+            <td><strong>安全性</strong></td>
+            <td>害を与えない設計・運用</td>
+            <td>危険な指示への拒否、入力制限</td>
+          </tr>
+          <tr>
+            <td><strong>説明責任</strong></td>
+            <td>誰が責任を負うか明確に</td>
+            <td>業務利用時の承認フロー</td>
+          </tr>
+          <tr>
+            <td><strong>プライバシー</strong></td>
+            <td>個人データの適切な扱い</td>
+            <td>プロンプトへの個人情報非入力</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="human-centered">
+      <h2>人間中心のAI</h2>
+      <p>
+        <strong>人間中心のAI</strong>（Human-Centered AI）は、人間の価値・権利を中心に置き、必要に応じて<strong>人間が確認・介入できる</strong>設計を重視する考え方です。
+      </p>
+      <p>
+        「すべての判断をAIに任せ、人間が関与しない状態を目指す」は<strong>人間中心ではない</strong>——これがG検定の典型論点です（<a href="../../exams/g-kentei/drill/q/tf-275/">TF-275</a>）。生成AIの業務利用でも、最終判断は人が行う、という原則が倫理と実務の両方で一致します。
+      </p>
+    </section>
+
+    <section id="stakeholders">
+      <h2>関係者ごとの責任</h2>
+      <p>倫理は開発者だけの話ではありません。試験のケース問題では「誰が何を確認すべきか」が問われます。</p>
+      <ul class="tool-steps">
+        <li><strong>開発・提供側</strong> — モデル評価、安全対策、利用規約</li>
+        <li><strong>導入企業</strong> — 社内ポリシー、教育、ログ・監査</li>
+        <li><strong>利用者</strong> — 入力情報の確認、出力の検証</li>
+        <li><strong>社会・規制</strong> — ガイドライン、法整備（<a href="../appi/">個人情報保護法</a>など）</li>
+      </ul>
+    </section>
+
+    <section id="vs-law">
+      <h2>法令・ガバナンスとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>概念</th>
+            <th>役割</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>AI倫理</strong></td>
+            <td>価値・原則の枠組み。「どうあるべきか」</td>
+          </tr>
+          <tr>
+            <td><strong>法令</strong></td>
+            <td>遵守義務。「違反すると罰則等」例：<a href="../copyright/">著作権</a>、<a href="../appi/">個人情報保護法</a></td>
+          </tr>
+          <tr>
+            <td><strong>AIガバナンス</strong></td>
+            <td>組織の統治体制。方針・評価・監視・改善の継続（<a href="../../exams/g-kentei/drill/q/tf-445/">TF-445</a>）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>倫理・法令・ガバナンスは重なりますが、<strong>同じ言葉ではありません</strong>。試験では定義のすり替えに注意してください。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>AI倫理とコンプライアンスの違いは？</summary>
+          <p class="tool-faq-a">コンプライアンスは主に法令遵守。AI倫理はそれに加え、公平性や人間の関与など価値判断を含みます。</p>
+        </details>
+        <details>
+          <summary>人間中心のAIは完全自動化を目指す？</summary>
+          <p class="tool-faq-a">いいえ。人間の確認・介入を重視します（<a href="../../exams/g-kentei/drill/q/tf-275/">TF-275</a>）。</p>
+        </details>
+        <details>
+          <summary>生成AIパスポートでどこに出る？</summary>
+          <p class="tool-faq-a">法令・権利・倫理・セキュリティが横断する章で出ます。<a href="../../exams/genai-passport/drill/q/tf-0400/">TF-0400</a>が全体像の入口です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../eu-ai-act/">EU AI Act</a></li>
+          <li class="tool-related-list__soon">公平性 <span class="tool-soon-badge">準備中</span></li>
+          <li><a href="../copyright/">著作権</a></li>
+          <li><a href="../appi/">個人情報保護法</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。本記事は一般的な整理であり、法的助言ではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

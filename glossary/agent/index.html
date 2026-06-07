@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AIエージェントとは？チャットボットとの違い、計画・ツール利用・自律実行の意味を生成AIパスポート・G検定向けに解説。">
+  <title>AIエージェントとは？意味・チャットとの違い・運用の注意 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/agent/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="AIエージェントとは？意味・チャットとの違い・運用の注意">
+  <meta property="og:url" content="https://ai-master.jp/glossary/agent/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "AIエージェント",
+        "alternateName": ["AI Agent", "エージェント"],
+        "description": "目標達成のため、計画・ツール利用・推論を繰り返す自律的なAIの構成。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "AIエージェントとチャットボットの違いは？",
+            "acceptedAnswer": { "@type": "Answer", "text": "チャットボットは主に一問一答の対話。AIエージェントは目標に向けて手順を立て、検索・API・コード実行などのツールを使いながらタスクを進める点が異なります。" }
+          },
+          {
+            "@type": "Question",
+            "name": "AIエージェントは強化学習のエージェントと同じ？",
+            "acceptedAnswer": { "@type": "Answer", "text": "文脈によります。生成AIパスポートでいうAIエージェントは、LLMがツールを使って業務を進める構成を指すことが多く、強化学習の環境行動エージェントとは別の話として問われることがあります。" }
+          },
+          {
+            "@type": "Question",
+            "name": "失敗時にログを残すべき？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。原因調査・監査のためログは重要です。「ログを残さない方がよい」は誤りです。" }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">AIエージェント</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>AIエージェントとは？意味・チャットとの違い・運用の注意</h1>
+    <p class="tool-hero-sub">読み：えーあいえーじぇんと ／ 英：AI Agent</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>AIエージェント</strong>（AI Agent）は、単なる質問応答ではなく、<strong>目標に向けて計画し、ツールを使いながらタスクを進める</strong>AIの構成です。本記事は<a href="../rag/">RAG</a>の検索パイプラインや<a href="../hallucination/">ハルシネーション</a>の定義ではなく、<strong>「誰が・何を・どこまで自律的に実行するか」</strong>というオーケストレーションの視点で整理します。強化学習の「エージェント」とは文脈が異なることも試験で区別します。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">AIエージェントとは</a></li>
+        <li><a href="#loop">思考と行動のループ</a></li>
+        <li><a href="#vs-chat">チャットボットとの違い</a></li>
+        <li><a href="#tools">ツール連携の例</a></li>
+        <li><a href="#ops">運用・ガバナンス</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、<strong>計画・ツール利用・自律性</strong>がキーワードです。また、失敗時の<strong>ログ記録</strong>は推奨され、「ログを残すと調査が難しくなるから記録しない」は×です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238（定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0270/">TF-0270（ログ）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-204/">TF-204（エージェントとプロンプトインジェクション）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>AIエージェントとは</h2>
+      <p>
+        一般的な説明として、AIエージェントは<strong>与えられた目標</strong>（例：「今週の競合ニュースをまとめて」）に対し、<a href="../llm/">LLM</a>が<strong>手順を分解</strong>し、必要に応じて<strong>外部ツール</strong>（検索、カレンダー、コード実行、社内APIなど）を呼び出しながら進める仕組みです。
+      </p>
+      <p>
+        1回の<a href="../prompt/">プロンプト</a>で完結するのではなく、<strong>複数ステップのループ</strong>になる点が、近年の「エージェント」ブームの本質です。
+      </p>
+    </section>
+
+    <section id="loop">
+      <h2>思考と行動のループ</h2>
+      <p>製品により名称は異なりますが、概念として次のサイクルが繰り返されます。</p>
+      <ol class="tool-steps">
+        <li><strong>理解</strong> — ユーザーの目標と制約を把握</li>
+        <li><strong>計画</strong> — サブタスクに分解（例：検索→要約→表作成）</li>
+        <li><strong>行動</strong> — ツールを実行（<a href="../rag/">RAG</a>検索、API、ファイル操作）</li>
+        <li><strong>観察</strong> — 結果を読み、次の一手を決める</li>
+        <li><strong>完了 or 再試行</strong> — 目標達成までループ、または人に確認</li>
+      </ol>
+      <p>
+        ループが増えるほど、<a href="../token/">トークン</a>消費とコストも増え、<a href="../hallucination/">ハルシネーション</a>や誤操作のリスクも広がります。
+      </p>
+    </section>
+
+    <section id="vs-chat">
+      <h2>チャットボットとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較</th>
+            <th>チャットボット（対話型）</th>
+            <th>AIエージェント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>基本動作</td>
+            <td>入力に対し回答を返す</td>
+            <td>目標達成まで複数手順を実行</td>
+          </tr>
+          <tr>
+            <td>外部連携</td>
+            <td>なし〜限定的</td>
+            <td>ツール・API呼び出しが前提になりやすい</td>
+          </tr>
+          <tr>
+            <td>自律性</td>
+            <td>低い（都度の指示）</td>
+            <td>中〜高（計画に沿って進める）</td>
+          </tr>
+          <tr>
+            <td>リスク</td>
+            <td>誤回答・情報漏洩</td>
+            <td>上記に加え、誤ったAPI操作・権限逸脱</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../tools/chatgpt/">ChatGPT</a>もエージェント機能を追加しており、「チャット」と「エージェント」の境界は製品上あいまいになっています。試験では<strong>能力の説明文</strong>で判別します。
+      </p>
+    </section>
+
+    <section id="tools">
+      <h2>ツール連携の例</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>検索・RAG</h3>
+          <p>社内文書やWebを引いてから回答を組み立てる。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コード実行</h3>
+          <p>データ分析やファイル変換を自動で試行する。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>業務API</h3>
+          <p>CRM登録、チケット起票、在庫照会など。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>マルチエージェント</h3>
+          <p>調査役・執筆役など役割分担（高度な構成）。</p>
+        </div>
+      </div>
+      <p>
+        ツールが増えるほど、<strong>権限の最小化</strong>（読み取り専用、承認フロー）が重要です。
+      </p>
+    </section>
+
+    <section id="ops">
+      <h2>運用・ガバナンス</h2>
+      <ul class="tool-example-list">
+        <li><strong>ログ・監査証跡</strong> — 何を実行したか追えるようにする（<a href="../../exams/genai-passport/drill/q/tf-0270/">TF-0270</a>）</li>
+        <li><strong>人の承認ポイント</strong> — 送信・決済・削除などは最終確認</li>
+        <li><strong>プロンプトインジェクション対策</strong> — 外部データ経由の悪意ある指示（<a href="../../exams/g-kentei/drill/q/tf-204/">TF-204</a>）</li>
+        <li><strong>失敗時のフォールバック</strong> — 無限ループやコスト暴走を防ぐ上限設定</li>
+      </ul>
+      <p>
+        キャリア面では、エージェント設計は<a href="../../career/generative-ai-engineer/">生成AIエンジニア</a>や<a href="../../career/prompt-engineer/">プロンプトエンジニア</a>の実務領域と重なります。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>AIエージェントとチャットボットの違いは？</summary>
+          <p class="tool-faq-a">エージェントは目標達成のため計画・ツール利用を繰り返します。<a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238</a>を参照。</p>
+        </details>
+        <details>
+          <summary>強化学習のエージェントと同じ？</summary>
+          <p class="tool-faq-a">生成AI文脈のAIエージェントは、LLM＋ツールの業務自動化を指すことが多く、RLの環境行動とは別として問われることがあります。</p>
+        </details>
+        <details>
+          <summary>失敗時にログを残すべき？</summary>
+          <p class="tool-faq-a">はい。記録しない方がよいという記述は×です（<a href="../../exams/genai-passport/drill/q/tf-0270/">TF-0270</a>）。</p>
+        </details>
+        <details>
+          <summary>RAGとの関係は？</summary>
+          <p class="tool-faq-a">エージェントのツールのひとつとして<a href="../rag/">RAG</a>検索を使う構成が一般的です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../prompt-injection/">プロンプトインジェクション</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">キャリア・ツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../career/generative-ai-engineer/">生成AIエンジニアとは</a></li>
+          <li><a href="../../tools/chatgpt/">ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
