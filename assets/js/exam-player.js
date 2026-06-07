@@ -89,6 +89,7 @@
       this.deadline = null;
       this.keyHandler = null;
       this.sessionScore = { correct: 0, answered: 0 };
+      this.mockAnswers = {};
       this.selectedSetupCount = 10;
       this.selectedSetupDomain = "";
 
@@ -96,6 +97,7 @@
       this.ensureCompleteUI();
       this.ensureMockClosedPanel();
       this.ensureMockBriefingPanel();
+      this.ensureMockNavigator();
 
       this.el = {
         bar: $(".quiz-bar", root),
@@ -128,6 +130,7 @@
         completeShare: $(".quiz-complete__share-x", root),
         mockClosed: $(".quiz-mock-closed", root),
         mockBriefing: $(".quiz-mock-briefing", root),
+        navigator: $(".quiz-navigator", root),
       };
 
       this.initUI();
@@ -140,6 +143,7 @@
       const paywall = mode === "paywall";
       const mockClosed = mode === "mock-closed";
       const mockBriefing = mode === "mock-briefing";
+      const showNavigator = play && this.isMockDeferFeedback();
 
       if (this.el.setup) this.el.setup.hidden = !setup;
       if (this.el.bar) this.el.bar.hidden = !play;
@@ -148,6 +152,7 @@
       if (this.el.paywall) this.el.paywall.hidden = !paywall;
       if (this.el.mockClosed) this.el.mockClosed.hidden = !mockClosed;
       if (this.el.mockBriefing) this.el.mockBriefing.hidden = !mockBriefing;
+      if (this.el.navigator) this.el.navigator.hidden = !showNavigator;
     }
 
     initUI() {
@@ -243,7 +248,8 @@
           <p class="quiz-mock-briefing__meta"></p>
           <ul class="quiz-mock-briefing__rules">
             <li>四肢択一形式で、本番と同じ問題数に挑戦します</li>
-            <li>1問回答すると解説を確認できます</li>
+            <li>正解・解説は結果画面でまとめて確認できます</li>
+            <li>問題一覧から任意の問題に移動できます</li>
             <li>途中でページを閉じても進捗は保存されます</li>
           </ul>
           <button type="button" class="quiz-btn quiz-btn--primary quiz-mock-briefing__start">模擬試験を開始</button>
@@ -262,6 +268,174 @@
 
     isMockSession() {
       return Boolean(this.config.examId);
+    }
+
+    isMockDeferFeedback() {
+      if (!this.isMockSession() || this.config.mockDeferFeedback === false) return false;
+      if (this.config.mockDeferFeedback === true) return true;
+      return this.config.examId !== "sample";
+    }
+
+    ensureMockNavigator() {
+      if ($(".quiz-navigator", this.root)) return;
+      const nav = document.createElement("div");
+      nav.className = "quiz-navigator";
+      nav.hidden = true;
+      nav.innerHTML = `
+        <p class="quiz-navigator__label">問題一覧</p>
+        <div class="quiz-navigator__grid" role="navigation" aria-label="問題一覧"></div>
+        <div class="quiz-navigator__footer">
+          <p class="quiz-navigator__status"></p>
+          <button type="button" class="quiz-btn quiz-btn--primary quiz-navigator__finish">結果を見る</button>
+        </div>
+      `;
+      const stage = $(".quiz-stage", this.root);
+      if (stage) {
+        this.root.insertBefore(nav, stage);
+      } else {
+        this.root.appendChild(nav);
+      }
+    }
+
+    computeMockScore() {
+      let correct = 0;
+      let answered = 0;
+      this.questions.forEach((q, i) => {
+        const sel = this.mockAnswers[i] ?? this.mockAnswers[String(i)];
+        if (!sel) return;
+        answered += 1;
+        if (sel === q.answer) correct += 1;
+      });
+      return { correct, answered };
+    }
+
+    loadMockAnswers() {
+      if (!this.isMockDeferFeedback()) return;
+      const raw = localStorage.getItem(storageKey(this.config, "answers"));
+      if (!raw) {
+        this.mockAnswers = {};
+        return;
+      }
+      try {
+        this.mockAnswers = JSON.parse(raw);
+      } catch {
+        this.mockAnswers = {};
+      }
+    }
+
+    saveMockAnswers() {
+      if (!this.isMockDeferFeedback()) return;
+      localStorage.setItem(storageKey(this.config, "answers"), JSON.stringify(this.mockAnswers));
+    }
+
+    updateNavigator() {
+      if (!this.isMockDeferFeedback()) return;
+      const nav = this.el.navigator || $(".quiz-navigator", this.root);
+      if (!nav) return;
+      const grid = $(".quiz-navigator__grid", nav);
+      const status = $(".quiz-navigator__status", nav);
+      const { answered } = this.computeMockScore();
+      const total = this.questions.length;
+      if (status) {
+        status.textContent = `回答済み ${answered} / ${total} 問`;
+      }
+      if (!grid) return;
+      grid.innerHTML = "";
+      this.questions.forEach((_, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "quiz-navigator__cell";
+        if (i === this.index) btn.classList.add("is-current");
+        if (this.mockAnswers[i] ?? this.mockAnswers[String(i)]) {
+          btn.classList.add("is-answered");
+        }
+        btn.textContent = String(i + 1);
+        btn.setAttribute("aria-label", `問題 ${i + 1}`);
+        btn.addEventListener("click", () => this.jumpToQuestion(i));
+        grid.appendChild(btn);
+      });
+    }
+
+    jumpToQuestion(i) {
+      if (i < 0 || i >= this.questions.length) return;
+      this.index = i;
+      this.saveProgress();
+      this.render();
+    }
+
+    requestFinish() {
+      const { answered } = this.computeMockScore();
+      const total = this.questions.length;
+      if (answered < total) {
+        const ok = window.confirm(
+          `未回答が ${total - answered} 問あります。このまま結果を見ますか？`
+        );
+        if (!ok) return;
+      }
+      this.finish(false);
+    }
+
+    markChoicesDeferred(selected) {
+      this.el.choices.querySelectorAll(".quiz-choice").forEach((btn) => {
+        btn.classList.remove("is-selected", "is-correct", "is-wrong");
+        btn.disabled = false;
+        if (btn.dataset.value === selected) btn.classList.add("is-selected");
+      });
+    }
+
+    renderMockReview() {
+      const complete = this.el.complete;
+      if (!complete) return;
+      let review = $(".quiz-review", complete);
+      if (!review) {
+        review = document.createElement("div");
+        review.className = "quiz-review";
+        const actions = $(".quiz-complete__actions", complete);
+        if (actions) complete.insertBefore(review, actions);
+        else complete.appendChild(review);
+      }
+      review.hidden = false;
+      review.innerHTML = `
+        <h3 class="quiz-review__title">問題別の正解と解説</h3>
+        <div class="quiz-review__list">
+          ${this.questions
+            .map((q, i) => {
+              const selected = this.mockAnswers[i] ?? this.mockAnswers[String(i)];
+              const correct = q.answer;
+              const isCorrect = selected === correct;
+              const verdict = !selected
+                ? "未回答"
+                : isCorrect
+                  ? "正解"
+                  : "不正解";
+              const verdictClass = !selected
+                ? "is-unanswered"
+                : isCorrect
+                  ? "is-correct"
+                  : "is-wrong";
+              const yourLabel = selected
+                ? `${selected}. ${escapeHtml(q.choices?.[selected] || selected)}`
+                : "—";
+              const correctLabel = `${correct}. ${escapeHtml(q.choices?.[correct] || correct)}`;
+              return `
+                <details class="quiz-review__item">
+                  <summary class="quiz-review__summary">
+                    <span class="quiz-review__no">問 ${i + 1}</span>
+                    <span class="quiz-review__verdict ${verdictClass}">${verdict}</span>
+                  </summary>
+                  <div class="quiz-review__body">
+                    <p class="quiz-review__question">${escapeHtml(q.question)}</p>
+                    <p class="quiz-review__line"><strong>あなたの回答</strong> ${yourLabel}</p>
+                    <p class="quiz-review__line"><strong>正解</strong> ${correctLabel}</p>
+                    <p class="quiz-review__explanation">${escapeHtml(q.explanation || "")}</p>
+                  </div>
+                </details>
+              `;
+            })
+            .join("")}
+        </div>
+      `;
+      complete.classList.add("quiz-complete--with-review");
     }
 
     shareLabel() {
@@ -360,6 +534,7 @@
       this.questions = this.allQuestions.slice();
       this.loadProgress();
       this.applyDeepLinkQuestion();
+      this.loadMockAnswers();
       this.loadSessionScore();
       if (this.isPaywalled()) {
         this.showPaywall();
@@ -568,6 +743,7 @@
     }
 
     loadSessionScore() {
+      if (this.isMockDeferFeedback()) return;
       const raw = localStorage.getItem(storageKey(this.config, "score"));
       if (raw) {
         try {
@@ -590,6 +766,8 @@
       localStorage.removeItem(storageKey(this.config, "index"));
       localStorage.removeItem(storageKey(this.config, "deadline"));
       localStorage.removeItem(storageKey(this.config, "score"));
+      localStorage.removeItem(storageKey(this.config, "answers"));
+      this.mockAnswers = {};
     }
 
     bookmarkKey() {
@@ -657,6 +835,9 @@
         const q = this.questions[this.index];
         if (q?.id) this.toggleBookmark(q.id);
       });
+      $(".quiz-navigator__finish", this.root)?.addEventListener("click", () => {
+        this.requestFinish();
+      });
     }
 
     bindKeyboard() {
@@ -666,6 +847,7 @@
         if (e.target.matches("input, textarea, select")) return;
 
         if (e.key === "Enter") {
+          if (this.isMockDeferFeedback()) return;
           if (this.answered && this.el.actions && !this.el.actions.hidden) {
             e.preventDefault();
             this.goNext();
@@ -673,7 +855,7 @@
           return;
         }
 
-        if (this.answered) return;
+        if (this.answered && !this.isMockDeferFeedback()) return;
 
         if (this.isDrill()) {
           if (e.key === "1") this.submit("○");
@@ -728,12 +910,17 @@
         this.el.progress.innerHTML = `問題 <strong>${this.index + 1}</strong> / ${total}`;
       }
       if (this.el.accuracy) {
-        if (answered > 0) {
+        if (this.isMockDeferFeedback()) {
+          this.el.accuracy.hidden = true;
+        } else if (answered > 0) {
           this.el.accuracy.hidden = false;
           this.el.accuracy.innerHTML = `正答率 <strong>${formatRate(correct, answered)}</strong>`;
         } else {
           this.el.accuracy.hidden = true;
         }
+      }
+      if (this.isMockDeferFeedback()) {
+        this.updateNavigator();
       }
     }
 
@@ -744,7 +931,7 @@
         this.el.prompt.textContent = "問題がありません。";
         return;
       }
-      if (this.index >= this.questions.length) {
+      if (!this.isMockDeferFeedback() && this.index >= this.questions.length) {
         this.finish(false);
         return;
       }
@@ -757,16 +944,25 @@
 
       this.el.meta.textContent = q.domain || q.topic || "";
 
+      const saved = this.isMockDeferFeedback()
+        ? this.mockAnswers[this.index] ?? this.mockAnswers[String(this.index)]
+        : null;
       this.answered = false;
-      this.selected = null;
+      this.selected = saved || null;
       this.el.feedback.hidden = true;
-      if (this.el.actions) this.el.actions.hidden = true;
+      if (this.el.actions) {
+        this.el.actions.hidden = this.isMockDeferFeedback() ? true : true;
+      }
       this.updateBookmarkButton(q.id);
 
       if (this.isDrill()) {
         this.renderDrill(q);
       } else {
         this.renderChoice(q);
+      }
+
+      if (saved) {
+        this.markChoicesDeferred(saved);
       }
     }
 
@@ -816,6 +1012,16 @@
     }
 
     submit(value) {
+      if (this.isMockDeferFeedback()) {
+        const q = this.questions[this.index];
+        this.mockAnswers[this.index] = value;
+        this.selected = value;
+        this.saveMockAnswers();
+        this.markChoicesDeferred(value);
+        this.updateProgressBar();
+        return;
+      }
+
       if (this.answered) return;
       const q = this.questions[this.index];
       const correctAnswer = q.answer;
@@ -890,22 +1096,37 @@
       this.setView("complete");
       this.unbindKeyboard();
 
-      const { correct, answered } = this.sessionScore;
+      let { correct, answered } = this.sessionScore;
+      if (this.isMockDeferFeedback()) {
+        ({ correct, answered } = this.computeMockScore());
+        this.sessionScore = { correct, answered };
+        localStorage.setItem(storageKey(this.config, "score"), JSON.stringify(this.sessionScore));
+      }
+
       const rate = formatRate(correct, answered);
-      const msg = timedOut ? "制限時間が終了しました。" : "すべての問題に回答しました。";
+      const total = this.questions.length;
+      let msg = timedOut ? "制限時間が終了しました。" : "すべての問題に回答しました。";
+      if (this.isMockDeferFeedback() && answered < total && !timedOut) {
+        msg = `回答済み ${answered} / ${total} 問で採点しました。`;
+      }
 
       if (this.el.completeRateValue) {
         this.el.completeRateValue.textContent = rate;
         this.updateCompleteRateTone(rate);
       }
       if (this.el.completeDetail) {
-        this.el.completeDetail.textContent = `${correct} / ${answered} 問正解`;
+        this.el.completeDetail.textContent = this.isMockDeferFeedback()
+          ? `${correct} / ${total} 問正解（回答 ${answered} 問）`
+          : `${correct} / ${answered} 問正解`;
       }
       if (this.el.completeMessage) {
         this.el.completeMessage.textContent = msg;
       }
       if (this.el.completeShare) {
         this.el.completeShare.href = this.buildShareUrl();
+      }
+      if (this.isMockDeferFeedback()) {
+        this.renderMockReview();
       }
     }
 
@@ -915,6 +1136,10 @@
       this.deadline = null;
       this.answered = false;
       this.sessionScore = { correct: 0, answered: 0 };
+      this.mockAnswers = {};
+      const review = $(".quiz-review", this.el.complete);
+      if (review) review.hidden = true;
+      this.el.complete?.classList.remove("quiz-complete--with-review");
 
       if (this.useSetup()) {
         this.showSetup();

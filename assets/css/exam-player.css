@@ -11,6 +11,10 @@
   margin-bottom: 10px;
 }
 
+.page-wrap--mock-exam > .breadcrumb {
+  display: none;
+}
+
 .page-wrap--quiz .hub-header {
   padding-bottom: 10px;
   border-bottom: none;
@@ -747,6 +751,197 @@ a.mock-pick-card:hover .mock-pick-name {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   color: var(--blue);
+}
+
+/* 模擬試験 — 問題ナビ */
+.quiz-navigator {
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+}
+
+.quiz-navigator__label {
+  margin: 0 0 10px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.quiz-navigator__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 132px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  padding-bottom: 2px;
+}
+
+.quiz-navigator__cell {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--white);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.quiz-navigator__cell:hover {
+  border-color: var(--blue-mid);
+  background: var(--blue-soft);
+}
+
+.quiz-navigator__cell.is-current {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: var(--white);
+}
+
+.quiz-navigator__cell.is-answered:not(.is-current) {
+  background: var(--surface-inset);
+  border-color: var(--border-default);
+}
+
+.quiz-navigator__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.quiz-navigator__status {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.quiz-navigator__finish {
+  margin-left: auto;
+}
+
+.page-wrap--mock-exam .hub-header {
+  padding-bottom: 8px;
+}
+
+.page-wrap--mock-exam .hub-header h1 {
+  font-size: var(--text-lg);
+}
+
+/* 模擬試験 — 結果の解説一覧 */
+.quiz-complete--with-review {
+  max-width: 900px;
+  text-align: left;
+}
+
+.quiz-complete--with-review .quiz-complete__hero,
+.quiz-complete--with-review .quiz-complete__detail,
+.quiz-complete--with-review .quiz-complete__message,
+.quiz-complete--with-review .quiz-complete__share-x {
+  text-align: center;
+}
+
+.quiz-review {
+  margin: 24px 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.quiz-review__title {
+  margin: 0 0 14px;
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--ink);
+}
+
+.quiz-review__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.quiz-review__item {
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--surface-inset);
+}
+
+.quiz-review__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.quiz-review__summary::-webkit-details-marker {
+  display: none;
+}
+
+.quiz-review__no {
+  color: var(--ink);
+}
+
+.quiz-review__verdict {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.quiz-review__verdict.is-correct {
+  background: #eaf3de;
+  color: #3b6d11;
+}
+
+.quiz-review__verdict.is-wrong {
+  background: #fde8e8;
+  color: #b42318;
+}
+
+.quiz-review__verdict.is-unanswered {
+  background: var(--gray-200);
+  color: var(--text-muted);
+}
+
+.quiz-review__body {
+  padding: 0 14px 14px;
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  color: var(--text-body);
+}
+
+.quiz-review__question {
+  margin: 0 0 10px;
+  font-weight: var(--font-semibold);
+  color: var(--ink);
+}
+
+.quiz-review__line {
+  margin: 0 0 6px;
+}
+
+.quiz-review__explanation {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  background: var(--white);
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
 }
 
 @media (max-width: 960px) {

@@ -30,7 +30,7 @@
   </ul>
 </nav>
 
-<main class="page-wrap page-wrap--article page-wrap--quiz">
+<main class="page-wrap page-wrap--article page-wrap--quiz" id="mock-main">
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <ol>
       <li><a href="../../../index.html">ホーム</a></li>
@@ -105,7 +105,12 @@
     timeLimitMinutes: isSample ? 0 : 60,
     backUrl: "index.html",
     mockBriefing: true,
+    mockDeferFeedback: !isSample,
   });
+
+  if (!isSample) {
+    document.getElementById("mock-main")?.classList.add("page-wrap--mock-exam");
+  }
 
   fetch("../../../assets/data/genai-passport/mock.json")
     .then((r) => r.json())
@@ -118,7 +123,7 @@
       const intro = document.getElementById("mock-intro");
       if (intro) {
         intro.textContent = minutes
-          ? `${exam.questionCount}問 · 制限時間${minutes}分。制限時間内にすべての問題に回答してください。解答後に解説を確認できます。`
+          ? `${exam.questionCount}問 · 制限時間${minutes}分。問題一覧から任意の問題に移動できます。正解と解説は結果画面で確認できます。`
           : `${exam.questionCount}問のお試しです。操作感を確認してから本番形式に挑戦してください。`;
       }
     })
