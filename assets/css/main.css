@@ -341,16 +341,23 @@ body {
   gap: 16px; margin-top: 36px;
 }
 .exam-card {
+  display: flex;
+  flex-direction: column;
   background: var(--white);
   border: 2px solid var(--blue-mid);
   border-radius: var(--radius-xl);
   padding: 36px;
-  transition: border-color .2s, transform .2s;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .2s, transform .2s, background .2s;
 }
 .exam-card:hover {
   border-color: var(--blue);
   background: var(--blue-soft);
   transform: translateY(-4px);
+}
+.exam-card:hover .btn-exam-solid {
+  background: var(--blue-hover);
 }
 .exam-tag {
   font-family: var(--font-mono); font-size: var(--text-xs);
@@ -360,12 +367,27 @@ body {
 }
 .exam-h3 {
   font-family: var(--font-display);
-  font-size: var(--text-xl); font-weight: 700;
+  font-size: var(--text-2xl); font-weight: 700;
   color: var(--ink); letter-spacing: -0.01em;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
-.exam-org { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 10px; }
-.exam-desc { font-size: var(--text-base); font-weight: 500; color: var(--ink); line-height: 1.65; margin-bottom: 22px; }
+.exam-org {
+  font-size: var(--text-sm);
+  color: var(--gray-400);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.exam-org-host {
+  color: var(--gray-400);
+  font-weight: 400;
+}
+.exam-desc {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.65;
+  margin-bottom: 22px;
+}
 .exam-row { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 8px; }
 .exam-figure-num {
   font-family: var(--font-display);
@@ -385,7 +407,7 @@ body {
   color: var(--text-muted);
 }
 .exam-line { height: 1px; background: var(--gray-200); margin: 0 0 20px; }
-.exam-list { list-style: none; margin-bottom: 24px; }
+.exam-list { list-style: none; margin-bottom: 24px; flex: 1; }
 .exam-list li {
   font-size: var(--text-sm); color: var(--text-body);
   padding: 5px 0;
@@ -399,13 +421,18 @@ body {
   background: var(--blue); flex-shrink: 0;
 }
 .btn-exam-solid {
-  display: block; text-align: center;
-  background: var(--blue); color: var(--white);
-  font-size: var(--text-sm); font-weight: 500;
-  padding: 12px; border-radius: var(--radius-sm);
-  text-decoration: none; transition: background .15s;
+  display: block;
+  margin-top: auto;
+  text-align: center;
+  background: var(--blue);
+  color: var(--white);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background .15s;
 }
-.btn-exam-solid:hover { background: var(--blue-hover); }
 
 .exam-more {
   margin-top: 20px;
