@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="再現率（Recall）とは？見逃し・偽陰性、適合率との違いをG検定向けに解説。">
+  <title>再現率とは？Recall・陽性の見逃しを減らす — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/recall/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="再現率とは？Recall・陽性の見逃しを減らす">
+  <meta property="og:description" content="実際の陽性のうち正しく陽性と検出できた割合。スクリーニングで重要。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/recall/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"再現率","alternateName":["Recall","感度"],"description":"実際の陽性のうち正しく検出できた割合。偽陰性を抑える指標。"}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">再現率</li></ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>再現率とは？Recall・「本当の陽性をどれだけ拾えたか」</h1>
+    <p class="tool-hero-sub">読み：さいげんりつ ／ 英：Recall</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>再現率</strong>（Recall／感度）は、<strong>実際に陽性である対象のうち、モデルが陽性と正しく検出できた割合</strong>です。本記事は公式暗記に加え、試験で問われる<strong>見逃し（偽陰性）の業務意味・適合率とのトレードオフ</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#definition">定義のイメージ</a></li>
+        <li><a href="#when">重視する場面</a></li>
+        <li><a href="#tradeoff">適合率とのトレードオフ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>○：再現率は<strong>本来陽性をどれだけ拾えたか</strong>（<a href="../../exams/g-kentei/drill/q/tf-046/">TF-046</a>）。見逃しを減らしたい場面で重要。</p>
+      <p>病気スクリーニングでは偽陰性を減らすため再現率を重視（<a href="../../exams/g-kentei/practice/q/g-084/">G-084</a>）。適合率は「陽性と言ったうちの正しさ」で目的が異なる。</p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-046/">TF-046</a>、<a href="../../exams/g-kentei/practice/q/g-084/">G-084</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/practice/q/g-495/">G-495</a></p>
+      </div>
+    </section>
+    <section id="definition">
+      <h2>定義のイメージ</h2>
+      <p><em>再現率 ＝ TP ÷ (TP ＋ FN)</em></p>
+      <p>混同行列では<strong>実際が陽性だった行</strong>（TP＋FN）のうち TP の割合です。FN（偽陰性）が多いと再現率は下がります。</p>
+    </section>
+    <section id="when">
+      <h2>重視する場面</h2>
+      <ul class="tool-steps">
+        <li><strong>医療スクリーニング</strong> — 患者の見逃しを避けたい</li>
+        <li><strong>不正・異常検知</strong> — インシデントの取りこぼしを減らす</li>
+        <li><strong>情報検索</strong> — 関連文書の網羅（別文脈では「リコール」と呼ぶことも）</li>
+      </ul>
+    </section>
+    <section id="tradeoff">
+      <h2>適合率とのトレードオフ</h2>
+      <p>閾値を下げると陽性判定が増え、再現率は上がりやすい一方、<a href="../precision/">適合率</a>は下がりやすいです。両方をバランスする指標が<a href="../f1-score/">F1スコア</a>です。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>感度と再現率は同じ？</summary><p class="tool-faq-a">二値分類では同じ概念として扱われることが多いです。試験ではRecall＝再現率で問題ありません。</p></details>
+        <details><summary>再現率100%が理想？</summary><p class="tool-faq-a">必ずしも。すべてを陽性と予測すれば再現率は1ですが、適合率が極端に下がります。業務目的でバランスを取ります。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../precision/">適合率</a></li>
+          <li><a href="../f1-score/">F1スコア</a></li>
+          <li><a href="../supervised-learning/">教師あり学習</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

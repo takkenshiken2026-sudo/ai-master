@@ -102,8 +102,8 @@
         <thead><tr><th>手法</th><th>要点</th><th>試験の注意</th></tr></thead>
         <tbody>
           <tr><td><strong><a href="../dropout/">ドロップアウト</a></strong></td><td>学習時にニューロンをランダム無効化</td><td>推論時に入力を「削除」するわけではない（TF-395は×）</td></tr>
-          <tr><td><strong>L1/L2正則化</strong></td><td>重みの大きさにペナルティ</td><td>ドロップアウトの説明と混同注意（HQ-0133）</td></tr>
-          <tr><td><strong>早期終了</strong></td><td>検証性能悪化で学習停止</td><td>ドロップアウトとは別手法（G-168）</td></tr>
+          <tr><td><strong><a href="../regularization/">L1/L2正則化</a></strong></td><td>重みの大きさにペナルティ</td><td>ドロップアウトの説明と混同注意（HQ-0133）</td></tr>
+          <tr><td><strong><a href="../early-stopping/">早期終了</a></strong></td><td>検証性能悪化で学習停止</td><td>ドロップアウトとは別手法（G-168）</td></tr>
           <tr><td><strong>データ拡張</strong></td><td>反転・切り出しなどで多様性UP</td><td>画像などで有効（TF-435）</td></tr>
           <tr><td><strong>モデル簡素化</strong></td><td>層・パラメータを減らす</td><td>—</td></tr>
           <tr><td><strong>データ追加</strong></td><td>学習例を増やす</td><td>根本対策の一つ</td></tr>
@@ -129,6 +129,8 @@
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../regularization/">正則化</a></li>
+          <li><a href="../early-stopping/">早期終了</a></li>
           <li><a href="../machine-learning/">機械学習</a></li>
           <li><a href="../deep-learning/">ディープラーニング</a></li>
           <li><a href="../loss-function/">損失関数</a></li>

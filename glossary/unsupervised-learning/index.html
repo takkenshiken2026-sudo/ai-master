@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="教師なし学習（Unsupervised Learning）とは？クラスタリング・次元削減、教師ありとの違いをG検定向けに解説。">
+  <title>教師なし学習とは？Unsupervised Learning・クラスタリング — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/unsupervised-learning/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="教師なし学習とは？Unsupervised Learning・クラスタリング">
+  <meta property="og:description" content="正解ラベルなしでデータの構造やパターンを見つける機械学習。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/unsupervised-learning/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"教師なし学習","alternateName":["Unsupervised Learning"],"description":"ラベルなしデータからパターンや構造を発見する機械学習。"}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">教師なし学習</li></ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>教師なし学習とは？Unsupervised Learning・ラベルなしの探索</h1>
+    <p class="tool-hero-sub">読み：きょうしなしがくしゅう ／ 英：Unsupervised Learning</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>教師なし学習</strong>（Unsupervised Learning）は、<strong>正解ラベルなし</strong>のデータから、構造やパターンを自動的に見つける<a href="../machine-learning/">機械学習</a>です。本記事はアルゴリズムの網羅ではなく、試験で問われる<strong>教師ありとの対比・代表タスク・損失の考え方</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">教師なし学習とは</a></li>
+        <li><a href="#tasks">代表タスク</a></li>
+        <li><a href="#vs-supervised">教師ありとの違い</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>○：教師なし学習は<strong>ラベルなし</strong>でパターンを発見。クラスタリング・次元削減が代表（<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a>）。</p>
+      <p>×：教師なしでも<strong>ラベルとの誤差を直接最小化</strong>するとは限らない（<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>）。再構成誤差やクラスタ内のまとまりなど別基準。</p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a>、<a href="../../exams/g-kentei/practice/q/g-045/">G-045</a>、<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>、<a href="../../exams/g-kentei/drill/q/tf-032/">TF-032（k-means）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>教師なし学習とは</h2>
+      <p>入力データだけが与えられ、「正解 y」がありません。データの<strong>似たもの同士のまとまり</strong>や<strong>低次元の構造</strong>を探すのが典型です。ラベル付けコストが高い場面で有効です。</p>
+    </section>
+    <section id="tasks">
+      <h2>代表タスク</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>タスク</th><th>目的</th><th>例</th></tr></thead>
+        <tbody>
+          <tr><td><strong>クラスタリング</strong></td><td>グループ分け</td><td><a href="../k-means/">k-means法</a></td></tr>
+          <tr><td><strong>次元削減</strong></td><td>特徴を圧縮</td><td>PCA</td></tr>
+          <tr><td><strong>異常検知</strong></td><td>通常と異なる点を検出</td><td>—</td></tr>
+          <tr><td><strong>表現学習</strong></td><td>特徴量の獲得</td><td>オートエンコーダ</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="vs-supervised">
+      <h2>教師ありとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>区分</th><th>ラベル</th><th>損失のイメージ</th></tr></thead>
+        <tbody>
+          <tr><td><strong><a href="../supervised-learning/">教師あり</a></strong></td><td>あり</td><td>予測と正解の差</td></tr>
+          <tr><td><strong>教師なし</strong></td><td>なし</td><td>クラスタ内距離・再構成誤差など</td></tr>
+          <tr><td><strong><a href="../reinforcement-learning/">強化学習</a></strong></td><td>報酬</td><td>累積報酬の最大化</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>LLMの事前学習は教師なし？</summary><p class="tool-faq-a">次トークン予測は正解トークンがあるため<strong>自己教師あり</strong>と呼ばれることが多いです。純粋な教師なしとは区別します。</p></details>
+        <details><summary>クラスタ数はどう決める？</summary><p class="tool-faq-a">k-meansでは k を事前指定（TF-032）。エルボー法などで探索することもあります。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../supervised-learning/">教師あり学習</a></li>
+          <li><a href="../k-means/">k-means法</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../reinforcement-learning/">強化学習</a></li>
+          <li><a href="../overfitting/">過学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

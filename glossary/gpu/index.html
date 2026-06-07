@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPU（Graphics Processing Unit）とは？深層学習との関係、CPU・TPUとの違いをG検定向けに解説。">
+  <title>GPUとは？Graphics Processing Unit・深層学習の計算 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpu/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="GPUとは？Graphics Processing Unit・深層学習の計算">
+  <meta property="og:description" content="並列演算に強いプロセッサ。深層学習の行列演算を高速化する。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpu/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"GPU","alternateName":["Graphics Processing Unit"],"description":"多数の単純演算を並列処理でき、深層学習の学習・推論に広く使われるプロセッサ。"}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">GPU</li></ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>GPUとは？Graphics Processing Unit・DLの並列計算</h1>
+    <p class="tool-hero-sub">読み：じーぴーゆー ／ 英：Graphics Processing Unit（GPU）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPU</strong>（Graphics Processing Unit）は、もともと画像描画向けの<strong>並列演算に強いプロセッサ</strong>です。現代の<a href="../deep-learning/">ディープラーニング</a>では大量の行列演算を高速化するために広く使われます。本記事はチップの世代比較ではなく、試験で問われる<strong>CPU/GPU/TPUの役割・DLとの関係</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#why-gpu">なぜDLにGPUか</a></li>
+        <li><a href="#comparison">CPU・GPU・TPU</a></li>
+        <li><a href="#train-infer">学習と推論</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>○：GPUは<strong>多数の単純演算を並列処理</strong>でき、DLの行列演算に利用される（<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>）。</p>
+      <p>×：DLは計算量が少なく<strong>GPUと無関係</strong>（<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>）。第三次AIブームではデータ・GPU・アルゴリズムが重要（<a href="../../exams/g-kentei/drill/q/tf-323/">TF-323</a>）。</p>
+      <p>TPUは機械学習向けに最適化されたプロセッサ（<a href="../../exams/g-kentei/drill/q/tf-056/">TF-056</a>）。</p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>、<a href="../../exams/g-kentei/drill/q/tf-056/">TF-056</a>、<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>、<a href="../../exams/g-kentei/drill/q/tf-334/">TF-334</a>、<a href="../../exams/g-kentei/drill/domain/domain-06/">ディープラーニングの概要</a></p>
+      </div>
+    </section>
+    <section id="why-gpu">
+      <h2>なぜDLにGPUか</h2>
+      <p>ニューラルネットの学習は、同じ形の演算を大量のデータ・パラメータに対して繰り返します。GPUは<strong>数千のコアで並列</strong>に処理でき、この「同じ計算の繰り返し」に向いています。CPUは複雑な分岐処理に強い一方、大規模な行列積ではGPUが有利なことが多いです。</p>
+    </section>
+    <section id="comparison">
+      <h2>CPU・GPU・TPU</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>プロセッサ</th><th>強み</th><th>AIでの用途</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CPU</strong></td><td>汎用・分岐処理</td><td>前処理、小規模モデル、推論の一部</td></tr>
+          <tr><td><strong>GPU</strong></td><td>大規模並列</td><td>DLの学習・推論の主流</td></tr>
+          <tr><td><strong>TPU</strong></td><td>ML向けASIC</td><td>Google等の大規模学習基盤</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="train-infer">
+      <h2>学習と推論</h2>
+      <p>学習は特に計算量が大きくGPUがほぼ必須級です。推論はモデル規模次第でCPUでも動きますが、大規模LLMはGPUや専用チップが使われます。電力・コストの観点も試験で触れられることがあります（TF-287）。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GPUがないとDLはできない？</summary><p class="tool-faq-a">小規模ならCPUでも可能ですが、実用的な深層学習ではGPUまたは同等の計算資源が事実上必要です。</p></details>
+        <details><summary>AlexNetとGPUの関係は？</summary><p class="tool-faq-a">AlexNetはGPU活用がDL実用化の象徴的出来事の一つとして語られます（TF-330）。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

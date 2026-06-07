@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="F1スコア（F1 Score）とは？適合率と再現率の調和平均、不均衡データでの評価をG検定向けに解説。">
+  <title>F1スコアとは？F1 Score・適合率と再現率のバランス — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/f1-score/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="F1スコアとは？F1 Score・適合率と再現率のバランス">
+  <meta property="og:description" content="適合率と再現率の調和平均。クラス不均衡で正解率の代わりに使われる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/f1-score/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"F1スコア","alternateName":["F1 Score","F値"],"description":"適合率と再現率の調和平均。二値分類のバランス指標。"}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">F1スコア</li></ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>F1スコアとは？F1 Score・調和平均で測るバランス</h1>
+    <p class="tool-hero-sub">読み：えふいちスコア ／ 英：F1 Score（F値）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>F1スコア</strong>（F1 Score／F値）は、<a href="../precision/">適合率</a>と<a href="../recall/">再現率</a>の<strong>調和平均</strong>で、二値分類のバランス指標です。本記事は計算練習ではなく、試験で問われる<strong>なぜ調和平均か・正解率との違い・いつ使うか</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#definition">定義のイメージ</a></li>
+        <li><a href="#why-harmonic">調和平均である理由</a></li>
+        <li><a href="#imbalance">不均衡データ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>○：F値は<strong>適合率と再現率の調和平均</strong>（<a href="../../exams/g-kentei/drill/q/tf-377/">TF-377</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>）。</p>
+      <p>×：F値＝正解率、F値＝RMSE などのすり替えに注意（G-376、G-274）。</p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/drill/q/tf-377/">TF-377</a>、<a href="../../exams/g-kentei/practice/q/g-495/">G-495</a>、<a href="../../exams/g-kentei/practice/q/g-474/">G-474</a></p>
+      </div>
+    </section>
+    <section id="definition">
+      <h2>定義のイメージ</h2>
+      <p><em>F1 ＝ 2 × 適合率 × 再現率 ÷ (適合率 ＋ 再現率)</em></p>
+      <p>どちらか一方だけが高くても、もう一方が極端に低いと F1 は押し下げられます。</p>
+    </section>
+    <section id="why-harmonic">
+      <h2>調和平均である理由</h2>
+      <p>算術平均だと、適合率90%・再現率10%でも平均50%に見えてしまいます。調和平均は<strong>小さい方に引きずられる</strong>ため、両方そろった性能を評価しやすいです。</p>
+    </section>
+    <section id="imbalance">
+      <h2>不均衡データ</h2>
+      <p>正例が1%しかないデータで「すべて陰性」と予測すると、正解率は99%でも再現率は0%です。G-064のように、<strong>正解率だけでは誤解</strong>するため、F1やAUCを併用します。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>F0.5やF2とは？</summary><p class="tool-faq-a">適合率と再現率の重みを変えた一般化（Fβ）。F1は等重みです。試験ではF1が中心です。</p></details>
+        <details><summary>多クラス分類のF1は？</summary><p class="tool-faq-a">マクロ平均・マイクロ平均など集約方法があります。G検定では二値分類のF1が主です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../precision/">適合率</a></li>
+          <li><a href="../recall/">再現率</a></li>
+          <li><a href="../supervised-learning/">教師あり学習</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

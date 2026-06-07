@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="適合率（Precision）とは？混同行列・偽陽性、再現率との違いをG検定向けに解説。">
+  <title>適合率とは？Precision・陽性予測の正しさ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/precision/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="適合率とは？Precision・陽性予測の正しさ">
+  <meta property="og:description" content="陽性と予測したもののうち実際に陽性だった割合。誤検知を抑えたい場面で重要。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/precision/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"適合率","alternateName":["Precision"],"description":"陽性予測のうち実際に陽性だった割合。偽陽性を抑える指標。"}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">適合率</li></ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>適合率とは？Precision・「陽性と言ったうち何割が正しいか」</h1>
+    <p class="tool-hero-sub">読み：てきごうりつ ／ 英：Precision</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>適合率</strong>（Precision）は、モデルが<strong>「陽性」と予測したもののうち、実際に陽性だった割合</strong>です。本記事は公式の暗記だけでなく、試験で問われる<strong>混同行列の読み方・偽陽性との関係・再現率との使い分け</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#matrix">混同行列</a></li>
+        <li><a href="#formula">定義のイメージ</a></li>
+        <li><a href="#when">重視する場面</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>適合率は<strong>陽性予測の精度</strong>。偽陽性（誤検知）が問題になる場面で重要（<a href="../../exams/g-kentei/practice/q/g-056/">G-056</a>の混同行列文脈）。</p>
+      <p>不均衡データでは正解率だけでは不十分で、適合率・<a href="../recall/">再現率</a>・<a href="../f1-score/">F1</a>を併用（<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>）。</p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-056/">G-056</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/practice/q/g-140/">G-140</a>、<a href="../../exams/g-kentei/drill/domain/domain-10/">機械学習の概要</a></p>
+      </div>
+    </section>
+    <section id="matrix">
+      <h2>混同行列</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th></th><th>予測：陽性</th><th>予測：陰性</th></tr></thead>
+        <tbody>
+          <tr><td><strong>実際：陽性</strong></td><td>真陽性（TP）</td><td>偽陰性（FN）</td></tr>
+          <tr><td><strong>実際：陰性</strong></td><td>偽陽性（FP）</td><td>真陰性（TN）</td></tr>
+        </tbody>
+      </table>
+      <p>適合率は<strong>予測が陽性だった列</strong>（TP＋FP）のうち TP の割合です。</p>
+    </section>
+    <section id="formula">
+      <h2>定義のイメージ</h2>
+      <p><em>適合率 ＝ TP ÷ (TP ＋ FP)</em></p>
+      <p>「陽性と判定したもののうち、何割が本当に陽性か」を測ります。FP が多いと適合率は下がります。</p>
+    </section>
+    <section id="when">
+      <h2>重視する場面</h2>
+      <p><strong>誤検知のコストが高い</strong>ときに適合率を重視します。例：迷惑メール判定で正常メールをスパムにしない、不正検知で善良ユーザーをブロックしない、など。</p>
+      <p>見逃しを減らしたい場合は<a href="../recall/">再現率</a>を重視（G-084）。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>適合率と正解率は同じ？</summary><p class="tool-faq-a">違います。正解率は全体の正解割合、適合率は陽性予測に限定した指標です。</p></details>
+        <details><summary>閾値を変えると？</summary><p class="tool-faq-a">分類の閾値を動かすと適合率と再現率はトレードオフになります（ROC曲線の文脈）。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../recall/">再現率</a></li>
+          <li><a href="../f1-score/">F1スコア</a></li>
+          <li><a href="../supervised-learning/">教師あり学習</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

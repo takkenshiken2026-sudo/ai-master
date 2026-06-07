@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="強化学習（Reinforcement Learning）とは？報酬・方策・エージェント、教師ありとの違いをG検定向けに解説。">
+  <title>強化学習とは？Reinforcement Learning・報酬と方策 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/reinforcement-learning/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="強化学習とは？Reinforcement Learning・報酬と方策">
+  <meta property="og:description" content="試行錯誤で報酬を最大化する行動を学ぶ機械学習。ゲームAIやRLHFの基盤。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/reinforcement-learning/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"強化学習","alternateName":["Reinforcement Learning","RL"],"description":"環境との相互作用で報酬を最大化する行動方策を学ぶ機械学習。"}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">強化学習</li></ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>強化学習とは？Reinforcement Learning・報酬最大化</h1>
+    <p class="tool-hero-sub">読み：きょうかがくしゅう ／ 英：Reinforcement Learning（RL）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>強化学習</strong>（Reinforcement Learning／RL）は、<strong>環境に行動し得られる報酬を最大化</strong>する方策を、試行錯誤で学ぶ<a href="../machine-learning/">機械学習</a>です。本記事はQ学習の数式ではなく、試験で問われる<strong>基本概念・教師ありとの違い・生成AIのRLHFとの関係</strong>に焦点を当てます。※<a href="../agent/">AIエージェント</a>（対話型ツール）とは別概念です。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#concepts">基本用語</a></li>
+        <li><a href="#loop">学習のループ</a></li>
+        <li><a href="#vs-supervised">教師ありとの違い</a></li>
+        <li><a href="#genai">生成AIとの接点</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>○：強化学習では<strong>エージェントが環境に行動し、報酬をもとに方策を改善</strong>する（<a href="../../exams/g-kentei/drill/q/tf-038/">TF-038</a>）。正解ラベルを直接与える教師あり学習とは異なる。</p>
+      <p>深層強化学習はニューラルネットで価値関数や方策を近似する分野（TF-150周辺）。</p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-038/">TF-038</a>〜<a href="../../exams/g-kentei/drill/q/tf-042/">TF-042</a>、<a href="../../exams/g-kentei/practice/q/g-065/">G-065</a>、<a href="../../exams/g-kentei/drill/domain/domain-09/">機械学習の要素技術</a></p>
+      </div>
+    </section>
+    <section id="concepts">
+      <h2>基本用語</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td><strong>エージェント</strong></td><td>行動を選ぶ学習主体（RL文脈）</td></tr>
+          <tr><td><strong>環境</strong></td><td>エージェントの行動に応じて状態・報酬を返す</td></tr>
+          <tr><td><strong>状態</strong></td><td>環境の現在の状況</td></tr>
+          <tr><td><strong>行動</strong></td><td>エージェントが取れる選択</td></tr>
+          <tr><td><strong>報酬</strong></td><td>行動の良し悪しを示すスカラー信号</td></tr>
+          <tr><td><strong>方策</strong></td><td>状態から行動を選ぶルール</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="loop">
+      <h2>学習のループ</h2>
+      <ol class="tool-example-list">
+        <li>状態を観測</li>
+        <li>方策に従い<strong>行動</strong>を選択</li>
+        <li>環境から<strong>報酬</strong>と次状態を受け取る</li>
+        <li>長期的な報酬最大化へ方策・価値を更新</li>
+      </ol>
+    </section>
+    <section id="vs-supervised">
+      <h2>教師ありとの違い</h2>
+      <p><a href="../supervised-learning/">教師あり</a>は各入力に正解ラベルがあります。強化学習は<strong>行動の結果として遅れて報酬</strong>が返り、どの行動が良かったかを探索しながら学びます。ゲーム・ロボット制御・推薦の順序決定などに使われます。</p>
+    </section>
+    <section id="genai">
+      <h2>生成AIとの接点</h2>
+      <p><a href="../rlhf/">RLHF</a>（人間のフィードバックから強化学習）は、LLMの出力品質を報酬信号で調整する手法として知られます。ただしLLM本体の事前学習は主に教師あり／自己教師ありです。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>強化学習のエージェント＝AIエージェント？</summary><p class="tool-faq-a">違います。RLのエージェントは学習理論上の主体、AIエージェントはツール連携でタスクを遂行する生成AIシステムを指すことが多いです。</p></details>
+        <details><summary>報酬設計が難しいと言われる理由は？</summary><p class="tool-faq-a">報酬が目的とずれると望ましくない行動を学習します（報酬ハッキング）。実務では報酬設計が重要課題です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../supervised-learning/">教師あり学習</a></li>
+          <li><a href="../unsupervised-learning/">教師なし学習</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../agent/">AIエージェント</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

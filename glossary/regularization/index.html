@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="正則化（Regularization）とは？L1/L2・ドロップアウト、過学習抑制、正規化層との違いをG検定向けに解説。">
+  <title>正則化とは？Regularization・L1/L2・過学習対策 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/regularization/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="正則化とは？Regularization・L1/L2・過学習対策">
+  <meta property="og:description" content="モデルの複雑さや重みを抑え、汎化性能を高める技法の総称。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/regularization/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"正則化","alternateName":["Regularization"],"description":"過学習を抑えるためモデルに制約を加える技法の総称。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"正則化と正規化は同じ？","acceptedAnswer":{"@type":"Answer","text":"違う。正則化は過学習抑制、正規化層は学習の安定化が主目的。"}}]}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">正則化</li></ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>正則化とは？Regularization・L1/L2とドロップアウト</h1>
+    <p class="tool-hero-sub">読み：せいそくか ／ 英：Regularization</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>正則化</strong>（Regularization）は、<a href="../overfitting/">過学習</a>を抑え<strong>汎化性能を高める</strong>ために、モデルの複雑さや重みに制約を加える技法の総称です。本記事は数式の導出ではなく、試験で問われる<strong>代表手法の対応表・ドロップアウトとの関係・正規化層との混同</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">正則化とは</a></li>
+        <li><a href="#methods">代表手法</a></li>
+        <li><a href="#vs-norm">正規化層との違い</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>○：正則化は<strong>過学習を抑えて汎化性能を高める</strong>（<a href="../../exams/g-kentei/drill/q/tf-068/">TF-068</a>）。L1・L2・<a href="../dropout/">ドロップアウト</a>が代表例。</p>
+      <p>×：ドロップアウトの説明を「重みにペナルティを課する」だけで済ませる——これはL1/L2のイメージ（<a href="../../exams/genai-passport/practice/q/hq-0133/">HQ-0133</a>）。</p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-068/">TF-068</a>、<a href="../../exams/g-kentei/drill/q/tf-437/">TF-437</a>、<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a>、<a href="../../exams/g-kentei/practice/domain/domain-06/">ディープラーニングの概要</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>正則化とは</h2>
+      <p>損失関数に<strong>ペナルティ項</strong>を足す、または学習の仕方を変えることで、訓練誤差だけを追いすぎないようにします。「複雑すぎるモデル」を抑え、未知データでも安定する解を求めます。</p>
+    </section>
+    <section id="methods">
+      <h2>代表手法</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>手法</th><th>仕組み</th><th>試験のキーワード</th></tr></thead>
+        <tbody>
+          <tr><td><strong>L1正則化</strong></td><td>重みの絶対値和にペナルティ</td><td>スパース化・特徴選択</td></tr>
+          <tr><td><strong>L2正則化</strong></td><td>重みの二乗和にペナルティ</td><td>リッジ回帰</td></tr>
+          <tr><td><strong>ドロップアウト</strong></td><td>学習時にユニットを無効化</td><td>共依存の抑制</td></tr>
+          <tr><td><strong><a href="../early-stopping/">早期終了</a></strong></td><td>検証悪化で学習停止</td><td>エポック制御</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="vs-norm">
+      <h2>正規化層との違い</h2>
+      <p><strong>バッチ正規化</strong>などは中間表現の分布を整え<strong>学習を安定化</strong>します。名称が似ていますが、正則化は主に<strong>過学習抑制</strong>が目的です（G-299）。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>正則化を強くしすぎると？</summary><p class="tool-faq-a">未学習（Underfitting）に近づき、訓練誤差も下がりにくくなります。検証性能でバランスを取ります。</p></details>
+        <details><summary>データ拡張は正則化？</summary><p class="tool-faq-a">広い意味では正則化効果がありますが、試験ではL1/L2・ドロップアウト・早期終了と並べて覚えるのが安全です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../overfitting/">過学習</a></li>
+          <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../early-stopping/">早期終了</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

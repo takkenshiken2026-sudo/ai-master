@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="k-means法とは？クラスタ数k・重心更新、教師なし学習の代表手法をG検定向けに解説。">
+  <title>k-means法とは？k-means・クラスタリング — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/k-means/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="k-means法とは？k-means・クラスタリング">
+  <meta property="og:description" content="重心への距離でk個のクラスタに分割する教師なし学習の代表手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/k-means/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"k-means法","alternateName":["k-means","k平均法"],"description":"クラスタ数kを指定し重心更新でデータを分割するクラスタリング手法。"}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">k-means法</li></ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>k-means法とは？k-means・重心とクラスタ数</h1>
+    <p class="tool-hero-sub">読み：けいみーんずほう ／ 英：k-means</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>k-means法</strong>（k-means／k平均法）は、<strong>クラスタ数 k を事前に指定</strong>し、各データを最も近い重心に割り当てながら重心を更新する<a href="../unsupervised-learning/">教師なし学習</a>の代表的手法です。本記事は収束証明の数学ではなく、試験で問われる<strong>手順・k の意味・他手法との違い</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#algorithm">アルゴリズムの流れ</a></li>
+        <li><a href="#k-choice">クラスタ数k</a></li>
+        <li><a href="#limits">限界</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>○：k-meansは<strong>あらかじめ指定した数のクラスタ</strong>にデータを分ける（<a href="../../exams/g-kentei/drill/q/tf-032/">TF-032</a>）。割り当てと重心更新を繰り返す<strong>教師なし学習</strong>。</p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-032/">TF-032</a>、<a href="../../exams/g-kentei/practice/q/g-068/">G-068</a>、<a href="../../exams/g-kentei/drill/domain/domain-09/">機械学習の要素技術</a></p>
+      </div>
+    </section>
+    <section id="algorithm">
+      <h2>アルゴリズムの流れ</h2>
+      <ol class="tool-example-list">
+        <li><strong>k 個の重心</strong>を初期化（ランダムなど）</li>
+        <li>各点を<strong>最も近い重心</strong>のクラスタへ割り当て</li>
+        <li>各クラスタの<strong>重心を再計算</strong>（平均位置）</li>
+        <li>収束するまで 2–3 を繰り返す</li>
+      </ol>
+    </section>
+    <section id="k-choice">
+      <h2>クラスタ数k</h2>
+      <p>k は<strong>人が事前に決める</strong>ハイパーパラメータです。k が小さすぎると粗い分類、大きすぎると過分割になります。エルボー法やシルエット係数などで探索することがあります。</p>
+    </section>
+    <section id="limits">
+      <h2>限界</h2>
+      <p>クラスタが球状・サイズが近いときに向きます。細長いクラスタや密度差が大きいデータでは DBSCAN など別手法が選ばれることもあります。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>k-meansは教師あり？</summary><p class="tool-faq-a">いいえ。正解ラベルは使いません。教師なし学習のクラスタリングです。</p></details>
+        <details><summary>分類とクラスタリングの違いは？</summary><p class="tool-faq-a">分類は教師ありで既知のクラス名に割り当て、クラスタリングはラベルなしでグループを発見します。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../unsupervised-learning/">教師なし学習</a></li>
+          <li><a href="../supervised-learning/">教師あり学習</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../overfitting/">過学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
