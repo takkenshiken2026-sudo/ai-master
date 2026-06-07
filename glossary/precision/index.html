@@ -17,7 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
-    {"@type":"DefinedTerm","name":"適合率","alternateName":["Precision"],"description":"陽性予測のうち実際に陽性だった割合。偽陽性を抑える指標。"}
+    {"@type":"DefinedTerm","name":"適合率","alternateName":["Precision"],"description":"陽性予測のうち実際に陽性だった割合。偽陽性を抑える指標。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"適合率と正解率は同じ？","acceptedAnswer":{"@type":"Answer","text":"違う。正解率は全体の正解割合、適合率は陽性予測に限定した指標。"}}]}
   ]}
   </script>
 </head>
@@ -42,57 +43,122 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>適合率</strong>（Precision）は、モデルが<strong>「陽性」と予測したもののうち、実際に陽性だった割合</strong>です。本記事は公式の暗記だけでなく、試験で問われる<strong>混同行列の読み方・偽陽性との関係・再現率との使い分け</strong>に焦点を当てます。
+      <strong>適合率</strong>（Precision）は、<a href="../supervised-learning/">教師あり学習</a>の二値分類で、モデルが<strong>「陽性」と予測したもののうち、実際に陽性だった割合</strong>です。本記事は計算ドリルではなく、試験で問われる<strong>混同行列の読み方・偽陽性の意味・再現率との使い分け</strong>——「どの指標を業務で重視するか」——に焦点を当てます。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
       <ol>
         <li><a href="#exam-study">試験で問われる見方</a></li>
-        <li><a href="#matrix">混同行列</a></li>
-        <li><a href="#formula">定義のイメージ</a></li>
-        <li><a href="#when">重視する場面</a></li>
+        <li><a href="#matrix">混同行列の読み方</a></li>
+        <li><a href="#formula">定義と偽陽性</a></li>
+        <li><a href="#when">重視する業務場面</a></li>
+        <li><a href="#vs-recall">再現率・F1との関係</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related-exams">関連する試験問題</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
-      <p>適合率は<strong>陽性予測の精度</strong>。偽陽性（誤検知）が問題になる場面で重要（<a href="../../exams/g-kentei/practice/q/g-056/">G-056</a>の混同行列文脈）。</p>
-      <p>不均衡データでは正解率だけでは不十分で、適合率・<a href="../recall/">再現率</a>・<a href="../f1-score/">F1</a>を併用（<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>）。</p>
+      <p>
+        ○：適合率は<strong>陽性と予測したもののうち、実際に陽性だった割合</strong>。混同行列では真陽性（TP）と偽陽性（FP）の関係（<a href="../../exams/g-kentei/practice/q/g-056/">G-056</a>）。
+      </p>
+      <p>
+        ○：クラス不均衡では正解率だけでは誤解しやすく、適合率・<a href="../recall/">再現率</a>・<a href="../f1-score/">F1</a>を併用する（<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>）。
+      </p>
+      <p>
+        ×：適合率＝正解率、適合率＝再現率などの<strong>定義の入れ替え</strong>（G-140、G-084の誤答肢）。
+      </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-056/">G-056</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/practice/q/g-140/">G-140</a>、<a href="../../exams/g-kentei/drill/domain/domain-10/">機械学習の概要</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-056/">G-056</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/practice/q/g-140/">G-140</a></p>
       </div>
     </section>
     <section id="matrix">
-      <h2>混同行列</h2>
+      <h2>混同行列の読み方</h2>
+      <p>適合率を理解するには、まず<strong>予測が陽性だった列</strong>に注目します。</p>
       <table class="tool-spec-table">
         <thead><tr><th></th><th>予測：陽性</th><th>予測：陰性</th></tr></thead>
         <tbody>
-          <tr><td><strong>実際：陽性</strong></td><td>真陽性（TP）</td><td>偽陰性（FN）</td></tr>
-          <tr><td><strong>実際：陰性</strong></td><td>偽陽性（FP）</td><td>真陰性（TN）</td></tr>
+          <tr><td><strong>実際：陽性</strong></td><td>真陽性（TP）</td><td>偽陰性（FN）→ <a href="../recall/">再現率</a>の分母</td></tr>
+          <tr><td><strong>実際：陰性</strong></td><td>偽陽性（FP）→ 適合率を下げる</td><td>真陰性（TN）</td></tr>
         </tbody>
       </table>
-      <p>適合率は<strong>予測が陽性だった列</strong>（TP＋FP）のうち TP の割合です。</p>
+      <p>適合率は「モデルが陽性と叫んだ集合」の中身の純度を測ります。FP（誤検知）が増えるほど適合率は下がります。</p>
     </section>
     <section id="formula">
-      <h2>定義のイメージ</h2>
-      <p><em>適合率 ＝ TP ÷ (TP ＋ FP)</em></p>
-      <p>「陽性と判定したもののうち、何割が本当に陽性か」を測ります。FP が多いと適合率は下がります。</p>
+      <h2>定義と偽陽性</h2>
+      <p><em>適合率（Precision）＝ TP ÷ (TP ＋ FP)</em></p>
+      <p>
+        分母は<strong>陽性と予測した件数全体</strong>です。100件を陽性と予測し、そのうち80件が本当に陽性なら適合率は0.8（80%）です。残り20件が FP で、ユーザー体験やコストに直結しやすい誤りです。
+      </p>
     </section>
     <section id="when">
-      <h2>重視する場面</h2>
-      <p><strong>誤検知のコストが高い</strong>ときに適合率を重視します。例：迷惑メール判定で正常メールをスパムにしない、不正検知で善良ユーザーをブロックしない、など。</p>
-      <p>見逃しを減らしたい場合は<a href="../recall/">再現率</a>を重視（G-084）。</p>
+      <h2>重視する業務場面</h2>
+      <p><strong>誤検知（FP）のコストが高い</strong>ときに適合率を重視します。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>場面</th><th>なぜ適合率か</th></tr></thead>
+        <tbody>
+          <tr><td>スパムフィルタ</td><td>正常メールをスパム判定したくない</td></tr>
+          <tr><td>不正検知（アカウント停止）</td><td>善良ユーザーの誤ブロックを避けたい</td></tr>
+          <tr><td>プッシュ通知</td><td>関係ない告知を送りたくない</td></tr>
+        </tbody>
+      </table>
+      <p>逆に、見逃し（FN）が致命的なら<a href="../recall/">再現率</a>を優先します（G-084の医療スクリーニング）。</p>
+    </section>
+    <section id="vs-recall">
+      <h2>再現率・F1との関係</h2>
+      <p>分類の閾値を動かすと、適合率と再現率は<strong>トレードオフ</strong>になりがちです。</p>
+      <ul class="tool-steps">
+        <li><strong>閾値を下げる</strong> → 陽性判定が増える → 再現率↑・適合率↓</li>
+        <li><strong>閾値を上げる</strong> → 陽性判定が減る → 適合率↑・再現率↓</li>
+      </ul>
+      <p>両方のバランスを1つの数値にまとめたのが<a href="../f1-score/">F1スコア</a>（調和平均）です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>適合率＝正解率（Accuracy）</td><td>正解率は (TP+TN)/全体。適合率は陽性予測のみ</td></tr>
+          <tr><td>適合率＝再現率</td><td>再現率は実際の陽性行（TP+FN）を分母にする</td></tr>
+          <tr><td>適合率が高ければ必ず良いモデル</td><td>目的次第。見逃し許容度で再現率も要確認</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
-        <details><summary>適合率と正解率は同じ？</summary><p class="tool-faq-a">違います。正解率は全体の正解割合、適合率は陽性予測に限定した指標です。</p></details>
-        <details><summary>閾値を変えると？</summary><p class="tool-faq-a">分類の閾値を動かすと適合率と再現率はトレードオフになります（ROC曲線の文脈）。</p></details>
+        <details><summary>適合率と正解率は同じ？</summary><p class="tool-faq-a">違います。正解率は全体の正解割合、適合率は陽性予測に限定した指標です。不均衡データでは正解率99%でも適合率が低いことがあります。</p></details>
+        <details><summary>閾値を変えると？</summary><p class="tool-faq-a">スコアを陽性/陰性に切る閾値を動かすと、適合率と再現率のバランスが変わります。ROC曲線はこの関係を可視化します。</p></details>
+        <details><summary>多クラス分類の適合率は？</summary><p class="tool-faq-a">クラスごとに適合率を計算し、マクロ平均などでまとめることがあります。G検定では二値分類が中心です。</p></details>
+      </div>
+    </section>
+    <section id="related-exams" class="tool-exam-section" aria-labelledby="related-exams-heading">
+      <h2 id="related-exams-heading" class="tool-related-heading">関連する試験問題</h2>
+      <p class="tool-exam-section__lead">適合率・混同行列が出る演習です。記事を読んだあとに解いてみてください。</p>
+      <div class="tool-exam-groups">
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 実践演習</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/practice/q/g-056/">G-056 · 混同行列（TP/FP）</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-064/">G-064 · 不均衡データと指標</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-140/">G-140 · 適合率の定義</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-084/">G-084 · 適合率と再現率の使い分け</a></li>
+          </ul>
+        </div>
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 一問一答</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/drill/q/tf-045/">TF-045 · 適合率</a></li>
+            <li><a href="../../exams/g-kentei/drill/q/tf-376/">TF-376 · F値（調和平均）</a></li>
+          </ul>
+          <p class="tool-exam-group__hub"><a href="../../exams/g-kentei/drill/domain/domain-10/">機械学習の概要（一問一答）</a></p>
+        </div>
       </div>
     </section>
     <aside class="tool-related-wrap">

@@ -17,7 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
-    {"@type":"DefinedTerm","name":"F1スコア","alternateName":["F1 Score","F値"],"description":"適合率と再現率の調和平均。二値分類のバランス指標。"}
+    {"@type":"DefinedTerm","name":"F1スコア","alternateName":["F1 Score","F値"],"description":"適合率と再現率の調和平均。二値分類のバランス指標。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"F1とF値は同じ？","acceptedAnswer":{"@type":"Answer","text":"試験ではF1スコアとF値は同じ文脈で使われることが多い。適合率と再現率の調和平均。"}}]}
   ]}
   </script>
 </head>
@@ -42,49 +43,122 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>F1スコア</strong>（F1 Score／F値）は、<a href="../precision/">適合率</a>と<a href="../recall/">再現率</a>の<strong>調和平均</strong>で、二値分類のバランス指標です。本記事は計算練習ではなく、試験で問われる<strong>なぜ調和平均か・正解率との違い・いつ使うか</strong>に焦点を当てます。
+      <strong>F1スコア</strong>（F1 Score／F値）は、<a href="../precision/">適合率</a>と<a href="../recall/">再現率</a>の<strong>調和平均</strong>で、二値分類のバランス指標です。本記事は計算練習ではなく、試験で問われる<strong>なぜ調和平均か・正解率との違い・RMSEなどとのすり替え</strong>に焦点を当てます。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
       <ol>
         <li><a href="#exam-study">試験で問われる見方</a></li>
-        <li><a href="#definition">定義のイメージ</a></li>
+        <li><a href="#definition">定義と数値例</a></li>
         <li><a href="#why-harmonic">調和平均である理由</a></li>
-        <li><a href="#imbalance">不均衡データ</a></li>
+        <li><a href="#imbalance">不均衡データと正解率</a></li>
+        <li><a href="#vs-others">他指標との区別</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related-exams">関連する試験問題</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
-      <p>○：F値は<strong>適合率と再現率の調和平均</strong>（<a href="../../exams/g-kentei/drill/q/tf-377/">TF-377</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>）。</p>
-      <p>×：F値＝正解率、F値＝RMSE などのすり替えに注意（G-376、G-274）。</p>
+      <p>
+        ○：F値は<strong>適合率と再現率の調和平均</strong>（<a href="../../exams/g-kentei/drill/q/tf-376/">TF-376</a>、<a href="../../exams/g-kentei/drill/q/tf-047/">TF-047</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>）。
+      </p>
+      <p>
+        ×：F値＝正解率、F値＝RMSE、F値＝平均二乗誤差の平方根など（<a href="../../exams/g-kentei/drill/q/tf-377/">TF-377</a>、<a href="../../exams/g-kentei/practice/q/g-376/">G-376</a>、<a href="../../exams/g-kentei/practice/q/g-274/">G-274</a>）。
+      </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/drill/q/tf-377/">TF-377</a>、<a href="../../exams/g-kentei/practice/q/g-495/">G-495</a>、<a href="../../exams/g-kentei/practice/q/g-474/">G-474</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-376/">TF-376</a>、<a href="../../exams/g-kentei/drill/q/tf-377/">TF-377</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/practice/q/g-495/">G-495</a></p>
       </div>
     </section>
     <section id="definition">
-      <h2>定義のイメージ</h2>
+      <h2>定義と数値例</h2>
       <p><em>F1 ＝ 2 × 適合率 × 再現率 ÷ (適合率 ＋ 再現率)</em></p>
-      <p>どちらか一方だけが高くても、もう一方が極端に低いと F1 は押し下げられます。</p>
+      <p>適合率0.9・再現率0.1のとき、算術平均は0.5ですが、F1は約0.18と<strong>低い方に強く引きずられます</strong>。どちらか一方だけ優秀でもF1は高くなりません。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>適合率</th><th>再現率</th><th>算術平均</th><th>F1（概算）</th></tr></thead>
+        <tbody>
+          <tr><td>0.9</td><td>0.9</td><td>0.9</td><td>0.9</td></tr>
+          <tr><td>0.9</td><td>0.1</td><td>0.5</td><td>≈0.18</td></tr>
+          <tr><td>0.5</td><td>0.5</td><td>0.5</td><td>0.5</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="why-harmonic">
       <h2>調和平均である理由</h2>
-      <p>算術平均だと、適合率90%・再現率10%でも平均50%に見えてしまいます。調和平均は<strong>小さい方に引きずられる</strong>ため、両方そろった性能を評価しやすいです。</p>
+      <p>
+        分類では適合率と再現率の<strong>両方が実用上有意味</strong>なことが多いです。調和平均は小さい値の影響を大きく反映するため、「片方だけ高い」モデルを過大評価しにくいです。
+      </p>
+      <p>
+        試験では「なぜ平均二乗誤差ではないのか」ではなく、「F値は分類の適合率・再現率のバランス」と答えられることが重要です。
+      </p>
     </section>
     <section id="imbalance">
-      <h2>不均衡データ</h2>
-      <p>正例が1%しかないデータで「すべて陰性」と予測すると、正解率は99%でも再現率は0%です。G-064のように、<strong>正解率だけでは誤解</strong>するため、F1やAUCを併用します。</p>
+      <h2>不均衡データと正解率</h2>
+      <p>
+        正例が全体の1%しかないデータで、すべて「陰性」と予測すると<strong>正解率は99%</strong>に見えます。しかし再現率は0%で、F1も0に近くなります（G-064）。
+      </p>
+      <p>
+        だから不均衡問題では、正解率だけでなくF1やAUC（ROC曲線下面積）を確認する、というのが試験の定番説明です。
+      </p>
+    </section>
+    <section id="vs-others">
+      <h2>他指標との区別</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>指標</th><th>タスク</th><th>要点</th></tr></thead>
+        <tbody>
+          <tr><td><strong>F1 / F値</strong></td><td>分類</td><td>適合率×再現率の調和平均</td></tr>
+          <tr><td><strong>正解率</strong></td><td>分類</td><td>全体の正解割合。不均衡で誤解しやすい</td></tr>
+          <tr><td><strong>RMSE</strong></td><td>回帰</td><td>予測と正解の二乗誤差の平方根（TF-377の誤答）</td></tr>
+          <tr><td><strong>AUC</strong></td><td>分類</td><td>閾値に依存しない性能の目安</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>F値は回帰専用</td><td>分類の指標（TF-377は×）</td></tr>
+          <tr><td>F値は適合率と再現率の算術平均</td><td>調和平均（TF-376は○）</td></tr>
+          <tr><td>F1が高ければ正解率も必ず高い</td><td>不均衡では両者が乖離しうる</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
-        <details><summary>F0.5やF2とは？</summary><p class="tool-faq-a">適合率と再現率の重みを変えた一般化（Fβ）。F1は等重みです。試験ではF1が中心です。</p></details>
-        <details><summary>多クラス分類のF1は？</summary><p class="tool-faq-a">マクロ平均・マイクロ平均など集約方法があります。G検定では二値分類のF1が主です。</p></details>
+        <details><summary>F0.5やF2とは？</summary><p class="tool-faq-a">適合率と再現率の重みを変えた一般化（Fβ）。F1は等重み。F2は再現率をより重視します。</p></details>
+        <details><summary>多クラス分類のF1は？</summary><p class="tool-faq-a">マクロ平均（クラスごとにF1を出して平均）やマイクロ平均などがあります。G検定では二値が中心です。</p></details>
+        <details><summary>F1とAUCはどちらを見る？</summary><p class="tool-faq-a">F1は特定の閾値でのバランス、AUCは閾値全体の分離能力。目的に応じて選びます。</p></details>
+      </div>
+    </section>
+    <section id="related-exams" class="tool-exam-section" aria-labelledby="related-exams-heading">
+      <h2 id="related-exams-heading" class="tool-related-heading">関連する試験問題</h2>
+      <p class="tool-exam-section__lead">F値・分類評価が出る演習です。すり替え問題（TF-377）に注意して解いてみてください。</p>
+      <div class="tool-exam-groups">
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 一問一答</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/drill/q/tf-376/">TF-376 · F値（調和平均）</a></li>
+            <li><a href="../../exams/g-kentei/drill/q/tf-377/">TF-377 · F値のすり替え（×）</a></li>
+            <li><a href="../../exams/g-kentei/drill/q/tf-047/">TF-047 · F値と不均衡</a></li>
+          </ul>
+        </div>
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 実践演習</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/practice/q/g-064/">G-064 · 不均衡とF値</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-376/">G-376 · F値の定義</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-274/">G-274 · F値と他指標の区別</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-495/">G-495 · 分類評価指標</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-474/">G-474 · 分類と回帰の指標</a></li>
+          </ul>
+        </div>
       </div>
     </section>
     <aside class="tool-related-wrap">

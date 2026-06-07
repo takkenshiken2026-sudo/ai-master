@@ -17,7 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
-    {"@type":"DefinedTerm","name":"再現率","alternateName":["Recall","感度"],"description":"実際の陽性のうち正しく検出できた割合。偽陰性を抑える指標。"}
+    {"@type":"DefinedTerm","name":"再現率","alternateName":["Recall","感度"],"description":"実際の陽性のうち正しく検出できた割合。偽陰性を抑える指標。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"感度と再現率は同じ？","acceptedAnswer":{"@type":"Answer","text":"二値分類では同じ概念として扱われることが多い。"}}]}
   ]}
   </script>
 </head>
@@ -38,57 +39,124 @@
   <header class="tool-hero tool-hero--article">
     <p class="tool-hero-eyebrow">基礎・機械学習</p>
     <h1>再現率とは？Recall・「本当の陽性をどれだけ拾えたか」</h1>
-    <p class="tool-hero-sub">読み：さいげんりつ ／ 英：Recall</p>
+    <p class="tool-hero-sub">読み：さいげんりつ ／ 英：Recall（感度）</p>
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>再現率</strong>（Recall／感度）は、<strong>実際に陽性である対象のうち、モデルが陽性と正しく検出できた割合</strong>です。本記事は公式暗記に加え、試験で問われる<strong>見逃し（偽陰性）の業務意味・適合率とのトレードオフ</strong>に焦点を当てます。
+      <strong>再現率</strong>（Recall／感度）は、<strong>実際に陽性である対象のうち、モデルが陽性と正しく検出できた割合</strong>です。本記事は公式の丸暗記ではなく、試験で問われる<strong>見逃し（偽陰性）の業務リスク・適合率との対比・閾値の動かし方</strong>に焦点を当てます。<a href="../precision/">適合率</a>記事とあわせて読むと整理しやすいです。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
       <ol>
         <li><a href="#exam-study">試験で問われる見方</a></li>
-        <li><a href="#definition">定義のイメージ</a></li>
-        <li><a href="#when">重視する場面</a></li>
+        <li><a href="#matrix">混同行列の読み方</a></li>
+        <li><a href="#definition">定義と偽陰性</a></li>
+        <li><a href="#when">重視する業務場面</a></li>
         <li><a href="#tradeoff">適合率とのトレードオフ</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related-exams">関連する試験問題</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
-      <p>○：再現率は<strong>本来陽性をどれだけ拾えたか</strong>（<a href="../../exams/g-kentei/drill/q/tf-046/">TF-046</a>）。見逃しを減らしたい場面で重要。</p>
-      <p>病気スクリーニングでは偽陰性を減らすため再現率を重視（<a href="../../exams/g-kentei/practice/q/g-084/">G-084</a>）。適合率は「陽性と言ったうちの正しさ」で目的が異なる。</p>
+      <p>
+        ○：再現率は<strong>本来陽性をどれだけ拾えたか</strong>（<a href="../../exams/g-kentei/drill/q/tf-046/">TF-046</a>）。偽陰性（FN）を減らしたい場面で重要。
+      </p>
+      <p>
+        ○：病気スクリーニングでは見逃しを避けるため<strong>再現率を重視</strong>（<a href="../../exams/g-kentei/practice/q/g-084/">G-084</a>）。<a href="../precision/">適合率</a>は「陽性と言ったうちの正しさ」で、重視する場面が異なる。
+      </p>
+      <p>
+        ×：再現率＝適合率、再現率＝正解率などの定義すり替え。
+      </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-046/">TF-046</a>、<a href="../../exams/g-kentei/practice/q/g-084/">G-084</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/practice/q/g-495/">G-495</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-046/">TF-046</a>、<a href="../../exams/g-kentei/practice/q/g-084/">G-084</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a></p>
       </div>
     </section>
+    <section id="matrix">
+      <h2>混同行列の読み方</h2>
+      <p>再現率は<strong>実際が陽性だった行</strong>に注目します。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th></th><th>予測：陽性</th><th>予測：陰性</th></tr></thead>
+        <tbody>
+          <tr><td><strong>実際：陽性</strong></td><td>真陽性（TP）</td><td>偽陰性（FN）→ 見逃し</td></tr>
+          <tr><td><strong>実際：陰性</strong></td><td>偽陽性（FP）</td><td>真陰性（TN）</td></tr>
+        </tbody>
+      </table>
+      <p>再現率の分母は TP＋FN（実際の陽性の総数）です。<a href="../precision/">適合率</a>の分母（TP＋FP）とは異なる点が試験の核心です。</p>
+    </section>
     <section id="definition">
-      <h2>定義のイメージ</h2>
-      <p><em>再現率 ＝ TP ÷ (TP ＋ FN)</em></p>
-      <p>混同行列では<strong>実際が陽性だった行</strong>（TP＋FN）のうち TP の割合です。FN（偽陰性）が多いと再現率は下がります。</p>
+      <h2>定義と偽陰性</h2>
+      <p><em>再現率（Recall）＝ TP ÷ (TP ＋ FN)</em></p>
+      <p>
+        「本当は陽性なのに、モデルが陰性と見逃した」件数が FN です。再現率が低いとは、陽性ケースの拾い漏れが多い状態を意味します。
+      </p>
     </section>
     <section id="when">
-      <h2>重視する場面</h2>
-      <ul class="tool-steps">
-        <li><strong>医療スクリーニング</strong> — 患者の見逃しを避けたい</li>
-        <li><strong>不正・異常検知</strong> — インシデントの取りこぼしを減らす</li>
-        <li><strong>情報検索</strong> — 関連文書の網羅（別文脈では「リコール」と呼ぶことも）</li>
-      </ul>
+      <h2>重視する業務場面</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>場面</th><th>なぜ再現率か</th></tr></thead>
+        <tbody>
+          <tr><td>医療スクリーニング</td><td>患者の見逃し（FN）が致命的</td></tr>
+          <tr><td>不正・セキュリティ</td><td>攻撃の取りこぼしを減らしたい</td></tr>
+          <tr><td>欠陥検査</td><td>不良品の流出を防ぎたい</td></tr>
+          <tr><td>情報検索</td><td>関連文書の網羅（リコール）</td></tr>
+        </tbody>
+      </table>
+      <p>誤検知より誤判定の「見逃し」が問題になるときは再現率優先。誤検知の方が困るときは<a href="../precision/">適合率</a>優先です。</p>
     </section>
     <section id="tradeoff">
       <h2>適合率とのトレードオフ</h2>
-      <p>閾値を下げると陽性判定が増え、再現率は上がりやすい一方、<a href="../precision/">適合率</a>は下がりやすいです。両方をバランスする指標が<a href="../f1-score/">F1スコア</a>です。</p>
+      <p>
+        閾値を下げて陽性判定を増やすと、拾い漏れは減り再現率は上がりやすい一方、誤検知が増え<strong>適合率は下がりやすい</strong>です。両方をまとめて見る指標が<a href="../f1-score/">F1スコア</a>です。
+      </p>
+      <p>試験では「どちらを重視するかは<strong>業務目的</strong>で決める」と答えられることが重要です（G-084）。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>再現率100%が常に最良</td><td>すべて陽性予測すれば再現率1だが適合率は崩れる</td></tr>
+          <tr><td>再現率＝適合率</td><td>分母が異なる（実際の陽性行 vs 予測陽性列）</td></tr>
+          <tr><td>再現率は回帰の指標</td><td>主に分類の指標。RMSE等とは別（TF-377の誤答パターンはF値側）</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
-        <details><summary>感度と再現率は同じ？</summary><p class="tool-faq-a">二値分類では同じ概念として扱われることが多いです。試験ではRecall＝再現率で問題ありません。</p></details>
-        <details><summary>再現率100%が理想？</summary><p class="tool-faq-a">必ずしも。すべてを陽性と予測すれば再現率は1ですが、適合率が極端に下がります。業務目的でバランスを取ります。</p></details>
+        <details><summary>感度と再現率は同じ？</summary><p class="tool-faq-a">二値分類では同じ概念として扱われることが多いです。医療検査では「感度」という語がよく使われます。</p></details>
+        <details><summary>特異度（Specificity）との関係は？</summary><p class="tool-faq-a">特異度は実際の陰性をどれだけ正しく陰性と判定したか（TN/(TN+FP)）。再現率とセットで試験に出ることもあります。</p></details>
+        <details><summary>LLMの評価にも再現率は？</summary><p class="tool-faq-a">分類タスク（有害判定など）では使えます。自由生成の品質評価では別指標（BLEU、人間評価）が中心です。</p></details>
+      </div>
+    </section>
+    <section id="related-exams" class="tool-exam-section" aria-labelledby="related-exams-heading">
+      <h2 id="related-exams-heading" class="tool-related-heading">関連する試験問題</h2>
+      <p class="tool-exam-section__lead">再現率・見逃しの文脈が出る演習です。</p>
+      <div class="tool-exam-groups">
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 一問一答</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/drill/q/tf-046/">TF-046 · 再現率</a></li>
+            <li><a href="../../exams/g-kentei/drill/q/tf-047/">TF-047 · F値</a></li>
+          </ul>
+        </div>
+        <div class="tool-exam-group">
+          <p class="tool-exam-group__title">G検定 · 実践演習</p>
+          <ul class="tool-related-list">
+            <li><a href="../../exams/g-kentei/practice/q/g-084/">G-084 · 再現率を重視する場面</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-064/">G-064 · 不均衡データと指標</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-056/">G-056 · 混同行列</a></li>
+            <li><a href="../../exams/g-kentei/practice/q/g-495/">G-495 · 分類評価指標</a></li>
+          </ul>
+          <p class="tool-exam-group__hub"><a href="../../exams/g-kentei/practice/domain/domain-10/">機械学習の概要（実践演習）</a></p>
+        </div>
       </div>
     </section>
     <aside class="tool-related-wrap">
