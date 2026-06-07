@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" role="img" aria-labelledby="title desc">
+  <title id="title">AI¨ó¸Ë¢nmÙÕíü</title>
+  <desc id="desc">Çü¿ÎÆK‰MæâÇëfÒU¡,jŸÅK(û9„~gnAŒ</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EEF3FC"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#1A5CDB"/>
+    </marker>
+    <marker id="arrow-muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+  <rect width="960" height="300" rx="16" fill="url(#bg)" stroke="#E2E8F0"/>
+  <text x="480" y="36" text-anchor="middle" font-family="'Noto Sans JP', system-ui, sans-serif" font-size="18" font-weight="700" fill="#0F172A">AI¨ó¸Ë¢nx‹„jmÙÕíü</text>
+  <text x="480" y="58" text-anchor="middle" font-family="'Noto Sans JP', system-ui, sans-serif" font-size="12" fill="#64748B">PoCK‰,jK(~gŸÅh9„’pŠÔY</text>
+
+  <!-- step boxes -->
+  <g font-family="'Noto Sans JP', system-ui, sans-serif">
+    <g transform="translate(24, 96)">
+      <rect width="128" height="88" rx="12" fill="#FFFFFF" stroke="#1A5CDB" stroke-width="2"/>
+      <text x="64" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#1A5CDB">01</text>
+      <text x="64" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">Çü¿</text>
+      <text x="64" y="76" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">ÎÆ</text>
+    </g>
+    <g transform="translate(176, 96)">
+      <rect width="128" height="88" rx="12" fill="#FFFFFF" stroke="#1A5CDB" stroke-width="2"/>
+      <text x="64" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#1A5CDB">02</text>
+      <text x="64" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">Mæ</text>
+      <text x="64" y="76" text-anchor="middle" font-size="12" fill="#64748B">y´Ï-</text>
+    </g>
+    <g transform="translate(328, 96)">
+      <rect width="128" height="88" rx="12" fill="#FFFFFF" stroke="#1A5CDB" stroke-width="2"/>
+      <text x="64" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#1A5CDB">03</text>
+      <text x="64" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">âÇë</text>
+      <text x="64" y="76" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">fÒ</text>
+    </g>
+    <g transform="translate(480, 96)">
+      <rect width="128" height="88" rx="12" fill="#FFFFFF" stroke="#1A5CDB" stroke-width="2"/>
+      <text x="64" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#1A5CDB">04</text>
+      <text x="64" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">U¡</text>
+      <text x="64" y="76" text-anchor="middle" font-size="12" fill="#64748B">¾¦ûþ‡</text>
+    </g>
+    <g transform="translate(632, 96)">
+      <rect width="128" height="88" rx="12" fill="#1A5CDB" stroke="#1A5CDB" stroke-width="2"/>
+      <text x="64" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">05</text>
+      <text x="64" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">,j</text>
+      <text x="64" y="76" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">ŸÅ</text>
+    </g>
+    <g transform="translate(808, 96)">
+      <rect width="128" height="88" rx="12" fill="#FFFFFF" stroke="#1A5CDB" stroke-width="2"/>
+      <text x="64" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#1A5CDB">06</text>
+      <text x="64" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">K(</text>
+      <text x="64" y="76" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">û9„</text>
+    </g>
+  </g>
+
+  <!-- forward arrows -->
+  <line x1="152" y1="140" x2="172" y2="140" stroke="#1A5CDB" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="304" y1="140" x2="324" y2="140" stroke="#1A5CDB" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="456" y1="140" x2="476" y2="140" stroke="#1A5CDB" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="608" y1="140" x2="628" y2="140" stroke="#1A5CDB" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="760" y1="140" x2="804" y2="140" stroke="#1A5CDB" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- improvement loop -->
+  <path d="M872 184 C872 228 480 248 88 228 C88 210 88 200 88 200" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-muted)"/>
+  <text x="480" y="268" text-anchor="middle" font-family="'Noto Sans JP', system-ui, sans-serif" font-size="12" fill="#64748B">ã–ûfÒûA/BÆ¹Èg™š9„</text>
+</svg>
