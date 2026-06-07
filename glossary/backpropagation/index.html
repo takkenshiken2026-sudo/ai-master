@@ -65,7 +65,9 @@
         <li><a href="#chain-rule">連鎖律が鍵</a></li>
         <li><a href="#vs-others">混同しやすい用語</a></li>
         <li><a href="#issues">勾配消失・爆発</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -167,6 +169,19 @@
       </p>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>誤差逆伝播＝k-meansの中心更新</td><td>NNの勾配計算（TF-073は×）</td></tr>
+          <tr><td>学習率も逆伝播で自動更新</td><td>ハイパーパラメータ（TF-052）</td></tr>
+          <tr><td>誤差逆伝播＝勾配降下法</td><td>勾配を求める vs 更新する方針</td></tr>
+          <tr><td>信号が物理的に逆流する</td><td>勾配を効率計算する数学的手順</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -182,21 +197,22 @@
           <summary>学習率も誤差逆伝播で更新される？</summary>
           <p class="tool-faq-a">通常は更新されません（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）。ハイパーパラメータとして別に設定します。</p>
         </details>
-        <details>
-          <summary>生成AIパスポートでも出る？</summary>
-          <p class="tool-faq-a">深い技術詳細はG検定寄りです。生成AIパスポートは活用・リスクが中心で、本記事はG検定の土台として読むのがおすすめです。</p>
-        </details>
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-072/">TF-072 · 連鎖律と逆伝播</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-390/">TF-390 · 誤差逆伝播法</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-052/">TF-052 · ハイパーパラメータ（×）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-136/">G-136 · 勾配爆発</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
-          <li><a href="../transformer/">Transformer</a></li>
-          <li><a href="../llm/">LLM</a></li>
-          <li><a href="../generative-ai/">生成AI</a></li>
-          <li><a href="../artificial-intelligence/">人工知能（AI）</a></li>
           <li><a href="../gradient-descent/">勾配降下法</a></li>
           <li><a href="../loss-function/">損失関数</a></li>
           <li><a href="../neural-network/">ニューラルネットワーク</a></li>

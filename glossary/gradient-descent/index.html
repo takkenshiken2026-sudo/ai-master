@@ -65,7 +65,9 @@
         <li><a href="#variants">バッチの三兄弟</a></li>
         <li><a href="#learning-rate">学習率の効き方</a></li>
         <li><a href="#vs-backprop">誤差逆伝播法との役割分担</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -142,6 +144,18 @@
       </table>
       <p><a href="../llm/">LLM</a>の学習でも、損失に対する勾配で重みを更新する点は同じです。規模が大きいため分散学習などの技術が加わります。</p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>学習率も誤差逆伝播で自動更新</td><td>ハイパーパラメータ（TF-052）</td></tr>
+          <tr><td>勾配の大きい方向へ更新</td><td>損失を減らす＝勾配の反対方向（TF-240）</td></tr>
+          <tr><td>SGD＝訓練データを使わない</td><td>訓練データで勾配を計算（G-141）</td></tr>
+          <tr><td>勾配降下＝誤差逆伝播</td><td>前者は更新方針、後者は勾配計算</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -150,17 +164,23 @@
         <details><summary>勾配消失・爆発は勾配降下法の話？</summary><p class="tool-faq-a">逆伝播で勾配が極端に小さく／大きくなる現象です。更新がうまくいかない原因の一つ（<a href="../../exams/g-kentei/practice/q/g-136/">G-136</a>）。<a href="../backpropagation/">誤差逆伝播法</a>の記事も参照してください。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-075/">TF-075 · 勾配降下法</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-239/">TF-239 · 学習率</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-052/">TF-052 · ハイパーパラメータ（×）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-190/">G-190 · 学習率の役割</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../backpropagation/">誤差逆伝播法</a></li>
           <li><a href="../loss-function/">損失関数</a></li>
           <li><a href="../machine-learning/">機械学習</a></li>
-          <li><a href="../transformer/">Transformer</a></li>
-          <li><a href="../llm/">LLM</a></li>
-          <li><a href="../generative-ai/">生成AI</a></li>
-          <li><a href="../artificial-intelligence/">人工知能（AI）</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

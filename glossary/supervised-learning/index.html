@@ -47,7 +47,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -60,21 +60,27 @@
         <li><a href="#what-is">教師あり学習とは</a></li>
         <li><a href="#tasks">二大タスク：分類と回帰</a></li>
         <li><a href="#pipeline">学習の流れ</a></li>
-        <li><a href="#vs-unsupervised">教師なしとの違い</a></li>
+        <li><a href="#vs-others">3つの学習パラダイム</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
       <p>
-        教師あり学習は<strong>正解ラベル付きデータ</strong>を使う。スパム判定・画像分類などが典型例（CSV定義・G検定頻出）。
+        ○：教師あり学習は<strong>入力と正解ラベルのペア</strong>から学習する（<a href="../../exams/g-kentei/practice/q/g-094/">G-094</a>、<a href="../../exams/genai-passport/practice/q/hq-0126/">HQ-0126</a>）。スパム判定・売上予測が典型。
       </p>
       <p>
-        教師なし学習では正解ラベルがないため、<strong>ラベルとの誤差を直接最小化するとは限らない</strong>（<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>）。クラスタ内のまとまりや再構成誤差など別の基準を使う。
+        ×：教師なしでも<strong>ラベルとの誤差を直接最小化</strong>するとは限らない（<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>）。クラスタ内のまとまりや再構成誤差など別基準。
+      </p>
+      <p>
+        ×：教師ありと教師なしの定義を<strong>入れ替えた選択肢</strong>（HQ-0126の誤答パターン）。
       </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>、<a href="../../exams/g-kentei/drill/domain/domain-10/">機械学習の概要</a>、<a href="../../exams/g-kentei/drill/domain/domain-09/">機械学習の要素技術</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-094/">G-094</a>、<a href="../../exams/g-kentei/practice/q/g-139/">G-139</a>、<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0126/">HQ-0126</a></p>
       </div>
     </section>
     <section id="what-is">
@@ -106,17 +112,29 @@
         <li><strong>汎化性能</strong>の評価（<a href="../overfitting/">過学習</a>チェック）</li>
       </ol>
     </section>
-    <section id="vs-unsupervised">
-      <h2>教師なしとの違い</h2>
+    <section id="vs-others">
+      <h2>3つの学習パラダイム</h2>
       <table class="tool-spec-table">
-        <thead><tr><th>区分</th><th>ラベル</th><th>目的の例</th></tr></thead>
+        <thead><tr><th>区分</th><th>教師（信号）</th><th>目的の例</th></tr></thead>
         <tbody>
-          <tr><td><strong>教師あり</strong></td><td>あり</td><td>分類・回帰</td></tr>
-          <tr><td><strong>教師なし</strong></td><td>なし</td><td>クラスタリング、k-means</td></tr>
-          <tr><td><strong>強化学習</strong></td><td>報酬信号</td><td>方策の最適化</td></tr>
+          <tr><td><strong>教師あり</strong></td><td>正解ラベル</td><td>分類・回帰</td></tr>
+          <tr><td><strong><a href="../unsupervised-learning/">教師なし</a></strong></td><td>なし</td><td>クラスタリング、次元削減</td></tr>
+          <tr><td><strong><a href="../reinforcement-learning/">強化学習</a></strong></td><td>報酬</td><td>方策の最適化</td></tr>
         </tbody>
       </table>
-      <p>「教師なしでも分類できる」は文脈次第ですが、<strong>ラベル付き教師信号なしに教師あり分類と同じ損失を使う</strong>という説明は×になりやすいです。</p>
+      <p>試験では3つを混同する選択肢が頻出です。特に「報酬で学習」は強化学習、「ラベルなしで構造発見」は教師なしです。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>教師あり＝ラベルなしでパターン発見</td><td>教師なしの定義（HQ-0126）</td></tr>
+          <tr><td>教師なし＝ラベル誤差を最小化</td><td>必ずしも当てはまらない（TF-354）</td></tr>
+          <tr><td>回帰＝クラスタリング</td><td>回帰は連続値予測の教師あり（G-094）</td></tr>
+          <tr><td>k-means＝教師あり</td><td>教師なしのクラスタリング</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
@@ -126,17 +144,24 @@
         <details><summary>ラベル作成が高いときは？</summary><p class="tool-faq-a">教師なし・半教師あり、転移学習、弱いラベルなどが検討されます。試験では区分の定義が中心です。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-094/">G-094 · 回帰は教師あり</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-139/">G-139 · 学習の種類の区別</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-354/">TF-354 · 教師なしの損失（すり替え）</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0126/">HQ-0126 · 教師ありとの比較</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../machine-learning/">機械学習</a></li>
           <li><a href="../unsupervised-learning/">教師なし学習</a></li>
-          <li><a href="../precision/">適合率</a></li>
           <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../precision/">適合率</a></li>
           <li><a href="../overfitting/">過学習</a></li>
-          <li><a href="../deep-learning/">ディープラーニング</a></li>
-          <li><a href="../fine-tuning/">ファインチューニング</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

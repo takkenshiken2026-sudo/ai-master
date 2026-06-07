@@ -76,6 +76,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("L", "クラスタ・計算", ["k-means", "reinforcement-learning", "gpu"]),
     ("M", "分類指標", ["precision", "recall", "f1-score"]),
     ("N", "損失・正則化", ["dropout", "loss-function", "overfitting"]),
+    ("O", "最適化・学習型", ["gradient-descent", "backpropagation", "supervised-learning"]),
 ]
 
 REVISION_STATUS_LABEL = {
