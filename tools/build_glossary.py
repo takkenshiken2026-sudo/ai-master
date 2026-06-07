@@ -79,6 +79,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("O", "最適化・学習型", ["gradient-descent", "backpropagation", "supervised-learning"]),
     ("P", "生成AI活用", ["prompt", "token", "hallucination"]),
     ("Q", "生成AI基礎", ["generative-ai", "llm", "prompt-engineering"]),
+    ("R", "RAG・推論設定", ["rag", "context-window", "temperature"]),
 ]
 
 REVISION_STATUS_LABEL = {

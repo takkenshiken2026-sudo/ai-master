@@ -71,7 +71,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -85,9 +85,10 @@
         <li><a href="#exam-study">試験で問われる見方</a></li>
         <li><a href="#what-is">コンテキストウィンドウとは</a></li>
         <li><a href="#what-counts">何が枠を消費するか</a></li>
-        <li><a href="#misconceptions">よくある誤解</a></li>
         <li><a href="#practice">実務チェックリスト</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -129,36 +130,6 @@
       <p>日本語は英語より<a href="../token/">トークン</a>消費が大きくなりやすいため、同じ文字数でも枠を早く使い切ることがあります。</p>
     </section>
 
-    <section id="misconceptions">
-      <h2>よくある誤解</h2>
-      <table class="tool-spec-table">
-        <thead>
-          <tr>
-            <th>誤解</th>
-            <th>実際</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>大きい＝最新ニュースを自動取得</td>
-            <td>×。渡した文脈の範囲の話（TF-0169）</td>
-          </tr>
-          <tr>
-            <td>大きい＝常に正確</td>
-            <td>長文を読めるだけ。<a href="../hallucination/">ハルシネーション</a>は別問題</td>
-          </tr>
-          <tr>
-            <td>大きい＝料金は同じ</td>
-            <td>入力トークン課金なら、使うほどコスト増のことが多い</td>
-          </tr>
-          <tr>
-            <td>会話を続ければ永遠に覚えている</td>
-            <td>上限を超えると古い発言が切り捨てられる・要約される</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
     <section id="practice">
       <h2>実務チェックリスト</h2>
       <p>長文・長期プロジェクトで枠を意識するときの確認項目です。</p>
@@ -170,6 +141,19 @@
         <li><strong>社内文書は<a href="../rag/">RAG</a>で分割取得</strong> — <a href="../chunking/">チャンキング</a>と検索で関連部分だけ渡す</li>
         <li><strong>機密データを無制限に履歴へ</strong> — <a href="../confidential-data-leak/">漏洩リスク</a>。不要なら履歴を残さない</li>
       </ol>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>大きい＝最新情報を自動検索</td><td>文脈の長さの上限（TF-0169は×）</td></tr>
+          <tr><td>大きい＝常に正確</td><td>長文を扱えるだけ。ハルシネーションは別</td></tr>
+          <tr><td>コンテキスト＝トークン</td><td>上限 vs 処理単位（TF-0156）</td></tr>
+          <tr><td>会話を続ければ永遠に記憶</td><td>上限超過で古い履歴が切られる</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <section id="faq">
@@ -194,24 +178,24 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · 文脈の長さ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169 · 自動検索は×</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156 · トークンの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178 · 次トークン生成</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../token/">トークン</a></li>
           <li><a href="../llm/">LLM</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../rag/">RAG</a></li>
-          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
-        </ul>
-      </div>
-      <div class="tool-related-block">
-        <h2 class="tool-related-heading">関連するAIツール</h2>
-        <ul class="tool-related-list">
-          <li><a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
-          <li><a href="../../tools/claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
-          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
         </ul>
       </div>
     </aside>

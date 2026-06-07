@@ -109,7 +109,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -126,7 +126,9 @@
         <li><a href="#use-cases">導入が向く場面</a></li>
         <li><a href="#vs-finetuning">ファインチューニングとの違い</a></li>
         <li><a href="#limits">限界と運用上の注意</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -256,6 +258,19 @@
       </p>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>RAG＝ファインチューニング</td><td>検索＋生成 vs 重みの追加学習</td></tr>
+          <tr><td>RAGで100%正確</td><td>検索・生成どちらも誤りうる（TF-0171）</td></tr>
+          <tr><td>誤情報が検索にあっても正答</td><td>インデックスの品質に依存（TF-175）</td></tr>
+          <tr><td>RAG＝チャンク／ベクトルDB</td><td>パイプライン全体 vs 構成要素（HQ-0370）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -278,30 +293,25 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-174/">TF-174 · RAGの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-175/">TF-175 · RAGの限界</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0172/">TF-0172 · 検索拡張生成</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171 · 100%正確は×</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../llm/">LLM</a></li>
           <li><a href="../hallucination/">ハルシネーション</a></li>
-          <li><a href="../agent/">AIエージェント</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../chunking/">チャンキング</a></li>
-          <li><a href="../embedding/">埋め込み</a></li>
-          <li><a href="../embedding-model/">埋め込みモデル</a></li>
-          <li><a href="../vector-search/">ベクトル検索</a></li>
           <li><a href="../vector-database/">ベクトルデータベース</a></li>
-          <li><a href="../semantic-search/">セマンティック検索</a></li>
           <li><a href="../fine-tuning/">ファインチューニング</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
-        </ul>
-      </div>
-      <div class="tool-related-block">
-        <h2 class="tool-related-heading">関連記事</h2>
-        <ul class="tool-related-list">
-          <li><a href="../generative-ai/">生成AI</a></li>
-          <li><a href="../../career/generative-ai-engineer/">生成AIエンジニアとは</a></li>
-          <li class="tool-related-list__index"><a href="../../exams/g-kentei/">G検定 試験対策</a></li>
         </ul>
       </div>
     </aside>

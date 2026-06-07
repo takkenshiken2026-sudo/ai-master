@@ -50,7 +50,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -63,8 +63,9 @@
         <li><a href="#what-is">温度パラメータとは</a></li>
         <li><a href="#dial">創造性ダイヤル</a></li>
         <li><a href="#use-cases">用途別の目安</a></li>
-        <li><a href="#confusions">混同しやすい用語</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -112,15 +113,15 @@
       </ul>
       <p><a href="../prompt-engineering/">プロンプトエンジニアリング</a>と組み合わせ、出力を評価しながら調整します。</p>
     </section>
-    <section id="confusions">
-      <h2>混同しやすい用語</h2>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
       <table class="tool-spec-table">
-        <thead><tr><th>用語</th><th>違い</th></tr></thead>
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
         <tbody>
-          <tr><td><strong>学習率</strong></td><td>学習時の重み更新幅（<a href="../gradient-descent/">勾配降下法</a>）</td></tr>
-          <tr><td><strong>Top-p / Top-k</strong></td><td>候補語を絞る別のサンプリング設定</td></tr>
-          <tr><td><strong>回帰の「温度」</strong></td><td>物理量の予測とは無関係（<a href="../../exams/g-kentei/drill/q/tf-022/">TF-022</a>は回帰問題の例）</td></tr>
-          <tr><td><strong>モデルの「性能」</strong></td><td>温度は推論設定であり、能力そのものではない</td></tr>
+          <tr><td>温度＝学習率</td><td>推論時のサンプリング vs 学習時の更新幅（G-190）</td></tr>
+          <tr><td>温度を上げればハルシネーション消滅</td><td>多様性↑であり正確性の保証ではない</td></tr>
+          <tr><td>温度＝Top-p</td><td>ランダム性調整 vs 候補の絞り込み（HQ-0704）</td></tr>
+          <tr><td>温度＝モデルの性能</td><td>出力のばらつきを制御する設定値</td></tr>
         </tbody>
       </table>
     </section>
@@ -132,15 +133,23 @@
         <details><summary>画像生成にも温度はある？</summary><p class="tool-faq-a">拡散モデル等では別名のパラメータ（CFG scale等）で多様性を制御します。概念は近いですが用語は領域によります。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-178/">TF-178 · ランダム性</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0174/">TF-0174 · 多様性の設定</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0704/">HQ-0704 · Top-pとの区別</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-190/">G-190 · 学習率との区別</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../llm/">LLM</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../prompt-engineering/">プロンプトエンジニアリング</a></li>
-          <li><a href="../token/">トークン</a></li>
-          <li><a href="../hallucination-mitigation/">ハルシネーション対策</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>
