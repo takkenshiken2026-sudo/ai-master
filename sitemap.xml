@@ -225,6 +225,16 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://ai-master.jp/tools/capcut/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/tools/opus-clip/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
 
   
@@ -274,6 +284,11 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://ai-master.jp/exams/g-kentei/mock/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 <url>
     <loc>https://ai-master.jp/exams/genai-passport/</loc>
     <changefreq>weekly</changefreq>
@@ -289,6 +304,11 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://ai-master.jp/exams/genai-passport/mock/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 <url>
     <loc>https://ai-master.jp/legal/privacy.html</loc>
     <changefreq>yearly</changefreq>
@@ -299,6 +319,7 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+
 
 
   <!-- question-pages:start -->

@@ -17,6 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://ai-master.jp"
+SITE_OG_IMAGE = f"{SITE_ORIGIN}/assets/images/og-default.jpg"
 SITEMAP = ROOT / "sitemap.xml"
 INDEX_JSON = ROOT / "data" / "question-index.json"
 GLOSSARY_TERMS_JSON = ROOT / "data" / "glossary-terms.json"
@@ -149,6 +150,27 @@ def render_footer(rel: str) -> str:
     return FOOTER.format(legal=f"{rel}legal/")
 
 
+def render_og_meta(
+    title: str,
+    description: str,
+    canonical: str,
+    *,
+    og_type: str = "website",
+) -> str:
+    esc_title = html.escape(title, quote=True)
+    esc_desc = html.escape(description, quote=True)
+    return f"""  <meta property="og:type" content="{og_type}">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="{esc_title}">
+  <meta property="og:description" content="{esc_desc}">
+  <meta property="og:url" content="{canonical}">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="{SITE_OG_IMAGE}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{SITE_OG_IMAGE}">
+"""
+
+
 def page_shell(
     *,
     rel: str,
@@ -159,6 +181,7 @@ def page_shell(
     body_html: str,
     json_ld: dict | None = None,
     css_depth: int = 4,
+    og_type: str = "website",
 ) -> str:
     css = rel_to_root(css_depth) + "assets/css/"
     json_block = ""
@@ -170,6 +193,7 @@ def page_shell(
         )
     esc_title = html.escape(title)
     esc_desc = html.escape(description)
+    og_block = render_og_meta(title, description, canonical, og_type=og_type)
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -178,7 +202,7 @@ def page_shell(
   <meta name="description" content="{esc_desc}">
   <title>{esc_title}</title>
   <link rel="canonical" href="{canonical}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+{og_block}  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{css}main.css">
@@ -563,8 +587,9 @@ def build_mode(
         )
 
         topic = q.get("topic") or qs
+        qid = q.get("id") or qs.upper()
         prompt = q.get("statement") if kind == "drill" else q.get("question")
-        title = f"【{exam_label} {mode_label}】{topic} — AIマスター"
+        title = f"【{exam_label} {mode_label}】{qid} · {topic} — AIマスター"
         description = trim_text(prompt or "")
         canonical = f"{SITE_ORIGIN}/exams/{exam_id}/{mode_id}/q/{qs}/"
         crumb = breadcrumb(
@@ -618,6 +643,7 @@ def build_mode(
                 body_html=body,
                 json_ld=json_ld,
                 css_depth=5,
+                og_type="article",
             ),
             encoding="utf-8",
         )

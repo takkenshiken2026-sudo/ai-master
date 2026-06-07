@@ -58,7 +58,11 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  scroll-padding-top: var(--nav-h);
+}
 body {
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -603,12 +607,236 @@ footer {
 }
 
 @media (max-width: 600px) {
-  .nav-links { display: none; }
+  .site-nav {
+    position: sticky;
+    top: 0;
+    padding: 0 16px;
+    gap: 12px;
+  }
+  .logo { font-size: var(--text-base); }
+  .nav-links {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    gap: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links li { flex-shrink: 0; }
+  .nav-links a {
+    font-size: var(--text-xs);
+    white-space: nowrap;
+  }
+
+  .page-wrap,
+  main { padding-top: 0 !important; }
+
+  .hero-wrap { padding: 48px 16px 0; }
   .hero-wrap h1 { font-size: 32px; }
   .hero-actions { flex-direction: column; }
-  .hero-actions .btn-solid { justify-content: center; }
+  .hero-actions .btn-solid,
+  .hero-actions .btn-ghost { justify-content: center; }
   .mini-cards { grid-template-columns: 1fr; }
   .cat-grid { grid-template-columns: 1fr; }
+  .band { padding: 24px 16px; margin-top: 40px; }
   .band-stat { flex: 1 1 100%; }
   .foot-bottom { flex-direction: column; }
+}
+
+/* ── responsive（旧 responsive.css を統合） ── */
+img,
+video,
+iframe,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  .page-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 72px;
+  }
+
+  .page-wrap--article {
+    padding-left: 16px;
+    padding-right: 16px;
+    box-shadow: none;
+  }
+
+  .page-header {
+    padding: 28px 0 20px;
+  }
+
+  .page-header h1 {
+    font-size: var(--text-xl);
+  }
+
+  .sec-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    padding: 48px 16px;
+  }
+
+  .exam-wrap {
+    padding: 48px 16px;
+  }
+
+  .exam-card {
+    padding: 24px 20px;
+  }
+
+  footer {
+    padding: 40px 16px 24px;
+  }
+
+  .hub-header h1 {
+    font-size: var(--text-xl);
+  }
+
+  .hub-filter-row {
+    top: var(--nav-h);
+    margin-left: -2px;
+    margin-right: -2px;
+  }
+
+  .hub-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .hub-sort-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .exam-mode-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 16px 16px 20px;
+  }
+
+  .exam-mode-row__go {
+    align-self: flex-end;
+  }
+
+  .exam-mode-row__name {
+    font-size: var(--text-base);
+  }
+
+  .exam-related {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 18px;
+  }
+
+  .exam-related-links {
+    flex-direction: column;
+  }
+
+  .exam-related-links a {
+    text-align: center;
+  }
+
+  .exam-pick-card {
+    padding: 18px 18px;
+  }
+
+  .exam-pick-name {
+    font-size: var(--text-lg);
+  }
+
+  .quiz-bar {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-top: 24px;
+  }
+
+  .quiz-accuracy {
+    width: 100%;
+  }
+
+  .mock-pick-card {
+    padding: 18px 18px;
+  }
+
+  .career-cta {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 18px;
+    margin-top: 36px;
+  }
+
+  .career-cta-links {
+    flex-direction: column;
+  }
+
+  .career-cta-links a {
+    text-align: center;
+  }
+
+  .legal-content {
+    padding-bottom: 32px;
+  }
+
+  .legal-content h2 {
+    font-size: var(--text-base);
+    margin-top: 28px;
+  }
+
+  .tool-lead {
+    padding: 14px 16px;
+    font-size: var(--text-sm);
+  }
+
+  .tool-toc {
+    padding: 14px 16px;
+  }
+
+  .tool-product-links {
+    font-size: var(--text-xs);
+    line-height: 1.65;
+  }
+
+  .tool-content section:has(.tool-spec-table),
+  .tool-content section:has(.tool-pros-cons-table) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tool-spec-table {
+    min-width: 520px;
+    font-size: var(--text-sm);
+  }
+
+  .tool-pros-cons-table {
+    min-width: 280px;
+    width: 100%;
+  }
+
+  .question-page__card {
+    padding: 20px 16px;
+  }
+
+  .question-page__prompt {
+    font-size: var(--text-sm);
+  }
+
+  .breadcrumb {
+    font-size: var(--text-xs);
+  }
+
+  .breadcrumb li + li::before {
+    margin: 0 6px;
+  }
 }

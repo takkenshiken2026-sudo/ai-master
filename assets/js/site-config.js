@@ -8,4 +8,5 @@ const SITE_CONFIG = {
   description: 'G検定・生成AIパスポートなどAI関連資格の対策情報と、AIツール・用語辞典を掲載する学習プラットフォーム',
   locale: 'ja_JP',
   lang: 'ja',
+  ogImage: 'https://ai-master.jp/assets/images/og-default.jpg',
 };
