@@ -2627,7 +2627,7 @@
       "summary": "学習済みモデルで新しい入力に対し予測を行う処理。",
       "category": "basics",
       "sortKey": "す",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -9314,7 +9314,7 @@
       "summary": "AIツールの許容・禁止行為を定めた社内規程。",
       "category": "governance",
       "sortKey": "り",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -9983,7 +9983,7 @@
       "summary": "AIの結果に対し誰が責任を負うかを明確にすること。",
       "category": "governance",
       "sortKey": "せ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -10033,7 +10033,7 @@
       "summary": "AIの判断過程や限界を利用者が理解できること。",
       "category": "governance",
       "sortKey": "と",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",

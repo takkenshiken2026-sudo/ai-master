@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="透明性（Transparency）とは？AIの仕組み・利用目的・判断根拠を理解可能にする考え方。説明責任との違いを解説。">
+  <title>透明性（Transparency）とは？AIの理解可能性 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/transparency/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="透明性（Transparency）とは？AIの理解可能性">
+  <meta property="og:description" content="AIの判断過程や限界を利用者が理解できること。生成AIパスポート第4章の倫理原則。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/transparency/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"透明性","alternateName":["Transparency"],"description":"AIの判断過程や限界を利用者が理解できること。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">透明性</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・ビジネス</p>
+    <h1>透明性（Transparency）とは？AIの理解可能性</h1>
+    <p class="tool-hero-sub">読み：とうめいせい ／ 英：Transparency</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>透明性</strong>（Transparency）は、<strong>AIの仕組み・利用目的・判断の根拠などを、関係者が理解できるようにする</strong>考え方です。本記事はアルゴリズム公開の法制度ではなく、<strong>試験定義と説明責任・人間中心との区別</strong>——第4章のすり替え対策——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">透明性とは</a></li>
+        <li><a href="#what-show">何を示すか</a></li>
+        <li><a href="#genai">生成AIでの例</a></li>
+        <li><a href="#vs-others">他原則との違い</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートの定義は<strong>「AIの仕組みや利用目的、判断の根拠などを理解可能にする考え方」</strong>です（<a href="../../exams/genai-passport/practice/q/hq-0504/">HQ-0504</a>、<a href="../../exams/genai-passport/practice/q/hq-0624/">HQ-0624</a>）。
+      </p>
+      <p>
+        AIを使っていることや運用ルールを示すことも透明性に関係します（<a href="../../exams/genai-passport/drill/q/tf-0355/">TF-0355</a>）。<strong>人間中心</strong>（尊厳・意思決定の尊重）や<strong>説明責任</strong>と定義を入れ替えないでください。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0504/">HQ-0504</a>、<a href="../../exams/genai-passport/practice/q/hq-0624/">HQ-0624</a>、<a href="../../exams/genai-passport/drill/q/tf-0355/">TF-0355</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>透明性とは</h2>
+      <p>
+        透明性は、ブラックボックスをなくすことだけではありません。<strong>何のためにAIを使い、どんなデータが関与し、出力の限界は何か</strong>——利用者や利害関係者が判断材料を得られる状態を指します。
+      </p>
+      <p><a href="../model-card/">モデルカード</a>や利用ガイド、社内FAQは透明性を高める手段の例です。</p>
+    </section>
+    <section id="what-show">
+      <h2>何を示すか</h2>
+      <ul class="tool-example-list">
+        <li><strong>利用目的</strong> — 何の業務で使うか</li>
+        <li><strong>AI利用の明示</strong> — 生成物がAI由来であること（<a href="../../exams/genai-passport/drill/q/tf-0355/">TF-0355</a>）</li>
+        <li><strong>限界</strong> — 幻覚・偏り・適用外用途</li>
+        <li><strong>根拠</strong> — 引用付き回答、<a href="../explainable-ai/">XAI</a>など</li>
+      </ul>
+    </section>
+    <section id="genai">
+      <h2>生成AIでの例</h2>
+      <p>チャットボットで「AIが回答しています」と表示する、RAGで参照文書を示す、画像生成で利用規約を確認する——いずれも透明性・信頼の文脈で語られます。</p>
+      <p>透明性が高いからといって<strong>出力が常に正確</strong>とは限りません。理解可能性と正確性は別軸です。</p>
+    </section>
+    <section id="vs-others">
+      <h2>他原則との違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>覚え方</th></tr></thead>
+        <tbody>
+          <tr><td><strong>透明性（本記事）</strong></td><td>理解可能にする</td></tr>
+          <tr><td><a href="../accountability/">説明責任</a></td><td>結果に対する責任を果たす</td></tr>
+          <tr><td>人間中心</td><td>尊厳・意思決定を尊重（HQ-0624で対比）</td></tr>
+          <tr><td><a href="../fairness/">公平性</a></td><td>不当な差別・偏りを避ける</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>透明性＝説明責任</td><td>理解可能性 vs 責任の果たし方</td></tr>
+          <tr><td>透明性＝人間中心</td><td>定義が入れ替わる誤答（<a href="../../exams/genai-passport/practice/q/hq-0624/">HQ-0624</a>）</td></tr>
+          <tr><td>透明性＝公平性</td><td>HQ-0534の誤答パターン</td></tr>
+          <tr><td>透明性＝試験範囲外</td><td>第4章で頻出（HQ-0624の誤答D）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>透明性はソースコード公開のこと？</summary><p class="tool-faq-a">オープンソースは透明性の一例ですが、試験では利用目的・根拠・限界の説明という広い意味で問われます。</p></details>
+        <details><summary>社外秘モデルでも透明性は必要？</summary><p class="tool-faq-a">アルゴリズム全公開が必須とは限りません。利用者に必要な情報を分かりやすく示すことが論点です。</p></details>
+        <details><summary>透明性とプライバシーは両立する？</summary><p class="tool-faq-a">トレードオフがあり得ます。何を開示し何を保護するかは<a href="../ai-governance/">ガバナンス</a>で設計します。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/practice/q/hq-0504/">HQ-0504 · 透明性の要点</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0624/">HQ-0624 · 人間中心との区別</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0355/">TF-0355 · AI利用の明示</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0358/">TF-0358 · 説明責任との対比</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../accountability/">説明責任</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../explainable-ai/">説明可能なAI</a></li>
+          <li><a href="../ai-ethics-overview/">AI倫理</a></li>
+          <li><a href="../model-card/">モデルカード</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
