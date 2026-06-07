@@ -57,8 +57,9 @@
         <li><a href="#what-is">拡散モデルとは</a></li>
         <li><a href="#pipeline">順過程と逆過程</a></li>
         <li><a href="#vs-gan">GANとの違い</a></li>
-        <li><a href="#misconceptions">よくある誤解</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -107,13 +108,17 @@
         </tbody>
       </table>
     </section>
-    <section id="misconceptions">
-      <h2>よくある誤解</h2>
-      <ul class="tool-example-list">
-        <li><strong>マーケの「拡散」だけ</strong> — 機械学習の生成モデル（TF-0185）</li>
-        <li><strong>逆過程を使わない</strong> — 生成に復元が必要（TF-154）</li>
-        <li><strong>Text-to-Imageそのもの</strong> — 拡散は手法、タスクは<a href="../text-to-image/">別記事</a></li>
-      </ul>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>拡散＝SNSの情報拡散のみ</td><td>ノイズ付加・除去の生成モデル（TF-0185）</td></tr>
+          <tr><td>逆過程を使わない</td><td>ノイズから復元して生成（TF-154）</td></tr>
+          <tr><td>拡散＝Text-to-Image</td><td>手法 vs タスク</td></tr>
+          <tr><td>拡散＝GAN</td><td>ノイズ除去 vs 対抗学習（G-377）</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
@@ -123,14 +128,22 @@
         <details><summary>DALL·Eも拡散？</summary><p class="tool-faq-a">系列は拡散ベースとして知られます。<a href="../dalle-model/">DALL·E</a>の記事を参照。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-377/">G-377 · ノイズ付加と除去</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184 · 画像生成の仕組み</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0185/">TF-0185 · マーケ用語は×</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-154/">TF-154 · 逆過程の復元</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../text-to-image/">テキスト画像生成</a></li>
-          <li><a href="../ddpm/">DDPM</a></li>
-          <li><a href="../latent-diffusion/">潜在拡散モデル</a></li>
           <li><a href="../gan/">GAN</a></li>
+          <li><a href="../ddpm/">DDPM</a></li>
           <li><a href="../generative-ai/">生成AI</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>

@@ -54,7 +54,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -71,7 +71,9 @@
         <li><a href="#models">代表的な技術（概要）</a></li>
         <li><a href="#vs-image-gen">画像生成AIとの違い</a></li>
         <li><a href="#risks">利用時の注意</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -188,6 +190,19 @@
       <p>プロンプト設計は<a href="../prompt/">プロンプト</a>の記事と併用してください。</p>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>手作業で文章を書き写す</td><td>AIがテキストから画像生成（TF-0191）</td></tr>
+          <tr><td>Image-to-Textと同じ</td><td>入力出力の方向が逆</td></tr>
+          <tr><td>Text-to-Image＝LLM</td><td>画像生成 vs テキスト生成</td></tr>
+          <tr><td>権利は自動保証</td><td>利用者が確認（HQ-0343）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -210,18 +225,23 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190 · 定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0191/">TF-0191 · 手作業は×</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211 · 利用と権利</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0343/">HQ-0343 · 権利確認</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
-          <li><a href="../generative-ai/">生成AI</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
-          <li><a href="../deepfake/">ディープフェイク</a></li>
-          <li><a href="../copyright/">著作権</a></li>
           <li><a href="../denoising-diffusion/">拡散モデル</a></li>
-          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
-          <li><a href="../dalle-model/">DALL·E</a></li>
           <li><a href="../gan/">GAN</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../copyright/">著作権</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

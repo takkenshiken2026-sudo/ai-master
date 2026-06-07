@@ -85,6 +85,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("U", "エージェント・調整", ["agent", "fine-tuning", "rlhf"]),
     ("V", "Transformer系", ["transformer", "attention", "gpt"]),
     ("W", "適応・表現", ["lora", "alignment", "embedding"]),
+    ("X", "画像生成", ["gan", "denoising-diffusion", "text-to-image"]),
 ]
 
 REVISION_STATUS_LABEL = {

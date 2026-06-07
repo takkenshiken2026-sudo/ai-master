@@ -50,7 +50,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -63,7 +63,9 @@
         <li><a href="#what-is">GANとは</a></li>
         <li><a href="#roles">生成器と識別器</a></li>
         <li><a href="#vs-diffusion">拡散モデルとの位置づけ</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -117,6 +119,18 @@
       </div>
       <p>どちらも<a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>のように「データ生成モデル」の適切な説明として並びます。ディープフェイクの早期事例とGANの関連も知識として出ることがあります（<a href="../deepfake/">ディープフェイク</a>）。</p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>生成器と識別器の役割入れ替え</td><td>Gが生成、Dが判定（HQ-0303）</td></tr>
+          <tr><td>識別器＝常に多クラス分類</td><td>基本は本物/偽物の二値（TF-152）</td></tr>
+          <tr><td>GAN＝拡散モデル</td><td>対抗学習 vs ノイズ除去</td></tr>
+          <tr><td>GAN単体の説明＝GAN全体</td><td>二つを競わせる構造（HQ-0157）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -125,7 +139,16 @@
         <details><summary>GANはテキスト生成にも使える？</summary><p class="tool-faq-a">原理上は可能ですが、試験では画像生成の文脈で出ることが多いです。テキストは主に<a href="../llm/">LLM</a>。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/practice/q/hq-0157/">HQ-0157 · GANの定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0303/">HQ-0303 · 役割の識別</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-373/">G-373 · 生成器と識別器</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-152/">TF-152 · 識別器の役割</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
