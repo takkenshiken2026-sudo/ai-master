@@ -44,7 +44,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -58,7 +58,9 @@
         <li><a href="#patterns">関与のパターン</a></li>
         <li><a href="#vs-automation">完全自動化との対比</a></li>
         <li><a href="#limits">限界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -125,6 +127,18 @@
         <li>すべての出力に人レビューはスケールしない → リスクに応じた設計</li>
       </ul>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>HITL＝RLHF</td><td>広い人の関与設計 vs 学習手法の一つ</td></tr>
+          <tr><td>HITLでバイアス完全除去</td><td>人間にも偏りがありうる（<a href="../../exams/g-kentei/drill/q/tf-200/">TF-200</a>）</td></tr>
+          <tr><td>HITLで誤りが常にゼロ</td><td>完全消滅とは限らない（<a href="../../exams/g-kentei/drill/q/tf-458/">TF-458</a>）</td></tr>
+          <tr><td>高リスクほど人を外す</td><td>確認・承認を強化（<a href="../../exams/g-kentei/drill/q/tf-457/">TF-457</a>、<a href="../../exams/g-kentei/drill/q/tf-499/">TF-499</a>は×）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -133,7 +147,16 @@
         <details><summary>エージェントにも使える？</summary><p class="tool-faq-a">はい。<a href="../agent/">AIエージェント</a>のツール実行前に人の承認を入れる設計もHITLです。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-199/">TF-199 · HITLの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-200/">TF-200 · バイアス完全除去は×</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-457/">TF-457 · 高リスクでの承認</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-458/">TF-458 · 誤りゼロは×</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
