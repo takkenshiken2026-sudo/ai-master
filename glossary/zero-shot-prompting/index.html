@@ -47,7 +47,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -61,7 +61,9 @@
         <li><a href="#why-works">なぜ例なしで動くか</a></li>
         <li><a href="#vs-few">Few-shotとの使い分け</a></li>
         <li><a href="#limits">限界と対策</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -116,6 +118,18 @@
         <a href="../temperature/">温度</a>を下げると出力のばらつきを抑えられる場合がありますが、知識不足の補完にはなりません。
       </p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Zero-shot＝学習データゼロ</td><td>プロンプト内の例がゼロ</td></tr>
+          <tr><td>Zero-shot＝Few-shot学習</td><td>推論技法 vs 学習設定（G-385）</td></tr>
+          <tr><td>Zero-shot＝常に最良</td><td>形式が崩れるならFew-shotへ</td></tr>
+          <tr><td>Zero-shot＝RAG不要</td><td>知識不足は別軸の対策</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -124,13 +138,21 @@
         <details><summary>いつFew-shotに切り替える？</summary><p class="tool-faq-a">出力形式が2回連続で崩れたとき、独自の分類体系を使うとき、コストに余裕があるときが目安です。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-386/">G-386 · Zero/One/Few-shot</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-385/">G-385 · Few-shot学習</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-168/">TF-168 · ゼロショット分類</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0437/">TF-0437 · プロンプト4要素</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../few-shot-prompting/">少数ショットプロンプト</a></li>
           <li><a href="../prompt-engineering/">プロンプトエンジニアリング</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
           <li><a href="../llm/">LLM</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>

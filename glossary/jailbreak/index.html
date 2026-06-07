@@ -47,7 +47,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約5分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -64,7 +64,9 @@
         <li><a href="#why-models-fail">なぜ防ぎきれないのか</a></li>
         <li><a href="#org-policy">企業・組織での扱い</a></li>
         <li><a href="#comparison">関連用語との整理</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -169,6 +171,19 @@
       </table>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ジェイルブレイク＝インジェクション</td><td>利用者の回避 vs 第三者混入</td></tr>
+          <tr><td>パスワード管理だけで十分</td><td>AI特有のリスク対策も必要（TF-0366）</td></tr>
+          <tr><td>システムプロンプトで完全防御</td><td>ルール無視の試みは残る（TF-0323）</td></tr>
+          <tr><td>ジェイルブレイク＝スマホ脱獄のみ</td><td>生成AIの安全制限回避の文脈</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -187,14 +202,23 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0323/">TF-0323 · ルール無視のリスク</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0366/">TF-0366 · パスワードだけでは×</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-204/">TF-204 · 制約回避の攻撃</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0324/">TF-0324 · 概念の識別</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../prompt-injection/">プロンプトインジェクション</a></li>
           <li><a href="../system-prompt/">システムプロンプト</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../ai-safety/">AI安全性</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

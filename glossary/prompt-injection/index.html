@@ -47,7 +47,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -64,7 +64,9 @@
         <li><a href="#rag-agent">RAG・エージェントで危ない理由</a></li>
         <li><a href="#defense">設計上の対策</a></li>
         <li><a href="#vs-jailbreak">ジェイルブレイクとの違い</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -176,6 +178,19 @@
       </table>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>インジェクション＝プリンター設定</td><td>悪意ある指示の混入攻撃（TF-0324）</td></tr>
+          <tr><td>外部入力を無条件に信頼</td><td>命令ではなくデータとして扱う（TF-205）</td></tr>
+          <tr><td>パスワード管理だけで十分</td><td>AI特有の入力検証も必要（TF-0366）</td></tr>
+          <tr><td>インジェクション＝ジェイルブレイク</td><td>第三者混入 vs 利用者の回避試み</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -194,7 +209,16 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-204/">TF-204 · 攻撃の定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-205/">TF-205 · 対策の考え方</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0324/">TF-0324 · 概念の識別</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0366/">TF-0366 · パスワードだけでは×</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
