@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ベクトル検索とは？埋め込みの近傍探索で関連文書を取得する仕組み。RAGパイプラインでの役割をG検定・生成AIパスポート向けに解説。">
+  <title>ベクトル検索とは？Vector Search・意味的類似検索 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/vector-search/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ベクトル検索とは？Vector Search・意味的類似検索">
+  <meta property="og:description" content="埋め込みベクトルの距離・類似度で関連文書を探す検索。RAGのRetrieval段階の中核。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/vector-search/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"ベクトル検索","alternateName":["Vector Search","ベクトル類似検索"],"description":"埋め込みの近傍探索で意味的に関連する文書を取得する検索手法。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ベクトル検索</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>ベクトル検索とは？Vector Search・意味的類似検索</h1>
+    <p class="tool-hero-sub">読み：べくとるけんさく ／ 英：Vector Search</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ベクトル検索</strong>（Vector Search）は、文書や質問を<a href="../embedding/">埋め込み</a>ベクトルに変換し、<strong>意味的に近いベクトル</strong>を高速に探し出す検索です。本記事は<a href="../rag/">RAG</a>全体の設計ではなく、<strong>Retrieval（検索）段階の流れ</strong>——何と何を比較するか——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ベクトル検索とは</a></li>
+        <li><a href="#flow">RAGでの流れ</a></li>
+        <li><a href="#vs-keyword">キーワード検索との違い</a></li>
+        <li><a href="#pitfalls">品質を左右する要因</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ベクトル検索単独の定義穴埋めは少ないですが、<strong>埋め込みの近さで関連文書を探す</strong>という理解が、<a href="../vector-database/">ベクトルデータベース</a>（<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>）や<a href="../rag/">RAG</a>の説明とセットで問われます。
+      </p>
+      <p>
+        混同注意：<strong>「文書を小さく分割したもの」はチャンク</strong>（<a href="../chunking/">チャンキング</a>）、<strong>「検索しながら生成する手法」はRAG</strong>（<a href="../../exams/genai-passport/practice/q/hq-0370/">HQ-0370</a>）。ベクトル検索はその中間の<strong>検索方式</strong>です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>、<a href="../../exams/genai-passport/practice/q/hq-0370/">HQ-0370（RAGとの区別）</a>、<a href="../../exams/g-kentei/drill/q/tf-174/">G検定 TF-174（RAG）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>ベクトル検索とは</h2>
+      <p>
+        従来のキーワード検索が語の一致を重視するのに対し、ベクトル検索は<strong>意味の近さ</strong>で関連文書を並べます。「退職金の計算」と「退職時の支給額」が語彙は違っても近いベクトルになる、といったケースで有効です。
+      </p>
+      <p>
+        各文書チャンクは<a href="../embedding-model/">埋め込みモデル</a>でベクトル化され、<a href="../vector-database/">ベクトルデータベース</a>に格納されます。質問も同じモデルでベクトル化し、<strong>コサイン類似度</strong>などで近傍（nearest neighbor）を探索します。
+      </p>
+    </section>
+    <section id="flow">
+      <h2>RAGでの流れ</h2>
+      <ol class="tool-steps">
+        <li><strong>インデックス</strong> — <a href="../chunking/">チャンキング</a> → 埋め込み → DB登録</li>
+        <li><strong>クエリ埋め込み</strong> — ユーザー質問をベクトル化</li>
+        <li><strong>近傍探索</strong> — 上位k件のチャンクを取得（本記事の核心）</li>
+        <li><strong>生成</strong> — 取得結果を<a href="../prompt/">プロンプト</a>に渡し<a href="../llm/">LLM</a>が回答</li>
+      </ol>
+    </section>
+    <section id="vs-keyword">
+      <h2>キーワード検索との違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>方式</th><th>得意なこと</th><th>弱み</th></tr></thead>
+        <tbody>
+          <tr><td>キーワード（BM25等）</td><td>固有名詞・型番の完全一致</td><td>言い換えに弱い</td></tr>
+          <tr><td><strong>ベクトル検索</strong></td><td>意味的な言い換え・類似表現</td><td>短いクエリ・数値だけだと外しやすい</td></tr>
+          <tr><td><a href="../semantic-search/">セマンティック検索</a></td><td>意味に基づく検索（概念）</td><td>実装はベクトル検索が多い</td></tr>
+        </tbody>
+      </table>
+      <p>実務では<strong>ハイブリッド検索</strong>（キーワード＋ベクトル）を採用することも多いです。</p>
+    </section>
+    <section id="pitfalls">
+      <h2>品質を左右する要因</h2>
+      <ul class="tool-example-list">
+        <li><strong>チャンクサイズ</strong> — 大きすぎるとノイズ、小さすぎると文脈欠落</li>
+        <li><strong>埋め込みモデル</strong> — 日本語・ドメイン適性</li>
+        <li><strong>top-kの数</strong> — 少なすぎると取りこぼし、多すぎると<a href="../context-window/">コンテキスト</a>圧迫</li>
+        <li><strong>古い・誤った文書</strong> — 検索できても正答にならない（<a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171</a>）</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ベクトル検索＝RAG？</summary><p class="tool-faq-a">いいえ。ベクトル検索はRAGの検索段階で使われる手法の一つです。</p></details>
+        <details><summary>ベクトル検索＝ベクトルDB？</summary><p class="tool-faq-a">DBは格納・検索の基盤、ベクトル検索は検索の方式です。多くの場合セットで使います。</p></details>
+        <details><summary>LLMそのものが検索する？</summary><p class="tool-faq-a">RAGでは別コンポーネントが検索し、結果をLLMに渡す構成が一般的です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../embedding/">埋め込み（Embedding）</a></li>
+          <li><a href="../vector-database/">ベクトルデータベース</a></li>
+          <li><a href="../chunking/">チャンキング</a></li>
+          <li><a href="../semantic-search/">セマンティック検索</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Imagenとは？Googleのテキスト画像生成拡散モデル系列・DALL·EやStable Diffusionとの違いをG検定向けに解説。">
+  <title>Imagenとは？Googleのテキスト画像生成モデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/imagen/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="Imagenとは？Googleのテキスト画像生成モデル">
+  <meta property="og:description" content="Googleが開発するテキストから画像を生成する拡散モデルファミリー。高いテキスト忠実度で知られる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/imagen/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"Imagen","alternateName":["イマージェン"],"description":"Googleのテキスト画像生成拡散モデルファミリー。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Imagen</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Imagenとは？Googleのテキスト画像生成モデル</h1>
+    <p class="tool-hero-sub">読み：いめーじぇん ／ 英：Imagen</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Imagen</strong>（イマージェン）は、Googleが開発する<strong><a href="../text-to-image/">テキスト画像生成</a>向けの拡散モデル</strong>ファミリーです。本記事は世代ごとのベンチマークではなく、<strong>開発元・強み・他社モデルとの違い</strong>——固有名詞モデルの地図——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Imagenとは</a></li>
+        <li><a href="#features">特徴</a></li>
+        <li><a href="#compare">他モデルとの比較</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Imagen単独の詳細問題は少ないですが、<strong>Googleのテキスト画像生成モデル</strong>として<a href="../dalle-model/">DALL·E</a>（OpenAI）、<a href="../stable-diffusion/">Stable Diffusion</a>（Stability AI等）と並べて認識できるとよいです。
+      </p>
+      <p>
+        基礎は<a href="../denoising-diffusion/">拡散モデル</a>（<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>、<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>）と<a href="../text-to-image/">Text-to-Image</a>の定義です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>、<a href="../../exams/g-kentei/practice/q/g-391/">G-391</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Imagenとは</h2>
+      <p>
+        Imagenは、大規模な言語モデルでテキストを理解し、<a href="../denoising-diffusion/">拡散モデル</a>で高解像度画像を生成する、という二段構成で紹介されることが多い系列です。Googleの<a href="../../tools/gemini/">Gemini</a>など他製品との連携も進んでいます。
+      </p>
+      <p>UI・課金・APIの実務は<a href="../../tools/">AIツール一覧</a>を参照してください。</p>
+    </section>
+    <section id="features">
+      <h2>特徴</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>テキスト忠実度</h3>
+          <p>複雑なプロンプトの描写を反映しやすい、とされる</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>拡散ベース</h3>
+          <p><a href="../denoising-diffusion/">拡散モデル</a>系の画像生成</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Googleエコシステム</h3>
+          <p>クラウド・検索・マルチモーダル製品と接続</p>
+        </div>
+      </div>
+    </section>
+    <section id="compare">
+      <h2>他モデルとの比較</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>モデル</th><th>開発元</th><th>試験での覚え方</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Imagen</strong></td><td>Google</td><td>Text-to-Image・拡散</td></tr>
+          <tr><td><a href="../dalle-model/">DALL·E</a></td><td>OpenAI</td><td>同上</td></tr>
+          <tr><td><a href="../stable-diffusion/">Stable Diffusion</a></td><td>Stability AI等</td><td>オープン・潜在拡散</td></tr>
+          <tr><td><a href="../gan/">GAN</a></td><td>（手法）</td><td>対抗学習。歴史的代表</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ImagenとGeminiは同じ？</summary><p class="tool-faq-a">別製品ラインですが、マルチモーダル機能で近づくこともあります。試験では開発元と主用途を区別してください。</p></details>
+        <details><summary>Imagen 3は試験に出る？</summary><p class="tool-faq-a">バージョン番号より「Googleの画像生成モデル」という位置づけが重要です。</p></details>
+        <details><summary>オープンソース？</summary><p class="tool-faq-a">Stable Diffusionのようなオープンウェイト文化とは異なり、主にクラウドサービスとして提供されます。利用条件は公式を確認してください。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../dalle-model/">DALL·E</a></li>
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

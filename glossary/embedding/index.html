@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="埋め込み（Embedding）とは？テキストを数値ベクトルに変換し意味の近さを表現する技術。RAG・ベクトル検索との関係をG検定向けに解説。">
+  <title>埋め込み（Embedding）とは？意味ベクトル・類似度 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/embedding/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="埋め込み（Embedding）とは？意味ベクトル・類似度">
+  <meta property="og:description" content="単語や文章を数値ベクトルに変換し、意味が近いものをベクトル空間上で近く配置する表現学習。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/embedding/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"埋め込み","alternateName":["Embedding","埋め込み表現"],"description":"単語や文章を数値ベクトルに変換し、意味の近さを距離で表現する技術。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">埋め込み</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>埋め込み（Embedding）とは？意味ベクトル・類似度</h1>
+    <p class="tool-hero-sub">読み：うめこみ ／ 英：Embedding</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>埋め込み</strong>（Embedding／埋め込み表現）は、テキストなどを<strong>数値のベクトル（配列）</strong>に変換し、<strong>意味が近いものほどベクトル空間上で近く</strong>なるように表現する技術です。本記事はword2vecの数式復習ではなく、<strong>RAG・検索での役割</strong>——なぜベクトルが必要か——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">埋め込みとは</a></li>
+        <li><a href="#space">ベクトル空間のイメージ</a></li>
+        <li><a href="#rag-role">RAGでの使われ方</a></li>
+        <li><a href="#vs-llm">LLMとの違い</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では古典的な<strong>単語埋め込み</strong>（word2vec等）と、<strong>音声のMFCC</strong>を混同しない問題があります（<a href="../../exams/g-kentei/practice/q/g-344/">G-344</a>）。MFCCは音声特徴量であり、単語埋め込みモデルではありません。
+      </p>
+      <p>
+        生成AIパスポート第3章では、<strong>埋め込みベクトルを保存・検索するDB</strong>は<a href="../vector-database/">ベクトルデータベース</a>の説明であり、<a href="../chunking/">チャンク</a>や<a href="../rag/">RAG</a>の定義ではありません（<a href="../../exams/genai-passport/practice/q/hq-0448/">HQ-0448</a>の誤答パターン）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-344/">G-344（MFCCとの区別）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>、<a href="../../exams/genai-passport/practice/q/hq-0449/">HQ-0449（ベクトルDB）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>埋め込みとは</h2>
+      <p>
+        コンピュータは文字列をそのままでは「意味の距離」を計算できません。埋め込みは、文書・単語・画像などを<strong>固定長の実数ベクトル</strong>に写像し、機械学習や検索で扱える形にします。
+      </p>
+      <p>
+        学習方法は時代とともに進化しています（BoW、TF-IDF、word2vec、<a href="../transformer/">Transformer</a>系の<a href="../embedding-model/">埋め込みモデル</a>など）。試験では<strong>「意味が近いほどベクトルも近い」</strong>という概念が中心です。
+      </p>
+    </section>
+    <section id="space">
+      <h2>ベクトル空間のイメージ</h2>
+      <p>2次元に射影すると次のようにイメージできます（実際は数百〜数千次元）。</p>
+      <ul class="tool-example-list">
+        <li>「犬」「子犬」「ペット」 — 近い位置に集まりやすい</li>
+        <li>「犬」「株価」 — 離れた位置</li>
+        <li>類似度 — コサイン類似度やユークリッド距離で測る</li>
+      </ul>
+      <p>対照学習のContrastive Lossは、似たペアを近く・異なるペアを遠くにする損失です（<a href="../../exams/g-kentei/practice/q/g-127/">G-127</a>）。埋め込み学習の一例として出ることがあります。</p>
+    </section>
+    <section id="rag-role">
+      <h2>RAGでの使われ方</h2>
+      <ol class="tool-steps">
+        <li>文書チャンクを埋め込みベクトルに変換</li>
+        <li><a href="../vector-database/">ベクトルDB</a>に保存</li>
+        <li>質問も同じモデルで埋め込み</li>
+        <li><a href="../vector-search/">ベクトル検索</a>で近いチャンクを取得 → <a href="../rag/">RAG</a>の入力へ</li>
+      </ol>
+    </section>
+    <section id="vs-llm">
+      <h2>LLMとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th></th><th>埋め込み</th><th><a href="../llm/">LLM</a></th></tr></thead>
+        <tbody>
+          <tr><td>主な出力</td><td>固定長ベクトル</td><td>テキスト（次トークン列）</td></tr>
+          <tr><td>典型用途</td><td>検索・クラスタリング・推薦</td><td>対話・要約・生成</td></tr>
+          <tr><td>RAGでの役割</td><td>検索のための表現</td><td>最終回答の生成</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>埋め込み＝トークン？</summary><p class="tool-faq-a">いいえ。<a href="../token/">トークン</a>はLLMの処理単位、埋め込みは意味を表すベクトルです。LLM内部でもトークン埋め込み層がありますが、用語としては区別します。</p></details>
+        <details><summary>埋め込みモデルは必須？</summary><p class="tool-faq-a">意味検索ベースのRAGでは実質必須です。キーワードのみのRAGなら別経路もあります。</p></details>
+        <details><summary>画像にも使える？</summary><p class="tool-faq-a">はい。マルチモーダル埋め込みで画像とテキストを同じ空間に載せる手法もあります。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../embedding-model/">埋め込みモデル</a></li>
+          <li><a href="../vector-search/">ベクトル検索</a></li>
+          <li><a href="../vector-database/">ベクトルデータベース</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

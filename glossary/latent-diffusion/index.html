@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="潜在拡散モデル（Latent Diffusion）とは？ピクセル空間ではなく潜在空間で拡散し高速化する仕組みをG検定向けに解説。">
+  <title>潜在拡散モデルとは？Latent Diffusion・Stable Diffusionの基盤 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/latent-diffusion/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="潜在拡散モデルとは？Latent Diffusion・Stable Diffusionの基盤">
+  <meta property="og:description" content="低次元の潜在空間でノイズ付加・除去を行い、計算コストを抑えつつ画像生成する拡散モデルの派生。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/latent-diffusion/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"潜在拡散モデル","alternateName":["Latent Diffusion","Latent Diffusion Model"],"description":"低次元潜在空間で拡散を行い、画像生成を高速化する手法。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">潜在拡散モデル</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>潜在拡散モデルとは？Latent Diffusion・Stable Diffusionの基盤</h1>
+    <p class="tool-hero-sub">読み：せんざいかくさんもでる ／ 英：Latent Diffusion</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>潜在拡散モデル</strong>（Latent Diffusion）は、高解像度の<strong>ピクセル空間ではなく、圧縮された潜在空間</strong>で<a href="../denoising-diffusion/">拡散モデル</a>のノイズ付加・除去を行う手法です。本記事は拡散の数学全般ではなく、<strong>なぜ速く・軽くなるか</strong>——ピクセル空間とのコスト比較——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">潜在拡散とは</a></li>
+        <li><a href="#compare">ピクセル拡散との比較</a></li>
+        <li><a href="#pipeline">処理の流れ</a></li>
+        <li><a href="#products">製品との関係</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        潜在拡散単独の定義問題は少ないですが、<strong>拡散モデルの一種で計算を抑える</strong>という理解が役立ちます。基礎は<a href="../denoising-diffusion/">拡散モデル</a>（<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>）とセットで学びます。
+      </p>
+      <p>
+        <a href="../stable-diffusion/">Stable Diffusion</a>がオープンな<a href="../text-to-image/">Text-to-Image</a>の代表として出る場合、<strong>潜在拡散ベース</strong>である点を結びつけられるとよいです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>、<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>潜在拡散とは</h2>
+      <p>
+        フル解像度の画像に直接拡散をかけると、メモリと計算量が膨大になります。潜在拡散は、<strong>オートエンコーダ等で画像を低次元の潜在表現 z に圧縮</strong>し、その z 上で拡散・逆拡散を行います。最後にデコーダでピクセル画像に戻します。
+      </p>
+      <p>
+        「潜在（latent）」は<strong>人間に直接見えない中間表現</strong>のことで、意味的・構造的な情報が圧縮されて保持されていると考えられます。
+      </p>
+    </section>
+    <section id="compare">
+      <h2>ピクセル拡散との比較</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>観点</th><th>ピクセル空間の拡散</th><th>潜在拡散</th></tr></thead>
+        <tbody>
+          <tr><td>演算の対象</td><td>全ピクセル・全チャネル</td><td>圧縮後の低次元テンソル</td></tr>
+          <tr><td>メモリ</td><td>大きい</td><td>相対的に小さい</td></tr>
+          <tr><td>速度</td><td>遅くなりやすい</td><td>実用化しやすい</td></tr>
+          <tr><td>品質</td><td>理論上は高精細</td><td>VAEの品質に依存。十分高品質な実績</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="pipeline">
+      <h2>処理の流れ</h2>
+      <ol class="tool-steps">
+        <li><strong>エンコード</strong> — 画像 → 潜在 z</li>
+        <li><strong>潜在空間で拡散・逆拡散</strong> — <a href="../denoising-diffusion/">拡散モデル</a>と同様の考え方</li>
+        <li><strong>テキスト条件</strong> — プロンプトをクロスアテンション等で注入（<a href="../text-to-image/">Text-to-Image</a>）</li>
+        <li><strong>デコード</strong> — 潜在 z → 出力画像</li>
+      </ol>
+      <p>構図の細かい制御には<a href="../controlnet/">ControlNet</a>などの追加モジュールが使われることもあります。</p>
+    </section>
+    <section id="products">
+      <h2>製品との関係</h2>
+      <p>
+        <a href="../stable-diffusion/">Stable Diffusion</a>は潜在拡散の代表例として広く知られ、ローカル実行やオープンウェイトの文化を広めました。<a href="../dalle-model/">DALL·E</a>や<a href="../imagen/">Imagen</a>も別アーキテクチャですが、いずれも<a href="../text-to-image/">テキスト画像生成</a>の文脈で比較されます。
+      </p>
+      <p>製品の詳細・利用規約は<a href="../../tools/">AIツール一覧</a>を参照してください。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>潜在拡散と拡散モデルは別物？</summary><p class="tool-faq-a">潜在拡散は拡散モデルの実装・効率化の一形態です。対比するのは主にピクセル空間での拡散です。</p></details>
+        <details><summary>Stable Diffusion＝潜在拡散？</summary><p class="tool-faq-a">Stable Diffusionは潜在拡散を用いたモデルファミリーの代表です。バージョン差はありますが、基本思想は同じです。</p></details>
+        <details><summary>LLMの潜在表現と同じ？</summary><p class="tool-faq-a">「潜在」という語は共通ですが、画像VAEの潜在空間とLLMの内部表現は別物です。<a href="../llm/">LLM</a>はテキスト生成が主目的です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../ddpm/">DDPM</a></li>
+          <li><a href="../controlnet/">ControlNet</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ControlNetとは？拡散モデルに骨格・線画などの条件を追加して生成を制御する仕組みをG検定向けに解説。">
+  <title>ControlNetとは？拡散モデルの条件付き画像生成制御 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/controlnet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ControlNetとは？拡散モデルの条件付き画像生成制御">
+  <meta property="og:description" content="エッジ・深度・ポーズなどの補助情報で拡散モデルの出力構図を制御する追加モジュール。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/controlnet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"ControlNet","alternateName":["コントロールネット"],"description":"追加条件で拡散モデルの生成を制御する仕組み。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ControlNet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ControlNetとは？拡散モデルの条件付き画像生成制御</h1>
+    <p class="tool-hero-sub">読み：こんとろーるねっと ／ 英：ControlNet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ControlNet</strong>（コントロールネット）は、<a href="../denoising-diffusion/">拡散モデル</a>による画像生成に、<strong>線画・深度・人物ポーズなどの補助条件</strong>を加えて構図や形状を制御する仕組みです。本記事は<a href="../text-to-image/">Text-to-Image</a>の入出力定義ではなく、<strong>プロンプトだけでは足りない制御をどう足すか</strong>——条件の種類と実務——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ControlNetとは</a></li>
+        <li><a href="#conditions">制御条件の例</a></li>
+        <li><a href="#stack">Stable Diffusionとの組み合わせ</a></li>
+        <li><a href="#limits">限界と注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ControlNet単独の定義問題はG検定・生成AIパスポートで頻出ではありませんが、<strong>拡散モデルに追加条件で生成を制御する</strong>という理解がCSV定義と一致します。
+      </p>
+      <p>
+        基礎は<a href="../denoising-diffusion/">拡散モデル</a>と<a href="../stable-diffusion/">Stable Diffusion</a>です。<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>のように拡散が画像生成の代表であることを押さえた上で、<strong>実務的な拡張</strong>として読むとよいです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>、<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211（権利・肖像）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>ControlNetとは</h2>
+      <p>
+        テキストプロンプトだけでは、人物の姿勢や建物の透視が意図通りにならないことがあります。ControlNetは、元の拡散モデル（UNet等）に<strong>並列の制御ブランチ</strong>を追加し、条件画像の情報を逆拡散過程へ注入します。ベースモデルの重みを固定したまま制御を学習できる設計として知られます。
+      </p>
+    </section>
+    <section id="conditions">
+      <h2>制御条件の例</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>条件タイプ</th><th>入力の例</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>Canny / 線画</td><td>エッジ検出画像</td><td>輪郭を維持したスタイル変換</td></tr>
+          <tr><td>Depth</td><td>深度マップ</td><td>遠近・レイアウトの維持</td></tr>
+          <tr><td>OpenPose</td><td>骨格キーポイント</td><td>人物ポーズの指定</td></tr>
+          <tr><td>Segmentation</td><td>領域マスク</td><td>オブジェクト配置の制御</td></tr>
+        </tbody>
+      </table>
+      <p>いずれも<a href="../prompt/">プロンプト</a>と併用するのが一般的です。</p>
+    </section>
+    <section id="stack">
+      <h2>Stable Diffusionとの組み合わせ</h2>
+      <ol class="tool-steps">
+        <li><strong>ベース</strong> — <a href="../stable-diffusion/">Stable Diffusion</a>（<a href="../latent-diffusion/">潜在拡散</a>）</li>
+        <li><strong>条件画像</strong> — 上記の制御マップを準備</li>
+        <li><strong>ControlNet</strong> — 条件に沿った生成</li>
+        <li><strong>任意</strong> — <a href="../lora/">LoRA</a>で画風・ドメイン適応</li>
+      </ol>
+      <p>オープンソースのワークフロー（ComfyUI、Automatic1111等）でよく使われます。</p>
+    </section>
+    <section id="limits">
+      <h2>限界と注意</h2>
+      <ul class="tool-example-list">
+        <li>条件画像の品質が出力に直結する</li>
+        <li>実在人物のポーズ・肖像の無断利用は<a href="../copyright/">著作権</a>・肖像権のリスク</li>
+        <li>制御が強すぎると多様性が失われる</li>
+        <li>ベースモデル・ControlNetの組み合わせ互換に注意</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ControlNetは単体で画像を生成する？</summary><p class="tool-faq-a">いいえ。拡散モデルへの<strong>追加制御モジュール</strong>です。ベースモデルが必要です。</p></details>
+        <details><summary>Text-to-Imageと同じ？</summary><p class="tool-faq-a">Text-to-Imageはタスク名。ControlNetはそのタスクをより細かく制御する技法です。</p></details>
+        <details><summary>DALL·Eにもある？</summary><p class="tool-faq-a">製品によっては参考画像やマスクで編集できますが、ControlNetは主にオープン系SDエコシステムの用語として知られます。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../latent-diffusion/">潜在拡散モデル</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

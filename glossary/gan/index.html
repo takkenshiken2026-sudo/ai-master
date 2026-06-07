@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GAN（敵対的生成ネットワーク）とは？生成器と識別器の役割、拡散モデルとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>GANとは？敵対的生成ネットワーク・生成器と識別器 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gan/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="GANとは？敵対的生成ネットワーク・生成器と識別器">
+  <meta property="og:description" content="生成器と識別器を競わせながらリアルなデータを生成するモデル。画像生成の歴史的代表手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gan/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"GAN","alternateName":["敵対的生成ネットワーク","Generative Adversarial Network"],"description":"生成器と識別器を競わせながら生成性能を高める生成モデル。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"GANの識別器は多クラス分類器？","acceptedAnswer":{"@type":"Answer","text":"基本的なGANでは本物か生成物かの二値判定を行う識別器として説明される。常に多クラス分類器であるわけではない。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GAN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GANとは？敵対的生成ネットワーク・生成器と識別器</h1>
+    <p class="tool-hero-sub">読み：じぇーえーえぬ ／ 英：GAN（Generative Adversarial Network）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GAN</strong>（Generative Adversarial Network／敵対的生成ネットワーク）は、<strong>生成器（Generator）</strong>と<strong>識別器（Discriminator）</strong>を競わせながら、本物らしいデータを生成する<a href="../generative-ai/">生成AI</a>の手法です。本記事は<a href="../denoising-diffusion/">拡散モデル</a>の解説ではなく、<strong>二つのネットワークの役割分担</strong>——試験で最も問われる構造——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">GANとは</a></li>
+        <li><a href="#roles">生成器と識別器</a></li>
+        <li><a href="#vs-diffusion">拡散モデルとの位置づけ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の核：<strong>「生成器と識別器を競わせながら生成性能を高めるモデル」</strong>（<a href="../../exams/genai-passport/practice/q/hq-0157/">HQ-0157</a>、<a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>のA）。
+      </p>
+      <p>
+        生成器・識別器の<strong>役割の入れ替え</strong>が誤答になりやすいです（<a href="../../exams/genai-passport/practice/q/hq-0303/">HQ-0303</a>）。生成器が「本物らしいデータを作る」、識別器が「本物か生成物かを見分ける」——この対応を確認してください。
+      </p>
+      <p>
+        G検定では、（あ）偽物生成（い）本物判定の組み合わせ問題（<a href="../../exams/g-kentei/practice/q/g-373/">G-373</a>）、識別器が<strong>常に多クラス分類器</strong>であるという説明は×（<a href="../../exams/g-kentei/drill/q/tf-152/">TF-152</a>）も出ます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0157/">HQ-0157</a>、<a href="../../exams/genai-passport/practice/q/hq-0303/">HQ-0303</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-373/">G-373</a>、<a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>、<a href="../../exams/g-kentei/drill/q/tf-152/">TF-152</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>GANとは</h2>
+      <p>
+        GANは2014年頃に提案され、画像生成の品質向上に大きく貢献した手法です。二つのネットワークが<strong>ミニマックスゲーム</strong>のように学習し、生成器は識別器を騙そう、識別器は見抜こう、という競争で性能が上がります。
+      </p>
+      <p>
+        近年の<a href="../text-to-image/">Text-to-Image</a>では<a href="../denoising-diffusion/">拡散モデル</a>が主流になりつつありますが、試験では<strong>GANと拡散の両方</strong>が生成モデルの代表として問われます。
+      </p>
+    </section>
+    <section id="roles">
+      <h2>生成器と識別器</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>構成要素</th><th>役割</th><th>試験での言い換え</th></tr></thead>
+        <tbody>
+          <tr><td><strong>生成器（G）</strong></td><td>ノイズなどから偽データを生成</td><td>「本物らしいデータを作ろうとする側」</td></tr>
+          <tr><td><strong>識別器（D）</strong></td><td>入力が本物か生成物か判定</td><td>「見分けようとする側」</td></tr>
+        </tbody>
+      </table>
+      <p>HQ-0157の誤答では、GAN全体の定義を生成器や識別器<strong>単体</strong>の説明とすり替えています。主語が「GAN」か「識別器」かを読み分けてください。</p>
+    </section>
+    <section id="vs-diffusion">
+      <h2>拡散モデルとの位置づけ</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>GAN</h3>
+          <p>対抗学習。生成器 vs 識別器</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3><a href="../denoising-diffusion/">拡散モデル</a></h3>
+          <p>ノイズ付加・除去の段階的生成</p>
+        </div>
+      </div>
+      <p>どちらも<a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>のように「データ生成モデル」の適切な説明として並びます。ディープフェイクの早期事例とGANの関連も知識として出ることがあります（<a href="../deepfake/">ディープフェイク</a>）。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GANと拡散モデル、どちらが新しい主流？</summary><p class="tool-faq-a">高品質なText-to-Imageでは拡散が主流です。試験では両方の定義が必要です。</p></details>
+        <details><summary>識別器はクラス名を当てる？</summary><p class="tool-faq-a">基本GANでは二値判定。多クラス分類器である必要はない（TF-152）。</p></details>
+        <details><summary>GANはテキスト生成にも使える？</summary><p class="tool-faq-a">原理上は可能ですが、試験では画像生成の文脈で出ることが多いです。テキストは主に<a href="../llm/">LLM</a>。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../deepfake/">ディープフェイク</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

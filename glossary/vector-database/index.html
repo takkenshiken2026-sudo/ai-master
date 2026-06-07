@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ベクトルデータベースとは？埋め込みベクトルの保存と意味検索。RAG・チャンクとの違いを生成AIパスポート向けに解説。">
+  <title>ベクトルデータベースとは？Vector Database・RAGの基盤 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/vector-database/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ベクトルデータベースとは？Vector Database・RAGの基盤">
+  <meta property="og:description" content="埋め込みベクトルを保存し、意味的な近さで検索するデータベース。RAGのインフラ層。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/vector-database/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"ベクトルデータベース","alternateName":["Vector Database","ベクトルDB"],"description":"埋め込みベクトルを保存し、意味的類似検索に使うデータベース。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ベクトルDBは行政の個人番号台帳？","acceptedAnswer":{"@type":"Answer","text":"いいえ。埋め込みベクトルの保存と類似検索のためのデータベースであり、個人識別番号台帳ではない。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ベクトルデータベース</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">データ・運用</p>
+    <h1>ベクトルデータベースとは？Vector Database・RAGの基盤</h1>
+    <p class="tool-hero-sub">読み：べくとるでーたべーす ／ 英：Vector Database</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ベクトルデータベース</strong>（Vector Database／ベクトルDB）は、<a href="../embedding/">埋め込み</a>ベクトルと元テキストなどのメタデータを保存し、<strong>意味的に近いベクトルを高速検索</strong>するためのデータベースです。本記事は製品比較ではなく、<strong>RAGスタックの基盤層</strong>——チャンク・RAGと混同しない定義——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ベクトルDBとは</a></li>
+        <li><a href="#vs-others">近い用語との違い</a></li>
+        <li><a href="#rag-role">RAGでの役割</a></li>
+        <li><a href="#ops">運用・リスク</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の核：<strong>「意味的な近さで検索できるよう、埋め込みベクトルを保存・検索するデータベース」</strong>（<a href="../../exams/genai-passport/practice/q/hq-0449/">HQ-0449</a>、<a href="../../exams/genai-passport/practice/q/hq-0416/">HQ-0416</a>、<a href="../../exams/genai-passport/practice/q/hq-0471/">HQ-0471</a>）。
+      </p>
+      <p>
+        ○：<strong>埋め込みを保存し意味検索に使う</strong>（<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>）。×：<strong>個人識別番号だけを保管する行政台帳</strong>（<a href="../../exams/genai-passport/drill/q/tf-0233/">TF-0233</a>）。
+      </p>
+      <p>
+        チャンクの定義やRAGの定義をベクトルDBにすり替える誤答が多いです（<a href="../../exams/genai-passport/practice/q/hq-0448/">HQ-0448</a>のB選択肢など）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p><a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>、<a href="../../exams/genai-passport/drill/q/tf-0233/">TF-0233</a>、<a href="../../exams/genai-passport/practice/q/hq-0449/">HQ-0449</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>ベクトルDBとは</h2>
+      <p>
+        従来のRDBは行・列の完全一致検索が得意です。ベクトルDBは、高次元ベクトル間の<strong>近傍探索</strong>（ANN: Approximate Nearest Neighbor）に最適化されています。数百万チャンク規模でもミリ秒〜秒オーダーで類似検索できる製品があります。
+      </p>
+      <p>代表例として Pinecone、Weaviate、Milvus、pgvector（PostgreSQL拡張）などが知られますが、試験では<strong>役割の定義</strong>が優先です。</p>
+    </section>
+    <section id="vs-others">
+      <h2>近い用語との違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>一言</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ベクトルDB</strong></td><td>ベクトル保存＋類似検索の<strong>ストア</strong></td></tr>
+          <tr><td><a href="../vector-search/">ベクトル検索</a></td><td>検索の<strong>方式・処理</strong></td></tr>
+          <tr><td><a href="../chunking/">チャンク</a></td><td>分割された<strong>文書片</strong></td></tr>
+          <tr><td><a href="../rag/">RAG</a></td><td>検索＋生成の<strong>全体手法</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="rag-role">
+      <h2>RAGでの役割</h2>
+      <ol class="tool-steps">
+        <li><a href="../chunking/">チャンキング</a>した文書を<a href="../embedding-model/">埋め込みモデル</a>でベクトル化</li>
+        <li>ベクトル＋本文＋メタデータを<strong>ベクトルDBに登録</strong></li>
+        <li>質問ベクトルで近傍検索 → 関連チャンクを取得</li>
+        <li><a href="../llm/">LLM</a>がチャンクを参照して回答（<a href="../rag/">RAG</a>）</li>
+      </ol>
+    </section>
+    <section id="ops">
+      <h2>運用・リスク</h2>
+      <ul class="tool-example-list">
+        <li><a href="../personal-information/">個人情報</a>・<a href="../confidential-data-leak/">機密</a>をインデックスしない／マスキング</li>
+        <li>文書更新時の再インデックス手順</li>
+        <li>アクセス制御・テナント分離（マルチテナントSaaS）</li>
+        <li>検索精度はDBだけでは決まらない（埋め込み・チャンク設計）</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ベクトルDB＝RAG？</summary><p class="tool-faq-a">いいえ。RAGの構成要素のひとつです。</p></details>
+        <details><summary>通常のDBで代用できる？</summary><p class="tool-faq-a">小規模なら可能ですが、大規模な意味検索では専用DBや拡張の利用が一般的です。</p></details>
+        <details><summary>行政のマイナンバー台帳？</summary><p class="tool-faq-a">いいえ（TF-0233）。AI文脈の技術用語です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../embedding-model/">埋め込みモデル</a></li>
+          <li><a href="../vector-search/">ベクトル検索</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../chunking/">チャンキング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

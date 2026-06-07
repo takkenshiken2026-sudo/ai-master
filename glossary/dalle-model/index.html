@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DALL·Eとは？OpenAIのテキスト画像生成モデル系列・Text-to-Imageとの関係をG検定・生成AIパスポート向けに解説。">
+  <title>DALL·Eとは？OpenAIのテキスト画像生成モデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/dalle-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="DALL·Eとは？OpenAIのテキスト画像生成モデル">
+  <meta property="og:description" content="テキストから画像を生成するOpenAIのモデル系列。Text-to-ImageやマルチモーダルAIと関連。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/dalle-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"DALL·E","alternateName":["DALL-E","ダリ"],"description":"OpenAIが開発するテキストから画像を生成する拡散モデル系列。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">DALL·E</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>DALL·Eとは？OpenAIのテキスト画像生成モデル</h1>
+    <p class="tool-hero-sub">読み：だりー ／ 英：DALL·E（DALL-E）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>DALL·E</strong>（ダリー）は、OpenAIが開発する<strong>テキストから画像を生成する</strong>モデル系列の名称です。本記事は各世代のベンチマーク比較ではなく、<strong>Text-to-Imageタスクとの関係と試験での誤答パターン</strong>——概念のすり替えに注意——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">DALL·Eとは</a></li>
+        <li><a href="#vs-task">Text-to-Imageとの違い</a></li>
+        <li><a href="#vs-others">他モデルとの比較</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、DALL·Eが<strong>テキストから画像を生成するモデル</strong>であり、<a href="../text-to-image/">Text-to-Image</a>やマルチモーダルAIと関係が深い（<a href="../../exams/g-kentei/practice/q/g-394/">G-394</a>）。不適切な説明として、<strong>MFCC（音声特徴量）</strong>など無関係な技術を選ぶ問題があります。
+      </p>
+      <p>
+        Text-to-Imageの定義問題では、<strong>DALL·Eが代表例の一つ</strong>として挙げられることがあります（<a href="../../exams/g-kentei/practice/q/g-391/">G-391</a>）。Image Captioning（画像→テキスト）と方向を混同しないでください。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-394/">G-394</a>、<a href="../../exams/g-kentei/practice/q/g-391/">G-391</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>、<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>DALL·Eとは</h2>
+      <p>
+        名前は芸術家ダリとロボットWALL·Eにちなむと言われます。OpenAIの<a href="../generative-ai/">生成AI</a>製品群の一つで、プロンプトに応じた画像生成・編集が可能です。技術的には<a href="../denoising-diffusion/">拡散モデル</a>系として説明されることが多いです。
+      </p>
+      <p>
+        対話型の<a href="../../tools/chatgpt/">ChatGPT</a>とは別製品ですが、エコシステム内で連携が強化されることもあります。試験では<strong>モデル名とサービス名</strong>の対応に注意してください。
+      </p>
+    </section>
+    <section id="vs-task">
+      <h2>Text-to-Imageとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>性質</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Text-to-Image</strong></td><td>テキスト→画像の<strong>タスク名</strong></td></tr>
+          <tr><td><strong>DALL·E</strong></td><td>そのタスクを実現する<strong>特定のモデル系列（固有名詞）</strong></td></tr>
+          <tr><td><strong>画像生成AI</strong></td><td>サービス・システム全般の呼び方</td></tr>
+        </tbody>
+      </table>
+      <p>「DALL·E＝Text-to-Imageそのもの」ではありません。DALL·Eは実装の一例です。</p>
+    </section>
+    <section id="vs-others">
+      <h2>他モデルとの比較</h2>
+      <p>試験で並ぶことがある代表例です（詳細バージョンは暗記不要）。</p>
+      <ul class="tool-example-list">
+        <li><strong><a href="../stable-diffusion/">Stable Diffusion</a></strong> — オープン・ローカル向けの潜在拡散</li>
+        <li><strong><a href="../imagen/">Imagen</a></strong> — Googleのテキスト画像生成系列</li>
+        <li><strong><a href="../gan/">GAN</a></strong> — 別系統の生成手法（歴史的）</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>DALL·EとChatGPTは同じ？</summary><p class="tool-faq-a">別製品です。ChatGPTは主にテキスト対話、DALL·Eは画像生成が中心です。</p></details>
+        <details><summary>DALL·E 2と3の違いは試験に出る？</summary><p class="tool-faq-a">世代番号の細部より、「OpenAIのText-to-Imageモデル」という位置づけが重要です。</p></details>
+        <details><summary>生成画像は自由に使える？</summary><p class="tool-faq-a">利用規約と<a href="../copyright/">著作権</a>を確認してください。自動的に安全とは限りません。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../imagen/">Imagen</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

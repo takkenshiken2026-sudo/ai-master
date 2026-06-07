@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="セマンティック検索とは？意味的類似性に基づく検索。キーワード検索・ベクトル検索との関係をG検定・生成AIパスポート向けに解説。">
+  <title>セマンティック検索とは？Semantic Search・意味に基づく検索 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/semantic-search/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="セマンティック検索とは？Semantic Search・意味に基づく検索">
+  <meta property="og:description" content="語の一致ではなく意味的な近さで関連情報を見つける検索の考え方。RAGの検索層と密接。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/semantic-search/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"セマンティック検索","alternateName":["Semantic Search","意味検索"],"description":"意味的類似性に基づいて関連文書を見つける検索。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">セマンティック検索</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>セマンティック検索とは？Semantic Search・意味に基づく検索</h1>
+    <p class="tool-hero-sub">読み：せまんてぃっくけんさく ／ 英：Semantic Search</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>セマンティック検索</strong>（Semantic Search）は、クエリと文書の<strong>語句の一致ではなく、意味的な関連性</strong>に基づいて情報を探す検索の考え方です。本記事は検索エンジンの歴史全般ではなく、<strong>キーワード検索・ベクトル検索との地図</strong>——RAG文脈での位置づけ——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">セマンティック検索とは</a></li>
+        <li><a href="#spectrum">検索方式のスペクトル</a></li>
+        <li><a href="#implementation">実装との対応</a></li>
+        <li><a href="#limits">限界</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        単独の定義問題は少ないですが、<a href="../vector-database/">ベクトルDB</a>の説明「意味的な近さで検索」（<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>）や<a href="../rag/">RAG</a>の検索段階と結びつけて理解します。
+      </p>
+      <p>
+        画像分野の「セマンティックセグメンテーション」（<a href="../../exams/g-kentei/practice/q/g-330/">G-330</a>）は<strong>別の「セマンティック」</strong>——画素の意味領域分割——であり、本記事の検索とは文脈が異なります。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>、<a href="../../exams/g-kentei/drill/q/tf-174/">G検定 TF-174（RAG）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>セマンティック検索とは</h2>
+      <p>
+        ユーザーが「有給の残日数の確認方法」と聞いたとき、マニュアルに「年次有給休暇の取得残数」という表現しかなくても、<strong>意味が近ければヒットさせたい</strong>——それがセマンティック検索の動機です。
+      </p>
+      <p>
+        現代の<a href="../rag/">RAG</a>では、<a href="../embedding/">埋め込み</a>と<a href="../vector-search/">ベクトル検索</a>によってセマンティック検索を実現する構成が一般的です。
+      </p>
+    </section>
+    <section id="spectrum">
+      <h2>検索方式のスペクトル</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>方式</th><th>マッチの基準</th><th>例</th></tr></thead>
+        <tbody>
+          <tr><td>キーワード検索</td><td>語の出現・TF-IDF・BM25</td><td>製品型番の完全一致</td></tr>
+          <tr><td><strong>セマンティック検索</strong></td><td>意味的類似性</td><td>言い換え質問への対応</td></tr>
+          <tr><td><a href="../vector-search/">ベクトル検索</a></td><td>埋め込みベクトルの距離</td><td>セマンティック検索の実装例</td></tr>
+          <tr><td>ハイブリッド</td><td>キーワード＋ベクトルの併用</td><td>実務でよく採用</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="implementation">
+      <h2>実装との対応</h2>
+      <p>概念と技術の対応を整理します。</p>
+      <ul class="tool-example-list">
+        <li><strong>セマンティック検索</strong> — 何をしたいか（意味で探す）</li>
+        <li><strong><a href="../embedding-model/">埋め込みモデル</a></strong> — 意味をベクトル化する</li>
+        <li><strong><a href="../vector-database/">ベクトルDB</a></strong> — ベクトルを蓄積・探索する</li>
+        <li><strong><a href="../rag/">RAG</a></strong> — 検索結果を生成に活用する上位パターン</li>
+      </ul>
+    </section>
+    <section id="limits">
+      <h2>限界</h2>
+      <ul class="tool-steps">
+        <li>固有名詞・コード番号はキーワード検索の方が強いことも</li>
+        <li>埋め込みの質次第で関連性のない文書が上位に来る</li>
+        <li>意味が近くても<strong>事実が誤っている文書</strong>は誤答の元（<a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171</a>）</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>セマンティック検索＝ベクトル検索？</summary><p class="tool-faq-a">実務ではほぼ同義に使われることが多いですが、厳密にはベクトル検索は実装手法、セマンティック検索は目的・概念です。</p></details>
+        <details><summary>Google検索はセマンティック？</summary><p class="tool-faq-a">現代のWeb検索は意味理解の要素を含みますが、試験ではRAG・ベクトルDBの文脈を優先してください。</p></details>
+        <details><summary>LLMに検索させればセマンティック？</summary><p class="tool-faq-a">LLM単体の知識想起と、外部文書のセマンティック検索は別です。RAGは後者を使います。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../vector-search/">ベクトル検索</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../vector-database/">ベクトルデータベース</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../chunking/">チャンキング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

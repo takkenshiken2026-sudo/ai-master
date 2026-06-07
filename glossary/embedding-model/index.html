@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="埋め込みモデル（Embedding Model）とは？テキストをベクトル化する専用モデル。LLMとの違いとRAGでの役割を解説。">
+  <title>埋め込みモデルとは？Embedding Model・ベクトル化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/embedding-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="埋め込みモデルとは？Embedding Model・ベクトル化">
+  <meta property="og:description" content="テキスト等を意味ベクトルに変換する専用モデル。RAGのインデックス化と検索に使われる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/embedding-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"埋め込みモデル","alternateName":["Embedding Model"],"description":"テキスト等をベクトル化する専用モデル。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">埋め込みモデル</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>埋め込みモデルとは？Embedding Model・ベクトル化</h1>
+    <p class="tool-hero-sub">読み：うめこみもでる ／ 英：Embedding Model</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>埋め込みモデル</strong>（Embedding Model）は、テキストやコードなどを<strong>検索向けのベクトル</strong>に変換する専用の機械学習モデルです。本記事は各社モデル名の比較ではなく、<strong>LLMとの役割分担</strong>——なぜ別モデルが要るか——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">埋め込みモデルとは</a></li>
+        <li><a href="#vs-llm">LLMとの違い</a></li>
+        <li><a href="#rag-stack">RAGスタックでの位置</a></li>
+        <li><a href="#choose">選定の観点</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        単独の略称問題は少ないですが、<a href="../embedding/">埋め込み</a>の実体として「テキストをベクトル化するモデル」と理解し、<a href="../vector-database/">ベクトルDB</a>・<a href="../rag/">RAG</a>と接続できることが重要です。
+      </p>
+      <p>
+        <a href="../llm/">LLM</a>でチャット用と同じモデルをそのまま埋め込みに使える場合もありますが、試験では<strong>検索用の表現学習</strong>と<strong>文章生成</strong>を分けて考えるとよいです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>、<a href="../../exams/genai-passport/practice/q/hq-0371/">HQ-0371</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>埋め込みモデルとは</h2>
+      <p>
+        入力文（や<a href="../chunking/">チャンク</a>）を受け取り、固定次元の実数ベクトルを出力します。意味が近い文は出力ベクトルも近くなるよう学習されています。古典的にはword2vec、現代では<a href="../transformer/">Transformer</a>ベースのモデルが主流です。
+      </p>
+    </section>
+    <section id="vs-llm">
+      <h2>LLMとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>観点</th><th>埋め込みモデル</th><th>LLM（チャット用）</th></tr></thead>
+        <tbody>
+          <tr><td>出力</td><td>ベクトル（数値配列）</td><td>自然言語テキスト</td></tr>
+          <tr><td>主用途</td><td><a href="../vector-search/">類似検索</a>・クラスタリング</td><td>回答生成・要約</td></tr>
+          <tr><td>RAG</td><td>インデックス・クエリのベクトル化</td><td>最終回答の生成</td></tr>
+          <tr><td>コスト</td><td>一般に軽量・バッチ処理向き</td><td>生成トークン課金が大きいことも</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="rag-stack">
+      <h2>RAGスタックでの位置</h2>
+      <ol class="tool-steps">
+        <li>文書 → <a href="../chunking/">チャンキング</a></li>
+        <li>各チャンク → <strong>埋め込みモデル</strong> → ベクトル</li>
+        <li>ベクトル → <a href="../vector-database/">ベクトルDB</a></li>
+        <li>質問 → 同じ埋め込みモデル → <a href="../vector-search/">検索</a></li>
+        <li>ヒットチャンク + 質問 → <a href="../llm/">LLM</a></li>
+      </ol>
+      <p>インデックス時と検索時で<strong>同じモデル</strong>を使う必要があります（次元・空間の一致）。</p>
+    </section>
+    <section id="choose">
+      <h2>選定の観点</h2>
+      <ul class="tool-example-list">
+        <li>日本語・専門用語の性能</li>
+        <li>ベクトル次元とストレージコスト</li>
+        <li>API提供かオンプレか（<a href="../confidential-data-leak/">機密</a>）</li>
+        <li>最大入力長（長いチャンクを扱えるか）</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>埋め込みモデル＝埋め込み？</summary><p class="tool-faq-a">埋め込みは技術・結果のベクトル、埋め込みモデルはそれを生成するモデルです。</p></details>
+        <details><summary>ChatGPTのモデルで埋め込みAPIは？</summary><p class="tool-faq-a">各クラウドは埋め込み専用APIを提供しています。チャットモデルとは別エンドポイントです。</p></details>
+        <details><summary>ファインチューニングする？</summary><p class="tool-faq-a">ドメイン特化で埋め込みを追加学習することはあります。<a href="../fine-tuning/">ファインチューニング</a>の一種として理解できます。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../vector-search/">ベクトル検索</a></li>
+          <li><a href="../vector-database/">ベクトルデータベース</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

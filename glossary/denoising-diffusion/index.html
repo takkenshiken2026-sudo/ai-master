@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="拡散モデル（ノイズ除去拡散）とは？ノイズ付加と復元の双方向プロセスをG検定・生成AIパスポート向けに解説。">
+  <title>拡散モデルとは？ノイズ除去拡散・Diffusion Modelの仕組み — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/denoising-diffusion/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="拡散モデルとは？ノイズ除去拡散・Diffusion Modelの仕組み">
+  <meta property="og:description" content="データにノイズを加える順過程と、ノイズから復元する逆過程で画像などを生成する手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/denoising-diffusion/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"拡散モデル","alternateName":["ノイズ除去拡散","Denoising Diffusion","Diffusion Model"],"description":"段階的にノイズを付加・除去してサンプルを生成する生成モデルの手法。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">拡散モデル</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>拡散モデルとは？ノイズ除去拡散・Diffusion Modelの仕組み</h1>
+    <p class="tool-hero-sub">読み：かくさんもでる ／ 英：Diffusion Model／Denoising Diffusion</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>拡散モデル</strong>（Diffusion Model／ノイズ除去拡散）は、画像などのデータに<strong>段階的にノイズを加え、逆にノイズを除去して復元する</strong>ことで新しいサンプルを生成する<a href="../generative-ai/">生成AI</a>の手法です。本記事は<a href="../text-to-image/">テキスト画像生成</a>のタスク定義ではなく、<strong>順過程と逆過程のパイプライン</strong>——試験で問われる核心——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">拡散モデルとは</a></li>
+        <li><a href="#pipeline">順過程と逆過程</a></li>
+        <li><a href="#vs-gan">GANとの違い</a></li>
+        <li><a href="#misconceptions">よくある誤解</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定の定番は、<strong>「データにノイズを加える過程と、そのノイズを除去する過程を学習して生成を行う」</strong>（<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>）。決定木・割引率・音声フォルマントなど別分野の説明は×です。
+      </p>
+      <p>
+        生成AIパスポートでは、拡散モデルが<strong>画像生成AIの代表的仕組みの一つ</strong>である（<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>○）、<strong>SNSの情報拡散を数えるマーケ用語だけ</strong>ではない（<a href="../../exams/genai-passport/drill/q/tf-0185/">TF-0185</a>×）が問われます。
+      </p>
+      <p>
+        逆過程だけ学習し復元しない、という説明は×です（<a href="../../exams/g-kentei/drill/q/tf-154/">TF-154</a>）。<strong>ノイズからの復元</strong>が生成に使われます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>、<a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>、<a href="../../exams/g-kentei/drill/q/tf-154/">TF-154</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>、<a href="../../exams/genai-passport/drill/q/tf-0185/">TF-0185</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>拡散モデルとは</h2>
+      <p>
+        拡散モデルは、きれいな画像から出発して少しずつノイズを混ぜていく<strong>順拡散（forward diffusion）</strong>を定義し、その逆の<strong>ノイズ除去（denoising）</strong>を学習します。生成時は純粋なノイズから始め、学習した逆過程を繰り返して画像を復元します。
+      </p>
+      <p>
+        近年の<a href="../text-to-image/">Text-to-Image</a>の高品質化で主流となった手法の一つです。代表的手法として<a href="../ddpm/">DDPM</a>、高速化の<a href="../latent-diffusion/">潜在拡散</a>などが知られます。
+      </p>
+    </section>
+    <section id="pipeline">
+      <h2>順過程と逆過程</h2>
+      <ol class="tool-steps">
+        <li><strong>順過程（学習データの劣化）</strong><p>元画像 x₀ に段階的にガウスノイズを加え、最終的にほぼノイズだけの状態 x_T へ近づける。</p></li>
+        <li><strong>逆過程の学習</strong><p>各ステップで「少しノイズを取り除く」ネットワークを学習。損失は予測ノイズや復元画像など、方式により異なる。</p></li>
+        <li><strong>生成（サンプリング）</strong><p>ランダムノイズから出発し、学習した逆ステップを T 回（または少ないステップに圧縮）繰り返して画像を得る。</p></li>
+      </ol>
+      <p>試験では数式より<strong>「加える」と「除去する」の両方がある</strong>ことを押さえれば十分なことが多いです。</p>
+    </section>
+    <section id="vs-gan">
+      <h2>GANとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>観点</th><th>拡散モデル</th><th><a href="../gan/">GAN</a></th></tr></thead>
+        <tbody>
+          <tr><td>学習のイメージ</td><td>ノイズ付加・除去</td><td>生成器と識別器の対抗</td></tr>
+          <tr><td>安定性</td><td>比較的学習が安定しやすいとされる</td><td>モード崩壊などの課題が知られる</td></tr>
+          <tr><td>試験</td><td>ノイズ除去過程（G-378のB）</td><td>生成器・識別器（G-378のA）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="misconceptions">
+      <h2>よくある誤解</h2>
+      <ul class="tool-example-list">
+        <li><strong>マーケの「拡散」だけ</strong> — 機械学習の生成モデル（TF-0185）</li>
+        <li><strong>逆過程を使わない</strong> — 生成に復元が必要（TF-154）</li>
+        <li><strong>Text-to-Imageそのもの</strong> — 拡散は手法、タスクは<a href="../text-to-image/">別記事</a></li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>拡散モデルとDDPMは同じ？</summary><p class="tool-faq-a">DDPMは拡散モデルの代表的な一種です。<a href="../ddpm/">DDPM</a>の記事を参照。</p></details>
+        <details><summary>Stable Diffusionは拡散モデル？</summary><p class="tool-faq-a">はい。<a href="../latent-diffusion/">潜在拡散</a>を用いた実装の代表例です。<a href="../stable-diffusion/">Stable Diffusion</a>も参照。</p></details>
+        <details><summary>DALL·Eも拡散？</summary><p class="tool-faq-a">系列は拡散ベースとして知られます。<a href="../dalle-model/">DALL·E</a>の記事を参照。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../ddpm/">DDPM</a></li>
+          <li><a href="../latent-diffusion/">潜在拡散モデル</a></li>
+          <li><a href="../gan/">GAN</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

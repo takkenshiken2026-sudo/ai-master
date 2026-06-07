@@ -158,11 +158,11 @@
       <ul class="tool-steps">
         <li>
           <strong>1. インデックス化（事前準備）</strong>
-          <p>文書を分割し、ベクトル化して検索用データベースに格納。埋め込み（Embedding）を使う構成が多い。</p>
+          <p><a href="../chunking/">チャンキング</a>で文書を分割し、<a href="../embedding-model/">埋め込みモデル</a>でベクトル化して<a href="../vector-database/">ベクトルDB</a>に格納。</p>
         </li>
         <li>
           <strong>2. 検索（Retrieval）</strong>
-          <p>ユーザーの質問と意味的に近いチャンクを上位k件取得。</p>
+          <p><a href="../vector-search/">ベクトル検索</a>や<a href="../semantic-search/">セマンティック検索</a>で、質問に意味的に近いチャンクを上位k件取得。</p>
         </li>
         <li>
           <strong>3. 拡張（Augment）</strong>
@@ -174,7 +174,7 @@
         </li>
       </ul>
       <p>
-        検索が外れる（関係ない段落を拾う）と、<a href="../hallucination/">ハルシネーション</a>に似た誤回答が起きます。チャンク設計と検索精度が品質の鍵です。
+        検索が外れる（関係ない段落を拾う）と、<a href="../hallucination/">ハルシネーション</a>に似た誤回答が起きます。<a href="../chunking/">チャンク</a>設計と検索精度が品質の鍵です。チャンク・RAG・ベクトルDBの定義すり替えに注意（<a href="../../exams/genai-passport/practice/q/hq-0370/">HQ-0370</a>、<a href="../../exams/genai-passport/practice/q/hq-0371/">HQ-0371</a>）。
       </p>
     </section>
 
@@ -286,7 +286,13 @@
           <li><a href="../hallucination/">ハルシネーション</a></li>
           <li><a href="../agent/">AIエージェント</a></li>
           <li><a href="../prompt/">プロンプト</a></li>
-          <li class="tool-related-list__soon">ベクトル検索 <span class="tool-soon-badge">準備中</span></li>
+          <li><a href="../chunking/">チャンキング</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../embedding-model/">埋め込みモデル</a></li>
+          <li><a href="../vector-search/">ベクトル検索</a></li>
+          <li><a href="../vector-database/">ベクトルデータベース</a></li>
+          <li><a href="../semantic-search/">セマンティック検索</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

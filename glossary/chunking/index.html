@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="チャンキング（Chunking）とは？RAG向けに長文を分割する実務判断。チャンクとRAGの違いを生成AIパスポート向けに解説。">
+  <title>チャンキングとは？文書分割・チャンク・RAGの前処理 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/chunking/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="チャンキングとは？文書分割・チャンク・RAGの前処理">
+  <meta property="og:description" content="検索や埋め込みのために文書を小さな単位（チャンク）に分割する前処理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/chunking/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"チャンキング","alternateName":["Chunking","チャンク分割"],"description":"長文を検索・生成向けに適切な塊（チャンク）へ分割すること。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"チャンクとRAGは同じ？","acceptedAnswer":{"@type":"Answer","text":"同じではありません。チャンクは分割された文書の単位、RAGは検索結果を参照しながら生成する手法です。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">チャンキング</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>チャンキングとは？文書分割・チャンク・RAGの前処理</h1>
+    <p class="tool-hero-sub">読み：ちゃんきんぐ ／ 英：Chunking</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>チャンキング</strong>（Chunking）は、長い文書を<a href="../rag/">RAG</a>や<a href="../vector-search/">ベクトル検索</a>向けに<strong>小さな単位（チャンク）へ分割する</strong>前処理です。本記事は分割アルゴリズムの網羅ではなく、<strong>試験で頻出の定義と実務判断</strong>——チャンクとRAGを混同しない——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">チャンキングとは</a></li>
+        <li><a href="#vs-rag">チャンクとRAGの違い</a></li>
+        <li><a href="#practice">実務の判断ポイント</a></li>
+        <li><a href="#risks">注意点</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、チャンク（チャンキングの結果）の定義が繰り返し問われます。<strong>「検索や埋め込みのために文書を小さな単位に分割したもの」</strong>（<a href="../../exams/genai-passport/practice/q/hq-0448/">HQ-0448</a>、<a href="../../exams/genai-passport/practice/q/hq-0404/">HQ-0404</a>、<a href="../../exams/genai-passport/practice/q/hq-0470/">HQ-0470</a>）。
+      </p>
+      <p>
+        比較問題の定番：<strong>チャンクの説明をRAGに当てはめる</strong>、または逆（<a href="../../exams/genai-passport/practice/q/hq-0371/">HQ-0371</a>）。正解は「チャンク＝分割単位、RAG＝検索しながら生成する手法」です。
+      </p>
+      <p>
+        不適切説明として、チャンクの定義をRAGにする問題もあります（<a href="../../exams/genai-passport/practice/q/hq-0370/">HQ-0370</a>、<a href="../../exams/genai-passport/practice/q/hq-0348/">HQ-0348</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p><a href="../../exams/genai-passport/practice/q/hq-0371/">HQ-0371（チャンク vs RAG）</a>、<a href="../../exams/genai-passport/practice/q/hq-0448/">HQ-0448</a>、<a href="../../exams/genai-passport/practice/q/hq-0370/">HQ-0370</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>チャンキングとは</h2>
+      <p>
+        PDFマニュアル、Wiki、規程集などはそのままでは長すぎて、<a href="../embedding/">埋め込み</a>や<a href="../context-window/">コンテキストウィンドウ</a>の制限に収まりません。チャンキングは、見出し・段落・固定トークン数などのルールで<strong>検索しやすい粒度</strong>に切り出します。切り出された1片が<strong>チャンク</strong>です。
+      </p>
+    </section>
+    <section id="vs-rag">
+      <h2>チャンクとRAGの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>性質</th><th>試験の一文</th></tr></thead>
+        <tbody>
+          <tr><td><strong>チャンク</strong></td><td>分割された文書の<strong>単位・データ</strong></td><td>小さな単位に分割したもの</td></tr>
+          <tr><td><strong>チャンキング</strong></td><td>分割する<strong>処理</strong></td><td>上記を行う前処理</td></tr>
+          <tr><td><strong><a href="../rag/">RAG</a></strong></td><td>検索＋生成の<strong>アーキテクチャ</strong></td><td>外部情報を参照しながら生成</td></tr>
+          <tr><td><strong><a href="../vector-database/">ベクトルDB</a></strong></td><td>ベクトル保存の<strong>基盤</strong></td><td>埋め込みを保存・検索するDB</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="practice">
+      <h2>実務の判断ポイント</h2>
+      <ol class="tool-steps">
+        <li><strong>サイズ</strong> — 512/1024トークン前後から調整（モデル・用途による）</li>
+        <li><strong>オーバーラップ</strong> — 隣接チャンクを少し重ね、文脈の切れ目を緩和</li>
+        <li><strong>構造尊重</strong> — 見出し・条番号で切ると検索精度が上がりやすい</li>
+        <li><strong>メタデータ</strong> — 出典URL・章タイトルをチャンクに付与</li>
+        <li><strong>更新</strong> — 原文が変わったら該当チャンクを再インデックス</li>
+      </ol>
+    </section>
+    <section id="risks">
+      <h2>注意点</h2>
+      <ul class="tool-example-list">
+        <li>大きすぎるチャンク — 検索がぼやけ、<a href="../token/">トークン</a>浪費</li>
+        <li>小さすぎるチャンク — 文脈不足で誤回答</li>
+        <li><a href="../confidential-data-leak/">機密</a>段落がそのままインデックスされるリスク</li>
+        <li>チャンキングだけでは<a href="../hallucination/">ハルシネーション</a>は消えない</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>チャンクとRAGは同じ？</summary><p class="tool-faq-a">いいえ（<a href="../../exams/genai-passport/practice/q/hq-0371/">HQ-0371</a>）。</p></details>
+        <details><summary>チャンク＝ベクトルDB？</summary><p class="tool-faq-a">いいえ。チャンクは文書片、ベクトルDBはベクトルを格納するシステムです。</p></details>
+        <details><summary>全文を1チャンクにしない？</summary><p class="tool-faq-a">短いFAQなら可能ですが、長文では検索精度とコストの面で分割が一般的です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../vector-search/">ベクトル検索</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

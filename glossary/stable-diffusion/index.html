@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Stable Diffusionとは？潜在拡散ベースのオープン画像生成モデル・ローカル利用と注意点をG検定・生成AIパスポート向けに解説。">
+  <title>Stable Diffusionとは？オープン画像生成・潜在拡散モデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/stable-diffusion/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="Stable Diffusionとは？オープン画像生成・潜在拡散モデル">
+  <meta property="og:description" content="潜在拡散を用いたオープンなテキスト画像生成モデル。ローカル実行やコミュニティ拡張で知られる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/stable-diffusion/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"Stable Diffusion","alternateName":["SD","スタブルディフュージョン"],"description":"潜在拡散によるオープンなテキスト画像生成モデルファミリー。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Stable Diffusion</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Stable Diffusionとは？オープン画像生成・潜在拡散モデル</h1>
+    <p class="tool-hero-sub">読み：すてーぶるでぃふゅーじょん ／ 英：Stable Diffusion</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Stable Diffusion</strong>（スタブルディフュージョン）は、<a href="../latent-diffusion/">潜在拡散モデル</a>を用いた<strong>オープンな<a href="../text-to-image/">テキスト画像生成</a>モデル</strong>のファミリーです。本記事はバージョンごとの性能比較ではなく、<strong>なぜ広まったか・何と混同しないか</strong>——エコシステムと実務の視点——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Stable Diffusionとは</a></li>
+        <li><a href="#tech">技術的な位置づけ</a></li>
+        <li><a href="#ecosystem">エコシステム</a></li>
+        <li><a href="#risks">利用時の注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        固有名詞としての細かいバージョン差より、<strong>テキストから画像を生成する拡散ベースのモデル</strong>であること、<a href="../text-to-image/">Text-to-Image</a>の代表例の一つとして<a href="../denoising-diffusion/">拡散モデル</a>と関連づけられることが重要です。
+      </p>
+      <p>
+        <a href="../dalle-model/">DALL·E</a>や<a href="../imagen/">Imagen</a>と並ぶ「名前のある画像生成モデル」として比較問題に出ることがあります。各社の最新版番号の暗記は不要です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>、<a href="../../exams/g-kentei/practice/q/g-394/">G-394（DALL·E）</a>、<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211（権利確認）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Stable Diffusionとは</h2>
+      <p>
+        Stability AIなどが広めた、<strong>ウェイトや仕様が公開されやすい</strong>画像生成モデル系列です。消費者向けGPUでも動かしやすい設計が特徴で、個人環境での<a href="../text-to-image/">Text-to-Image</a>体験を大きく広げました。
+      </p>
+      <p>
+        製品としてのUI・課金は<a href="../../tools/">AIツール一覧</a>に集約し、本記事は<strong>モデル名・技術の概念</strong>として整理します。
+      </p>
+    </section>
+    <section id="tech">
+      <h2>技術的な位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>層</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>生成の考え方</td><td><a href="../denoising-diffusion/">拡散モデル</a>（ノイズ除去）</td></tr>
+          <tr><td>効率化</td><td><a href="../latent-diffusion/">潜在拡散</a>（潜在空間で拡散）</td></tr>
+          <tr><td>条件付け</td><td>テキストエンコーダでプロンプトを注入</td></tr>
+          <tr><td>構図制御</td><td><a href="../controlnet/">ControlNet</a>などの追加</td></tr>
+          <tr><td>用途適応</td><td><a href="../lora/">LoRA</a>等のファインチューニング</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="ecosystem">
+      <h2>エコシステム</h2>
+      <ul class="tool-example-list">
+        <li><strong>ローカル実行</strong> — オンプレ・PCでの生成（機密データの扱いに注意）</li>
+        <li><strong>コミュニティモデル</strong> — 追加学習済みウェイトの流通</li>
+        <li><strong>拡張機能</strong> — ControlNet、LoRA、各種パイプライン</li>
+        <li><strong>ライセンス</strong> — バージョンごとに利用条件が異なる。商用利用は要確認</li>
+      </ul>
+    </section>
+    <section id="risks">
+      <h2>利用時の注意</h2>
+      <p>他の画像生成AIと共通の論点です。</p>
+      <ul class="tool-steps">
+        <li><a href="../copyright/">著作権</a>・<a href="../ai-generated-copyright/">AI生成物の著作権</a></li>
+        <li>肖像権・商標（<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a>）</li>
+        <li><a href="../deepfake/">ディープフェイク</a>的悪用</li>
+        <li>学習データ由来のバイアス（<a href="../algorithmic-bias/">アルゴリズムバイアス</a>）</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Stable Diffusionと拡散モデルは同じ？</summary><p class="tool-faq-a">Stable Diffusionは拡散モデル（潜在拡散）の具体的なモデルファミリーです。</p></details>
+        <details><summary>Midjourneyと同じ？</summary><p class="tool-faq-a">別サービス・別モデルです。いずれも<a href="../text-to-image/">Text-to-Image</a>を提供しますが、技術と利用形態は異なります。</p></details>
+        <details><summary>社内データで追加学習できる？</summary><p class="tool-faq-a">技術的には<a href="../fine-tuning/">ファインチューニング</a>やLoRAが可能な場合があります。<a href="../confidential-data-leak/">機密情報漏洩</a>リスクとライセンスを必ず確認してください。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../latent-diffusion/">潜在拡散モデル</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../controlnet/">ControlNet</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../dalle-model/">DALL·E</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

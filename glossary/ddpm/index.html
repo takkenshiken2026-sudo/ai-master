@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DDPMとは？Denoising Diffusion Probabilistic Model・確率的拡散モデルの略称と拡散モデルとの関係をG検定向けに解説。">
+  <title>DDPMとは？確率的拡散モデル・拡散モデルの代表手法 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/ddpm/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="DDPMとは？確率的拡散モデル・拡散モデルの代表手法">
+  <meta property="og:description" content="ノイズ付加過程を確率モデルとして定式化した拡散モデルの代表。Diffusion Modelの基礎文献として知られる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/ddpm/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"DDPM","alternateName":["Denoising Diffusion Probabilistic Model","確率的拡散モデル"],"description":"ノイズ付加と除去を確率モデルとして扱う拡散モデルの代表的手法。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">DDPM</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>DDPMとは？確率的拡散モデル・拡散モデルの代表手法</h1>
+    <p class="tool-hero-sub">読み：でぃーでぃーぴーえむ ／ 英：DDPM（Denoising Diffusion Probabilistic Model）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>DDPM</strong>（Denoising Diffusion Probabilistic Model／確率的拡散モデル）は、<a href="../denoising-diffusion/">拡散モデル</a>を<strong>確率過程として定式化</strong>した代表的な手法です。本記事は厳密な数理導出ではなく、<strong>略称の意味と拡散モデル全体との関係</strong>——用語の地図上の位置——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">DDPMとは</a></li>
+        <li><a href="#acronym">略称の読み解き</a></li>
+        <li><a href="#family">拡散モデルファミリー</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        試験で「DDPM」と名指しされることは少なく、<strong>Diffusion Model／拡散モデル</strong>として問われることが多いです（<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>、<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>）。DDPMはその<strong>学術的な源流の一つ</strong>として押さえます。
+      </p>
+      <p>
+        <strong>逆過程を使わない</strong>という説明は×（<a href="../../exams/g-kentei/drill/q/tf-154/">TF-154</a>）。DDPMでも生成はノイズからの段階的復元です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>、<a href="../../exams/g-kentei/drill/q/tf-154/">TF-154</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>DDPMとは</h2>
+      <p>
+        DDPMは、データにガウスノイズを段階的に加える<strong>順過程</strong>と、それを反転させる<strong>学習可能な逆過程</strong>を、マルコフ連鎖として記述したモデルです。学習目標は、各ステップで加えたノイズを予測するなど、実装バリアントによりますが、試験では<strong>ノイズ付加と除去の双方向</strong>が本質です。
+      </p>
+    </section>
+    <section id="acronym">
+      <h2>略称の読み解き</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>語</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Denoising</strong></td><td>ノイズ除去。逆過程の核心</td></tr>
+          <tr><td><strong>Diffusion</strong></td><td>拡散。順方向にノイズが広がるイメージ</td></tr>
+          <tr><td><strong>Probabilistic</strong></td><td>確率的。分布としてモデル化</td></tr>
+          <tr><td><strong>Model</strong></td><td>生成モデル</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="family">
+      <h2>拡散モデルファミリー</h2>
+      <ul class="tool-example-list">
+        <li><strong><a href="../denoising-diffusion/">拡散モデル</a></strong> — 総称・試験での呼び名</li>
+        <li><strong>DDPM</strong> — 確率的定式化の代表（本記事）</li>
+        <li><strong><a href="../latent-diffusion/">潜在拡散</a></strong> — 潜在空間での高速化</li>
+        <li><strong><a href="../stable-diffusion/">Stable Diffusion</a></strong> — 潜在拡散の実用例</li>
+        <li><strong><a href="../gan/">GAN</a></strong> — 別系統の生成モデル（対抗学習）</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>DDPMと拡散モデルは同じ？</summary><p class="tool-faq-a">DDPMは拡散モデルの代表的な一種です。試験文脈では「Diffusion Model」という語がより頻出です。</p></details>
+        <details><summary>DDIMなど他の略称は？</summary><p class="tool-faq-a">サンプリングを高速化する派生手法があります。G検定・生成AIパスポートの範囲ではDDPM名より拡散の基本概念が優先です。</p></details>
+        <details><summary>Text-to-Imageとの関係は？</summary><p class="tool-faq-a">テキスト条件付き拡散は<a href="../text-to-image/">Text-to-Image</a>の実装に使われます。DDPM単体は無条件生成の文脈で学ばれることもあります。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../latent-diffusion/">潜在拡散モデル</a></li>
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../gan/">GAN</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
