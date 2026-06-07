@@ -44,7 +44,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -58,7 +58,9 @@
         <li><a href="#space">ベクトル空間のイメージ</a></li>
         <li><a href="#rag-role">RAGでの使われ方</a></li>
         <li><a href="#vs-llm">LLMとの違い</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -114,6 +116,18 @@
         </tbody>
       </table>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>埋め込み＝トークン</td><td>意味ベクトル vs 処理単位</td></tr>
+          <tr><td>MFCC＝単語埋め込み</td><td>音声特徴量（G-344）</td></tr>
+          <tr><td>ベクトルDB＝チャンク</td><td>保存先 vs 分割単位（HQ-0448）</td></tr>
+          <tr><td>埋め込み＝LLM</td><td>ベクトル出力 vs テキスト生成</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -122,12 +136,20 @@
         <details><summary>画像にも使える？</summary><p class="tool-faq-a">はい。マルチモーダル埋め込みで画像とテキストを同じ空間に載せる手法もあります。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-344/">G-344 · MFCCとの区別</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232 · 埋め込みの役割</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0449/">HQ-0449 · ベクトルDB</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0448/">HQ-0448 · 概念の識別</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../embedding-model/">埋め込みモデル</a></li>
-          <li><a href="../vector-search/">ベクトル検索</a></li>
           <li><a href="../vector-database/">ベクトルデータベース</a></li>
           <li><a href="../rag/">RAG</a></li>
           <li><a href="../llm/">LLM</a></li>

@@ -48,7 +48,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -65,7 +65,9 @@
         <li><a href="#compare">手法の比較</a></li>
         <li><a href="#use-cases">使われる場面</a></li>
         <li><a href="#limits">限界・注意点</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -176,6 +178,19 @@
       </p>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>LoRA＝全パラメータ更新</td><td>低ランクの追加部分を学習（TF-177）</td></tr>
+          <tr><td>LoRA＝プロンプト設計</td><td>重みを更新するFT手法</td></tr>
+          <tr><td>LoRA＝RLHF</td><td>ドメイン適応 vs 好み調整</td></tr>
+          <tr><td>LoRA＝RAG</td><td>学習 vs 検索で知識を渡す</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -198,15 +213,23 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-177/">TF-177 · LoRAの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0164/">TF-0164 · 追加学習</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127 · FTの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0128/">TF-0128 · FTの誤解</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
-          <li><a href="../llm/">LLM</a></li>
-          <li><a href="../alignment/">アライメント</a></li>
-          <li><a href="../rag/">RAG</a></li>
-          <li><a href="../generative-ai/">生成AI</a></li>
           <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>
