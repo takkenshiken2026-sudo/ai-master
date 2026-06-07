@@ -65,7 +65,9 @@
         <li><a href="#toolbox">技法のツールボックス</a></li>
         <li><a href="#workflow">実務の流れ</a></li>
         <li><a href="#limits">万能ではない</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -148,6 +150,18 @@
         プロンプトだけで<a href="../jailbreak/">ジェイルブレイク</a>や<a href="../prompt-injection/">プロンプトインジェクション</a>のリスクをゼロにできるわけではありません（TF-173の解説）。機密入力の禁止、出力確認、<a href="../hallucination-mitigation/">ハルシネーション対策</a>は別途必要です。
       </p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>PE＝プロンプト（入力文）</td><td>技術 vs 名詞（HQ-0764・HQ-0726）</td></tr>
+          <tr><td>PE＝Few-shotだけ</td><td>技法の一つにとどまる（HQ-0783）</td></tr>
+          <tr><td>PEでセキュリティ完結</td><td>インジェクション対策は別途（TF-173）</td></tr>
+          <tr><td>良いプロンプト＝正確な出力</td><td>ハルシネーションは残りうる</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -156,16 +170,22 @@
         <details><summary>日本語プロンプトで試験は？</summary><p class="tool-faq-a">定義は言語非依存です。英語名（Prompt Engineering）と日本語説明の対応を確認してください。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-173/">TF-173 · PEの定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0783/">HQ-0783 · 指示の工夫</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0764/">HQ-0764 · プロンプトとの区別</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0726/">HQ-0726 · 用語の識別</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../few-shot-prompting/">少数ショットプロンプト</a></li>
-          <li><a href="../zero-shot-prompting/">ゼロショットプロンプト</a></li>
           <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
-          <li><a href="../temperature/">温度パラメータ</a></li>
-          <li><a href="../self-consistency/">自己整合性</a></li>
           <li><a href="../system-prompt/">システムプロンプト</a></li>
           <li><a href="../llm/">LLM</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>

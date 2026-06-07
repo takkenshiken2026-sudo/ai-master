@@ -140,7 +140,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -158,7 +158,9 @@
         <li><a href="#why-large">「大規模」とは何が大きいのか</a></li>
         <li><a href="#model-vs-service">モデルとサービスの違い</a></li>
         <li><a href="#limits">LLMの限界（試験でも重要）</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -310,6 +312,19 @@
       </ul>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>LLM＝決定木</td><td>ニューラルネット vs 木構造（TF-132）</td></tr>
+          <tr><td>LLM＝n-gram</td><td>大規模深層モデル vs 古典的LM（HQ-0741）</td></tr>
+          <tr><td>LLM＝ChatGPT</td><td>モデル vs サービス</td></tr>
+          <tr><td>自然な文章＝正確</td><td>次トークン予測の限界（TF-171）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -332,34 +347,25 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-132/">TF-132 · LLMと決定木</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0741/">HQ-0741 · LMとLLM</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178 · 次トークン生成</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0473/">TF-0473 · 不得意領域</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../generative-ai/">生成AI</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
-          <li><a href="../few-shot-prompting/">少数ショットプロンプト</a></li>
-          <li><a href="../zero-shot-prompting/">ゼロショットプロンプト</a></li>
           <li><a href="../token/">トークン</a></li>
-          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
-          <li><a href="../fine-tuning/">ファインチューニング</a></li>
-          <li><a href="../rlhf/">RLHF</a></li>
-          <li><a href="../rag/">RAG</a></li>
-          <li><a href="../hallucination/">ハルシネーション</a></li>
-          <li><a href="../gpt/">GPT</a></li>
-          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
-          <li><a href="../attention/">Attention</a></li>
           <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../rag/">RAG</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
-        </ul>
-      </div>
-      <div class="tool-related-block">
-        <h2 class="tool-related-heading">関連するAIツール</h2>
-        <ul class="tool-related-list">
-          <li><a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
-          <li><a href="../../tools/claude/"><img src="../../assets/images/tools/anthropic.svg" alt="" width="16" height="16"> Claude</a></li>
-          <li><a href="../../tools/gemini/"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> Gemini</a></li>
-          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
         </ul>
       </div>
     </aside>
