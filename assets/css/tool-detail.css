@@ -196,13 +196,24 @@
 }
 .tool-split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 13fr) minmax(0, 7fr);
   gap: 28px;
   align-items: start;
   margin-top: 16px;
 }
-.tool-split__media .tool-figure { margin: 0; }
-
+.tool-split__media {
+  max-width: 70%;
+  justify-self: end;
+}
+.tool-split__media .tool-figure {
+  margin: 0;
+}
+.tool-split__media .tool-figure img {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+}
 .tool-plan-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -817,6 +828,10 @@
 @media (max-width: 900px) {
   .tool-hero--split,
   .tool-split { grid-template-columns: 1fr; }
+  .tool-split__media {
+    max-width: min(320px, 100%);
+    justify-self: center;
+  }
   .tool-hero-visual {
     order: -1;
     max-width: 520px;
