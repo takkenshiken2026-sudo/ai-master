@@ -44,7 +44,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -58,7 +58,9 @@
         <li><a href="#compare">ピクセル拡散との比較</a></li>
         <li><a href="#pipeline">処理の流れ</a></li>
         <li><a href="#products">製品との関係</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -112,6 +114,18 @@
       </p>
       <p>製品の詳細・利用規約は<a href="../../tools/">AIツール一覧</a>を参照してください。</p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>潜在拡散≠拡散モデル</td><td>拡散モデルの効率化の一形態（<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>）</td></tr>
+          <tr><td>潜在＝LLMの内部表現</td><td>画像VAEの圧縮空間。目的も仕組みも別</td></tr>
+          <tr><td>潜在拡散＝SNSの拡散</td><td>ノイズ付加・除去の生成モデル（<a href="../../exams/genai-passport/drill/q/tf-0185/">TF-0185</a>）</td></tr>
+          <tr><td>SD＝潜在拡散の同義語</td><td>SDは潜在拡散を用いた具体モデルファミリー</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -120,7 +134,16 @@
         <details><summary>LLMの潜在表現と同じ？</summary><p class="tool-faq-a">「潜在」という語は共通ですが、画像VAEの潜在空間とLLMの内部表現は別物です。<a href="../llm/">LLM</a>はテキスト生成が主目的です。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-377/">G-377 · ノイズ付加と除去</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184 · 画像生成の仕組み</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0185/">TF-0185 · マーケ用語は×</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190 · Text-to-Image定義</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

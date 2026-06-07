@@ -96,6 +96,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("AF", "基礎・検索・データ", ["artificial-intelligence", "semantic-search", "data-sheet"]),
     ("AG", "モデル・AI種類", ["model-card", "agi", "weak-ai"]),
     ("AH", "機械学習基礎", ["machine-learning", "deep-learning", "neural-network"]),
+    ("AI", "拡散モデル実装", ["stable-diffusion", "latent-diffusion", "ddpm"]),
 ]
 
 REVISION_STATUS_LABEL = {

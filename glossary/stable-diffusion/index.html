@@ -44,7 +44,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -58,7 +58,9 @@
         <li><a href="#tech">技術的な位置づけ</a></li>
         <li><a href="#ecosystem">エコシステム</a></li>
         <li><a href="#risks">利用時の注意</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -115,6 +117,18 @@
         <li>学習データ由来のバイアス（<a href="../algorithmic-bias/">アルゴリズムバイアス</a>）</li>
       </ul>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SD＝拡散モデル全体</td><td>潜在拡散を用いた具体モデルファミリー（<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>）</td></tr>
+          <tr><td>SD＝Midjourney</td><td>別サービス・別モデル。いずれも<a href="../text-to-image/">Text-to-Image</a>（<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>）</td></tr>
+          <tr><td>SD＝GAN</td><td>拡散ベース vs 対抗学習（<a href="../../exams/g-kentei/practice/q/g-394/">G-394</a>）</td></tr>
+          <tr><td>生成画像は権利確認不要</td><td>肖像・商標等の確認が必要（<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -123,7 +137,16 @@
         <details><summary>社内データで追加学習できる？</summary><p class="tool-faq-a">技術的には<a href="../fine-tuning/">ファインチューニング</a>やLoRAが可能な場合があります。<a href="../confidential-data-leak/">機密情報漏洩</a>リスクとライセンスを必ず確認してください。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184 · 拡散と画像生成</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190 · Text-to-Image定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-394/">G-394 · DALL·Eとの比較</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211 · 権利確認</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

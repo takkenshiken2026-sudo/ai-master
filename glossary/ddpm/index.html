@@ -44,7 +44,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約5分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -57,7 +57,9 @@
         <li><a href="#what-is">DDPMとは</a></li>
         <li><a href="#acronym">略称の読み解き</a></li>
         <li><a href="#family">拡散モデルファミリー</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -101,6 +103,18 @@
         <li><strong><a href="../gan/">GAN</a></strong> — 別系統の生成モデル（対抗学習）</li>
       </ul>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>逆過程を使わない</td><td>ノイズから段階的に復元して生成（<a href="../../exams/g-kentei/drill/q/tf-154/">TF-154</a>）</td></tr>
+          <tr><td>DDPM＝拡散モデル全体</td><td>確率的定式化の代表的一種（<a href="../../exams/g-kentei/practice/q/g-377/">G-377</a>）</td></tr>
+          <tr><td>DDPM＝GAN</td><td>ノイズ除去 vs 対抗学習（<a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>）</td></tr>
+          <tr><td>DDPM＝SNSの拡散</td><td>生成モデルの手法（<a href="../../exams/genai-passport/drill/q/tf-0185/">TF-0185</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -109,7 +123,16 @@
         <details><summary>Text-to-Imageとの関係は？</summary><p class="tool-faq-a">テキスト条件付き拡散は<a href="../text-to-image/">Text-to-Image</a>の実装に使われます。DDPM単体は無条件生成の文脈で学ばれることもあります。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-377/">G-377 · ノイズ付加と除去</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-154/">TF-154 · 逆過程の復元</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184 · 画像生成の仕組み</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-378/">G-378 · GANとの違い</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
