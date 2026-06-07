@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LIMEとは？局所的に単純モデルでAIの予測を説明するXAI手法。SHAPとの違いをG検定向けに解説。">
+  <title>LIMEとは？局所説明・説明可能AIの代表手法 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/lime/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="LIMEとは？局所説明・説明可能AIの代表手法">
+  <meta property="og:description" content="特定の予測の周辺を単純なモデルで近似し、なぜその結果になったかを説明するXAI手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/lime/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"LIME","alternateName":["Local Interpretable Model-agnostic Explanations"],"description":"局所的に単純モデルで予測を説明する説明可能AI手法。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">LIME</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>LIMEとは？局所説明・説明可能AIの代表手法</h1>
+    <p class="tool-hero-sub">読み：らいむ ／ 英：LIME（Local Interpretable Model-agnostic Explanations）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>LIME</strong>は、複雑なAIモデルの<strong>特定の1回の予測</strong>について、周辺のデータを擬似生成し、<strong>解釈しやすい単純なモデルで近似説明</strong>する<a href="../explainable-ai/">説明可能AI（XAI）</a>の手法です。本記事は実装の数式ではなく、<strong>「局所的」「モデル非依存」の意味</strong>——試験での識別ポイント——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">LIMEとは</a></li>
+        <li><a href="#local">局所説明の意味</a></li>
+        <li><a href="#vs-shap">SHAPとの違い</a></li>
+        <li><a href="#limits">限界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G-398では、<strong>「局所的に単純なモデルで説明する」＝LIME</strong>として識別します（<a href="../../exams/g-kentei/practice/q/g-398/">G-398</a>）。SHAPと入れ替える誤答が典型です。
+      </p>
+      <p>
+        XAI全体の目的は<a href="../explainable-ai/">説明可能AI</a>の記事のとおり、信頼性・説明責任の向上です（<a href="../../exams/g-kentei/practice/q/g-397/">G-397</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-398/">G-398</a>、<a href="../../exams/g-kentei/practice/q/g-397/">G-397</a>、<a href="../../exams/g-kentei/drill/q/tf-441/">TF-441</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>LIMEとは</h2>
+      <p>
+        LIME（Local Interpretable Model-agnostic Explanations）は、元のモデルがニューラルネットでもランダムフォレストでも、<strong>その1予測の近傍だけ</strong>を線形モデルなどで近似し、「どの特徴が結果を押し上げたか」を示します。
+      </p>
+      <p>
+        「model-agnostic（モデル非依存）」は、<strong>中身のモデル構造を書き換えずに</strong>後付けで説明できる、という意味です。
+      </p>
+    </section>
+    <section id="local">
+      <h2>局所説明の意味</h2>
+      <p>
+        LIMEは<strong>グローバルにモデル全体を説明する</strong>のではなく、<strong>1つの入力点の周辺</strong>に焦点を当てます。別の入力では重要特徴が変わりうる——これが「局所的」の要点です。
+      </p>
+      <ol class="tool-steps">
+        <li>説明したい予測（対象インスタンス）を選ぶ</li>
+        <li>近傍の擬似サンプルを生成する</li>
+        <li>単純モデルで元モデルの出力を近似する</li>
+        <li>単純モデルの係数などを「説明」として提示する</li>
+      </ol>
+    </section>
+    <section id="vs-shap">
+      <h2>SHAPとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th></th><th>LIME</th><th><a href="../shap/">SHAP</a></th></tr></thead>
+        <tbody>
+          <tr><td><strong>考え方</strong></td><td>局所近似（単純モデル）</td><td>シャープレイ値による寄与配分</td></tr>
+          <tr><td><strong>試験のキーワード</strong></td><td>局所的・単純モデル</td><td>ゲーム理論・寄与度</td></tr>
+          <tr><td><strong>安定性</strong></td><td>サンプリングに依存しうる</td><td>理論的枠組みが明確</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="limits">
+      <h2>限界</h2>
+      <ul class="tool-example-list">
+        <li>近傍の取り方で説明が変わりうる</li>
+        <li>高次元データでは解釈が難しくなることがある</li>
+        <li>説明が得られても<strong>予測が正しい</strong>とは限らない</li>
+        <li>画像・テキストでは前処理の設計が重要</li>
+      </ul>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>LIME＝SHAP</td><td>局所近似 vs シャープレイ値（<a href="../../exams/g-kentei/practice/q/g-398/">G-398</a>）</td></tr>
+          <tr><td>LIME＝モデル全体の説明</td><td>特定予測の<strong>局所</strong>説明</td></tr>
+          <tr><td>LIME＝精度向上手法</td><td>説明・解釈のためのXAI</td></tr>
+          <tr><td>LIME＝物体検出</td><td>G-398の誤答パターン</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>LIMEはどんなモデルに使える？</summary><p class="tool-faq-a">分類・回帰など、入出力が定義できればブラックボックスに後付け可能、というのが model-agnostic の意味です。</p></details>
+        <details><summary>生成AIの説明にも使う？</summary><p class="tool-faq-a">試験の典型は表形式データのMLです。LLMの説明は別手法・別議論が中心です。</p></details>
+        <details><summary>LIMEだけ覚えればXAIは足りる？</summary><p class="tool-faq-a">いいえ。XAIは要件の総称で、SHAPなど他手法もセットで出ます。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-398/">G-398 · LIMEとSHAPの組み合わせ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-397/">G-397 · XAIの目的</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-441/">TF-441 · 説明可能性</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-198/">TF-198 · 性能とのトレードオフ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../explainable-ai/">説明可能なAI</a></li>
+          <li><a href="../shap/">SHAP</a></li>
+          <li><a href="../fairness/">公平性</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

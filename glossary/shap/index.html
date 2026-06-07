@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SHAPとは？シャープレイ値で特徴量の予測への寄与を評価する説明可能AI手法。LIMEとの違いをG検定向けに解説。">
+  <title>SHAPとは？シャープレイ値・特徴寄与の説明 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/shap/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="SHAPとは？シャープレイ値・特徴寄与の説明">
+  <meta property="og:description" content="各特徴量が予測結果にどれだけ寄与したかをシャープレイ値で配分するXAI手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/shap/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"SHAP","alternateName":["SHapley Additive exPlanations"],"description":"各特徴の予測への寄与をシャープレイ値で配分する説明手法。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SHAP</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>SHAPとは？シャープレイ値・特徴寄与の説明</h1>
+    <p class="tool-hero-sub">読み：しゃっぷ ／ 英：SHAP（SHapley Additive exPlanations）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SHAP</strong>は、予測結果に対して<strong>各特徴量がどれだけ寄与したか</strong>を、ゲーム理論の<strong>シャープレイ値（Shapley value）</strong>に基づいて配分する<a href="../explainable-ai/">説明可能AI（XAI）</a>手法です。本記事は厳密な数理導出ではなく、<strong>試験での識別とLIMEとの対比</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">SHAPとは</a></li>
+        <li><a href="#shapley">シャープレイ値のイメージ</a></li>
+        <li><a href="#vs-lime">LIMEとの違い</a></li>
+        <li><a href="#read">結果の読み方</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G-398では、<strong>「特徴量の寄与度をゲーム理論的に評価する」＝SHAP</strong>です（<a href="../../exams/g-kentei/practice/q/g-398/">G-398</a>）。LIMEとの役割分担を問う典型問題です。
+      </p>
+      <p>
+        XAIの目的全体は<a href="../../exams/g-kentei/practice/q/g-397/">G-397</a>のとおり、判断根拠の理解と信頼性・説明責任の向上です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-398/">G-398</a>、<a href="../../exams/g-kentei/practice/q/g-397/">G-397</a>、<a href="../../exams/g-kentei/drill/q/tf-442/">TF-442</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>SHAPとは</h2>
+      <p>
+        SHAP（SHapley Additive exPlanations）は、予測値とベースライン（平均的な予測など）の差を、<strong>特徴ごとの寄与の和</strong>として分解する枠組みです。正の寄与は予測を押し上げ、負の寄与は押し下げる、と読みます。
+      </p>
+      <p>
+        実務ではサマリープロットなどで「どの特徴が全体的に効いているか」を可視化する用途も多いです。
+      </p>
+    </section>
+    <section id="shapley">
+      <h2>シャープレイ値のイメージ</h2>
+      <p>
+        シャープレイ値は、複数の参加者が協力して得た成果を<strong>公平に配分する</strong>考え方です。SHAPでは「参加者＝特徴量」、「成果＝予測との差」と対応づけます。
+      </p>
+      <p>試験では数式より<strong>「ゲーム理論」「寄与の配分」</strong>というラベルでLIMEと区別できれば十分です。</p>
+    </section>
+    <section id="vs-lime">
+      <h2>LIMEとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th></th><th><a href="../lime/">LIME</a></th><th>SHAP</th></tr></thead>
+        <tbody>
+          <tr><td><strong>核となる考え</strong></td><td>局所線形近似</td><td>シャープレイ値</td></tr>
+          <tr><td><strong>G-398の説明</strong></td><td>局所的に単純モデル</td><td>寄与度をゲーム理論的に評価</td></tr>
+          <tr><td><strong>理論的基盤</strong></td><td>近似・サンプリング</td><td>公理に基づく配分</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="read">
+      <h2>結果の読み方</h2>
+      <ul class="tool-steps">
+        <li><strong>特徴のSHAP値が大きい</strong> — その予測への影響が大きい</li>
+        <li><strong>符号</strong> — 正なら予測を上げる方向、負なら下げる方向</li>
+        <li><strong>全体サマリー</strong> — データセット横断の重要特徴の把握</li>
+        <li><strong>人の確認</strong> — 寄与が直感と合うか、ドメイン知識で検証</li>
+      </ul>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SHAP＝LIME</td><td>シャープレイ値 vs 局所近似（<a href="../../exams/g-kentei/practice/q/g-398/">G-398</a>）</td></tr>
+          <tr><td>SHAP＝word2vec</td><td>G-398の誤答パターン（埋め込み学習）</td></tr>
+          <tr><td>SHAP値が高い＝特徴が常に重要</td><td>文脈・インスタンスにより変わりうる</td></tr>
+          <tr><td>SHAPで説明＝予測が正しい</td><td>説明と正確性は別問題</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>SHAPは計算コストが高い？</summary><p class="tool-faq-a">厳密計算は高くなりうるため、近似アルゴリズムが使われます。試験ではコストより概念の識別が中心です。</p></details>
+        <details><summary>公平性（Fairness）の公平と同じ？</summary><p class="tool-faq-a">別概念です。SHAPの「公平」は寄与配分の公理、AI倫理の<a href="../fairness/">公平性</a>は差別・偏りの回避を指します。</p></details>
+        <details><summary>TreeSHAPなど派生は？</summary><p class="tool-faq-a">木モデル向けの高速化などがあります。G検定ではSHAP/LIMEの対比が優先です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-398/">G-398 · LIMEとSHAPの組み合わせ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-397/">G-397 · XAIの目的</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-442/">TF-442 · 説明可能性</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-198/">TF-198 · 性能とのトレードオフ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../explainable-ai/">説明可能なAI</a></li>
+          <li><a href="../lime/">LIME</a></li>
+          <li><a href="../fairness/">公平性</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

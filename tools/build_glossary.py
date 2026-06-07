@@ -99,6 +99,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("AI", "拡散モデル実装", ["stable-diffusion", "latent-diffusion", "ddpm"]),
     ("AJ", "画像生成モデル", ["dalle-model", "imagen", "controlnet"]),
     ("AK", "アーキテクチャ・推論", ["gpt-architecture", "multimodal-ai", "self-consistency"]),
+    ("AL", "説明可能AI", ["explainable-ai", "lime", "shap"]),
 ]
 
 REVISION_STATUS_LABEL = {

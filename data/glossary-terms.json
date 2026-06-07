@@ -47,7 +47,7 @@
       "summary": "人間と同等以上の知的能力を持つとされるAI。現時点では実現していない概念上の目標として研究が進む。",
       "category": "basics",
       "sortKey": "A",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -271,7 +271,7 @@
       "summary": "適合率と再現率の調和平均。バランス指標として使われる。",
       "category": "basics",
       "sortKey": "F",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -287,7 +287,7 @@
       "summary": "並列演算に強いプロセッサ。深層学習の学習・推論に広く使われる。",
       "category": "basics",
       "sortKey": "G",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -303,7 +303,7 @@
       "summary": "人が学習・運用のループに介在し品質や安全性を高める設計。",
       "category": "basics",
       "sortKey": "H",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -384,7 +384,7 @@
       "summary": "局所的に単純モデルで予測を説明する手法。",
       "category": "basics",
       "sortKey": "L",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -480,7 +480,7 @@
       "summary": "訓練データに適合しすぎて未知のデータへの精度が落ちる現象。ドロップアウトや正則化で対策する。",
       "category": "basics",
       "sortKey": "O",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -576,7 +576,7 @@
       "summary": "各特徴の予測への寄与を公平に配分する説明手法。",
       "category": "basics",
       "sortKey": "S",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -640,7 +640,7 @@
       "summary": "重心への距離でk個のクラスタに分割する手法。",
       "category": "basics",
       "sortKey": "け",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -1969,7 +1969,7 @@
       "summary": "人間の知能をコンピュータで模倣・実現しようとする技術・研究分野の総称。",
       "category": "basics",
       "sortKey": "じ",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei"
@@ -2002,7 +2002,7 @@
       "summary": "実際の陽性のうち正しく検出できた割合。",
       "category": "basics",
       "sortKey": "さ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2082,7 +2082,7 @@
       "summary": "損失を減らす方向へパラメータを反復更新する最適化の基本手法。",
       "category": "basics",
       "sortKey": "こ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2467,7 +2467,7 @@
       "summary": "特定のタスクに特化したAI。現実に稼働する大半のAIはこれに該当する。",
       "category": "basics",
       "sortKey": "よ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2515,7 +2515,7 @@
       "summary": "報酬を最大化するように行動を学習するAIの手法。ゲームAIやロボット制御に使われる。ChatGPTの改善にも活用された。",
       "category": "basics",
       "sortKey": "強",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2660,7 +2660,7 @@
       "summary": "予測と正解のズレを数値化する関数。学習の最適化目標となる。",
       "category": "basics",
       "sortKey": "そ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2676,7 +2676,7 @@
       "summary": "正解ラベル付きのデータを使って学習する機械学習の手法。画像分類やスパムフィルタリングなどに広く使われる。",
       "category": "basics",
       "sortKey": "教",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2692,7 +2692,7 @@
       "summary": "正解ラベルなしのデータからパターンを自動的に見つけ出す機械学習の手法。クラスタリングや次元削減に使われる。",
       "category": "basics",
       "sortKey": "教",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2724,7 +2724,7 @@
       "summary": "検証性能が悪化し始めたら学習を打ち切る正則化手法。",
       "category": "basics",
       "sortKey": "そ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2852,7 +2852,7 @@
       "summary": "データから自動的にパターンを学習し予測・判断を行うAI技術の総称。ディープラーニングは機械学習の一分野。",
       "category": "basics",
       "sortKey": "機",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -2884,7 +2884,7 @@
       "summary": "パラメータの大きさを罰し過学習を抑える技法。",
       "category": "basics",
       "sortKey": "せ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -3284,7 +3284,7 @@
       "summary": "損失の勾配を層ごとに逆方向へ伝播し重みを更新する学習法。",
       "category": "basics",
       "sortKey": "ご",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei"
@@ -3300,7 +3300,7 @@
       "summary": "AIの判断根拠を人が理解できる形で示す研究・要件。",
       "category": "basics",
       "sortKey": "せ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -3381,7 +3381,7 @@
       "summary": "陽性予測のうち実際に陽性だった割合。",
       "category": "basics",
       "sortKey": "て",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -4423,7 +4423,7 @@
       "summary": "テキストや画像をベクトル（数値の配列）として保存・検索するデータベース。RAGシステムの構築に欠かせない。",
       "category": "data-ops",
       "sortKey": "ベ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -5159,7 +5159,7 @@
       "summary": "目標達成のためツールや推論を自律的に繰り返すAI。",
       "category": "genai-use",
       "sortKey": "A",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -5176,7 +5176,7 @@
       "summary": "AIを適切に理解し活用するための基礎素養。",
       "category": "genai-use",
       "sortKey": "A",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -5193,7 +5193,7 @@
       "summary": "AIの誤用・暴走・有害出力を防ぐ研究・実践。",
       "category": "genai-use",
       "sortKey": "A",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -5326,7 +5326,7 @@
       "summary": "段階的推論を促すプロンプト技法。CoTと略される。",
       "category": "genai-use",
       "sortKey": "C",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -5410,7 +5410,7 @@
       "summary": "外部の知識データベースを検索しながら回答を生成する手法。幻覚（ハルシネーション）を減らし、最新情報に基づいた回答が可能になる。",
       "category": "genai-use",
       "sortKey": "R",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -5676,7 +5676,7 @@
       "summary": "モデルの振る舞いを規定する上位指示文。",
       "category": "genai-use",
       "sortKey": "し",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -5710,7 +5710,7 @@
       "summary": "安全制限を回避して有害出力を引き出す試み。",
       "category": "genai-use",
       "sortKey": "じ",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -5793,7 +5793,7 @@
       "summary": "意味的類似性に基づく検索。",
       "category": "genai-use",
       "sortKey": "せ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -5827,7 +5827,7 @@
       "summary": "例示なしでタスクを指示するプロンプト手法。",
       "category": "genai-use",
       "sortKey": "ぜ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -5878,7 +5878,7 @@
       "summary": "長文を検索・生成向けに適切な塊へ分割すること。",
       "category": "genai-use",
       "sortKey": "ち",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -5929,7 +5929,7 @@
       "summary": "テキスト指示から画像を生成する生成AIタスク。",
       "category": "genai-use",
       "sortKey": "て",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -5963,7 +5963,7 @@
       "summary": "AIで作られた偽の顔・音声・映像。",
       "category": "genai-use",
       "sortKey": "で",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -6012,7 +6012,7 @@
       "summary": "LLMが処理するテキストの最小単位。",
       "category": "genai-use",
       "sortKey": "と",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -6113,7 +6113,7 @@
       "summary": "AIが事実と異なる内容を自信を持って出力してしまう現象。生成AIの主要な課題のひとつ。",
       "category": "genai-use",
       "sortKey": "ハ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -6129,7 +6129,7 @@
       "summary": "事実誤り出力を減らす技法の総称。",
       "category": "genai-use",
       "sortKey": "は",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -6179,7 +6179,7 @@
       "summary": "AIに与える指示文・質問文のこと。プロンプトの書き方次第で出力の質が大きく変わる。",
       "category": "genai-use",
       "sortKey": "プ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -6195,7 +6195,7 @@
       "summary": "悪意ある指示でAIの制約を迂回させる攻撃。",
       "category": "genai-use",
       "sortKey": "ぷ",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -6212,7 +6212,7 @@
       "summary": "AIから望む回答を引き出すための指示文を設計・最適化する技術。ビジネス活用において重要なスキル。",
       "category": "genai-use",
       "sortKey": "プ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -6296,7 +6296,7 @@
       "summary": "埋め込みの近傍探索で関連文書を取得する。",
       "category": "genai-use",
       "sortKey": "べ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -6731,7 +6731,7 @@
       "summary": "少数の例をプロンプトに含めて性能を高める手法。",
       "category": "genai-use",
       "sortKey": "し",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -6899,7 +6899,7 @@
       "summary": "出力のランダム性を制御する生成パラメータ。",
       "category": "genai-use",
       "sortKey": "お",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -6983,7 +6983,7 @@
       "summary": "複数推論経路の多数決で回答精度を上げる手法。",
       "category": "genai-use",
       "sortKey": "じ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -7281,7 +7281,7 @@
       "summary": "AIの開発・運用を組織的に統制・監督する枠組み。",
       "category": "governance",
       "sortKey": "A",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -7483,7 +7483,7 @@
       "summary": "AIの開発・利用における公平性・安全性・責任の枠組み。",
       "category": "governance",
       "sortKey": "A",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -7585,7 +7585,7 @@
       "summary": "AIが生成したコンテンツの権利帰属に関する問題。",
       "category": "governance",
       "sortKey": "A",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -7687,7 +7687,7 @@
       "summary": "EUのAI規制法。リスクベースで義務を段階化。",
       "category": "governance",
       "sortKey": "E",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -8020,7 +8020,7 @@
       "summary": "アルゴリズムが特定集団に不利な結果を生む偏り。",
       "category": "governance",
       "sortKey": "あ",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -8548,6 +8548,23 @@
       "category": "governance",
       "sortKey": "で",
       "status": "planned",
+      "tier": 2,
+      "exams": [
+        "g-kentei",
+        "genai-passport"
+      ],
+      "priority": "",
+      "notes": ""
+    },
+    {
+      "id": "data-sheet",
+      "name": "データシート",
+      "yomi": "Data Sheet",
+      "reading": "で",
+      "summary": "データセットの収集方法・用途・制約・偏りなどを説明する透明性資料。",
+      "category": "governance",
+      "sortKey": "で",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -9129,7 +9146,7 @@
       "summary": "個人を識別できる情報。保護法制の対象。",
       "category": "governance",
       "sortKey": "こ",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -9146,7 +9163,7 @@
       "summary": "日本の個人情報保護に関する基本法律。",
       "category": "governance",
       "sortKey": "こ",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -9248,7 +9265,7 @@
       "summary": "AIが属性に関わらず公正な結果を出すこと。",
       "category": "governance",
       "sortKey": "こ",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -9665,7 +9682,7 @@
       "summary": "生成AIへの入力で社外秘が流出するリスク。",
       "category": "governance",
       "sortKey": "き",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -9866,7 +9883,7 @@
       "summary": "創作物に対する排他的権利。AI生成物の扱いが議論中。",
       "category": "governance",
       "sortKey": "ち",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -10098,7 +10115,7 @@
       "summary": "AIシステムが規制要件を満たすか審査すること。",
       "category": "governance",
       "sortKey": "て",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -10180,7 +10197,7 @@
       "summary": "EU AI Act等で厳しい要件が課されるAI用途区分。",
       "category": "governance",
       "sortKey": "こ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -10582,7 +10599,7 @@
       "summary": "追加条件で拡散モデルの生成を制御する仕組み。",
       "category": "models-tech",
       "sortKey": "C",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -10630,7 +10647,7 @@
       "summary": "OpenAIのテキストから画像を生成する拡散モデル系列。",
       "category": "models-tech",
       "sortKey": "D",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -10647,7 +10664,7 @@
       "summary": "確率的拡散モデルの代表的手法。",
       "category": "models-tech",
       "sortKey": "D",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -10807,7 +10824,7 @@
       "summary": "単語や文章を数値ベクトルに変換する技術。意味が近い言葉はベクトル空間上でも近い位置に配置される。",
       "category": "models-tech",
       "sortKey": "E",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -10951,7 +10968,7 @@
       "summary": "生成器と識別器が競い合いながら学習するモデル。リアルな画像・音声・動画の生成に使われる。",
       "category": "models-tech",
       "sortKey": "G",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -11015,7 +11032,7 @@
       "summary": "OpenAIが開発した大規模言語モデルシリーズ。ChatGPTの基盤であり、文章生成・翻訳・要約など幅広いタスクに対応する。",
       "category": "models-tech",
       "sortKey": "G",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -11081,7 +11098,7 @@
       "summary": "デコーダのみTransformerによる自己回帰言語モデル。",
       "category": "models-tech",
       "sortKey": "G",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -11274,7 +11291,7 @@
       "summary": "Googleのテキスト画像生成拡散モデルファミリー。",
       "category": "models-tech",
       "sortKey": "I",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -11386,7 +11403,7 @@
       "summary": "大量のテキストデータで学習した巨大な言語モデル。GPT・Claude・Geminiなどが代表例。",
       "category": "models-tech",
       "sortKey": "L",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -11482,7 +11499,7 @@
       "summary": "低ランク行列で効率的にファインチューニングする技法。",
       "category": "models-tech",
       "sortKey": "L",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -12319,7 +12336,7 @@
       "summary": "潜在拡散によるオープンなテキスト画像生成モデル。",
       "category": "models-tech",
       "sortKey": "S",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -12481,7 +12498,7 @@
       "summary": "現代の大規模言語モデルの基盤となるアーキテクチャ。アテンション機構により長距離の依存関係を効率的に学習できる。",
       "category": "models-tech",
       "sortKey": "T",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -12882,7 +12899,7 @@
       "summary": "モデルが入力の中で「どこに注目すべきか」を学習する仕組み。Transformerの中核技術であり、翻訳や要約の精度向上に大きく貢献した。",
       "category": "models-tech",
       "sortKey": "ア",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -12914,7 +12931,7 @@
       "summary": "AIの目的を人間の意図・価値に整合させること。",
       "category": "models-tech",
       "sortKey": "あ",
-      "status": "planned",
+      "status": "published",
       "tier": 1,
       "exams": [
         "g-kentei",
@@ -13365,7 +13382,7 @@
       "summary": "モデルが一度に処理できるトークン数の上限。",
       "category": "models-tech",
       "sortKey": "こ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -13912,7 +13929,7 @@
       "summary": "多層のニューラルネットワークを使った機械学習の手法。画像・音声・自然言語など幅広い分野で高い精度を発揮する。",
       "category": "models-tech",
       "sortKey": "デ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -14041,7 +14058,7 @@
       "summary": "学習中にランダムにニューロンを無効化することで過学習を防ぐ手法。汎化性能の向上に効果がある。",
       "category": "models-tech",
       "sortKey": "ド",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -14057,7 +14074,7 @@
       "summary": "人間の脳の神経回路を模した計算モデル。層を重ねることで複雑なパターンを学習できる。",
       "category": "models-tech",
       "sortKey": "ニ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -14089,7 +14106,7 @@
       "summary": "段階的にノイズを除去してサンプルを生成する手法。",
       "category": "models-tech",
       "sortKey": "の",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -14313,7 +14330,7 @@
       "summary": "事前学習済みモデルを特定のタスクや用途向けに追加学習させること。少ないデータで高い精度を達成できる。",
       "category": "models-tech",
       "sortKey": "フ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -14458,7 +14475,7 @@
       "summary": "テキスト・画像・音声など複数の形式のデータを同時に処理できるAI。GPT-4oやGeminiなどが対応している。",
       "category": "models-tech",
       "sortKey": "マ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"
@@ -14490,7 +14507,7 @@
       "summary": "モデルの用途・限界・評価を文書化した説明資料。",
       "category": "models-tech",
       "sortKey": "も",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -15115,7 +15132,7 @@
       "summary": "テキスト等をベクトル化する専用モデル。",
       "category": "models-tech",
       "sortKey": "う",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei",
@@ -15136,6 +15153,23 @@
       "tier": 2,
       "exams": [
         "g-kentei"
+      ],
+      "priority": "",
+      "notes": ""
+    },
+    {
+      "id": "rlhf",
+      "name": "RLHF",
+      "yomi": "Reinforcement Learning from Human Feedback",
+      "reading": "あ",
+      "summary": "人間のフィードバックを用いた強化学習でモデル出力を望ましい方向へ調整する手法。",
+      "category": "models-tech",
+      "sortKey": "R",
+      "status": "published",
+      "tier": 2,
+      "exams": [
+        "g-kentei",
+        "genai-passport"
       ],
       "priority": "",
       "notes": ""
@@ -15854,7 +15888,7 @@
       "summary": "低次元潜在空間で拡散を行い高速化する手法。Stable Diffusionなど。",
       "category": "models-tech",
       "sortKey": "せ",
-      "status": "planned",
+      "status": "published",
       "tier": 2,
       "exams": [
         "g-kentei"

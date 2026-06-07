@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="説明可能なAI（XAI）とは？判断根拠を人が理解できる形で示す研究・要件。LIME・SHAPとの関係をG検定・生成AIパスポート向けに解説。">
+  <title>説明可能なAI（XAI）とは？判断根拠の可視化・信頼性 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/explainable-ai/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="説明可能なAI（XAI）とは？判断根拠の可視化・信頼性">
+  <meta property="og:description" content="AIの判断根拠を人が理解できる形で示す研究・要件。医療・金融など高リスク領域で重要。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/explainable-ai/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"説明可能なAI","alternateName":["Explainable AI","XAI","説明可能性"],"description":"AIの判断根拠を人が理解できる形で示す研究・要件。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">説明可能なAI</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>説明可能なAI（XAI）とは？判断根拠の可視化・信頼性</h1>
+    <p class="tool-hero-sub">読み：せつめいかのうなえーあい ／ 英：Explainable AI（XAI）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>説明可能なAI</strong>（Explainable AI／XAI）は、<strong>AIがなぜその判断をしたのかを人が理解できる形で示す</strong>研究・要件の総称です。本記事は個別アルゴリズムの数式ではなく、<strong>なぜ必要か・何と混同しないか</strong>——試験で問われる目的と位置づけ——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">XAIとは</a></li>
+        <li><a href="#why">なぜ必要か</a></li>
+        <li><a href="#methods">代表的な手法</a></li>
+        <li><a href="#governance">ガバナンスとの関係</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、XAIが必要とされる理由として<strong>判断根拠の理解・信頼性・説明責任の向上</strong>が正解です（<a href="../../exams/g-kentei/practice/q/g-397/">G-397</a>）。「精度を必ず100%にする」「訓練データを削除する」などは×。
+      </p>
+      <p>
+        説明可能性と予測性能は<strong>常に両立するわけではない</strong>（<a href="../../exams/g-kentei/drill/q/tf-198/">TF-198</a>）。複雑なモデルほど説明が難しくなるトレードオフを押さえます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-397/">G-397</a>、<a href="../../exams/g-kentei/practice/q/g-398/">G-398（LIME・SHAP）</a>、<a href="../../exams/g-kentei/drill/q/tf-198/">TF-198</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>XAIとは</h2>
+      <p>
+        XAIは「ブラックボックス」と呼ばれる複雑なモデル（深層学習など）の<strong>入力と出力の関係を、人間が検証・説明できるようにする</strong>取り組みです。単なる可視化ではなく、<strong>意思決定の根拠を第三者に伝えられること</strong>が実務では重要になります。
+      </p>
+      <p>
+        医療診断、融資審査、採用支援など、誤りの影響が大きい領域では<a href="../high-risk-ai/">高リスクAI</a>の文脈とセットで説明可能性が論じられます。
+      </p>
+    </section>
+    <section id="why">
+      <h2>なぜ必要か</h2>
+      <ul class="tool-example-list">
+        <li><strong>信頼性</strong> — 利用者・関係者が納得して使える</li>
+        <li><strong>説明責任</strong> — 監査・苦情対応・規制対応</li>
+        <li><strong>リスク管理</strong> — 誤判定の原因究明、改善サイクル</li>
+        <li><strong>公平性の確認</strong> — 属性別の偏り検知（<a href="../fairness/">公平性</a>）</li>
+      </ul>
+      <p>生成AIでも、根拠のない自信ある回答（<a href="../hallucination/">ハルシネーション</a>）とは別軸で、「なぜそう判断したか」を問う場面があります。</p>
+    </section>
+    <section id="methods">
+      <h2>代表的な手法</h2>
+      <p>試験で名前が出やすい説明手法です（詳細は各記事へ）。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>手法</th><th>覚え方</th></tr></thead>
+        <tbody>
+          <tr><td><a href="../lime/">LIME</a></td><td>特定予測の<strong>周辺</strong>を単純モデルで近似して説明</td></tr>
+          <tr><td><a href="../shap/">SHAP</a></td><td>特徴量の寄与を<strong>シャープレイ値</strong>で配分</td></tr>
+          <tr><td>特徴重要度（決定木等）</td><td>もともと解釈しやすいモデルを選ぶ</td></tr>
+        </tbody>
+      </table>
+      <p>G-398では「（あ）局所的に単純なモデル＝LIME」「（い）ゲーム理論的寄与＝SHAP」の組み合わせが正解です。</p>
+    </section>
+    <section id="governance">
+      <h2>ガバナンスとの関係</h2>
+      <p>
+        XAIは<a href="../ai-governance/">AIガバナンス</a>や<a href="../model-card/">モデルカード</a>の記載項目と接続します。「説明できる」こと自体が目的ではなく、<strong>適切な説明と人の最終判断</strong>（<a href="../human-in-the-loop/">Human-in-the-Loop</a>）がセットで語られることが多いです。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>XAI＝精度100%</td><td>根拠の理解・信頼性向上（<a href="../../exams/g-kentei/practice/q/g-397/">G-397</a>）</td></tr>
+          <tr><td>説明可能性と性能は常に両立</td><td>トレードオフがありうる（<a href="../../exams/g-kentei/drill/q/tf-198/">TF-198</a>）</td></tr>
+          <tr><td>XAI＝LIMEだけ</td><td>研究・要件の総称。手法は複数</td></tr>
+          <tr><td>説明できれば必ず正しい</td><td>整合した誤推論もありうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>XAIと説明可能性は同じ？</summary><p class="tool-faq-a">日常ではほぼ同義で使われます。試験では「判断根拠を理解しやすくする」という目的を押さえれば十分です。</p></details>
+        <details><summary>LLMにもXAIは関係ある？</summary><p class="tool-faq-a">引用付き回答や思考過程の表示など、説明・根拠提示の要求は生成AIでも増えています。古典的MLのLIME/SHAPとは手法が異なります。</p></details>
+        <details><summary>シンプルなモデルならXAI不要？</summary><p class="tool-faq-a">決定木などはもともと解釈しやすいですが、高リスク用途では説明の質・記録・監査要件は別途必要なことがあります。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-397/">G-397 · XAIが必要な理由</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-398/">G-398 · LIMEとSHAP</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-198/">TF-198 · 性能との両立</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-441/">TF-441 · 説明可能性</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../lime/">LIME</a></li>
+          <li><a href="../shap/">SHAP</a></li>
+          <li><a href="../fairness/">公平性</a></li>
+          <li><a href="../high-risk-ai/">高リスクAI</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
