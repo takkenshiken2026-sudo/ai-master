@@ -65,7 +65,9 @@
         <li><a href="#layers">多層の対策</a></li>
         <li><a href="#vs-others">倫理・セキュリティとの違い</a></li>
         <li><a href="#org">組織・利用者の役割</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -212,6 +214,19 @@
       </p>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>レッドチーミング＝画面を赤くする</td><td>攻撃者視点で弱点を検証（<a href="../../exams/genai-passport/drill/q/tf-0422/">TF-0422</a>）</td></tr>
+          <tr><td>RLHFだけで安全性完璧</td><td>多層対策が必要（<a href="../../exams/genai-passport/practice/q/hq-0240/">HQ-0240</a>）</td></tr>
+          <tr><td>AI安全性＝出力が常に正確</td><td>害の防止 vs 正確性（ハルシネーション対策は別軸）</td></tr>
+          <tr><td>機密を詳しく入れるほど安全</td><td>×。漏えいリスクが増える（<a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -234,7 +249,16 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0421/">TF-0421 · レッドチーミング</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0422/">TF-0422 · デザイン用語ではない</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0240/">HQ-0240 · アライメント</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0466/">TF-0466 · 機密入力は×</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

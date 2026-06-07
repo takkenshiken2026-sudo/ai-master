@@ -89,6 +89,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("Y", "RAG基盤", ["chunking", "vector-database", "embedding-model"]),
     ("Z", "倫理・権利", ["copyright", "deepfake", "ai-ethics-overview"]),
     ("AA", "プライバシー・機密", ["appi", "personal-information", "confidential-data-leak"]),
+    ("AB", "ガバナンス・安全", ["ai-governance", "ai-literacy", "ai-safety"]),
 ]
 
 REVISION_STATUS_LABEL = {
