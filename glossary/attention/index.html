@@ -63,8 +63,9 @@
         <li><a href="#what-is">Attentionとは</a></li>
         <li><a href="#qkv">Query・Key・Valueのたとえ</a></li>
         <li><a href="#variants">Self-Attentionと派生</a></li>
-        <li><a href="#misconceptions">よくある誤解</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -115,15 +116,15 @@
       </table>
       <p><a href="../llm/">LLM</a>や<a href="../gpt/">GPT</a>も、内部ではSelf-Attentionを積み重ねて文脈を捉えます。学習の更新は<a href="../backpropagation/">誤差逆伝播法</a>・<a href="../gradient-descent/">勾配降下法</a>の話で、Attentionとは別レイヤーです。</p>
     </section>
-    <section id="misconceptions">
-      <h2>よくある誤解</h2>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
       <table class="tool-spec-table">
-        <thead><tr><th>誤解</th><th>実際</th></tr></thead>
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
         <tbody>
-          <tr><td>APIの「attention」料金項目</td><td>課金用語ではない（TF-0110）</td></tr>
-          <tr><td>人間が手動で注目箇所を指定</td><td>学習により<strong>重みが自動計算</strong>される</td></tr>
-          <tr><td>Transformer＝Attentionだけ</td><td>FFN・位置エンコーディング等も含む（<a href="../transformer/">Transformer</a>）</td></tr>
-          <tr><td>RNNの代替ではない</td><td>系列モデルの<strong>別アプローチ</strong>。長距離依存を扱いやすい</td></tr>
+          <tr><td>Attention＝API課金方式</td><td>注意機構（TF-0110は×）</td></tr>
+          <tr><td>パディング値を必ず1にする</td><td>Attentionの説明ではない（G-295）</td></tr>
+          <tr><td>Transformer＝Attentionだけ</td><td>アーキテクチャの構成要素の一つ</td></tr>
+          <tr><td>手動で注目箇所を指定</td><td>重みは学習・計算で決まる</td></tr>
         </tbody>
       </table>
     </section>
@@ -135,13 +136,21 @@
         <details><summary>トークン数とAttentionの計算量は？</summary><p class="tool-faq-a">系列長が長いほど計算・メモリ負荷が増えやすいのが実務上の論点です。試験では深掘り少なめです。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-295/">G-295 · Attentionの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0110/">TF-0110 · 課金方式は×</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformer</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-019/">G-019 · 系列モデル</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../transformer/">Transformer</a></li>
           <li><a href="../gpt/">GPT</a></li>
-          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
           <li><a href="../llm/">LLM</a></li>
           <li><a href="../token/">トークン</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>

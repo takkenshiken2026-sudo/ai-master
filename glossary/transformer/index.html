@@ -88,7 +88,9 @@
         <li><a href="#blocks">構成要素（試験向け）</a></li>
         <li><a href="#vs-rnn">RNNとの対比</a></li>
         <li><a href="#llm">LLM・GPTとの関係</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -221,6 +223,19 @@
       <p>学習の仕組みは<a href="../backpropagation/">誤差逆伝播法</a>、振る舞い調整は<a href="../alignment/">アライメント</a>、効率適応は<a href="../lora/">LoRA</a>など、別の記事で補完します。</p>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Transformer＝ChatGPT</td><td>アーキテクチャ vs サービス</td></tr>
+          <tr><td>位置エンコーディング＝匿名加工</td><td>語順・位置情報の付与（TF-0112）</td></tr>
+          <tr><td>GPT＝GANの生成器・識別器</td><td>言語モデル系列（TF-0140）</td></tr>
+          <tr><td>Transformer＝Attentionだけ</td><td>FFN・位置符号化等も含む</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -243,17 +258,22 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformerの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112 · 位置エンコーディング</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0140/">TF-0140 · GPTとの区別</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0284/">HQ-0284 · 概念の識別</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
-          <li><a href="../llm/">LLM</a></li>
-          <li><a href="../token/">トークン</a></li>
-          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
-          <li><a href="../alignment/">アライメント</a></li>
-          <li><a href="../text-to-image/">テキスト画像生成</a></li>
           <li><a href="../attention/">Attention</a></li>
           <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../llm/">LLM</a></li>
           <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
