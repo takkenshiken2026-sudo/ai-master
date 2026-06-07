@@ -50,7 +50,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -64,7 +64,9 @@
         <li><a href="#sections">典型的な記載内容</a></li>
         <li><a href="#who">誰のための資料か</a></li>
         <li><a href="#pairing">データシートとのセット</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -137,15 +139,36 @@
       </p>
       <p><a href="../ai-governance/">AIガバナンス</a>では、モデルカードを<strong>承認・監査の入力資料</strong>として位置づける組織も増えています。</p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>モデルカード＝郵送の封筒</td><td>用途・性能・制約の説明資料（<a href="../../exams/genai-passport/drill/q/tf-0411/">TF-0411</a>、<a href="../../exams/genai-passport/drill/q/tf-0412/">TF-0412</a>は×）</td></tr>
+          <tr><td>モデルカード＝データシート</td><td>モデルの説明 vs データセットの説明（<a href="../../exams/genai-passport/drill/q/tf-0413/">TF-0413</a>）</td></tr>
+          <tr><td>モデルカード＝アライメント</td><td>説明資料 vs 価値観への調整（<a href="../alignment/">アライメント</a>）</td></tr>
+          <tr><td>カードがあれば問題自動解決</td><td>透明性のツールであり魔法ではない（<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
         <details><summary>APIのドキュメントと同じ？</summary><p class="tool-faq-a">API仕様は「使い方」中心。モデルカードは性能・限界・倫理面の説明が中心です。製品によっては統合されています。</p></details>
-        <details><summary>ChatGPTにもモデルカードはある？</summary><p class="tool-faq-a">公開形態は製品によります。試験では概念定義（TF-0411）を優先してください。</p></details>
+        <details><summary>ChatGPTにもモデルカードはある？</summary><p class="tool-faq-a">公開形態は製品によります。試験では概念定義（<a href="../../exams/genai-passport/drill/q/tf-0411/">TF-0411</a>）を優先してください。</p></details>
         <details><summary>モデルカードがあれば出力は常に安全？</summary><p class="tool-faq-a">いいえ。限界の説明であり、利用時の確認・<a href="../hallucination-mitigation/">ハルシネーション対策</a>は別途必要です。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0411/">TF-0411 · モデルカードの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0412/">TF-0412 · 郵送封筒は×</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0413/">TF-0413 · データシートとの区別</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414 · 自動解決は×</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
