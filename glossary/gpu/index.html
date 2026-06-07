@@ -17,7 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
-    {"@type":"DefinedTerm","name":"GPU","alternateName":["Graphics Processing Unit"],"description":"多数の単純演算を並列処理でき、深層学習の学習・推論に広く使われるプロセッサ。"}
+    {"@type":"DefinedTerm","name":"GPU","alternateName":["Graphics Processing Unit"],"description":"多数の単純演算を並列処理でき、深層学習の学習・推論に広く使われるプロセッサ。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"GPUがないと深層学習はできない？","acceptedAnswer":{"@type":"Answer","text":"小規模ならCPUでも可能だが、実用的な深層学習ではGPUまたは同等の計算資源が事実上必要。"}}]}
   ]}
   </script>
 </head>
@@ -42,11 +43,11 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>GPU</strong>（Graphics Processing Unit）は、もともと画像描画向けの<strong>並列演算に強いプロセッサ</strong>です。現代の<a href="../deep-learning/">ディープラーニング</a>では大量の行列演算を高速化するために広く使われます。本記事はチップの世代比較ではなく、試験で問われる<strong>CPU/GPU/TPUの役割・DLとの関係</strong>に焦点を当てます。
+      <strong>GPU</strong>（Graphics Processing Unit）は、もともと画像描画向けの<strong>並列演算に強いプロセッサ</strong>です。現代の<a href="../deep-learning/">ディープラーニング</a>では大量の行列演算を高速化するために広く使われます。本記事はチップの世代比較ではなく、試験で問われる<strong>CPU/GPU/TPUの役割・なぜDLに向くか・すり替え問題</strong>に焦点を当てます。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
@@ -55,22 +56,36 @@
         <li><a href="#why-gpu">なぜDLにGPUか</a></li>
         <li><a href="#comparison">CPU・GPU・TPU</a></li>
         <li><a href="#train-infer">学習と推論</a></li>
+        <li><a href="#history">DLブームとの関係</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
-      <p>○：GPUは<strong>多数の単純演算を並列処理</strong>でき、DLの行列演算に利用される（<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>）。</p>
-      <p>×：DLは計算量が少なく<strong>GPUと無関係</strong>（<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>）。第三次AIブームではデータ・GPU・アルゴリズムが重要（<a href="../../exams/g-kentei/drill/q/tf-323/">TF-323</a>）。</p>
-      <p>TPUは機械学習向けに最適化されたプロセッサ（<a href="../../exams/g-kentei/drill/q/tf-056/">TF-056</a>）。</p>
+      <p>
+        ○：GPUは<strong>多数の単純演算を並列処理</strong>でき、DLの行列演算に利用される（<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>、<a href="../../exams/g-kentei/practice/q/g-010/">G-010</a>）。
+      </p>
+      <p>
+        ○：TPUは機械学習向けに最適化されたプロセッサ（<a href="../../exams/g-kentei/drill/q/tf-056/">TF-056</a>）。CPUは汎用、GPUは大規模並列が強み。
+      </p>
+      <p>
+        ×：DLは計算量が少なく<strong>GPUと無関係</strong>（<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>）。GPUを使えば<strong>必ず高精度</strong>になる（G-010の誤答C）。
+      </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>、<a href="../../exams/g-kentei/drill/q/tf-056/">TF-056</a>、<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>、<a href="../../exams/g-kentei/drill/q/tf-334/">TF-334</a>、<a href="../../exams/g-kentei/drill/domain/domain-06/">ディープラーニングの概要</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>、<a href="../../exams/g-kentei/drill/q/tf-056/">TF-056</a>、<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>、<a href="../../exams/g-kentei/practice/q/g-010/">G-010</a></p>
       </div>
     </section>
     <section id="why-gpu">
       <h2>なぜDLにGPUか</h2>
-      <p>ニューラルネットの学習は、同じ形の演算を大量のデータ・パラメータに対して繰り返します。GPUは<strong>数千のコアで並列</strong>に処理でき、この「同じ計算の繰り返し」に向いています。CPUは複雑な分岐処理に強い一方、大規模な行列積ではGPUが有利なことが多いです。</p>
+      <p>
+        ニューラルネットの学習は、同じ形の演算を大量のデータ・パラメータに対して繰り返します。GPUは<strong>数千のコアで並列</strong>に処理でき、この「同じ計算の繰り返し」に向いています。
+      </p>
+      <p>
+        CPUは複雑な分岐処理に強い一方、大規模な行列積ではGPUが有利なことが多いです。試験では「逐次処理専用」などの説明が誤答パターンになります（G-010のA）。
+      </p>
     </section>
     <section id="comparison">
       <h2>CPU・GPU・TPU</h2>
@@ -79,22 +94,55 @@
         <tbody>
           <tr><td><strong>CPU</strong></td><td>汎用・分岐処理</td><td>前処理、小規模モデル、推論の一部</td></tr>
           <tr><td><strong>GPU</strong></td><td>大規模並列</td><td>DLの学習・推論の主流</td></tr>
-          <tr><td><strong>TPU</strong></td><td>ML向けASIC</td><td>Google等の大規模学習基盤</td></tr>
+          <tr><td><strong>TPU</strong></td><td>ML向けASIC</td><td>Google等の大規模学習基盤（TF-056）</td></tr>
         </tbody>
       </table>
     </section>
     <section id="train-infer">
       <h2>学習と推論</h2>
-      <p>学習は特に計算量が大きくGPUがほぼ必須級です。推論はモデル規模次第でCPUでも動きますが、大規模LLMはGPUや専用チップが使われます。電力・コストの観点も試験で触れられることがあります（TF-287）。</p>
+      <p>
+        学習は特に計算量が大きくGPUがほぼ必須級です。推論はモデル規模次第でCPUでも動きますが、大規模LLMはGPUや専用チップが使われます。
+      </p>
+      <p>
+        精度はGPUの有無だけで決まりません。データの質、モデル構造、<a href="../regularization/">正則化</a>、ハイパーパラメータなども影響します（G-010）。
+      </p>
+    </section>
+    <section id="history">
+      <h2>DLブームとの関係</h2>
+      <p>
+        第三次AIブームでは、データ・アルゴリズムに加え<strong>計算資源（GPU）</strong>が重要と語られます（TF-323、TF-330）。AlexNetの成功はGPU活用の象徴的出来事の一つとして試験に登場します。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GPU＝解釈性を自動で高める</td><td>計算高速化が主目的（G-010のD）</td></tr>
+          <tr><td>DLはGPU不要</td><td>実用的なDLではGPUが標準（TF-335は×）</td></tr>
+          <tr><td>GPU＝TPU</td><td>別チップ。TPUはML特化ASIC</td></tr>
+          <tr><td>GPUがあればデータ量が不要</td><td>データとモデル設計も不可欠</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
         <details><summary>GPUがないとDLはできない？</summary><p class="tool-faq-a">小規模ならCPUでも可能ですが、実用的な深層学習ではGPUまたは同等の計算資源が事実上必要です。</p></details>
         <details><summary>AlexNetとGPUの関係は？</summary><p class="tool-faq-a">AlexNetはGPU活用がDL実用化の象徴的出来事の一つとして語られます（TF-330）。</p></details>
+        <details><summary>クラウドのGPUインスタンスとは？</summary><p class="tool-faq-a">AWSやGCPなどが提供するGPU付き仮想マシン。自前でGPUを買わずに学習できる選択肢です。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-055/">TF-055 · GPUと並列演算</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-056/">TF-056 · TPU</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-335/">TF-335 · GPU不要説（×）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-010/">G-010 · DLでGPUが使われる理由</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

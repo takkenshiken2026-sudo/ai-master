@@ -71,6 +71,83 @@ def term_has_page(term: dict) -> bool:
     return (ROOT / "glossary" / term["id"] / "index.html").is_file()
 
 
+REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
+    ("K", "過学習・学習型", ["regularization", "early-stopping", "unsupervised-learning"]),
+    ("L", "クラスタ・計算", ["k-means", "reinforcement-learning", "gpu"]),
+    ("M", "分類指標", ["precision", "recall", "f1-score"]),
+    ("N", "損失・正則化", ["dropout", "loss-function", "overfitting"]),
+]
+
+REVISION_STATUS_LABEL = {
+    "done": "改修済",
+    "partial": "試験4問待ち",
+    "todo": "要改修",
+}
+
+
+def detect_revision_status(term_id: str) -> str:
+    path = ROOT / "glossary" / term_id / "index.html"
+    if not path.is_file():
+        return "planned"
+    text = path.read_text(encoding="utf-8")
+    if 'id="related-exams"' in text and 'tool-related-wrap" id="related"' in text:
+        return "done"
+    if "読了目安：約7分" in text or len(text.splitlines()) >= 170:
+        return "partial"
+    return "todo"
+
+
+def render_revision_progress(terms: list[dict]) -> str:
+    by_id = {t["id"]: t for t in terms}
+    published = [t for t in terms if term_has_page(t)]
+    counts = {"done": 0, "partial": 0, "todo": 0}
+    for t in published:
+        status = detect_revision_status(t["id"])
+        if status in counts:
+            counts[status] += 1
+
+    rows: list[str] = []
+    for code, label, ids in REVISION_CLUSTERS:
+        for tid in ids:
+            term = by_id.get(tid)
+            if not term or not term_has_page(term):
+                continue
+            status = detect_revision_status(tid)
+            name = html.escape(term["name"])
+            slug = html.escape(tid)
+            status_cls = html.escape(f"glossary-revision__status--{status}")
+            status_label = html.escape(REVISION_STATUS_LABEL[status])
+            rows.append(
+                f"          <tr>\n"
+                f'            <td><span class="glossary-revision__cluster">{html.escape(code)}</span> {html.escape(label)}</td>\n'
+                f'            <td><a href="{slug}/">{name}</a></td>\n'
+                f'            <td><span class="glossary-revision__status {status_cls}">{status_label}</span></td>\n'
+                f"          </tr>"
+            )
+
+    in_focus = len(rows)
+
+    return f"""  <section class="glossary-revision" aria-labelledby="glossary-revision-heading">
+    <h2 id="glossary-revision-heading" class="glossary-revision__title">記事改修の進捗</h2>
+    <p class="glossary-revision__summary">公開 {len(published)} 本のうち、新フォーマット（読了約7分・試験問題4問）は <strong>{counts["done"]} 本</strong>完了。下表は優先クラスタ K〜N（{in_focus} 本）の状況です。</p>
+    <div class="glossary-revision__stats">
+      <span class="glossary-revision__stat glossary-revision__status--done">改修済 {counts["done"]}</span>
+      <span class="glossary-revision__stat glossary-revision__status--partial">試験4問待ち {counts["partial"]}</span>
+      <span class="glossary-revision__stat glossary-revision__status--todo">要改修 {counts["todo"]}</span>
+    </div>
+    <div class="glossary-revision__table-wrap">
+      <table class="glossary-revision__table">
+        <thead>
+          <tr><th>クラスタ</th><th>用語</th><th>状態</th></tr>
+        </thead>
+        <tbody>
+{chr(10).join(rows)}
+        </tbody>
+      </table>
+    </div>
+  </section>"""
+
+
 def render_term_row(term: dict, categories: dict) -> str:
     cat_label = categories.get(term["category"], term["category"])
     tag_cls = TAG_CLASS.get(term["category"], "tag-basics")
@@ -128,6 +205,7 @@ def build_index_html(data: dict) -> str:
     categories = data["categories"]
     terms = data["terms"]
     published_count = sum(1 for t in terms if term_has_page(t))
+    revision_progress = render_revision_progress(terms)
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -208,6 +286,8 @@ def build_index_html(data: dict) -> str:
       <input type="search" id="glossarySearchInput" placeholder="用語・読み・説明文を検索…" autocomplete="off" enterkeyhint="search">
     </div>
   </header>
+
+{revision_progress}
 
   <div class="hub-filter-row" id="glossaryCategoryFilters" aria-label="カテゴリで絞り込み"></div>
 

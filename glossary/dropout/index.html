@@ -47,7 +47,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -60,7 +60,9 @@
         <li><a href="#what-is">ドロップアウトとは</a></li>
         <li><a href="#train-infer">学習時と推論時</a></li>
         <li><a href="#vs-others">混同しやすい手法</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -102,9 +104,22 @@
       <table class="tool-spec-table">
         <thead><tr><th>手法</th><th>要点</th><th>ドロップアウトとの違い</th></tr></thead>
         <tbody>
-          <tr><td><strong>L1/L2正則化</strong></td><td>重みにペナルティ</td><td>ユニット無効化ではない（HQ-0133のすり替え先）</td></tr>
-          <tr><td><strong>早期終了</strong></td><td>検証悪化で学習停止</td><td>エポック制御（G-168の（い））</td></tr>
+          <tr><td><strong><a href="../regularization/">L1/L2正則化</a></strong></td><td>重みにペナルティ</td><td>ユニット無効化ではない（HQ-0133のすり替え先）</td></tr>
+          <tr><td><strong><a href="../early-stopping/">早期終了</a></strong></td><td>検証悪化で学習停止</td><td>エポック制御（G-168の（あ）ドロップアウト・（い）早期終了）</td></tr>
           <tr><td><strong>バッチ正規化</strong></td><td>中間表現の分布を整える</td><td>正則化とは目的が異なる（G-299）</td></tr>
+        </tbody>
+      </table>
+      <p>試験では<a href="../regularization/">正則化</a>の一族としてドロップアウトが登場しますが、メカニズムはL1/L2とは異なります。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>推論時も入力データを削除する</td><td>学習時のみユニット無効化（TF-395は×）</td></tr>
+          <tr><td>ドロップアウト＝重みにペナルティ</td><td>L1/L2の説明（HQ-0133は×）</td></tr>
+          <tr><td>ドロップアウト＝正規化層</td><td>分布整備と過学習抑制は別（G-299）</td></tr>
+          <tr><td>ドロップアウト＝早期終了</td><td>別手法（G-168で区別）</td></tr>
         </tbody>
       </table>
     </section>
@@ -116,14 +131,23 @@
         <details><summary>データ拡張とどちらが先？</summary><p class="tool-faq-a">併用可能です。画像ならデータ拡張、NN全般ではドロップアウトがセットで語られることが多いです。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-437/">TF-437 · ドロップアウトと正則化</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-395/">TF-395 · 推論時の誤解（×）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-168/">G-168 · ドロップアウトと早期終了</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0133/">HQ-0133 · 説明のすり替え（×）</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../overfitting/">過学習</a></li>
+          <li><a href="../regularization/">正則化</a></li>
           <li><a href="../neural-network/">ニューラルネットワーク</a></li>
-          <li><a href="../deep-learning/">ディープラーニング</a></li>
-          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../early-stopping/">早期終了</a></li>
           <li><a href="../machine-learning/">機械学習</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
