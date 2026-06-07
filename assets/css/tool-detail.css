@@ -30,6 +30,24 @@
   gap: 28px;
   align-items: start;
 }
+/* キャリア記事: ヒーロー写真を大きく（テキスト高さに合わせない） */
+.tool-hero--career.tool-hero--split {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: start;
+}
+.tool-hero--career .tool-hero-visual {
+  height: auto !important;
+  max-height: none !important;
+  width: 100%;
+}
+.tool-hero--career .tool-hero-visual img {
+  flex: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+}
 .tool-hero-body {
   min-width: 0;
   --hero-text-indent: 66px;
