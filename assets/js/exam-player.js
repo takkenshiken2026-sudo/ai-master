@@ -412,7 +412,8 @@
       review.hidden = false;
       review.innerHTML = `
         <h3 class="quiz-review__title">問題別の正解と解説</h3>
-        <div class="quiz-review__list">
+        <p class="quiz-review__hint">不正解・未回答は最初から開いています。スクロールして確認できます。</p>
+        <div class="quiz-review__list" tabindex="0" aria-label="問題別の解説一覧">
           ${this.questions
             .map((q, i) => {
               const selected = this.mockAnswers[i] ?? this.mockAnswers[String(i)];
@@ -432,8 +433,15 @@
                 ? `${selected}. ${escapeHtml(q.choices?.[selected] || selected)}`
                 : "—";
               const correctLabel = `${correct}. ${escapeHtml(q.choices?.[correct] || correct)}`;
+              const shouldOpen = !isCorrect;
+              const itemModifier =
+                verdictClass === "is-wrong"
+                  ? " quiz-review__item--wrong"
+                  : verdictClass === "is-unanswered"
+                    ? " quiz-review__item--unanswered"
+                    : "";
               return `
-                <details class="quiz-review__item">
+                <details class="quiz-review__item${itemModifier}"${shouldOpen ? " open" : ""}>
                   <summary class="quiz-review__summary">
                     <span class="quiz-review__no">問 ${i + 1}</span>
                     <span class="quiz-review__verdict ${verdictClass}">${verdict}</span>
@@ -451,6 +459,17 @@
         </div>
       `;
       complete.classList.add("quiz-complete--with-review");
+      requestAnimationFrame(() => {
+        const list = $(".quiz-review__list", review);
+        const firstFocus = review.querySelector(
+          ".quiz-review__item--wrong[open], .quiz-review__item--unanswered[open]"
+        );
+        if (firstFocus && list) {
+          const listTop = list.getBoundingClientRect().top;
+          const itemTop = firstFocus.getBoundingClientRect().top;
+          list.scrollTop += itemTop - listTop - 8;
+        }
+      });
     }
 
     shareLabel() {
