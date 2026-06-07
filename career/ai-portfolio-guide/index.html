@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI職向けポートフォリオの作り方を解説。GitHub・Kaggleの見せ方、職種別の題材選び、採用側が見るポイント、READMEの書き方を2026年時点で整理。">
+  <title>AI職向けポートフォリオの作り方 — GitHub・Kaggle・採用の見方 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/career/ai-portfolio-guide/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="AI職向けポートフォリオの作り方 — GitHub・Kaggle・採用の見方">
+  <meta property="og:description" content="職種別の題材選び、GitHubの見せ方、採用側が重視するポイントをわかりやすく解説。">
+  <meta property="og:url" content="https://ai-master.jp/career/ai-portfolio-guide/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/career/ai-portfolio-guide/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/career/ai-portfolio-guide/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/career/ai-portfolio-guide/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIキャリア", "item": "https://ai-master.jp/career/" },
+          { "@type": "ListItem", "position": 3, "name": "AI職向けポートフォリオの作り方", "item": "https://ai-master.jp/career/ai-portfolio-guide/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/career/ai-portfolio-guide/#article",
+        "headline": "AI職向けポートフォリオの作り方 — GitHub・Kaggle・採用の見方",
+        "description": "職種別の題材選び、GitHubの見せ方、採用側が重視するポイントをわかりやすく解説。",
+        "url": "https://ai-master.jp/career/ai-portfolio-guide/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/career/ai-portfolio-guide/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/career/ai-portfolio-guide/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/career/ai-portfolio-guide/#webpage",
+        "url": "https://ai-master.jp/career/ai-portfolio-guide/",
+        "name": "AI職向けポートフォリオの作り方 — GitHub・Kaggle・採用の見方",
+        "description": "職種別の題材選び、GitHubの見せ方、採用側が重視するポイントをわかりやすく解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/career/ai-portfolio-guide/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "AI職のポートフォリオは何個必要？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "質の高い1〜3個が目安です。未経験なら、職種に直結した完成度の高い1作品と、学習過程がわかる補助リポジトリがあれば十分なことが多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kaggleのメダルは必須？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "必須ではありません。参加コンペのノートブックと考察をREADME付きで整理できれば、データサイエンティスト志望のアピール材料になります。メダルはあれば加点要素です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "生成AIだけのポートフォリオで転職できる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "プロンプト設計や業務活用の実績ならプロンプトエンジニアやAI PMの入口になり得ます。AIエンジニア・MLエンジニア志望では、データ処理や評価指標を含む実装作品が別途求められることが多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "READMEに何を書けばよい？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "背景・課題、使用データ、手法、結果、限界、再現手順を書くのが基本です。採用側はコード量より、なぜその設計にしたかを説明できるかを見ます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body career-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../index.html" class="active">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIキャリア</a></li>
+      <li aria-current="page">AI職向けポートフォリオの作り方</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--career">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">キャリアガイド · 学ぶ・資格</p>
+      <h1>AI職向けポートフォリオの作り方</h1>
+      <p class="tool-hero-sub">GitHub · Kaggle · 採用側の見方</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">ポートフォリオ</span>
+        <span class="tool-category">未経験可</span>
+        <span class="tool-category">転職</span>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/career/ai-portfolio-guide/hero.jpg" alt="ノートパソコンでコードを書く開発者の作業風景" width="1920" height="1080" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/4365d14bab8c" target="_blank" rel="noopener noreferrer">Unsplash</a>（Lukas Blazek）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      AI職の転職・未経験採用では、資格や学習履歴に加えて<strong>再現可能な成果物</strong>が重視されます。本記事では、<strong>採用側がポートフォリオで見るポイント</strong>、<a href="#by-role">職種別の題材選び</a>、<a href="#github">GitHubの見せ方</a>、<a href="#kaggle">Kaggleの活かし方</a>、<a href="#mistakes">よくある失敗</a>を<strong>2026年6月時点</strong>で整理します。<a href="../beginner-learning-roadmap/">学習ロードマップ</a>のフェーズ6とあわせて読むと、応募までの流れがつかみやすくなります。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why">ポートフォリオで伝えるべきこと</a></li>
+        <li><a href="#recruiter-view">採用側が見るポイント</a></li>
+        <li><a href="#by-role">職種別の作り方</a></li>
+        <li><a href="#flow">制作の流れ</a></li>
+        <li><a href="#github">GitHubの見せ方</a></li>
+        <li><a href="#kaggle">Kaggle・その他プラットフォーム</a></li>
+        <li><a href="#resume">履歴書・面接での伝え方</a></li>
+        <li><a href="#mistakes">よくある失敗と対策</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why">
+      <h2>ポートフォリオで伝えるべきこと</h2>
+      <p>
+        ポートフォリオの目的は「すごい技術を使った」ことの誇示ではなく、<strong>業務に近い課題をどう分解し、どう実装し、どう評価したか</strong>を第三者に伝えることです。未経験採用では、実務年数の代わりに「この人なら入社後も同様の思考で進められそうか」を判断する材料になります。
+      </p>
+      <p>
+        量より質です。<strong>完成度の高い1〜3作品</strong>があれば十分なことが多く、10個の未完成リポジトリより、READMEと再現手順が整った1本の方が評価されやすいです。
+      </p>
+    </section>
+
+    <section id="recruiter-view">
+      <h2>採用側が見るポイント</h2>
+      <p>書類選考や技術面接の前段で、採用担当・エンジニアはおおむね次の観点で見ます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>見ていること</th>
+            <th>対策のヒント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>再現性</strong></td>
+            <td>cloneして動くか、手順が明記されているか</td>
+            <td>requirements.txt、環境変数の例、サンプルデータを用意</td>
+          </tr>
+          <tr>
+            <td><strong>課題設定</strong></td>
+            <td>なぜその題材か、ビジネス文脈があるか</td>
+            <td>「誰のどんな困りごとを解くか」をREADME冒頭に書く</td>
+          </tr>
+          <tr>
+            <td><strong>評価・限界</strong></td>
+            <td>指標の選び方、失敗パターンの理解</td>
+            <td>精度だけでなく、データの偏り・コスト・リスクも記載</td>
+          </tr>
+          <tr>
+            <td><strong>コード品質</strong></td>
+            <td>読みやすさ、適切な分割、コミット履歴</td>
+            <td>1ファイルに全部詰め込まない。意味のあるコミットメッセージ</td>
+          </tr>
+          <tr>
+            <td><strong>職種との一致</strong></td>
+            <td>応募職種の実務に近いスキルが出ているか</td>
+            <td>汎用チュートリアルの写経だけで終わらせない</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="by-role">
+      <h2>職種別の作り方</h2>
+      <p>狙う職種に合わせて、題材と見せ方を変えるのが効率的です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>職種</th>
+            <th>おすすめ題材</th>
+            <th>盛り込むとよい要素</th>
+            <th>詳細ガイド</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>データアナリスト</strong></td>
+            <td>公開データの売上・利用分析、KPIダッシュボード</td>
+            <td>問い→SQL→可視化→示唆の一連、BIスクショ</td>
+            <td><a href="../data-analyst/">記事へ</a></td>
+          </tr>
+          <tr>
+            <td><strong>AIエンジニア</strong></td>
+            <td>分類・回帰の学習パイプライン、推論API</td>
+            <td>評価指標、学習/検証分割、Docker（任意）</td>
+            <td><a href="../ai-engineer/">記事へ</a></td>
+          </tr>
+          <tr>
+            <td><strong>データサイエンティスト</strong></td>
+            <td>仮説検証付きの分析、小規模予測モデル</td>
+            <td>EDA、特徴量の根拠、ビジネスへの翻訳</td>
+            <td><a href="../data-scientist/">記事へ</a></td>
+          </tr>
+          <tr>
+            <td><strong>生成AIエンジニア</strong></td>
+            <td>RAGチャット、社内文書検索PoC</td>
+            <td>プロンプト設計、評価、ガードレール</td>
+            <td><a href="../generative-ai-engineer/">記事へ</a></td>
+          </tr>
+          <tr>
+            <td><strong>プロンプトエンジニア</strong></td>
+            <td>業務テンプレート集、A/B比較ログ</td>
+            <td>改善前後、評価観点、リスク対策</td>
+            <td><a href="../prompt-engineer/">記事へ</a></td>
+          </tr>
+          <tr>
+            <td><strong>MLOpsエンジニア</strong></td>
+            <td>CI/CD付き学習パイプライン、モデル監視のデモ</td>
+            <td>再学習トリガー、ログ、インフラ構成図</td>
+            <td><a href="../mlops-engineer/">記事へ</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        題材に迷ったら、<a href="../beginner-ai-roles-top5/">未経験者が最初に狙うべきAI職種5つ</a>で職種を1つに絞ってから着手してください。
+      </p>
+    </section>
+
+    <section id="flow">
+      <h2>制作の流れ</h2>
+      <figure class="tool-figure">
+        <img src="../../assets/images/career/ai-portfolio-guide/role-flow.png" alt="AI職向けポートフォリオ制作フロー：題材選定、実装公開、README整備、Kaggle等での見せ方、面接想定、継続改善" width="960" height="300" loading="lazy">
+        <figcaption>ポートフォリオ制作フロー（当サイト作成）</figcaption>
+      </figure>
+      <ol class="tool-steps">
+        <li>
+          <strong>題材を1つ決める（3〜7日）</strong>
+          <p>応募したい職種のJD（求人票）から逆算し、キーワードに近い題材を選ぶ。</p>
+        </li>
+        <li>
+          <strong>最小構成で動かす（2〜4週間）</strong>
+          <p>完璧な精度より、 end-to-end で一通り回る状態を優先する。</p>
+        </li>
+        <li>
+          <strong>READMEを書く（2〜3日）</strong>
+          <p>背景・手法・結果・限界・再現手順を整理。図や表があると読みやすい。</p>
+        </li>
+        <li>
+          <strong>フィードバックを得る（1週間）</strong>
+          <p>学習コミュニティや知人に見てもらい、説明のわかりにくい箇所を直す。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="github">
+      <h2>GitHubの見せ方</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>リポジトリ構成</h3>
+          <p><code>README.md</code>、<code>requirements.txt</code>または<code>pyproject.toml</code>、<code>src/</code>、<code>notebooks/</code>（分析系）、<code>data/README.md</code>（データの出典と取得方法）を分ける。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>READMEの必須項目</h3>
+          <p>概要、課題、使用技術、セットアップ手順、実行方法、結果（スクショ・表）、今後の改善点、ライセンス・データ出典。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>プロフィール欄</h3>
+          <p>ピン留めで代表作を2〜3個。自己紹介に<strong>狙う職種と強み</strong>を1〜2文。資格（<a href="../g-kentei-career/">G検定</a>、<a href="../genai-passport-career/">生成AIパスポート</a>）へのリンクも可。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>避けたい状態</h3>
+          <p>巨大な単一ノートブックのみ、APIキーの直書き、データの無断アップロード、コミットメッセージがすべて「update」。</p>
+        </div>
+      </div>
+      <div class="tool-callout">
+        <p><strong>READMEの骨子（コピー用テンプレート）</strong></p>
+        <p>1. 背景と目的 → 2. データと前提 → 3. 手法の選定理由 → 4. 結果と評価 → 5. 限界とリスク → 6. 再現手順 → 7. 参考リンク</p>
+      </div>
+    </section>
+
+    <section id="kaggle">
+      <h2>Kaggle・その他プラットフォーム</h2>
+      <p>
+        <strong>Kaggle</strong>は、データサイエンティスト・MLエンジニア志望で特に有効です。コンペの順位そのものより、<strong>ノートブックの考察と再現性</strong>が評価されやすいです。メダルがなくても、公開ノートブックに仮説・EDA・改善過程が書かれていればアピールになります。
+      </p>
+      <ul class="tool-steps">
+        <li>
+          <strong>GitHubとの役割分担</strong>
+          <p>Kaggleで探索・実験、GitHubで整理されたパイプラインとREADME、という二段構えがおすすめ。</p>
+        </li>
+        <li>
+          <strong>生成AI系の見せ方</strong>
+          <p>プロンプト改善ログはNotionやGitHubの<code>docs/</code>にまとめ、<a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a>等の利用は<strong>入力データのマスキング</strong>に注意。</p>
+        </li>
+        <li>
+          <strong>社内に近い題材</strong>
+          <p>現職の業務をそのまま公開できない場合は、同業界の公開データや匿名化した架空データで「業務に近い問い」を再現する。</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="resume">
+      <h2>履歴書・面接での伝え方</h2>
+      <p>URLを載せるだけでは不十分なことが多いです。<strong>何を解決し、何を学んだか</strong>を短文で添えます。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>職務経歴書の書き方</h3>
+          <p>「GitHub：〇〇（顧客離反予測。精度〇%、特徴量設計とクラス不均衡への対処を実装）」のように、<strong>成果と工夫を一文</strong>で。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>面接で話す構成</h3>
+          <p>課題設定（1分）→ 手法とトレードオフ（2分）→ 結果と限界（1分）→ 入社後にどう活かすか（1分）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>資格との組み合わせ</h3>
+          <p>G検定・生成AIパスポートは「理論の理解」、ポートフォリオは「実践」として役割分担を説明すると説得力が増す。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mistakes">
+      <h2>よくある失敗と対策</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">よくある失敗</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">対策</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>チュートリアルの写経だけで終わる</td>
+            <td>データセット・評価指標・問いを自分で変える</td>
+          </tr>
+          <tr>
+            <td>精度だけを強調し、限界に触れない</td>
+            <td>失敗例・バイアス・運用コストをREADMEに書く</td>
+          </tr>
+          <tr>
+            <td>動かないリポジトリを複数並べる</td>
+            <td>代表作1つを完璧にし、他はアーカイブまたは統合</td>
+          </tr>
+          <tr>
+            <td>職種と無関係な題材ばかり</td>
+            <td>応募JDのキーワードに合わせて題材を選び直す</td>
+          </tr>
+          <tr>
+            <td>完璧を待ちすぎて応募が遅れる</td>
+            <td>80%の完成度で応募し、フィードバックで改善する</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>AI職のポートフォリオは何個必要？</summary>
+          <p class="tool-faq-a">質の高い1〜3個が目安です。未経験なら職種に直結した完成度の高い1作品があれば十分なことが多いです。</p>
+        </details>
+        <details>
+          <summary>Kaggleのメダルは必須？</summary>
+          <p class="tool-faq-a">必須ではありません。ノートブックと考察を整理できればアピール材料になります。メダルはあれば加点要素です。</p>
+        </details>
+        <details>
+          <summary>生成AIだけのポートフォリオで転職できる？</summary>
+          <p class="tool-faq-a"><a href="../prompt-engineer/">プロンプトエンジニア</a>や<a href="../ai-product-manager/">AI PM</a>なら可能な場合があります。実装職ではデータ処理や評価を含む作品が別途求められることが多いです。</p>
+        </details>
+        <details>
+          <summary>READMEに何を書けばよい？</summary>
+          <p class="tool-faq-a">背景・課題、データ、手法、結果、限界、再現手順が基本です。なぜその設計にしたかを説明できることが重要です。</p>
+        </details>
+        <details>
+          <summary>ポートフォリオはいつから作るべき？</summary>
+          <p class="tool-faq-a">学習開始2〜3か月目から着手し、応募の1〜2か月前には代表作を1つ完成させるのが目安です。<a href="../beginner-learning-roadmap/">学習ロードマップ</a>のフェーズ6も参照してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するキャリア記事</h2>
+        <ul class="tool-related-list">
+          <li><a href="../beginner-learning-roadmap/">未経験からAI職へ必要な学習順序</a></li>
+          <li><a href="../beginner-ai-roles-top5/">未経験者向けAI職種5つ</a></li>
+          <li><a href="../g-kentei-career/">G検定のキャリアへの活かし方</a></li>
+          <li><a href="../genai-passport-career/">生成AIパスポート取得後の学習ロードマップ</a></li>
+          <li><a href="../ai-side-job-prep/">AI副業を始める前の準備と時間の使い方</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">キャリア記事一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/">G検定 試験対策</a></li>
+          <li><a href="../../exams/genai-passport/">生成AIパスポート 試験対策</a></li>
+          <li><a href="../../glossary/">用語辞典</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

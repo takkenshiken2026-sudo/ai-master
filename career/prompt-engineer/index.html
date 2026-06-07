@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="プロンプトエンジニアの仕事内容・年収・必要スキル・需要の現状を解説。生成AIエンジニアとの違い、プロンプト設計・評価・業務組み込みの実務像を整理。">
+  <title>プロンプトエンジニアとは？仕事内容・年収・需要の現状を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/career/prompt-engineer/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="プロンプトエンジニアとは？仕事内容・年収・需要の現状を解説">
+  <meta property="og:description" content="プロンプトエンジニアの仕事内容・年収・スキル・需要をわかりやすく解説。生成AIエンジニアとの違いも整理。">
+  <meta property="og:url" content="https://ai-master.jp/career/prompt-engineer/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/career/prompt-engineer/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/career/prompt-engineer/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/career/prompt-engineer/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIキャリア", "item": "https://ai-master.jp/career/" },
+          { "@type": "ListItem", "position": 3, "name": "プロンプトエンジニア", "item": "https://ai-master.jp/career/prompt-engineer/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/career/prompt-engineer/#article",
+        "headline": "プロンプトエンジニアとは？仕事内容・年収・需要の現状を解説",
+        "description": "プロンプトエンジニアの仕事内容・年収・スキル・需要をわかりやすく解説。",
+        "url": "https://ai-master.jp/career/prompt-engineer/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/career/prompt-engineer/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/career/prompt-engineer/#webpage" },
+        "about": { "@type": "Occupation", "name": "プロンプトエンジニア", "alternateName": "Prompt Engineer" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/career/prompt-engineer/#webpage",
+        "url": "https://ai-master.jp/career/prompt-engineer/",
+        "name": "プロンプトエンジニアとは？仕事内容・年収・需要の現状を解説",
+        "description": "プロンプトエンジニアの仕事内容・年収・スキル・需要をわかりやすく解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/career/prompt-engineer/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "プロンプトエンジニアと生成AIエンジニアの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "プロンプトエンジニアはLLMへの指示設計・評価・改善に特化したポジションです。生成AIエンジニアはそれに加え、RAG構築・API連携・本番運用など実装全般を担うことが多く、プロンプト設計はその一部として含まれる場合があります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "プロンプトエンジニアにプログラミングは必要？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "必須ではありません。評価の自動化やツール連携でPythonやAPIの基礎があると有利ですが、採用ではドメイン知識・指示設計力・評価設計が重視される求人も多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "プロンプトエンジニアの年収相場は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "経験・雇用形態により幅がありますが、おおむね450万〜900万円前後が目安となることが多いです。専任ポジションより、マーケ・CS・企画職の業務の一部として求められるケースも増えています（2026年6月時点の一般的な相場感）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "プロンプトエンジニアの需要は続く？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "単独の肩書きとしての求人は落ち着きつつあり、生成AIエンジニアや各職種へのスキル統合が進んでいます。一方で、LLMを業務で使うあらゆる職種でプロンプト設計・評価の知識は引き続き価値があります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body career-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../index.html" class="active">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIキャリア</a></li>
+      <li aria-current="page">プロンプトエンジニア</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--career">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">職種ガイド · 職種・比較</p>
+      <h1>プロンプトエンジニアとは？仕事内容・年収・需要の現状を解説</h1>
+      <p class="tool-hero-sub">年収目安 450〜900万円 · 英：Prompt Engineer</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">LLM</span>
+        <span class="tool-category">未経験可</span>
+        <span class="tool-category">生成AIパスポート</span>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/career/prompt-engineer/hero.jpg" alt="チャットボットを象徴するロボットのイメージ" width="1920" height="1080" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/bcc4688e7485" target="_blank" rel="noopener noreferrer">Unsplash</a>（Possessed Photography）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>プロンプトエンジニア</strong>（Prompt Engineer）は、大規模言語モデル（LLM）に対する<strong>指示文（プロンプト）の設計・評価・改善</strong>を専門に担う職種です。2023年前後に注目が集まりましたが、<strong>2026年6月時点</strong>では単独の専任ポジションより、<a href="../generative-ai-engineer/">生成AIエンジニア</a>や業務部門への<strong>スキル統合</strong>が進んでいます。本記事では、仕事内容、<a href="#demand">需要の現状</a>、<a href="#salary">年収</a>、<a href="#vs-roles">関連職種との違い</a>を整理します。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">資格・学習との関係</a></li>
+        <li><a href="#what-is">プロンプトエンジニアとは</a></li>
+        <li><a href="#job">仕事内容</a></li>
+        <li><a href="#skills">必要スキル</a></li>
+        <li><a href="#demand">需要の現状</a></li>
+        <li><a href="#salary">年収相場</a></li>
+        <li><a href="#career-path">キャリアパス</a></li>
+        <li><a href="#vs-roles">関連職種との違い</a></li>
+        <li><a href="#roadmap">未経験からの道のり</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>資格・学習との関係</h2>
+      <p>
+        プロンプトエンジニアに必要なのは、魔法の呪文を覚えることではなく、<strong>LLMの特性・限界・評価の考え方</strong>の理解です。生成AIパスポートではプロンプトの設計原則やハルシネーション、情報セキュリティが問われ、実務では「なぜその指示で品質が上がったか」を説明できるかが見られます。
+      </p>
+      <p>
+        よくある誤解は、<strong>「プロンプトエンジニア＝ChatGPTを上手に使える人」</strong>だけで足りるという考え方です。業務組み込みでは、再現性・バージョン管理・評価データセット・ガードレールまで含めた<strong>設計プロセス</strong>が求められることが多いです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>基礎概念を演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0476/">一問一答 TF-0476（プロンプト）</a>、<a href="../../exams/genai-passport/drill/q/tf-0437/">TF-0437（プロンプト）</a>、<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（LLMの不得意領域）</a>
+        </p>
+        <p>
+          関連記事：<a href="../generative-ai-engineer/">生成AIエンジニアとは</a> · 試験トップ：<a href="../../exams/genai-passport/">生成AIパスポート対策</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>プロンプトエンジニアとは</h2>
+      <p>
+        プロンプトエンジニアは、<strong>Prompt Engineer</strong>として、LLMが望ましい出力を返すよう<strong>システムプロンプト・Few-shot例・出力フォーマット</strong>を設計し、品質を測定しながら改善する専門職です。カスタマーサポートの応答案、社内文書の要約ルール、マーケティング文案のテンプレートなど、業務シーンごとに最適化します。
+      </p>
+      <p>
+        エンジニアリング職として実装まで担う場合もあれば、<strong>非エンジニアの業務専門家がプロンプト設計をリード</strong>し、エンジニアがAPI連携する分担もあります。組織によって「プロンプトエンジニア」の定義は大きく異なるため、求人票の業務記述を必ず確認してください。
+      </p>
+    </section>
+
+    <section id="job">
+      <h2>仕事内容</h2>
+      <p>組織によって分担は異なりますが、プロンプトエンジニアに期待されやすい業務は次のとおりです。</p>
+      <figure class="tool-figure">
+        <img src="../../assets/images/career/prompt-engineer/role-flow.png" alt="プロンプトエンジニアの業務フロー：業務整理、プロンプト設計、テスト実行、評価、改善反復、業務組み込み" width="960" height="300" loading="lazy">
+        <figcaption>プロンプトエンジニアの典型的な業務フロー（当サイト作成）</figcaption>
+      </figure>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>ユースケース整理</h3>
+          <p>自動化対象の業務フロー、成功基準、禁止事項（PII・誤情報）を定義する。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>プロンプト設計</h3>
+          <p>役割・制約・出力形式を明示。Few-shot例やチェーン・オブ・ソートの設計も。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>テスト・実験</h3>
+          <p>代表クエリで出力を確認。温度やモデルバージョンの違いを比較する。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>評価設計</h3>
+          <p>正答率、ルーブリック、ヒューマン評価。ゴールデンデータセットの整備。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>改善サイクル</h3>
+          <p>失敗例を分析しプロンプトを更新。変更履歴と効果を記録する。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>業務展開・教育</h3>
+          <p>現場担当者へのガイドライン作成、社内ベストプラクティスの共有。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>必要スキル</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>領域</th>
+            <th>具体例</th>
+            <th>重要度の目安</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>プロンプト設計</strong></td>
+            <td>役割設定、制約、Few-shot、JSON出力指定</td>
+            <td>必須</td>
+          </tr>
+          <tr>
+            <td><strong>LLMの基礎理解</strong></td>
+            <td>ハルシネーション、コンテキスト長、モデル差</td>
+            <td>必須</td>
+          </tr>
+          <tr>
+            <td><strong>評価・改善</strong></td>
+            <td>テストケース設計、A/B比較、失敗分析</td>
+            <td>必須</td>
+          </tr>
+          <tr>
+            <td><strong>ドメイン知識</strong></td>
+            <td>法務、医療、CS、マーケなど対象業務の理解</td>
+            <td>実務で差がつく</td>
+          </tr>
+          <tr>
+            <td><strong>Python / API（任意）</strong></td>
+            <td>評価スクリプト、バッチ実行、LangChain等</td>
+            <td>エンジニア寄りJDで重視</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="demand">
+      <h2>需要の現状</h2>
+      <p>
+        2023〜2024年は「プロンプトエンジニア」単独の求人が注目を集めましたが、<strong>2026年6月時点</strong>では次の傾向が見られます。
+      </p>
+      <ul class="tool-steps">
+        <li>
+          <strong>専任ポジションは減少傾向</strong>
+          <p>プロンプト設計は<a href="../generative-ai-engineer/">生成AIエンジニア</a>や<a href="../ai-engineer/">AIエンジニア</a>のスキルセットに吸収されつつある。</p>
+        </li>
+        <li>
+          <strong>各職種への横展開</strong>
+          <p>マーケ・CS・人事・法務など、LLMを使うあらゆる職種でプロンプト設計力が求められる。</p>
+        </li>
+        <li>
+          <strong>「設計＋評価」へのシフト</strong>
+          <p>単発の上手な指示より、再現可能な評価と改善プロセスを回せる人材が評価されやすい。</p>
+        </li>
+      </ul>
+      <p>
+        キャリア戦略としては、プロンプト専任だけを狙うより、<strong>生成AI実装やドメイン専門性と組み合わせる</strong>ほうが選択肢は広がりやすいです。
+      </p>
+    </section>
+
+    <section id="salary">
+      <h2>年収相場</h2>
+      <p>
+        当サイトの職種マスタでは、プロンプトエンジニアの年収目安を<strong>450万〜900万円</strong>としています（<strong>2026年6月時点</strong>の一般的な相場感）。専任の正社員ポジションは限られ、業務委託・副業・他職種への兼務として扱われることも多いです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>区分</th>
+            <th>年収の目安（日本・一般論）</th>
+            <th>補足</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ジュニア・兼務</strong></td>
+            <td>450万〜600万円前後</td>
+            <td>他業務と併せてプロンプト改善を担当</td>
+          </tr>
+          <tr>
+            <td><strong>ミドル・専任</strong></td>
+            <td>600万〜750万円前後</td>
+            <td>複数ユースケースの設計・評価をリード</td>
+          </tr>
+          <tr>
+            <td><strong>シニア</strong></td>
+            <td>750万〜900万円以上</td>
+            <td>社内ガイドライン・評価基盤の整備</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="career-path">
+      <h2>キャリアパス</h2>
+      <ol class="tool-steps">
+        <li>
+          <strong>生成AIエンジニアへ</strong>
+          <p>RAG・API・デプロイのスキルを足し、プロンプト設計から実装まで一気通貫で担う。</p>
+        </li>
+        <li>
+          <strong>AIプロダクトマネージャー寄り</strong>
+          <p>ユースケース選定・要件定義・品質基準の設計。技術とビジネスの橋渡し。</p>
+        </li>
+        <li>
+          <strong>ドメインスペシャリスト</strong>
+          <p>法務・医療・金融など規制の強い領域で、安全なプロンプト設計の第一人者へ。</p>
+        </li>
+        <li>
+          <strong>コンサル・社内推進</strong>
+          <p>複数部門の生成AI活用を支援。教育・ガイドライン整備が中心。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="vs-roles">
+      <h2>関連職種との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>職種</th>
+            <th>主な焦点</th>
+            <th>プロンプトエンジニアとの違い</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong><a href="../generative-ai-engineer/">生成AIエンジニア</a></strong></td>
+            <td>LLM・RAG・エージェント実装</td>
+            <td>プロンプトに加えAPI連携・評価基盤・本番運用まで担うことが多い。</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../ai-engineer/">AIエンジニア</a></strong></td>
+            <td>AI機能の実装全般</td>
+            <td>より広いML/AI実装。プロンプトはその一部。</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../data-analyst/">データアナリスト</a></strong></td>
+            <td>SQL・BI・可視化</td>
+            <td>数値分析が中心。LLMは補助ツールとして使う場面が増加。</td>
+          </tr>
+          <tr>
+            <td><strong>業務専門職＋AI活用</strong></td>
+            <td>本業＋生成AI</td>
+            <td>肩書きは別でも、プロンプト設計は日常業務に含まれる。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="roadmap">
+      <h2>未経験からの道のり</h2>
+      <ol class="tool-steps">
+        <li>
+          <strong>LLMの基礎（2〜4週間）</strong>
+          <p>生成AIパスポートレベルでプロンプト・リスク・倫理を整理。実際にChatGPT等で実験。</p>
+        </li>
+        <li>
+          <strong>評価付きプロンプト集（1〜2か月）</strong>
+          <p>10〜30件のテストケースと改善前後の比較をREADMEにまとめる。</p>
+        </li>
+        <li>
+          <strong>ドメイン題材（1か月）</strong>
+          <p>自分の本業や興味領域（CS、マーケなど）でユースケースを一つ完成させる。</p>
+        </li>
+        <li>
+          <strong>実装の入口（任意）</strong>
+          <p>PythonでAPI呼び出しとバッチ評価。生成AIエンジニアへのステップにもなる。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>プログラミングなしでも始めやすい入口がある</td>
+            <td>専任求人が少なく、キャリアパスが不明瞭なことも</td>
+          </tr>
+          <tr>
+            <td>本業のドメイン知識を活かしやすい</td>
+            <td>「プロンプトだけ」では差別化が難しくなってきた</td>
+          </tr>
+          <tr>
+            <td>生成AIエンジニアへのステップとして学びやすい</td>
+            <td>成果が主観評価になりやすく、評価設計が重要</td>
+          </tr>
+          <tr>
+            <td>社内外の生成AI推進で即戦力になりやすい</td>
+            <td>モデル更新でベストプラクティスが変わり続ける</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>プロンプトエンジニアと生成AIエンジニアの違いは？</summary>
+          <p class="tool-faq-a">プロンプトエンジニアは指示設計・評価・改善に特化し、生成AIエンジニアはRAG・API・本番運用など実装全般を担うことが多いです。詳しくは<a href="../generative-ai-engineer/">生成AIエンジニアの解説</a>を参照してください。</p>
+        </details>
+        <details>
+          <summary>プロンプトエンジニアにプログラミングは必要？</summary>
+          <p class="tool-faq-a">必須ではありません。評価の自動化やAPI連携でPythonがあると有利ですが、ドメイン知識と設計力が重視される求人も多いです。</p>
+        </details>
+        <details>
+          <summary>プロンプトエンジニアの年収相場は？</summary>
+          <p class="tool-faq-a">おおむね450万〜900万円前後が目安となることが多いです（2026年6月時点）。兼務・委託の場合は別形態になります。</p>
+        </details>
+        <details>
+          <summary>プロンプトエンジニアの需要は続く？</summary>
+          <p class="tool-faq-a">単独肩書きの求人は落ち着きつつありますが、LLMを業務で使う全職種でプロンプト設計の知識は引き続き価値があります。</p>
+        </details>
+        <details>
+          <summary>生成AIパスポートは役に立つ？</summary>
+          <p class="tool-faq-a">プロンプト・リスク・ガバナンスの基礎を体系的に学べる教材として有用です。採用の必須条件になることは少ないですが、アピール材料になります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するキャリア記事</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai-engineer/">生成AIエンジニアとは</a></li>
+          <li><a href="../ai-engineer/">AIエンジニアとは</a></li>
+          <li><a href="../data-analyst/">データアナリストとは</a></li>
+          <li><a href="../ai-product-manager/">AIプロダクトマネージャーとは</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">キャリア記事一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/">生成AIパスポート 試験対策</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI（用語）</a></li>
+          <li><a href="../../tools/cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../../tools/chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

@@ -94,7 +94,7 @@
         "未経験可"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "data-analyst",
@@ -124,7 +124,7 @@
         "PoC"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "data-scientist-vs-analyst",
@@ -167,7 +167,7 @@
         "未経験"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-career",
@@ -182,7 +182,7 @@
         "資格"
       ],
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-passport-career",
@@ -197,7 +197,7 @@
         "資格"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "beginner-learning-roadmap",
@@ -212,7 +212,7 @@
         "ロードマップ"
       ],
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "ai-portfolio-guide",
@@ -226,7 +226,7 @@
         "ポートフォリオ"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "ai-side-job-prep",
@@ -240,7 +240,7 @@
         "副業"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "manufacturing-to-ai-engineer",
