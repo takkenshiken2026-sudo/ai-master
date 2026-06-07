@@ -255,7 +255,7 @@
         "転職"
       ],
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "finance-data-scientist-career",
@@ -270,7 +270,7 @@
         "転職"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "liberal-arts-to-ai",
@@ -286,7 +286,7 @@
         "転職"
       ],
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "sier-to-ai-startup",
@@ -301,7 +301,7 @@
         "転職"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "second-career-ai",
@@ -316,7 +316,7 @@
         "転職"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "ai-career-outlook-2026",
@@ -330,7 +330,7 @@
         "将来性"
       ],
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "ai-engineer-salary-trend",
@@ -344,7 +344,7 @@
         "年収"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "overseas-ai-engineer-salary",
@@ -359,7 +359,7 @@
         "年収"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "ai-freelance-market",
@@ -374,7 +374,7 @@
         "副業"
       ],
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "grad-school-ai-worth",
@@ -389,7 +389,7 @@
         "研究"
       ],
       "featured": false,
-      "published": false
+      "published": true
     }
   ]
 }
