@@ -78,7 +78,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -93,10 +93,11 @@
         <li><a href="#what-is">ハルシネーションとは</a></li>
         <li><a href="#why">なぜ起きるのか</a></li>
         <li><a href="#types">代表的なパターン</a></li>
-        <li><a href="#not-this">混同しやすい概念</a></li>
         <li><a href="#verify">業務での確認チェックリスト</a></li>
         <li><a href="#mitigate">減らす方向性（概要）</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -177,33 +178,6 @@
       </table>
     </section>
 
-    <section id="not-this">
-      <h2>混同しやすい概念</h2>
-      <p>生成AIパスポートの選択肢問題で、次は<strong>ハルシネーションではない</strong>説明として出ます（<a href="../../exams/genai-passport/practice/q/hq-0242/">HQ-0242</a>）。</p>
-      <table class="tool-spec-table tool-pros-cons-table">
-        <thead>
-          <tr>
-            <th class="tool-pros-cons-th">ハルシネーション<strong>ではない</strong></th>
-            <th class="tool-pros-cons-th">正しくは</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>マルチモーダル（画像・音声も扱う性質）</td>
-            <td>入出力の形式に関する用語</td>
-          </tr>
-          <tr>
-            <td>ChatGPT（対話型サービス）</td>
-            <td>製品・サービス名</td>
-          </tr>
-          <tr>
-            <td>ファインチューニング</td>
-            <td>追加学習の手法</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
     <section id="verify">
       <h2>業務での確認チェックリスト</h2>
       <p>RAGのパイプライン以前に、<strong>人が出力をどう扱うか</strong>が最後の防波堤です。</p>
@@ -228,6 +202,21 @@
       <p>対策の体系は<a href="../hallucination-mitigation/">ハルシネーション対策</a>の記事で整理しています。</p>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <p>生成AIパスポートでは、次は<strong>ハルシネーションではない</strong>説明として出ます（<a href="../../exams/genai-passport/practice/q/hq-0242/">HQ-0242</a>）。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ハルシネーション＝ChatGPT</td><td>誤出力現象 vs 製品・サービス名</td></tr>
+          <tr><td>ハルシネーション＝マルチモーダル</td><td>事実誤り vs 入出力形式の用語</td></tr>
+          <tr><td>ハルシネーション＝ファインチューニング</td><td>誤出力 vs 追加学習の手法</td></tr>
+          <tr><td>自然な文章なら正確</td><td>自然さ≠正確さ（TF-171）</td></tr>
+          <tr><td>RAGでゼロになる</td><td>減らす手段の一つにとどまる</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -250,24 +239,24 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-172/">TF-172 · ハルシネーションの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-171/">TF-171 · 正確性の保証なし</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0242/">HQ-0242 · 概念の識別</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0314/">HQ-0314 · 用語選択</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../generative-ai/">生成AI</a></li>
           <li><a href="../llm/">LLM</a></li>
           <li><a href="../rag/">RAG</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../hallucination-mitigation/">ハルシネーション対策</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
-        </ul>
-      </div>
-      <div class="tool-related-block">
-        <h2 class="tool-related-heading">試験対策</h2>
-        <ul class="tool-related-list">
-          <li><a href="../../exams/g-kentei/">G検定</a></li>
-          <li><a href="../../exams/genai-passport/">生成AIパスポート</a></li>
-          <li class="tool-related-list__index"><a href="../../exams/">試験一覧へ →</a></li>
         </ul>
       </div>
     </aside>

@@ -77,6 +77,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("M", "分類指標", ["precision", "recall", "f1-score"]),
     ("N", "損失・正則化", ["dropout", "loss-function", "overfitting"]),
     ("O", "最適化・学習型", ["gradient-descent", "backpropagation", "supervised-learning"]),
+    ("P", "生成AI活用", ["prompt", "token", "hallucination"]),
 ]
 
 REVISION_STATUS_LABEL = {
@@ -127,10 +128,16 @@ def render_revision_progress(terms: list[dict]) -> str:
             )
 
     in_focus = len(rows)
+    cluster_codes = [code for code, _, _ in REVISION_CLUSTERS]
+    cluster_range = (
+        f"{cluster_codes[0]}〜{cluster_codes[-1]}"
+        if len(cluster_codes) > 1
+        else cluster_codes[0]
+    )
 
     return f"""  <section class="glossary-revision" aria-labelledby="glossary-revision-heading">
     <h2 id="glossary-revision-heading" class="glossary-revision__title">記事改修の進捗</h2>
-    <p class="glossary-revision__summary">公開 {len(published)} 本のうち、新フォーマット（読了約7分・試験問題4問）は <strong>{counts["done"]} 本</strong>完了。下表は優先クラスタ K〜N（{in_focus} 本）の状況です。</p>
+    <p class="glossary-revision__summary">公開 {len(published)} 本のうち、新フォーマット（読了約7分・試験問題4問）は <strong>{counts["done"]} 本</strong>完了。下表は優先クラスタ {cluster_range}（{in_focus} 本）の状況です。</p>
     <div class="glossary-revision__stats">
       <span class="glossary-revision__stat glossary-revision__status--done">改修済 {counts["done"]}</span>
       <span class="glossary-revision__stat glossary-revision__status--partial">試験4問待ち {counts["partial"]}</span>
