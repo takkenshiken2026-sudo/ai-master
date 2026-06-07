@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="データアナリストの仕事内容・年収・必要スキル・キャリアパスを解説。データサイエンティストとの違い、SQL・BI・可視化の実務像と未経験からの道のりを整理。">
+  <title>データアナリストとは？仕事内容・年収・DSとの違い — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/career/data-analyst/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="データアナリストとは？仕事内容・年収・DSとの違い">
+  <meta property="og:description" content="データアナリストの仕事内容・年収・スキル・キャリアパスをわかりやすく解説。データサイエンティストとの違いも整理。">
+  <meta property="og:url" content="https://ai-master.jp/career/data-analyst/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/career/data-analyst/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/career/data-analyst/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/career/data-analyst/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIキャリア", "item": "https://ai-master.jp/career/" },
+          { "@type": "ListItem", "position": 3, "name": "データアナリスト", "item": "https://ai-master.jp/career/data-analyst/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/career/data-analyst/#article",
+        "headline": "データアナリストとは？仕事内容・年収・DSとの違い",
+        "description": "データアナリストの仕事内容・年収・スキル・キャリアパスをわかりやすく解説。",
+        "url": "https://ai-master.jp/career/data-analyst/",
+        "datePublished": "2026-06-07",
+        "dateModified": "2026-06-07",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/career/data-analyst/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/career/data-analyst/#webpage" },
+        "about": { "@type": "Occupation", "name": "データアナリスト", "alternateName": "Data Analyst" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/career/data-analyst/#webpage",
+        "url": "https://ai-master.jp/career/data-analyst/",
+        "name": "データアナリストとは？仕事内容・年収・DSとの違い",
+        "description": "データアナリストの仕事内容・年収・スキル・キャリアパスをわかりやすく解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/career/data-analyst/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "データアナリストとデータサイエンティストの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "データアナリストはSQL・BI・可視化によるKPI追跡とレポーティングに比重が置かれることが多く、データサイエンティストは仮説検証・統計・機械学習モデル・意思決定支援に比重が置かれることが多いです。組織によって役割は重なることもあります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "データアナリストに必要なスキルは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SQL、スプレッドシート、BIツール（Looker、Tableau、Power BIなど）、基本的な統計、ビジネス文脈の理解が求められます。2026年時点では生成AIを補助に使うスキルも差別化要因になりつつあります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "データアナリストの年収相場は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "経験・業界により幅がありますが、おおむね400万〜800万円前後が目安となることが多いです。未経験から入りやすいデータ職の一つですが、SQLとドメイン知識で上限が伸びやすい傾向があります（2026年6月時点の一般的な相場感）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "未経験からデータアナリストになれますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "可能です。事務・営業・マーケティングなどから、SQLとBIのスキルを独学または社内異動で積み上げるルートが一般的です。ポートフォリオで集計・可視化の実例を示すと採用側は評価しやすいです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body career-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../index.html" class="active">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIキャリア</a></li>
+      <li aria-current="page">データアナリスト</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--career">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">職種ガイド · 職種・比較</p>
+      <h1>データアナリストとは？仕事内容・年収・DSとの違い</h1>
+      <p class="tool-hero-sub">年収目安 400〜800万円 · 英：Data Analyst</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">SQL</span>
+        <span class="tool-category">未経験可</span>
+        <span class="tool-category">BI</span>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/career/data-analyst/hero.jpg" alt="オフィスでデータを見ながら打ち合わせするチームの作業風景" width="1920" height="1080" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/8e7e53415bb0" target="_blank" rel="noopener noreferrer">Unsplash</a>（Christina @ wocintechchat.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>データアナリスト</strong>（Data Analyst）は、SQLやBIツールを使って<strong>業務データを集計・可視化し、KPIの推移を関係者に伝える</strong>専門職です。<a href="../data-scientist/">データサイエンティスト</a>と名称が近いですが、実務では「定型レポート」「ダッシュボード」「部門別の数値追跡」の比重が高いポジションとして理解されることが多いです。本記事では、<a href="#salary">年収</a>、<a href="#skills">スキル</a>、<a href="#vs-roles">関連職種との違い</a>を<strong>2026年6月時点</strong>の市場感覚で整理します。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">資格・学習との関係</a></li>
+        <li><a href="#what-is">データアナリストとは</a></li>
+        <li><a href="#job">仕事内容</a></li>
+        <li><a href="#skills">必要スキル</a></li>
+        <li><a href="#salary">年収相場</a></li>
+        <li><a href="#career-path">キャリアパス</a></li>
+        <li><a href="#vs-roles">関連職種との違い</a></li>
+        <li><a href="#roadmap">未経験からの道のり</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>資格・学習との関係</h2>
+      <p>
+        データアナリストに必須なのは資格より<strong>SQLと可視化の実務力</strong>です。一方で、G検定ではビッグデータやデータ活用の背景知識が問われ、生成AIパスポートでは業務でのAI活用・情報セキュリティの考え方が整理できます。面接では「指標の定義」「集計ロジック」「グラフの読み取り方」を説明できるかが見られます。
+      </p>
+      <p>
+        よくある誤解は、<strong>「データアナリスト＝Excelが使えれば十分」</strong>という考え方です。小規模な現場ではそれでも回りますが、採用求人ではSQL、ダッシュボードツール、再現可能なクエリ管理が前提となることがほとんどです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>基礎概念を演習で確認する</strong></p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-333/">一問一答 TF-333（ビッグデータ）</a>、<a href="../../exams/g-kentei/drill/q/tf-221/">TF-221（相関）</a>
+        </p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0205/">TF-0205（翻訳支援と確認）</a> · 関連記事：<a href="../data-scientist/">データサイエンティストとは</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>データアナリストとは</h2>
+      <p>
+        データアナリストは、<strong>Data Analyst</strong>として、営業・マーケティング・プロダクト・経理などの部門が必要とする<strong>数値の見える化</strong>を担います。単発の集計だけでなく、週次・月次のレポートやダッシュボードを維持し、異常値やトレンドを早期に共有する役割もあります。
+      </p>
+      <p>
+        生成AIツールの普及以降、SQLの下書きやグラフ説明文のたたき台をAIに任せ、人間が定義と解釈を確認する働き方も増えています。ただし、<strong>KPIの定義ズレや集計ミス</strong>はビジネス判断に直結するため、最終的な責任はアナリスト側にあります。
+      </p>
+    </section>
+
+    <section id="job">
+      <h2>仕事内容</h2>
+      <p>組織によって分担は異なりますが、データアナリストに期待されやすい業務は次のとおりです。</p>
+      <figure class="tool-figure">
+        <img src="../../assets/images/career/data-analyst/role-flow.png" alt="データアナリストの業務フロー：要件確認、データ取得、加工集計、可視化、報告共有、改善追跡" width="960" height="300" loading="lazy">
+        <figcaption>データアナリストの典型的な業務フロー（当サイト作成）</figcaption>
+      </figure>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>要件・KPIの確認</h3>
+          <p>「何を・いつ・誰向けに」測るかをすり合わせ。指標定義書やデータ辞書の更新も。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>データ取得（SQL）</h3>
+          <p>倉庫やトランザクションDBから抽出。JOIN・ウィンドウ関数・期間比較が日常業務に。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>加工・集計</h3>
+          <p>部門別・チャネル別・コホート別の切り口。重複排除と母数の整合を確認する。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>可視化・ダッシュボード</h3>
+          <p>Looker、Tableau、Power BI、スプレッドシート。見る人が迷わない設計が重要。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>報告・ストーリーテリング</h3>
+          <p>数値の背景と次のアクションをセットで伝える。定例MTGでの説明が中心のことも。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>改善の追跡</h3>
+          <p>施策前後のKPI変化をフォロー。定義変更時は過去数値との比較可能性に注意。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>必要スキル</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>領域</th>
+            <th>具体例</th>
+            <th>重要度の目安</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SQL</strong></td>
+            <td>SELECT/JOIN、集計、サブクエリ、BigQuery/Snowflake/Redshift</td>
+            <td>必須</td>
+          </tr>
+          <tr>
+            <td><strong>BI・可視化</strong></td>
+            <td>Looker、Tableau、Power BI、Googleスプレッドシート</td>
+            <td>必須</td>
+          </tr>
+          <tr>
+            <td><strong>基礎統計</strong></td>
+            <td>平均・中央値、前年比、構成比、単純な相関の読み方</td>
+            <td>必須</td>
+          </tr>
+          <tr>
+            <td><strong>ドメイン知識</strong></td>
+            <td>EC、SaaS、広告、小売など業界のKPI理解</td>
+            <td>実務で差がつく</td>
+          </tr>
+          <tr>
+            <td><strong>Python（任意）</strong></td>
+            <td>pandas、自動レポート、Notebook</td>
+            <td>中級以上で重視</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="salary">
+      <h2>年収相場</h2>
+      <p>
+        当サイトの職種マスタでは、データアナリストの年収目安を<strong>400万〜800万円</strong>としています（<strong>2026年6月時点</strong>の一般的な相場感）。<a href="../data-scientist/">データサイエンティスト</a>より入りやすい帯域ですが、高度なSQL・ドメイン特化・英語要件がある求人では上限が上がります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>区分</th>
+            <th>年収の目安（日本・一般論）</th>
+            <th>補足</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ジュニア</strong></td>
+            <td>400万〜500万円前後</td>
+            <td>定型レポートの作成・ダッシュボード更新から</td>
+          </tr>
+          <tr>
+            <td><strong>ミドル</strong></td>
+            <td>500万〜650万円前後</td>
+            <td>部門横断の指標設計・自律的な分析</td>
+          </tr>
+          <tr>
+            <td><strong>シニア</strong></td>
+            <td>650万〜800万円以上</td>
+            <td>分析方針のリード・後輩育成・データ基盤との連携</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="career-path">
+      <h2>キャリアパス</h2>
+      <ol class="tool-steps">
+        <li>
+          <strong>ビジネスアナリスト / 部門アナリスト</strong>
+          <p>特定部門のKPIオーナー。営業・マーケ・CSなどに深く入り込む。</p>
+        </li>
+        <li>
+          <strong>データサイエンティスト寄り</strong>
+          <p>Python・統計・実験設計のスキルを足し、モデル構築や仮説検証へ。</p>
+        </li>
+        <li>
+          <strong>データエンジニア寄り</strong>
+          <p>パイプライン・dbt・データ品質の改善。SQLの先に基盤側へ。</p>
+        </li>
+        <li>
+          <strong>アナリティクスリード・マネジメント</strong>
+          <p>複数ダッシュボードとチームを統括。採用・育成も担当。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="vs-roles">
+      <h2>関連職種との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>職種</th>
+            <th>主な焦点</th>
+            <th>データアナリストとの違い</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong><a href="../data-scientist/">データサイエンティスト</a></strong></td>
+            <td>仮説検証・モデル・意思決定</td>
+            <td>統計・MLの比重が高い。アナリストはレポーティング寄りのJDが多い。</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../ai-engineer/">AIエンジニア</a></strong></td>
+            <td>AI機能の実装</td>
+            <td>プログラミングとモデル本番化が中心。アナリストはBI・SQLが中心。</td>
+          </tr>
+          <tr>
+            <td><strong>ビジネスアナリスト（BA）</strong></td>
+            <td>要件定義・業務設計</td>
+            <td>システム開発の橋渡しが多い。データアナリストは数値分析が中心。</td>
+          </tr>
+          <tr>
+            <td><strong>データエンジニア</strong></td>
+            <td>データ基盤・ETL</td>
+            <td>パイプライン構築が中心。アナリストはその上の集計・可視化。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="roadmap">
+      <h2>未経験からの道のり</h2>
+      <ol class="tool-steps">
+        <li>
+          <strong>SQLの基礎（1〜2か月）</strong>
+          <p>SELECT、JOIN、GROUP BYを習得。公開データやKaggleのSQL課題で練習。</p>
+        </li>
+        <li>
+          <strong>BI・可視化（1〜2か月）</strong>
+          <p>スプレッドシートまたは無料枠のBIでダッシュボードを1つ完成させる。</p>
+        </li>
+        <li>
+          <strong>ポートフォリオ（1か月）</strong>
+          <p>「問い→SQL→グラフ→示唆」をREADME付きでGitHubに公開。</p>
+        </li>
+        <li>
+          <strong>社内実務 or 副業（継続）</strong>
+          <p>現職の数字報告を自動化する、小規模案件で実績を積む。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>未経験から入りやすいデータ職の入口になりやすい</td>
+            <td>定型業務が多く、マンネリ化しやすい</td>
+          </tr>
+          <tr>
+            <td>ビジネスに近い位置で成果が見えやすい</td>
+            <td>急な集計依頼で優先度が乱れやすい</td>
+          </tr>
+          <tr>
+            <td>データサイエンティスト・エンジニアへステップアップしやすい</td>
+            <td>KPI定義の争いに巻き込まれやすい</td>
+          </tr>
+          <tr>
+            <td>生成AIで生産性を上げる余地が大きい</td>
+            <td>データ品質問題の根本原因まで届かないことも</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>データアナリストとデータサイエンティストの違いは？</summary>
+          <p class="tool-faq-a">データアナリストはSQL・BI・可視化によるKPI追跡に比重が置かれることが多く、データサイエンティストは仮説検証・統計・機械学習に比重が置かれることが多いです。詳しくは<a href="../data-scientist/">データサイエンティストの解説</a>も参照してください。</p>
+        </details>
+        <details>
+          <summary>データアナリストに必要なスキルは？</summary>
+          <p class="tool-faq-a">SQL、BIツール、基礎統計、ビジネス文脈の理解が求められます。Pythonは必須ではありませんが、あるとキャリアの選択肢が広がります。</p>
+        </details>
+        <details>
+          <summary>データアナリストの年収相場は？</summary>
+          <p class="tool-faq-a">経験・業界により幅がありますが、おおむね400万〜800万円前後が目安となることが多いです（2026年6月時点の一般的な相場感）。</p>
+        </details>
+        <details>
+          <summary>未経験からデータアナリストになれますか？</summary>
+          <p class="tool-faq-a">可能です。SQLとBIのスキルを独学で積み、ポートフォリオで集計・可視化の実例を示すのが典型的なルートです。</p>
+        </details>
+        <details>
+          <summary>文系出身でも大丈夫ですか？</summary>
+          <p class="tool-faq-a">文系出身で活躍している例は多いです。論理的な集計思考と、数字を言葉で説明する力が重要です。数学の高度な知識より、SQLと業務理解のほうが日常では効く場面が多いです。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するキャリア記事</h2>
+        <ul class="tool-related-list">
+          <li><a href="../data-scientist/">データサイエンティストとは</a></li>
+          <li><a href="../data-scientist-vs-analyst/">データサイエンティストとデータアナリストの違い</a></li>
+          <li><a href="../ai-engineer/">AIエンジニアとは</a></li>
+          <li><a href="../machine-learning-engineer/">機械学習エンジニアとは</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">キャリア記事一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/">G検定 試験対策</a></li>
+          <li><a href="../../exams/genai-passport/">生成AIパスポート 試験対策</a></li>
+          <li><a href="../../tools/cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI（用語）</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
