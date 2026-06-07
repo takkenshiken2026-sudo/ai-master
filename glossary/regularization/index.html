@@ -16,10 +16,17 @@
   <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"DefinedTerm","name":"正則化","alternateName":["Regularization"],"description":"過学習を抑えるためモデルに制約を加える技法の総称。"},
-    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"正則化と正規化は同じ？","acceptedAnswer":{"@type":"Answer","text":"違う。正則化は過学習抑制、正規化層は学習の安定化が主目的。"}}]}
-  ]}
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"正則化","alternateName":["Regularization"],"description":"過学習を抑えるためモデルに制約を加える技法の総称。"},
+      {"@type":"FAQPage","mainEntity":[
+        {"@type":"Question","name":"正則化と正規化は同じ？","acceptedAnswer":{"@type":"Answer","text":"違う。正則化は過学習抑制、正規化層は学習の安定化が主目的。"}},
+        {"@type":"Question","name":"L1とL2正則化の違いは？","acceptedAnswer":{"@type":"Answer","text":"L1は絶対値和のペナルティでスパース化、L2は二乗和のペナルティで重みを全体的に小さくする。"}},
+        {"@type":"Question","name":"ドロップアウトは正則化？","acceptedAnswer":{"@type":"Answer","text":"はい。学習時にユニットを無効化して過学習を抑える正則化手法の一つ。"}}
+      ]}
+    ]
+  }
   </script>
 </head>
 <body class="page-body">
@@ -34,7 +41,11 @@
 </nav>
 <main class="page-wrap page-wrap--article">
   <nav class="breadcrumb" aria-label="パンくずリスト">
-    <ol><li><a href="../../index.html">ホーム</a></li><li><a href="../index.html">用語辞典</a></li><li aria-current="page">正則化</li></ol>
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">正則化</li>
+    </ol>
   </nav>
   <header class="tool-hero tool-hero--article">
     <p class="tool-hero-eyebrow">基礎・機械学習</p>
@@ -43,56 +54,158 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
-      <strong>正則化</strong>（Regularization）は、<a href="../overfitting/">過学習</a>を抑え<strong>汎化性能を高める</strong>ために、モデルの複雑さや重みに制約を加える技法の総称です。本記事は数式の導出ではなく、試験で問われる<strong>代表手法の対応表・ドロップアウトとの関係・正規化層との混同</strong>に焦点を当てます。
+      <strong>正則化</strong>（Regularization）は、<a href="../overfitting/">過学習</a>を抑え<strong>汎化性能を高める</strong>ために、モデルの複雑さや重みに制約を加える技法の総称です。本記事は数式の厳密な導出ではなく、試験で問われる<strong>「なぜ必要か」「L1とL2の違い」「ドロップアウト・早期終了との役割分担」「正規化層との混同」</strong>——対策の地図——に焦点を当てます。
     </p>
     <nav class="tool-toc" aria-label="目次">
       <p class="tool-toc-title">目次</p>
       <ol>
         <li><a href="#exam-study">試験で問われる見方</a></li>
-        <li><a href="#what-is">正則化とは</a></li>
-        <li><a href="#methods">代表手法</a></li>
+        <li><a href="#why">なぜ正則化が必要か</a></li>
+        <li><a href="#what-is">正則化の考え方</a></li>
+        <li><a href="#l1-l2">L1とL2の違い</a></li>
+        <li><a href="#methods">代表手法一覧</a></li>
+        <li><a href="#hyperparam">正則化係数とハイパーパラメータ</a></li>
         <li><a href="#vs-norm">正規化層との違い</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
       </ol>
     </nav>
     <section id="exam-study">
       <h2>試験で問われる見方</h2>
-      <p>○：正則化は<strong>過学習を抑えて汎化性能を高める</strong>（<a href="../../exams/g-kentei/drill/q/tf-068/">TF-068</a>）。L1・L2・<a href="../dropout/">ドロップアウト</a>が代表例。</p>
-      <p>×：ドロップアウトの説明を「重みにペナルティを課する」だけで済ませる——これはL1/L2のイメージ（<a href="../../exams/genai-passport/practice/q/hq-0133/">HQ-0133</a>）。</p>
+      <p>
+        ○：正則化は<strong>過学習を抑えて汎化性能を高める</strong>（<a href="../../exams/g-kentei/drill/q/tf-068/">TF-068</a>、<a href="../../exams/g-kentei/drill/q/tf-437/">TF-437</a>）。L1・L2・<a href="../dropout/">ドロップアウト</a>が代表例。
+      </p>
+      <p>
+        ○：過学習対策として<strong>正則化・データ拡張・早期終了・交差検証</strong>などを組み合わせて考える（<a href="../../exams/g-kentei/practice/q/g-008/">G-008</a>、<a href="../../exams/g-kentei/practice/q/g-112/">G-112</a>）。正則化単体が「魔法の銀弾」ではない。
+      </p>
+      <p>
+        ○：<strong>正則化係数</strong>（λなど）は学習前に設定する<strong>ハイパーパラメータ</strong>。モデル重みとは別（<a href="../../exams/g-kentei/practice/q/g-086/">G-086</a>）。
+      </p>
+      <p>
+        ×：ドロップアウトの説明を「重みにペナルティを課する」だけで済ませる——これはL1/L2のイメージ（<a href="../../exams/genai-passport/practice/q/hq-0133/">HQ-0133</a>）。ドロップアウトは<strong>ユニットの無効化</strong>が要点。
+      </p>
       <div class="tool-callout">
         <p><strong>演習で確認する</strong></p>
-        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-068/">TF-068</a>、<a href="../../exams/g-kentei/drill/q/tf-437/">TF-437</a>、<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a>、<a href="../../exams/g-kentei/practice/domain/domain-06/">ディープラーニングの概要</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-068/">TF-068</a>、<a href="../../exams/g-kentei/drill/q/tf-437/">TF-437</a>、<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a>、<a href="../../exams/g-kentei/practice/q/g-037/">G-037</a>、<a href="../../exams/g-kentei/practice/domain/domain-06/">ディープラーニングの概要</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0133/">HQ-0133</a></p>
       </div>
     </section>
-    <section id="what-is">
-      <h2>正則化とは</h2>
-      <p>損失関数に<strong>ペナルティ項</strong>を足す、または学習の仕方を変えることで、訓練誤差だけを追いすぎないようにします。「複雑すぎるモデル」を抑え、未知データでも安定する解を求めます。</p>
+    <section id="why">
+      <h2>なぜ正則化が必要か</h2>
+      <p>
+        モデルが複雑すぎると、訓練データのノイズまで覚えてしまい、<strong>訓練誤差は下がるのに検証誤差が上がる</strong>——いわゆる<a href="../overfitting/">過学習</a>——に陥ります（G-088）。表現力を上げることと汎化することはトレードオフの関係にあります。
+      </p>
+      <p>
+        正則化は「訓練誤差だけを最小化する」のではなく、<strong>シンプルで安定した解</strong>を選ぶようモデルに働きかけます。データ量が少ない、特徴量が多い、ニューラルネットが深い、といった状況で特に効果が問われます。
+      </p>
     </section>
-    <section id="methods">
-      <h2>代表手法</h2>
+    <section id="what-is">
+      <h2>正則化の考え方</h2>
+      <p>
+        代表的なイメージは、<a href="../loss-function/">損失関数</a>に<strong>ペナルティ項</strong>を足すことです。
+      </p>
+      <p>
+        <em>最適化する量 ＝ 予測誤差 ＋ λ ×（モデルの複雑さへの罰）</em>
+      </p>
+      <p>
+        λ（ラムダ）は<strong>正則化係数</strong>で、大きいほど「複雑さへの罰」が強くなり、モデルは控えめな重みを選びやすくなります。小さすぎれば過学習、大きすぎれば<a href="../overfitting/">未学習</a>に近づくため、検証データで調整します。
+      </p>
+      <p>
+        ペナルティを損失に足さない手法——<a href="../dropout/">ドロップアウト</a>や<a href="../early-stopping/">早期終了</a>——も、広い意味では正則化の一族として試験に登場します。
+      </p>
+    </section>
+    <section id="l1-l2">
+      <h2>L1とL2の違い</h2>
+      <p>線形モデルやニューラルネットの重みに対するペナルティとして、L1とL2が頻出です。</p>
       <table class="tool-spec-table">
-        <thead><tr><th>手法</th><th>仕組み</th><th>試験のキーワード</th></tr></thead>
+        <thead>
+          <tr><th>種類</th><th>ペナルティの形</th><th>効き方</th><th>関連用語</th></tr>
+        </thead>
         <tbody>
-          <tr><td><strong>L1正則化</strong></td><td>重みの絶対値和にペナルティ</td><td>スパース化・特徴選択</td></tr>
-          <tr><td><strong>L2正則化</strong></td><td>重みの二乗和にペナルティ</td><td>リッジ回帰</td></tr>
-          <tr><td><strong>ドロップアウト</strong></td><td>学習時にユニットを無効化</td><td>共依存の抑制</td></tr>
-          <tr><td><strong><a href="../early-stopping/">早期終了</a></strong></td><td>検証悪化で学習停止</td><td>エポック制御</td></tr>
+          <tr>
+            <td><strong>L1正則化</strong></td>
+            <td>重みの絶対値の和</td>
+            <td>不要な重みを<strong>ゼロに近づける</strong>（スパース化）。特徴選択に近い効果</td>
+            <td>Lasso回帰</td>
+          </tr>
+          <tr>
+            <td><strong>L2正則化</strong></td>
+            <td>重みの二乗和</td>
+            <td>重みを<strong>全体的に小さく</strong>保つ。極端な値を抑える</td>
+            <td>リッジ回帰</td>
+          </tr>
         </tbody>
       </table>
+      <p>
+        試験では「L1＝スパース」「L2＝リッジ」の対応と、どちらも<strong>過学習抑制</strong>が目的である点を押さえます（G-037の（あ）（い）の並び問題など）。
+      </p>
+    </section>
+    <section id="methods">
+      <h2>代表手法一覧</h2>
+      <p>正則化は一つの技法ではなく、<strong>過学習を抑える工夫の総称</strong>です。試験では次の対応が重要です。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>手法</th><th>仕組み</th><th>覚え方</th></tr></thead>
+        <tbody>
+          <tr><td><strong>L1 / L2</strong></td><td>損失に重みのペナルティを追加</td><td>「重みを小さく／ゼロに」</td></tr>
+          <tr><td><strong><a href="../dropout/">ドロップアウト</a></strong></td><td>学習時にニューロンをランダム無効化</td><td>「ユニットを落とす」。推論時は通常オフ</td></tr>
+          <tr><td><strong><a href="../early-stopping/">早期終了</a></strong></td><td>検証性能悪化で学習を打ち切る</td><td>「学習の長さを制御」</td></tr>
+          <tr><td><strong>データ拡張</strong></td><td>反転・切り出しなどで多様性を増やす</td><td>画像などで有効。正則化効果もある</td></tr>
+          <tr><td><strong>モデル簡素化</strong></td><td>層・パラメータ数を減らす</td><td>表現力と汎化のバランス</td></tr>
+        </tbody>
+      </table>
+      <p>
+        実務では複数を<strong>組み合わせる</strong>ことが多いです。例：CNNでデータ拡張＋ドロップアウト＋早期終了、線形モデルでL2正則化、など。
+      </p>
+    </section>
+    <section id="hyperparam">
+      <h2>正則化係数とハイパーパラメータ</h2>
+      <p>
+        L1/L2の強さを決める λ は、<a href="../gradient-descent/">勾配降下法</a>で更新される<strong>モデル重みとは別物</strong>です。学習率や木の深さと同様、<strong>ハイパーパラメータ</strong>として学習前（または検証セットを使った探索で）設定します（G-086）。
+      </p>
+      <p>
+        グリッドサーチやランダムサーチで λ を探索するのは、正則化の「強さ」と汎化性能のバランスを取るためです。訓練データだけで決めると過学習した設定を選びやすいため、<strong>検証データや交差検証</strong>がセットで問われます。
+      </p>
     </section>
     <section id="vs-norm">
       <h2>正規化層との違い</h2>
-      <p><strong>バッチ正規化</strong>などは中間表現の分布を整え<strong>学習を安定化</strong>します。名称が似ていますが、正則化は主に<strong>過学習抑制</strong>が目的です（G-299）。</p>
+      <p>
+        名称が似ているため、試験で混同されやすいのが<strong>正規化層</strong>（バッチ正規化・レイヤー正規化など）です。
+      </p>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>目的</th><th>典型例</th></tr></thead>
+        <tbody>
+          <tr><td><strong>正規化層</strong></td><td>中間表現の分布を整え<strong>学習を安定化</strong></td><td>バッチ正規化、レイヤー正規化</td></tr>
+          <tr><td><strong>正則化</strong></td><td><strong>過学習を抑える</strong>制約・ペナルティ</td><td>L1/L2、ドロップアウト、早期終了</td></tr>
+        </tbody>
+      </table>
+      <p>
+        G-299の正解は「正規化層は分布を整える層、正則化は過学習抑制の考え方」という整理です。「正則化＝プーリング層の別名」などは明確な×です。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <p>選択肢の<strong>主語と説明の対応</strong>がずれているパターンが頻出です。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ドロップアウト＝重みにペナルティ</td><td>ドロップアウト＝学習時のユニット無効化（HQ-0133）</td></tr>
+          <tr><td>正則化＝正規化層</td><td>目的が異なる（G-299）</td></tr>
+          <tr><td>正則化＝重みをすべて0に固定</td><td>制約・ペナルティであり、単純なゼロ固定ではない（G-282・G-306の誤答パターン）</td></tr>
+          <tr><td>交差検証だけで過学習は防げる</td><td>評価手法。対策は正則化等と併用（G-112）</td></tr>
+        </tbody>
+      </table>
     </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
-        <details><summary>正則化を強くしすぎると？</summary><p class="tool-faq-a">未学習（Underfitting）に近づき、訓練誤差も下がりにくくなります。検証性能でバランスを取ります。</p></details>
-        <details><summary>データ拡張は正則化？</summary><p class="tool-faq-a">広い意味では正則化効果がありますが、試験ではL1/L2・ドロップアウト・早期終了と並べて覚えるのが安全です。</p></details>
+        <details><summary>正則化を強くしすぎると？</summary><p class="tool-faq-a">未学習（Underfitting）に近づき、訓練誤差も下がりにくくなります。検証性能の曲線を見ながら λ やドロップアウト率を調整します。</p></details>
+        <details><summary>データ拡張は正則化？</summary><p class="tool-faq-a">広い意味では正則化効果があります。試験では L1/L2・ドロップアウト・早期終了と並べて覚え、過学習対策の選択肢として扱うのが安全です。</p></details>
+        <details><summary>LLMのファインチューニングでも正則化する？</summary><p class="tool-faq-a">はい。Weight decay（L2に近い）、ドロップアウト、早期終了、LoRAなどパラメータを絞る手法も過学習抑制に使われます。</p></details>
+        <details><summary>L1とL2は同時に使える？</summary><p class="tool-faq-a">Elastic Netのように併用する手法もあります。G検定では個別の定義と効果の違いが中心です。</p></details>
       </div>
     </section>
     <aside class="tool-related-wrap">
@@ -103,6 +216,7 @@
           <li><a href="../dropout/">ドロップアウト</a></li>
           <li><a href="../early-stopping/">早期終了</a></li>
           <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
           <li><a href="../machine-learning/">機械学習</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
