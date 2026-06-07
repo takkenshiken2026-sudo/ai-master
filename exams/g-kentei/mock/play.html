@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex">
   <title>G検定 模擬試験 — AI Master</title>
   <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
@@ -44,7 +43,7 @@
 
   <header class="hub-header">
     <h1 id="mock-title">G検定 模擬試験</h1>
-    <p class="hub-intro">制限時間内にすべての問題に回答してください。解答後に解説を確認できます。</p>
+    <p class="hub-intro" id="mock-intro">制限時間内にすべての問題に回答してください。解答後に解説を確認できます。</p>
   </header>
 
   <div id="exam-player" class="quiz">
@@ -66,7 +65,7 @@
       </article>
 
       <p class="quiz-hint quiz-hint--tf" hidden></p>
-      <p class="quiz-hint quiz-hint--choice" hidden></p>
+      <p class="quiz-hint quiz-hint--choice" hidden>キーボード <kbd>1</kbd>〜<kbd>4</kbd> で選択 · <kbd>Enter</kbd> で次へ</p>
 
       <div class="quiz-choices"></div>
 
@@ -95,23 +94,32 @@
 (function () {
   const params = new URLSearchParams(location.search);
   const examId = params.get("exam") || "mock_01";
+  const isSample = examId === "sample";
   const root = document.getElementById("exam-player");
   root.dataset.config = JSON.stringify({
     mode: "choice",
     dataUrl: "../../../assets/data/g-kentei/mock.json",
     examId: examId,
+    storagePrefix: "g-kentei",
     storageKey: "mock",
-    timeLimitMinutes: 120,
+    timeLimitMinutes: isSample ? 0 : 120,
     backUrl: "index.html",
+    mockBriefing: true,
   });
 
   fetch("../../../assets/data/g-kentei/mock.json")
     .then((r) => r.json())
     .then((data) => {
       const exam = data.exams?.[examId];
-      if (exam) {
-        document.getElementById("mock-title").textContent = "G検定 " + exam.title;
-        document.title = "G検定 " + exam.title + " — AI Master";
+      if (!exam) return;
+      document.getElementById("mock-title").textContent = "G検定 " + exam.title;
+      document.title = "G検定 " + exam.title + " — AI Master";
+      const minutes = isSample ? null : (data.timeLimitMinutes || 120);
+      const intro = document.getElementById("mock-intro");
+      if (intro) {
+        intro.textContent = minutes
+          ? `${exam.questionCount}問 · 制限時間${minutes}分。制限時間内にすべての問題に回答してください。解答後に解説を確認できます。`
+          : `${exam.questionCount}問のお試しです。操作感を確認してから本番形式に挑戦してください。`;
       }
     })
     .catch(() => {});

@@ -525,6 +525,48 @@
   margin: 0;
 }
 
+.quiz-mock-briefing {
+  max-width: 520px;
+  margin: 8px auto 0;
+}
+
+.quiz-mock-briefing__card {
+  padding: 28px 28px 24px;
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+}
+
+.quiz-mock-briefing__title {
+  margin: 0 0 8px;
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--ink);
+}
+
+.quiz-mock-briefing__meta {
+  margin: 0 0 16px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--blue);
+}
+
+.quiz-mock-briefing__rules {
+  margin: 0 0 22px;
+  padding-left: 1.2em;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.quiz-mock-briefing__rules li + li {
+  margin-top: 6px;
+}
+
+.quiz-mock-briefing__start {
+  width: 100%;
+}
+
 .quiz-mock-closed {
   max-width: 420px;
   margin: 24px auto 0;

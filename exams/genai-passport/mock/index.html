@@ -19,7 +19,6 @@
   <link rel="stylesheet" href="../../../assets/css/hub.css">
   <link rel="stylesheet" href="../../../assets/css/seo.css">
   <link rel="stylesheet" href="../../../assets/css/exams.css">
-  <link rel="stylesheet" href="../../../assets/css/exam-player.css">
 </head>
 <body class="page-body">
 
@@ -45,16 +44,12 @@
 
   <header class="hub-header">
     <h1>生成AIパスポート 模擬試験</h1>
-    <p class="hub-intro">制限時間60分の模擬試験で本番に近い体験ができます。3回分の問題を用意しています。</p>
+    <p class="hub-intro">本番と同じ60問・60分の形式で受験できます。3回分の問題を用意しています。まずはサンプル3問で操作感を確認してから挑戦してください。</p>
   </header>
 
-  <div id="mock-pick-grid" class="mock-pick-grid" aria-label="模擬試験一覧" data-mock-config='{"dataUrl":"../../../assets/data/genai-passport/mock.json","examOrder":["mock_01","mock_02","mock_03"]}'>
+  <div id="mock-pick-list" class="exam-mode-list" aria-label="模擬試験一覧" data-mock-config='{"dataUrl":"../../../assets/data/genai-passport/mock.json","examOrder":["mock_01","mock_02","mock_03"]}'>
     <p>読み込み中…</p>
   </div>
-
-  <p style="font-size:var(--text-sm);color:var(--text-muted);margin-top:-32px;margin-bottom:48px;">
-    <a id="mock-sample-link" href="#" hidden>サンプル3問を試す</a>
-  </p>
 </main>
 
 <script src="../../../assets/js/exam-flags.js"></script>

@@ -95,6 +95,7 @@
       this.ensureSetupPanel();
       this.ensureCompleteUI();
       this.ensureMockClosedPanel();
+      this.ensureMockBriefingPanel();
 
       this.el = {
         bar: $(".quiz-bar", root),
@@ -126,6 +127,7 @@
         completeMessage: $(".quiz-complete__message", root),
         completeShare: $(".quiz-complete__share-x", root),
         mockClosed: $(".quiz-mock-closed", root),
+        mockBriefing: $(".quiz-mock-briefing", root),
       };
 
       this.initUI();
@@ -137,6 +139,7 @@
       const done = mode === "complete";
       const paywall = mode === "paywall";
       const mockClosed = mode === "mock-closed";
+      const mockBriefing = mode === "mock-briefing";
 
       if (this.el.setup) this.el.setup.hidden = !setup;
       if (this.el.bar) this.el.bar.hidden = !play;
@@ -144,6 +147,7 @@
       if (this.el.complete) this.el.complete.hidden = !done;
       if (this.el.paywall) this.el.paywall.hidden = !paywall;
       if (this.el.mockClosed) this.el.mockClosed.hidden = !mockClosed;
+      if (this.el.mockBriefing) this.el.mockBriefing.hidden = !mockBriefing;
     }
 
     initUI() {
@@ -225,6 +229,34 @@
       this.root.appendChild(panel);
       panel.querySelector(".quiz-mock-closed__back")?.addEventListener("click", () => {
         window.location.href = this.config.backUrl || "../";
+      });
+    }
+
+    ensureMockBriefingPanel() {
+      if ($(".quiz-mock-briefing", this.root)) return;
+      const panel = document.createElement("div");
+      panel.className = "quiz-mock-briefing";
+      panel.hidden = true;
+      panel.innerHTML = `
+        <div class="quiz-mock-briefing__card">
+          <h2 class="quiz-mock-briefing__title">模擬試験</h2>
+          <p class="quiz-mock-briefing__meta"></p>
+          <ul class="quiz-mock-briefing__rules">
+            <li>四肢択一形式で、本番と同じ問題数に挑戦します</li>
+            <li>1問回答すると解説を確認できます</li>
+            <li>途中でページを閉じても進捗は保存されます</li>
+          </ul>
+          <button type="button" class="quiz-btn quiz-btn--primary quiz-mock-briefing__start">模擬試験を開始</button>
+        </div>
+      `;
+      const bar = $(".quiz-bar", this.root);
+      if (bar) {
+        this.root.insertBefore(panel, bar);
+      } else {
+        this.root.prepend(panel);
+      }
+      panel.querySelector(".quiz-mock-briefing__start")?.addEventListener("click", () => {
+        this.beginMockSession();
       });
     }
 
@@ -329,6 +361,50 @@
       this.loadProgress();
       this.applyDeepLinkQuestion();
       this.loadSessionScore();
+      if (this.isPaywalled()) {
+        this.showPaywall();
+        return;
+      }
+      if (this.needsMockBriefing()) {
+        this.showMockBriefing();
+        return;
+      }
+      this.setView("play");
+      this.startTimer();
+      this.render();
+    }
+
+    needsMockBriefing() {
+      if (!this.isMockSession() || this.config.mockBriefing === false) return false;
+      if (this.index > 0) return false;
+      const saved = localStorage.getItem(storageKey(this.config, "index"));
+      if (saved !== null && parseInt(saved, 10) > 0) return false;
+      if (this.deadline) return false;
+      return true;
+    }
+
+    showMockBriefing() {
+      const panel = this.el.mockBriefing || $(".quiz-mock-briefing", this.root);
+      if (!panel) {
+        this.setView("play");
+        this.startTimer();
+        this.render();
+        return;
+      }
+      const exam = this.data.exams?.[this.config.examId];
+      const minutes = this.config.timeLimitMinutes ?? this.data.timeLimitMinutes;
+      const title = $(".quiz-mock-briefing__title", panel);
+      const meta = $(".quiz-mock-briefing__meta", panel);
+      if (title) title.textContent = exam?.title || "模擬試験";
+      if (meta) {
+        meta.textContent = minutes
+          ? `${this.questions.length}問 · 制限時間 ${minutes}分`
+          : `${this.questions.length}問 · 制限時間なし`;
+      }
+      this.setView("mock-briefing");
+    }
+
+    beginMockSession() {
       if (this.isPaywalled()) {
         this.showPaywall();
         return;
