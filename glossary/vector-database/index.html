@@ -50,7 +50,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -64,7 +64,9 @@
         <li><a href="#vs-others">近い用語との違い</a></li>
         <li><a href="#rag-role">RAGでの役割</a></li>
         <li><a href="#ops">運用・リスク</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -120,15 +122,36 @@
         <li>検索精度はDBだけでは決まらない（埋め込み・チャンク設計）</li>
       </ul>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ベクトルDB＝RAG</td><td>ストア vs 検索＋生成の全体手法</td></tr>
+          <tr><td>ベクトルDB＝チャンク</td><td>ベクトル保存基盤 vs 文書の分割片（<a href="../../exams/genai-passport/practice/q/hq-0448/">HQ-0448</a>）</td></tr>
+          <tr><td>個人番号の行政台帳</td><td>埋め込みベクトルの意味検索用DB（<a href="../../exams/genai-passport/drill/q/tf-0233/">TF-0233</a>は×）</td></tr>
+          <tr><td>ベクトルDBがあれば検索精度100%</td><td>埋め込み・チャンク設計にも依存</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
         <details><summary>ベクトルDB＝RAG？</summary><p class="tool-faq-a">いいえ。RAGの構成要素のひとつです。</p></details>
         <details><summary>通常のDBで代用できる？</summary><p class="tool-faq-a">小規模なら可能ですが、大規模な意味検索では専用DBや拡張の利用が一般的です。</p></details>
-        <details><summary>行政のマイナンバー台帳？</summary><p class="tool-faq-a">いいえ（TF-0233）。AI文脈の技術用語です。</p></details>
+        <details><summary>行政のマイナンバー台帳？</summary><p class="tool-faq-a">いいえ（<a href="../../exams/genai-passport/drill/q/tf-0233/">TF-0233</a>）。AI文脈の技術用語です。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232 · 埋め込み保存・意味検索</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0233/">TF-0233 · 行政台帳は×</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0449/">HQ-0449 · ベクトルDBの定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0416/">HQ-0416 · 意味的な近さで検索</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
