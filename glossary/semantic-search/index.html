@@ -44,7 +44,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約5分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -58,7 +58,9 @@
         <li><a href="#spectrum">検索方式のスペクトル</a></li>
         <li><a href="#implementation">実装との対応</a></li>
         <li><a href="#limits">限界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -113,6 +115,18 @@
         <li>意味が近くても<strong>事実が誤っている文書</strong>は誤答の元（<a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171</a>）</li>
       </ul>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>セマンティック検索＝RAG</td><td>意味で探す考え方 vs 検索＋生成全体（<a href="../../exams/g-kentei/drill/q/tf-174/">TF-174</a>）</td></tr>
+          <tr><td>セマンティック検索＝ベクトルDB</td><td>目的・概念 vs 格納基盤（<a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232</a>）</td></tr>
+          <tr><td>セマンティックセグメンテーション＝本記事</td><td>画像の領域分割 vs 文書検索（別文脈）</td></tr>
+          <tr><td>LLMの想起＝セマンティック検索</td><td>外部文書の意味検索はRAGの検索段階</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -121,7 +135,16 @@
         <details><summary>LLMに検索させればセマンティック？</summary><p class="tool-faq-a">LLM単体の知識想起と、外部文書のセマンティック検索は別です。RAGは後者を使います。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0232/">TF-0232 · 意味的な近さで検索</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-174/">TF-174 · RAGの定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0370/">HQ-0370 · RAGとの区別</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0171/">TF-0171 · 検索しても100%正確は×</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">

@@ -93,6 +93,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("AC", "規制・公平性", ["eu-ai-act", "fairness", "algorithmic-bias"]),
     ("AD", "検索・出力権利", ["hallucination-mitigation", "ai-generated-copyright", "vector-search"]),
     ("AE", "EU規制・監督", ["high-risk-ai", "human-in-the-loop", "conformity-assessment"]),
+    ("AF", "基礎・検索・データ", ["artificial-intelligence", "semantic-search", "data-sheet"]),
 ]
 
 REVISION_STATUS_LABEL = {

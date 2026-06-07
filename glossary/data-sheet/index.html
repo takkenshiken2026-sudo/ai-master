@@ -50,7 +50,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -64,7 +64,9 @@
         <li><a href="#sections">記載項目のチェックリスト</a></li>
         <li><a href="#vs-model-card">モデルカードとの違い</a></li>
         <li><a href="#limits">できること・できないこと</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -126,15 +128,36 @@
       </table>
       <p>データシートは<strong>説明責任の土台</strong>です。記載後も、前処理・評価・<a href="../human-in-the-loop/">人の確認</a>などの対策が必要です。</p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>データシート＝モデルカード</td><td>データセットの説明 vs モデルの説明</td></tr>
+          <tr><td>作成すれば偏りが自動消去</td><td>可視化・判断支援であり魔法ではない（<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414</a>）</td></tr>
+          <tr><td>データ量を増やせばシート不要</td><td>収集方法・偏りの記録は別（<a href="../../exams/g-kentei/drill/q/tf-284/">TF-284</a>）</td></tr>
+          <tr><td>データシート＝学習データそのもの</td><td>データについての説明資料（<a href="../../exams/genai-passport/drill/q/tf-0413/">TF-0413</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
-        <details><summary>データカードと同じ？</summary><p class="tool-faq-a">近い概念です。いずれも学習データの説明文書として語られます。試験では「データシート」の定義（TF-0413）を優先してください。</p></details>
+        <details><summary>データカードと同じ？</summary><p class="tool-faq-a">近い概念です。いずれも学習データの説明文書として語られます。試験では「データシート」の定義（<a href="../../exams/genai-passport/drill/q/tf-0413/">TF-0413</a>）を優先してください。</p></details>
         <details><summary>社内データにも必要？</summary><p class="tool-faq-a">規模やリスクによります。高リスク・共有範囲が広いデータほど、収集経緯と制約の文書化が重要です。</p></details>
         <details><summary>生成AIの学習データ公開義務は？</summary><p class="tool-faq-a">法制度・契約は変化します。データシートの考え方は「何が分かっているか／分からないか」を整理する実務に役立ちます。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0413/">TF-0413 · データシートの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414 · 偏り自動消去は×</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-284/">TF-284 · データ量の神話</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-283/">TF-283 · バイアスの多様な原因</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
