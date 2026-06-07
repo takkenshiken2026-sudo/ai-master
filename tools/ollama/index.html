@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ollamaの機能・料金・使い方を解説。ローカルLLMのCLI実行、Free/Pro/Maxプラン、LM Studioとの違いを2026年6月時点で整理。">
+  <title>Ollamaとは？ローカルLLMの機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/ollama/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Ollamaとは？ローカルLLMの機能・料金・使い方を解説">
+  <meta property="og:description" content="Ollamaをわかりやすく解説。ローカルLLMのCLI実行、Free/Pro/Maxプランを2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/ollama/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/ollama/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/ollama/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/ollama/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+        { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Ollama", "item": "https://ai-master.jp/tools/ollama/" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/ollama/#article",
+      "headline": "Ollamaとは？ローカルLLMの機能・料金・使い方を解説",
+      "description": "Ollamaをわかりやすく解説。ローカルLLMのCLI実行、Free/Pro/Maxプランを2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/ollama/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/ollama/og-hero.png",
+      "author": { "@type": "Organization", "name": "AI Master" },
+      "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+      "about": { "@type": "SoftwareApplication", "name": "Ollama" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Ollama",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "コマンド1行でローカルLLMを起動できるCLIツール。クラウドモデルへのアクセスも提供。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free $0（ローカル無制限）。Pro $20/月（2026年6月時点）"
+      },
+      "provider": { "@type": "Organization", "name": "Ollama", "url": "https://ollama.com" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Ollamaは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。自分のハードウェア上でのモデル実行は無制限で無料です。クラウドモデルの利用にはFree枠があり、より多く使う場合はPro $20/月などの有料プランがあります（2026年6月時点・公式Pricing）。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "OllamaとLM Studioの違いは？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OllamaはCLI中心で軽量にモデルを起動するツールです。LM StudioはGUIでモデル管理・チャットがしやすいデスクトップアプリです。開発・自動化ならOllama、GUIで試すならLM Studioという使い分けが一般的です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ollama runとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ターミナルでモデル名を指定してローカルLLMを起動・対話する基本コマンドです。例：ollama run llama3"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "クラウドモデルはログに残りますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "公式Pricingでは、プロンプトや応答データはログ・学習に使わないと明記されています（2026年6月時点）。業務利用では最新の公式ポリシーを確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "OllamaはChatGPTの代替になりますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ローカル実行や開発連携には向きますが、クラウドの最新モデルと同等の性能が常に得られるとは限りません。機密性と性能のトレードオフを理解した上で使い分けるのが現実的です。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Ollama</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/ollama/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Ollama · ローカル・上級者向け</p>
+          <h1>Ollamaとは？ローカルLLMの機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">コマンド1行でローカルLLMを起動。CLI・API・デスクトップアプリに対応</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">ローカル無料</span>
+        <span class="tool-category">CLI</span>
+        <span class="tool-category">クラウドプランあり</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>macOS / Windows / Linux</li><li>CLI・API</li><li>デスクトップアプリ</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/ollama/og-hero.png" alt="Ollamaの公式イメージ" width="1200" height="630" fetchpriority="high">
+      <figcaption>出典：Ollama公式（ollama.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Ollama</strong>は、<strong>ローカルPC上でLLMを簡単に起動</strong>するためのCLIツールです。<code>ollama run</code>の1コマンドでモデルをダウンロード・実行でき、開発者や上級者に広く使われています。近年は<strong>クラウドモデル</strong>へのアクセスも追加され、Free/Pro/Maxの料金プランが用意されています（2026年6月時点）。本記事では、<a href="#pricing">料金</a>、<a href="../lm-studio/">LM Studio</a>との違い、<a href="#misconception">試験での誤解</a>を整理します。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Ollamaとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">LM Studioとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>生成AIパスポートでは、<strong>クラウド型とローカル型</strong>、<strong>データのプライバシー</strong>が問われます。Ollamaは「自分のハードウェアでLLMを動かす」代表例として、クラウド送信リスクとの対比で覚えると試験と実務の両方で役立ちます。</p>
+      <p>「Ollama＝完全オフラインのみ」「ローカル＝学習に使われない」と混同しないこと。クラウドモデル利用時は通信が発生し、ポリシーはプラン・モードにより異なります。</p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0289/">一問一答 TF-0289（音声データの個人情報リスク）</a>、<a href="../../exams/genai-passport/drill/q/tf-0388/">TF-0388（AI生成物の確認）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Ollamaとは</h2>
+      <p>Ollamaは、ローカル環境でオープンウェイトのLLMを<strong>パッケージ化して配布・実行</strong>するプラットフォームです。Llama、Gemma、DeepSeekなど多数のモデルを<code>ollama pull</code>で取得し、<code>ollama run</code>で対話できます（公式サイト）。</p>
+      <p>REST APIを提供し、<a href="../cursor/">Cursor</a>などの開発ツールや自作アプリから接続する使い方も一般的です。2026年時点では、ローカル無制限に加え、<strong>クラウドホスト型の大規模モデル</strong>へのアクセスを料金プランで提供しています（公式Pricing）。</p>
+      <p>試験では、Ollamaを「チャットアプリ」ではなく<strong>LLMランタイム（実行環境）</strong>として整理すると理解しやすいです。</p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card"><h3>ローカルモデル実行</h3><p>自PCのCPU/GPUでLLMを実行。データは端末内に留まりやすい。</p></div>
+        <div class="tool-feature-card"><h3>CLI・API</h3><p>ターミナル操作とREST API。CI/CDやエージェント連携に向く。</p></div>
+        <div class="tool-feature-card"><h3>モデルライブラリ</h3><p>ollama.com/libraryで公開モデルを検索・取得。</p></div>
+        <div class="tool-feature-card"><h3>クラウドモデル</h3><p>大規模モデルをクラウド経由で利用（プラン別上限・公式Pricing）。</p></div>
+        <div class="tool-feature-card"><h3>デスクトップアプリ</h3><p>GUIからの利用も可能（公式サイト）。</p></div>
+        <div class="tool-feature-card"><h3>ツール呼び出し</h3><p>対応モデルではtool callingをサポート（公式FAQ）。</p></div>
+      </div>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>代表的な誤解は「<strong>Ollama＝完全無料でクラウド最新モデルが無制限</strong>」です。ローカル実行は無料ですが、クラウドモデルはFree/Pro/Maxで<strong>利用上限</strong>があります（公式Pricing）。</p>
+      <p>もう1つは「<strong>ローカルならプライバシー100%</strong>」です。ローカル実行は外部送信を避けやすいですが、クラウドモードやログ設定、端末セキュリティは別途確認が必要です。</p>
+      <p>「<strong>Ollama＝LM Studio</strong>」とも限りません。UIの有無、ターゲットユーザー、クラウドプランの有無が異なります。</p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>以下は公式Pricingに基づく<strong>2026年6月時点</strong>の整理です。<strong>ローカルハードウェアでの実行は常に無制限・無料</strong>です。</p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card"><p class="tool-plan-name">Free</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">ローカル無制限</p></div>
+        <div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Pro</p><p class="tool-plan-price">$20/月</p><p class="tool-plan-note">年払い$200/年</p></div>
+        <div class="tool-plan-card"><p class="tool-plan-name">Max</p><p class="tool-plan-price">$100/月</p><p class="tool-plan-note">大規模利用</p></div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead><tr><th>プラン</th><th>料金</th><th>ローカル</th><th>クラウド</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Free</strong></td><td><strong>$0</strong></td><td><strong>無制限</strong></td><td>軽量利用・同時1モデル</td></tr>
+          <tr><td><strong>Pro</strong></td><td><strong>$20/月</strong>（$200/年）</td><td><strong>無制限</strong></td><td>Freeの約50倍・同時3モデル・大規模モデル</td></tr>
+          <tr><td><strong>Max</strong></td><td><strong>$100/月</strong></td><td><strong>無制限</strong></td><td>Proの約5倍・同時10モデル</td></tr>
+          <tr><td><strong>Team</strong></td><td><strong>準備中</strong></td><td>—</td><td>SSO・チーム管理（公式Pricing）</td></tr>
+        </tbody>
+      </table>
+      <p>クラウド利用量は5時間ごとのセッション上限と7日ごとの週次上限で管理されます（公式Pricing）。プロンプト・応答は学習に使わないと明記されていますが、業務利用では最新ポリシーを確認してください。</p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <ol class="tool-steps">
+        <li><strong>インストール</strong>ollama.comからOS向けインストーラを取得します。</li>
+        <li><strong>モデル取得</strong><code>ollama pull llama3</code>などでモデルをダウンロードします。</li>
+        <li><strong>実行</strong><code>ollama run llama3</code>で対話を開始します。</li>
+        <li><strong>API連携</strong>ローカルAPI（既定ポート11434）でアプリから呼び出します。</li>
+        <li><strong>クラウド（任意）</strong>アカウント作成後、クラウドモデルをプラン内で利用します。</li>
+      </ol>
+    </section>
+
+    <section id="use-cases">
+      <h2>活用例</h2>
+      <ul>
+        <li>開発環境でのローカルLLMプロトタイプ</li>
+        <li>機密コード・文書のローカル要約（外部非送信）</li>
+        <li>CI/CDやエージェントからのAPI呼び出し</li>
+        <li>クラウドの大規模モデルをProで試す場合</li>
+      </ul>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+        <tbody>
+          <tr><td>ローカル実行が無料・無制限</td><td>CLI中心で初心者には敷居がある</td></tr>
+          <tr><td>軽量・高速なセットアップ</td><td>ローカルモデルは性能・VRAMに制約</td></tr>
+          <tr><td>豊富なモデルエコシステム</td><td>クラウド大規模モデルは有料・上限あり</td></tr>
+          <tr><td>API連携が容易</td><td>ハルシネーションはローカルでも発生</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>LM Studioとの比較</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>項目</th><th>Ollama</th><th>LM Studio</th></tr></thead>
+        <tbody>
+          <tr><td>操作</td><td>CLI・API中心</td><td>GUI中心</td></tr>
+          <tr><td>クラウド</td><td>Pro/Maxでクラウドモデル</td><td>ローカル特化</td></tr>
+          <tr><td>向いている人</td><td>開発者・DevOps</td><td>GUIで試したい人</td></tr>
+          <tr><td>料金</td><td>ローカル無料＋クラウド有料</td><td>ローカル無料</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>ターミナルでローカルLLMを素早く試したい開発者</strong></li>
+        <li><strong>API経由でエージェント・CIにLLMを組み込みたい人</strong></li>
+        <li><strong>試験でローカルAIとクラウドAIの違いを押さえたい受験生</strong></li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>無料ですか？</summary><p class="tool-faq-a">ローカル実行は無料・無制限です。クラウドはプラン別です。</p></details>
+        <details><summary>LM Studioとの違いは？</summary><p class="tool-faq-a">OllamaはCLI・API向け、LM StudioはGUI向けです。</p></details>
+        <details><summary>ollama runとは？</summary><p class="tool-faq-a">モデルを起動して対話する基本コマンドです。</p></details>
+        <details><summary>クラウドは安全ですか？</summary><p class="tool-faq-a">公式では学習に使わないと明記。業務では最新ポリシーを確認してください。</p></details>
+        <details><summary>Proはいくらですか？</summary><p class="tool-faq-a">$20/月、または年払い$200/年です（2026年6月時点）。</p></details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://ollama.com/pricing" target="_blank" rel="noopener noreferrer">料金ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://ollama.com/library" target="_blank" rel="noopener noreferrer">モデルライブラリ</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../lm-studio/"><img src="../../assets/images/tools/lm-studio/app-icon.png" alt="" width="16" height="16"> LM Studio</a></li>
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">大規模言語モデル（LLM） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="OpenAI Whisperの機能・料金・使い方を解説。オープンソースの音声認識モデルとAPI（$0.006/分）、自社ホストとの違い、Notta・Otter.aiとの関係を2026年6月時点で整理。">
+          <title>Whisperとは？OpenAI音声認識の機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/whisper/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="Whisperとは？OpenAI音声認識の機能・料金・使い方を解説">
+          <meta property="og:description" content="Whisperをわかりやすく解説。オープンソースモデル、OpenAI APIの従量課金、gpt-4o-transcribeとの違い、自社ホストとの比較を2026年6月時点で整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/whisper/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/whisper/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/whisper/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/whisper/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+        { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Whisper", "item": "https://ai-master.jp/tools/whisper/" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/whisper/#article",
+      "headline": "Whisperとは？OpenAI音声認識の機能・料金・使い方を解説",
+      "description": "Whisperをわかりやすく解説。オープンソースモデル、OpenAI APIの従量課金、gpt-4o-transcribeとの違い、自社ホストとの比較を2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/whisper/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/whisper/og-hero.png",
+      "author": { "@type": "Organization", "name": "AI Master" },
+      "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+      "isPartOf": { "@id": "https://ai-master.jp/#website" },
+      "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/whisper/#webpage" },
+      "about": { "@type": "SoftwareApplication", "name": "Whisper" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ai-master.jp/tools/whisper/#webpage",
+      "url": "https://ai-master.jp/tools/whisper/",
+      "name": "Whisperとは？OpenAI音声認識の機能・料金・使い方を解説",
+      "description": "Whisperをわかりやすく解説。オープンソースモデル、OpenAI APIの従量課金、gpt-4o-transcribeとの違い、自社ホストとの比較を2026年6月時点で整理。",
+      "isPartOf": { "@id": "https://ai-master.jp/#website" },
+      "breadcrumb": { "@id": "https://ai-master.jp/tools/whisper/#breadcrumb" },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Whisper",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Cross-platform",
+      "description": "OpenAIが公開した高精度の音声認識（Speech-to-Text）モデル。オープンソースで自社ホスト可能。OpenAI APIでも利用できる。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "オープンソース（自社ホストはインフラ費用のみ）。OpenAI APIは whisper-1 / gpt-4o-transcribe $0.006/分、gpt-4o-mini-transcribe $0.003/分（2026年6月時点）"
+      },
+      "provider": { "@type": "Organization", "name": "OpenAI", "url": "https://openai.com" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Whisperは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "オープンソースモデルは無料でダウンロードし、自社サーバーやPC上で実行できます。ただしGPUなどのインフラ費用は別途かかります。OpenAI API経由では従量課金（例：$0.006/分）です（2026年6月時点）。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Whisperは音声合成（Text-to-Speech）ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。WhisperはSpeech-to-Text（音声からテキスト）のモデルです。テキストから音声を生成するText-to-Speechとは入出力が逆です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "WhisperとChatGPTの音声機能は同じですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。Whisperは音声認識モデル（STT）であり、ChatGPTアプリの音声会話は対話型の生成AI機能です。Whisperは多くのサービスの文字起こし基盤として使われますが、ChatGPTそのものではありません。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Whisper APIの料金はいくらですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2026年6月時点のOpenAI API公式Pricingでは、whisper-1およびgpt-4o-transcribeが$0.006/分、gpt-4o-mini-transcribeが$0.003/分と案内されています。最新のモデル名と価格は契約前に公式で確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "WhisperとNotta・Otter.aiの関係は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "NottaやOtter.aiは会議向けの文字起こしアプリ（SaaS）です。Whisperは音声認識の基盤モデルであり、開発者がAPIや自社ホストで組み込む用途が中心です。エンドユーザーが会議メモを取るならSaaS、自社システムにSTTを組み込むならWhisper APIが向くことが多いです。"
+          }
+        }
+      ]
+    }
+  ]
+}
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">Whisper</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/whisper/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">Whisper · 音声・動画・音楽</p>
+                  <h1>Whisperとは？OpenAI音声認識の機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">99言語以上に対応するオープンソースのSpeech-to-Textモデル。APIでも自社ホストでも利用可能</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">オープンソース</span>
+                <span class="tool-category">Speech-to-Text</span>
+                <span class="tool-category">API従量課金</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Python（OSS）</li><li>OpenAI API</li><li>macOS / Linux / Windows</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/whisper/og-hero.png" alt="OpenAI Whisperの公式ドキュメントイメージ" width="1200" height="630" fetchpriority="high">
+              <figcaption>出典：OpenAI公式（developers.openai.com）</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>Whisper</strong>は、OpenAIが2022年に公開した<strong>音声認識（Speech-to-Text）</strong>モデルです。<strong>オープンソース</strong>として無料で利用でき、<strong>OpenAI API</strong>経由でも従量課金で呼び出せます。NottaやOtter.aiのような会議アプリとは異なり、<strong>開発者向けの基盤技術</strong>として位置づけられます。本記事では、<a href="#pricing">API料金</a>、<a href="#comparison">会議アプリとの違い</a>、<a href="#misconception">試験での誤解</a>を整理します。料金とモデル名は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+                <li><a href="#what-is">Whisperとは</a></li>
+                <li><a href="#features">できること（主な機能）</a></li>
+                <li><a href="#misconception">よくある誤解</a></li>
+                <li><a href="#pricing">料金（2026年6月時点）</a></li>
+                <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+                <li><a href="#use-cases">ビジネスでの活用例</a></li>
+                <li><a href="#pros-cons">メリット・デメリット</a></li>
+                <li><a href="#comparison">主要ツールとの比較</a></li>
+                <li><a href="#recommend">こんな人におすすめ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+              <h2>試験で問われる見方</h2>
+              <p>生成AIパスポートでは、Speech-to-TextとText-to-Speechの区別、音声データの個人情報リスク、オープンソースモデルの活用が論点になります。Whisperは「音声→テキスト」の代表例として押さえると整理しやすいです。</p>
+              <p>「Whisper＝ChatGPT」「Whisper＝会議アプリ（Notta等）」と混同しないことが重要です。Whisperはモデル/APIであり、会議メモSaaSとはレイヤーが異なります。</p>
+              <div class="tool-callout">
+                <p><strong>このサイトの演習で確認する</strong></p>
+                <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0195/">一問一答 TF-0195（Speech-to-TextとTTSの区別）</a>、<a href="../../exams/genai-passport/drill/q/tf-0447/">TF-0447（文字起こしから議事録下書き）</a>、<a href="../../exams/genai-passport/drill/q/tf-0289/">TF-0289（音声データの個人情報リスク）</a></p>
+                <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+              </div>
+            </section>
+
+            <section id="what-is">
+              <h2>Whisperとは</h2>
+              <p>Whisperは、雑音の多い環境や多言語の音声でも比較的高精度に文字起こしできると評価される音声認識モデルです。2022年9月にOpenAIが論文とともにオープンソースとして公開しました。</p>
+              <p>利用形態は大きく2つあります。<strong>自社ホスト</strong>ではGitHub上のモデルウェイトをダウンロードし、GPUサーバーやローカルPCで実行します。<strong>OpenAI API</strong>では<code>/audio/transcriptions</code>エンドポイント経由でクラウド処理し、分単位の従量課金となります。</p>
+              <p>2026年時点では、APIには従来の<strong>whisper-1</strong>に加え、<strong>gpt-4o-transcribe</strong>や<strong>gpt-4o-mini-transcribe</strong>、話者分離対応の<strong>gpt-4o-transcribe-diarize</strong>などが案内されています。モデルの提供状況は更新されるため、利用前に公式ドキュメントで確認してください。</p>
+            </section>
+
+            <section id="features">
+              <h2>できること（主な機能）</h2>
+              <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+  <h3>多言語文字起こし</h3>
+  <p>99言語以上の音声をテキスト化。日本語を含む多言語コンテンツの処理に使われる。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>翻訳モード</h3>
+  <p>非英語の音声を英語テキストに翻訳しながら書き起こすモード（APIのtranslateエンドポイント）。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>タイムスタンプ</h3>
+  <p>APIではセグメント単位のタイムスタンプを取得可能。字幕生成の前処理に使える。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>話者分離（Diarize）</h3>
+  <p>gpt-4o-transcribe-diarizeで話者ラベル付きの文字起こしが可能（2026年6月時点）。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>自社ホスト</h3>
+  <p>オープンソース版を社内サーバーで実行し、データを外部に出さない構成が可能。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>アプリ組み込み</h3>
+  <p>API経由で自社サービスにSTT機能を追加。会議アプリとは別レイヤーの開発用途。</p>
+</div>
+              </div>
+            </section>
+
+            <section id="misconception">
+              <h2>よくある誤解</h2>
+              <p>代表的な誤解は「<strong>Whisper＝ChatGPTの音声モード</strong>」です。Whisperは音声認識モデル（STT）であり、ChatGPTの音声会話は対話型の生成AI機能です。関連技術ではありますが同一製品ではありません。</p>
+              <p>もう1つは「<strong>Whisper＝NottaやOtter.ai</strong>」です。後者は会議メモの完成されたSaaS、Whisperは開発者が組み込む音声認識エンジンです。エンドユーザーがそのまま会議に参加させるツールではありません。</p>
+            </section>
+
+            <section id="pricing">
+              <h2>料金（2026年6月時点）</h2>
+              <p>Whisperには「月額プラン」はなく、利用形態ごとにコスト構造が異なります。以下は<strong>2026年6月時点</strong>の整理です。</p>
+              <div class="tool-plan-grid">
+        <div class="tool-plan-card"><p class="tool-plan-name">OSS（自社ホスト）</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">モデル自体は無料</p></div>
+<div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">OpenAI API</p><p class="tool-plan-price">$0.006/分</p><p class="tool-plan-note">whisper-1 / gpt-4o-transcribe</p></div>
+<div class="tool-plan-card"><p class="tool-plan-name">Mini API</p><p class="tool-plan-price">$0.003/分</p><p class="tool-plan-note">gpt-4o-mini-transcribe</p></div>
+      </div>
+
+      <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>利用形態</th>
+                    <th>料金（2026年6月時点）</th>
+                    <th>主な条件</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td><strong>オープンソース（自社ホスト）</strong></td><td><strong>モデル$0</strong>＋インフラ費</td><td>GPU・運用コストは自社負担。ファイルサイズ制限なし</td></tr>
+<tr><td><strong>whisper-1 / gpt-4o-transcribe</strong></td><td><strong>$0.006/分</strong>（$0.36/時）</td><td>1ファイル25MB上限・秒単位課金（API）</td></tr>
+<tr><td><strong>gpt-4o-mini-transcribe</strong></td><td><strong>$0.003/分</strong>（$0.18/時）</td><td>コスト重視のバッチ処理向け</td></tr>
+<tr><td><strong>gpt-4o-transcribe-diarize</strong></td><td>トークン課金（公式Pricing参照）</td><td>話者分離付き文字起こし</td></tr>
+<tr><td><strong>gpt-realtime-whisper（ストリーミング）</strong></td><td><strong>$0.017/分</strong></td><td>リアルタイム文字起こし（公式Pricing）</td></tr>
+                </tbody>
+              </table>
+              <p>1,000分の処理は whisper-1 で約$6.00、mini-transcribe で約$3.00の目安です。自社ホストは処理量が多いほどAPIより安くなる場合がありますが、GPU・運用の固定費がかかります。モデルの提供終了スケジュールも更新されるため、本番利用前に記事末尾の公式リンクからモデル一覧を確認してください。</p>
+            </section>
+
+            <section id="how-to">
+              <h2>はじめ方・基本的な使い方</h2>
+              <div class="tool-split">
+                <ol class="tool-steps">
+        <li><strong>用途を決める</strong>会議メモならNotta等のSaaS、自社アプリ組み込みならWhisper APIまたは自社ホストを選びます。</li>
+<li><strong>API利用の場合</strong>OpenAIアカウントを作成し、APIキーを取得。音声ファイルを<code>/audio/transcriptions</code>にPOSTします。</li>
+<li><strong>モデルを選択</strong>精度重視ならgpt-4o-transcribe、コスト重視ならgpt-4o-mini-transcribe、話者分離ならdiarizeモデルを選びます。</li>
+<li><strong>自社ホストの場合</strong>GitHubのopenai/whisperリポジトリからモデルを取得し、Python環境で実行します。</li>
+<li><strong>結果を活用</strong>得られたテキストを議事録、字幕、検索インデックスなどに渡します。</li>
+                </ol>
+                <div class="tool-split__media">
+                  <figure class="tool-figure">
+                    <img src="../../assets/images/tools/whisper/og-hero.png" alt="OpenAI Whisperの公式ドキュメントイメージ" width="600" height="314" loading="lazy">
+                    <figcaption>出典：OpenAI公式（developers.openai.com）</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <section id="use-cases">
+              <h2>ビジネスでの活用例</h2>
+              <div class="tool-usecase-grid">
+              <div class="tool-usecase-card">
+        <h3>自社サービスへのSTT組み込み</h3>
+        <ul>
+                <li>社内ポータルに音声入力機能を追加</li>
+<li>コールセンター録音のテキスト化</li>
+<li>APIで従量課金、少量なら運用が簡単</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>データガバナンス重視の処理</h3>
+        <ul>
+                <li>オープンソース版を社内GPUで実行</li>
+<li>機密音声を外部クラウドに送らない</li>
+<li>運用・スケーリングのコストは自社負担</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>試験・資格の学習</h3>
+        <ul>
+                <li>Speech-to-Textの基盤モデルとして整理</li>
+<li>SaaS（Notta等）とのレイヤー差を理解</li>
+<li>音声データの個人情報リスクを併せて学習</li>
+        </ul>
+      </div>
+              </div>
+            </section>
+
+            <section id="pros-cons">
+              <h2>メリット・デメリット</h2>
+              <table class="tool-pros-cons-table">
+                <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+                <tbody>
+        <tr><td>オープンソースで無料利用可能</td><td>自社ホストはGPU・運用が必要</td></tr>
+<tr><td>APIは$0.003〜0.006/分と比較的安価</td><td>APIは1ファイル25MB上限</td></tr>
+<tr><td>99言語以上に対応</td><td>会議連携・要約UIは別途開発が必要</td></tr>
+<tr><td>多くのSTTサービスの基盤技術</td><td>モデル提供状況は更新・廃止があり得る</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="comparison">
+              <h2>主要ツールとの比較</h2>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr><th>項目</th><th>Whisper</th><th>Notta</th><th>ElevenLabs</th></tr>
+                </thead>
+                <tbody>
+        <tr><td>種類</td><td>音声認識モデル/API</td><td>会議STTのSaaS</td><td>音声生成AIプラットフォーム</td></tr>
+<tr><td>技術分類</td><td>Speech-to-Text</td><td>Speech-to-Text</td><td>主にText-to-Speech</td></tr>
+<tr><td>料金形態</td><td>OSS無料 or API従量</td><td>月額サブスク</td><td>月額サブスク＋従量</td></tr>
+<tr><td>主なユーザー</td><td>開発者・エンジニア</td><td>ビジネスユーザー</td><td>クリエイター・開発者</td></tr>
+<tr><td>試験での位置づけ</td><td>STT基盤モデルの例</td><td>日本語議事録AIの例</td><td>音声生成AIの例</td></tr>
+                </tbody>
+              </table>
+              <p>会議メモをすぐ使うなら<a href="../notta/">Notta</a>、音声認識を自社製品に組み込むならWhisper、ナレーション生成なら<a href="../elevenlabs/">ElevenLabs</a>という使い分けが一般的です。OpenAI全体像は<a href="../chatgpt/">ChatGPT記事</a>も参照してください。</p>
+            </section>
+
+            <section id="recommend">
+              <h2>こんな人におすすめ</h2>
+              <ul>
+                      <li><strong>自社アプリに文字起こし機能を組み込みたい開発者</strong></li>
+              <li><strong>機密音声を社内だけで処理したいインフラ担当</strong></li>
+              <li><strong>試験対策でSpeech-to-Textの基盤技術を押さえたい受験生</strong></li>
+              </ul>
+              <p>あえて向いていないのは、会議の議事録をすぐ自動化したい一般ビジネスユーザー（<a href="../notta/">Notta</a>・<a href="../otter-ai/">Otter.ai</a>向け）や、テキストから音声を生成したいケース（ElevenLabs向け）です。</p>
+            </section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+        <details><summary>無料で使えますか？</summary><p class="tool-faq-a">オープンソースモデルは無料です。OpenAI APIは従量課金（例：$0.006/分）です。自社ホストにはGPUなどのインフラ費がかかります。</p></details>
+<details><summary>音声合成ツールですか？</summary><p class="tool-faq-a">いいえ。Speech-to-Text（音声→テキスト）のモデルです。Text-to-Speechとは別カテゴリです。</p></details>
+<details><summary>ChatGPTと同じですか？</summary><p class="tool-faq-a">いいえ。Whisperは音声認識モデル、ChatGPTは対話型生成AIです。関連技術ですが別製品です。</p></details>
+<details><summary>APIの料金は？</summary><p class="tool-faq-a">2026年6月時点の公式Pricingでは whisper-1 / gpt-4o-transcribe が$0.006/分、gpt-4o-mini-transcribe が$0.003/分です。</p></details>
+<details><summary>NottaやOtter.aiとの関係は？</summary><p class="tool-faq-a">Notta等は会議向けSaaS、Whisperは開発者向けの音声認識基盤です。レイヤーが異なります。</p></details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://openai.com/index/whisper/" target="_blank" rel="noopener noreferrer">Whisper（OpenAI）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://platform.openai.com/docs/guides/speech-to-text" target="_blank" rel="noopener noreferrer">Speech-to-Textガイド</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener noreferrer">API Pricing</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../chatgpt/"><img src="../../assets/images/tools/chatgpt/app-icon.png" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../notta/"><img src="../../assets/images/tools/notta/app-icon.png" alt="" width="16" height="16"> Notta</a></li>
+          <li><a href="../otter-ai/"><img src="../../assets/images/tools/otter-ai/app-icon.png" alt="" width="16" height="16"> Otter.ai</a></li>
+          <li><a href="../elevenlabs/"><img src="../../assets/images/tools/elevenlabs/app-icon.png" alt="" width="16" height="16"> ElevenLabs</a></li>
+          <li><a href="../descript/"><img src="../../assets/images/tools/descript/app-icon.png" alt="" width="16" height="16"> Descript</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Speech（音声合成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        <script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+        </html>

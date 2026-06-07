@@ -1,0 +1,433 @@
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="NotebookLMの機能・料金・使い方を解説。アップロード資料へのQ&A、Audio Overview、Google AI Plus/Proとの関係、無料枠の上限を2026年6月時点で整理。">
+          <title>NotebookLMとは？資料研究AIの機能・料金・使い方を解説 — AI Master</title>
+          <link rel="canonical" href="https://ai-master.jp/tools/notebooklm/">
+          <meta property="og:type" content="article">
+          <meta property="og:site_name" content="AI Master">
+          <meta property="og:title" content="NotebookLMとは？資料研究AIの機能・料金・使い方を解説">
+          <meta property="og:description" content="NotebookLMをわかりやすく解説。ソースベースのQ&A、Audio Overview、Standard/Plus/Proの上限、Geminiとの違いを2026年6月時点で整理。">
+          <meta property="og:url" content="https://ai-master.jp/tools/notebooklm/">
+          <meta property="og:locale" content="ja_JP">
+          <meta property="og:image" content="https://ai-master.jp/assets/images/tools/notebooklm/og-hero.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/notebooklm/og-hero.png">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="../../assets/css/main.css">
+          <link rel="stylesheet" href="../../assets/css/tools.css">
+          <link rel="stylesheet" href="../../assets/css/seo.css">
+          <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+          <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ai-master.jp/tools/notebooklm/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+        { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "NotebookLM", "item": "https://ai-master.jp/tools/notebooklm/" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ai-master.jp/tools/notebooklm/#article",
+      "headline": "NotebookLMとは？資料研究AIの機能・料金・使い方を解説",
+      "description": "NotebookLMをわかりやすく解説。ソースベースのQ&A、Audio Overview、Standard/Plus/Proの上限、Geminiとの違いを2026年6月時点で整理。",
+      "url": "https://ai-master.jp/tools/notebooklm/",
+      "datePublished": "2026-06-08",
+      "dateModified": "2026-06-08",
+      "inLanguage": "ja",
+      "image": "https://ai-master.jp/assets/images/tools/notebooklm/og-hero.png",
+      "author": { "@type": "Organization", "name": "AI Master" },
+      "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+      "isPartOf": { "@id": "https://ai-master.jp/#website" },
+      "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/notebooklm/#webpage" },
+      "about": { "@type": "SoftwareApplication", "name": "NotebookLM" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ai-master.jp/tools/notebooklm/#webpage",
+      "url": "https://ai-master.jp/tools/notebooklm/",
+      "name": "NotebookLMとは？資料研究AIの機能・料金・使い方を解説",
+      "description": "NotebookLMをわかりやすく解説。ソースベースのQ&A、Audio Overview、Standard/Plus/Proの上限、Geminiとの違いを2026年6月時点で整理。",
+      "isPartOf": { "@id": "https://ai-master.jp/#website" },
+      "breadcrumb": { "@id": "https://ai-master.jp/tools/notebooklm/#breadcrumb" },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "NotebookLM",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web Browser, iOS, Android",
+      "description": "アップロードした資料をソースに、要約・Q&A・Audio Overviewなどを生成するGoogleの研究支援AI。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Standard $0。拡張枠はGoogle AI Plus/Pro/UltraまたはWorkspace・Enterprise経由（2026年6月時点）"
+      },
+      "provider": { "@type": "Organization", "name": "Google", "url": "https://notebooklm.google.com" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "NotebookLMは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。GmailアカウントでNotebookLM Standard（無料）が利用できます。ノートブック100件・ソース50件/ノート・チャット50回/日などの上限があります（2026年6月時点）。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "NotebookLMとGeminiの違いは？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "NotebookLMはユーザーがアップロードした資料（ソース）に基づいて回答・要約・Audio Overviewを生成します。Geminiは汎用チャットAIで、Web検索やGmail連携など幅広い用途に対応します。資料に根拠を限定したいならNotebookLMが向きます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "NotebookLM Plusは別料金ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "単体のNotebookLM Plusプランではなく、Google AI Plus/Pro/Ultraや対象のWorkspace・Google Cloudプランに含まれる形で上限が拡張されます（2026年6月時点）。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Audio Overviewとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ソース資料をもとに、ポッドキャスト風の音声ディスカッションを自動生成する機能です。無料枠は1日3回まで、上位プランでは上限が拡張されます（2026年6月時点）。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "アップロードしたデータは学習に使われますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "公式ヘルプでは、フィードバックを送らない限りNotebookLMのモデル学習には使われないと説明されています。Workspace for Education等では人間によるレビューも行われない旨が記載されています（2026年6月時点）。"
+          }
+        }
+      ]
+    }
+  ]
+}
+          </script>
+        </head>
+        <body class="page-body">
+
+        <nav class="site-nav">
+          <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+          <ul class="nav-links">
+            <li><a href="../../exams/">試験対策</a></li>
+            <li><a href="../../glossary/">用語辞典</a></li>
+            <li><a href="../index.html" class="active">AIツール</a></li>
+            <li><a href="../../career/">キャリア</a></li>
+          </ul>
+        </nav>
+
+        <main class="page-wrap page-wrap--article">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a href="../../index.html">ホーム</a></li>
+              <li><a href="../index.html">AIツール</a></li>
+              <li aria-current="page">NotebookLM</li>
+            </ol>
+          </nav>
+
+          <header class="tool-hero tool-hero--split">
+            <div class="tool-hero-body">
+              <div class="tool-hero-brand">
+                <img src="../../assets/images/tools/notebooklm/app-icon.svg" alt="" width="52" height="52" class="tool-hero-app-icon">
+                <div>
+                  <p class="tool-hero-eyebrow">NotebookLM · 仕事効率化・資料・翻訳</p>
+                  <h1>NotebookLMとは？資料研究AIの機能・料金・使い方を解説</h1>
+                </div>
+              </div>
+              <p class="tool-hero-maker">アップロードした資料だけを根拠に、要約・Q&A・音声解説を生成するGoogleの研究ツール</p>
+              <div class="tool-hero-meta">
+                <span class="tool-category">無料枠あり</span>
+                <span class="tool-category">ソースベースAI</span>
+                <span class="tool-category">Google AIプラン連携</span>
+              </div>
+              <div class="tool-platform-bar">
+                <span class="tool-platform-label">対応環境</span>
+                <ul class="tool-platform-chips">
+                  <li>Web</li><li>iOS / Android</li><li>Googleアカウント</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="tool-hero-visual">
+              <img src="../../assets/images/tools/notebooklm/og-hero.png" alt="NotebookLMの公式イメージ" width="1200" height="630" fetchpriority="high">
+              <figcaption>出典：Google公式（blog.google）</figcaption>
+            </figure>
+          </header>
+
+          <div class="tool-meta-bar">
+            <span>更新日：<time datetime="2026-06-08">2026年6月8日</time></span>
+            <span>読了目安：約8分</span>
+          </div>
+
+          <article class="tool-content">
+            <p class="tool-lead">
+              <strong>NotebookLM</strong>は、Googleが提供する<strong>資料研究・思考支援AI</strong>です。PDFやWebページなどを<strong>ソース</strong>としてノートブックに登録し、その範囲内でのみ要約・質問応答・<strong>Audio Overview</strong>（音声解説）を生成します。本記事では、<a href="#pricing">無料枠とGoogle AIプラン</a>、<a href="#comparison">Gemini・ChatGPTとの違い</a>、<a href="#misconception">試験での誤解</a>を整理します。上限と機能は<strong>2026年6月時点</strong>の情報です。
+            </p>
+
+            <nav class="tool-toc" aria-label="目次">
+              <p class="tool-toc-title">目次</p>
+              <ol>
+                <li><a href="#exam-study">試験で問われる見方</a></li>
+                <li><a href="#what-is">NotebookLMとは</a></li>
+                <li><a href="#features">できること（主な機能）</a></li>
+                <li><a href="#misconception">よくある誤解</a></li>
+                <li><a href="#pricing">料金・上限（2026年6月時点）</a></li>
+                <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+                <li><a href="#use-cases">ビジネスでの活用例</a></li>
+                <li><a href="#pros-cons">メリット・デメリット</a></li>
+                <li><a href="#comparison">主要ツールとの比較</a></li>
+                <li><a href="#recommend">こんな人におすすめ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+              </ol>
+            </nav>
+
+            <section id="exam-study">
+              <h2>試験で問われる見方</h2>
+              <p>生成AIパスポートでは、資料に基づく回答、社外向けコンテンツの確認、ハルシネーションへの注意が問われます。NotebookLMは「ソースを限定したAI活用」の具体例として押さえると整理しやすいです。</p>
+              <p>「NotebookLM＝Gemini」「ソース付きだから100%正確」と混同しないことが重要です。根拠は資料内に限定されても、解釈の誤りや抜けは起こり得ます。</p>
+              <div class="tool-callout">
+                <p><strong>このサイトの演習で確認する</strong></p>
+                <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0255/">一問一答 TF-0255（もっともらしい出力の確認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0409/">TF-0409（社外資料の公開前確認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0451/">TF-0451（企画資料のたたき台）</a></p>
+                <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+              </div>
+            </section>
+
+            <section id="what-is">
+              <h2>NotebookLMとは</h2>
+              <p>NotebookLM（notebooklm.google.com）は、2023年にGoogle Labsから公開された研究支援ツールです。ユーザーが選んだ資料だけを参照して回答するため、<strong>グラウンディング（根拠付き回答）</strong>の典型例として知られています。</p>
+              <p>ノートブック単位でPDF、Google Docs、Web URL、YouTubeなどをソースに追加し、チャットで質問したり、FAQ・タイムライン・Audio Overviewを生成したりします。2025年以降はスライドデッキやインフォグラフィックなどの出力も拡張されています。</p>
+              <p>上限の拡張は<strong>Google AI Plus / Pro / Ultra</strong>（旧Google One AI Premiumを含む）や、対象の<strong>Google Workspace</strong>・<strong>Google Cloud</strong>プラン経由で提供されます。プロフィール横のバッジで上位プラン利用を確認できます（公式ヘルプ）。</p>
+            </section>
+
+            <section id="features">
+              <h2>できること（主な機能）</h2>
+              <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+  <h3>ソースベースQ&A</h3>
+  <p>登録した資料の範囲で質問に回答。引用元をたどりやすいのが特徴。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Audio Overview</h3>
+  <p>資料をもとに2人のAIホストが解説するポッドキャスト風音声を生成。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>学習支援コンテンツ</h3>
+  <p>フラッシュカード、クイズ、マインドマップ、レポートなどを自動生成。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>Deep Research</h3>
+  <p>複数ソースを横断した調査・整理（プランにより日次・月次上限が異なる）。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>スライド・インフォグラフィック</h3>
+  <p>資料からプレゼン資料や図解を生成（上位プランで上限・透かし除去が拡張）。</p>
+</div>
+<div class="tool-feature-card">
+  <h3>共有・コラボ</h3>
+  <p>ノートブックを共有して共同研究。共有しても各ユーザーのソース上限は変わらない（公式ヘルプ）。</p>
+</div>
+              </div>
+            </section>
+
+            <section id="misconception">
+              <h2>よくある誤解</h2>
+              <p>代表的な誤解は「<strong>NotebookLM＝Gemini</strong>」です。どちらもGoogleのAIですが、NotebookLMはアップロード資料に回答が限定され、Geminiは汎用チャットとGoogleサービス連携が中心です。</p>
+              <p>もう1つは「<strong>ソースを付ければハルシネーションはゼロ</strong>」です。資料外の事実は出にくくても、資料の誤読や不適切な要約は起こり得ます。社外資料ではTF-0409のように公開前確認が必要です。</p>
+            </section>
+
+            <section id="pricing">
+              <h2>料金・上限（2026年6月時点）</h2>
+              <p>NotebookLM単体の月額プランはなく、<strong>Standard（無料）</strong>と、Google AI / Workspace / Cloud経由の<strong>拡張枠</strong>で提供されます。以下は公式ヘルプに基づく主要上限です（変更される場合があります）。</p>
+              <div class="tool-plan-grid">
+        <div class="tool-plan-card"><p class="tool-plan-name">Standard</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">Gmailで利用可</p></div>
+<div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Google AI Plus</p><p class="tool-plan-price">要確認</p><p class="tool-plan-note">上限拡張</p></div>
+<div class="tool-plan-card"><p class="tool-plan-name">Google AI Pro</p><p class="tool-plan-price">要確認</p><p class="tool-plan-note">さらに拡張</p></div>
+      </div>
+
+      <table class="tool-spec-table">
+                <thead>
+                  <tr>
+                    <th>プラン</th>
+                    <th>ノートブック数</th>
+                    <th>ソース/ノート</th>
+                    <th>チャット/日</th>
+                    <th>Audio Overview/日</th>
+                  </tr>
+                </thead>
+                <tbody>
+        <tr><td><strong>Standard（無料）</strong></td><td><strong>100</strong></td><td><strong>50</strong></td><td><strong>50</strong></td><td><strong>3</strong></td></tr>
+<tr><td><strong>Google AI Plus</strong></td><td><strong>200</strong></td><td><strong>100</strong></td><td><strong>200</strong></td><td><strong>6</strong></td></tr>
+<tr><td><strong>Google AI Pro</strong></td><td><strong>500</strong></td><td><strong>300</strong></td><td><strong>500</strong></td><td><strong>20</strong></td></tr>
+<tr><td><strong>Google AI Ultra</strong></td><td><strong>500</strong></td><td><strong>500〜600</strong></td><td><strong>2,500〜5,000</strong></td><td><strong>100〜200</strong></td></tr>
+                </tbody>
+              </table>
+              <p>Google AI Plusは旧「Google One AI Premium」と同等の位置づけで、Gemini・NotebookLM・ストレージなどがセットになっています。地域・通貨により価格が異なるため、契約前にGoogle Oneの公式Pricingで確認してください。Enterprise向けはGoogle Cloud経由のNotebookLM for Enterpriseもあります。</p>
+            </section>
+
+            <section id="how-to">
+              <h2>はじめ方・基本的な使い方</h2>
+              <div class="tool-split">
+                <ol class="tool-steps">
+        <li><strong>ログイン</strong>notebooklm.google.comにGoogleアカウントでアクセスします。</li>
+<li><strong>ノートブック作成</strong>新規ノートブックを作り、PDF・URL・Google Docsなどをソースとして追加します。</li>
+<li><strong>チャットで質問</strong>資料の内容について質問し、回答と引用元を確認します。</li>
+<li><strong>成果物を生成</strong>Audio Overview、フラッシュカード、レポートなど必要な形式を選びます。</li>
+<li><strong>共有・検証</strong>チームと共有する前に、事実関係をソースと照合して確認します。</li>
+                </ol>
+                <div class="tool-split__media">
+                  <figure class="tool-figure">
+                    <img src="../../assets/images/tools/notebooklm/og-hero.png" alt="NotebookLMの公式イメージ" width="600" height="338" loading="lazy">
+                    <figcaption>出典：Google公式（blog.google）</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <section id="use-cases">
+              <h2>ビジネスでの活用例</h2>
+              <div class="tool-usecase-grid">
+              <div class="tool-usecase-card">
+        <h3>調査・レポート読解</h3>
+        <ul>
+                <li>長文PDFの要点抽出とQ&A</li>
+<li>複数資料の横断的な質問</li>
+<li>Audio Overviewで移動中に内容把握</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>研修・資格学習</h3>
+        <ul>
+                <li>教材からフラッシュカード・クイズ生成</li>
+<li>試験範囲の資料に限定して学習</li>
+<li>誤答がないか原典で再確認</li>
+        </ul>
+      </div>
+      <div class="tool-usecase-card">
+        <h3>社内ナレッジ整理</h3>
+        <ul>
+                <li>議事録・仕様書をソース化</li>
+<li>新メンバー向けFAQ自動生成</li>
+<li>機密資料の取り扱いポリシーを事前確認</li>
+        </ul>
+      </div>
+              </div>
+            </section>
+
+            <section id="pros-cons">
+              <h2>メリット・デメリット</h2>
+              <table class="tool-pros-cons-table">
+                <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+                <tbody>
+        <tr><td>資料に基づく回答で根拠を追いやすい</td><td>無料枠はチャット・Audio上限が厳しめ</td></tr>
+<tr><td>Audio Overviewなど独自の出力形式</td><td>ソース外の最新情報は得られない</td></tr>
+<tr><td>無料で試用開始できる</td><td>上限拡張はGoogle AIプラン等が必要</td></tr>
+<tr><td>フィードバックなしでは学習に使わない旨の説明あり</td><td>資料の品質・偏りに出力が左右される</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="comparison">
+              <h2>主要ツールとの比較</h2>
+              <table class="tool-spec-table">
+                <thead>
+                  <tr><th>項目</th><th>NotebookLM</th><th>Gemini</th><th>ChatGPT</th></tr>
+                </thead>
+                <tbody>
+        <tr><td>主な用途</td><td>資料研究・学習支援</td><td>汎用チャット・Google連携</td><td>汎用チャット・GPTs</td></tr>
+<tr><td>回答の根拠</td><td>登録ソースに限定</td><td>Web検索・連携データも可</td><td>アップロード・検索も可</td></tr>
+<tr><td>無料枠</td><td>Standardあり</td><td>無料枠あり</td><td>無料枠あり</td></tr>
+<tr><td>独自機能</td><td>Audio Overview等</td><td>Gmail/Docs統合</td><td>Code Interpreter等</td></tr>
+<tr><td>試験での位置づけ</td><td>ソース限定AIの例</td><td>汎用生成AIの例</td><td>汎用生成AIの例</td></tr>
+                </tbody>
+              </table>
+              <p>特定資料の深掘りならNotebookLM、日常の汎用タスクなら<a href="../gemini/">Gemini</a>や<a href="../chatgpt/">ChatGPT</a>という使い分けが一般的です。</p>
+            </section>
+
+            <section id="recommend">
+              <h2>こんな人におすすめ</h2>
+              <ul>
+                      <li><strong>論文・報告書・マニュアルを読み込んで質問したい研究者・学生</strong></li>
+              <li><strong>社内資料だけを根拠にFAQを作りたいチーム</strong></li>
+              <li><strong>試験対策でソース限定AIの具体例を押さえたい受験生</strong></li>
+              </ul>
+              <p>あえて向いていないのは、最新ニュースの網羅的調査（Gemini/Perplexity向け）や、スライドのゼロからのビジュアル生成（<a href="../gamma/">Gamma</a>向け）です。</p>
+            </section>
+
+            <section id="faq">
+              <h2>よくある質問</h2>
+              <div class="tool-faq">
+        <details><summary>無料で使えますか？</summary><p class="tool-faq-a">GmailアカウントでStandard（無料）が使えます。ノート100件・ソース50件/ノート・チャット50回/日などの上限があります。</p></details>
+<details><summary>Geminiとの違いは？</summary><p class="tool-faq-a">NotebookLMは登録資料に限定して回答します。Geminiは汎用チャットとGoogleサービス連携が中心です。</p></details>
+<details><summary>Plusは別料金ですか？</summary><p class="tool-faq-a">Google AI Plus/Pro/Ultraや対象Workspaceプランに含まれる形で上限が拡張されます。単体のNotebookLM月額プランはありません。</p></details>
+<details><summary>Audio Overviewとは？</summary><p class="tool-faq-a">資料をもとにポッドキャスト風の音声解説を生成する機能です。無料は1日3回までです。</p></details>
+<details><summary>データは学習に使われますか？</summary><p class="tool-faq-a">公式ヘルプでは、フィードバックを送らない限り学習に使われないと説明されています。利用規約とWorkspace設定も確認してください。</p></details>
+              </div>
+            </section>
+
+            <p class="tool-product-links tool-product-links--footer">
+              公式リンク：
+              <a href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer">NotebookLM（notebooklm.google.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://one.google.com/intl/en_us/about/google-ai-plans/" target="_blank" rel="noopener noreferrer">Google AIプラン</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://support.google.com/notebooklm" target="_blank" rel="noopener noreferrer">ヘルプセンター</a>
+            </p>
+
+            <aside class="tool-related-wrap">
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連するAIツール</h2>
+                <ul class="tool-related-list">
+                  <li><a href="../gemini/"><img src="../../assets/images/tools/gemini/icon.svg" alt="" width="16" height="16"> Gemini</a></li>
+          <li><a href="../gamma/"><img src="../../assets/images/tools/gamma/app-icon.png" alt="" width="16" height="16"> Gamma</a></li>
+          <li><a href="../notion-ai/"><img src="../../assets/images/tools/notion-ai/app-icon.png" alt="" width="16" height="16"> Notion AI</a></li>
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/chatgpt/app-icon.png" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../adobe-acrobat-ai/"><img src="../../assets/images/tools/adobe.svg" alt="" width="16" height="16"> Adobe Acrobat AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+                </ul>
+              </div>
+              <div class="tool-related-block">
+                <h2 class="tool-related-heading">関連用語</h2>
+                <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+                </ul>
+              </div>
+            </aside>
+          </article>
+        </main>
+
+        <footer>
+          <div class="foot-inner">
+            <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+            <div class="foot-bottom">
+              <span>© 2026 AIマスター. All rights reserved.</span>
+              <span class="foot-legal">
+                <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        <script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+        </html>
