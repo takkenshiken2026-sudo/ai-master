@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="勾配降下法（Gradient Descent）とは？損失を減らす最適化の基本。学習率・SGD・誤差逆伝播法との違いをG検定向けに解説。">
+  <title>勾配降下法とは？Gradient Descent・学習率・最適化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gradient-descent/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="勾配降下法とは？Gradient Descent・学習率・最適化">
+  <meta property="og:description" content="損失関数の勾配を使い、パラメータを損失が小さくなる方向へ反復更新する機械学習の基本手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gradient-descent/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"勾配降下法","alternateName":["Gradient Descent","GD"],"description":"損失を減らす方向へパラメータを反復更新する最適化の基本手法。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"勾配降下法と誤差逆伝播法は同じ？","acceptedAnswer":{"@type":"Answer","text":"違う。勾配降下法はパラメータの更新方針、誤差逆伝播は深いネットで勾配を求める方法。組み合わせて使う。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">勾配降下法</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>勾配降下法とは？Gradient Descent・学習率・最適化</h1>
+    <p class="tool-hero-sub">読み：こうばいこうかほう ／ 英：Gradient Descent</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>勾配降下法</strong>（Gradient Descent）は、<strong>損失（誤差）が小さくなる方向へパラメータを少しずつ動かす</strong>機械学習の基本最適化手法です。本記事は<a href="../backpropagation/">誤差逆伝播法</a>の層構造の話ではなく、<strong>「山を下りる」たとえと学習率・バッチの選び方</strong>——更新の設計——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#metaphor">山登りのたとえ</a></li>
+        <li><a href="#update">1回の更新で何をするか</a></li>
+        <li><a href="#variants">バッチの三兄弟</a></li>
+        <li><a href="#learning-rate">学習率の効き方</a></li>
+        <li><a href="#vs-backprop">誤差逆伝播法との役割分担</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：勾配降下法は<strong>損失が小さくなる方向</strong>にパラメータを更新する（<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>、<a href="../../exams/g-kentei/drill/q/tf-239/">TF-239</a>）。重みは学習で更新される<strong>モデルパラメータ</strong>（<a href="../../exams/g-kentei/practice/q/g-152/">G-152</a>）。
+      </p>
+      <p>
+        ○：<strong>学習率</strong>は更新の幅を決める<strong>ハイパーパラメータ</strong>（<a href="../../exams/g-kentei/practice/q/g-190/">G-190</a>）。大きすぎると発散、小さすぎると収束が遅い（TF-239）。
+      </p>
+      <p>
+        ×：学習率やバッチサイズも、重みと同様に誤差逆伝播で<strong>自動的に学習される</strong>（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>、<a href="../../exams/g-kentei/drill/q/tf-239/">TF-239</a>、<a href="../../exams/g-kentei/practice/q/g-190/">G-190</a>、<a href="../../exams/g-kentei/practice/q/g-141/">G-141（SGD）</a>、<a href="../../exams/g-kentei/drill/domain/domain-06/">ディープラーニングの概要</a></p>
+      </div>
+    </section>
+    <section id="metaphor">
+      <h2>山登りのたとえ</h2>
+      <p>
+        損失関数を<strong>谷の深い地形</strong>と想像します。いまのパラメータは山の上の一点。勾配は「いちばん急に下る方向」を示すコンパスです。勾配降下法は、その方向に<strong>一歩ずつ下る</strong>ことで谷底（損失が小さい状態）に近づきます。
+      </p>
+      <p>
+        実際のニューラルネットでは地形が複雑で、局所最適（小さな谷）に止まることもあります。試験では「勾配の向きに更新する」という<strong>基本原則</strong>が問われることが多いです。
+      </p>
+    </section>
+    <section id="update">
+      <h2>1回の更新で何をするか</h2>
+      <p>深層学習では、次の流れがセットで回ります（勾配降下法が担うのは最後の一手です）。</p>
+      <ul class="tool-steps">
+        <li><strong>予測</strong> — 入力をモデルに通す（順伝播）</li>
+        <li><strong>損失の計算</strong> — 正解との差を数値化</li>
+        <li><strong>勾配の計算</strong> — <a href="../backpropagation/">誤差逆伝播法</a>などで各重みへの勾配を求める</li>
+        <li><strong>パラメータ更新</strong> — 勾配降下法：<em>新しい重み ＝ いまの重み − 学習率 × 勾配</em>（概念式）</li>
+      </ul>
+      <p>更新されるのは主に<strong>重み・バイアス</strong>などのモデルパラメータです。学習率は人が（または別の探索手法で）設定します。</p>
+    </section>
+    <section id="variants">
+      <h2>バッチの三兄弟</h2>
+      <p>勾配を<strong>どのデータで計算するか</strong>で名前が変わります。試験では違いのイメージが重要です。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>方式</th><th>勾配の計算</th><th>特徴</th></tr></thead>
+        <tbody>
+          <tr><td><strong>バッチ勾配降下法</strong></td><td>全訓練データ</td><td>正確だが1回の更新が重い</td></tr>
+          <tr><td><strong>確率的勾配降下法（SGD）</strong></td><td>1サンプル（またはごく少数）</td><td>更新は速いがノイズが大きい（<a href="../../exams/g-kentei/practice/q/g-141/">G-141</a>）</td></tr>
+          <tr><td><strong>ミニバッチ</strong></td><td>小さなまとまり（例：32件）</td><td>実務・深層学習で最も一般的</td></tr>
+        </tbody>
+      </table>
+      <p>「SGD＝訓練データを一切使わない」など、最適化として<strong>成立しない説明</strong>は×（G-141）。</p>
+    </section>
+    <section id="learning-rate">
+      <h2>学習率の効き方</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>学習率</th><th>起きやすいこと</th></tr></thead>
+        <tbody>
+          <tr><td>大きすぎる</td><td>谷底を飛び越え、損失が増える・発散（不安定）</td></tr>
+          <tr><td>適切</td><td>着実に損失が減る</td></tr>
+          <tr><td>小さすぎる</td><td>安全だが学習が遅い・局所に長く留まる</td></tr>
+        </tbody>
+      </table>
+      <p>Adamなどの<strong>適応的な最適化手法</strong>は、学習率を層やパラメータごとに調整する発展形です。G検定では名前の暗記より、「学習率はハイパーパラメータ」が頻出です。</p>
+    </section>
+    <section id="vs-backprop">
+      <h2>誤差逆伝播法との役割分担</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>役割</th></tr></thead>
+        <tbody>
+          <tr><td><strong>勾配降下法</strong></td><td>勾配の<strong>向きにパラメータを動かす</strong>最適化の考え方</td></tr>
+          <tr><td><strong><a href="../backpropagation/">誤差逆伝播法</a></strong></td><td>多層ネットで勾配を<strong>効率よく計算する</strong>手法</td></tr>
+          <tr><td><strong>損失関数</strong></td><td>最適化の<strong>目的</strong>（何を小さくするか）</td></tr>
+          <tr><td><strong>ハイパーパラメータ</strong></td><td>学習率、バッチサイズなど。通常は勾配降下で<strong>直接は更新しない</strong></td></tr>
+        </tbody>
+      </table>
+      <p><a href="../llm/">LLM</a>の学習でも、損失に対する勾配で重みを更新する点は同じです。規模が大きいため分散学習などの技術が加わります。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>微分と勾配の関係は？</summary><p class="tool-faq-a">多変数では偏微分の集まりが勾配（ベクトル）です。損失を小さくする方向を示します（<a href="../../exams/g-kentei/drill/q/tf-238/">TF-238</a>）。</p></details>
+        <details><summary>生成AIパスポートでも出る？</summary><p class="tool-faq-a">深い技術詳細はG検定寄りです。パスポートは活用・リスクが中心で、本記事はG検定の土台として読むのがおすすめです。</p></details>
+        <details><summary>勾配消失・爆発は勾配降下法の話？</summary><p class="tool-faq-a">逆伝播で勾配が極端に小さく／大きくなる現象です。更新がうまくいかない原因の一つ（<a href="../../exams/g-kentei/practice/q/g-136/">G-136</a>）。<a href="../backpropagation/">誤差逆伝播法</a>の記事も参照してください。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../artificial-intelligence/">人工知能（AI）</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

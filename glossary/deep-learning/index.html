@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ディープラーニング（Deep Learning）とは？多層ニューラルネット、GPUとの関係、機械学習との包含関係をG検定向けに解説。">
+  <title>ディープラーニングとは？Deep Learning・多層NN — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/deep-learning/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ディープラーニングとは？Deep Learning・多層NN">
+  <meta property="og:description" content="多層のニューラルネットワークで表現力を高める機械学習の一分野。GPU・データ・設計の三条件を整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/deep-learning/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"ディープラーニング","alternateName":["Deep Learning","DL"],"description":"多層のニューラルネットワークを用いる機械学習の一分野。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ディープラーニングは機械学習の一部？","acceptedAnswer":{"@type":"Answer","text":"はい。機械学習の中にディープラーニングが含まれる。"}}]}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ディープラーニング</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・モデル技術</p>
+    <h1>ディープラーニングとは？Deep Learning・多層ニューラルネット</h1>
+    <p class="tool-hero-sub">読み：でぃーぷらーにんぐ ／ 英：Deep Learning（DL）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ディープラーニング</strong>（Deep Learning／DL）は、<strong>多層の<a href="../neural-network/">ニューラルネットワーク</a>で複雑な特徴を学ぶ</strong><a href="../machine-learning/">機械学習</a>の一分野です。本記事はCNNの詳細ではなく、試験で問われる<strong>「なぜ深い層か」「いつ単純MLで十分か」「GPUとの関係」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ディープラーニングとは</a></li>
+        <li><a href="#why-deep">深い層の意味</a></li>
+        <li><a href="#requirements">実用化の三条件</a></li>
+        <li><a href="#representatives">代表アーキテクチャ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：ディープラーニングは<strong>機械学習の一分野</strong>で、多層NNが特徴（<a href="../../exams/g-kentei/drill/q/tf-004/">TF-004</a>）。多層パーセプトロンは入力・隠れ・出力層を持つ（<a href="../../exams/g-kentei/drill/q/tf-053/">TF-053</a>）。
+      </p>
+      <p>
+        ×：DLは計算量が少なく<strong>GPUと無関係</strong>（<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>）。大規模な行列演算のためGPU等が重要。
+      </p>
+      <p>
+        ○：強力だが<strong>十分なデータ・計算資源・適切な設計・評価</strong>が必要。タスクによっては単純なMLの方が実用的な場合もある（<a href="../../exams/g-kentei/drill/q/tf-054/">TF-054</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-004/">TF-004</a>、<a href="../../exams/g-kentei/drill/q/tf-053/">TF-053</a>、<a href="../../exams/g-kentei/drill/q/tf-054/">TF-054</a>、<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>、<a href="../../exams/g-kentei/drill/domain/domain-06/">ディープラーニングの概要</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>ディープラーニングとは</h2>
+      <p>
+        「Deep」は<strong>隠れ層が多い（深い）</strong>ニューラルネットを指します。浅いNNでは表現しきれない画像のエッジ→形状→物体といった<strong>階層的特徴</strong>を、層を重ねることで自動獲得できます。
+      </p>
+      <p>
+        学習は<a href="../backpropagation/">誤差逆伝播法</a>と<a href="../gradient-descent/">勾配降下法</a>の組み合わせが基本です。<a href="../loss-function/">損失関数</a>を最小化しながら重みを更新します。
+      </p>
+    </section>
+    <section id="why-deep">
+      <h2>深い層の意味</h2>
+      <p>
+        各層は前層の出力を非線形変換し、<strong>より抽象度の高い表現</strong>へ写像します。画像ならピクセル→エッジ→パーツ→クラス、自然言語なら文字→語→文脈→意味、というイメージです。
+      </p>
+      <p>
+        層が増えると表現力は上がりますが、<a href="../overfitting/">過学習</a>や学習の不安定化のリスクも増えます。<a href="../dropout/">ドロップアウト</a>や正則化、データ拡張などの対策がセットで問われます。
+      </p>
+    </section>
+    <section id="requirements">
+      <h2>実用化の三条件</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>条件</th><th>なぜ必要か</th></tr></thead>
+        <tbody>
+          <tr><td><strong>データ量</strong></td><td>パラメータが多いほど多様な例が必要</td></tr>
+          <tr><td><strong>計算資源</strong></td><td>学習は大量の行列演算（GPUが加速）</td></tr>
+          <tr><td><strong>設計・評価</strong></td><td>アーキテクチャ選定と汎化性能の検証</td></tr>
+        </tbody>
+      </table>
+      <p>「DLなら常に最高精度」は誤り。データが少ない・解釈性が重要なタスクでは、決定木や線形モデルが選ばれることもあります。</p>
+    </section>
+    <section id="representatives">
+      <h2>代表アーキテクチャ</h2>
+      <p>試験では名前と用途の対応がよく出ます。</p>
+      <ul class="tool-steps">
+        <li><strong>CNN</strong> — 画像認識（畳み込みで局所特徴）</li>
+        <li><strong>RNN / LSTM / GRU</strong> — 系列データ（時系列・文）</li>
+        <li><strong><a href="../transformer/">Transformer</a></strong> — 自己注意機構。現代の<a href="../llm/">LLM</a>の基盤</li>
+        <li><strong>GAN・拡散モデル</strong> — <a href="../generative-ai/">生成AI</a>（<a href="../stable-diffusion/">Stable Diffusion</a>など）</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ニューラルネットとディープラーニングの違いは？</summary><p class="tool-faq-a">ニューラルネットは計算モデル全般、ディープラーニングは層を深くしたNNを学習する手法・分野です。1〜2層のNNだけでは「ディープ」と呼ばないことが多いです。</p></details>
+        <details><summary>推論時もGPUが必須？</summary><p class="tool-faq-a">学習ほどではありませんが、大規模モデルは推論でもGPUや専用チップが使われます。エッジ端末では軽量化技術が重要です。</p></details>
+        <details><summary>生成AIはすべてDL？</summary><p class="tool-faq-a">現状の主要な生成AI（LLM、画像生成）はディープラーニングが中核です。ただし生成AIは「目的」（生成）、DLは「手法」の軸で、概念は交差します。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../overfitting/">過学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

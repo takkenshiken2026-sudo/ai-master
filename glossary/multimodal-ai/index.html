@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="マルチモーダルAIとは？テキスト・画像・音声など複数種類の情報を扱うAI。ハルシネーション・ファインチューニングとの混同をG検定・生成AIパスポート向けに解説。">
+  <title>マルチモーダルAIとは？Multimodal AI・複数データ形式 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/multimodal-ai/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="マルチモーダルAIとは？Multimodal AI・複数データ形式">
+  <meta property="og:description" content="テキスト、画像、音声など複数種類の情報を扱える性質。AGIやハルシネーションとは別概念。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/multimodal-ai/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"マルチモーダルAI","alternateName":["Multimodal AI","マルチモーダル"],"description":"テキスト・画像・音声など複数の形式のデータを同時に処理できるAI。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"マルチモーダルはファインチューニングのこと？","acceptedAnswer":{"@type":"Answer","text":"いいえ。複数種類の情報を扱える性質を指す。ファインチューニングは追加学習の手法。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">マルチモーダルAI</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>マルチモーダルAIとは？Multimodal AI・複数データ形式</h1>
+    <p class="tool-hero-sub">読み：まるちもーだるえーあい ／ 英：Multimodal AI</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>マルチモーダルAI</strong>（Multimodal AI）は、<strong>テキスト・画像・音声など複数種類の情報を扱える</strong>AIを指します。本記事は個別製品の機能一覧ではなく、<strong>「モダリティの地図」</strong>——試験で他概念とすり替えられやすい定義——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">マルチモーダルとは</a></li>
+        <li><a href="#modalities">モダリティの地図</a></li>
+        <li><a href="#tasks">代表タスク</a></li>
+        <li><a href="#confusions">すり替えに注意</a></li>
+        <li><a href="#biz">業務での注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：マルチモーダルは<strong>テキスト、画像、音声など複数種類の情報を扱える性質</strong>（<a href="../../exams/genai-passport/practice/q/hq-0219/">HQ-0219</a>、<a href="../../exams/genai-passport/practice/q/hq-0267/">HQ-0267</a>）。
+      </p>
+      <p>
+        ×：マルチモーダル＝<strong>ファインチューニング</strong>、<strong>RLHF</strong>、<strong>アライメント</strong>、<strong>ハルシネーション</strong>、<strong>ChatGPT</strong>の定義——いずれも別概念（HQ-0219の誤答パターン、<a href="../hallucination/">ハルシネーション</a>記事）。
+      </p>
+      <p>
+        G検定では、画像を文章で説明する<strong>Image Captioning</strong>など、認識と生成を組み合わせたタスクがマルチモーダル例として出ます（<a href="../../exams/g-kentei/practice/q/g-390/">G-390</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0219/">HQ-0219</a>、<a href="../../exams/genai-passport/practice/q/hq-0267/">HQ-0267</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-390/">G-390（Image Captioning）</a>、<a href="../../exams/g-kentei/practice/q/g-394/">G-394（DALL·E）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>マルチモーダルとは</h2>
+      <p>
+        「モダリティ」とは情報の<strong>形式・チャネル</strong>のことです。テキストだけを扱う<a href="../llm/">LLM</a>は（狭い意味では）単一モダリティ、画像とテキストの両方を入力できるモデルはマルチモーダルです。
+      </p>
+      <p>
+        近年は1つのサービスで<strong>チャット＋画像理解＋画像生成</strong>を提供する製品が増え、日常語の「マルチモーダル」は「多機能な生成AI」に近い使われ方もします。試験では<strong>定義文の主語と説明の対応</strong>を確認してください。
+      </p>
+    </section>
+    <section id="modalities">
+      <h2>モダリティの地図</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>モダリティ</th><th>例</th><th>関連用語</th></tr></thead>
+        <tbody>
+          <tr><td><strong>テキスト</strong></td><td>チャット、要約、翻訳</td><td><a href="../llm/">LLM</a>、<a href="../gpt/">GPT</a></td></tr>
+          <tr><td><strong>画像</strong></td><td>写真の説明、図表の読取</td><td><a href="../text-to-image/">テキスト画像生成</a>（出力側）</td></tr>
+          <tr><td><strong>音声</strong></td><td>文字起こし、音声合成</td><td>Whisper等（ツール記事参照）</td></tr>
+          <tr><td><strong>動画</strong></td><td>映像理解・生成</td><td>動画生成サービス</td></tr>
+        </tbody>
+      </table>
+      <p>複数を<strong>同時に入力</strong>する（例：画像＋質問文）のが典型的なマルチモーダル利用です。</p>
+    </section>
+    <section id="tasks">
+      <h2>代表タスク</h2>
+      <ul class="tool-steps">
+        <li><strong>Image Captioning</strong> — 画像内容を自然言語で説明（G-390）</li>
+        <li><strong>Visual Question Answering</strong> — 画像について質問に答える</li>
+        <li><strong>Text-to-Image</strong> — テキストから画像生成（<a href="../dalle-model/">DALL·E</a>、<a href="../stable-diffusion/">Stable Diffusion</a>）</li>
+        <li><strong>マルチモーダルRAG</strong> — 文書・図表を横断検索（<a href="../rag/">RAG</a>）</li>
+      </ul>
+      <p>アーキテクチャとしては<a href="../transformer/">Transformer</a>や<a href="../attention/">Attention</a>を各モダリティに拡張する手法が主流です。</p>
+    </section>
+    <section id="confusions">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい整理</th></tr></thead>
+        <tbody>
+          <tr><td>マルチモーダル＝ハルシネーション</td><td>事実誤りの出力現象（<a href="../hallucination/">ハルシネーション</a>）</td></tr>
+          <tr><td>マルチモーダル＝AGI</td><td>複数形式を扱っても用途は限定されうる（<a href="../agi/">AGI</a>）</td></tr>
+          <tr><td>マルチモーダル＝RLHF</td><td>人間フィードバックによる調整手法（<a href="../rlhf/">RLHF</a>）</td></tr>
+          <tr><td>画像生成だけ＝マルチモーダル全体</td><td>生成は一部。理解・対話との組み合わせも含む</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="biz">
+      <h2>業務での注意</h2>
+      <p>マルチモーダル対応は便利ですが、リスクも増えます。</p>
+      <ol class="tool-example-list">
+        <li>画像・音声にも<strong><a href="../personal-information/">個人情報</a></strong>が含まれうる</li>
+        <li>図表の読取ミス・<a href="../hallucination/">ハルシネーション</a>はテキストと同様に確認が必要</li>
+        <li><a href="../deepfake/">ディープフェイク</a>など悪用リスクとの接点</li>
+        <li>利用規約・出力物の<a href="../copyright/">著作権</a></li>
+      </ol>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>マルチモーダル＝生成AI？</summary><p class="tool-faq-a">重なりはありますが同義ではありません。マルチモーダルは入力・出力の形式の話、生成AIは新規コンテンツを作る技術の総称です。</p></details>
+        <details><summary>GPT-4oはマルチモーダル？</summary><p class="tool-faq-a">製品世代の詳細暗記より、試験定義（複数種類の情報を扱える性質）で整理してください。</p></details>
+        <details><summary>単一モダリティは obsolete？</summary><p class="tool-faq-a">いいえ。用途によってテキスト専用モデルの方が適切な場合もあります。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

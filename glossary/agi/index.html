@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AGI（汎用人工知能）とは？強いAIの定義、現時点で未実現である理由、弱いAIとの違い、ChatGPTとの混同をG検定・生成AIパスポート向けに解説。">
+  <title>AGIとは？汎用人工知能・強いAIの概念と現実 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/agi/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="AGIとは？汎用人工知能・強いAIの概念と現実">
+  <meta property="og:description" content="幅広い課題に人間のように汎用的に対応できる知能。研究上の目標であり、現時点では未実現の概念。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/agi/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"AGI","alternateName":["汎用人工知能","Artificial General Intelligence","強いAI"],"description":"人間と同等以上の知的能力を持つとされるAI。現時点では実現していない概念上の目標として研究が進む。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ChatGPTはAGI？","acceptedAnswer":{"@type":"Answer","text":"試験上は多くの場合、特定用途に特化した弱いAIとして説明される。AGIは汎用知能の未実現概念。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">AGI</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎概念</p>
+    <h1>AGIとは？汎用人工知能・強いAIの概念と現実</h1>
+    <p class="tool-hero-sub">読み：えーじーあい ／ 英：AGI（Artificial General Intelligence）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>AGI</strong>（Artificial General Intelligence／汎用人工知能）は、<strong>幅広い課題に人間のように汎用的に対応できる知能</strong>を持つAIという概念です。本記事は技術ロードマップの予測ではなく、<strong>試験とメディアで起きやすい「未来の目標」と「いまの製品」の混同</strong>——定義の落とし穴——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">AGIとは</a></li>
+        <li><a href="#not-yet">なぜ「未実現」と言うか</a></li>
+        <li><a href="#vs-products">製品・LLMとの違い</a></li>
+        <li><a href="#timeline">研究と社会の時間軸</a></li>
+        <li><a href="#safety">安全性議論との接点</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：AGI（強いAI）は<strong>汎用的な知能</strong>を想定する概念（<a href="../../exams/g-kentei/drill/q/tf-303/">TF-303</a>、<a href="../../exams/genai-passport/practice/q/hq-0136/">HQ-0136</a>）。人間のような理解や意識を想定する文脈で語られることがある（<a href="../../exams/g-kentei/drill/q/tf-009/">TF-009</a>）。
+      </p>
+      <p>
+        ×：いま広く使われている<a href="../llm/">LLM</a>や<a href="../generative-ai/">生成AI</a>が、そのままAGIである——試験では多くの場合×。<a href="../weak-ai/">弱いAI</a>として説明される設問が主流です。
+      </p>
+      <p>
+        生成AIパスポートでは、<strong>弱いAIとAGIの定義を入れ替えた選択肢</strong>に注意（<a href="../../exams/genai-passport/practice/q/hq-0015/">HQ-0015</a>、<a href="../../exams/genai-passport/practice/q/hq-0036/">HQ-0036</a>、<a href="../../exams/genai-passport/practice/q/hq-0035/">HQ-0035</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-009/">TF-009</a>、<a href="../../exams/g-kentei/drill/q/tf-303/">TF-303</a>、<a href="../../exams/g-kentei/drill/domain/domain-08/">AIの歴史と種類</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0015/">HQ-0015</a>、<a href="../../exams/genai-passport/practice/q/hq-0036/">HQ-0036</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>AGIとは</h2>
+      <p>
+        <strong>強いAI</strong>（Strong AI）とほぼ同義で使われることが多いです。<a href="../weak-ai/">弱いAI</a>が「翻訳が得意」「画像認識が得意」のように<strong>能力の範囲が限定</strong>されるのに対し、AGIは<strong>学習・推論・計画・適応</strong>などを幅広い領域で自律的にこなせる知能を目指す、という整理が試験の基本です。
+      </p>
+      <p>
+        <a href="../artificial-intelligence/">人工知能（AI）</a>研究の長期的な目標の一つとして位置づけられますが、<strong>合格基準や実現時期の合意</strong>は学術・産業ともに固定されていません。
+      </p>
+    </section>
+    <section id="not-yet">
+      <h2>なぜ「未実現」と言うか</h2>
+      <p>会話が自然なチャットボットがあっても、次のような点でAGIとは区別されます（試験・入門向けの整理）。</p>
+      <ul class="tool-steps">
+        <li><strong>汎用性</strong> — 未学習の物理作業や長期計画を人間並みにこなすとは限らない</li>
+        <li><strong>信頼性</strong> — <a href="../hallucination/">ハルシネーション</a>や文脈の取り違えが残る</li>
+        <li><strong>自律性</strong> — 目的設定・自己改善を人間の監督なしに安全に続けられるとは限らない</li>
+        <li><strong>理解・意識</strong> — 振る舞いが知的でも、理解や意識を持つとは限らない（TF-009の論点）</li>
+      </ul>
+      <p>したがって試験では「AGIは<strong>概念・研究目標</strong>」「実用の主流は<strong>弱いAI</strong>」の二層で覚えると安定します。</p>
+    </section>
+    <section id="vs-products">
+      <h2>製品・LLMとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>よくある混同</th><th>試験向けの整理</th></tr></thead>
+        <tbody>
+          <tr><td>「GPTだからAGI」</td><td>大規模言語モデルは<strong>言語タスクに特化</strong>した弱いAIの文脈が多い</td></tr>
+          <tr><td>「賢い＝汎用」</td><td>賢さは<strong>タスク内の性能</strong>。汎用性とは別軸</td></tr>
+          <tr><td>「マルチモーダル＝AGI」</td><td>複数モダリティでも<strong>用途は設計で限定</strong>されうる</td></tr>
+          <tr><td>「エージェント＝AGI」</td><td><a href="../agent/">エージェント</a>はツール連携の<strong>設計パターン</strong>。AGIの実現を意味しない</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="timeline">
+      <h2>研究と社会の時間軸</h2>
+      <p>年代の暗記より、<strong>三つのレイヤー</strong>を分けて覚えると他の用語記事につながります。</p>
+      <ol class="tool-example-list">
+        <li><strong>いま使えるAI</strong> — <a href="../weak-ai/">弱いAI</a>の製品・サービス（認識、予測、生成など）</li>
+        <li><strong>研究・開発の最前線</strong> — より汎用的な能力を目指すモデル・<a href="../agent/">エージェント</a>研究（AGI達成とは別）</li>
+        <li><strong>AGIという概念</strong> — 人間レベルの汎用知能。未実現の長期目標</li>
+      </ol>
+      <p>メディアの「AGI達成」報道と、試験の定義は一致しないことがあるため、<strong>公式テキスト・演習問題の定義</strong>を優先してください。</p>
+    </section>
+    <section id="safety">
+      <h2>安全性議論との接点</h2>
+      <p>
+        <a href="../ai-safety/">AI安全性</a>の議論では、将来のAGIが持ちうる<strong>大規模リスク</strong>も研究コミュニティで言及されます。一方、G検定・生成AIパスポートの中心は、いま稼働するAIの<strong>有害出力・誤用・漏えい</strong>など実務に近い論点です。
+      </p>
+      <p>AGIの記事を読む目的が試験対策なら、まず<strong>弱いAI／AGIの定義区別</strong>を固め、安全性は実装済みシステムのリスクから入るのが効率的です。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>AGIとASI（人工超知能）は同じ？</summary><p class="tool-faq-a">試験範囲ではASIの深掘りは少ないです。AGIは人間並みの汎用知能、ASIはそれを超える知能という整理で語られることがあります。</p></details>
+        <details><summary>強いAI＝高性能AI？</summary><p class="tool-faq-a">試験では「強い」は性能ではなく汎用性の話です。高性能な弱いAIと混同しないでください。</p></details>
+        <details><summary>生成AIパスポートでAGIはどこまで？</summary><p class="tool-faq-a">第1章の基礎用語として定義と弱いAIとの対比が中心です。技術詳細はG検定寄りです。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../artificial-intelligence/">人工知能（AI）</a></li>
+          <li><a href="../weak-ai/">弱いAI</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../ai-safety/">AI安全性</a></li>
+          <li><a href="../agent/">エージェント</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

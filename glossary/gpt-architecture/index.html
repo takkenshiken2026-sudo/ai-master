@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPTアーキテクチャとは？デコーダのみTransformer・自己回帰言語モデルの構造。BERTとの違い・学習の流れをG検定向けに解説。">
+  <title>GPTアーキテクチャとは？デコーダ型・自己回帰・学習の流れ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt-architecture/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="GPTアーキテクチャとは？デコーダ型・自己回帰・学習の流れ">
+  <meta property="og:description" content="デコーダのみのTransformerによる自己回帰言語モデル。次トークン予測で文章生成能力を獲得する。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt-architecture/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"GPTアーキテクチャ","alternateName":["GPT Architecture","デコーダ型GPT"],"description":"デコーダのみTransformerによる自己回帰言語モデル。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"GPTはエンコーダ・デコーダ両方？","acceptedAnswer":{"@type":"Answer","text":"典型的なGPTはデコーダ（Decoder）側のブロックを積み重ねた自己回帰型。翻訳向けのフルEncoder-Decoderとは構成が異なる。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPTアーキテクチャ</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPTアーキテクチャとは？デコーダ型・自己回帰・学習の流れ</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃーあーきてくちゃ ／ 英：GPT Architecture</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPTアーキテクチャ</strong>は、<a href="../transformer/">Transformer</a>の<strong>デコーダ（Decoder）側</strong>を中心に積み重ね、<strong>次のトークンを順に予測する自己回帰型</strong>の言語モデル構造です。本記事は<a href="../gpt/">GPT</a>の製品史ではなく、<strong>「なぜデコーダのみか」「BERTと何が違うか」</strong>——構造の分岐——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#decoder-only">デコーダのみの意味</a></li>
+        <li><a href="#autoregressive">自己回帰生成の流れ</a></li>
+        <li><a href="#vs-bert">BERT（エンコーダ）との対比</a></li>
+        <li><a href="#training">学習パイプライン</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：GPT系は<strong>Transformerのデコーダ構造</strong>を基盤とし、<strong>次のトークン予測</strong>で文章生成能力を獲得（<a href="../../exams/g-kentei/drill/q/tf-427/">TF-427</a>）。自己回帰的な言語モデルとして説明される。
+      </p>
+      <p>
+        対比：BERTは<strong>Transformerのエンコーダ</strong>を用いた自然言語処理モデル（<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>）。BERTをGANや画像専用とする説明は×（<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-427/">TF-427</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425（BERT）</a>、<a href="../../exams/g-kentei/drill/domain/domain-07/">ディープラーニングの要素技術</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108（Transformer）</a>、<a href="../../exams/genai-passport/practice/q/hq-0261/">HQ-0261（GPTの定義）</a></p>
+      </div>
+    </section>
+    <section id="decoder-only">
+      <h2>デコーダのみの意味</h2>
+      <p>
+        原典のTransformerは機械翻訳向けに<strong>エンコーダ＋デコーダ</strong>の二部構成でした。GPT系列はそのうち<strong>デコーダブロック</strong>（<a href="../attention/">Self-Attention</a>＋FFNなど）を深く積み、単一のテキスト列から次を予測する形に特化します。
+      </p>
+      <p>試験では層数の暗記より、<strong>「デコーダ中心の自己回帰生成」</strong>というラベルが重要です。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>構成</th><th>典型例</th><th>向き</th></tr></thead>
+        <tbody>
+          <tr><td>エンコーダのみ</td><td>BERT</td><td>文全体の理解・分類・埋め込み</td></tr>
+          <tr><td>デコーダのみ</td><td>GPT</td><td>左から右へトークン生成</td></tr>
+          <tr><td>エンコーダ＋デコーダ</td><td>翻訳モデル（T5等）</td><td>入力系列→出力系列</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="autoregressive">
+      <h2>自己回帰生成の流れ</h2>
+      <p>推論時のイメージ（試験向けの簡略版）です。</p>
+      <ol class="tool-example-list">
+        <li>プロンプトを<a href="../token/">トークン</a>列に変換</li>
+        <li>これまでのトークン列を入力し、<strong>次の1トークン</strong>の確率分布を出力</li>
+        <li>サンプリングまたは最尤で1トークンを選び、列の末尾に追加</li>
+        <li>終了条件まで繰り返し（<a href="../context-window/">コンテキストウィンドウ</a>の範囲内）</li>
+      </ol>
+      <p>
+        学習時は正解文の各位置で「次のトークン」を予測する教師あり学習として、<a href="../backpropagation/">誤差逆伝播法</a>と<a href="../gradient-descent/">勾配降下法</a>で重みを更新します。
+      </p>
+    </section>
+    <section id="vs-bert">
+      <h2>BERT（エンコーダ）との対比</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th></th><th>GPT（デコーダ型）</th><th>BERT（エンコーダ型）</th></tr></thead>
+        <tbody>
+          <tr><td><strong>主な学習</strong></td><td>次トークン予測（因果的マスク）</td><td>マスク言語モデル等（双方向文脈）</td></tr>
+          <tr><td><strong>得意</strong></td><td>文章生成・続き書き</td><td>分類・理解・検索向け表現</td></tr>
+          <tr><td><strong>生成</strong></td><td>自己回帰で自然に生成</td><td>生成は別設計が必要なことが多い</td></tr>
+          <tr><td><strong>試験</strong></td><td>TF-427</td><td>TF-425</td></tr>
+        </tbody>
+      </table>
+      <p>どちらも<a href="../transformer/">Transformer</a>系ですが、<strong>使う側（エンコーダ／デコーダ）と学習目的</strong>が異なります。</p>
+    </section>
+    <section id="training">
+      <h2>学習パイプライン</h2>
+      <p>実務・試験の橋渡しとして、よく語られる段階です（詳細は製品により異なります）。</p>
+      <ul class="tool-steps">
+        <li><strong>事前学習（Pre-training）</strong> — 大規模テキストで次トークン予測。汎用の言語能力</li>
+        <li><strong>指示追従・タスク適応</strong> — <a href="../fine-tuning/">ファインチューニング</a>や教師付きデータで用途に合わせる</li>
+        <li><strong>人間の好みへの調整</strong> — <a href="../rlhf/">RLHF</a>など（<a href="../alignment/">アライメント</a>）</li>
+        <li><strong>サービス化</strong> — <a href="../../tools/chatgpt/">ChatGPT</a>のような対話UI・API</li>
+      </ul>
+      <p>アーキテクチャは<strong>構造</strong>、RLHFは<strong>調整手法</strong>、ChatGPTは<strong>サービス</strong>——層を混同しないでください。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>因果的マスクとは？</summary><p class="tool-faq-a">生成時、未来のトークンを見えないようにする制約です。自己回帰学習の整合性のため。試験では名前の暗記より「未来を見ずに次を予測」のイメージで十分なことが多いです。</p></details>
+        <details><summary>GPTアーキテクチャ＝LLM？</summary><p class="tool-faq-a">GPTはLLMの代表的実装の一つです。LLMは規模の大きな言語モデルというクラス名（<a href="../llm/">LLM</a>）。</p></details>
+        <details><summary>画像GPTもある？</summary><p class="tool-faq-a">試験の典型文脈は自然言語のGPT系列です。画像は別アーキテクチャ（<a href="../text-to-image/">拡散モデル</a>等）が主流です（TF-428）。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

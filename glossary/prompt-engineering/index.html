@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="プロンプトエンジニアリングとは？指示を工夫して望ましい出力を得る技術。プロンプト・Few-shot・CoTとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>プロンプトエンジニアリングとは？指示設計の技術と技法 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/prompt-engineering/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="プロンプトエンジニアリングとは？指示設計の技術と技法">
+  <meta property="og:description" content="目的に合った出力を得るために指示や条件を工夫する技術。プロンプト（入力文）そのものではない。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/prompt-engineering/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"プロンプトエンジニアリング","alternateName":["Prompt Engineering","PE"],"description":"AIから望む回答を引き出すための指示文を設計・最適化する技術。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"プロンプトエンジニアリング＝プロンプト？","acceptedAnswer":{"@type":"Answer","text":"違う。プロンプトは入力文、プロンプトエンジニアリングはそれを工夫する技術・取り組み。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">プロンプトエンジニアリング</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>プロンプトエンジニアリングとは？指示設計の技術と技法</h1>
+    <p class="tool-hero-sub">読み：ぷろんぷとえんじにありんぐ ／ 英：Prompt Engineering（PE）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>プロンプトエンジニアリング</strong>（Prompt Engineering）は、<strong>目的に合った出力を得るために指示や条件を工夫する技術</strong>です。本記事は<a href="../prompt/">プロンプト</a>の書き方例の羅列ではなく、<strong>「名詞（プロンプト）と技術（PE）の区別」</strong>——試験で最も問われるすり替え——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">プロンプトエンジニアリングとは</a></li>
+        <li><a href="#noun-vs-tech">プロンプトとの違い</a></li>
+        <li><a href="#toolbox">技法のツールボックス</a></li>
+        <li><a href="#workflow">実務の流れ</a></li>
+        <li><a href="#limits">万能ではない</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：生成AIへの<strong>入力指示を工夫して出力を調整する取り組み</strong>（<a href="../../exams/g-kentei/drill/q/tf-173/">TF-173</a>）。<strong>目的に合った出力を得るために指示や条件を工夫する技術</strong>（<a href="../../exams/genai-passport/practice/q/hq-0783/">HQ-0783</a>）。
+      </p>
+      <p>
+        ×：<strong>プロンプトエンジニアリング＝生成AIに与える指示や入力文</strong>——これは<a href="../prompt/">プロンプト</a>の定義（<a href="../../exams/genai-passport/practice/q/hq-0764/">HQ-0764</a>、<a href="../../exams/genai-passport/practice/q/hq-0726/">HQ-0726</a>）。×：<strong>少数の入出力例を示す方法だけ</strong>——それはFew-shotの説明（HQ-0783のD）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-173/">TF-173</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0783/">HQ-0783</a>、<a href="../../exams/genai-passport/practice/q/hq-0764/">HQ-0764</a>、<a href="../../exams/genai-passport/practice/q/hq-0726/">HQ-0726</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>プロンプトエンジニアリングとは</h2>
+      <p>
+        モデルの重みを変える<a href="../fine-tuning/">ファインチューニング</a>とは別に、<strong>推論時の入力設計</strong>で振る舞いを寄せる活動です。役割設定、出力形式、制約、例示、段階的依頼などを組み合わせ、評価しながら改善します。
+      </p>
+      <p>
+        職種としては<a href="../../career/prompt-engineer/">プロンプトエンジニア</a>が担う領域と重なりますが、試験では<strong>定義の正確さ</strong>が中心です。
+      </p>
+    </section>
+    <section id="noun-vs-tech">
+      <h2>プロンプトとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>品詞・性質</th><th>例</th></tr></thead>
+        <tbody>
+          <tr><td><strong><a href="../prompt/">プロンプト</a></strong></td><td>名詞＝<strong>入力文そのもの</strong></td><td>「以下を要約して」という文章</td></tr>
+          <tr><td><strong>プロンプトエンジニアリング</strong></td><td>技術・<strong>工夫するプロセス</strong></td><td>目的を達成するまで指示を試行錯誤する</td></tr>
+        </tbody>
+      </table>
+      <p>選択肢で「プロンプトエンジニアリングは、AIに与える指示文」と書かれていたら、主語と説明がずれているサインです。</p>
+    </section>
+    <section id="toolbox">
+      <h2>技法のツールボックス</h2>
+      <p>PEの中に含まれる代表的な一手です（すべてを毎回使う必要はありません）。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>役割・文脈</h3>
+          <p>「あなたは校正者です」など<a href="../system-prompt/">システムプロンプト</a>と連携</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>形式指定</h3>
+          <p>JSON、表、箇条書き、文字数上限</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Few-shot</h3>
+          <p>入出力の例を数件示す（<a href="../../exams/g-kentei/practice/q/g-385/">G-385</a>）</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3><a href="../chain-of-thought/">CoT</a></h3>
+          <p>段階的推論を促す</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3><a href="../self-consistency/">自己整合性</a></h3>
+          <p>複数回答の多数決</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>パラメータ調整</h3>
+          <p><a href="../temperature/">温度</a>など推論設定</p>
+        </div>
+      </div>
+    </section>
+    <section id="workflow">
+      <h2>実務の流れ</h2>
+      <ol class="tool-example-list">
+        <li><strong>目的と評価基準</strong>を決める（何が「良い出力」か）</li>
+        <li><strong>ベースプロンプト</strong>を書く（<a href="../prompt/">4要素</a>：目的・読者・形式・制約）</li>
+        <li><strong>テストケース</strong>で出力を確認（<a href="../hallucination/">ハルシネーション</a>・形式崩れ）</li>
+        <li><strong>技法を追加</strong>し、改善が頭打ちなら<a href="../rag/">RAG</a>やファインチューニングを検討</li>
+        <li><strong>本番監視</strong>（<a href="../ai-governance/">ガバナンス</a>）</li>
+      </ol>
+    </section>
+    <section id="limits">
+      <h2>万能ではない</h2>
+      <p>
+        プロンプトだけで<a href="../jailbreak/">ジェイルブレイク</a>や<a href="../prompt-injection/">プロンプトインジェクション</a>のリスクをゼロにできるわけではありません（TF-173の解説）。機密入力の禁止、出力確認、<a href="../hallucination-mitigation/">ハルシネーション対策</a>は別途必要です。
+      </p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>プロンプトエンジニアリングとRAGはどちらが先？</summary><p class="tool-faq-a">まずプロンプトと評価で足りるか確認し、知識不足ならRAGを検討する、という順が一般的です。排他ではありません。</p></details>
+        <details><summary>CoTはPEの一部？</summary><p class="tool-faq-a">はい。PEは技法全体、CoTはその中の一手です（<a href="../chain-of-thought/">CoT記事</a>）。</p></details>
+        <details><summary>日本語プロンプトで試験は？</summary><p class="tool-faq-a">定義は言語非依存です。英語名（Prompt Engineering）と日本語説明の対応を確認してください。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../few-shot-prompting/">少数ショットプロンプト</a></li>
+          <li><a href="../zero-shot-prompting/">ゼロショットプロンプト</a></li>
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../temperature/">温度パラメータ</a></li>
+          <li><a href="../self-consistency/">自己整合性</a></li>
+          <li><a href="../system-prompt/">システムプロンプト</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

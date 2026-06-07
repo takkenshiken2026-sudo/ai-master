@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="過学習（Overfitting）とは？訓練と汎化のズレ、ドロップアウト・正則化・早期終了など対策をG検定向けに解説。">
+  <title>過学習とは？Overfitting・汎化と対策 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/overfitting/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="過学習とは？Overfitting・汎化と対策">
+  <meta property="og:description" content="学習データに適合しすぎて未知データの性能が落ちる現象。訓練・検証の見方と対策一覧。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/overfitting/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"過学習","alternateName":["Overfitting"],"description":"学習データに適合しすぎ、未知データへの汎化性能が低下する状態。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"過学習のサインは？","acceptedAnswer":{"@type":"Answer","text":"訓練誤差は低いのに検証・テスト誤差が高い、または検証性能が悪化し始めること。"}}]}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">過学習</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>過学習とは？Overfitting・汎化性能と対策</h1>
+    <p class="tool-hero-sub">読み：かがくしゅう ／ 英：Overfitting</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>過学習</strong>（Overfitting）は、モデルが学習データの<strong>細部やノイズまで暗記</strong>し、未知データ（テストデータ）での性能が落ちる状態です。本記事は数式の導出ではなく、試験で問われる<strong>定義・見分け方・対策の対応表</strong>——特に他手法とのすり替え問題——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#definition">過学習とは</a></li>
+        <li><a href="#signals">見分けるサイン</a></li>
+        <li><a href="#mitigation">対策一覧</a></li>
+        <li><a href="#underfitting">過学習の反対・未学習</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：過学習は学習データに<strong>適合しすぎ</strong>、未知データの性能が低下する（<a href="../../exams/g-kentei/drill/q/tf-363/">TF-363</a>、<a href="../../exams/g-kentei/drill/q/tf-364/">TF-364</a>）。訓練だけでなく<strong>検証・テストで評価</strong>する。
+      </p>
+      <p>
+        ○：<a href="../dropout/">ドロップアウト</a>は学習時に一部ユニットを無効化する正則化（<a href="../../exams/g-kentei/practice/q/g-168/">G-168</a>）。早期終了は検証性能悪化で学習を止める（G-168）。
+      </p>
+      <p>
+        パスポートHQ-0133では、ドロップアウトの説明が<strong>正則化（L1/L2）の説明とすり替え</strong>られた不適切肢を見抜く問題があります。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-363/">TF-363</a>、<a href="../../exams/g-kentei/drill/q/tf-364/">TF-364</a>、<a href="../../exams/g-kentei/practice/q/g-168/">G-168</a>、<a href="../../exams/g-kentei/practice/q/g-002/">G-002</a>、<a href="../../exams/g-kentei/drill/domain/domain-10/">機械学習の概要</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0133/">HQ-0133</a></p>
+      </div>
+    </section>
+    <section id="definition">
+      <h2>過学習とは</h2>
+      <p>
+        機械学習の目的は<strong>汎化</strong>——学習に使っていないデータでもうまく予測すること——です。過学習では訓練誤差は小さいのに、検証・テスト誤差が大きくなります。モデルが複雑すぎる、データが少ない、学習が長すぎるなどが典型原因です。
+      </p>
+    </section>
+    <section id="signals">
+      <h2>見分けるサイン</h2>
+      <ul class="tool-steps">
+        <li><strong>訓練精度は高いがテスト精度が低い</strong></li>
+        <li><strong>検証損失が下がり始めたあと再び上昇</strong>（早期終了のタイミング）</li>
+        <li><strong>学習データの個別サンプルを丸暗記</strong>したような挙動</li>
+      </ul>
+      <p>だからこそデータを<strong>訓練・検証・テスト</strong>に分割し、ハイパーパラメータ調整は検証セットで行い、最終評価はテストセットで一度だけ、が基本です。</p>
+    </section>
+    <section id="mitigation">
+      <h2>対策一覧</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>手法</th><th>要点</th><th>試験の注意</th></tr></thead>
+        <tbody>
+          <tr><td><strong><a href="../dropout/">ドロップアウト</a></strong></td><td>学習時にニューロンをランダム無効化</td><td>推論時に入力を「削除」するわけではない（TF-395は×）</td></tr>
+          <tr><td><strong>L1/L2正則化</strong></td><td>重みの大きさにペナルティ</td><td>ドロップアウトの説明と混同注意（HQ-0133）</td></tr>
+          <tr><td><strong>早期終了</strong></td><td>検証性能悪化で学習停止</td><td>ドロップアウトとは別手法（G-168）</td></tr>
+          <tr><td><strong>データ拡張</strong></td><td>反転・切り出しなどで多様性UP</td><td>画像などで有効（TF-435）</td></tr>
+          <tr><td><strong>モデル簡素化</strong></td><td>層・パラメータを減らす</td><td>—</td></tr>
+          <tr><td><strong>データ追加</strong></td><td>学習例を増やす</td><td>根本対策の一つ</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="underfitting">
+      <h2>過学習の反対・未学習</h2>
+      <p>
+        <strong>未学習（Underfitting）</strong>はモデルが単純すぎて、訓練データすら十分に当てはまらない状態です（<a href="../../exams/g-kentei/practice/q/g-175/">G-175</a>の（あ）過学習・（い）未学習の対比）。過学習対策を入れすぎると未学習に振れることもあり、バランスが重要です。
+      </p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>LLMのファインチューニングでも過学習する？</summary><p class="tool-faq-a">はい。少数データでの調整では特に注意が必要で、検証セットでの監視やエポック数の制限が使われます。</p></details>
+        <details><summary>正規化層と正則化は同じ？</summary><p class="tool-faq-a">違います。バッチ正規化などは学習安定化、正則化は過学習抑制（G-299）。名称が似ているので混同注意。</p></details>
+        <details><summary>アンサンブルは過学習対策？</summary><p class="tool-faq-a">ランダムフォレストなどは単木より過学習を抑えやすい、と説明されることがあります（G-038）。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

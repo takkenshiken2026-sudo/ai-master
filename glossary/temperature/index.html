@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="温度パラメータ（Temperature）とは？生成AIの出力のランダム性・多様性を制御する設定。学習率との違いをG検定・生成AIパスポート向けに解説。">
+  <title>温度パラメータとは？Temperature・出力のランダム性 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/temperature/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="温度パラメータとは？Temperature・出力のランダム性">
+  <meta property="og:description" content="生成時の出力の多様性やランダム性に影響する推論パラメータ。高いほど多様、低いほど安定。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/temperature/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"温度パラメータ","alternateName":["Temperature","温度","T"],"description":"出力のランダム性を制御する生成パラメータ。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"温度を上げると何が起きる？","acceptedAnswer":{"@type":"Answer","text":"一般に出力のランダム性・多様性が高まりやすい。低いと安定した決定的な出力になりやすい。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">温度パラメータ</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>温度パラメータとは？Temperature・出力のランダム性</h1>
+    <p class="tool-hero-sub">読み：おんどぱらめーた ／ 英：Temperature</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>温度パラメータ</strong>（Temperature）は、<a href="../llm/">LLM</a>などの<strong>生成時に、次のトークンを選ぶ確率分布の「尖り方」</strong>を調整する設定です。本記事は数式の暗記ではなく、<strong>「創造性ダイヤル」としての使い分け</strong>——高い・低いで何が変わるか——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">温度パラメータとは</a></li>
+        <li><a href="#dial">創造性ダイヤル</a></li>
+        <li><a href="#use-cases">用途別の目安</a></li>
+        <li><a href="#confusions">混同しやすい用語</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：温度を<strong>高くすると出力のランダム性が高まりやすい</strong>（<a href="../../exams/g-kentei/drill/q/tf-178/">TF-178</a>）。生成AIの温度は<strong>多様性やランダム性に影響する設定</strong>（<a href="../../exams/genai-passport/drill/q/tf-0174/">TF-0174</a>）。
+      </p>
+      <p>
+        低いほど<strong>安定・決定的</strong>な出力になりやすい、という対比も覚えておきます。温度を上げれば<a href="../hallucination/">ハルシネーション</a>が消える、という説明は×です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-178/">TF-178</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0174/">TF-0174</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>温度パラメータとは</h2>
+      <p>
+        <a href="../llm/">LLM</a>は各ステップで「次に来る語」の候補に確率を付けます。温度はその分布を<strong>平坦化（高温）または尖らせる（低温）</strong>ことで、選ばれる語のばらつきを変えます。
+      </p>
+      <p>
+        推論時の設定であり、<a href="../gradient-descent/">勾配降下法</a>の<strong>学習率</strong>（学習時のハイパーパラメータ）とは別物です（<a href="../../exams/g-kentei/practice/q/g-190/">G-190</a>は学習率の話）。
+      </p>
+    </section>
+    <section id="dial">
+      <h2>創造性ダイヤル</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>温度</th><th>傾向</th><th>イメージ</th></tr></thead>
+        <tbody>
+          <tr><td><strong>低い（例：0〜0.3）</strong></td><td>同じ入力で似た出力、決定的</td><td>正確さ・再現性重視</td></tr>
+          <tr><td><strong>中程度</strong></td><td>バランス</td><td>一般業務</td></tr>
+          <tr><td><strong>高い（例：0.8〜1.0+）</strong></td><td>表現の多様性、意外な語が選ばれやすい</td><td>ブレインストーミング・文案</td></tr>
+        </tbody>
+      </table>
+      <p>製品やAPIでは名前・範囲・デフォルトが異なります。試験では<strong>方向性</strong>（高い＝ランダム性↑）が重要です。</p>
+    </section>
+    <section id="use-cases">
+      <h2>用途別の目安</h2>
+      <ul class="tool-steps">
+        <li><strong>コード生成・データ抽出</strong> — 低め（形式のブレを抑える）</li>
+        <li><strong>要約・翻訳</strong> — 低〜中（事実忠実度を優先）</li>
+        <li><strong>キャッチコピー・企画案</strong> — 中〜高（多様性を狙う）</li>
+        <li><strong><a href="../hallucination-mitigation/">ハルシネーション対策</a></strong> — 低めは補助になりうるが、確認は依然必要</li>
+      </ul>
+      <p><a href="../prompt-engineering/">プロンプトエンジニアリング</a>と組み合わせ、出力を評価しながら調整します。</p>
+    </section>
+    <section id="confusions">
+      <h2>混同しやすい用語</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>違い</th></tr></thead>
+        <tbody>
+          <tr><td><strong>学習率</strong></td><td>学習時の重み更新幅（<a href="../gradient-descent/">勾配降下法</a>）</td></tr>
+          <tr><td><strong>Top-p / Top-k</strong></td><td>候補語を絞る別のサンプリング設定</td></tr>
+          <tr><td><strong>回帰の「温度」</strong></td><td>物理量の予測とは無関係（<a href="../../exams/g-kentei/drill/q/tf-022/">TF-022</a>は回帰問題の例）</td></tr>
+          <tr><td><strong>モデルの「性能」</strong></td><td>温度は推論設定であり、能力そのものではない</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>温度0で完全に同じ出力？</summary><p class="tool-faq-a">製品によりますが、低温度では再現性が高まるイメージです。完全決定論かは実装次第です。</p></details>
+        <details><summary>同じプロンプトで結果が変わる理由は温度だけ？</summary><p class="tool-faq-a">温度以外にシード値、モデル更新、コンテキスト差なども影響します。</p></details>
+        <details><summary>画像生成にも温度はある？</summary><p class="tool-faq-a">拡散モデル等では別名のパラメータ（CFG scale等）で多様性を制御します。概念は近いですが用語は領域によります。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../prompt-engineering/">プロンプトエンジニアリング</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../hallucination-mitigation/">ハルシネーション対策</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

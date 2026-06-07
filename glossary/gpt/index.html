@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPTとは？Generative Pre-trained Transformerの意味、LLM・ChatGPTとの違い、自己回帰型言語モデルとしての位置づけをG検定・生成AIパスポート向けに解説。">
+  <title>GPTとは？Generative Pre-trained Transformer・LLMとの違い — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="GPTとは？Generative Pre-trained Transformer・LLMとの違い">
+  <meta property="og:description" content="OpenAIが開発したTransformer基盤の大規模言語モデル系列。ChatGPTの基盤だが、サービスそのものではない。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"GPT","alternateName":["Generative Pre-trained Transformer","ジーピーティー"],"description":"OpenAIが開発したTransformer基盤の大規模言語モデル系列。ChatGPTの基盤。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"GPTとChatGPTは同じ？","acceptedAnswer":{"@type":"Answer","text":"同じではない。GPTはモデル系列、ChatGPTは対話型のテキスト生成AIサービス。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPT</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPTとは？Generative Pre-trained Transformer・LLMとの違い</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃー ／ 英：GPT（Generative Pre-trained Transformer）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPT</strong>（Generative Pre-trained Transformer）は、<a href="../transformer/">Transformer</a>を基盤とする<strong>自己回帰型の言語モデル系列</strong>です。OpenAIが広く知られる開発元ですが、本記事は個別バージョンの性能比較ではなく、<strong>モデル・LLM・サービスの三層</strong>——試験で混同されやすい主語の整理——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#acronym">名前の意味</a></li>
+        <li><a href="#three-layers">三層の区別</a></li>
+        <li><a href="#what-does">GPTは何をするか</a></li>
+        <li><a href="#confusions">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：GPT系は<strong>文脈に続くトークンを予測する自己回帰的な言語モデル</strong>（<a href="../../exams/g-kentei/drill/q/tf-427/">TF-427</a>）。<strong>Transformerを基盤とする言語モデル系列</strong>（<a href="../../exams/genai-passport/drill/q/tf-0140/">TF-0140</a>、<a href="../../exams/genai-passport/practice/q/hq-0261/">HQ-0261</a>）。
+      </p>
+      <p>
+        ×：GPTは<strong>GANの生成器・識別器だけ</strong>で構成される画像生成モデル（TF-0140）。×：画像分類専用で<strong>文章を扱えない</strong>（<a href="../../exams/g-kentei/drill/q/tf-428/">TF-428</a>）。
+      </p>
+      <p>
+        「生成AIの定義」「RLHFの定義」「ChatGPTの定義」を、GPTの説明として選ぶ問題では<strong>主語と説明の対応</strong>を確認してください（<a href="../../exams/genai-passport/practice/q/hq-0247/">HQ-0247</a>は生成AIの説明が正解で、GPTの定義は別文脈）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-427/">TF-427</a>、<a href="../../exams/g-kentei/drill/q/tf-428/">TF-428</a>、<a href="../../exams/g-kentei/drill/domain/domain-07/">ディープラーニングの要素技術</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0140/">TF-0140</a>、<a href="../../exams/genai-passport/practice/q/hq-0261/">HQ-0261</a></p>
+      </div>
+    </section>
+    <section id="acronym">
+      <h2>名前の意味</h2>
+      <ul class="tool-steps">
+        <li><strong>Generative（生成的）</strong> — 与えられた文脈から<strong>新しいトークン列</strong>を生成する</li>
+        <li><strong>Pre-trained（事前学習済み）</strong> — 大規模コーパスでまず学習し、その後<a href="../fine-tuning/">ファインチューニング</a>や<a href="../rlhf/">RLHF</a>などで調整されることが多い</li>
+        <li><strong>Transformer</strong> — <a href="../attention/">Attention</a>を中核とする<a href="../transformer/">アーキテクチャ</a>を採用</li>
+      </ul>
+      <p>構造の詳細は<a href="../gpt-architecture/">GPTアーキテクチャ</a>の記事で補完します。</p>
+    </section>
+    <section id="three-layers">
+      <h2>三層の区別</h2>
+      <p>試験で最も重要な整理です。上から下へ「具体」になります。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>層</th><th>例</th><th>覚え方</th></tr></thead>
+        <tbody>
+          <tr><td><strong>サービス</strong></td><td><a href="../../tools/chatgpt/">ChatGPT</a></td><td>ユーザーが触る<strong>アプリ・API</strong></td></tr>
+          <tr><td><strong>モデル</strong></td><td>GPT系列、<a href="../llm/">LLM</a></td><td>学習済みの<strong>重み・能力</strong></td></tr>
+          <tr><td><strong>アーキテクチャ</strong></td><td><a href="../transformer/">Transformer</a>（デコーダ系）</td><td>ネットワークの<strong>設計図</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../generative-ai/">生成AI</a>はさらに広い概念で、「GPT＝生成AI全体」ではありません。逆に、GPTは生成AIを実現する代表的モデルの一つです。
+      </p>
+    </section>
+    <section id="what-does">
+      <h2>GPTは何をするか</h2>
+      <p>
+        入力テキスト（<a href="../prompt/">プロンプト</a>）を<a href="../token/">トークン</a>列に分割し、<strong>次のトークンを順に予測</strong>して文章を伸ばします。翻訳・要約・質問応答・コード生成など、多様なタスクはプロンプト設計や追加学習で実現されます。
+      </p>
+      <p>
+        出力の信頼性は別問題で、<a href="../hallucination/">ハルシネーション</a>や<a href="../rag/">RAG</a>による根拠付けは利用側の設計が重要です。
+      </p>
+    </section>
+    <section id="confusions">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい整理</th></tr></thead>
+        <tbody>
+          <tr><td>GPT＝ChatGPT</td><td>モデルとサービスは別</td></tr>
+          <tr><td>GPT＝GAN／VAE</td><td>言語モデル系列。画像生成専用の別系譜（HQ-0261）</td></tr>
+          <tr><td>GPT＝Transformer全体</td><td>GPTはTransformerの<strong>派生モデル</strong>の一つ</td></tr>
+          <tr><td>GPT＝RLHF</td><td>RLHFは調整<strong>手法</strong>（<a href="../rlhf/">RLHF</a>）</td></tr>
+          <tr><td>Transformer＝ChatGPT</td><td>アーキテクチャとサービスは別（<a href="../transformer/">Transformer</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GPTとClaude・Geminiは同じ？</summary><p class="tool-faq-a">いずれも大規模言語モデル系ですが、開発元・学習データ・提供形態は異なります。試験では「GPT＝OpenAIの系列」程度で十分なことが多いです。</p></details>
+        <details><summary>GPT-4などバージョンは覚える？</summary><p class="tool-faq-a">試験では世代の細かい暗記より、自己回帰・Transformer基盤・サービスとの区別が中心です。</p></details>
+        <details><summary>BERTとの違いは？</summary><p class="tool-faq-a">BERTはエンコーダ中心のモデル、GPTはデコーダ中心の自己回帰生成が典型です（<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>）。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../../tools/chatgpt/">ChatGPT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="データシート（Data Sheet）とは？データセットの収集・用途・制約・偏りを説明する透明性資料。モデルカードとの違いを生成AIパスポート向けに解説。">
+  <title>データシートとは？Data Sheet・データセットの透明性 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/data-sheet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="データシートとは？Data Sheet・データセットの透明性">
+  <meta property="og:description" content="データの収集方法、用途、制約、偏りなどを説明する資料。偏りを自動的に消すものではない。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/data-sheet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"データシート","alternateName":["Data Sheet","Datasheet"],"description":"データセットの収集方法、用途、制約、偏りなどを説明する透明性資料。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"データシートを作れば偏りは消える？","acceptedAnswer":{"@type":"Answer","text":"いいえ。問題を把握し対策を検討する手がかりであり、偏りや権利問題を自動的に消すものではない。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">データシート</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・ビジネス</p>
+    <h1>データシートとは？Data Sheet・データセットの透明性</h1>
+    <p class="tool-hero-sub">読み：でーたしーと ／ 英：Data Sheet / Datasheet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>データシート</strong>（Data Sheet）は、AIの学習に使う<strong>データセットについて、収集方法・用途・制約・偏りなどを説明する資料</strong>です。本記事は<a href="../algorithmic-bias/">アルゴリズムバイアス</a>の原因論ではなく、<strong>「何を書くか」のチェックリスト</strong>——透明性のための記載項目——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">データシートとは</a></li>
+        <li><a href="#sections">記載項目のチェックリスト</a></li>
+        <li><a href="#vs-model-card">モデルカードとの違い</a></li>
+        <li><a href="#limits">できること・できないこと</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：データシートは、データの<strong>収集方法、用途、制約、偏り</strong>などを説明する資料として使われる（<a href="../../exams/genai-passport/drill/q/tf-0413/">TF-0413</a>）。透明性や利用判断の支援に役立つ。
+      </p>
+      <p>
+        ×：データシートを作れば、偏りや権利問題が<strong>自動的に完全消滅</strong>する（<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0413/">TF-0413</a>、<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414</a></p>
+        <p>関連：<a href="../algorithmic-bias/">アルゴリズムバイアス</a>、<a href="../../exams/g-kentei/drill/q/tf-284/">TF-284（データ量の神話）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>データシートとは</h2>
+      <p>
+        データの質とリスクは、中身を見ないと判断しづらい問題があります。データシートは、関係者が<strong>「このデータは何か」「どう使ってよいか」「何に注意すべきか」</strong>を共有するための文書です。
+      </p>
+      <p>
+        研究コミュニティでは「Datasheets for Datasets」などの枠組みが知られ、企業でも社内データカタログや法務レビューと組み合わせて使われます。試験ではフォーマットの暗記より<strong>目的と限界</strong>が問われます。
+      </p>
+    </section>
+    <section id="sections">
+      <h2>記載項目のチェックリスト</h2>
+      <p>実務・試験の橋渡しとして、次の観点を押さえるとよいです。</p>
+      <ul class="tool-steps">
+        <li><strong>動機・作成者</strong> — なぜ作ったか、誰が管理するか</li>
+        <li><strong>収集方法</strong> — クロール、契約、ユーザー投稿、合成データなど</li>
+        <li><strong>構成・代表性</strong> — 含まれる属性、地域・言語、期間</li>
+        <li><strong>既知の偏り・欠損</strong> — <a href="../algorithmic-bias/">バイアス</a>の手がかり</li>
+        <li><strong>推奨用途・禁止用途</strong> — 高リスク利用の可否</li>
+        <li><strong>プライバシー・権利</strong> — <a href="../personal-information/">個人情報</a>、<a href="../copyright/">著作権</a>、ライセンス</li>
+        <li><strong>メンテナンス</strong> — 更新・廃止の方針</li>
+      </ul>
+    </section>
+    <section id="vs-model-card">
+      <h2>モデルカードとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>資料</th><th>主語</th><th>主な読者</th></tr></thead>
+        <tbody>
+          <tr><td><strong>データシート（本記事）</strong></td><td><strong>データセット</strong></td><td>データ利用者・法務・監査</td></tr>
+          <tr><td><strong><a href="../model-card/">モデルカード</a></strong></td><td><strong>AIモデル</strong></td><td>モデル利用者・プロダクト担当</td></tr>
+        </tbody>
+      </table>
+      <p>どちらも<strong>透明性・適切な利用判断</strong>を支援しますが、対象が異なります。セットで整備されることもあります。</p>
+    </section>
+    <section id="limits">
+      <h2>できること・できないこと</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>できること</th><th>できないこと</th></tr></thead>
+        <tbody>
+          <tr><td>偏り・制約の<strong>可視化</strong></td><td>偏りの<strong>自動除去</strong>（TF-0414）</td></tr>
+          <tr><td>利用前の<strong>リスク認識</strong></td><td>権利問題の<strong>自動解決</strong></td></tr>
+          <tr><td><a href="../ai-governance/">ガバナンス</a>の証跡</td><td>モデル性能の<strong>保証</strong>そのもの</td></tr>
+        </tbody>
+      </table>
+      <p>データシートは<strong>説明責任の土台</strong>です。記載後も、前処理・評価・<a href="../human-in-the-loop/">人の確認</a>などの対策が必要です。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>データカードと同じ？</summary><p class="tool-faq-a">近い概念です。いずれも学習データの説明文書として語られます。試験では「データシート」の定義（TF-0413）を優先してください。</p></details>
+        <details><summary>社内データにも必要？</summary><p class="tool-faq-a">規模やリスクによります。高リスク・共有範囲が広いデータほど、収集経緯と制約の文書化が重要です。</p></details>
+        <details><summary>生成AIの学習データ公開義務は？</summary><p class="tool-faq-a">法制度・契約は変化します。データシートの考え方は「何が分かっているか／分からないか」を整理する実務に役立ちます。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../model-card/">モデルカード</a></li>
+          <li><a href="../algorithmic-bias/">アルゴリズムバイアス</a></li>
+          <li><a href="../fairness/">公平性</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../ai-ethics-overview/">AI倫理</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

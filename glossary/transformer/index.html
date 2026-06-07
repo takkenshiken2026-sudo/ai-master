@@ -120,7 +120,7 @@
     <section id="self-attention">
       <h2>自己注意機構</h2>
       <p>
-        <strong>Attention（注意）</strong>は、入力系列の中で<strong>どの部分を重視するか</strong>に重みを付ける仕組みです。<strong>Self-Attention</strong>は、同じ系列内の要素同士の関係を見ます。
+        <strong><a href="../attention/">Attention（注意）</a></strong>は、入力系列の中で<strong>どの部分を重視するか</strong>に重みを付ける仕組みです。<strong>Self-Attention</strong>は、同じ系列内の要素同士の関係を見ます。
       </p>
       <p>
         例えば「彼はりんごを食べ、それを片付けた」の「それ」が何を指すか——遠い位置の語同士も、ある程度まとめて関連づけられるのが利点です（<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>）。
@@ -194,7 +194,7 @@
     <section id="llm">
       <h2>LLM・GPTとの関係</h2>
       <p>
-        <a href="../llm/">LLM</a>は大規模な言語モデルという<strong>モデルのクラス</strong>、Transformerはその中核になりうる<strong>ネットワーク構造</strong>です。GPTはTransformerを基盤とする自己回帰型の言語モデル系列として説明されます（<a href="../../exams/genai-passport/drill/q/tf-0140/">TF-0140</a>、<a href="../../exams/genai-passport/practice/q/hq-0247/">HQ-0247</a>）。
+        <a href="../llm/">LLM</a>は大規模な言語モデルという<strong>モデルのクラス</strong>、Transformerはその中核になりうる<strong>ネットワーク構造</strong>です。<a href="../gpt/">GPT</a>はTransformerを基盤とする自己回帰型の言語モデル系列として説明されます（<a href="../../exams/genai-passport/drill/q/tf-0140/">TF-0140</a>）。構造の詳細は<a href="../gpt-architecture/">GPTアーキテクチャ</a>を参照してください。
       </p>
       <table class="tool-spec-table">
         <thead>
@@ -210,7 +210,7 @@
           </tr>
           <tr>
             <td><strong>モデル</strong></td>
-            <td>GPT、BERT、<a href="../llm/">LLM</a></td>
+            <td><a href="../gpt/">GPT</a>、BERT、<a href="../llm/">LLM</a></td>
           </tr>
           <tr>
             <td><strong>サービス</strong></td>
@@ -252,7 +252,9 @@
           <li><a href="../backpropagation/">誤差逆伝播法</a></li>
           <li><a href="../alignment/">アライメント</a></li>
           <li><a href="../text-to-image/">テキスト画像生成</a></li>
-          <li class="tool-related-list__soon">Attention <span class="tool-soon-badge">準備中</span></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

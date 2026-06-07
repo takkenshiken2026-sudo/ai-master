@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="少数ショットプロンプト（Few-shot Prompting）とは？例示の設計、Zero-shotとの違い、Few-shot学習との区別を解説。">
+  <title>少数ショットプロンプトとは？Few-shot Prompting — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/few-shot-prompting/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="少数ショットプロンプトとは？Few-shot Prompting">
+  <meta property="og:description" content="プロンプトに少数の入出力例を含め、LLMのタスク適応を高める手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/few-shot-prompting/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"少数ショットプロンプト","alternateName":["Few-shot Prompting"],"description":"プロンプトに少数の例を含めてLLMにタスクを示す手法。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Few-shot学習と同じ？","acceptedAnswer":{"@type":"Answer","text":"違う。Few-shot Promptingは推論時のプロンプト技法、Few-shot学習は学習設定の話。"}}]}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">少数ショットプロンプト</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI・プロンプト</p>
+    <h1>少数ショットプロンプトとは？Few-shot Prompting・例示の設計</h1>
+    <p class="tool-hero-sub">読み：しょうすうしょっとぷろんぷと ／ 英：Few-shot Prompting</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>少数ショットプロンプト</strong>（Few-shot Prompting）は、<a href="../llm/">LLM</a>への指示に<strong>少数の入出力例（デモンストレーション）</strong>を含め、タスクの形式や意図を伝える<a href="../prompt-engineering/">プロンプトエンジニアリング</a>の技法です。本記事は論文の数式ではなく、試験で混同されやすい<strong>Zero-shotとの違い・Few-shot学習との区別・例の書き方</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Few-shot Promptingとは</a></li>
+        <li><a href="#spectrum">Zero / One / Few のスペクトラム</a></li>
+        <li><a href="#vs-learning">Few-shot学習との違い</a></li>
+        <li><a href="#design">例示の設計ポイント</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G-385：Few-shot学習は<strong>少数の例をもとに新しいタスクへ対応</strong>する考え方。One-shotは1例、Zero-shotは明示的な例なし（<a href="../../exams/g-kentei/practice/q/g-385/">G-385</a>、<a href="../../exams/g-kentei/practice/q/g-386/">G-386</a>）。
+      </p>
+      <p>
+        プロンプト文脈では、Few-shot Promptingは<strong>推論時にプロンプトへ例を載せる</strong>手法。重みを更新するファインチューニングとは別のレバーです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-385/">G-385</a>、<a href="../../exams/g-kentei/practice/q/g-386/">G-386</a>、<a href="../../exams/g-kentei/drill/domain/domain-11/">大規模言語モデル</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Few-shot Promptingとは</h2>
+      <p>
+        タスク説明だけでは形式がぶれるとき、<strong>2〜数個の「入力→望ましい出力」ペア</strong>をプロンプトに並べます。モデルは文脈内のパターンを読み取り、次の入力に対する出力を生成します。追加学習なしでタスク適応できるのが利点です。
+      </p>
+    </section>
+    <section id="spectrum">
+      <h2>Zero / One / Few のスペクトラム</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>手法</th><th>例の数</th><th>典型用途</th></tr></thead>
+        <tbody>
+          <tr><td><strong><a href="../zero-shot-prompting/">Zero-shot</a></strong></td><td>0</td><td>一般的な指示で足りるタスク</td></tr>
+          <tr><td><strong>One-shot</strong></td><td>1</td><td>出力形式の固定</td></tr>
+          <tr><td><strong>Few-shot</strong></td><td>少数（2〜数個）</td><td>分類ラベル・変換ルールの明示</td></tr>
+        </tbody>
+      </table>
+      <p>例が増えるほど形式は安定しやすい一方、<a href="../context-window/">コンテキストウィンドウ</a>とコストを消費します。</p>
+    </section>
+    <section id="vs-learning">
+      <h2>Few-shot学習との違い</h2>
+      <p>
+        <strong>Few-shot学習</strong>は機械学習の設定で、ごく少数のラベル付きデータから新クラスを認識するなど、<strong>学習フェーズ</strong>の話です。Few-shot Promptingは<strong>学習済みLLMへのプロンプト技法</strong>です。名前は似ていますが、試験では主語（学習 vs 推論）を確認してください。
+      </p>
+    </section>
+    <section id="design">
+      <h2>例示の設計ポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>形式を統一</strong> — 区切り記号・ラベル名を揃える</li>
+        <li><strong>多様性</strong> — 境界ケースを1例入れると安定しやすい</li>
+        <li><strong>順序</strong> — 偏りのある並びは出力に影響（順序バイアス）</li>
+        <li><strong>機密</strong> — 例に個人情報を入れない（<a href="../confidential-data-leak/">情報漏えい</a>リスク）</li>
+      </ul>
+      <p>複雑な推論には<a href="../chain-of-thought/">Chain-of-Thought</a>や<a href="../self-consistency/">自己整合性</a>と組み合わせることもあります。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>何例が最適？</summary><p class="tool-faq-a">タスクとモデル依存です。まず1〜3例で試し、形式が安定しない場合に増やすのが実務的です。</p></details>
+        <details><summary>RAGとどちらが先？</summary><p class="tool-faq-a">形式・タスク適応はFew-shot、知識不足は<a href="../rag/">RAG</a>。併用も可能です。</p></details>
+        <details><summary>ファインチューニングより劣る？</summary><p class="tool-faq-a">データが少なく素早く試すならFew-shot Promptingが有利。大量データで品質を固めるなら<a href="../fine-tuning/">ファインチューニング</a>を検討します。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../zero-shot-prompting/">ゼロショットプロンプト</a></li>
+          <li><a href="../prompt-engineering/">プロンプトエンジニアリング</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

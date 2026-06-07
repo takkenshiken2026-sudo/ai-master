@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Human-in-the-Loop（ヒューマンインザループ）とは？人がAIの判断・学習に関与する設計。高リスクAIとの関係をG検定向けに解説。">
+  <title>Human-in-the-Loopとは？人間の関与・承認・監督設計 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/human-in-the-loop/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="Human-in-the-Loopとは？人間の関与・承認・監督設計">
+  <meta property="og:description" content="人が学習・運用のループに介在し、品質や安全性を高めるAI設計。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/human-in-the-loop/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"DefinedTerm","name":"Human-in-the-Loop","alternateName":["ヒューマンインザループ","HITL","人間中心の関与"],"description":"人がAIの判断や学習プロセスに関与する設計。"}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Human-in-the-Loop</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・運用設計</p>
+    <h1>Human-in-the-Loopとは？人間の関与・承認・監督設計</h1>
+    <p class="tool-hero-sub">読み：ひゅーまんいんざるーぷ ／ 英：Human-in-the-Loop（HITL）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Human-in-the-Loop</strong>（ヒューマンインザループ／HITL）は、AIの<strong>判断・学習・運用のループに人間が介在する</strong>設計です。本記事は<a href="../rlhf/">RLHF</a>の学習手法全体ではなく、<strong>いつ・誰が・何をするか</strong>——監督のパターンと限界——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Human-in-the-Loopとは</a></li>
+        <li><a href="#patterns">関与のパターン</a></li>
+        <li><a href="#vs-automation">完全自動化との対比</a></li>
+        <li><a href="#limits">限界</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義：<strong>「人間がAIの判断や学習プロセスに関与する設計」</strong>（<a href="../../exams/g-kentei/drill/q/tf-199/">TF-199</a>○）。確認・修正・承認・フィードバックなどが含まれます。
+      </p>
+      <p>
+        ×：<strong>HITLを入れれば人間のミスやバイアスが必ず完全に除去される</strong>（<a href="../../exams/g-kentei/drill/q/tf-200/">TF-200</a>）。×：<strong>AIと人間の誤りが常に完全に消える</strong>（<a href="../../exams/g-kentei/drill/q/tf-458/">TF-458</a>）。
+      </p>
+      <p>
+        <a href="../high-risk-ai/">高リスクAI</a>では人間の確認・承認が必要になる場合がある（<a href="../../exams/g-kentei/drill/q/tf-457/">TF-457</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-199/">TF-199</a>、<a href="../../exams/g-kentei/drill/q/tf-200/">TF-200</a>、<a href="../../exams/g-kentei/drill/q/tf-457/">TF-457</a>、<a href="../../exams/g-kentei/drill/q/tf-458/">TF-458</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Human-in-the-Loopとは</h2>
+      <p>
+        AIを「一度設定したら放置」にせず、重要な局面で<strong>人の判断を挟む</strong>アーキテクチャです。学習段階ではラベル付けや好みの選択（<a href="../rlhf/">RLHF</a>の人間フィードバック）、運用段階では出力の承認やエスカレーションが典型例です。
+      </p>
+      <p>
+        <a href="../ai-governance/">AIガバナンス</a>や<a href="../eu-ai-act/">EU AI Act</a>の「人間の監督」とも接続する概念です。
+      </p>
+    </section>
+    <section id="patterns">
+      <h2>関与のパターン</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Human-in-the-Loop</h3>
+          <p>各判断・出力に人が関与（承認、修正）</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Human-on-the-Loop</h3>
+          <p>AIが実行、人が監視・介入可能</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Human-out-of-the-Loop</h3>
+          <p>完全自動（低リスク用途向け。高リスクでは慎重に）</p>
+        </div>
+      </div>
+      <p>試験では主に<strong>HITLの定義</strong>と、高リスクでの<strong>関与強化</strong>が問われます。略語の細分化は深掘り不要なことが多いです。</p>
+    </section>
+    <section id="vs-automation">
+      <h2>完全自動化との対比</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>観点</th><th>HITLあり</th><th>完全自動</th></tr></thead>
+        <tbody>
+          <tr><td>品質・安全</td><td>人が最終チェック</td><td>速度は速いがリスク増</td></tr>
+          <tr><td>コスト</td><td>人件費・待ち時間</td><td>低いが誤りの影響大</td></tr>
+          <tr><td>高リスクAI</td><td>推奨されやすい</td><td>TF-499の誤答パターン</td></tr>
+          <tr><td>生成AI実務</td><td>対外文案の人レビュー</td><td>下書き生成のみ自動</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="limits">
+      <h2>限界</h2>
+      <ul class="tool-example-list">
+        <li>人間も疲労・バイアス・見落としがある</li>
+        <li>形骸化（ rubber-stamping ）——承認が形だけになる</li>
+        <li><a href="../hallucination/">ハルシネーション</a>を人が見逃す可能性</li>
+        <li>すべての出力に人レビューはスケールしない → リスクに応じた設計</li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>HITLとRLHFは同じ？</summary><p class="tool-faq-a">RLHFは学習手法の一つで、人間フィードバックを含みます。HITLはより広い「人の関与」設計です。</p></details>
+        <details><summary>LLMの出力確認はHITL？</summary><p class="tool-faq-a">人が事実確認・承認する運用はHITLの一例です（<a href="../../exams/genai-passport/drill/q/tf-0434/">TF-0434</a>は確認不要とする誤り）。</p></details>
+        <details><summary>エージェントにも使える？</summary><p class="tool-faq-a">はい。<a href="../agent/">AIエージェント</a>のツール実行前に人の承認を入れる設計もHITLです。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../high-risk-ai/">高リスクAI</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../ai-safety/">AI安全性</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="機械学習（Machine Learning）とは？AIとの包含関係、教師あり・なしの区分、ディープラーニングとの違いをG検定向けに解説。">
+  <title>機械学習とは？Machine Learning・AIとの関係 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/machine-learning/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="機械学習とは？Machine Learning・AIとの関係">
+  <meta property="og:description" content="データからパターンを学び予測・判断するAIの代表的アプローチ。包含関係と学習の種類を地図で整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/machine-learning/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"機械学習","alternateName":["Machine Learning","ML"],"description":"データから規則やパターンを学習し予測・判断を行うAIの一分野。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"機械学習とAIは同じ？","acceptedAnswer":{"@type":"Answer","text":"同じではない。機械学習はAIの一分野で、AIの方が広い概念。"}}]}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">機械学習</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>機械学習とは？Machine Learning・AIとの包含関係</h1>
+    <p class="tool-hero-sub">読み：きかいがくしゅう ／ 英：Machine Learning（ML）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>機械学習</strong>（Machine Learning／ML）は、<strong>データから規則やパターンを学び、予測や判断を行う</strong>AIの代表的アプローチです。本記事は個別アルゴリズムの羅列ではなく、試験で必須の<strong>概念地図</strong>——AI・機械学習・<a href="../deep-learning/">ディープラーニング</a>の入れ子、学習の種類——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#definition">機械学習とは</a></li>
+        <li><a href="#taxonomy">包含関係の地図</a></li>
+        <li><a href="#types">学習の三区分</a></li>
+        <li><a href="#workflow">典型的な流れ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：機械学習は<strong>人工知能を実現する代表的アプローチの一つ</strong>（<a href="../../exams/g-kentei/drill/q/tf-003/">TF-003</a>）。データから学習して予測・判断する。
+      </p>
+      <p>
+        ×：ディープラーニングは機械学習と<strong>無関係な別分野</strong>（<a href="../../exams/g-kentei/drill/q/tf-004/">TF-004</a>）。DLはMLの一分野。
+      </p>
+      <p>
+        包含関係（AI ⊃ ML ⊃ DL）と、<a href="../supervised-learning/">教師あり</a>・教師なし・強化学習の違いはセットで覚えます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-003/">TF-003</a>、<a href="../../exams/g-kentei/drill/q/tf-004/">TF-004</a>、<a href="../../exams/g-kentei/drill/q/tf-170/">TF-170</a>、<a href="../../exams/g-kentei/drill/domain/domain-08/">人工知能とは</a>、<a href="../../exams/g-kentei/drill/domain/domain-10/">機械学習の概要</a></p>
+      </div>
+    </section>
+    <section id="definition">
+      <h2>機械学習とは</h2>
+      <p>
+        従来のプログラムが「人がルールを書く」方式なのに対し、機械学習は<strong>データと正解（または構造）からモデルがルールを獲得</strong>します。スパム判定、需要予測、画像分類、推薦など、ルールが複雑で人間が書ききれない問題に向きます。
+      </p>
+      <p>
+        学習後は未知の入力に対して<strong>推論（予測）</strong>を行います。モデルの中身は線形回帰から決定木、<a href="../neural-network/">ニューラルネット</a>まで多様です。
+      </p>
+    </section>
+    <section id="taxonomy">
+      <h2>包含関係の地図</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>範囲</th><th>キーワード</th></tr></thead>
+        <tbody>
+          <tr><td><strong><a href="../artificial-intelligence/">人工知能（AI）</a></strong></td><td>最も広い</td><td>探索・推論・学習すべて</td></tr>
+          <tr><td><strong>機械学習（ML）</strong></td><td>AIの一分野</td><td>データから学習</td></tr>
+          <tr><td><strong><a href="../deep-learning/">ディープラーニング（DL）</a></strong></td><td>MLの一分野</td><td>多層ニューラルネット</td></tr>
+          <tr><td><strong><a href="../generative-ai/">生成AI</a></strong></td><td>AIの一分野（MLと交差）</td><td>新規コンテンツ生成</td></tr>
+        </tbody>
+      </table>
+      <p>「MLはAIの外」「DLだけがAI」は試験で×になりやすいです。<a href="../artificial-intelligence/">人工知能</a>記事の表とあわせて確認してください。</p>
+    </section>
+    <section id="types">
+      <h2>学習の三区分</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>区分</th><th>データ</th><th>目的の例</th></tr></thead>
+        <tbody>
+          <tr><td><strong><a href="../supervised-learning/">教師あり学習</a></strong></td><td>入力＋正解ラベル</td><td>分類・回帰</td></tr>
+          <tr><td><strong>教師なし学習</strong></td><td>ラベルなし</td><td>クラスタリング・次元削減</td></tr>
+          <tr><td><strong>強化学習</strong></td><td>行動と報酬</td><td>ゲーム・制御</td></tr>
+        </tbody>
+      </table>
+      <p>教師なしではラベルとの誤差を直接最小化しない（<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>）。区分を混同しないことが重要です。</p>
+    </section>
+    <section id="workflow">
+      <h2>典型的な流れ</h2>
+      <ol class="tool-example-list">
+        <li><strong>データ収集・前処理</strong>（欠損・分割）</li>
+        <li><strong>モデル選択</strong>（線形／木／NNなど）</li>
+        <li><strong>学習</strong> — <a href="../loss-function/">損失関数</a>を最小化（<a href="../gradient-descent/">勾配降下法</a>など）</li>
+        <li><strong>評価</strong> — 訓練・検証・テストで<a href="../overfitting/">過学習</a>を確認</li>
+        <li><strong>本番運用</strong>と再学習</li>
+      </ol>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>機械学習と統計は同じ？</summary><p class="tool-faq-a">重なる部分は大きいですが、MLは予測性能・大規模データ・アルゴリズム実装の側面が強調されがちです。試験では「データから学習するAI手法」として覚えれば十分です。</p></details>
+        <details><summary>ルールベースAIは機械学習？</summary><p class="tool-faq-a">一般には別です。人が明示的にルールを書く方式はAIの一形態ですが、機械学習はデータ駆動でパラメータを学びます。</p></details>
+        <details><summary>LLMは機械学習？</summary><p class="tool-faq-a">はい。<a href="../llm/">LLM</a>は大規模なニューラルネットを学習したモデルで、機械学習（とくにディープラーニング）の成果です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../artificial-intelligence/">人工知能（AI）</a></li>
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li><a href="../supervised-learning/">教師あり学習</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../overfitting/">過学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

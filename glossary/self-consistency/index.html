@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="自己整合性（Self-Consistency）とは？複数の推論経路を生成し多数決で答えを選ぶプロンプト技法。Chain-of-Thoughtとの違いを解説。">
+  <title>自己整合性とは？Self-Consistency・多数決推論 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/self-consistency/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="自己整合性とは？Self-Consistency・多数決推論">
+  <meta property="og:description" content="複数の推論経路を生成し、最も一貫した答えを選ぶ手法。CoTと組み合わせることが多い。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/self-consistency/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"自己整合性","alternateName":["Self-Consistency","セルフコンシステンシー"],"description":"複数推論経路の多数決で回答精度を上げるプロンプト技法。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"自己整合性とアライメントは同じ？","acceptedAnswer":{"@type":"Answer","text":"違う。自己整合性は推論を複数回して多数決する技法。アライメントはAIの目的を人間の意図に合わせること。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">自己整合性</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>自己整合性とは？Self-Consistency・多数決推論</h1>
+    <p class="tool-hero-sub">読み：じこせいごうせい ／ 英：Self-Consistency</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>自己整合性</strong>（Self-Consistency）は、同じ問題に対して<strong>複数の推論経路（答えの候補）を生成し、最も多く現れた結論を採用する</strong>プロンプト技法です。本記事は<a href="../chain-of-thought/">Chain-of-Thought</a>の書き方ではなく、<strong>「1本の推論」から「多数決」へ</strong>——精度を上げる考え方——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">自己整合性とは</a></li>
+        <li><a href="#flow">処理の流れ</a></li>
+        <li><a href="#with-cot">CoTとの組み合わせ</a></li>
+        <li><a href="#tradeoffs">コストと限界</a></li>
+        <li><a href="#confusions">混同しやすい用語</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        専用の一問一答IDは少ないですが、<a href="../prompt-engineering/">プロンプトエンジニアリング</a>の技法の一つとして、<strong>複数回生成して一貫した答えを選ぶ</strong>イメージで押さえます。
+      </p>
+      <p>
+        ×：<strong>自己整合性＝<a href="../alignment/">アライメント</a></strong>（人間の価値への整合）。×：<strong>自己整合性＝<a href="../rag/">RAG</a></strong>や外部検索。×：多数決すれば<strong><a href="../hallucination/">ハルシネーション</a>が必ず消える</strong>。
+      </p>
+      <div class="tool-callout">
+        <p><strong>関連演習</strong></p>
+        <p><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（説明できる≠正確）</a>、<a href="../../exams/g-kentei/drill/q/tf-171/">TF-171</a> — 技法を使っても最終確認は必要</p>
+        <p><a href="../chain-of-thought/">CoT</a>、<a href="../../exams/g-kentei/practice/q/g-385/">G-385（Few-shot）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>自己整合性とは</h2>
+      <p>
+        1回の生成では、サンプリングのゆらぎで誤答になることがあります。自己整合性は、<strong>同じ質問を複数回（異なる推論パスで）解かせ、答えの多数決</strong>を取ることで、単発より正答しやすくする手法です（研究では算数・論理問題で効果が報告されています）。
+      </p>
+      <p>
+        「自分（モデル）の複数の答えの<strong>一貫性（consistency）</strong>を見る」という意味合いの名称です。
+      </p>
+    </section>
+    <section id="flow">
+      <h2>処理の流れ</h2>
+      <ol class="tool-example-list">
+        <li>同じプロンプト（またはCoT付き）で<strong>複数回</strong>生成する</li>
+        <li>各回の<strong>最終答え</strong>（数値・選択肢・Yes/No等）を抽出する</li>
+        <li><strong>最多票</strong>の答えを採用する（同票ならルールで決める）</li>
+        <li>必要なら採用答えの推論過程を人が確認する</li>
+      </ol>
+      <p>多様な経路を得るため、<a href="../temperature/">温度</a>をやや高めにする、シードを変えるなどの工夫が使われます。</p>
+    </section>
+    <section id="with-cot">
+      <h2>CoTとの組み合わせ</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>技法</th><th>やること</th></tr></thead>
+        <tbody>
+          <tr><td><strong><a href="../chain-of-thought/">Chain-of-Thought</a></strong></td><td>1回の生成内で<strong>段階的推論</strong>を促す</td></tr>
+          <tr><td><strong>自己整合性（本記事）</strong></td><td>複数回の生成結果を<strong>多数決</strong>する</td></tr>
+        </tbody>
+      </table>
+      <p>論文・実装では<strong>CoTで複数の推論チェーンを生成→自己整合性で答えを選ぶ</strong>という組み合わせが典型です。どちらか一方だけ、というわけではありません。</p>
+    </section>
+    <section id="tradeoffs">
+      <h2>コストと限界</h2>
+      <ul class="tool-steps">
+        <li><strong>コスト</strong> — 生成回数×<a href="../token/">トークン</a>。API料金・遅延が増える</li>
+        <li><strong>誤答の連鎖</strong> — 全経路が同じ誤りなら多数決でも誤る</li>
+        <li><strong>主観的タスク</strong> — 正解が一意でない文章生成には向きにくい</li>
+        <li><strong>検証は依然必要</strong> — <a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>のとおり、整合した誤推論がありうる</li>
+      </ul>
+    </section>
+    <section id="confusions">
+      <h2>混同しやすい用語</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>用語</th><th>違い</th></tr></thead>
+        <tbody>
+          <tr><td><strong>アライメント</strong></td><td>モデル調整・価値整合の広い概念（<a href="../alignment/">アライメント</a>）</td></tr>
+          <tr><td><strong>アンサンブル学習</strong></td><td>複数<strong>モデル</strong>の組み合わせ（機械学習一般）</td></tr>
+          <tr><td><strong>自己回帰</strong></td><td>トークンを順に生成するモデルの性質（<a href="../gpt-architecture/">GPT</a>）</td></tr>
+          <tr><td><strong>ファクトチェック</strong></td><td>外部事実との照合（<a href="../hallucination-mitigation/">ハルシネーション対策</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>何回生成すればよい？</summary><p class="tool-faq-a">研究では5〜10回などが例にされます。試験では回数の暗記より「複数経路の多数決」という考え方で十分です。</p></details>
+        <details><summary>業務で使える？</summary><p class="tool-faq-a">分類・抽出・数値判断など答えが离散値のタスク向きです。長文生成にはコスト対効果が低いことが多いです。</p></details>
+        <details><summary>プロンプトエンジニアリングの一部？</summary><p class="tool-faq-a">はい。<a href="../prompt-engineering/">プロンプトエンジニアリング</a>の技法ツールボックスの一つです。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../prompt-engineering/">プロンプトエンジニアリング</a></li>
+          <li><a href="../temperature/">温度パラメータ</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

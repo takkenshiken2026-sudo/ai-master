@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="モデルカード（Model Card）とは？AIモデルの用途・性能・制約・評価を説明する資料。データシートとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>モデルカードとは？Model Card・用途と限界の説明 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/model-card/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="モデルカードとは？Model Card・用途と限界の説明">
+  <meta property="og:description" content="AIモデルの用途、性能、制約、評価結果などを説明する透明性資料。物理的な封筒ではない。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/model-card/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"モデルカード","alternateName":["Model Card"],"description":"モデルの用途・限界・評価を文書化した説明資料。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"モデルカードは郵送用の封筒？","acceptedAnswer":{"@type":"Answer","text":"いいえ。AIモデルの用途、性能、制約、評価結果などを説明する資料の概念。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">モデルカード</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・モデル</p>
+    <h1>モデルカードとは？Model Card・用途と限界の説明</h1>
+    <p class="tool-hero-sub">読み：もでるかーど ／ 英：Model Card</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>モデルカード</strong>（Model Card）は、<strong>AIモデルの用途・性能・制約・評価結果</strong>などを、利用者や関係者が理解しやすい形でまとめた説明資料です。本記事は<a href="../llm/">LLM</a>の技術詳細ではなく、<strong>「モデル説明書」として何を伝えるか</strong>——利用判断のための項目——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">モデルカードとは</a></li>
+        <li><a href="#sections">典型的な記載内容</a></li>
+        <li><a href="#who">誰のための資料か</a></li>
+        <li><a href="#pairing">データシートとのセット</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：モデルカードは、AIモデルの<strong>用途、性能、制約、評価結果</strong>などを説明する資料（<a href="../../exams/genai-passport/drill/q/tf-0411/">TF-0411</a>）。透明性や適切な利用判断に役立つ。
+      </p>
+      <p>
+        ×：モデルカードは<strong>物理的にモデルを郵送する封筒</strong>（<a href="../../exams/genai-passport/drill/q/tf-0412/">TF-0412</a>）。×：モデルを<strong>物理的に並べる作業</strong>（アライメント等と混同しない：<a href="../alignment/">アライメント</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0411/">TF-0411</a>、<a href="../../exams/genai-passport/drill/q/tf-0412/">TF-0412</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>モデルカードとは</h2>
+      <p>
+        機械学習モデルは「入力すると出力が返る」だけでは、<strong>どんな場面で使ってよいか・不得意は何か</strong>が分かりにくいことがあります。モデルカードは、そのギャップを埋める<strong>説明責任のツール</strong>です。
+      </p>
+      <p>
+        Googleなどが提唱した枠組みが広く知られ、オープンウェイトモデルや企業APIのドキュメントでも、類似の「モデル仕様」「システムカード」として公開されることがあります。
+      </p>
+    </section>
+    <section id="sections">
+      <h2>典型的な記載内容</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>想定用途</h3>
+          <p>翻訳、要約、コード補助など<strong>推奨ユースケース</strong></p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>限界・不得意</h3>
+          <p>医療・法律判断、最新事実、<a href="../hallucination/">ハルシネーション</a>リスク</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>評価結果</h3>
+          <p>ベンチマーク、公平性指標、安全性テストの概要</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>学習データ概要</h3>
+          <p>期間・言語・既知の偏り（詳細は<a href="../data-sheet/">データシート</a>）</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>倫理・安全上の注意</h3>
+          <p>悪用リスク、<a href="../jailbreak/">ジェイルブレイク</a>、出力の確認推奨</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>バージョン・更新</h3>
+          <p>モデル名、リリース日、既知の変更点</p>
+        </div>
+      </div>
+    </section>
+    <section id="who">
+      <h2>誰のための資料か</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>読者</th><th>使い方</th></tr></thead>
+        <tbody>
+          <tr><td>プロダクト担当</td><td>機能設計・UI上の注意表示</td></tr>
+          <tr><td>法務・コンプライアンス</td><td>利用規約・<a href="../high-risk-ai/">高リスク</a>用途の可否</td></tr>
+          <tr><td>開発者</td><td>API選定・<a href="../fine-tuning/">ファインチューニング</a>の前提確認</td></tr>
+          <tr><td>利用者教育</td><td>研修・<a href="../ai-literacy/">AIリテラシー</a>教材</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="pairing">
+      <h2>データシートとのセット</h2>
+      <p>
+        <a href="../data-sheet/">データシート</a>が<strong>データ</strong>の説明であるのに対し、モデルカードは<strong>モデル</strong>の説明です。バイアスや権利の議論では両方を参照しますが、どちらも<strong>問題を自動解決する魔法</strong>ではありません（<a href="../../exams/genai-passport/drill/q/tf-0414/">TF-0414</a>）。
+      </p>
+      <p><a href="../ai-governance/">AIガバナンス</a>では、モデルカードを<strong>承認・監査の入力資料</strong>として位置づける組織も増えています。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>APIのドキュメントと同じ？</summary><p class="tool-faq-a">API仕様は「使い方」中心。モデルカードは性能・限界・倫理面の説明が中心です。製品によっては統合されています。</p></details>
+        <details><summary>ChatGPTにもモデルカードはある？</summary><p class="tool-faq-a">公開形態は製品によります。試験では概念定義（TF-0411）を優先してください。</p></details>
+        <details><summary>モデルカードがあれば出力は常に安全？</summary><p class="tool-faq-a">いいえ。限界の説明であり、利用時の確認・<a href="../hallucination-mitigation/">ハルシネーション対策</a>は別途必要です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../data-sheet/">データシート</a></li>
+          <li><a href="../algorithmic-bias/">アルゴリズムバイアス</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ドロップアウト（Dropout）とは？学習時のニューロン無効化、過学習抑制、正則化との違いをG検定向けに解説。">
+  <title>ドロップアウトとは？Dropout・過学習対策 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/dropout/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ドロップアウトとは？Dropout・過学習対策">
+  <meta property="og:description" content="学習中にランダムにニューロンを無効化し、過学習を抑える正則化手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/dropout/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"ドロップアウト","alternateName":["Dropout"],"description":"学習時に一部のニューロンをランダムに無効化する過学習抑制手法。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"推論時もドロップアウトする？","acceptedAnswer":{"@type":"Answer","text":"通常はしない。学習時のみ無効化し、推論時は全ユニットを使う。"}}]}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ドロップアウト</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・モデル技術</p>
+    <h1>ドロップアウトとは？Dropout・学習時の無効化</h1>
+    <p class="tool-hero-sub">読み：どろっぷあうと ／ 英：Dropout</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ドロップアウト</strong>（Dropout）は、<a href="../neural-network/">ニューラルネットワーク</a>の学習中に<strong>一部のニューロン（ユニット）をランダムに無効化</strong>し、<a href="../overfitting/">過学習</a>を抑える正則化手法です。本記事は実装の確率式ではなく、試験で頻出の<strong>定義・学習と推論の違い・他手法とのすり替え</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ドロップアウトとは</a></li>
+        <li><a href="#train-infer">学習時と推論時</a></li>
+        <li><a href="#vs-others">混同しやすい手法</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：ドロップアウトは<strong>学習時に一部のユニットをランダムに無効化</strong>する正則化（<a href="../../exams/g-kentei/practice/q/g-168/">G-168</a>、<a href="../../exams/g-kentei/drill/q/tf-437/">TF-437</a>）。
+      </p>
+      <p>
+        ×：推論時に<strong>全ての入力データを削除</strong>して予測する（<a href="../../exams/g-kentei/drill/q/tf-395/">TF-395</a>）。推論時は通常、全ユニットを使用。
+      </p>
+      <p>
+        パスポートHQ-0133：「モデルが複雑になりすぎないよう<strong>制約を加える</strong>」だけの説明は、L1/L2正則化のイメージで、ドロップアウトの説明として<strong>不適切</strong>（<a href="../../exams/genai-passport/practice/q/hq-0133/">HQ-0133</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-394/">TF-394</a>、<a href="../../exams/g-kentei/drill/q/tf-395/">TF-395</a>、<a href="../../exams/g-kentei/practice/q/g-168/">G-168</a>、<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0133/">HQ-0133</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>ドロップアウトとは</h2>
+      <p>
+        各学習ステップで、隠れ層のユニットを確率的に「落とす」（出力をゼロにする）ことで、特定のニューロンへの<strong>共依存を減らす</strong>効果があります。毎回異なる部分ネットワークで学習するイメージで、アンサンブルに近い正則化効果が期待されます。
+      </p>
+    </section>
+    <section id="train-infer">
+      <h2>学習時と推論時</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>フェーズ</th><th>ドロップアウト</th></tr></thead>
+        <tbody>
+          <tr><td><strong>学習（訓練）</strong></td><td>有効。ランダムにユニットを無効化</td></tr>
+          <tr><td><strong>推論（テスト）</strong></td><td>通常は無効。全ユニットで予測（スケーリングで補正することも）</td></tr>
+        </tbody>
+      </table>
+      <p>「推論時もドロップアウトする」は試験の典型的な×パターンです。</p>
+    </section>
+    <section id="vs-others">
+      <h2>混同しやすい手法</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>手法</th><th>要点</th><th>ドロップアウトとの違い</th></tr></thead>
+        <tbody>
+          <tr><td><strong>L1/L2正則化</strong></td><td>重みにペナルティ</td><td>ユニット無効化ではない（HQ-0133のすり替え先）</td></tr>
+          <tr><td><strong>早期終了</strong></td><td>検証悪化で学習停止</td><td>エポック制御（G-168の（い））</td></tr>
+          <tr><td><strong>バッチ正規化</strong></td><td>中間表現の分布を整える</td><td>正則化とは目的が異なる（G-299）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ドロップアウト率は？</summary><p class="tool-faq-a">隠れ層で0.2〜0.5程度がよく使われます。高すぎると未学習に近づきます。試験では具体値より定義が重要です。</p></details>
+        <details><summary>Transformerでも使う？</summary><p class="tool-faq-a">AttentionやFFN層にDropoutを入れる実装が一般的です。概念は同じく学習時の正則化です。</p></details>
+        <details><summary>データ拡張とどちらが先？</summary><p class="tool-faq-a">併用可能です。画像ならデータ拡張、NN全般ではドロップアウトがセットで語られることが多いです。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../overfitting/">過学習</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

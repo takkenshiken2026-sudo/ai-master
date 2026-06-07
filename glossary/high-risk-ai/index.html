@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="高リスクAIとは？EU AI Act上の区分・厳格化される要件・人間の関与。G検定・生成AIパスポート向けに解説。">
+  <title>高リスクAIとは？High-risk AI・規制要件・人間の監督 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/high-risk-ai/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="高リスクAIとは？High-risk AI・規制要件・人間の監督">
+  <meta property="og:description" content="EU AI Act等で厳しい要件が課されるAI用途区分。影響が大きいほど統制を強化する。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/high-risk-ai/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"高リスクAI","alternateName":["High-risk AI","ハイリスクAI"],"description":"EU AI Act等で厳しい要件が課されるAI用途区分。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"高リスクAIほど完全自動化すべき？","acceptedAnswer":{"@type":"Answer","text":"いいえ。説明・監視・人間の関与・監査・停止手段などを強化する必要がある。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">高リスクAI</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">倫理・ビジネス</p>
+    <h1>高リスクAIとは？High-risk AI・規制要件・人間の監督</h1>
+    <p class="tool-hero-sub">読み：こうりすくえーあい ／ 英：High-risk AI</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>高リスクAI</strong>（High-risk AI）は、<a href="../eu-ai-act/">EU AI Act</a>などの枠組みで、<strong>人の権利・安全・財産への影響が大きい用途</strong>として厳しい要件が課されるAIの区分です。本記事は条文の逐条解説ではなく、<strong>試験で問われる「リスクが高いほど統制を強める」</strong>——義務のチェックリスト——に焦点を当てます（法的助言ではありません）。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">高リスクAIとは</a></li>
+        <li><a href="#examples">用途のイメージ</a></li>
+        <li><a href="#obligations">強まる要件チェックリスト</a></li>
+        <li><a href="#misconceptions">よくある誤解</a></li>
+        <li><a href="#org">組織での対応</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：<strong>事前評価、文書化、監視、人間の関与</strong>など厳格な管理が求められる（<a href="../../exams/g-kentei/drill/q/tf-498/">TF-498</a>）。低リスクと高リスクで水準が異なる（<a href="../../exams/g-kentei/drill/q/tf-281/">TF-281</a>）。
+      </p>
+      <p>
+        ×：<strong>高リスクほど説明・監視を減らし完全自動化する</strong>（<a href="../../exams/g-kentei/drill/q/tf-499/">TF-499</a>）。高リスクな判断では人間の確認・承認が必要になる場合がある（<a href="../../exams/g-kentei/drill/q/tf-457/">TF-457</a>）。
+      </p>
+      <p>
+        利用者への<strong>判断根拠や限界の説明</strong>が重要になる場合がある（<a href="../../exams/g-kentei/drill/q/tf-441/">TF-441</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-498/">TF-498</a>、<a href="../../exams/g-kentei/drill/q/tf-499/">TF-499</a>、<a href="../../exams/g-kentei/drill/q/tf-457/">TF-457</a>、<a href="../../exams/g-kentei/drill/domain/domain-04/">AI倫理・ガバナンス一問一答</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>高リスクAIとは</h2>
+      <p>
+        「モデル自体が危険」という意味ではなく、<strong>特定の用途・文脈</strong>で使われるAIが高リスクに分類される考え方です。<a href="../eu-ai-act/">EU AI Act</a>では、採用・信用スコアリング、重要インフラ、教育・職業訓練、法執行、移民管理、司法支援、医療機器連動などが例示されます（Annex III等。試験では細目の暗記より原則）。
+      </p>
+      <p>
+        社内の<a href="../ai-governance/">AIガバナンス</a>でも、用途を<strong>リスクティア</strong>に分け、高リスクほど承認・監査を厚くする設計が一般的です。
+      </p>
+    </section>
+    <section id="examples">
+      <h2>用途のイメージ</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>領域</th><th>なぜ影響が大きいか</th></tr></thead>
+        <tbody>
+          <tr><td>採用・人事評価</td><td>雇用機会・処遇に直結</td></tr>
+          <tr><td>信用・融資</td><td>経済的機会への影響</td></tr>
+          <tr><td>医療・安全関連</td><td>生命・身体への影響</td></tr>
+          <tr><td>法執行・司法</td><td>基本的人権への影響</td></tr>
+          <tr><td>社内チャットボット（一般）</td><td>多くは高リスク以外の区分になりやすい（用途による）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="obligations">
+      <h2>強まる要件チェックリスト</h2>
+      <p>試験・実務の橋渡しとして、次を覚えておくとよいです。</p>
+      <ul class="tool-steps">
+        <li><strong>リスク管理システム</strong> — 設計から運用まで識別・低減</li>
+        <li><strong>データガバナンス</strong> — 偏り・品質（<a href="../algorithmic-bias/">アルゴリズムバイアス</a>）</li>
+        <li><strong>技術文書・記録</strong> — 追跡可能性、<a href="../conformity-assessment/">適合性評価</a>の材料</li>
+        <li><strong>透明性</strong> — 利用者への適切な情報</li>
+        <li><strong>人間の監督</strong> — <a href="../human-in-the-loop/">Human-in-the-Loop</a>等</li>
+        <li><strong>正確性・堅牢性・サイバーセキュリティ</strong></li>
+        <li><strong>監視・インシデント対応・停止手段</strong></li>
+      </ul>
+    </section>
+    <section id="misconceptions">
+      <h2>よくある誤解</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤解</th><th>実際</th></tr></thead>
+        <tbody>
+          <tr><td>高リスク＝最新・高性能AI</td><td>用途と影響で決まる</td></tr>
+          <tr><td>自動化すればコンプライアンス</td><td>×（TF-499）。監督を強化</td></tr>
+          <tr><td>日本国内のみなら無関係</td><td>EU提供・影響があり得る（<a href="../eu-ai-act/">EU AI Act</a>）</td></tr>
+          <tr><td>倫理ガイドがあれば十分</td><td>法令・<a href="../ai-governance/">ガバナンス</a>の両方が必要な場合あり</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="org">
+      <h2>組織での対応</h2>
+      <ol class="tool-example-list">
+        <li>用途の<strong>リスク分類</strong>（高・中・低）</li>
+        <li>高リスク用途の<strong>事前影響評価</strong>と承認フロー</li>
+        <li><a href="../personal-information/">個人情報</a>・<a href="../confidential-data-leak/">機密</a>の入力管理</li>
+        <li>出力の<strong>人によるレビュー</strong>（特に対外・対顧客）</li>
+        <li>ログ・監査証跡の保持</li>
+      </ol>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>高リスクAIとEU AI Actは同じ？</summary><p class="tool-faq-a">高リスクAIはEU AI Act内の重要な区分の一つです。法全体＝高リスクAIではありません。</p></details>
+        <details><summary>生成AIはすべて高リスク？</summary><p class="tool-faq-a">いいえ。チャットボットは限定的リスク（透明性義務）など別区分の例もあります。用途次第です。</p></details>
+        <details><summary>説明可能AI（XAI）との関係は？</summary><p class="tool-faq-a">高リスク領域では説明可能性が重視されます（<a href="../../exams/g-kentei/practice/q/g-397/">G-397</a>の論点）。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../eu-ai-act/">EU AI Act</a></li>
+          <li><a href="../ai-governance/">AIガバナンス</a></li>
+          <li><a href="../human-in-the-loop/">Human-in-the-Loop</a></li>
+          <li><a href="../conformity-assessment/">適合性評価</a></li>
+          <li><a href="../ai-ethics-overview/">AI倫理</a></li>
+          <li><a href="../fairness/">公平性</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">本記事は試験学習向けの一般整理であり、法的助言ではありません。最新の法改正は公式資料を参照してください。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

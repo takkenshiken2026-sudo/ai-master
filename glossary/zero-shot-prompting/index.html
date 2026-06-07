@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ゼロショットプロンプト（Zero-shot Prompting）とは？例示なしの指示、Few-shotとの違い、LLMの事前学習との関係を解説。">
+  <title>ゼロショットプロンプトとは？Zero-shot Prompting — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/zero-shot-prompting/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="ゼロショットプロンプトとは？Zero-shot Prompting">
+  <meta property="og:description" content="入出力例を示さず、自然言語の指示だけでLLMにタスクを遂行させるプロンプト手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/zero-shot-prompting/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"ゼロショットプロンプト","alternateName":["Zero-shot Prompting"],"description":"例示なしでタスクを指示するLLMプロンプト手法。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Zero-shotは例が0個？","acceptedAnswer":{"@type":"Answer","text":"プロンプトに明示的な入出力デモを載せない手法。事前学習で得た知識に依存する。"}}]}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ゼロショットプロンプト</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI・プロンプト</p>
+    <h1>ゼロショットプロンプトとは？Zero-shot Prompting・例なし指示</h1>
+    <p class="tool-hero-sub">読み：ぜろしょっとぷろんぷと ／ 英：Zero-shot Prompting</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ゼロショットプロンプト</strong>（Zero-shot Prompting）は、<strong>入出力の具体例をプロンプトに含めず</strong>、自然言語のタスク指示だけで<a href="../llm/">LLM</a>に動かす<a href="../prompt-engineering/">プロンプトエンジニアリング</a>の技法です。本記事は論文のベンチマーク数値ではなく、試験で整理しやすい<strong>「例なし」の意味・Few-shotとの使い分け・限界</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Zero-shot Promptingとは</a></li>
+        <li><a href="#why-works">なぜ例なしで動くか</a></li>
+        <li><a href="#vs-few">Few-shotとの使い分け</a></li>
+        <li><a href="#limits">限界と対策</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G-386：Zero-shotは<strong>明示的な例なしでタスクへ対応</strong>する考え方。One-shotは1例、Few-shotは少数の例（<a href="../../exams/g-kentei/practice/q/g-386/">G-386</a>）。
+      </p>
+      <p>
+        G-385：Few-shot学習の説明として、<strong>少数の例で新タスクへ対応</strong>が○。Zero-shotはそのスペクトラムの一端として整理されます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-386/">G-386</a>、<a href="../../exams/g-kentei/practice/q/g-385/">G-385</a>、<a href="../../exams/g-kentei/drill/domain/domain-11/">大規模言語モデル</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Zero-shot Promptingとは</h2>
+      <p>
+        「この文章を要約して」「次のJSON形式で出力して」のように、<strong>タスク記述と制約だけ</strong>を渡します。プロンプト内に「入力A→出力B」のデモンストレーションは載せません（shot＝例の数がゼロ、という意味です）。
+      </p>
+      <p>
+        チャットの初回メッセージや<a href="../system-prompt/">システムプロンプト</a>での役割指定も、Zero-shotの一形態とみなせます。
+      </p>
+    </section>
+    <section id="why-works">
+      <h2>なぜ例なしで動くか</h2>
+      <p>
+        大規模な事前学習で、多様なタスクに似たテキストを既に見ています。指示文の語彙（「翻訳」「分類」「要約」）と学習データのパターンが結びつき、<strong>追加例なしでも振る舞いを推定</strong>できるためです。
+      </p>
+      <p>
+        画像分野ではCLIPのようなモデルがゼロショット分類に応用されることもあります（<a href="../../exams/g-kentei/drill/q/tf-168/">TF-168</a>）。文脈は異なりますが「学習時に見ていないクラスへ一般化」という発想は共通です。
+      </p>
+    </section>
+    <section id="vs-few">
+      <h2>Few-shotとの使い分け</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>状況</th><th>向きやすい手法</th></tr></thead>
+        <tbody>
+          <tr><td>一般的なタスク（要約・翻訳）</td><td><strong>Zero-shot</strong></td></tr>
+          <tr><td>独自ラベル・特殊な出力形式</td><td><strong><a href="../few-shot-prompting/">Few-shot</a></strong></td></tr>
+          <tr><td>複雑な多段推論</td><td>Zero-shot＋<a href="../chain-of-thought/">CoT</a></td></tr>
+          <tr><td>社内ドキュメントの正確性</td><td><a href="../rag/">RAG</a>（例示とは別軸）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="limits">
+      <h2>限界と対策</h2>
+      <p>
+        Zero-shotだけでは形式がぶれたり、<a href="../hallucination/">ハルシネーション</a>が起きやすいタスクがあります。<a href="../prompt/">プロンプト4要素</a>（目的・読者・形式・制約）を明確にし、ダメならFew-shotやRAGへ段階的にエスカレーションするのが実務的です。
+      </p>
+      <p>
+        <a href="../temperature/">温度</a>を下げると出力のばらつきを抑えられる場合がありますが、知識不足の補完にはなりません。
+      </p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Zero-shot＝学習データゼロ？</summary><p class="tool-faq-a">違います。モデルは大量データで事前学習済み。「プロンプト内の例がゼロ」という意味です。</p></details>
+        <details><summary>Zero-shot学習と同じ？</summary><p class="tool-faq-a">別概念です。Zero-shot学習はMLの学習設定、Zero-shot Promptingは推論時のプロンプト技法です。</p></details>
+        <details><summary>いつFew-shotに切り替える？</summary><p class="tool-faq-a">出力形式が2回連続で崩れたとき、独自の分類体系を使うとき、コストに余裕があるときが目安です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../few-shot-prompting/">少数ショットプロンプト</a></li>
+          <li><a href="../prompt-engineering/">プロンプトエンジニアリング</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

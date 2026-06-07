@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Attention（アテンション機構）とは？入力のどこに注目するか重み付けする仕組み。Self-Attention・Transformerとの関係をG検定・生成AIパスポート向けに解説。">
+  <title>Attentionとは？アテンション機構・Self-Attention・重み付け — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/attention/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="Attentionとは？アテンション機構・Self-Attention・重み付け">
+  <meta property="og:description" content="モデルが入力の中でどこに注目すべきかを学習する仕組み。Transformerの中核技術。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/attention/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"DefinedTerm","name":"アテンション機構","alternateName":["Attention","Attention Mechanism","注意機構"],"description":"モデルが入力の中でどこに注目すべきかを学習する仕組み。Transformerの中核技術。"},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Attentionは課金方式？","acceptedAnswer":{"@type":"Answer","text":"いいえ。入力中の重要部分に重みを付けるモデル構造の技術用語。利用料金の計算方式ではない。"}}]}
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Attention</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Attentionとは？アテンション機構・Self-Attention・重み付け</h1>
+    <p class="tool-hero-sub">読み：あてんしょん ／ 英：Attention / Attention Mechanism</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Attention</strong>（アテンション機構／注意機構）は、入力の中で<strong>どの部分を重視するか</strong>に重みを付けて扱う仕組みです。本記事は<a href="../transformer/">Transformer</a>全体のブロック図ではなく、<strong>「注目の重み付け」という直感</strong>——Query・Key・Valueのたとえと試験の誤答パターン——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Attentionとは</a></li>
+        <li><a href="#qkv">Query・Key・Valueのたとえ</a></li>
+        <li><a href="#variants">Self-Attentionと派生</a></li>
+        <li><a href="#misconceptions">よくある誤解</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ○：重要な入力部分に<strong>大きな重み</strong>を与えられる（<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>）。機械翻訳で入力のどの単語を参照するか表すのに使われる。<a href="../transformer/">Transformer</a>の重要な構成要素。
+      </p>
+      <p>
+        ×：Attentionは<strong>利用料金の課金方式</strong>（<a href="../../exams/genai-passport/drill/q/tf-0110/">TF-0110</a>）。×：<strong>畳み込みのパディング値を必ず1にする固定ルール</strong>（G-295のD）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>、<a href="../../exams/g-kentei/practice/q/g-019/">G-019</a>、<a href="../../exams/g-kentei/drill/domain/domain-07/">ディープラーニングの要素技術</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0110/">TF-0110</a>、<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108（Transformer）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Attentionとは</h2>
+      <p>
+        長い文章や系列データでは、すべての語を均等に扱うより、<strong>文脈上重要な語に目を向ける</strong>ほうが精度が上がります。Attentionは、その「目を向ける強さ」を<strong>数値の重み</strong>として学習・計算する仕組みです。
+      </p>
+      <p>
+        例：「彼はりんごを食べ、それを片付けた」——「それ」が何を指すかを判断するとき、近い語だけでなく<strong>離れた「りんご」</strong>にも注目できるのが利点です（G-295の文脈）。
+      </p>
+    </section>
+    <section id="qkv">
+      <h2>Query・Key・Valueのたとえ</h2>
+      <p>試験では式の暗記より、<strong>役割のイメージ</strong>で十分なことが多いです。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>記号</th><th>たとえ</th><th>役割</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Query（Q）</strong></td><td>検索キーワード</td><td>「今、何を知りたいか」</td></tr>
+          <tr><td><strong>Key（K）</strong></td><td>索引・ラベル</td><td>各位置が「何についての情報か」</td></tr>
+          <tr><td><strong>Value（V）</strong></td><td>本文・中身</td><td>実際に取り出す情報</td></tr>
+        </tbody>
+      </table>
+      <p>QとKの類似度から<strong>注意の重み</strong>を求め、その重みでVを足し合わせます。重みの大きい位置ほど、出力への影響が強くなります。</p>
+    </section>
+    <section id="variants">
+      <h2>Self-Attentionと派生</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>種類</th><th>何を見るか</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Attention（一般）</strong></td><td>別系列（例：翻訳の入力と出力）の対応</td></tr>
+          <tr><td><strong>Self-Attention</strong></td><td><strong>同じ系列内</strong>の語同士の関係（<a href="../transformer/">Transformer</a>の中心）</td></tr>
+          <tr><td><strong>Multi-Head Attention</strong></td><td>複数の「注目の視点」を並列に計算</td></tr>
+        </tbody>
+      </table>
+      <p><a href="../llm/">LLM</a>や<a href="../gpt/">GPT</a>も、内部ではSelf-Attentionを積み重ねて文脈を捉えます。学習の更新は<a href="../backpropagation/">誤差逆伝播法</a>・<a href="../gradient-descent/">勾配降下法</a>の話で、Attentionとは別レイヤーです。</p>
+    </section>
+    <section id="misconceptions">
+      <h2>よくある誤解</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤解</th><th>実際</th></tr></thead>
+        <tbody>
+          <tr><td>APIの「attention」料金項目</td><td>課金用語ではない（TF-0110）</td></tr>
+          <tr><td>人間が手動で注目箇所を指定</td><td>学習により<strong>重みが自動計算</strong>される</td></tr>
+          <tr><td>Transformer＝Attentionだけ</td><td>FFN・位置エンコーディング等も含む（<a href="../transformer/">Transformer</a>）</td></tr>
+          <tr><td>RNNの代替ではない</td><td>系列モデルの<strong>別アプローチ</strong>。長距離依存を扱いやすい</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>AttentionとTransformerは同じ？</summary><p class="tool-faq-a">Attentionは仕組み、Transformerはそれを中核にしたアーキテクチャです。Attention単体がTransformer全体ではありません。</p></details>
+        <details><summary>画像にも使われる？</summary><p class="tool-faq-a">はい。パッチ列にSelf-Attentionを適用するViTなどがあります。<a href="../text-to-image/">テキスト画像生成</a>とも関連します。</p></details>
+        <details><summary>トークン数とAttentionの計算量は？</summary><p class="tool-faq-a">系列長が長いほど計算・メモリ負荷が増えやすいのが実務上の論点です。試験では深掘り少なめです。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

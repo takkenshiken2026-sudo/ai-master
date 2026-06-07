@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="教師あり学習（Supervised Learning）とは？正解ラベル付きデータ、分類・回帰、教師なしとの違いをG検定向けに解説。">
+  <title>教師あり学習とは？Supervised Learning・分類と回帰 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/supervised-learning/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <meta property="og:title" content="教師あり学習とは？Supervised Learning・分類と回帰">
+  <meta property="og:description" content="入力と正解ラベルのペアから学習する機械学習。分類・回帰と教師なしとの対比。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/supervised-learning/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"DefinedTerm","name":"教師あり学習","alternateName":["Supervised Learning"],"description":"正解ラベル付きデータから入出力の対応を学ぶ機械学習。"},
+    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"教師あり学習の例は？","acceptedAnswer":{"@type":"Answer","text":"スパム判定（分類）、売上予測（回帰）、画像の犬猫分類など。"}}]}
+  ]}
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">教師あり学習</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>教師あり学習とは？Supervised Learning・ラベルとタスク</h1>
+    <p class="tool-hero-sub">読み：きょうしありがくしゅう ／ 英：Supervised Learning</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>教師あり学習</strong>（Supervised Learning）は、<strong>入力データと正解ラベル（教師信号）のペア</strong>から、入出力の対応を学ぶ<a href="../machine-learning/">機械学習</a>の代表的手法です。本記事はアルゴリズムの網羅ではなく、試験で問われる<strong>定義・分類と回帰・教師なしとの対比</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">教師あり学習とは</a></li>
+        <li><a href="#tasks">二大タスク：分類と回帰</a></li>
+        <li><a href="#pipeline">学習の流れ</a></li>
+        <li><a href="#vs-unsupervised">教師なしとの違い</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        教師あり学習は<strong>正解ラベル付きデータ</strong>を使う。スパム判定・画像分類などが典型例（CSV定義・G検定頻出）。
+      </p>
+      <p>
+        教師なし学習では正解ラベルがないため、<strong>ラベルとの誤差を直接最小化するとは限らない</strong>（<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>）。クラスタ内のまとまりや再構成誤差など別の基準を使う。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-354/">TF-354</a>、<a href="../../exams/g-kentei/drill/domain/domain-10/">機械学習の概要</a>、<a href="../../exams/g-kentei/drill/domain/domain-09/">機械学習の要素技術</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>教師あり学習とは</h2>
+      <p>
+        各訓練サンプルが <em>(入力 x, 正解 y)</em> の形を持ちます。「教師」は正解ラベルの比喩です。モデルは予測 ŷ を出し、<a href="../loss-function/">損失関数</a>で y との差を測り、<a href="../gradient-descent/">勾配降下法</a>などでパラメータを更新します。
+      </p>
+      <p>
+        <a href="../neural-network/">ニューラルネット</a>による画像認識も、教師あり学習の典型です。LLMの事前学習は次トークン予測という<strong>自己教師あり</strong>に近い設定もありますが、試験の「教師あり」はラベル付き教師信号を想定することが多いです。
+      </p>
+    </section>
+    <section id="tasks">
+      <h2>二大タスク：分類と回帰</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>タスク</th><th>正解 y の型</th><th>例</th></tr></thead>
+        <tbody>
+          <tr><td><strong>分類</strong></td><td>カテゴリ（離散）</td><td>スパム／非スパム、犬／猫</td></tr>
+          <tr><td><strong>回帰</strong></td><td>連続値</td><td>売上予測、気温予測</td></tr>
+        </tbody>
+      </table>
+      <p>出力層の設計と損失関数の選び方がタスクごとに変わります（分類：交差エントロピー、回帰：二乗誤差など）。</p>
+    </section>
+    <section id="pipeline">
+      <h2>学習の流れ</h2>
+      <ol class="tool-example-list">
+        <li><strong>ラベル付きデータ</strong>の収集・分割（訓練／検証／テスト）</li>
+        <li><strong>モデル</strong>の選択（線形、木、NN…）</li>
+        <li><strong>損失最小化</strong>で学習</li>
+        <li><strong>汎化性能</strong>の評価（<a href="../overfitting/">過学習</a>チェック）</li>
+      </ol>
+    </section>
+    <section id="vs-unsupervised">
+      <h2>教師なしとの違い</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>区分</th><th>ラベル</th><th>目的の例</th></tr></thead>
+        <tbody>
+          <tr><td><strong>教師あり</strong></td><td>あり</td><td>分類・回帰</td></tr>
+          <tr><td><strong>教師なし</strong></td><td>なし</td><td>クラスタリング、k-means</td></tr>
+          <tr><td><strong>強化学習</strong></td><td>報酬信号</td><td>方策の最適化</td></tr>
+        </tbody>
+      </table>
+      <p>「教師なしでも分類できる」は文脈次第ですが、<strong>ラベル付き教師信号なしに教師あり分類と同じ損失を使う</strong>という説明は×になりやすいです。</p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>半教師あり学習は？</summary><p class="tool-faq-a">少量のラベル付きと大量のラベルなしを併用する設定です。教師あり・教師なしの中間に位置します。</p></details>
+        <details><summary>LLMのファインチューニングは教師あり？</summary><p class="tool-faq-a">指示データに正解応答がある形式なら教師ありに近いです。RLHFは強化学習の要素も含みます。</p></details>
+        <details><summary>ラベル作成が高いときは？</summary><p class="tool-faq-a">教師なし・半教師あり、転移学習、弱いラベルなどが検討されます。試験では区分の定義が中心です。</p></details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../overfitting/">過学習</a></li>
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
