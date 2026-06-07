@@ -363,6 +363,21 @@
       this.render();
     }
 
+    updateMockActions() {
+      if (!this.isMockDeferFeedback() || !this.el.actions) return;
+      const isLast = this.index >= this.questions.length - 1;
+      this.el.actions.hidden = false;
+      if (this.el.nextBtn) {
+        this.el.nextBtn.textContent = "次の問題へ";
+        this.el.nextBtn.disabled = isLast;
+      }
+      if (this.el.hintNext) {
+        this.el.hintNext.innerHTML = isLast
+          ? "最後の問題です。結果は上部の「結果を見る」から確認できます。"
+          : "キーボード <kbd>Enter</kbd> で次へ";
+      }
+    }
+
     requestFinish() {
       const { answered } = this.computeMockScore();
       const total = this.questions.length;
@@ -847,7 +862,11 @@
         if (e.target.matches("input, textarea, select")) return;
 
         if (e.key === "Enter") {
-          if (this.isMockDeferFeedback()) return;
+          if (this.isMockDeferFeedback()) {
+            e.preventDefault();
+            this.goNext();
+            return;
+          }
           if (this.answered && this.el.actions && !this.el.actions.hidden) {
             e.preventDefault();
             this.goNext();
@@ -950,8 +969,10 @@
       this.answered = false;
       this.selected = saved || null;
       this.el.feedback.hidden = true;
-      if (this.el.actions) {
-        this.el.actions.hidden = this.isMockDeferFeedback() ? true : true;
+      if (this.isMockDeferFeedback()) {
+        this.updateMockActions();
+      } else if (this.el.actions) {
+        this.el.actions.hidden = true;
       }
       this.updateBookmarkButton(q.id);
 
@@ -1019,6 +1040,7 @@
         this.saveMockAnswers();
         this.markChoicesDeferred(value);
         this.updateProgressBar();
+        this.updateMockActions();
         return;
       }
 
@@ -1065,6 +1087,14 @@
     }
 
     goNext() {
+      if (this.isMockDeferFeedback()) {
+        if (this.index >= this.questions.length - 1) return;
+        this.index += 1;
+        this.saveProgress();
+        this.render();
+        return;
+      }
+
       if (!this.answered || (this.el.actions && this.el.actions.hidden)) return;
       this.index += 1;
       this.saveProgress();

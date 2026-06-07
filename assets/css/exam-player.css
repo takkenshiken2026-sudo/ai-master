@@ -382,6 +382,11 @@
   transition: background 0.12s, border-color 0.12s, color 0.12s;
 }
 
+.quiz-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .quiz-btn:hover:not(:disabled) {
   border-color: var(--blue);
   color: var(--blue);
@@ -830,6 +835,7 @@ a.mock-pick-card:hover .mock-pick-name {
 }
 
 .page-wrap--mock-exam .hub-header {
+  padding-top: 20px;
   padding-bottom: 8px;
 }
 
