@@ -47,7 +47,7 @@
   </header>
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
   <article class="tool-content">
     <p class="tool-lead">
@@ -61,7 +61,9 @@
         <li><a href="#spectrum">Zero / One / Few のスペクトラム</a></li>
         <li><a href="#vs-learning">Few-shot学習との違い</a></li>
         <li><a href="#design">例示の設計ポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
     <section id="exam-study">
@@ -111,6 +113,18 @@
       </ul>
       <p>複雑な推論には<a href="../chain-of-thought/">Chain-of-Thought</a>や<a href="../self-consistency/">自己整合性</a>と組み合わせることもあります。</p>
     </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Few-shot Prompting＝Few-shot学習</td><td>推論時の例示 vs 学習フェーズ（G-385）</td></tr>
+          <tr><td>Few-shot＝プロンプトエンジニアリング全体</td><td>技法の一つ（HQ-0783）</td></tr>
+          <tr><td>Few-shot＝ファインチューニング</td><td>重み更新なしで文脈内適応</td></tr>
+          <tr><td>例が多いほど常に良い</td><td>コンテキスト・コストとのトレードオフ</td></tr>
+        </tbody>
+      </table>
+    </section>
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -119,13 +133,21 @@
         <details><summary>ファインチューニングより劣る？</summary><p class="tool-faq-a">データが少なく素早く試すならFew-shot Promptingが有利。大量データで品質を固めるなら<a href="../fine-tuning/">ファインチューニング</a>を検討します。</p></details>
       </div>
     </section>
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-385/">G-385 · Few-shot学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-386/">G-386 · One/Zero-shot</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0783/">HQ-0783 · PEとの区別</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0726/">HQ-0726 · 用語の識別</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../zero-shot-prompting/">ゼロショットプロンプト</a></li>
           <li><a href="../prompt-engineering/">プロンプトエンジニアリング</a></li>
-          <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
           <li><a href="../llm/">LLM</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>

@@ -48,7 +48,7 @@
 
   <div class="tool-meta-bar">
     <span>更新日：<time datetime="2026-06-07">2026年6月7日</time></span>
-    <span>読了目安：約6分</span>
+    <span>読了目安：約7分</span>
   </div>
 
   <article class="tool-content">
@@ -65,7 +65,9 @@
         <li><a href="#variants">ゼロショットとFew-shot</a></li>
         <li><a href="#vs-decompose">タスク分割との違い</a></li>
         <li><a href="#limits">限界（重要）</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -197,6 +199,19 @@
       </p>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CoT＝プロンプトエンジニアリング全体</td><td>技法の一つ（HQ-0726）</td></tr>
+          <tr><td>段階的出力＝常に正確</td><td>説明できる≠事実が正しい（TF-0460）</td></tr>
+          <tr><td>CoT＝タスク分割</td><td>1応答内の推論 vs 複数プロンプト（TF-0476）</td></tr>
+          <tr><td>CoTで検証不要</td><td>人の確認は依然必要（TF-171）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -219,17 +234,23 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 説明≠正確</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476 · 段階的依頼</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0726/">HQ-0726 · PEとの区別</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-171/">TF-171 · 正確性の保証なし</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
-          <li><a href="../prompt/">プロンプト</a></li>
+          <li><a href="../few-shot-prompting/">少数ショットプロンプト</a></li>
           <li><a href="../prompt-engineering/">プロンプトエンジニアリング</a></li>
           <li><a href="../self-consistency/">自己整合性</a></li>
-          <li><a href="../llm/">LLM</a></li>
           <li><a href="../hallucination/">ハルシネーション</a></li>
-          <li><a href="../token/">トークン</a></li>
-          <li><a href="../agent/">AIエージェント</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>
