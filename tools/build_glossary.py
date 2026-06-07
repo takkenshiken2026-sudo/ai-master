@@ -82,6 +82,7 @@ REVISION_CLUSTERS: list[tuple[str, str, list[str]]] = [
     ("R", "RAG・推論設定", ["rag", "context-window", "temperature"]),
     ("S", "プロンプト技法", ["system-prompt", "few-shot-prompting", "chain-of-thought"]),
     ("T", "セキュリティ・例示", ["prompt-injection", "jailbreak", "zero-shot-prompting"]),
+    ("U", "エージェント・調整", ["agent", "fine-tuning", "rlhf"]),
 ]
 
 REVISION_STATUS_LABEL = {

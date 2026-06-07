@@ -95,7 +95,9 @@
         <li><a href="#pipeline">3段階パイプライン</a></li>
         <li><a href="#vs-others">似た用語との違い</a></li>
         <li><a href="#limits">限界と誤解</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
         <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
       </ol>
     </nav>
 
@@ -198,6 +200,19 @@
       </ul>
     </section>
 
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>RLHF＝ChatGPT</td><td>調整手法 vs サービス（HQ-0262）</td></tr>
+          <tr><td>RLHF＝アライメント</td><td>実装の一つ vs 考え方（HQ-0311）</td></tr>
+          <tr><td>RLHF＝手作業の転記</td><td>学習手法（TF-0166は×）</td></tr>
+          <tr><td>RLHFでハルシネーション消滅</td><td>好み調整≠事実の正確性</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="faq">
       <h2>よくある質問</h2>
       <div class="tool-faq">
@@ -220,16 +235,23 @@
       </div>
     </section>
 
-    <aside class="tool-related-wrap">
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311 · RLHFの定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0262/">HQ-0262 · ChatGPTとの区別</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0166/">TF-0166 · 誤った説明</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-370/">G-370 · 不適切な説明</a></li>
+        </ul>
+      </div>
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../alignment/">アライメント</a></li>
-          <li><a href="../reinforcement-learning/">強化学習</a></li>
           <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../reinforcement-learning/">強化学習</a></li>
           <li><a href="../llm/">LLM</a></li>
-          <li><a href="../lora/">LoRA</a></li>
-          <li><a href="../../tools/chatgpt/">ChatGPT</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>
