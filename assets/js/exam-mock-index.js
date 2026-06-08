@@ -229,23 +229,27 @@
         const title = btn.dataset.examTitle;
         if (!examId || !slug) return;
 
-        const email = window.prompt(
-          "購入確認メールを送るメールアドレス（任意・空欄可）",
-          ""
-        );
+        const email = await commerce.showPurchaseDialog({
+          examTitle: title,
+          priceLabel,
+        });
         if (email === null) return;
 
         btn.disabled = true;
         const original = btn.textContent;
         btn.textContent = "Stripeへ移動中…";
         try {
-          await commerce.startCheckout(slug, examId, title, email.trim());
+          await commerce.startCheckout(slug, examId, title, email);
         } catch (error) {
           btn.disabled = false;
           btn.textContent = original;
-          window.alert(
-            error instanceof Error ? error.message : "購入を開始できませんでした。"
-          );
+          await commerce.showMessageDialog({
+            title: "購入を開始できませんでした",
+            message:
+              error instanceof Error
+                ? error.message
+                : "しばらくしてから再度お試しください。",
+          });
         }
       });
     } catch {

@@ -161,6 +161,129 @@
     return `¥${yen.toLocaleString("ja-JP")}`;
   }
 
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function showMessageDialog(options) {
+    const { title, message, confirmLabel = "OK" } = options;
+    return new Promise((resolve) => {
+      const root = document.createElement("div");
+      root.className = "mock-checkout-modal";
+      root.innerHTML = `
+        <div class="mock-checkout-modal__backdrop" data-action="close"></div>
+        <div class="mock-checkout-modal__panel" role="alertdialog" aria-modal="true" aria-labelledby="mock-checkout-msg-title">
+          <h2 class="mock-checkout-modal__title" id="mock-checkout-msg-title">${escapeHtml(title)}</h2>
+          <p class="mock-checkout-modal__message">${escapeHtml(message)}</p>
+          <div class="mock-checkout-modal__actions mock-checkout-modal__actions--single">
+            <button type="button" class="mock-checkout-modal__confirm" data-action="confirm">${escapeHtml(confirmLabel)}</button>
+          </div>
+        </div>
+      `;
+      const close = () => {
+        root.remove();
+        document.body.classList.remove("mock-checkout-modal-open");
+        resolve();
+      };
+      root.addEventListener("click", (event) => {
+        const action = event.target.closest("[data-action]")?.dataset.action;
+        if (action === "close" || action === "confirm") close();
+      });
+      document.addEventListener(
+        "keydown",
+        function onKey(event) {
+          if (event.key === "Escape") {
+            document.removeEventListener("keydown", onKey);
+            close();
+          }
+        },
+        { once: true }
+      );
+      document.body.classList.add("mock-checkout-modal-open");
+      document.body.appendChild(root);
+      root.querySelector("[data-action='confirm']")?.focus();
+    });
+  }
+
+  function showPurchaseDialog(options) {
+    const { examTitle, priceLabel } = options;
+    return new Promise((resolve) => {
+      const root = document.createElement("div");
+      root.className = "mock-checkout-modal";
+      root.innerHTML = `
+        <div class="mock-checkout-modal__backdrop" data-action="cancel"></div>
+        <div class="mock-checkout-modal__panel" role="dialog" aria-modal="true" aria-labelledby="mock-checkout-title">
+          <button type="button" class="mock-checkout-modal__close" data-action="cancel" aria-label="閉じる">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke-linecap="round"/></svg>
+          </button>
+          <p class="mock-checkout-modal__eyebrow">お支払い</p>
+          <h2 class="mock-checkout-modal__title" id="mock-checkout-title">${escapeHtml(examTitle)}</h2>
+          <p class="mock-checkout-modal__price">${escapeHtml(priceLabel)}<span class="mock-checkout-modal__price-note">（買い切り · 3回分）</span></p>
+          <ul class="mock-checkout-modal__summary">
+            <li>第1回・第2回・第3回をすべて受験可能</li>
+            <li>購入後は何度でも再受験できます</li>
+            <li>決済完了後すぐに受験を開始できます</li>
+          </ul>
+          <label class="mock-checkout-modal__field">
+            <span class="mock-checkout-modal__label">確認メール（任意）</span>
+            <input type="email" class="mock-checkout-modal__input" name="email" placeholder="example@email.com" autocomplete="email">
+            <span class="mock-checkout-modal__hint">受験リンクを送る場合のみ入力してください。空欄でも購入できます。</span>
+          </label>
+          <p class="mock-checkout-modal__secure">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 1.5L3 4v3.5c0 3 2.2 5.8 5 6.5 2.8-.7 5-3.5 5-6.5V4L8 1.5z" stroke-linejoin="round"/></svg>
+            お支払いは Stripe の安全なページで行われます
+          </p>
+          <div class="mock-checkout-modal__actions">
+            <button type="button" class="mock-checkout-modal__cancel" data-action="cancel">キャンセル</button>
+            <button type="button" class="mock-checkout-modal__confirm" data-action="confirm">Stripeで支払う</button>
+          </div>
+        </div>
+      `;
+
+      const panel = root.querySelector(".mock-checkout-modal__panel");
+      const input = root.querySelector(".mock-checkout-modal__input");
+      const confirmBtn = root.querySelector("[data-action='confirm']");
+
+      const finish = (email) => {
+        root.remove();
+        document.body.classList.remove("mock-checkout-modal-open");
+        resolve(email);
+      };
+
+      root.addEventListener("click", (event) => {
+        const action = event.target.closest("[data-action]")?.dataset.action;
+        if (action === "cancel") finish(null);
+        if (action === "confirm") finish(input.value.trim());
+      });
+
+      panel?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && event.target !== input) {
+          event.preventDefault();
+          finish(input.value.trim());
+        }
+      });
+
+      document.addEventListener(
+        "keydown",
+        function onKey(event) {
+          if (event.key === "Escape") {
+            document.removeEventListener("keydown", onKey);
+            finish(null);
+          }
+        },
+        { once: true }
+      );
+
+      document.body.classList.add("mock-checkout-modal-open");
+      document.body.appendChild(root);
+      input?.focus();
+    });
+  }
+
   async function preparePlayPage(examSlug, examId) {
     if (examId === "sample") {
       window.location.replace("index.html");
@@ -197,6 +320,8 @@
     getLocalToken,
     formatPrice,
     preparePlayPage,
+    showPurchaseDialog,
+    showMessageDialog,
     bundleExamId,
     mockExamIds,
   };
