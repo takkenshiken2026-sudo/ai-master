@@ -96,10 +96,12 @@
         "このブラウザには購入情報を保存済みです。同じ端末ならリンクがなくても模擬試験一覧から受験できます。";
       browserLine.hidden = false;
 
+      const listUrl = new URL("index.html", location.href);
+      listUrl.searchParams.set("access", result.token);
       const linkEl = document.getElementById("mock-success-link");
-      linkEl.textContent = result.accessUrl;
+      linkEl.textContent = listUrl.href;
 
-      document.getElementById("mock-success-start").href = result.accessUrl;
+      document.getElementById("mock-success-start").href = listUrl.href;
 
       okBox.hidden = false;
     } catch (error) {
