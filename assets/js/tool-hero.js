@@ -21,7 +21,7 @@
   }
 
   function initHeroSync() {
-    document.querySelectorAll('.tool-hero--split:not(.tool-hero--career)').forEach(function (hero) {
+    document.querySelectorAll('.tool-hero--split:not(.tool-hero--career):not(.tool-hero--guide)').forEach(function (hero) {
       syncHero(hero);
 
       if (typeof ResizeObserver === 'undefined') return;
