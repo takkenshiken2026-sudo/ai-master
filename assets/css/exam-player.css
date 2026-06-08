@@ -655,10 +655,11 @@ body.mock-exam-focus .breadcrumb {
 body.mock-exam-focus .page-wrap--mock-exam {
   display: flex;
   flex-direction: column;
-  max-width: none;
+  max-width: var(--content-max);
   min-height: 100vh;
-  padding: 24px 20px 32px;
-  box-shadow: none;
+  padding-top: 24px;
+  padding-bottom: 32px;
+  box-shadow: 0 0 0 1px var(--border-subtle);
 }
 
 body.mock-exam-focus .page-wrap--mock-exam > #exam-player {
