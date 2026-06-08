@@ -19,8 +19,8 @@
       .map(
         (stat) => `
         <div class="exam-hero__stat">
-          <p class="exam-hero__stat-value">${escapeHtml(stat.value)}</p>
           <p class="exam-hero__stat-label">${escapeHtml(renderStatLabel(stat))}</p>
+          <p class="exam-hero__stat-value">${escapeHtml(stat.value)}</p>
         </div>`
       )
       .join("");
