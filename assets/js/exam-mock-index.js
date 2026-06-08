@@ -40,48 +40,6 @@
       >購入する</button>`;
   }
 
-  function pitchHtml(pitch, buyOptions) {
-    if (!pitch) return "";
-    const whyPoints = (pitch.whyPoints || [])
-      .map(
-        (point) => `<li class="mock-purchase-pitch__item">
-          <h3 class="mock-purchase-pitch__item-title">${escapeHtml(point.title)}</h3>
-          <p class="mock-purchase-pitch__item-body">${escapeHtml(point.body)}</p>
-        </li>`
-      )
-      .join("");
-    const forPoints = (pitch.forPoints || [])
-      .map((point) => `<li>${escapeHtml(point)}</li>`)
-      .join("");
-    const bottomBuy = buyOptions
-      ? `<div class="mock-purchase-pitch__cta">
-          ${buyButtonHtml(
-            buyOptions.examSlug,
-            buyOptions.bundleId,
-            buyOptions.bundleTitle,
-            "mock-purchase__buy mock-purchase__buy--secondary"
-          )}
-        </div>`
-      : "";
-
-    return `<div class="mock-purchase-pitch">
-        <section class="mock-purchase-pitch__section">
-          <h2 class="mock-purchase-pitch__heading">${escapeHtml(pitch.whyTitle || "")}</h2>
-          <p class="mock-purchase-pitch__lead">${escapeHtml(pitch.whyLead || "")}</p>
-          <ul class="mock-purchase-pitch__reasons">${whyPoints}</ul>
-        </section>
-        <section class="mock-purchase-pitch__section">
-          <h2 class="mock-purchase-pitch__heading">${escapeHtml(pitch.forTitle || "")}</h2>
-          <ul class="mock-purchase-pitch__checks">${forPoints}</ul>
-        </section>
-        <section class="mock-purchase-pitch__section mock-purchase-pitch__section--muted">
-          <h2 class="mock-purchase-pitch__heading">${escapeHtml(pitch.compareTitle || "")}</h2>
-          <p class="mock-purchase-pitch__compare">${escapeHtml(pitch.compareBody || "")}</p>
-        </section>
-        ${bottomBuy}
-      </div>`;
-  }
-
   function purchasePageHtml(options) {
     const {
       priceLabel,
@@ -94,25 +52,66 @@
       pitch,
     } = options;
     const notice = showNotice
-      ? '<p class="mock-purchase__notice">受験には購入が必要です。購入済みの方はメールのリンクから入るか、購入完了画面のリンクをご利用ください。</p>'
+      ? '<p class="mock-landing__notice">受験には購入が必要です。購入済みの方はメールのリンクから入るか、購入完了画面のリンクをご利用ください。</p>'
       : "";
-    const buyOptions = { examSlug, bundleId, bundleTitle };
-    return `<section class="mock-purchase" data-exam-id="${escapeAttr(bundleId)}">
+    const whyPoints = (pitch?.whyPoints || [])
+      .map(
+        (point, index) => `<li class="mock-landing-point">
+          <span class="mock-landing-point__no">${String(index + 1).padStart(2, "0")}</span>
+          <div class="mock-landing-point__body">
+            <h3 class="mock-landing-point__title">${escapeHtml(point.title)}</h3>
+            <p class="mock-landing-point__text">${escapeHtml(point.body)}</p>
+          </div>
+        </li>`
+      )
+      .join("");
+    const forPoints = (pitch?.forPoints || [])
+      .map((point) => `<li>${escapeHtml(point)}</li>`)
+      .join("");
+    const pitchWhy = pitch
+      ? `<section class="mock-landing-section">
+          <h2 class="mock-landing-section__title">${escapeHtml(pitch.whyTitle || "")}</h2>
+          <p class="mock-landing-section__lead">${escapeHtml(pitch.whyLead || "")}</p>
+          <ol class="mock-landing-points">${whyPoints}</ol>
+        </section>
+        <section class="mock-landing-section">
+          <h2 class="mock-landing-section__title">${escapeHtml(pitch.forTitle || "")}</h2>
+          <ul class="mock-landing-checks">${forPoints}</ul>
+        </section>
+        <section class="mock-landing-section mock-landing-section--band">
+          <h2 class="mock-landing-section__title">${escapeHtml(pitch.compareTitle || "")}</h2>
+          <p class="mock-landing-section__text">${escapeHtml(pitch.compareBody || "")}</p>
+        </section>`
+      : "";
+
+    return `<div class="mock-landing" data-exam-id="${escapeAttr(bundleId)}">
         ${notice}
-        <div class="mock-purchase__card">
-          <p class="mock-purchase__eyebrow">3本セット · 買い切り</p>
-          <h2 class="mock-purchase__title">${escapeHtml(bundleTitle)}</h2>
-          <p class="mock-purchase__price">${escapeHtml(priceLabel)}</p>
-          <ul class="mock-purchase__features">
-            <li>模擬試験 <strong>3回分</strong>（第1回・第2回・第3回）</li>
-            <li>各回 <strong>${questionCount}問 · ${minutes}分</strong>（本番形式）</li>
-            <li>購入後は <strong>何度でも再受験</strong>できます</li>
+        <div class="mock-landing-hero">
+          <div class="mock-landing-hero__copy">
+            <p class="mock-landing-hero__eyebrow">模擬試験 · 3本セット · 買い切り</p>
+            <p class="mock-landing-hero__price">${escapeHtml(priceLabel)}</p>
+            <p class="mock-landing-hero__spec">第1回・第2回・第3回 · 各 ${escapeHtml(String(questionCount))}問 · ${minutes}分</p>
+            <p class="mock-landing-hero__desc">購入後は3回すべて何度でも受験できます。第1回から順に、またはお好きな回から始められます。</p>
+            ${buyButtonHtml(examSlug, bundleId, bundleTitle, "mock-landing-hero__buy")}
+          </div>
+          <ul class="mock-landing-hero__facts" aria-label="セット内容">
+            <li><strong>3回</strong><span>模擬試験</span></li>
+            <li><strong>${escapeHtml(String(questionCount))}問</strong><span>各回の出題数</span></li>
+            <li><strong>${minutes}分</strong><span>制限時間</span></li>
+            <li><strong>再受験</strong><span>何度でも可</span></li>
           </ul>
-          ${buyButtonHtml(examSlug, bundleId, bundleTitle, "mock-purchase__buy")}
-          <p class="mock-purchase__foot">購入後、このページに第1回・第2回・第3回が表示されます。</p>
         </div>
-        ${pitchHtml(pitch, buyOptions)}
-      </section>`;
+        <div class="mock-landing-body">
+          ${pitchWhy}
+          <div class="mock-landing-cta">
+            <div class="mock-landing-cta__copy">
+              <p class="mock-landing-cta__title">${escapeHtml(bundleTitle)}</p>
+              <p class="mock-landing-cta__meta">${escapeHtml(priceLabel)} · 3本セット · 買い切り</p>
+            </div>
+            ${buyButtonHtml(examSlug, bundleId, bundleTitle, "mock-landing-cta__buy")}
+          </div>
+        </div>
+      </div>`;
   }
 
   function setIntro(introEl, text) {
@@ -187,12 +186,17 @@
         hasBundle = await commerce.hasBundleAccess(examSlug);
       }
 
+      const pageWrap = document.querySelector(".page-wrap");
+
       if (checkoutOn && !hasBundle) {
+        pageWrap?.classList.add("page-wrap--mock-sales");
         setIntro(
           introEl,
           config.purchaseIntro ||
             "本番・過去問を想定した模擬試験です。3回分をセットでご購入いただけます。"
         );
+        list.classList.remove("exam-mode-list");
+        list.classList.add("mock-landing-root");
         list.innerHTML = purchasePageHtml({
           priceLabel,
           examSlug,
@@ -204,6 +208,9 @@
           pitch,
         });
       } else {
+        pageWrap?.classList.remove("page-wrap--mock-sales");
+        list.classList.add("exam-mode-list");
+        list.classList.remove("mock-landing-root");
         setIntro(
           introEl,
           checkoutOn
@@ -222,7 +229,9 @@
       }
 
       list.addEventListener("click", async (event) => {
-        const btn = event.target.closest(".mock-purchase__buy, .exam-mode-row__buy");
+        const btn = event.target.closest(
+          ".mock-landing-hero__buy, .mock-landing-cta__buy, .exam-mode-row__buy"
+        );
         if (!btn || !commerce) return;
         const examId = btn.dataset.examId;
         const slug = btn.dataset.examSlug;
