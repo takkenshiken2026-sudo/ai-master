@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>購入完了 — 生成AIパスポート 模擬試験 — AI Master</title>
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../assets/css/main.css">
+  <link rel="stylesheet" href="../../../assets/css/hub.css">
+  <link rel="stylesheet" href="../../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../../assets/css/exams.css">
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="active">試験対策</a></li>
+    <li><a href="../../../glossary/">用語辞典</a></li>
+    <li><a href="../../../tools/">AIツール</a></li>
+    <li><a href="../../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../../index.html">ホーム</a></li>
+      <li><a href="../../index.html">試験対策</a></li>
+      <li><a href="../index.html">生成AIパスポート</a></li>
+      <li><a href="index.html">模擬試験</a></li>
+      <li aria-current="page">購入完了</li>
+    </ol>
+  </nav>
+
+  <section class="mock-success" id="mock-success" hidden>
+    <h1 class="mock-success__title">購入が完了しました</h1>
+    <p class="mock-success__lead" id="mock-success-lead"></p>
+    <p class="mock-success__lead" id="mock-success-email" hidden></p>
+    <p class="mock-success__lead"><strong>受験リンク（再入場用）</strong></p>
+    <p class="mock-success__link-box" id="mock-success-link"></p>
+    <div class="mock-success__actions">
+      <a href="#" class="btn-exam-solid" id="mock-success-start">今すぐ受験する</a>
+      <a href="index.html" class="btn-exam-outline">模擬試験一覧へ</a>
+    </div>
+  </section>
+
+  <section class="mock-success" id="mock-success-error" hidden>
+    <h1 class="mock-success__title">購入の確認中です</h1>
+    <p class="mock-success__lead" id="mock-success-error-text">決済の反映を待っています。しばらくしてから再度お試しください。</p>
+    <div class="mock-success__actions">
+      <a href="index.html" class="btn-exam-outline">模擬試験一覧へ</a>
+    </div>
+  </section>
+</main>
+
+<script src="../../../assets/js/mock-commerce.js"></script>
+<script>
+(function () {
+  const EXAM_SLUG = "genai-passport";
+  const params = new URLSearchParams(location.search);
+  const sessionId = params.get("session_id");
+  const okBox = document.getElementById("mock-success");
+  const errBox = document.getElementById("mock-success-error");
+  const errText = document.getElementById("mock-success-error-text");
+
+  async function run() {
+    if (!sessionId || !window.MockCommerce) {
+      errBox.hidden = false;
+      return;
+    }
+
+    try {
+      const result = await MockCommerce.fulfillSession(sessionId);
+      MockCommerce.saveLocalToken(EXAM_SLUG, result.examId, result.token);
+
+      document.getElementById("mock-success-lead").textContent =
+        `${result.examTitle} を購入しました。以下のリンクから何度でも受験できます（買い切り）。`;
+
+      const emailLine = document.getElementById("mock-success-email");
+      if (result.emailSent) {
+        emailLine.textContent = `${result.email} 宛に受験リンクを送信しました。`;
+        emailLine.hidden = false;
+      } else {
+        emailLine.textContent =
+          "メール送信は未設定のため、下のリンクを保存してください。";
+        emailLine.hidden = false;
+      }
+
+      const linkEl = document.getElementById("mock-success-link");
+      linkEl.textContent = result.accessUrl;
+
+      const start = document.getElementById("mock-success-start");
+      start.href = result.accessUrl;
+
+      okBox.hidden = false;
+    } catch (error) {
+      errText.textContent =
+        error instanceof Error
+          ? error.message
+          : "購入の確認に失敗しました。";
+      errBox.hidden = false;
+    }
+  }
+
+  run();
+})();
+</script>
+</body>
+</html>

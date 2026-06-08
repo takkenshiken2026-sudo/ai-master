@@ -569,11 +569,16 @@
         </div>
       `;
       complete.classList.add("quiz-complete--with-review");
+    }
+
+    scrollCompleteSummary() {
+      const target =
+        $(".quiz-complete__hero", this.el.complete) ||
+        this.el.completeRateValue ||
+        this.el.complete;
+      if (!target) return;
       requestAnimationFrame(() => {
-        const firstFocus = review.querySelector(
-          ".quiz-review__item--wrong[open], .quiz-review__item--unanswered[open]"
-        );
-        firstFocus?.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
 
@@ -1384,6 +1389,7 @@
       } else if (this.useSetup() && answered > 0) {
         this.renderAnswerReview(this.sessionAnswers, { onlyAnswered: interrupted });
       }
+      this.scrollCompleteSummary();
     }
 
     reset() {

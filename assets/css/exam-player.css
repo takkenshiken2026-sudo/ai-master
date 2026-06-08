@@ -34,6 +34,17 @@
   display: none;
 }
 
+.mock-access-gate {
+  max-width: 720px;
+  margin: 0 auto 20px;
+  padding: 16px 18px;
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  text-align: center;
+  background: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+}
+
 .page-wrap--quiz .quiz {
   margin-bottom: 32px;
 }

@@ -1,0 +1,7 @@
+{
+  "checkoutEnabled": false,
+  "supabaseUrl": "",
+  "supabaseAnonKey": "",
+  "priceYen": 980,
+  "currency": "jpy"
+}

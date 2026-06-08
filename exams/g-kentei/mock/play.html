@@ -54,12 +54,14 @@
     </ol>
   </nav>
 
-  <header class="hub-header">
+  <p id="mock-access-gate" class="mock-access-gate" hidden>購入確認中…</p>
+
+  <header class="hub-header" id="mock-header" hidden>
     <h1 id="mock-title">G検定 模擬試験</h1>
     <p class="hub-intro" id="mock-intro">制限時間内にすべての問題に回答してください。解答後に解説を確認できます。</p>
   </header>
 
-  <div id="exam-player" class="quiz">
+  <div id="exam-player" class="quiz" hidden>
     <div class="quiz-bar" hidden>
       <div class="quiz-progress"></div>
       <div class="quiz-timer" hidden></div>
@@ -103,12 +105,24 @@
   </div>
 </main>
 
+<script src="../../../assets/js/mock-commerce.js"></script>
 <script>
-(function () {
+(async function () {
+  const EXAM_SLUG = "g-kentei";
   const params = new URLSearchParams(location.search);
   const examId = params.get("exam") || "mock_01";
   const isSample = examId === "sample";
   const root = document.getElementById("exam-player");
+  const header = document.getElementById("mock-header");
+
+  if (!isSample && window.MockCommerce) {
+    const ok = await MockCommerce.preparePlayPage(EXAM_SLUG, examId);
+    if (!ok) return;
+  }
+
+  root.hidden = false;
+  if (header) header.hidden = false;
+
   root.dataset.config = JSON.stringify({
     mode: "choice",
     dataUrl: "../../../assets/data/g-kentei/mock.json",
@@ -142,9 +156,16 @@
       }
     })
     .catch(() => {});
+
+  const playerScript = document.createElement("script");
+  playerScript.src = "../../../assets/js/exam-flags.js";
+  document.body.appendChild(playerScript);
+  playerScript.onload = () => {
+    const examPlayerScript = document.createElement("script");
+    examPlayerScript.src = "../../../assets/js/exam-player.js";
+    document.body.appendChild(examPlayerScript);
+  };
 })();
 </script>
-<script src="../../../assets/js/exam-flags.js"></script>
-<script src="../../../assets/js/exam-player.js"></script>
 </body>
 </html>

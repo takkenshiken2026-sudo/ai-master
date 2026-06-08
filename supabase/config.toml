@@ -1,0 +1,16 @@
+# Supabase CLI 用（Edge Functions デプロイ）
+# https://supabase.com/docs/guides/cli/config
+
+project_id = "ai-master"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15
+
+[functions]
+verify_jwt = true
+
+[functions.stripe-webhook]
+verify_jwt = false

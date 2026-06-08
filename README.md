@@ -61,6 +61,12 @@ python3 tools/build_question_pages.py
 window.AI_MASTER.mockExamsEnabled = true;
 ```
 
+## 有料模擬試験（Stripe）
+
+`mock_01`〜`mock_03` を **¥980 買い切り** で販売する場合は、Supabase と Stripe のセットアップ後に `assets/data/mock-commerce.json` で `checkoutEnabled: true` にします。詳細は [docs/mock-stripe-setup.md](docs/mock-stripe-setup.md) を参照してください。
+
+`checkoutEnabled: false` のままでは、有料回も無料で受験できます。
+
 ## ディレクトリ構成
 
 | パス | 内容 |
