@@ -77,6 +77,78 @@
     return escapeHtml(str).replace(/'/g, "&#39;");
   }
 
+  function showQuizConfirmDialog(options) {
+    const {
+      title,
+      message,
+      unanswered,
+      answered,
+      total,
+      confirmLabel = "結果を見る",
+      cancelLabel = "戻って回答する",
+    } = options;
+
+    return new Promise((resolve) => {
+      const root = document.createElement("div");
+      root.className = "quiz-confirm-modal";
+      root.innerHTML = `
+        <div class="quiz-confirm-modal__backdrop" data-action="cancel"></div>
+        <div class="quiz-confirm-modal__panel" role="alertdialog" aria-modal="true" aria-labelledby="quiz-confirm-title">
+          <div class="quiz-confirm-modal__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <path d="M12 9v4M12 17h.01" stroke-linecap="round"/>
+              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="quiz-confirm-modal__eyebrow">採点前の確認</p>
+          <h2 class="quiz-confirm-modal__title" id="quiz-confirm-title">${escapeHtml(title)}</h2>
+          <div class="quiz-confirm-modal__stats">
+            <div class="quiz-confirm-modal__stat quiz-confirm-modal__stat--warn">
+              <span class="quiz-confirm-modal__stat-value">${escapeHtml(String(unanswered))}</span>
+              <span class="quiz-confirm-modal__stat-label">未回答</span>
+            </div>
+            <div class="quiz-confirm-modal__stat">
+              <span class="quiz-confirm-modal__stat-value">${escapeHtml(`${answered} / ${total}`)}</span>
+              <span class="quiz-confirm-modal__stat-label">回答済み</span>
+            </div>
+          </div>
+          <p class="quiz-confirm-modal__message">${escapeHtml(message)}</p>
+          <div class="quiz-confirm-modal__actions">
+            <button type="button" class="quiz-confirm-modal__cancel" data-action="cancel">${escapeHtml(cancelLabel)}</button>
+            <button type="button" class="quiz-confirm-modal__confirm" data-action="confirm">${escapeHtml(confirmLabel)}</button>
+          </div>
+        </div>
+      `;
+
+      const close = (result) => {
+        root.remove();
+        document.body.classList.remove("quiz-confirm-modal-open");
+        resolve(result);
+      };
+
+      root.addEventListener("click", (event) => {
+        const action = event.target.closest("[data-action]")?.dataset.action;
+        if (action === "cancel") close(false);
+        if (action === "confirm") close(true);
+      });
+
+      document.addEventListener(
+        "keydown",
+        function onKey(event) {
+          if (event.key === "Escape") {
+            document.removeEventListener("keydown", onKey);
+            close(false);
+          }
+        },
+        { once: true }
+      );
+
+      document.body.classList.add("quiz-confirm-modal-open");
+      document.body.appendChild(root);
+      root.querySelector("[data-action='confirm']")?.focus();
+    });
+  }
+
   function mockExamsEnabled() {
     return !(window.AI_MASTER && window.AI_MASTER.mockExamsEnabled === false);
   }
@@ -474,13 +546,20 @@
       }
     }
 
-    requestFinish() {
+    async requestFinish() {
       const { answered } = this.computeMockScore();
       const total = this.questions.length;
       if (answered < total) {
-        const ok = window.confirm(
-          `未回答が ${total - answered} 問あります。このまま結果を見ますか？`
-        );
+        const ok = await showQuizConfirmDialog({
+          title: "未回答の問題があります",
+          unanswered: total - answered,
+          answered,
+          total,
+          message:
+            "このまま結果を表示すると、未回答は不正解として採点されます。",
+          confirmLabel: "結果を見る",
+          cancelLabel: "戻って回答する",
+        });
         if (!ok) return;
       }
       this.finish(false);
