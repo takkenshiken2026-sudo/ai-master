@@ -679,7 +679,19 @@
       this.el.accuracy = acc;
     }
 
+    showMockBriefingLoading() {
+      if (!this.isMockSession() || this.config.mockBriefing === false) return;
+      const panel = this.el.mockBriefing || $(".quiz-mock-briefing", this.root);
+      if (!panel) return;
+      const lead = $(".quiz-mock-briefing__lead", panel);
+      const meta = $(".quiz-mock-briefing__meta", panel);
+      if (lead) lead.textContent = "問題データを読み込んでいます…";
+      if (meta) meta.textContent = "しばらくお待ちください。";
+      this.setView("mock-briefing");
+    }
+
     async start() {
+      this.showMockBriefingLoading();
       const res = await fetch(this.config.dataUrl);
       if (!res.ok) throw new Error("問題データを読み込めませんでした");
       this.data = await res.json();
@@ -1446,6 +1458,8 @@
       }
     });
   }
+
+  window.bootExamPlayer = bootExamPlayer;
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", bootExamPlayer);

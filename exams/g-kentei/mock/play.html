@@ -55,6 +55,7 @@
   </nav>
 
   <p id="mock-access-gate" class="mock-access-gate" hidden>購入確認中…</p>
+  <p id="mock-player-loading" class="mock-access-gate" hidden>試験画面を読み込み中…</p>
 
   <header class="hub-header" id="mock-header" hidden>
     <h1 id="mock-title">G検定 模擬試験</h1>
@@ -109,38 +110,76 @@
 <script>
 (async function () {
   const EXAM_SLUG = "g-kentei";
+  const DATA_URL = "../../../assets/data/g-kentei/mock.json";
   const params = new URLSearchParams(location.search);
   const examId = params.get("exam") || "mock_01";
   const isSample = examId === "sample";
   const root = document.getElementById("exam-player");
   const header = document.getElementById("mock-header");
+  const loading = document.getElementById("mock-player-loading");
 
-  if (!isSample && window.MockCommerce) {
-    const ok = await MockCommerce.preparePlayPage(EXAM_SLUG, examId);
-    if (!ok) return;
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("試験画面の読み込みに失敗しました。"));
+      document.body.appendChild(script);
+    });
   }
 
-  root.hidden = false;
-  if (header) header.hidden = false;
-
-  root.dataset.config = JSON.stringify({
-    mode: "choice",
-    dataUrl: "../../../assets/data/g-kentei/mock.json",
-    examId: examId,
-    storagePrefix: "g-kentei",
-    storageKey: "mock",
-    timeLimitMinutes: isSample ? 0 : 120,
-    backUrl: "index.html",
-    mockBriefing: true,
-    mockDeferFeedback: !isSample,
-    mockNoPersist: !isSample,
-  });
-
-  if (!isSample) {
-    document.getElementById("mock-main")?.classList.add("page-wrap--mock-exam");
+  function showLoadError(message) {
+    if (loading) {
+      loading.hidden = false;
+      loading.textContent = message;
+    }
   }
 
-  fetch("../../../assets/data/g-kentei/mock.json")
+  try {
+    if (!isSample && window.MockCommerce) {
+      const ok = await MockCommerce.preparePlayPage(EXAM_SLUG, examId);
+      if (!ok) return;
+    }
+
+    if (loading) loading.hidden = false;
+    if (header) header.hidden = false;
+
+    root.dataset.config = JSON.stringify({
+      mode: "choice",
+      dataUrl: DATA_URL,
+      examId: examId,
+      storagePrefix: "g-kentei",
+      storageKey: "mock",
+      timeLimitMinutes: isSample ? 0 : 120,
+      backUrl: "index.html",
+      mockBriefing: true,
+      mockDeferFeedback: !isSample,
+      mockNoPersist: !isSample,
+    });
+
+    if (!isSample) {
+      document.getElementById("mock-main")?.classList.add("page-wrap--mock-exam");
+    }
+
+    window.AI_MASTER = window.AI_MASTER || {};
+    window.AI_MASTER.mockExamsEnabled = true;
+
+    await loadScript("../../../assets/js/exam-player.js");
+    if (typeof window.bootExamPlayer !== "function") {
+      throw new Error("試験プレイヤーの起動に失敗しました。");
+    }
+    delete root.dataset.playerBooted;
+    root.hidden = false;
+    window.bootExamPlayer();
+    if (loading) loading.hidden = true;
+  } catch (error) {
+    showLoadError(
+      error instanceof Error ? error.message : "試験画面を読み込めませんでした。"
+    );
+    return;
+  }
+
+  fetch(DATA_URL)
     .then((r) => r.json())
     .then((data) => {
       const exam = data.exams?.[examId];
@@ -156,15 +195,6 @@
       }
     })
     .catch(() => {});
-
-  const playerScript = document.createElement("script");
-  playerScript.src = "../../../assets/js/exam-flags.js";
-  document.body.appendChild(playerScript);
-  playerScript.onload = () => {
-    const examPlayerScript = document.createElement("script");
-    examPlayerScript.src = "../../../assets/js/exam-player.js";
-    document.body.appendChild(examPlayerScript);
-  };
 })();
 </script>
 </body>
