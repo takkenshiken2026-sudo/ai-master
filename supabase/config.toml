@@ -9,8 +9,6 @@ enabled = true
 [db]
 major_version = 15
 
-[functions]
-verify_jwt = true
-
+# stripe-webhook は Stripe から JWT なしで呼ばれるため検証をオフ
 [functions.stripe-webhook]
 verify_jwt = false
