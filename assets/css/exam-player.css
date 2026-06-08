@@ -1236,10 +1236,18 @@ body.quiz-confirm-modal-open {
 }
 
 .quiz-confirm-modal__title {
-  margin: 0 0 18px;
+  margin: 0 0 8px;
   font-size: 1.25rem;
   line-height: 1.35;
   color: var(--ink);
+}
+
+.quiz-confirm-modal__lead {
+  margin: 0 0 18px;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  line-height: 1.75;
+  color: var(--blue);
 }
 
 .quiz-confirm-modal__stats {

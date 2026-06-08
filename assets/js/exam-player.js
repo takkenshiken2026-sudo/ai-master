@@ -80,6 +80,7 @@
   function showQuizConfirmDialog(options) {
     const {
       title,
+      lead = "",
       message,
       unanswered,
       answered,
@@ -102,6 +103,7 @@
           </div>
           <p class="quiz-confirm-modal__eyebrow">採点前の確認</p>
           <h2 class="quiz-confirm-modal__title" id="quiz-confirm-title">${escapeHtml(title)}</h2>
+          ${lead ? `<p class="quiz-confirm-modal__lead">${escapeHtml(lead)}</p>` : ""}
           <div class="quiz-confirm-modal__stats">
             <div class="quiz-confirm-modal__stat quiz-confirm-modal__stat--warn">
               <span class="quiz-confirm-modal__stat-value">${escapeHtml(String(unanswered))}</span>
@@ -552,12 +554,13 @@
       if (answered < total) {
         const ok = await showQuizConfirmDialog({
           title: "未回答の問題があります",
+          lead: "もう少しだけ頑張りませんか？",
           unanswered: total - answered,
           answered,
           total,
           message:
             "未回答は採点対象外です。回答した問題のみで正答率を表示します。",
-          confirmLabel: "結果を見る",
+          confirmLabel: "このまま結果を見る",
           cancelLabel: "戻って回答する",
         });
         if (!ok) return;
