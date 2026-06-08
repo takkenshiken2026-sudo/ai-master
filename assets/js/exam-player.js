@@ -1443,6 +1443,7 @@
   function bootExamPlayer() {
     const root = document.getElementById("exam-player");
     if (!root || root.dataset.playerBooted === "1") return;
+    if (root.dataset.awaitBoot === "1") return;
     root.dataset.playerBooted = "1";
     const player = new ExamPlayer(root);
     player.start().catch((err) => {
