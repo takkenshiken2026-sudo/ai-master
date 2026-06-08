@@ -587,15 +587,14 @@
       return `#AIマスター #${examTag} #資格マスター`;
     }
 
-    buildShareUrl() {
+    buildShareUrl(interrupted) {
       const { correct, answered } = this.sessionScore;
       const rate = formatRate(correct, answered);
       const label = this.shareLabel();
-      const text = [
-        `${label}を完了！正答率 ${rate}（${correct}/${answered}問）`,
-        "",
-        this.shareHashtags(),
-      ].join("\n");
+      const headline = interrupted
+        ? `${label}を中断。正答率 ${rate}（${correct}/${answered}問）`
+        : `${label}を完了！正答率 ${rate}（${correct}/${answered}問）`;
+      const text = [headline, "", this.shareHashtags()].join("\n");
       const params = new URLSearchParams({
         text,
         url: this.sharePageUrl(),
@@ -894,21 +893,42 @@
       this.render();
     }
 
-    interruptSession() {
-      if (!this.canInterrupt()) return;
-      if (!window.confirm("演習を中断して出題設定に戻りますか？")) return;
+    stopActiveSession() {
       if (this.timerId) {
         window.clearInterval(this.timerId);
         this.timerId = null;
       }
-      this.index = 0;
+      this.clearProgress();
+      this.deadline = null;
       this.answered = false;
       this.selected = null;
-      this.sessionScore = { correct: 0, answered: 0 };
-      this.deadline = null;
-      this.questions = [];
       this.unbindKeyboard();
-      this.showSetup();
+    }
+
+    setCompleteHeading(text) {
+      const label = $(".quiz-complete__label", this.el.complete);
+      const heading = this.el.complete?.querySelector("h2");
+      if (label) label.textContent = text;
+      if (heading) heading.textContent = text;
+    }
+
+    interruptSession() {
+      if (!this.canInterrupt()) return;
+      const { answered } = this.sessionScore;
+
+      if (answered === 0) {
+        if (!window.confirm("演習を中断して出題設定に戻りますか？")) return;
+        this.stopActiveSession();
+        this.index = 0;
+        this.sessionScore = { correct: 0, answered: 0 };
+        this.questions = [];
+        this.showSetup();
+        return;
+      }
+
+      if (!window.confirm("演習を中断して、ここまでの結果を表示しますか？")) return;
+      this.stopActiveSession();
+      this.finish(false, { interrupted: true });
     }
 
     loadProgress() {
@@ -1288,7 +1308,8 @@
       if (this.timerId) window.clearInterval(this.timerId);
     }
 
-    finish(timedOut) {
+    finish(timedOut, options = {}) {
+      const interrupted = options.interrupted === true;
       if (this.timerId) window.clearInterval(this.timerId);
       this.setView("complete");
       this.unbindKeyboard();
@@ -1304,10 +1325,18 @@
 
       const rate = formatRate(correct, answered);
       const total = this.questions.length;
-      let msg = timedOut ? "制限時間が終了しました。" : "すべての問題に回答しました。";
-      if (this.isMockDeferFeedback() && answered < total && !timedOut) {
+      let msg;
+      if (interrupted) {
+        msg = `演習を中断しました。（全 ${total} 問中 ${answered} 問に回答）`;
+      } else if (timedOut) {
+        msg = "制限時間が終了しました。";
+      } else if (this.isMockDeferFeedback() && answered < total) {
         msg = `回答済み ${answered} / ${total} 問で採点しました。`;
+      } else {
+        msg = "すべての問題に回答しました。";
       }
+
+      this.setCompleteHeading(interrupted ? "中断" : "完了");
 
       if (this.el.completeRateValue) {
         this.el.completeRateValue.textContent = rate;
@@ -1322,7 +1351,7 @@
         this.el.completeMessage.textContent = msg;
       }
       if (this.el.completeShare) {
-        this.el.completeShare.href = this.buildShareUrl();
+        this.el.completeShare.href = this.buildShareUrl(interrupted);
       }
       if (this.isMockDeferFeedback()) {
         this.renderMockDomainStats();
@@ -1337,6 +1366,7 @@
       this.answered = false;
       this.sessionScore = { correct: 0, answered: 0 };
       this.mockAnswers = {};
+      this.setCompleteHeading("完了");
       const review = $(".quiz-review", this.el.complete);
       if (review) review.hidden = true;
       const domainStats = $(".quiz-domain-stats", this.el.complete);
