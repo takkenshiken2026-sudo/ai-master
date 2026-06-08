@@ -21,7 +21,9 @@ function playPath(examSlug: string, examId: string) {
 
 function accessUrl(siteUrl: string, examSlug: string, examId: string, token: string) {
   const base = siteUrl.replace(/\/$/, "");
-  return `${base}${playPath(examSlug, examId)}&access=${encodeURIComponent(token)}`;
+  const path = playPath(examSlug, examId);
+  const sep = path.includes("?") ? "&" : "?";
+  return `${base}${path}${sep}access=${encodeURIComponent(token)}`;
 }
 
 export async function fulfillCheckoutSession(

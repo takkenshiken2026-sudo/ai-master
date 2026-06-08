@@ -38,11 +38,11 @@
     <h1 class="mock-success__title">購入が完了しました</h1>
     <p class="mock-success__lead" id="mock-success-lead"></p>
     <p class="mock-success__lead" id="mock-success-email" hidden></p>
+    <p class="mock-success__lead" id="mock-success-browser" hidden></p>
     <p class="mock-success__lead"><strong>受験リンク（再入場用）</strong></p>
     <p class="mock-success__link-box" id="mock-success-link"></p>
     <div class="mock-success__actions">
-      <a href="#" class="btn-exam-solid" id="mock-success-start">模擬試験一覧へ</a>
-      <a href="index.html" class="btn-exam-outline">模擬試験一覧へ</a>
+      <a href="index.html" class="btn-exam-solid" id="mock-success-start">模擬試験一覧へ</a>
     </div>
   </section>
 
@@ -87,15 +87,19 @@
         emailLine.hidden = false;
       } else {
         emailLine.textContent =
-          "メール送信は未設定のため、下のリンクを保存してください。";
+          "メール送信は未設定のため、別の端末で受験する場合は下のリンクを保存してください。";
         emailLine.hidden = false;
       }
+
+      const browserLine = document.getElementById("mock-success-browser");
+      browserLine.textContent =
+        "このブラウザには購入情報を保存済みです。同じ端末ならリンクがなくても模擬試験一覧から受験できます。";
+      browserLine.hidden = false;
 
       const linkEl = document.getElementById("mock-success-link");
       linkEl.textContent = result.accessUrl;
 
-      const start = document.getElementById("mock-success-start");
-      start.href = result.accessUrl;
+      document.getElementById("mock-success-start").href = result.accessUrl;
 
       okBox.hidden = false;
     } catch (error) {
