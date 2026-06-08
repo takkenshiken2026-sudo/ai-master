@@ -473,7 +473,7 @@ a.exam-mode-row:hover .exam-mode-row__name {
   position: absolute;
   left: 0;
   font-weight: var(--font-semibold);
-  color: var(--brand);
+  color: var(--blue);
 }
 
 .mock-purchase-pitch__compare {
