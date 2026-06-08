@@ -370,7 +370,7 @@
 }
 
 .quiz-feedback {
-  padding: 14px 16px;
+  padding: 16px 18px;
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
   background: var(--surface-inset);
@@ -387,17 +387,17 @@
 }
 
 .quiz-feedback__verdict {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: var(--font-bold);
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 
 .quiz-feedback__verdict.is-correct { color: #2e7d32; }
 .quiz-feedback__verdict.is-wrong { color: #c0392b; }
 
 .quiz-feedback__body {
-  font-size: var(--text-sm);
-  line-height: 1.7;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--text-body);
   margin: 0;
   white-space: pre-wrap;

@@ -363,34 +363,36 @@ a.exam-mode-row:hover .exam-mode-row__name {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   margin-bottom: 14px;
+  align-items: stretch;
 }
 
 .exam-hero__stat {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  padding: 10px 12px;
+  min-height: 72px;
+  padding: 12px 10px;
   background: var(--surface-inset);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
 }
 
 .exam-hero__stat-line {
-  display: inline-flex;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.35em 0.5em;
+  gap: 6px;
+  width: 100%;
   margin: 0;
   text-align: center;
-  line-height: 1.35;
 }
 
 .exam-hero__stat-label {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   font-weight: var(--font-regular);
   color: var(--text-muted);
+  line-height: 1.35;
 }
 
 .exam-hero__stat-value {
@@ -399,7 +401,9 @@ a.exam-mode-row:hover .exam-mode-row__name {
   font-weight: var(--font-bold);
   font-variant-numeric: tabular-nums;
   color: var(--ink);
+  line-height: 1.15;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 .exam-hero__disclaimer {
@@ -431,12 +435,8 @@ a.exam-mode-row:hover .exam-mode-row__name {
   }
 
   .exam-hero__stat {
-    min-height: 48px;
-    padding: 10px;
-  }
-
-  .exam-hero__stat-label {
-    font-size: var(--text-xs);
+    min-height: 68px;
+    padding: 10px 8px;
   }
 
   .exam-hero__stat-value {
