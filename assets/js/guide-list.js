@@ -52,7 +52,6 @@ function matchesSearch(article, q) {
     article.summary,
     article.keyword,
     categories[article.category] || '',
-    article.priority || '',
   ]
     .join(' ')
     .toLowerCase();
@@ -67,17 +66,8 @@ function escapeHtml(text) {
     .replace(/"/g, '&quot;');
 }
 
-function priorityClass(priority) {
-  if (priority === '高') return 'guide-priority guide-priority--high';
-  if (priority === '中') return 'guide-priority guide-priority--mid';
-  return 'guide-priority guide-priority--low';
-}
-
 function renderArticleRow(article) {
   const catLabel = categories[article.category] || article.category;
-  const priority = article.priority
-    ? `<span class="${priorityClass(article.priority)}">${escapeHtml(article.priority)}</span>`
-    : '';
   const status = article.published
     ? ''
     : '<span class="hub-list-pill">準備中</span>';
@@ -91,7 +81,6 @@ function renderArticleRow(article) {
     (article.summary ? `<p class="hub-list-desc">${escapeHtml(article.summary)}</p>` : '') +
     `</div>` +
     `<div class="hub-list-aside">` +
-    priority +
     `<span class="hub-list-cat">${escapeHtml(catLabel)}</span>` +
     HUB_CHEVRON +
     `</div>`;

@@ -1,35 +1,5 @@
 /* 学習ガイド一覧 */
 
-.guide-priority {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 2em;
-  padding: 2px 8px;
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  border-radius: 20px;
-  line-height: 1.4;
-}
-
-.guide-priority--high {
-  color: #9a3412;
-  background: #fff7ed;
-  border: 1px solid #fdba74;
-}
-
-.guide-priority--mid {
-  color: var(--text-body);
-  background: var(--surface-inset);
-  border: 1px solid var(--border-subtle);
-}
-
-.guide-priority--low {
-  color: var(--text-muted);
-  background: var(--white);
-  border: 1px solid var(--border-subtle);
-}
-
 .hub-list-row--planned .hub-list-pill {
   flex-shrink: 0;
 }
