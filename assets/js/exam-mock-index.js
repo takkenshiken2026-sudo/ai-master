@@ -30,6 +30,58 @@
       </a>`;
   }
 
+  function buyButtonHtml(examSlug, bundleId, bundleTitle, className) {
+    return `<button
+        type="button"
+        class="${className}"
+        data-exam-slug="${escapeAttr(examSlug)}"
+        data-exam-id="${escapeAttr(bundleId)}"
+        data-exam-title="${escapeAttr(bundleTitle)}"
+      >購入する</button>`;
+  }
+
+  function pitchHtml(pitch, buyOptions) {
+    if (!pitch) return "";
+    const whyPoints = (pitch.whyPoints || [])
+      .map(
+        (point) => `<li class="mock-purchase-pitch__item">
+          <h3 class="mock-purchase-pitch__item-title">${escapeHtml(point.title)}</h3>
+          <p class="mock-purchase-pitch__item-body">${escapeHtml(point.body)}</p>
+        </li>`
+      )
+      .join("");
+    const forPoints = (pitch.forPoints || [])
+      .map((point) => `<li>${escapeHtml(point)}</li>`)
+      .join("");
+    const bottomBuy = buyOptions
+      ? `<div class="mock-purchase-pitch__cta">
+          ${buyButtonHtml(
+            buyOptions.examSlug,
+            buyOptions.bundleId,
+            buyOptions.bundleTitle,
+            "mock-purchase__buy mock-purchase__buy--secondary"
+          )}
+        </div>`
+      : "";
+
+    return `<div class="mock-purchase-pitch">
+        <section class="mock-purchase-pitch__section">
+          <h2 class="mock-purchase-pitch__heading">${escapeHtml(pitch.whyTitle || "")}</h2>
+          <p class="mock-purchase-pitch__lead">${escapeHtml(pitch.whyLead || "")}</p>
+          <ul class="mock-purchase-pitch__reasons">${whyPoints}</ul>
+        </section>
+        <section class="mock-purchase-pitch__section">
+          <h2 class="mock-purchase-pitch__heading">${escapeHtml(pitch.forTitle || "")}</h2>
+          <ul class="mock-purchase-pitch__checks">${forPoints}</ul>
+        </section>
+        <section class="mock-purchase-pitch__section mock-purchase-pitch__section--muted">
+          <h2 class="mock-purchase-pitch__heading">${escapeHtml(pitch.compareTitle || "")}</h2>
+          <p class="mock-purchase-pitch__compare">${escapeHtml(pitch.compareBody || "")}</p>
+        </section>
+        ${bottomBuy}
+      </div>`;
+  }
+
   function purchasePageHtml(options) {
     const {
       priceLabel,
@@ -39,10 +91,12 @@
       minutes,
       questionCount,
       showNotice,
+      pitch,
     } = options;
     const notice = showNotice
       ? '<p class="mock-purchase__notice">受験には購入が必要です。購入済みの方はメールのリンクから入るか、購入完了画面のリンクをご利用ください。</p>'
       : "";
+    const buyOptions = { examSlug, bundleId, bundleTitle };
     return `<section class="mock-purchase" data-exam-id="${escapeAttr(bundleId)}">
         ${notice}
         <div class="mock-purchase__card">
@@ -54,15 +108,10 @@
             <li>各回 <strong>${questionCount}問 · ${minutes}分</strong>（本番形式）</li>
             <li>購入後は <strong>何度でも再受験</strong>できます</li>
           </ul>
-          <button
-            type="button"
-            class="mock-purchase__buy"
-            data-exam-slug="${escapeAttr(examSlug)}"
-            data-exam-id="${escapeAttr(bundleId)}"
-            data-exam-title="${escapeAttr(bundleTitle)}"
-          >購入する</button>
+          ${buyButtonHtml(examSlug, bundleId, bundleTitle, "mock-purchase__buy")}
           <p class="mock-purchase__foot">購入後、このページに第1回・第2回・第3回が表示されます。</p>
         </div>
+        ${pitchHtml(pitch, buyOptions)}
       </section>`;
   }
 
@@ -103,8 +152,22 @@
         ? commerce.bundleExamId(commerceConfig)
         : "bundle";
 
-      const res = await fetch(dataUrl);
-      const data = await res.json();
+      const copyUrl =
+        config.purchaseCopyUrl || "/assets/data/mock-purchase-copy.json";
+      const [examRes, copyRes] = await Promise.all([
+        fetch(dataUrl),
+        fetch(copyUrl).catch(() => null),
+      ]);
+      const data = await examRes.json();
+      let pitch = null;
+      if (copyRes?.ok) {
+        try {
+          const allCopy = await copyRes.json();
+          pitch = allCopy[examSlug] || null;
+        } catch {
+          pitch = null;
+        }
+      }
       const exams = data.exams || {};
       const minutes = data.timeLimitMinutes || 60;
       const enabled = mockExamsEnabled();
@@ -138,6 +201,7 @@
           minutes,
           questionCount,
           showNotice: Boolean(purchaseParam),
+          pitch,
         });
       } else {
         setIntro(

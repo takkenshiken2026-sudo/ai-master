@@ -292,7 +292,7 @@ a.exam-mode-row:hover .exam-mode-row__name {
 }
 
 .mock-purchase {
-  max-width: 560px;
+  max-width: 680px;
   margin: 0 auto 48px;
 }
 
@@ -387,6 +387,105 @@ a.exam-mode-row:hover .exam-mode-row__name {
   font-size: var(--text-xs);
   line-height: 1.6;
   color: var(--text-muted);
+}
+
+.mock-purchase__buy--secondary {
+  min-width: 200px;
+}
+
+.mock-purchase-pitch {
+  margin-top: 28px;
+  text-align: left;
+}
+
+.mock-purchase-pitch__section {
+  margin-bottom: 24px;
+  padding: 22px 20px;
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.mock-purchase-pitch__section--muted {
+  background: var(--surface-inset);
+}
+
+.mock-purchase-pitch__heading {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.mock-purchase-pitch__lead {
+  margin: 0 0 16px;
+  font-size: var(--text-sm);
+  line-height: 1.75;
+  color: var(--text-body);
+}
+
+.mock-purchase-pitch__reasons {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mock-purchase-pitch__item {
+  padding: 14px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.mock-purchase-pitch__item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.mock-purchase-pitch__item-title {
+  margin: 0 0 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--ink);
+}
+
+.mock-purchase-pitch__item-body {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.mock-purchase-pitch__checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.mock-purchase-pitch__checks li {
+  position: relative;
+  padding: 8px 0 8px 1.35em;
+}
+
+.mock-purchase-pitch__checks li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  font-weight: var(--font-semibold);
+  color: var(--brand);
+}
+
+.mock-purchase-pitch__compare {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.75;
+  color: var(--text-body);
+}
+
+.mock-purchase-pitch__cta {
+  margin-top: 8px;
+  text-align: center;
 }
 
 .exam-mode-row__buy {
