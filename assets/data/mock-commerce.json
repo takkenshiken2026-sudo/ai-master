@@ -3,5 +3,7 @@
   "supabaseUrl": "https://rxfjnzybhtsaklctdhsx.supabase.co",
   "supabaseAnonKey": "sb_publishable_r3OqyxgdxmidxRGNz4llig_U9GzDmi2",
   "priceYen": 980,
-  "currency": "jpy"
+  "currency": "jpy",
+  "bundleExamId": "bundle",
+  "mockExamIds": ["mock_01", "mock_02", "mock_03"]
 }

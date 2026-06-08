@@ -41,7 +41,7 @@
     <p class="mock-success__lead"><strong>受験リンク（再入場用）</strong></p>
     <p class="mock-success__link-box" id="mock-success-link"></p>
     <div class="mock-success__actions">
-      <a href="#" class="btn-exam-solid" id="mock-success-start">今すぐ受験する</a>
+      <a href="#" class="btn-exam-solid" id="mock-success-start">模擬試験一覧へ</a>
       <a href="index.html" class="btn-exam-outline">模擬試験一覧へ</a>
     </div>
   </section>
@@ -73,10 +73,13 @@
 
     try {
       const result = await MockCommerce.fulfillSession(sessionId);
-      MockCommerce.saveLocalToken(EXAM_SLUG, result.examId, result.token);
+      const bundleId = MockCommerce.bundleExamId
+        ? MockCommerce.bundleExamId(await MockCommerce.loadConfig())
+        : "bundle";
+      MockCommerce.saveLocalToken(EXAM_SLUG, bundleId, result.token);
 
       document.getElementById("mock-success-lead").textContent =
-        `${result.examTitle} を購入しました。以下のリンクから何度でも受験できます（買い切り）。`;
+        `${result.examTitle} を購入しました。3回すべて何度でも受験できます（買い切り）。`;
 
       const emailLine = document.getElementById("mock-success-email");
       if (result.emailSent) {

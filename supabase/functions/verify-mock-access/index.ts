@@ -7,6 +7,9 @@ type Body = {
   token?: string;
 };
 
+const MOCK_EXAM_IDS = ["mock_01", "mock_02", "mock_03"];
+const BUNDLE_EXAM_ID = "bundle";
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -17,7 +20,13 @@ Deno.serve(async (req) => {
 
   try {
     const { examSlug, examId, token } = (await req.json()) as Body;
-    if (!examSlug || !examId || !token || examId === "sample") {
+    if (
+      !examSlug ||
+      !examId ||
+      !token ||
+      examId === "sample" ||
+      !MOCK_EXAM_IDS.includes(examId)
+    ) {
       return jsonResponse({ ok: false }, 400);
     }
 
@@ -27,11 +36,17 @@ Deno.serve(async (req) => {
       .select("token, email, exam_slug, exam_id")
       .eq("token", token)
       .eq("exam_slug", examSlug)
-      .eq("exam_id", examId)
       .maybeSingle();
 
     if (error) throw error;
     if (!data) {
+      return jsonResponse({ ok: false });
+    }
+
+    const bundleAccess =
+      data.exam_id === BUNDLE_EXAM_ID && MOCK_EXAM_IDS.includes(examId);
+    const singleAccess = data.exam_id === examId;
+    if (!bundleAccess && !singleAccess) {
       return jsonResponse({ ok: false });
     }
 

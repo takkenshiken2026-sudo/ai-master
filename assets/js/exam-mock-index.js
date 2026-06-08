@@ -17,48 +17,61 @@
     return escapeHtml(str).replace(/'/g, "&#39;");
   }
 
-  function paidRowHtml(exam, minutes, options) {
-    const { hasAccess, priceLabel, examSlug, examId } = options;
-    const action = hasAccess
-      ? `<a href="play.html?exam=${encodeURIComponent(examId)}" class="exam-mode-row exam-mode-row--mock">
+  function examRowHtml(exam, minutes, options) {
+    const { unlocked } = options;
+    if (unlocked) {
+      return `<a href="play.html?exam=${encodeURIComponent(exam.id)}" class="exam-mode-row exam-mode-row--mock">
           <div class="exam-mode-row__main">
             <div class="exam-mode-row__head">
               <h2 class="exam-mode-row__name">${escapeHtml(exam.title)}</h2>
-              <span class="exam-mode-badge exam-mode-badge--paid">購入済み</span>
             </div>
             <p class="exam-mode-row__desc">本番と同じ問題数・制限時間で一気に解く総仕上げです。時間配分の練習や実力チェックに向いています。</p>
             <p class="exam-mode-row__meta">${exam.questionCount}問 · ${minutes}分</p>
           </div>
           <span class="exam-mode-row__go">受験する<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </a>`
-      : `<div class="exam-mode-row exam-mode-row--mock exam-mode-row--purchase">
-          <div class="exam-mode-row__main">
-            <div class="exam-mode-row__head">
-              <h2 class="exam-mode-row__name">${escapeHtml(exam.title)}</h2>
-              <span class="exam-mode-badge exam-mode-badge--paid">有料</span>
-            </div>
-            <p class="exam-mode-row__desc">本番と同じ問題数・制限時間で一気に解く総仕上げです。購入後はメールのリンクから何度でも受験できます（買い切り）。</p>
-            <p class="exam-mode-row__meta">${exam.questionCount}問 · ${minutes}分 · ${escapeHtml(priceLabel)}（買い切り）</p>
+        </a>`;
+    }
+    return `<div class="exam-mode-row exam-mode-row--mock exam-mode-row--locked">
+        <div class="exam-mode-row__main">
+          <div class="exam-mode-row__head">
+            <h2 class="exam-mode-row__name">${escapeHtml(exam.title)}</h2>
+            <span class="exam-mode-badge exam-mode-badge--paid">セット購入後</span>
           </div>
-          <button
-            type="button"
-            class="exam-mode-row__buy"
-            data-exam-slug="${escapeAttr(examSlug)}"
-            data-exam-id="${escapeAttr(examId)}"
-            data-exam-title="${escapeAttr(exam.title)}"
-          >購入する</button>
-        </div>`;
-    return action;
+          <p class="exam-mode-row__desc">3本セットを購入すると、すべての模擬試験を何度でも受験できます。</p>
+          <p class="exam-mode-row__meta">${exam.questionCount}問 · ${minutes}分</p>
+        </div>
+      </div>`;
   }
 
-  function showPurchaseNotice(list, examId) {
+  function bundlePurchaseHtml(options) {
+    const { priceLabel, examSlug, bundleId, bundleTitle } = options;
+    return `<div class="exam-mode-row exam-mode-row--mock exam-mode-row--purchase exam-mode-row--bundle" data-exam-id="${escapeAttr(bundleId)}">
+        <div class="exam-mode-row__main">
+          <div class="exam-mode-row__head">
+            <h2 class="exam-mode-row__name">${escapeHtml(bundleTitle)}</h2>
+            <span class="exam-mode-badge exam-mode-badge--paid">3本セット</span>
+          </div>
+          <p class="exam-mode-row__desc">模擬試験3回分をまとめて購入できます。購入後は3回すべて何度でも受験可能です（買い切り）。</p>
+          <p class="exam-mode-row__meta">3回分 · ${escapeHtml(priceLabel)}（買い切り）</p>
+        </div>
+        <button
+          type="button"
+          class="exam-mode-row__buy"
+          data-exam-slug="${escapeAttr(examSlug)}"
+          data-exam-id="${escapeAttr(bundleId)}"
+          data-exam-title="${escapeAttr(bundleTitle)}"
+        >購入する</button>
+      </div>`;
+  }
+
+  function showPurchaseNotice(list, bundleId) {
     const notice = document.createElement("p");
     notice.className = "mock-purchase-notice";
     notice.textContent =
-      "この模擬試験は購入後に受験できます。購入済みの方はメールの受験リンクから入るか、購入完了画面のリンクをご利用ください。";
+      "模擬試験は3本セット購入後に受験できます。購入済みの方はメールのリンクから入るか、購入完了画面のリンクをご利用ください。";
     list.prepend(notice);
-    if (!examId) return;
-    const row = list.querySelector(`[data-exam-id="${CSS.escape(examId)}"]`)?.closest(".exam-mode-row");
+    if (!bundleId) return;
+    const row = list.querySelector(`[data-exam-id="${CSS.escape(bundleId)}"]`);
     row?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
@@ -76,9 +89,7 @@
     const dataUrl = config.dataUrl;
     const examSlug = config.examSlug || "";
     const examOrder = config.examOrder || ["mock_01", "mock_02", "mock_03"];
-    const sampleDesc =
-      config.sampleDesc ||
-      "3問だけ試せるサンプルです。操作感を確認してから本番形式に挑戦できます。";
+    const bundleTitle = config.bundleTitle || "模擬試験3本セット";
 
     if (!dataUrl || !examSlug) {
       list.innerHTML = "<p>模擬試験の設定がありません。</p>";
@@ -92,6 +103,9 @@
       const commerceConfig = commerce ? await commerce.loadConfig() : null;
       const checkoutOn = commerce && commerce.isCheckoutEnabled(commerceConfig);
       const priceLabel = commerce ? commerce.formatPrice(commerceConfig) : "¥980";
+      const bundleId = commerce
+        ? commerce.bundleExamId(commerceConfig)
+        : "bundle";
 
       const res = await fetch(dataUrl);
       const data = await res.json();
@@ -107,50 +121,41 @@
         return;
       }
 
+      let hasBundle = true;
+      if (checkoutOn && commerce) {
+        hasBundle = await commerce.hasBundleAccess(examSlug);
+      }
+
       if (checkoutOn) {
         const intro = document.querySelector(".hub-intro");
         if (intro) {
           intro.textContent +=
-            " 有料回は1回あたり買い切りです。購入後はメールの受験リンクから再入場できます。";
+            " 3本セットの買い切りです。購入後は3回すべて何度でも受験できます。";
         }
+      }
+
+      if (checkoutOn && !hasBundle) {
+        const bundleWrap = document.createElement("div");
+        bundleWrap.innerHTML = bundlePurchaseHtml({
+          priceLabel,
+          examSlug,
+          bundleId,
+          bundleTitle,
+        });
+        list.appendChild(bundleWrap.firstElementChild);
       }
 
       for (const id of examOrder) {
         const exam = exams[id];
         if (!exam) continue;
 
-        let hasAccess = true;
-        if (checkoutOn && commerce) {
-          hasAccess = await commerce.hasAccess(examSlug, id);
-        }
-
         const row = document.createElement("div");
-        row.innerHTML = paidRowHtml(exam, minutes, {
-          hasAccess,
-          priceLabel,
-          examSlug,
-          examId: id,
-        });
+        row.innerHTML = examRowHtml(
+          { ...exam, id },
+          minutes,
+          { unlocked: hasBundle || !checkoutOn }
+        );
         list.appendChild(row.firstElementChild);
-      }
-
-      const sample = exams.sample;
-      if (sample) {
-        const sampleRow = document.createElement("a");
-        sampleRow.href = "play.html?exam=sample";
-        sampleRow.className = "exam-mode-row exam-mode-row--sample";
-        sampleRow.innerHTML = `
-          <div class="exam-mode-row__main">
-            <div class="exam-mode-row__head">
-              <h2 class="exam-mode-row__name">${escapeHtml(sample.title)}</h2>
-              <span class="exam-mode-badge exam-mode-badge--free">お試し</span>
-            </div>
-            <p class="exam-mode-row__desc">${escapeHtml(sampleDesc)}</p>
-            <p class="exam-mode-row__meta">${sample.questionCount}問 · 制限時間なし</p>
-          </div>
-          <span class="exam-mode-row__go">試す<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        `;
-        list.appendChild(sampleRow);
       }
 
       if (checkoutOn && purchaseParam) {

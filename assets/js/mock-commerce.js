@@ -2,6 +2,8 @@
   "use strict";
 
   const TOKEN_STORAGE_KEY = "ai-master-mock-tokens";
+  const DEFAULT_MOCK_IDS = ["mock_01", "mock_02", "mock_03"];
+  const DEFAULT_BUNDLE_ID = "bundle";
   let configPromise = null;
 
   function loadConfig() {
@@ -16,9 +18,19 @@
           supabaseUrl: "",
           supabaseAnonKey: "",
           priceYen: 980,
+          bundleExamId: DEFAULT_BUNDLE_ID,
+          mockExamIds: DEFAULT_MOCK_IDS,
         }));
     }
     return configPromise;
+  }
+
+  function bundleExamId(config) {
+    return config?.bundleExamId || DEFAULT_BUNDLE_ID;
+  }
+
+  function mockExamIds(config) {
+    return config?.mockExamIds || DEFAULT_MOCK_IDS;
   }
 
   function isCheckoutEnabled(config) {
@@ -98,16 +110,27 @@
       token,
     });
     if (!data.ok) return false;
-    saveLocalToken(examSlug, examId, token);
+    saveLocalToken(examSlug, bundleExamId(config), token);
     return true;
+  }
+
+  async function hasBundleAccess(examSlug) {
+    const config = await loadConfig();
+    if (!isCheckoutEnabled(config)) return true;
+    const ids = mockExamIds(config);
+    const bundleId = bundleExamId(config);
+    const token = consumeUrlToken() || getLocalToken(examSlug, bundleId);
+    if (!token) return false;
+    return verifyAccess(examSlug, ids[0], token);
   }
 
   async function hasAccess(examSlug, examId) {
     const config = await loadConfig();
-    if (!isCheckoutEnabled(config) || examId === "sample") return true;
-    const token = consumeUrlToken() || getLocalToken(examSlug, examId);
-    if (!token) return false;
-    return verifyAccess(examSlug, examId, token);
+    if (examId === "sample") return false;
+    if (!isCheckoutEnabled(config)) return true;
+    const ids = mockExamIds(config);
+    if (!ids.includes(examId)) return false;
+    return hasBundleAccess(examSlug);
   }
 
   async function startCheckout(examSlug, examId, examTitle, email) {
@@ -139,7 +162,10 @@
   }
 
   async function preparePlayPage(examSlug, examId) {
-    if (examId === "sample") return true;
+    if (examId === "sample") {
+      window.location.replace("index.html");
+      return false;
+    }
 
     const config = await loadConfig();
     if (!isCheckoutEnabled(config)) return true;
@@ -150,7 +176,7 @@
     const ok = await hasAccess(examSlug, examId);
     if (!ok) {
       window.location.replace(
-        `index.html?purchase=${encodeURIComponent(examId)}`
+        `index.html?purchase=${encodeURIComponent(bundleExamId(config))}`
       );
       return false;
     }
@@ -163,6 +189,7 @@
     loadConfig,
     isCheckoutEnabled,
     hasAccess,
+    hasBundleAccess,
     verifyAccess,
     startCheckout,
     fulfillSession,
@@ -170,5 +197,7 @@
     getLocalToken,
     formatPrice,
     preparePlayPage,
+    bundleExamId,
+    mockExamIds,
   };
 })();

@@ -277,6 +277,20 @@ a.exam-mode-row:hover .exam-mode-row__name {
   border-color: var(--border-default);
 }
 
+.exam-mode-row--locked {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.exam-mode-row--locked:hover {
+  background: var(--white);
+  border-color: var(--border-default);
+}
+
+.exam-mode-row--bundle {
+  margin-bottom: 12px;
+}
+
 .exam-mode-row__buy {
   flex-shrink: 0;
   align-self: center;

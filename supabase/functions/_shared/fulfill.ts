@@ -13,6 +13,9 @@ export type FulfillResult = {
 };
 
 function playPath(examSlug: string, examId: string) {
+  if (examId === "bundle") {
+    return `/exams/${examSlug}/mock/index.html`;
+  }
   return `/exams/${examSlug}/mock/play.html?exam=${encodeURIComponent(examId)}`;
 }
 

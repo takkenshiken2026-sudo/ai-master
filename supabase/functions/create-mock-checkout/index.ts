@@ -27,6 +27,8 @@ Deno.serve(async (req) => {
       return jsonResponse({ error: "Invalid exam" }, 400);
     }
 
+    const isBundle = examId === "bundle";
+
     const stripe = stripeClient();
     const successUrl =
       `${siteUrl.replace(/\/$/, "")}/exams/${examSlug}/mock/success.html?session_id={CHECKOUT_SESSION_ID}`;
@@ -43,8 +45,12 @@ Deno.serve(async (req) => {
             currency: "jpy",
             unit_amount: MOCK_PRICE_YEN,
             product_data: {
-              name: `${examTitle}（買い切り）`,
-              description: "AIマスター 模擬試験 1回分",
+              name: isBundle
+                ? `${examTitle}（3本セット・買い切り）`
+                : `${examTitle}（買い切り）`,
+              description: isBundle
+                ? "AIマスター 模擬試験 3回分"
+                : "AIマスター 模擬試験 1回分",
             },
           },
         },
