@@ -491,7 +491,7 @@ a.exam-mode-row:hover .exam-mode-row__name {
 .mock-landing-point__title {
   margin: 0 0 6px;
   font-size: var(--text-base);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   color: var(--ink);
 }
 
@@ -976,13 +976,13 @@ body.mock-checkout-modal-open {
 
 .exam-hero__copy {
   display: grid;
-  gap: 8px;
+  gap: 4px;
   margin-bottom: 12px;
 }
 
 .exam-hero__lede {
   font-size: var(--text-base);
-  line-height: 1.8;
+  line-height: 1.75;
   color: var(--text-body);
   margin: 0;
 }
