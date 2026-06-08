@@ -610,24 +610,24 @@
 
 .quiz-mock-briefing__lead {
   margin: 0 0 8px;
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   font-weight: var(--font-bold);
-  line-height: 1.5;
+  line-height: 1.75;
   color: var(--ink);
 }
 
 .quiz-mock-briefing__meta {
   margin: 0 0 18px;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.75;
 }
 
 .quiz-mock-briefing__rules {
   margin: 0 0 22px;
   padding-left: 1.2em;
-  font-size: var(--text-sm);
-  line-height: 1.7;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--text-body);
 }
 
@@ -653,14 +653,26 @@ body.mock-exam-focus .breadcrumb {
 }
 
 body.mock-exam-focus .page-wrap--mock-exam {
-  max-width: 900px;
-  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: none;
+  min-height: 100vh;
+  padding: 24px 20px 32px;
   box-shadow: none;
 }
 
+body.mock-exam-focus .page-wrap--mock-exam > #exam-player {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
 body.mock-exam-focus .quiz-mock-briefing {
+  width: 100%;
   max-width: 560px;
-  margin: 24px auto 0;
+  margin: 0 auto;
 }
 
 .quiz-domain-stats {
