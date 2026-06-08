@@ -15,18 +15,22 @@
   display: none;
 }
 
-.page-wrap--quiz .hub-header {
-  padding-bottom: 10px;
-  border-bottom: none;
+.page-wrap--quiz .exam-hero {
+  padding-top: 4px;
+  padding-bottom: 18px;
   margin-bottom: 0;
 }
 
-.page-wrap--quiz .hub-header h1 {
-  font-size: var(--text-xl);
-  margin-bottom: 0;
+.page-wrap--quiz .exam-hero__title {
+  font-size: clamp(22px, 3vw, 28px);
+  margin-bottom: 12px;
 }
 
-.page-wrap--quiz .hub-intro {
+.page-wrap--quiz .exam-hero__stats {
+  margin-bottom: 10px;
+}
+
+.page-wrap--quiz .exam-hero__disclaimer {
   display: none;
 }
 
@@ -149,6 +153,30 @@
 
 .quiz-timer.is-warning {
   color: #c0392b;
+}
+
+.quiz-abort {
+  margin-left: auto;
+  padding: 6px 14px;
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  font-weight: var(--font-semibold);
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.quiz-abort:hover {
+  color: var(--ink);
+  border-color: var(--gray-400);
+  background: var(--surface-inset);
+}
+
+.quiz-abort[hidden] {
+  display: none !important;
 }
 
 .quiz-stage {

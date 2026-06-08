@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="../../../assets/css/main.css">
   <link rel="stylesheet" href="../../../assets/css/hub.css">
   <link rel="stylesheet" href="../../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../../assets/css/exams.css">
   <link rel="stylesheet" href="../../../assets/css/exam-player.css">
 </head>
 <body class="page-body">
@@ -53,10 +54,13 @@
     </ol>
   </nav>
 
-  <header class="hub-header">
-    <h1>生成AIパスポート 一問一答</h1>
-    <p class="hub-intro">過去問を想定した模擬問題で演習できます。出題順は毎回ランダムです。<a href="questions/">問題一覧</a>から個別ページ（解説付き）も閲覧できます。</p>
-  </header>
+  <div
+    class="exam-hero"
+    data-exam-hero="genai-passport"
+    data-exam-mode="drill"
+    data-profiles-url="../../../assets/data/exam-profiles.json"
+    hidden
+  ></div>
 
   <div id="exam-player" class="quiz" data-config='{"mode":"drill","dataUrl":"../../../assets/data/genai-passport/drill.json","storagePrefix":"genai-passport","storageKey":"drill","backUrl":"../index.html","setupDomainLabel":"章を選ぶ","setupFieldLabel":"章"}'>
     <div class="quiz-bar" hidden>
@@ -102,6 +106,7 @@
   </div>
 </main>
 
+<script src="../../../assets/js/exam-hero.js"></script>
 <script src="../../../assets/js/exam-player.js"></script>
 </body>
 </html>

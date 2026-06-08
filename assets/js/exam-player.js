@@ -2,6 +2,19 @@
   "use strict";
 
   const COUNT_PRESETS = [5, 10, 30];
+  const CHOICE_KEYS = ["A", "B", "C", "D"];
+
+  function choiceKeyToNum(key) {
+    const i = CHOICE_KEYS.indexOf(key);
+    return i >= 0 ? String(i + 1) : key;
+  }
+
+  function formatChoiceAnswer(key, choices) {
+    if (!key) return "—";
+    const num = choiceKeyToNum(key);
+    const text = choices?.[key];
+    return text ? `${num}. ${text}` : String(num);
+  }
 
   function $(sel, root) {
     return (root || document).querySelector(sel);
@@ -131,8 +144,10 @@
         mockClosed: $(".quiz-mock-closed", root),
         mockBriefing: $(".quiz-mock-briefing", root),
         navigator: $(".quiz-navigator", root),
+        abort: $(".quiz-abort", root),
       };
 
+      this.ensureAbortButton();
       this.initUI();
     }
 
@@ -153,7 +168,14 @@
       if (this.el.mockClosed) this.el.mockClosed.hidden = !mockClosed;
       if (this.el.mockBriefing) this.el.mockBriefing.hidden = !mockBriefing;
       if (this.el.navigator) this.el.navigator.hidden = !showNavigator;
+      if (this.el.abort) {
+        this.el.abort.hidden = !(play && this.canInterrupt());
+      }
       this.updateMockFocusMode(mode);
+    }
+
+    canInterrupt() {
+      return this.useSetup() && !this.isMockDeferFeedback();
     }
 
     updateMockFocusMode(mode) {
@@ -500,9 +522,9 @@
                   ? "is-correct"
                   : "is-wrong";
               const yourLabel = selected
-                ? `${selected}. ${escapeHtml(q.choices?.[selected] || selected)}`
+                ? escapeHtml(formatChoiceAnswer(selected, q.choices))
                 : "—";
-              const correctLabel = `${correct}. ${escapeHtml(q.choices?.[correct] || correct)}`;
+              const correctLabel = escapeHtml(formatChoiceAnswer(correct, q.choices));
               const shouldOpen = !isCorrect;
               const itemModifier =
                 verdictClass === "is-wrong"
@@ -594,6 +616,24 @@
       if (pct >= 80) value.classList.add("quiz-complete__rate-value--high");
       else if (pct >= 50) value.classList.add("quiz-complete__rate-value--mid");
       else value.classList.add("quiz-complete__rate-value--low");
+    }
+
+    ensureAbortButton() {
+      if (this.el.abort) return;
+      if (!this.el.bar) return;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "quiz-abort";
+      btn.textContent = "中断";
+      btn.hidden = true;
+      const timer = $(".quiz-timer", this.root);
+      if (timer) {
+        this.el.bar.insertBefore(btn, timer);
+      } else {
+        this.el.bar.appendChild(btn);
+      }
+      this.el.abort = btn;
+      btn.addEventListener("click", () => this.interruptSession());
     }
 
     ensureAccuracyInBar() {
@@ -762,6 +802,9 @@
       if (this.selectedSetupCount > maxCount) {
         this.selectedSetupCount = maxCount;
       }
+      if (this.selectedSetupCount === maxCount) {
+        return;
+      }
       const presets = COUNT_PRESETS.filter((n) => n <= maxCount);
       if (!presets.includes(this.selectedSetupCount)) {
         this.selectedSetupCount = presets[presets.length - 1] || maxCount;
@@ -849,6 +892,23 @@
       this.setView("play");
       this.startTimer();
       this.render();
+    }
+
+    interruptSession() {
+      if (!this.canInterrupt()) return;
+      if (!window.confirm("演習を中断して出題設定に戻りますか？")) return;
+      if (this.timerId) {
+        window.clearInterval(this.timerId);
+        this.timerId = null;
+      }
+      this.index = 0;
+      this.answered = false;
+      this.selected = null;
+      this.sessionScore = { correct: 0, answered: 0 };
+      this.deadline = null;
+      this.questions = [];
+      this.unbindKeyboard();
+      this.showSetup();
     }
 
     loadProgress() {
@@ -1125,14 +1185,14 @@
 
       this.el.choices.className = "quiz-choices";
       this.el.choices.innerHTML = "";
-      ["A", "B", "C", "D"].forEach((key) => {
+      CHOICE_KEYS.forEach((key, i) => {
         const text = q.choices[key];
         if (!text) return;
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "quiz-choice";
         btn.dataset.value = key;
-        btn.innerHTML = `<span class="quiz-choice__label">${key}</span><span class="quiz-choice__text">${escapeHtml(text)}</span>`;
+        btn.innerHTML = `<span class="quiz-choice__label">${i + 1}</span><span class="quiz-choice__text">${escapeHtml(text)}</span>`;
         btn.addEventListener("click", () => this.submit(key));
         this.el.choices.appendChild(btn);
       });
@@ -1178,7 +1238,8 @@
       this.el.feedback.hidden = false;
       this.el.feedback.classList.toggle("is-correct", isCorrect);
       this.el.feedback.classList.toggle("is-wrong", !isCorrect);
-      this.el.verdict.textContent = isCorrect ? "正解" : `不正解 — 正解は ${correctAnswer}`;
+      const correctLabel = this.isDrill() ? correctAnswer : choiceKeyToNum(correctAnswer);
+      this.el.verdict.textContent = isCorrect ? "正解" : `不正解 — 正解は ${correctLabel}`;
       this.el.verdict.classList.toggle("is-correct", isCorrect);
       this.el.verdict.classList.toggle("is-wrong", !isCorrect);
       this.el.feedbackBody.textContent = q.explanation || "";
