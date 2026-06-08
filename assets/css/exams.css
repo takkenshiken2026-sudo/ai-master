@@ -80,7 +80,8 @@ a.exam-pick-card:hover .exam-pick-cta {
 }
 
 /* ── 試験トップ: 学習モード ── */
-.hub-header + .exam-mode-list {
+.hub-header + .exam-mode-list,
+.exam-hero + .exam-mode-list {
   margin-top: 28px;
 }
 

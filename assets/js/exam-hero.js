@@ -22,18 +22,38 @@
       .join("");
   }
 
+  function renderHubHint(hub) {
+    if (!hub) return "";
+    const links = (hub.links || [])
+      .map(
+        (link) =>
+          `<a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`
+      )
+      .join(" · ");
+    return `<p class="exam-hero__hint">${escapeHtml(hub.hint || "")}${
+      links ? ` ${links}` : ""
+    }</p>`;
+  }
+
   function renderHero(profile, modeKey) {
+    const hub = profile.hub;
     const mode = profile.modes?.[modeKey] || {};
+    const isHub = modeKey === "hub";
     const modeLabel = mode.label || "";
-    const title = modeLabel
-      ? `${profile.examName} ${modeLabel}`
-      : profile.examName;
+    const title = isHub
+      ? hub?.title || `${profile.examName} 試験対策`
+      : modeLabel
+        ? `${profile.examName} ${modeLabel}`
+        : profile.examName;
     const lede = (profile.lede || [])
       .map((p) => `<p class="exam-hero__lede">${escapeHtml(p)}</p>`)
       .join("");
-    const hint = mode.hint
-      ? `<p class="exam-hero__hint">${escapeHtml(mode.hint)} <a href="questions/">問題一覧</a>（解説付き）も閲覧できます。</p>`
-      : "";
+    let hint = "";
+    if (isHub) {
+      hint = renderHubHint(hub);
+    } else if (mode.hint) {
+      hint = `<p class="exam-hero__hint">${escapeHtml(mode.hint)} <a href="questions/">問題一覧</a>（解説付き）も閲覧できます。</p>`;
+    }
 
     return `
       <div class="exam-hero__inner">
