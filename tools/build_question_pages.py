@@ -112,6 +112,56 @@ def trim_text(text: str, limit: int = 118) -> str:
     return text[: limit - 1] + "…"
 
 
+def seo_hub_title(exam_label: str, mode_label: str) -> str:
+    return f"{exam_label} 過去問想定 {mode_label} 問題一覧 — AIマスター"
+
+
+def seo_hub_description(exam_label: str, mode_label: str, count: int) -> str:
+    return trim_text(
+        f"{exam_label}の本番・過去問を想定した{mode_label}の模擬問題（全{count}問）。"
+        "公式の過去問ではなく、分野別に解説付きで掲載。"
+    )
+
+
+def seo_domain_title(exam_label: str, mode_label: str, domain: str) -> str:
+    return f"{exam_label} 過去問想定 {mode_label} {domain} — AIマスター"
+
+
+def seo_domain_description(
+    exam_label: str, mode_label: str, domain: str, count: int
+) -> str:
+    return trim_text(
+        f"{exam_label}の過去問を想定した{mode_label}「{domain}」の模擬問題（{count}問）。解説付き。"
+    )
+
+
+def seo_question_title(exam_label: str, mode_label: str, qid: str, topic: str) -> str:
+    return f"【{exam_label} 過去問想定 {mode_label}】{qid} · {topic} — AIマスター"
+
+
+def seo_question_description(
+    exam_label: str, mode_label: str, topic: str, prompt: str
+) -> str:
+    return trim_text(
+        f"{exam_label}の過去問を想定した{mode_label}（{topic}）。"
+        f"{prompt or ''} 模擬問題・解説付き。"
+    )
+
+
+def seo_hub_intro(exam_label: str, mode_label: str, count: int) -> str:
+    return (
+        f"本番・過去問を想定した模擬問題を全{count}問、分野別に掲載しています"
+        "（公式の過去問ではありません）。演習は"
+    )
+
+
+def seo_question_intro(exam_label: str, mode_label: str) -> str:
+    return (
+        f"{exam_label}の過去問を想定した{mode_label}の模擬問題です。"
+        "解説付きで個別に学習できます。"
+    )
+
+
 def load_questions(path: Path) -> list[dict]:
     data = json.loads(path.read_text(encoding="utf-8"))
     return data.get("questions") or []
@@ -256,9 +306,10 @@ def match_glossary_terms(
 
 def render_question_header(q: dict, exam_label: str, mode_label: str) -> str:
     topic = html.escape(q.get("topic") or "")
+    intro = html.escape(seo_question_intro(exam_label, mode_label))
     return f"""  <header class="hub-header hub-header--question">
     <h1>{topic}</h1>
-    <p class="hub-intro">{html.escape(exam_label)} {html.escape(mode_label)}の問題です。解説付きで個別に学習できます。</p>
+    <p class="hub-intro">{intro}</p>
   </header>"""
 
 
@@ -455,9 +506,10 @@ def build_mode(
         <span>{count}問</span>
       </a>"""
         )
+    hub_intro = seo_hub_intro(exam_label, mode_label, len(questions))
     hub_body = f"""  <header class="hub-header">
-    <h1>{html.escape(exam_label)} {html.escape(mode_label)} 問題一覧</h1>
-    <p class="hub-intro">分野別に全{len(questions)}問を掲載しています。個別ページは検索エンジン向け、演習は<a href="../">演習モード</a>をご利用ください。</p>
+    <h1>{html.escape(exam_label)} 過去問想定 {html.escape(mode_label)} 問題一覧</h1>
+    <p class="hub-intro">{html.escape(hub_intro)}<a href="../">演習モード</a>をご利用ください。</p>
   </header>
   <div class="question-domain-grid">
 {chr(10).join(domain_cards)}
@@ -477,8 +529,8 @@ def build_mode(
     hub_path.write_text(
         page_shell(
             rel=rel_hub,
-            title=f"{exam_label} {mode_label} 問題一覧 — AIマスター",
-            description=f"{exam_label}の{mode_label}全{len(questions)}問を分野別に掲載。",
+            title=seo_hub_title(exam_label, mode_label),
+            description=seo_hub_description(exam_label, mode_label, len(questions)),
             canonical=hub_canonical,
             breadcrumb_html=hub_breadcrumb,
             body_html=hub_body,
@@ -504,7 +556,7 @@ def build_mode(
             list_items.append(f'      <li><a href="../../q/{qs}/">{topic}</a></li>')
         domain_body = f"""  <header class="hub-header">
     <h1>{html.escape(domain)}</h1>
-    <p class="hub-intro">{html.escape(exam_label)} {html.escape(mode_label)} · {len(domain_questions)}問</p>
+    <p class="hub-intro">{html.escape(exam_label)}の過去問を想定した{html.escape(mode_label)} · {len(domain_questions)}問（模擬問題）</p>
   </header>
   <ul class="question-hub-list">
 {chr(10).join(list_items)}
@@ -526,8 +578,10 @@ def build_mode(
         (domain_dir / "index.html").write_text(
             page_shell(
                 rel=rel_to_root(5),
-                title=f"{exam_label} {mode_label} {domain} — AIマスター",
-                description=f"{exam_label} {mode_label}「{domain}」の問題一覧（{len(domain_questions)}問）。",
+                title=seo_domain_title(exam_label, mode_label, domain),
+                description=seo_domain_description(
+                    exam_label, mode_label, domain, len(domain_questions)
+                ),
                 canonical=domain_canonical,
                 breadcrumb_html=domain_breadcrumb,
                 body_html=domain_body,
@@ -570,8 +624,8 @@ def build_mode(
         topic = q.get("topic") or qs
         qid = q.get("id") or qs.upper()
         prompt = q.get("statement") if kind == "drill" else q.get("question")
-        title = f"【{exam_label} {mode_label}】{qid} · {topic} — AIマスター"
-        description = trim_text(prompt or "")
+        title = seo_question_title(exam_label, mode_label, qid, topic)
+        description = seo_question_description(exam_label, mode_label, topic, prompt or "")
         canonical = f"{SITE_ORIGIN}/exams/{exam_id}/{mode_id}/q/{qs}/"
         crumb = breadcrumb(
             [
@@ -610,7 +664,8 @@ def build_mode(
                     "description": description,
                     "url": canonical,
                     "inLanguage": "ja",
-                    "learningResourceType": mode_label,
+                    "learningResourceType": f"過去問想定の{mode_label}",
+                    "keywords": f"{exam_label}, 過去問想定, 模擬問題, {q.get('domain', '')}, {topic}",
                 },
             ],
         }
