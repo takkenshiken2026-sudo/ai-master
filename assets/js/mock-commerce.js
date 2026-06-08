@@ -73,12 +73,18 @@
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${config.supabaseAnonKey}`,
+        apikey: config.supabaseAnonKey,
       },
       body: JSON.stringify(body),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(data.error || "Request failed");
+      const msg =
+        data.error ||
+        data.message ||
+        (data.code ? `${data.code}` : "") ||
+        "Request failed";
+      throw new Error(msg);
     }
     return data;
   }

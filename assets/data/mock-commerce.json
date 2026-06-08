@@ -1,5 +1,5 @@
 {
-  "checkoutEnabled": false,
+  "checkoutEnabled": true,
   "supabaseUrl": "https://rxfjnzybhtsaklctdhsx.supabase.co",
   "supabaseAnonKey": "sb_publishable_r3OqyxgdxmidxRGNz4llig_U9GzDmi2",
   "priceYen": 980,

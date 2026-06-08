@@ -9,6 +9,15 @@ enabled = true
 [db]
 major_version = 15
 
-# stripe-webhook は Stripe から JWT なしで呼ばれるため検証をオフ
+# ブラウザから sb_publishable_ キーで呼ぶため JWT 検証をオフ
+[functions.create-mock-checkout]
+verify_jwt = false
+
+[functions.fulfill-mock-session]
+verify_jwt = false
+
+[functions.verify-mock-access]
+verify_jwt = false
+
 [functions.stripe-webhook]
 verify_jwt = false
