@@ -101,6 +101,28 @@ a.exam-pick-card:hover .exam-pick-cta {
   border-style: dashed;
 }
 
+.exam-mode-row--mock {
+  background: #f7f5fc;
+  border-color: #ddd6f0;
+}
+
+.exam-mode-row--mock::before {
+  background: #6b4fc7;
+}
+
+a.exam-mode-row--mock:hover {
+  background: #efebfa;
+  border-color: #c9bdf0;
+}
+
+a.exam-mode-row--mock:hover .exam-mode-row__name {
+  color: #5b3fa0;
+}
+
+a.exam-mode-row--mock .exam-mode-row__go {
+  color: #5b3fa0;
+}
+
 .exam-mode-row {
   position: relative;
   display: flex;
@@ -198,9 +220,9 @@ a.exam-mode-row:hover .exam-mode-row__name {
 }
 
 .exam-mode-badge--paid {
-  background: var(--surface-inset);
-  color: var(--text-body);
-  border: 1px solid var(--border-subtle);
+  background: #f0ebff;
+  color: #5b3fa0;
+  border: 1px solid #d4c5f5;
 }
 
 .exam-mode-badge--soon {

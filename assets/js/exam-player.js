@@ -153,6 +153,13 @@
       if (this.el.mockClosed) this.el.mockClosed.hidden = !mockClosed;
       if (this.el.mockBriefing) this.el.mockBriefing.hidden = !mockBriefing;
       if (this.el.navigator) this.el.navigator.hidden = !showNavigator;
+      this.updateMockFocusMode(mode);
+    }
+
+    updateMockFocusMode(mode) {
+      if (!this.isMockDeferFeedback()) return;
+      const focus = mode === "play" || mode === "mock-briefing";
+      document.body.classList.toggle("mock-exam-focus", focus);
     }
 
     initUI() {
@@ -245,14 +252,18 @@
       panel.innerHTML = `
         <div class="quiz-mock-briefing__card">
           <h2 class="quiz-mock-briefing__title">模擬試験</h2>
+          <p class="quiz-mock-briefing__lead"></p>
           <p class="quiz-mock-briefing__meta"></p>
           <ul class="quiz-mock-briefing__rules">
             <li>四肢択一形式で、本番と同じ問題数に挑戦します</li>
             <li>正解・解説は結果画面でまとめて確認できます</li>
             <li>問題一覧から任意の問題に移動できます</li>
-            <li>途中でページを閉じても進捗は保存されます</li>
+            <li>中断した場合、回答は保存されず最初からやり直しになります</li>
           </ul>
-          <button type="button" class="quiz-btn quiz-btn--primary quiz-mock-briefing__start">模擬試験を開始</button>
+          <div class="quiz-mock-briefing__actions">
+            <button type="button" class="quiz-btn quiz-mock-briefing__back">一覧に戻る</button>
+            <button type="button" class="quiz-btn quiz-btn--primary quiz-mock-briefing__start">模擬試験を開始</button>
+          </div>
         </div>
       `;
       const bar = $(".quiz-bar", this.root);
@@ -264,6 +275,9 @@
       panel.querySelector(".quiz-mock-briefing__start")?.addEventListener("click", () => {
         this.beginMockSession();
       });
+      panel.querySelector(".quiz-mock-briefing__back")?.addEventListener("click", () => {
+        window.location.href = this.config.backUrl || "../";
+      });
     }
 
     isMockSession() {
@@ -274,6 +288,10 @@
       if (!this.isMockSession() || this.config.mockDeferFeedback === false) return false;
       if (this.config.mockDeferFeedback === true) return true;
       return this.config.examId !== "sample";
+    }
+
+    isMockNoPersist() {
+      return this.isMockDeferFeedback() && this.config.mockNoPersist !== false;
     }
 
     ensureMockNavigator() {
@@ -309,8 +327,27 @@
       return { correct, answered };
     }
 
+    computeMockDomainStats() {
+      const map = new Map();
+      this.questions.forEach((q, i) => {
+        const domain = q.domain || "その他";
+        if (!map.has(domain)) {
+          map.set(domain, { correct: 0, answered: 0, total: 0 });
+        }
+        const stat = map.get(domain);
+        stat.total += 1;
+        const sel = this.mockAnswers[i] ?? this.mockAnswers[String(i)];
+        if (!sel) return;
+        stat.answered += 1;
+        if (sel === q.answer) stat.correct += 1;
+      });
+      return [...map.entries()].sort(
+        (a, b) => domainSortKey(a[0]) - domainSortKey(b[0]) || a[0].localeCompare(b[0], "ja")
+      );
+    }
+
     loadMockAnswers() {
-      if (!this.isMockDeferFeedback()) return;
+      if (!this.isMockDeferFeedback() || this.isMockNoPersist()) return;
       const raw = localStorage.getItem(storageKey(this.config, "answers"));
       if (!raw) {
         this.mockAnswers = {};
@@ -324,8 +361,43 @@
     }
 
     saveMockAnswers() {
-      if (!this.isMockDeferFeedback()) return;
+      if (!this.isMockDeferFeedback() || this.isMockNoPersist()) return;
       localStorage.setItem(storageKey(this.config, "answers"), JSON.stringify(this.mockAnswers));
+    }
+
+    renderMockDomainStats() {
+      const complete = this.el.complete;
+      if (!complete) return;
+      let block = $(".quiz-domain-stats", complete);
+      if (!block) {
+        block = document.createElement("div");
+        block.className = "quiz-domain-stats";
+        const review = $(".quiz-review", complete);
+        if (review) complete.insertBefore(block, review);
+        else complete.appendChild(block);
+      }
+      const rows = this.computeMockDomainStats();
+      block.hidden = false;
+      block.innerHTML = `
+        <h3 class="quiz-domain-stats__title">分野別の正答率</h3>
+        <table class="quiz-domain-stats__table">
+          <thead>
+            <tr><th>分野</th><th>正答率</th><th>正解</th></tr>
+          </thead>
+          <tbody>
+            ${rows
+              .map(([domain, stat]) => {
+                const rate = stat.answered ? formatRate(stat.correct, stat.answered) : "—";
+                return `<tr>
+                  <td>${escapeHtml(domain)}</td>
+                  <td>${rate}</td>
+                  <td>${stat.correct} / ${stat.answered} 問</td>
+                </tr>`;
+              })
+              .join("")}
+          </tbody>
+        </table>
+      `;
     }
 
     updateNavigator() {
@@ -405,15 +477,13 @@
       if (!review) {
         review = document.createElement("div");
         review.className = "quiz-review";
-        const actions = $(".quiz-complete__actions", complete);
-        if (actions) complete.insertBefore(review, actions);
-        else complete.appendChild(review);
+        complete.appendChild(review);
       }
       review.hidden = false;
       review.innerHTML = `
         <h3 class="quiz-review__title">問題別の正解と解説</h3>
-        <p class="quiz-review__hint">不正解・未回答は最初から開いています。スクロールして確認できます。</p>
-        <div class="quiz-review__list" tabindex="0" aria-label="問題別の解説一覧">
+        <p class="quiz-review__hint">不正解・未回答は最初から開いています。</p>
+        <div class="quiz-review__list" aria-label="問題別の解説一覧">
           ${this.questions
             .map((q, i) => {
               const selected = this.mockAnswers[i] ?? this.mockAnswers[String(i)];
@@ -460,15 +530,10 @@
       `;
       complete.classList.add("quiz-complete--with-review");
       requestAnimationFrame(() => {
-        const list = $(".quiz-review__list", review);
         const firstFocus = review.querySelector(
           ".quiz-review__item--wrong[open], .quiz-review__item--unanswered[open]"
         );
-        if (firstFocus && list) {
-          const listTop = list.getBoundingClientRect().top;
-          const itemTop = firstFocus.getBoundingClientRect().top;
-          list.scrollTop += itemTop - listTop - 8;
-        }
+        firstFocus?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
 
@@ -566,10 +631,18 @@
       }
 
       this.questions = this.allQuestions.slice();
-      this.loadProgress();
+      if (this.isMockNoPersist()) {
+        this.clearProgress();
+        this.index = 0;
+        this.deadline = null;
+        this.mockAnswers = {};
+        this.sessionScore = { correct: 0, answered: 0 };
+      } else {
+        this.loadProgress();
+        this.loadMockAnswers();
+        this.loadSessionScore();
+      }
       this.applyDeepLinkQuestion();
-      this.loadMockAnswers();
-      this.loadSessionScore();
       if (this.isPaywalled()) {
         this.showPaywall();
         return;
@@ -585,6 +658,7 @@
 
     needsMockBriefing() {
       if (!this.isMockSession() || this.config.mockBriefing === false) return false;
+      if (this.isMockNoPersist()) return true;
       if (this.index > 0) return false;
       const saved = localStorage.getItem(storageKey(this.config, "index"));
       if (saved !== null && parseInt(saved, 10) > 0) return false;
@@ -603,12 +677,18 @@
       const exam = this.data.exams?.[this.config.examId];
       const minutes = this.config.timeLimitMinutes ?? this.data.timeLimitMinutes;
       const title = $(".quiz-mock-briefing__title", panel);
+      const lead = $(".quiz-mock-briefing__lead", panel);
       const meta = $(".quiz-mock-briefing__meta", panel);
       if (title) title.textContent = exam?.title || "模擬試験";
+      if (lead) {
+        lead.textContent = minutes
+          ? `${this.questions.length}問・${minutes}分です。準備はよろしいですか？`
+          : `${this.questions.length}問です。準備はよろしいですか？`;
+      }
       if (meta) {
         meta.textContent = minutes
-          ? `${this.questions.length}問 · 制限時間 ${minutes}分`
-          : `${this.questions.length}問 · 制限時間なし`;
+          ? "開始すると制限時間のカウントが始まります。"
+          : "お試し用の短いセットです。";
       }
       this.setView("mock-briefing");
     }
@@ -617,6 +697,13 @@
       if (this.isPaywalled()) {
         this.showPaywall();
         return;
+      }
+      if (this.isMockNoPersist()) {
+        this.clearProgress();
+        this.index = 0;
+        this.deadline = null;
+        this.mockAnswers = {};
+        this.sessionScore = { correct: 0, answered: 0 };
       }
       this.setView("play");
       this.startTimer();
@@ -777,7 +864,7 @@
     }
 
     loadSessionScore() {
-      if (this.isMockDeferFeedback()) return;
+      if (this.isMockDeferFeedback() || this.isMockNoPersist()) return;
       const raw = localStorage.getItem(storageKey(this.config, "score"));
       if (raw) {
         try {
@@ -789,7 +876,7 @@
     }
 
     saveProgress() {
-      if (this.useSetup()) return;
+      if (this.useSetup() || this.isMockNoPersist()) return;
       localStorage.setItem(storageKey(this.config, "index"), String(this.index));
       if (this.deadline) {
         localStorage.setItem(storageKey(this.config, "deadline"), String(this.deadline));
@@ -1149,7 +1236,9 @@
       if (this.isMockDeferFeedback()) {
         ({ correct, answered } = this.computeMockScore());
         this.sessionScore = { correct, answered };
-        localStorage.setItem(storageKey(this.config, "score"), JSON.stringify(this.sessionScore));
+        if (!this.isMockNoPersist()) {
+          localStorage.setItem(storageKey(this.config, "score"), JSON.stringify(this.sessionScore));
+        }
       }
 
       const rate = formatRate(correct, answered);
@@ -1175,6 +1264,7 @@
         this.el.completeShare.href = this.buildShareUrl();
       }
       if (this.isMockDeferFeedback()) {
+        this.renderMockDomainStats();
         this.renderMockReview();
       }
     }
@@ -1188,6 +1278,8 @@
       this.mockAnswers = {};
       const review = $(".quiz-review", this.el.complete);
       if (review) review.hidden = true;
+      const domainStats = $(".quiz-domain-stats", this.el.complete);
+      if (domainStats) domainStats.hidden = true;
       this.el.complete?.classList.remove("quiz-complete--with-review");
 
       if (this.useSetup()) {
@@ -1199,6 +1291,12 @@
         this.showPaywall();
         return;
       }
+
+      if (this.isMockNoPersist() && this.config.mockBriefing !== false) {
+        this.showMockBriefing();
+        return;
+      }
+
       this.setView("play");
       this.startTimer();
       this.render();

@@ -56,11 +56,12 @@
 
         const a = document.createElement("a");
         a.href = `play.html?exam=${encodeURIComponent(id)}`;
-        a.className = "exam-mode-row";
+        a.className = "exam-mode-row exam-mode-row--mock";
         a.innerHTML = `
           <div class="exam-mode-row__main">
             <div class="exam-mode-row__head">
               <h2 class="exam-mode-row__name">${escapeHtml(exam.title)}</h2>
+              <span class="exam-mode-badge exam-mode-badge--paid">有料</span>
             </div>
             <p class="exam-mode-row__desc">本番と同じ問題数・制限時間で一気に解く総仕上げです。時間配分の練習や実力チェックに向いています。</p>
             <p class="exam-mode-row__meta">${exam.questionCount}問 · ${minutes}分</p>
