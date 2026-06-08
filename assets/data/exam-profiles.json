@@ -37,8 +37,8 @@
     "stats": [
       { "value": "60問", "label": "出題数", "note": "CBT形式" },
       { "value": "60分", "label": "試験時間", "note": "オンライン" },
-      { "value": "約70%", "label": "合格率", "note": "公表情報" },
-      { "value": "10〜20時間", "label": "目安勉強時間", "note": "" }
+      { "value": "約70%", "label": "合格率", "note": "" },
+      { "value": "約20時間", "label": "目安勉強時間", "note": "" }
     ],
     "hub": {
       "title": "生成AIパスポート 過去問想定 試験対策",
