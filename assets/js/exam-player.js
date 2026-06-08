@@ -102,6 +102,7 @@
       this.deadline = null;
       this.keyHandler = null;
       this.sessionScore = { correct: 0, answered: 0 };
+      this.sessionAnswers = {};
       this.mockAnswers = {};
       this.selectedSetupCount = 10;
       this.selectedSetupDomain = "";
@@ -492,9 +493,20 @@
       });
     }
 
-    renderMockReview() {
+    questionPrompt(q) {
+      return this.isDrill() ? q.statement : q.question;
+    }
+
+    formatReviewAnswer(q, key) {
+      if (!key) return "—";
+      if (this.isDrill()) return escapeHtml(key);
+      return escapeHtml(formatChoiceAnswer(key, q.choices));
+    }
+
+    renderAnswerReview(answers, options = {}) {
       const complete = this.el.complete;
       if (!complete) return;
+      const onlyAnswered = options.onlyAnswered === true;
       let review = $(".quiz-review", complete);
       if (!review) {
         review = document.createElement("div");
@@ -502,52 +514,58 @@
         complete.appendChild(review);
       }
       review.hidden = false;
+
+      const items = this.questions
+        .map((q, i) => {
+          const selected = answers[i] ?? answers[String(i)];
+          if (onlyAnswered && !selected) return "";
+          const correct = q.answer;
+          const isCorrect = !!selected && selected === correct;
+          const verdict = !selected
+            ? "未回答"
+            : isCorrect
+              ? "正解"
+              : "不正解";
+          const verdictClass = !selected
+            ? "is-unanswered"
+            : isCorrect
+              ? "is-correct"
+              : "is-wrong";
+          const shouldOpen = !isCorrect;
+          const itemModifier =
+            verdictClass === "is-wrong"
+              ? " quiz-review__item--wrong"
+              : verdictClass === "is-unanswered"
+                ? " quiz-review__item--unanswered"
+                : "";
+          return `
+            <details class="quiz-review__item${itemModifier}"${shouldOpen ? " open" : ""}>
+              <summary class="quiz-review__summary">
+                <span class="quiz-review__no">問 ${i + 1}</span>
+                <span class="quiz-review__verdict ${verdictClass}">${verdict}</span>
+              </summary>
+              <div class="quiz-review__body">
+                <p class="quiz-review__question">${escapeHtml(this.questionPrompt(q) || "")}</p>
+                <p class="quiz-review__line"><strong>あなたの回答</strong> ${this.formatReviewAnswer(q, selected)}</p>
+                <p class="quiz-review__line"><strong>正解</strong> ${this.formatReviewAnswer(q, correct)}</p>
+                <p class="quiz-review__explanation">${escapeHtml(q.explanation || "")}</p>
+              </div>
+            </details>
+          `;
+        })
+        .filter(Boolean)
+        .join("");
+
+      const title = onlyAnswered ? "解いた問題の正解と解説" : "問題別の正解と解説";
+      const hint = onlyAnswered
+        ? "不正解は最初から開いています。"
+        : "不正解・未回答は最初から開いています。";
+
       review.innerHTML = `
-        <h3 class="quiz-review__title">問題別の正解と解説</h3>
-        <p class="quiz-review__hint">不正解・未回答は最初から開いています。</p>
+        <h3 class="quiz-review__title">${title}</h3>
+        <p class="quiz-review__hint">${hint}</p>
         <div class="quiz-review__list" aria-label="問題別の解説一覧">
-          ${this.questions
-            .map((q, i) => {
-              const selected = this.mockAnswers[i] ?? this.mockAnswers[String(i)];
-              const correct = q.answer;
-              const isCorrect = selected === correct;
-              const verdict = !selected
-                ? "未回答"
-                : isCorrect
-                  ? "正解"
-                  : "不正解";
-              const verdictClass = !selected
-                ? "is-unanswered"
-                : isCorrect
-                  ? "is-correct"
-                  : "is-wrong";
-              const yourLabel = selected
-                ? escapeHtml(formatChoiceAnswer(selected, q.choices))
-                : "—";
-              const correctLabel = escapeHtml(formatChoiceAnswer(correct, q.choices));
-              const shouldOpen = !isCorrect;
-              const itemModifier =
-                verdictClass === "is-wrong"
-                  ? " quiz-review__item--wrong"
-                  : verdictClass === "is-unanswered"
-                    ? " quiz-review__item--unanswered"
-                    : "";
-              return `
-                <details class="quiz-review__item${itemModifier}"${shouldOpen ? " open" : ""}>
-                  <summary class="quiz-review__summary">
-                    <span class="quiz-review__no">問 ${i + 1}</span>
-                    <span class="quiz-review__verdict ${verdictClass}">${verdict}</span>
-                  </summary>
-                  <div class="quiz-review__body">
-                    <p class="quiz-review__question">${escapeHtml(q.question)}</p>
-                    <p class="quiz-review__line"><strong>あなたの回答</strong> ${yourLabel}</p>
-                    <p class="quiz-review__line"><strong>正解</strong> ${correctLabel}</p>
-                    <p class="quiz-review__explanation">${escapeHtml(q.explanation || "")}</p>
-                  </div>
-                </details>
-              `;
-            })
-            .join("")}
+          ${items}
         </div>
       `;
       complete.classList.add("quiz-complete--with-review");
@@ -557,6 +575,10 @@
         );
         firstFocus?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
+    }
+
+    renderMockReview() {
+      this.renderAnswerReview(this.mockAnswers);
     }
 
     shareLabel() {
@@ -880,6 +902,7 @@
       this.questions = pool.slice(0, take);
       this.index = 0;
       this.sessionScore = { correct: 0, answered: 0 };
+      this.sessionAnswers = {};
       this.deadline = null;
       this.clearProgress();
 
@@ -921,6 +944,7 @@
         this.stopActiveSession();
         this.index = 0;
         this.sessionScore = { correct: 0, answered: 0 };
+        this.sessionAnswers = {};
         this.questions = [];
         this.showSetup();
         return;
@@ -1237,6 +1261,7 @@
 
       this.answered = true;
       this.selected = value;
+      this.sessionAnswers[this.index] = value;
       this.markChoices(correctAnswer);
       this.showFeedback(isCorrect, q, correctAnswer);
       if (this.el.actions) this.el.actions.hidden = false;
@@ -1356,6 +1381,8 @@
       if (this.isMockDeferFeedback()) {
         this.renderMockDomainStats();
         this.renderMockReview();
+      } else if (this.useSetup() && answered > 0) {
+        this.renderAnswerReview(this.sessionAnswers, { onlyAnswered: interrupted });
       }
     }
 
@@ -1365,6 +1392,7 @@
       this.deadline = null;
       this.answered = false;
       this.sessionScore = { correct: 0, answered: 0 };
+      this.sessionAnswers = {};
       this.mockAnswers = {};
       this.setCompleteHeading("完了");
       const review = $(".quiz-review", this.el.complete);
