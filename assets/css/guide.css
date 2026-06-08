@@ -1,0 +1,113 @@
+/* 学習ガイド一覧 */
+
+.guide-priority {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2em;
+  padding: 2px 8px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  border-radius: 20px;
+  line-height: 1.4;
+}
+
+.guide-priority--high {
+  color: #9a3412;
+  background: #fff7ed;
+  border: 1px solid #fdba74;
+}
+
+.guide-priority--mid {
+  color: var(--text-body);
+  background: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+}
+
+.guide-priority--low {
+  color: var(--text-muted);
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+}
+
+.hub-list-row--planned .hub-list-pill {
+  flex-shrink: 0;
+}
+
+.hub-featured-card .hub-list-pill {
+  margin-bottom: 8px;
+}
+
+.guide-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-top: 40px;
+  padding: 24px 28px;
+  background: var(--blue-soft);
+  border: 1px solid var(--blue-mid);
+  border-radius: 12px;
+}
+
+.guide-cta h2 {
+  margin: 0 0 6px;
+  font-size: var(--text-lg);
+  color: var(--ink);
+}
+
+.guide-cta p {
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: 1.75;
+  color: var(--text-body);
+}
+
+.guide-cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.guide-cta-links a {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  transition: border-color 0.12s ease, color 0.12s ease;
+}
+
+.guide-cta-links a:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.guide-cta-links a.is-primary {
+  color: var(--white);
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.guide-cta-links a.is-primary:hover {
+  background: var(--blue-hover);
+  border-color: var(--blue-hover);
+  color: var(--white);
+}
+
+@media (max-width: 640px) {
+  .guide-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .guide-cta-links {
+    flex-direction: column;
+  }
+}

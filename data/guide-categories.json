@@ -1,0 +1,72 @@
+{
+  "taxonomy": "guide-v1",
+  "categories": {
+    "g-kentei-overview": {
+      "label": "G検定 概要",
+      "description": "試験の全体像・受験料・合格率・シラバス"
+    },
+    "genai-overview": {
+      "label": "生成AIパスポート 概要",
+      "description": "試験の全体像・受験料・合格率・シラバス"
+    },
+    "compare": {
+      "label": "比較・選び方",
+      "description": "資格の比較と選び方・AI資格一覧"
+    },
+    "g-kentei-study": {
+      "label": "G検定 勉強法",
+      "description": "勉強時間・テキスト・直前対策"
+    },
+    "genai-study": {
+      "label": "生成AIパスポート 勉強法",
+      "description": "勉強時間・テキスト・直前対策"
+    },
+    "g-kentei-domain": {
+      "label": "G検定 分野別解説",
+      "description": "機械学習・DL・倫理など分野別の要点"
+    },
+    "genai-domain": {
+      "label": "生成AIパスポート 分野別解説",
+      "description": "プロンプト・法律倫理など分野別の要点"
+    },
+    "terms": {
+      "label": "用語解説",
+      "description": "試験頻出の用語を記事形式で解説"
+    },
+    "audience": {
+      "label": "対象者別",
+      "description": "文系・大学生・職種別のおすすめ"
+    },
+    "enterprise": {
+      "label": "法人・企業向け",
+      "description": "社内研修・取得制度・費用対効果"
+    },
+    "trends": {
+      "label": "時事・トレンド",
+      "description": "法改正・シラバス改訂・AI資格の意義"
+    },
+    "exam-tips": {
+      "label": "合格・不合格対策",
+      "description": "体験談・FAQ・試験当日の注意"
+    },
+    "after-cert": {
+      "label": "資格取得後・キャリア",
+      "description": "次の資格・転職・履歴書の書き方"
+    }
+  },
+  "csvCategoryMap": {
+    "G検定 概要": "g-kentei-overview",
+    "生成AIパスポート 概要": "genai-overview",
+    "比較・選び方": "compare",
+    "G検定 勉強法": "g-kentei-study",
+    "生成AIパスポート 勉強法": "genai-study",
+    "G検定 分野別解説": "g-kentei-domain",
+    "生成AIパスポート 分野別解説": "genai-domain",
+    "用語解説": "terms",
+    "対象者別": "audience",
+    "法人・企業向け": "enterprise",
+    "時事・トレンド": "trends",
+    "合格・不合格対策": "exam-tips",
+    "資格取得後・キャリア": "after-cert"
+  }
+}

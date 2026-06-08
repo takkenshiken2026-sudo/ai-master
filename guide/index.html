@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="G検定・生成AIパスポートの学習ガイド。試験概要・勉強法・資格比較・分野別解説など、受験前に読みたい記事をカテゴリ別に掲載しています。">
+  <title>学習ガイド — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="学習ガイド — AI Master">
+  <meta property="og:description" content="G検定・生成AIパスポートの学習ガイド。試験概要・勉強法・資格比較などをカテゴリ別に掲載。">
+  <meta property="og:url" content="https://ai-master.jp/guide/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/hub.css">
+  <link rel="stylesheet" href="../assets/css/seo.css">
+  <link rel="stylesheet" href="../assets/css/guide.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" }
+        ]
+      },
+      {
+        "@type": "CollectionPage",
+        "name": "学習ガイド",
+        "description": "G検定・生成AIパスポートの学習ガイド記事一覧",
+        "url": "https://ai-master.jp/guide/",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "inLanguage": "ja"
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../exams/">試験対策</a></li>
+    <li><a href="index.html" class="active">学習ガイド</a></li>
+    <li><a href="../glossary/">用語辞典</a></li>
+    <li><a href="../tools/">AIツール</a></li>
+    <li><a href="../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../index.html">ホーム</a></li>
+      <li aria-current="page">学習ガイド</li>
+    </ol>
+  </nav>
+
+  <header class="hub-header">
+    <h1>学習ガイド</h1>
+    <p class="hub-intro">G検定・生成AIパスポートの受験前に読みたい記事をまとめています。試験概要・勉強法・資格の比較・分野別解説など、カテゴリから探せます。公開済みの記事から順次リンクが有効になります（準備中の記事はクリックできません）。</p>
+    <div class="search-wrap hub-search">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5l3 3" stroke-linecap="round"/>
+      </svg>
+      <input type="search" id="guideSearchInput" placeholder="記事タイトル・キーワードで検索…" autocomplete="off" enterkeyhint="search">
+    </div>
+  </header>
+
+  <div class="hub-filter-row" id="guideCategoryFilters" aria-label="カテゴリで絞り込み"></div>
+
+  <section class="hub-featured" id="guideFeatured">
+    <p class="hub-featured-label">注目のガイド</p>
+    <div class="hub-featured-grid" id="guideFeaturedGrid"></div>
+  </section>
+
+  <div class="hub-meta-row">
+    <div>
+      <p class="hub-result-meta" id="guideResultMeta">70件のガイド記事</p>
+      <p class="hub-result-range" id="guideResultRange"></p>
+    </div>
+  </div>
+
+  <ul class="hub-list" id="guideList" aria-label="学習ガイド一覧">
+    <li class="hub-empty" aria-live="polite">読み込み中…</li>
+  </ul>
+
+  <nav class="hub-pagination" id="guidePagination" aria-label="ページ送り"></nav>
+
+  <aside class="guide-cta">
+    <div>
+      <h2>記事を読んだら、問題演習へ</h2>
+      <p>一問一答・実践演習・模擬試験で、本番形式の総仕上げまで進められます。</p>
+    </div>
+    <div class="guide-cta-links">
+      <a href="../exams/g-kentei/" class="is-primary">G検定 試験対策</a>
+      <a href="../exams/genai-passport/">生成AIパスポート</a>
+      <a href="../glossary/">用語辞典</a>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">AI<em>マスター</em></div>
+        <p class="foot-tagline">AIスキルを、キャリアの武器に。</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <p class="foot-col-h">学ぶ</p>
+          <a href="index.html">学習ガイド</a>
+          <a href="../glossary/">AI用語辞典</a>
+          <a href="../tools/">AIツール</a>
+        </div>
+        <div class="foot-col">
+          <p class="foot-col-h">試験対策</p>
+          <a href="../exams/g-kentei/">G検定対策</a>
+          <a href="../exams/genai-passport/">生成AIパスポート対策</a>
+          <a href="../exams/">資格一覧</a>
+        </div>
+        <div class="foot-col">
+          <p class="foot-col-h">キャリア</p>
+          <a href="../career/">AI職種ガイド</a>
+        </div>
+      </div>
+    </div>
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/guide-list.js" defer></script>
+</body>
+</html>
