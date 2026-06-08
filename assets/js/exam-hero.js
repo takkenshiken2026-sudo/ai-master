@@ -9,30 +9,21 @@
       .replace(/"/g, "&quot;");
   }
 
+  function renderStatLabel(stat) {
+    const note = stat.note ? `（${stat.note}）` : "";
+    return `${stat.label}${note}`;
+  }
+
   function renderStats(stats) {
     return stats
       .map(
         (stat) => `
         <div class="exam-hero__stat">
           <p class="exam-hero__stat-value">${escapeHtml(stat.value)}</p>
-          <p class="exam-hero__stat-label">${escapeHtml(stat.label)}</p>
-          ${stat.note ? `<p class="exam-hero__stat-note">${escapeHtml(stat.note)}</p>` : ""}
+          <p class="exam-hero__stat-label">${escapeHtml(renderStatLabel(stat))}</p>
         </div>`
       )
       .join("");
-  }
-
-  function renderHubHint(hub) {
-    if (!hub) return "";
-    const links = (hub.links || [])
-      .map(
-        (link) =>
-          `<a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`
-      )
-      .join(" · ");
-    return `<p class="exam-hero__hint">${escapeHtml(hub.hint || "")}${
-      links ? ` ${links}` : ""
-    }</p>`;
   }
 
   function renderHero(profile, modeKey) {
@@ -45,15 +36,17 @@
       : modeLabel
         ? `${profile.examName} ${modeLabel}`
         : profile.examName;
-    const lede = (profile.lede || [])
+    const ledeParts = [...(profile.lede || [])];
+    if (isHub && hub?.hint) {
+      ledeParts.push(hub.hint);
+    }
+    const lede = ledeParts
       .map((p) => `<p class="exam-hero__lede">${escapeHtml(p)}</p>`)
       .join("");
-    let hint = "";
-    if (isHub) {
-      hint = renderHubHint(hub);
-    } else if (mode.hint) {
-      hint = `<p class="exam-hero__hint">${escapeHtml(mode.hint)} <a href="questions/">問題一覧</a>（解説付き）も閲覧できます。</p>`;
-    }
+    const hint =
+      !isHub && mode.hint
+        ? `<p class="exam-hero__hint">${escapeHtml(mode.hint)} <a href="questions/">問題一覧</a>（解説付き）も閲覧できます。</p>`
+        : "";
 
     return `
       <div class="exam-hero__inner">
