@@ -44,6 +44,14 @@
       { "value": "約70%", "label": "合格率", "note": "公表情報" },
       { "value": "10〜20時間", "label": "目安勉強時間", "note": "" }
     ],
+    "hub": {
+      "title": "生成AIパスポート 過去問想定 試験対策",
+      "hint": "本番・過去問を想定した模擬問題で、一問一答・実践演習・模擬試験の順に段階的に対策できます。",
+      "links": [
+        { "label": "一問一答の問題一覧", "href": "drill/questions/" },
+        { "label": "実践演習の問題一覧", "href": "practice/questions/" }
+      ]
+    },
     "modes": {
       "drill": {
         "label": "一問一答",

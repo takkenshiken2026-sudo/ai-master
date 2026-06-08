@@ -75,10 +75,13 @@
     </ol>
   </nav>
 
-  <header class="hub-header">
-    <h1>生成AIパスポート 過去問想定 試験対策</h1>
-    <p class="hub-intro">一般社団法人 生成AI活用普及協会主催の入門資格。本番・過去問を想定した模擬問題で対策できます（公式の過去問ではありません）。<a href="drill/questions/">一問一答の問題一覧</a>・<a href="practice/questions/">実践演習の問題一覧</a>も掲載しています。</p>
-  </header>
+  <div
+    class="exam-hero"
+    data-exam-hero="genai-passport"
+    data-exam-mode="hub"
+    data-profiles-url="../../assets/data/exam-profiles.json"
+    hidden
+  ></div>
 
   <div class="exam-mode-list" aria-label="学習モード">
     <a href="drill/" class="exam-mode-row">
@@ -167,5 +170,6 @@
   </div>
 </footer>
 
+<script src="../../assets/js/exam-hero.js"></script>
 </body>
 </html>
