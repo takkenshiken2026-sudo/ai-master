@@ -183,6 +183,7 @@
       if (!this.isMockDeferFeedback()) return;
       const focus = mode === "play" || mode === "mock-briefing";
       document.body.classList.toggle("mock-exam-focus", focus);
+      document.body.classList.toggle("mock-exam-briefing", mode === "mock-briefing");
     }
 
     initUI() {

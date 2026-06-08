@@ -653,8 +653,6 @@ body.mock-exam-focus .breadcrumb {
 }
 
 body.mock-exam-focus .page-wrap--mock-exam {
-  display: flex;
-  flex-direction: column;
   max-width: var(--content-max);
   min-height: 100vh;
   padding-top: 24px;
@@ -662,11 +660,14 @@ body.mock-exam-focus .page-wrap--mock-exam {
   box-shadow: 0 0 0 1px var(--border-subtle);
 }
 
-body.mock-exam-focus .page-wrap--mock-exam > #exam-player {
-  flex: 1;
+body.mock-exam-focus.mock-exam-briefing .page-wrap--mock-exam {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+}
+
+body.mock-exam-focus .page-wrap--mock-exam > #exam-player {
+  width: 100%;
   margin-bottom: 0;
 }
 
