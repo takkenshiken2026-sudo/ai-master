@@ -307,8 +307,8 @@ a.exam-mode-row:hover .exam-mode-row__name {
 .mock-landing__notice {
   margin: 0 0 20px;
   padding: 14px 16px;
-  font-size: var(--text-sm);
-  line-height: 1.65;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--text-body);
   background: #fff8e8;
   border-left: 3px solid #e6c56a;
@@ -353,7 +353,7 @@ a.exam-mode-row:hover .exam-mode-row__name {
 .mock-landing-hero__desc {
   margin: 0 0 22px;
   max-width: 36em;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   line-height: 1.75;
   color: var(--text-body);
 }
@@ -413,8 +413,8 @@ a.exam-mode-row:hover .exam-mode-row__name {
 }
 
 .mock-landing-hero__facts span {
-  font-size: var(--text-xs);
-  line-height: 1.4;
+  font-size: var(--text-sm);
+  line-height: 1.5;
   color: var(--text-muted);
 }
 
@@ -452,8 +452,8 @@ a.exam-mode-row:hover .exam-mode-row__name {
 .mock-landing-section__text {
   margin: 0 0 20px;
   max-width: 42em;
-  font-size: var(--text-sm);
-  line-height: 1.8;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--text-body);
 }
 
@@ -497,7 +497,7 @@ a.exam-mode-row:hover .exam-mode-row__name {
 
 .mock-landing-point__text {
   margin: 0;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   line-height: 1.75;
   color: var(--text-body);
 }
@@ -513,8 +513,8 @@ a.exam-mode-row:hover .exam-mode-row__name {
   position: relative;
   break-inside: avoid;
   padding: 10px 0 10px 1.4em;
-  font-size: var(--text-sm);
-  line-height: 1.7;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--text-body);
 }
 
@@ -546,7 +546,7 @@ a.exam-mode-row:hover .exam-mode-row__name {
 
 .mock-landing-cta__meta {
   margin: 0;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-muted);
 }
 
@@ -691,8 +691,8 @@ body.mock-checkout-modal-open {
   margin: 0 0 20px;
   padding: 14px 16px;
   list-style: none;
-  font-size: var(--text-sm);
-  line-height: 1.65;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--text-body);
   background: var(--blue-soft);
   border: 1px solid var(--blue-mid);
@@ -819,8 +819,8 @@ body.mock-checkout-modal-open {
 
 .mock-checkout-modal__message {
   margin: 0 0 20px;
-  font-size: var(--text-sm);
-  line-height: 1.7;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--text-body);
 }
 
