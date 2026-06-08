@@ -1428,9 +1428,10 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  function bootExamPlayer() {
     const root = document.getElementById("exam-player");
-    if (!root) return;
+    if (!root || root.dataset.playerBooted === "1") return;
+    root.dataset.playerBooted = "1";
     const player = new ExamPlayer(root);
     player.start().catch((err) => {
       const msg = err.message || "読み込みに失敗しました。";
@@ -1444,5 +1445,11 @@
         if (prompt) prompt.textContent = msg;
       }
     });
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootExamPlayer);
+  } else {
+    bootExamPlayer();
+  }
 })();
