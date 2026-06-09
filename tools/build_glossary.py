@@ -274,6 +274,7 @@ def build_index_html(data: dict) -> str:
   </div>
 </footer>
 
+<script src="../assets/js/hub-list-nav.js" defer></script>
 <script src="../assets/js/glossary-list.js" defer></script>
 </body>
 </html>

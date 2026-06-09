@@ -228,7 +228,7 @@ function render() {
   renderCategoryFilters(cat, q, sort);
   renderFeatured(cat, page, q, sort);
   if (page > totalPages) {
-    window.location.replace(buildListUrl(totalPages, q, sort, cat));
+    HubNav.replace(buildListUrl(totalPages, q, sort, cat), render);
     return;
   }
   const safePage = page;
@@ -281,19 +281,23 @@ function render() {
 
 let searchTimer;
 function bindEvents() {
+  HubNav.bindLinkClicks(render);
+  HubNav.bindPopstate(render);
+
   document.getElementById('glossarySearchInput')?.addEventListener('input', (e) => {
+    if (e.isComposing) return;
     clearTimeout(searchTimer);
     const q = e.target.value.trim();
     const { sort, cat } = parseState();
     searchTimer = setTimeout(() => {
-      window.location.href = buildListUrl(1, q, sort, cat);
+      HubNav.navigate(buildListUrl(1, q, sort, cat), render);
     }, 300);
   });
 
   document.getElementById('glossarySortSelect')?.addEventListener('change', (e) => {
     const { q, cat } = parseState();
     const sort = e.target.value === 'az' ? 'az' : 'alpha';
-    window.location.href = buildListUrl(1, q, sort, cat);
+    HubNav.navigate(buildListUrl(1, q, sort, cat), render);
   });
 }
 

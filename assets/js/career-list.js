@@ -183,7 +183,7 @@ function render() {
   renderFeatured(cat, page, q);
 
   if (page > totalPages) {
-    window.location.replace(buildListUrl(cat, totalPages, q));
+    HubNav.replace(buildListUrl(cat, totalPages, q), render);
     return;
   }
 
@@ -222,12 +222,16 @@ function render() {
 
 let searchTimer;
 function bindEvents() {
+  HubNav.bindLinkClicks(render);
+  HubNav.bindPopstate(render);
+
   document.getElementById('careerSearchInput')?.addEventListener('input', (e) => {
+    if (e.isComposing) return;
     clearTimeout(searchTimer);
     const q = e.target.value.trim();
     const { cat } = parseState();
     searchTimer = setTimeout(() => {
-      window.location.href = buildListUrl(cat, 1, q);
+      HubNav.navigate(buildListUrl(cat, 1, q), render);
     }, 300);
   });
 }

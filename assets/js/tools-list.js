@@ -265,14 +265,20 @@ function render() {
 }
 
 let searchTimer;
-document.getElementById('searchInput')?.addEventListener('input', (e) => {
-  clearTimeout(searchTimer);
-  const q = e.target.value.trim();
-  searchTimer = setTimeout(() => {
-    const { cat } = parseState();
-    window.location.href = buildListUrl(cat, 1, q);
-  }, 300);
-});
+function bindEvents() {
+  HubNav.bindLinkClicks(render);
+  HubNav.bindPopstate(render);
 
-window.addEventListener('popstate', render);
+  document.getElementById('searchInput')?.addEventListener('input', (e) => {
+    if (e.isComposing) return;
+    clearTimeout(searchTimer);
+    const q = e.target.value.trim();
+    searchTimer = setTimeout(() => {
+      const { cat } = parseState();
+      HubNav.navigate(buildListUrl(cat, 1, q), render);
+    }, 300);
+  });
+}
+
+bindEvents();
 render();
