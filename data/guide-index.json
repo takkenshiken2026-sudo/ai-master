@@ -677,7 +677,7 @@
       "keyword": "生成AIパスポート シラバス 改訂 2026",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "trends-05",
@@ -688,7 +688,7 @@
       "keyword": "AIリテラシー 義務化 企業",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "exam-tips-01",
@@ -699,7 +699,7 @@
       "keyword": "G検定 合格 体験談",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "exam-tips-02",
