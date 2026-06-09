@@ -369,7 +369,7 @@
       "keyword": "G検定 自然言語処理",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-domain-04",
@@ -380,7 +380,7 @@
       "keyword": "G検定 倫理 法律",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-domain-05",
@@ -391,7 +391,7 @@
       "keyword": "G検定 数学 統計 苦手",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-domain-06",

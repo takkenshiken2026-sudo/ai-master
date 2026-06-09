@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="G検定「自然言語処理」分野の全要点と頻出問題パターンを解説。形態素解析・埋め込み・RNN・トランスフォーマー・LLMまで整理。">
+  <title>G検定「自然言語処理」分野の全要点と頻出問題 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/g-kentei-domain-03/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="G検定「自然言語処理」分野の全要点と頻出問題">
+  <meta property="og:description" content="G検定の自然言語処理分野を要点整理。前処理・埋め込み・系列モデル・LLMと頻出問題パターンを解説。">
+  <meta property="og:url" content="https://ai-master.jp/guide/g-kentei-domain-03/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/guide/g-kentei-domain-03/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/guide/g-kentei-domain-03/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-03/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" },
+          { "@type": "ListItem", "position": 3, "name": "G検定 自然言語処理分野", "item": "https://ai-master.jp/guide/g-kentei-domain-03/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-03/#article",
+        "headline": "G検定「自然言語処理」分野の全要点と頻出問題",
+        "description": "G検定の自然言語処理分野を要点整理。前処理・埋め込み・系列モデル・LLMと頻出問題パターンを解説。",
+        "url": "https://ai-master.jp/guide/g-kentei-domain-03/",
+        "datePublished": "2026-06-09",
+        "dateModified": "2026-06-09",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/guide/g-kentei-domain-03/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/guide/g-kentei-domain-03/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-03/#webpage",
+        "url": "https://ai-master.jp/guide/g-kentei-domain-03/",
+        "name": "G検定「自然言語処理」分野の全要点と頻出問題",
+        "description": "G検定の自然言語処理分野を要点整理。前処理・埋め込み・系列モデル・LLMと頻出問題パターンを解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/guide/g-kentei-domain-03/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "G検定の自然言語処理はどのシラバスに該当する？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主に「ディープラーニングの応用例」に含まれます。RNN・トランスフォーマー・LLMなどの言語処理技術が出題されます。最新の出題範囲は日本ディープラーニング協会の公式シラバスで確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RNNとトランスフォーマー、どちらが重要？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "両方とも重要です。RNNは系列データの文脈保持の基礎として、トランスフォーマーは現代のLLMの基盤として頻出します。使い分けと特徴の違いを押さえましょう。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LLMの知識はどこまで必要？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "大規模言語モデルの概要、事前学習とファインチューニングの違い、ハルシネーションなどの課題が問われます。実装の詳細より概念理解が中心です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "この分野の演習はどこでできる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "一問一答「ディープラーニングの応用例」（domain-05）が中心です。系列モデルの基礎はdomain-07も参照してください。模擬試験は本番・過去問想定であり、公式の過去問ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body guide-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">学習ガイド</a></li>
+      <li aria-current="page">G検定 自然言語処理分野</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--guide">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">G検定 分野別解説</p>
+      <h1>G検定「自然言語処理」分野の全要点と頻出問題</h1>
+      <p class="tool-hero-sub">前処理 · 埋め込み · 系列モデル · LLM · 演習リンク</p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/guide/g-kentei-domain-03/hero.jpg" alt="書棚と学習資料でG検定の自然言語処理分野を学ぶ様子" width="1920" height="1280" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/1481627834876-b7833e8f5570" target="_blank" rel="noopener noreferrer">Unsplash</a>（Sincerely Media）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-09">2026年6月9日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      自然言語処理（NLP）は、コンピュータが人間の言語を理解・生成する技術です。G検定では<strong>「ディープラーニングの応用例」</strong>を中心に、形態素解析から<a href="../../glossary/llm/">大規模言語モデル（LLM）</a>まで幅広く出題されます。本記事では、<a href="../g-kentei-domain-02/">ディープラーニング分野</a>の知識を前提に、<strong>NLPの基本タスク・前処理・表現学習・系列モデル・LLM・頻出問題パターン</strong>を整理します。最新の出題範囲は<a href="https://www.jdla.org/certificate/general/" target="_blank" rel="noopener noreferrer">日本ディープラーニング協会 G検定公式ページ</a>でご確認ください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#overview">分野の位置づけ</a></li>
+        <li><a href="#tasks">NLPの基本タスク</a></li>
+        <li><a href="#preprocess">前処理と表現</a></li>
+        <li><a href="#models">系列モデルとトランスフォーマー</a></li>
+        <li><a href="#llm">LLMと生成AI</a></li>
+        <li><a href="#patterns">頻出問題パターン</a></li>
+        <li><a href="#study">学習の進め方</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="overview">
+      <h2>分野の位置づけ</h2>
+      <p>
+        NLPは<a href="../g-kentei-overview-04/">シラバス10分野</a>のうち、主に<strong>ディープラーニングの応用例（domain-05）</strong>に該当します。基盤技術は<a href="../g-kentei-domain-02/">ディープラーニングの概要・要素技術</a>（RNN・トランスフォーマー）と重なります。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>古典的NLP</strong>
+          形態素解析・品詞タグ付け・構文解析など、ルールや統計に基づく言語処理
+        </li>
+        <li>
+          <strong>ニューラルNLP</strong>
+          単語埋め込み・RNN/LSTM・トランスフォーマーによる深層学習ベースの言語処理
+        </li>
+        <li>
+          <strong>生成AI時代のNLP</strong>
+          LLMによる文章生成・要約・翻訳・対話。ChatGPTなどの基盤技術
+        </li>
+      </ul>
+    </section>
+
+    <section id="tasks">
+      <h2>NLPの基本タスク</h2>
+      <p>G検定で問われる代表的なNLPタスクと、その性質です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>タスク</th>
+            <th>内容</th>
+            <th>例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>形態素解析</strong></td>
+            <td>文を意味の最小単位（形態素）に分割</td>
+            <td>「自然言語処理」→「自然/言語/処理」</td>
+          </tr>
+          <tr>
+            <td><strong>品詞タグ付け</strong></td>
+            <td>各単語に品詞（名詞・動詞など）を付与</td>
+            <td>文法構造の把握に利用</td>
+          </tr>
+          <tr>
+            <td><strong>感情分析</strong></td>
+            <td>テキストのポジティブ・ネガティブを判定</td>
+            <td>レビュー分析・SNS監視</td>
+          </tr>
+          <tr>
+            <td><strong>固有表現抽出</strong></td>
+            <td>人名・地名・組織名などを抽出</td>
+            <td>情報検索・要約の前処理</td>
+          </tr>
+          <tr>
+            <td><strong>機械翻訳</strong></td>
+            <td>ある言語の文を別の言語に変換</td>
+            <td>系列変換タスクの代表例</td>
+          </tr>
+          <tr>
+            <td><strong>テキスト分類</strong></td>
+            <td>文書をカテゴリに分類</td>
+            <td>スパム判定・トピック分類</td>
+          </tr>
+          <tr>
+            <td><strong>質問応答</strong></td>
+            <td>質問に対する回答を生成・抽出</td>
+            <td>チャットボット・検索支援</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="preprocess">
+      <h2>前処理と表現</h2>
+      <p>テキストをモデルが扱える形式に変換する工程です。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>トークン化</strong>
+          テキストを<a href="../../glossary/token/">トークン</a>（単語やサブワード単位）に分割。言語によって手法が異なる
+        </li>
+        <li>
+          <strong>ストップワード除去</strong>
+          「は」「の」など意味の薄い語を除去し、ノイズを減らす
+        </li>
+        <li>
+          <strong>正規化</strong>
+          表記ゆれの統一（全角・半角、大文字・小文字など）
+        </li>
+        <li>
+          <strong>Bag of Words（BoW）</strong>
+          単語の出現頻度ベクトルで文書を表現。語順の情報は失われる
+        </li>
+        <li>
+          <strong>TF-IDF</strong>
+          単語の重要度を頻度と文書全体での希少性で重み付け
+        </li>
+        <li>
+          <strong>単語埋め込み（Word Embedding）</strong>
+          単語を低次元の密なベクトルで表現。<a href="../../glossary/embedding/">埋め込み</a>により意味的に近い語が近いベクトルになる
+        </li>
+      </ul>
+    </section>
+
+    <section id="models">
+      <h2>系列モデルとトランスフォーマー</h2>
+      <p>文脈を考慮した言語処理のためのモデル構造です。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>RNN（リカレントニューラルネットワーク）</strong>
+          過去の状態を保持し、時系列・文脈を逐次処理。長文では勾配消失の課題
+        </li>
+        <li>
+          <strong>LSTM・GRU</strong>
+          ゲート機構で長期依存を学習しやすくしたRNNの改良版
+        </li>
+        <li>
+          <strong>Seq2Seq（系列変換）</strong>
+          エンコーダ・デコーダ構造で入力系列から出力系列を生成。機械翻訳に応用
+        </li>
+        <li>
+          <strong><a href="../../glossary/attention/">アテンション</a></strong>
+          入力のどの部分に注目すべきかを重み付け。長い文脈の処理を改善
+        </li>
+        <li>
+          <strong><a href="../../glossary/transformer/">トランスフォーマー</a></strong>
+          アテンション機構のみで系列を処理。並列計算に適し、現代LLMの基盤
+        </li>
+        <li>
+          <strong>BERT・GPT</strong>
+          トランスフォーマーベースの事前学習モデル。BERTは双方向、GPTは左から右への生成に特化
+        </li>
+      </ul>
+    </section>
+
+    <section id="llm">
+      <h2>LLMと生成AI</h2>
+      <p>近年のG検定では<a href="../../glossary/generative-ai/">生成AI</a>関連の出題が増えています。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong><a href="../../glossary/llm/">大規模言語モデル（LLM）</a></strong>
+          大量のテキストで事前学習された大規模な言語モデル。ChatGPTの基盤
+        </li>
+        <li>
+          <strong>事前学習とファインチューニング</strong>
+          汎用知識を事前学習で獲得し、特定タスク用に追加学習する二段階の流れ
+        </li>
+        <li>
+          <strong><a href="../../glossary/prompt-engineering/">プロンプトエンジニアリング</a></strong>
+          適切な指示文でLLMの出力品質を高める技法
+        </li>
+        <li>
+          <strong><a href="../../glossary/hallucination/">ハルシネーション</a></strong>
+          LLMがもっともらしいが事実と異なる内容を生成する現象
+        </li>
+        <li>
+          <strong><a href="../../glossary/rag/">RAG（検索拡張生成）</a></strong>
+          外部データを検索してから生成することで、回答の正確性を高める手法
+        </li>
+      </ul>
+    </section>
+
+    <section id="patterns">
+      <h2>頻出問題パターン</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>タスクと手法の対応</strong>
+          「機械翻訳」→系列変換、「感情分析」→テキスト分類
+        </li>
+        <li>
+          <strong>BoWと埋め込みの違い</strong>
+          BoWは疎ベクトルで語順を無視、埋め込みは密ベクトルで意味的類似を表現
+        </li>
+        <li>
+          <strong>RNNとトランスフォーマーの比較</strong>
+          RNNは逐次処理で長文に弱い、トランスフォーマーは並列処理とアテンションで長距離依存を捉える
+        </li>
+        <li>
+          <strong>LLMの課題</strong>
+          ハルシネーション・偏り・著作権・個人情報など、生成AI特有のリスク
+        </li>
+        <li>
+          <strong>前処理の目的</strong>
+          ノイズ除去・表記統一・トークン化など、モデル入力の品質向上
+        </li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>分野別演習で定着させる</strong></p>
+        <p><a href="../../exams/g-kentei/drill/domain/domain-05/">G検定 一問一答「ディープラーニングの応用例」</a> — NLP・生成AIを含む応用分野の演習</p>
+      </div>
+    </section>
+
+    <section id="study">
+      <h2>学習の進め方</h2>
+      <ol class="tool-example-list">
+        <li>
+          <strong>ディープラーニングの基礎を確認</strong>
+          <a href="../g-kentei-domain-02/">DL分野</a>でRNN・トランスフォーマーの概要を押さえる
+        </li>
+        <li>
+          <strong>用語を整理</strong>
+          <a href="../../glossary/llm/">LLM</a>・<a href="../../glossary/embedding/">埋め込み</a>・<a href="../../glossary/token/">トークン</a>など関連用語を<a href="../../glossary/">用語辞典</a>で確認
+        </li>
+        <li>
+          <strong>domain-05で演習</strong>
+          応用例の一問一答を50問以上解き、NLP・生成AIの問題パターンに慣れる
+        </li>
+        <li>
+          <strong>生成AIの倫理も接続</strong>
+          ハルシネーションやバイアスは<a href="../g-kentei-domain-04/">倫理・法律分野</a>とも関連
+        </li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>G検定の自然言語処理はどのシラバスに該当する？</summary>
+          <p class="tool-faq-a">主に「ディープラーニングの応用例」（domain-05）に含まれます。最新の出題範囲は<a href="https://www.jdla.org/certificate/general/" target="_blank" rel="noopener noreferrer">公式シラバス</a>で確認してください。</p>
+        </details>
+        <details>
+          <summary>RNNとトランスフォーマー、どちらが重要？</summary>
+          <p class="tool-faq-a">両方とも重要です。RNNは系列処理の基礎、トランスフォーマーは現代LLMの基盤として頻出します。<a href="../g-kentei-domain-02/">ディープラーニング分野</a>もあわせて学習しましょう。</p>
+        </details>
+        <details>
+          <summary>LLMの知識はどこまで必要？</summary>
+          <p class="tool-faq-a">概要・事前学習とファインチューニングの違い・ハルシネーションなどの課題が問われます。実装の詳細より概念理解が中心です。</p>
+        </details>
+        <details>
+          <summary>この分野の演習はどこでできる？</summary>
+          <p class="tool-faq-a"><a href="../../exams/g-kentei/drill/domain/domain-05/">domain-05</a>が中心です。当サイトの模擬問題は本番・過去問想定であり、公式の過去問ではありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する学習ガイド</h2>
+        <ul class="tool-related-list">
+          <li><a href="../g-kentei-domain-02/">ディープラーニング分野の要点</a></li>
+          <li><a href="../g-kentei-domain-04/">AI倫理・法律分野の要点</a></li>
+          <li><a href="../g-kentei-overview-04/">試験範囲・シラバス10分野</a></li>
+          <li><a href="../g-kentei-study-05/">頻出用語50選</a></li>
+          <li><a href="../index.html?cat=g-kentei-domain">分野別解説カテゴリ一覧</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">学習ガイド一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/domain/domain-05/">一問一答（DL応用例）</a></li>
+          <li><a href="../../exams/g-kentei/drill/domain/domain-07/">一問一答（DL要素技術）</a></li>
+          <li><a href="../../glossary/llm/">LLM（用語）</a></li>
+          <li><a href="../../exams/g-kentei/mock/">模擬試験</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/g-kentei/">G検定 試験対策トップ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
