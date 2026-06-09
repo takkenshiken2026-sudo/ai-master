@@ -129,9 +129,9 @@ a.exam-mode-row--mock:hover .exam-mode-row__go {
 
 .exam-mode-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
   padding: 20px;
   background: var(--white);
   border: 2px solid var(--blue-mid);
@@ -156,6 +156,7 @@ a.exam-mode-row:focus-visible {
 }
 
 .exam-mode-row__main {
+  flex: 1;
   min-width: 0;
 }
 
@@ -195,12 +196,14 @@ a.exam-mode-row:hover .exam-mode-row__name {
 
 .exam-mode-row__go {
   flex-shrink: 0;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  min-width: 108px;
-  padding: 10px 18px;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  margin-top: 18px;
+  padding: 12px 18px;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   line-height: 1.2;
@@ -836,7 +839,9 @@ body.mock-checkout-modal-open {
 
 .exam-mode-row__buy {
   flex-shrink: 0;
-  align-self: center;
+  align-self: stretch;
+  width: 100%;
+  margin-top: 18px;
   padding: 12px 18px;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
@@ -844,7 +849,7 @@ body.mock-checkout-modal-open {
   color: var(--white);
   background: var(--ink);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background 0.12s ease;
 }
