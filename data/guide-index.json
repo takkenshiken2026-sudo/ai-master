@@ -402,7 +402,7 @@
       "keyword": "G検定 AI 歴史",
       "priority": "低",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-domain-01",
@@ -446,7 +446,7 @@
       "keyword": "ハルシネーション とは",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "terms-02",
@@ -479,7 +479,7 @@
       "keyword": "RAG とは",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "terms-05",
