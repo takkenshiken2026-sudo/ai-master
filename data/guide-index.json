@@ -50,7 +50,7 @@
       "keyword": "G検定 受験料 日程",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-overview-03",
@@ -94,7 +94,7 @@
       "keyword": "生成AIパスポート とは",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-overview-02",
@@ -149,7 +149,7 @@
       "keyword": "G検定 生成AIパスポート 違い どっち",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "compare-02",
@@ -226,7 +226,7 @@
       "keyword": "G検定 勉強法 文系",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-study-02",
