@@ -218,6 +218,8 @@ function updateHeadLinks(page, q, sort, cat, totalPages) {
   }
 }
 
+let lastFilterKey = '';
+
 function render() {
   const { page, q, sort, cat } = parseState();
   const filtered = sortTerms(
@@ -225,7 +227,13 @@ function render() {
     sort,
   );
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
-  renderCategoryFilters(cat, q, sort);
+  const filterKey = `${cat}:${sort}`;
+  if (filterKey !== lastFilterKey) {
+    renderCategoryFilters(cat, q, sort);
+    lastFilterKey = filterKey;
+  } else {
+    HubNav.updateFilterHrefs('glossaryCategoryFilters', (id) => buildListUrl(1, q, sort, id));
+  }
   renderFeatured(cat, page, q, sort);
   if (page > totalPages) {
     HubNav.replace(buildListUrl(totalPages, q, sort, cat), render);
@@ -246,9 +254,7 @@ function render() {
   if (sortSelect && sortSelect.value !== sort) {
     sortSelect.value = sort;
   }
-  if (searchInput && searchInput.value !== q) {
-    searchInput.value = q;
-  }
+  HubNav.syncSearchInput(searchInput, q);
 
   if (filtered.length === 0) {
     if (meta) meta.textContent = '0件';
@@ -279,19 +285,17 @@ function render() {
   renderPagination(safePage, q, sort, cat, totalPages);
 }
 
-let searchTimer;
 function bindEvents() {
   HubNav.bindLinkClicks(render);
   HubNav.bindPopstate(render);
 
-  document.getElementById('glossarySearchInput')?.addEventListener('input', (e) => {
-    if (e.isComposing) return;
-    clearTimeout(searchTimer);
-    const q = e.target.value.trim();
-    const { sort, cat } = parseState();
-    searchTimer = setTimeout(() => {
-      HubNav.navigate(buildListUrl(1, q, sort, cat), render);
-    }, 300);
+  HubNav.bindSearchInput({
+    inputId: 'glossarySearchInput',
+    render,
+    buildUrl(q) {
+      const { sort, cat } = parseState();
+      return buildListUrl(1, q, sort, cat);
+    },
   });
 
   document.getElementById('glossarySortSelect')?.addEventListener('change', (e) => {

@@ -218,6 +218,8 @@ function updateHeadLinks(cat, page, q, totalPages) {
   }
 }
 
+let lastFilterKey = '';
+
 function render() {
   const { cat, page, q } = parseState();
   const filtered = getFiltered(cat, q);
@@ -226,7 +228,13 @@ function render() {
   const start = (safePage - 1) * PAGE_SIZE;
   const pageTools = filtered.slice(start, start + PAGE_SIZE);
 
-  renderCategoryFilters(cat, q);
+  const filterKey = cat;
+  if (filterKey !== lastFilterKey) {
+    renderCategoryFilters(cat, q);
+    lastFilterKey = filterKey;
+  } else {
+    HubNav.updateFilterHrefs('toolsCategoryFilters', (id) => buildListUrl(id, 1, q));
+  }
   renderFeatured();
 
   const list = document.getElementById('toolList');
@@ -257,26 +265,22 @@ function render() {
   renderPagination(cat, safePage, q, totalPages);
 
   const searchInput = document.getElementById('searchInput');
-  if (searchInput && searchInput.value !== q) {
-    searchInput.value = q;
-  }
+  HubNav.syncSearchInput(searchInput, q);
 
   window.SEO?.updateToolsBreadcrumb?.(cat);
 }
 
-let searchTimer;
 function bindEvents() {
   HubNav.bindLinkClicks(render);
   HubNav.bindPopstate(render);
 
-  document.getElementById('searchInput')?.addEventListener('input', (e) => {
-    if (e.isComposing) return;
-    clearTimeout(searchTimer);
-    const q = e.target.value.trim();
-    searchTimer = setTimeout(() => {
+  HubNav.bindSearchInput({
+    inputId: 'searchInput',
+    render,
+    buildUrl(q) {
       const { cat } = parseState();
-      HubNav.navigate(buildListUrl(cat, 1, q), render);
-    }, 300);
+      return buildListUrl(cat, 1, q);
+    },
   });
 }
 

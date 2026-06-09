@@ -173,13 +173,21 @@ function renderPagination(cat, page, q, totalPages) {
   nav.innerHTML = html;
 }
 
+let lastFilterKey = '';
+
 function render() {
   const { cat, page, q } = parseState();
   const filtered = allArticles.filter((a) => matchesCategory(a, cat) && matchesSearch(a, q));
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const publishedCount = allArticles.filter((a) => a.published).length;
 
-  renderCategoryFilters(cat, q);
+  const filterKey = cat;
+  if (filterKey !== lastFilterKey) {
+    renderCategoryFilters(cat, q);
+    lastFilterKey = filterKey;
+  } else {
+    HubNav.updateFilterHrefs('careerCategoryFilters', (id) => buildListUrl(id, 1, q));
+  }
   renderFeatured(cat, page, q);
 
   if (page > totalPages) {
@@ -195,7 +203,7 @@ function render() {
   const list = document.getElementById('roleList');
   const searchInput = document.getElementById('careerSearchInput');
 
-  if (searchInput && searchInput.value !== q) searchInput.value = q;
+  if (searchInput) HubNav.syncSearchInput(searchInput, q);
 
   const catLabel = cat === 'all' ? '' : categories[cat] || cat;
 
@@ -220,19 +228,17 @@ function render() {
   renderPagination(cat, page, q, totalPages);
 }
 
-let searchTimer;
 function bindEvents() {
   HubNav.bindLinkClicks(render);
   HubNav.bindPopstate(render);
 
-  document.getElementById('careerSearchInput')?.addEventListener('input', (e) => {
-    if (e.isComposing) return;
-    clearTimeout(searchTimer);
-    const q = e.target.value.trim();
-    const { cat } = parseState();
-    searchTimer = setTimeout(() => {
-      HubNav.navigate(buildListUrl(cat, 1, q), render);
-    }, 300);
+  HubNav.bindSearchInput({
+    inputId: 'careerSearchInput',
+    render,
+    buildUrl(q) {
+      const { cat } = parseState();
+      return buildListUrl(cat, 1, q);
+    },
   });
 }
 
