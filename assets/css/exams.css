@@ -103,28 +103,19 @@ a.exam-pick-card:hover .exam-pick-cta {
 }
 
 .exam-mode-row--mock {
-  background: #f7f5fc;
-  border-color: #c9bdf0;
+  background: var(--red-soft);
+  border-color: var(--red-mid);
 }
 
 a.exam-mode-row--mock:hover {
-  background: #efebfa;
-  border-color: #6b4fc7;
-  box-shadow: 0 6px 20px rgba(107, 79, 199, 0.14);
-}
-
-a.exam-mode-row--mock:hover .exam-mode-row__name {
-  color: #5b3fa0;
+  background: var(--red-soft-hover);
+  border-color: var(--red);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.12);
 }
 
 a.exam-mode-row--mock .exam-mode-row__go {
-  background: #6b4fc7;
-  box-shadow: 0 1px 2px rgba(107, 79, 199, 0.25);
-}
-
-a.exam-mode-row--mock:hover .exam-mode-row__go {
-  background: #5b3fa0;
-  box-shadow: 0 2px 6px rgba(107, 79, 199, 0.32);
+  background: var(--red);
+  box-shadow: 0 1px 2px rgba(220, 38, 38, 0.22);
 }
 
 .exam-mode-row {
@@ -179,6 +170,10 @@ a.exam-mode-row:hover .exam-mode-row__name {
   color: var(--blue);
 }
 
+a.exam-mode-row--mock:hover .exam-mode-row__name {
+  color: var(--red-hover);
+}
+
 .exam-mode-row__desc {
   margin: 8px 0 0;
   font-size: var(--text-sm);
@@ -216,6 +211,11 @@ a.exam-mode-row:hover .exam-mode-row__go {
   box-shadow: 0 2px 6px rgba(26, 92, 219, 0.28);
 }
 
+a.exam-mode-row--mock:hover .exam-mode-row__go {
+  background: var(--red-hover);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.28);
+}
+
 .exam-mode-row__go svg {
   width: 16px;
   height: 16px;
@@ -235,9 +235,9 @@ a.exam-mode-row:hover .exam-mode-row__go {
 }
 
 .exam-mode-badge--paid {
-  background: #f0ebff;
-  color: #5b3fa0;
-  border: 1px solid #d4c5f5;
+  background: var(--red-soft);
+  color: var(--red-hover);
+  border: 1px solid var(--red-mid);
 }
 
 .exam-mode-badge--soon {

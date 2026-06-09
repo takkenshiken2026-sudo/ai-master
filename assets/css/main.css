@@ -55,6 +55,10 @@
   --amber: #D97706;
   --amber-soft: #FEF9C3;
   --red: #DC2626;
+  --red-hover: #B91C1C;
+  --red-soft: #FEF2F2;
+  --red-soft-hover: #FEE2E2;
+  --red-mid: #FECACA;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
