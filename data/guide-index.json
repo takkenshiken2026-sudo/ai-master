@@ -336,7 +336,7 @@
       "keyword": "生成AIパスポート 直前 対策",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-domain-01",
@@ -347,7 +347,7 @@
       "keyword": "G検定 機械学習",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-domain-02",
@@ -358,7 +358,7 @@
       "keyword": "G検定 ディープラーニング",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "g-kentei-domain-03",

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="G検定「機械学習の概要」分野の全要点と頻出問題パターンを解説。教師あり・なし学習、評価指標、過学習対策まで整理。">
+  <title>G検定「機械学習」分野の全要点と頻出問題 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/g-kentei-domain-01/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="G検定「機械学習」分野の全要点と頻出問題">
+  <meta property="og:description" content="G検定の機械学習分野を要点整理。学習の種類、評価指標、過学習対策と頻出問題パターンを解説。">
+  <meta property="og:url" content="https://ai-master.jp/guide/g-kentei-domain-01/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/guide/g-kentei-domain-01/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/guide/g-kentei-domain-01/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-01/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" },
+          { "@type": "ListItem", "position": 3, "name": "G検定 機械学習分野", "item": "https://ai-master.jp/guide/g-kentei-domain-01/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-01/#article",
+        "headline": "G検定「機械学習」分野の全要点と頻出問題",
+        "description": "G検定の機械学習分野を要点整理。学習の種類、評価指標、過学習対策と頻出問題パターンを解説。",
+        "url": "https://ai-master.jp/guide/g-kentei-domain-01/",
+        "datePublished": "2026-06-09",
+        "dateModified": "2026-06-09",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/guide/g-kentei-domain-01/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/guide/g-kentei-domain-01/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-01/#webpage",
+        "url": "https://ai-master.jp/guide/g-kentei-domain-01/",
+        "name": "G検定「機械学習」分野の全要点と頻出問題",
+        "description": "G検定の機械学習分野を要点整理。学習の種類、評価指標、過学習対策と頻出問題パターンを解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/guide/g-kentei-domain-01/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "G検定の機械学習分野はどのシラバスに該当する？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "「機械学習の概要」に該当します。教師あり・なし学習、評価指標、過学習と正則化などが中心です。最新の出題範囲は日本ディープラーニング協会の公式シラバスで確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "機械学習とディープラーニングの違いは試験で問われる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。機械学習はデータからパターンを学ぶ手法全般、ディープラーニングは多層ニューラルネットを使う深層学習の一分野として区別されることが多いです。包含関係と代表的な手法の違いを押さえましょう。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "評価指標はどこまで覚える必要がある？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "精度・適合率・再現率・F値の定義と使い分けは頻出です。不均衡データでは精度だけでは判断できない理由も問われます。混同行列の読み取りも確認しておきましょう。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "この分野の演習はどこでできる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "当サイトのG検定一問一答「機械学習の概要」（domain-10）で分野別に演習できます。模擬試験は本番・過去問想定であり、公式の過去問ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body guide-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">学習ガイド</a></li>
+      <li aria-current="page">G検定 機械学習分野</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--guide">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">G検定 分野別解説</p>
+      <h1>G検定「機械学習」分野の全要点と頻出問題</h1>
+      <p class="tool-hero-sub">学習の種類 · 評価指標 · 過学習対策 · 演習リンク</p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/guide/g-kentei-domain-01/hero.jpg" alt="ノートとペンでG検定の機械学習分野を整理して学習する様子" width="1920" height="1280" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/1450101499163-c8848c66ca85" target="_blank" rel="noopener noreferrer">Unsplash</a>（Jan Kahánek）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-09">2026年6月9日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      G検定のシラバス10分野のうち、<strong>「機械学習の概要」</strong>は出題比率が高く、<a href="../../glossary/supervised-learning/">教師あり学習</a>と<a href="../../glossary/unsupervised-learning/">教師なし学習</a>の区別、評価指標、過学習対策などが四肢択一で繰り返し問われます。本記事では、<a href="../g-kentei-overview-04/">試験範囲・シラバス</a>の機械学習分野を、<strong>学習の種類・代表的アルゴリズム・評価指標・汎化と過学習・頻出問題パターン</strong>に分けて整理します。最新の出題範囲は<a href="https://www.jdla.org/certificate/general/" target="_blank" rel="noopener noreferrer">日本ディープラーニング協会 G検定公式ページ</a>でご確認ください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#overview">分野の位置づけ</a></li>
+        <li><a href="#types">学習の種類</a></li>
+        <li><a href="#algorithms">代表的アルゴリズム</a></li>
+        <li><a href="#metrics">評価指標</a></li>
+        <li><a href="#generalization">汎化・過学習・正則化</a></li>
+        <li><a href="#patterns">頻出問題パターン</a></li>
+        <li><a href="#study">学習の進め方</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="overview">
+      <h2>分野の位置づけ</h2>
+      <p>
+        機械学習分野は、AIの技術的コアのひとつです。<a href="../g-kentei-overview-04/">シラバス10分野</a>では「機械学習の概要」として独立しており、数理・統計（domain-01）の知識を土台に、<a href="../g-kentei-domain-02/">ディープラーニング分野</a>へつながります。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>機械学習とは</strong>
+          明示的なルールではなく、データからパターンを学習して予測・分類・クラスタリングを行う手法の総称（<a href="../../glossary/machine-learning/">用語辞典</a>）
+        </li>
+        <li>
+          <strong>ディープラーニングとの関係</strong>
+          ディープラーニングは機械学習の一分野。多層ニューラルネットを使う深層学習は別分野としても出題される
+        </li>
+        <li>
+          <strong>出題の傾向</strong>
+          定義の暗記より「どの手法をいつ使うか」「指標の意味と限界」が問われやすい
+        </li>
+      </ul>
+    </section>
+
+    <section id="types">
+      <h2>学習の種類</h2>
+      <p>G検定で最も頻出するのが、3つの学習パラダイムの区別です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>種類</th>
+            <th>データの特徴</th>
+            <th>主なタスク例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong><a href="../../glossary/supervised-learning/">教師あり学習</a></strong></td>
+            <td>正解ラベル付き</td>
+            <td>分類・回帰</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../../glossary/unsupervised-learning/">教師なし学習</a></strong></td>
+            <td>ラベルなし</td>
+            <td>クラスタリング・次元削減</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../../glossary/reinforcement-learning/">強化学習</a></strong></td>
+            <td>報酬・罰によるフィードバック</td>
+            <td>方策学習・ゲームAI</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>問題文に「正解データがある」「ラベルがない」「エージェントが環境と相互作用する」などのキーワードが出たら、どの学習に該当するかを即座に判断できるようにしておきましょう。</p>
+    </section>
+
+    <section id="algorithms">
+      <h2>代表的アルゴリズム</h2>
+      <p>実装の詳細より、特徴と適用場面の理解が試験では重要です。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>線形回帰・ロジスティック回帰</strong>
+          教師あり学習の基礎。回帰は連続値、ロジスティックは二値分類に使う
+        </li>
+        <li>
+          <strong>決定木・ランダムフォレスト</strong>
+          条件分岐でデータを分割。ランダムフォレストは複数の木を組み合わせて精度と汎化を改善
+        </li>
+        <li>
+          <strong>SVM（サポートベクターマシン）</strong>
+          マージン最大化で分類境界を求める。カーネル法で非線形にも対応
+        </li>
+        <li>
+          <strong>k-means法</strong>
+          教師なしの代表的手法。データをk個のクラスタに分割
+        </li>
+        <li>
+          <strong>主成分分析（PCA）</strong>
+          次元削減の代表例。分散の大きい方向へ射影して特徴を圧縮
+        </li>
+      </ul>
+    </section>
+
+    <section id="metrics">
+      <h2>評価指標</h2>
+      <p>分類タスクの評価指標はG検定の定番です。混同行列（TP・FP・TN・FN）とセットで覚えましょう。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>精度（Accuracy）</strong>
+          全体のうち正しく予測した割合。クラス不均衡があると誤解を招きやすい
+        </li>
+        <li>
+          <strong>適合率（Precision）</strong>
+          陽性と予測したうち、実際に陽性だった割合。誤検知を抑えたいとき重視
+        </li>
+        <li>
+          <strong>再現率（Recall）</strong>
+          実際の陽性のうち、正しく検出できた割合。見逃しを減らしたいとき重視
+        </li>
+        <li>
+          <strong>F値（F1スコア）</strong>
+          適合率と再現率の調和平均。両者のバランスを一つの数値で表す
+        </li>
+        <li>
+          <strong>ROC曲線・AUC</strong>
+          閾値を変えたときの性能を評価。AUCが1に近いほど判別性能が高い
+        </li>
+      </ul>
+      <p>「スパムメール検出で見逃しを減らしたい」→再現率重視、「誤って重要メールをスパムにしたくない」→適合率重視、といったケース問題に慣れておきましょう。</p>
+    </section>
+
+    <section id="generalization">
+      <h2>汎化・過学習・正則化</h2>
+      <p>訓練データにだけ適合し、未知データで性能が落ちる<strong>過学習</strong>は頻出テーマです。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>訓練データ・検証データ・テストデータ</strong>
+          学習・ハイパーパラメータ調整・最終評価で役割を分け、データリークを防ぐ
+        </li>
+        <li>
+          <strong>交差検証</strong>
+          データを分割して学習・検証を繰り返し、汎化性能を安定して見積もる
+        </li>
+        <li>
+          <strong><a href="../../glossary/overfitting/">過学習</a></strong>
+          訓練誤差は小さいが検証誤差が大きい状態。モデルが複雑すぎる・データが少ないとき起きやすい
+        </li>
+        <li>
+          <strong><a href="../../glossary/regularization/">正則化</a></strong>
+          L1・L2正則化などでパラメータを抑制し、過学習を防ぐ
+        </li>
+        <li>
+          <strong><a href="../../glossary/early-stopping/">早期終了</a></strong>
+          検証誤差が悪化し始めた時点で学習を打ち切る手法
+        </li>
+      </ul>
+    </section>
+
+    <section id="patterns">
+      <h2>頻出問題パターン</h2>
+      <p>四肢択一で繰り返し登場するパターンをまとめます。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>学習手法の分類</strong>
+          「ラベル付きデータで分類モデルを学ぶ」→教師あり、「顧客をグループ分けする」→教師なし（クラスタリング）
+        </li>
+        <li>
+          <strong>指標の選択</strong>
+          不均衡データで精度だけを見ると危険、という文脈でF値や再現率を選ぶ
+        </li>
+        <li>
+          <strong>過学習の対策</strong>
+          正則化・早期終了・データ増強・モデル簡素化のうち、文脈に合うものを選ぶ
+        </li>
+        <li>
+          <strong>バイアス・バリアンス</strong>
+          モデルが単純すぎるとバイアスが高く、複雑すぎるとバリアンスが高い、というトレードオフ
+        </li>
+        <li>
+          <strong>特徴量エンジニアリング</strong>
+          生データからモデルに有効な特徴を作る工程。精度に大きく影響する
+        </li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>分野別演習で定着させる</strong></p>
+        <p><a href="../../exams/g-kentei/drill/domain/domain-10/">G検定 一問一答「機械学習の概要」</a> — この分野に特化した演習問題</p>
+      </div>
+    </section>
+
+    <section id="study">
+      <h2>学習の進め方</h2>
+      <ol class="tool-example-list">
+        <li>
+          <strong>用語の土台を固める</strong>
+          <a href="../g-kentei-study-05/">頻出用語50選</a>の機械学習カテゴリと<a href="../../glossary/machine-learning/">用語辞典</a>で定義を確認
+        </li>
+        <li>
+          <strong>一問一答で理解度チェック</strong>
+          <a href="../../exams/g-kentei/drill/domain/domain-10/">domain-10</a>を50問以上解き、正答率70%を目標に
+        </li>
+        <li>
+          <strong>評価指標は具体例で</strong>
+          混同行列を自分で書いてPrecision・Recallを計算する練習を1回でもすると定着しやすい
+        </li>
+        <li>
+          <strong>ディープラーニングと接続</strong>
+          機械学習の基礎が固まったら<a href="../g-kentei-domain-02/">ディープラーニング分野</a>へ進む
+        </li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>G検定の機械学習分野はどのシラバスに該当する？</summary>
+          <p class="tool-faq-a">「機械学習の概要」に該当します。最新の出題範囲は<a href="https://www.jdla.org/certificate/general/" target="_blank" rel="noopener noreferrer">公式シラバス</a>で確認してください。</p>
+        </details>
+        <details>
+          <summary>機械学習とディープラーニングの違いは試験で問われる？</summary>
+          <p class="tool-faq-a">はい。機械学習は手法全般、ディープラーニングは多層ニューラルネットを使う深層学習です。<a href="../g-kentei-domain-02/">ディープラーニング分野の解説</a>もあわせて参照してください。</p>
+        </details>
+        <details>
+          <summary>評価指標はどこまで覚える必要がある？</summary>
+          <p class="tool-faq-a">精度・適合率・再現率・F値の定義と使い分けは頻出です。不均衡データでは精度だけでは判断できない理由も問われます。</p>
+        </details>
+        <details>
+          <summary>この分野の演習はどこでできる？</summary>
+          <p class="tool-faq-a"><a href="../../exams/g-kentei/drill/domain/domain-10/">一問一答 domain-10</a>で分野別に演習できます。当サイトの模擬問題は本番・過去問想定であり、公式の過去問ではありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する学習ガイド</h2>
+        <ul class="tool-related-list">
+          <li><a href="../g-kentei-domain-02/">ディープラーニング分野の要点</a></li>
+          <li><a href="../g-kentei-overview-04/">試験範囲・シラバス10分野</a></li>
+          <li><a href="../g-kentei-study-05/">頻出用語50選</a></li>
+          <li><a href="../g-kentei-study-01/">G検定の勉強法ロードマップ</a></li>
+          <li><a href="../index.html?cat=g-kentei-domain">分野別解説カテゴリ一覧</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">学習ガイド一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/domain/domain-10/">一問一答（機械学習）</a></li>
+          <li><a href="../../exams/g-kentei/drill/">一問一答 500問</a></li>
+          <li><a href="../../exams/g-kentei/practice/">実践演習</a></li>
+          <li><a href="../../exams/g-kentei/mock/">模擬試験</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/g-kentei/">G検定 試験対策トップ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

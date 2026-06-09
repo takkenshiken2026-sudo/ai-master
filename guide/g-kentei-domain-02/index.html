@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="G検定「ディープラーニング」分野の全要点と頻出問題パターンを解説。ニューラルネット、CNN・RNN、正則化・最適化まで整理。">
+  <title>G検定「ディープラーニング」分野の全要点と頻出問題 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/g-kentei-domain-02/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="G検定「ディープラーニング」分野の全要点と頻出問題">
+  <meta property="og:description" content="G検定のディープラーニング分野を要点整理。概要・要素技術・学習の流れと頻出問題パターンを解説。">
+  <meta property="og:url" content="https://ai-master.jp/guide/g-kentei-domain-02/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/guide/g-kentei-domain-02/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/guide/g-kentei-domain-02/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-02/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" },
+          { "@type": "ListItem", "position": 3, "name": "G検定 ディープラーニング分野", "item": "https://ai-master.jp/guide/g-kentei-domain-02/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-02/#article",
+        "headline": "G検定「ディープラーニング」分野の全要点と頻出問題",
+        "description": "G検定のディープラーニング分野を要点整理。概要・要素技術・学習の流れと頻出問題パターンを解説。",
+        "url": "https://ai-master.jp/guide/g-kentei-domain-02/",
+        "datePublished": "2026-06-09",
+        "dateModified": "2026-06-09",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/guide/g-kentei-domain-02/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/guide/g-kentei-domain-02/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/guide/g-kentei-domain-02/#webpage",
+        "url": "https://ai-master.jp/guide/g-kentei-domain-02/",
+        "name": "G検定「ディープラーニング」分野の全要点と頻出問題",
+        "description": "G検定のディープラーニング分野を要点整理。概要・要素技術・学習の流れと頻出問題パターンを解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/guide/g-kentei-domain-02/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "G検定のディープラーニングは何分野に分かれる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "シラバス上は「ディープラーニングの概要」「ディープラーニングの要素技術」「ディープラーニングの応用例」の3分野にまたがります。本記事は概要と要素技術を中心に解説します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CNNとRNNの違いは試験で問われる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。CNNは画像の局所特徴抽出に、RNNは時系列・文脈の保持に適している、という使い分けが頻出です。近年はトランスフォーマーも重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "数式はどこまで必要？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "G検定はジェネラリスト向けのため、複雑な導出より概念理解が中心です。勾配降下法・誤差逆伝播・損失関数の役割を言葉で説明できるレベルが目安です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "この分野の演習はどこでできる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "一問一答「ディープラーニングの概要」（domain-06）と「要素技術」（domain-07）で演習できます。模擬試験は本番・過去問想定であり、公式の過去問ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body guide-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">学習ガイド</a></li>
+      <li aria-current="page">G検定 ディープラーニング分野</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--guide">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">G検定 分野別解説</p>
+      <h1>G検定「ディープラーニング」分野の全要点と頻出問題</h1>
+      <p class="tool-hero-sub">ニューラルネット · CNN・RNN · 最適化 · 演習リンク</p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/guide/g-kentei-domain-02/hero.jpg" alt="ノートPCでG検定のディープラーニング分野を学習する様子" width="1920" height="1280" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/1516321318423-f06f85e504b3" target="_blank" rel="noopener noreferrer">Unsplash</a>（Christina @ wocintechchat.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-09">2026年6月9日</time></span>
+    <span>読了目安：約11分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      G検定のシラバスでは、<strong>ディープラーニング関連が3分野</strong>（概要・要素技術・応用例）にまたがり、出題比率の高いエリアです。本記事では<strong>「ディープラーニングの概要」</strong>と<strong>「要素技術」</strong>を中心に、<a href="../../glossary/neural-network/">ニューラルネットワーク</a>の基礎、学習の流れ、CNN・RNN・<a href="../../glossary/transformer/">トランスフォーマー</a>、正則化・最適化、頻出問題パターンを整理します。<a href="../g-kentei-domain-01/">機械学習分野</a>の理解があるとスムーズです。最新の出題範囲は<a href="https://www.jdla.org/certificate/general/" target="_blank" rel="noopener noreferrer">日本ディープラーニング協会 G検定公式ページ</a>でご確認ください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#overview">3分野の全体像</a></li>
+        <li><a href="#nn">ニューラルネットの基礎</a></li>
+        <li><a href="#training">学習の流れ</a></li>
+        <li><a href="#architectures">代表的アーキテクチャ</a></li>
+        <li><a href="#techniques">正則化・最適化・活性化</a></li>
+        <li><a href="#patterns">頻出問題パターン</a></li>
+        <li><a href="#study">学習の進め方</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="overview">
+      <h2>3分野の全体像</h2>
+      <p><a href="../g-kentei-overview-04/">シラバス10分野</a>のうち、ディープラーニングは次の3つに分かれます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>分野</th>
+            <th>内容</th>
+            <th>演習</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ディープラーニングの概要</strong></td>
+            <td>ニューラルネットの構造、学習の流れ、特徴抽出</td>
+            <td><a href="../../exams/g-kentei/drill/domain/domain-06/">domain-06</a></td>
+          </tr>
+          <tr>
+            <td><strong>ディープラーニングの要素技術</strong></td>
+            <td>CNN・RNN・正則化・最適化・活性化関数</td>
+            <td><a href="../../exams/g-kentei/drill/domain/domain-07/">domain-07</a></td>
+          </tr>
+          <tr>
+            <td><strong>ディープラーニングの応用例</strong></td>
+            <td>画像認識・自然言語処理・生成AIなど</td>
+            <td><a href="../../exams/g-kentei/drill/domain/domain-05/">domain-05</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>学習順序は<strong>概要（domain-06）→要素技術（domain-07）→応用例（domain-05）</strong>がおすすめです。</p>
+    </section>
+
+    <section id="nn">
+      <h2>ニューラルネットの基礎</h2>
+      <p><a href="../../glossary/deep-learning/">ディープラーニング</a>は、多層の<a href="../../glossary/neural-network/">ニューラルネットワーク</a>で高次の特徴を自動抽出する手法です。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>入力層・隠れ層・出力層</strong>
+          データが入力層から入り、隠れ層で特徴変換を経て、出力層で予測結果を出す
+        </li>
+        <li>
+          <strong>ニューロン（ノード）</strong>
+          重み付き和に活性化関数を適用して次の層へ信号を渡す計算単位
+        </li>
+        <li>
+          <strong>重みとバイアス</strong>
+          学習によって更新されるパラメータ。モデルの表現力を決める
+        </li>
+        <li>
+          <strong>損失関数</strong>
+          予測と正解の差を数値化。これを最小化するのが学習の目的
+        </li>
+        <li>
+          <strong>特徴量の自動抽出</strong>
+          従来の機械学習と異なり、隠れ層がデータから特徴を学習する点が強み
+        </li>
+      </ul>
+    </section>
+
+    <section id="training">
+      <h2>学習の流れ</h2>
+      <p>ディープラーニングの学習プロセスはG検定の頻出テーマです。</p>
+      <ol class="tool-example-list">
+        <li>
+          <strong>順伝播（フォワードパス）</strong>
+          入力データをネットワークに通し、予測値と損失を計算する
+        </li>
+        <li>
+          <strong>誤差逆伝播（バックプロパゲーション）</strong>
+          出力層から入力層へ誤差を伝播し、各層の勾配を効率的に計算（<a href="../../glossary/backpropagation/">用語辞典</a>）
+        </li>
+        <li>
+          <strong>勾配降下法によるパラメータ更新</strong>
+          損失関数の勾配方向に重みを更新（<a href="../../glossary/gradient-descent/">勾配降下法</a>）
+        </li>
+        <li>
+          <strong>ミニバッチ学習</strong>
+          全データではなく小さなバッチ単位で更新。計算効率と汎化のバランスが良い
+        </li>
+        <li>
+          <strong>エポック</strong>
+          全訓練データを1周学習した単位。エポック数は過学習に影響する
+        </li>
+      </ol>
+    </section>
+
+    <section id="architectures">
+      <h2>代表的アーキテクチャ</h2>
+      <p>データの種類に応じたネットワーク構造の使い分けが試験で問われます。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>全結合ネットワーク（FCN）</strong>
+          各層のニューロンが全ての前層ニューロンと接続。汎用的だがパラメータ数が多い
+        </li>
+        <li>
+          <strong>畳み込みニューラルネットワーク（CNN）</strong>
+          畳み込み演算で画像の局所特徴を抽出。画像認識の定番。プーリング層で次元を削減
+        </li>
+        <li>
+          <strong>リカレントニューラルネットワーク（RNN）</strong>
+          過去の状態を保持し、時系列・自然言語などの系列データに適する。LSTM・GRUは長期依存の課題を改善
+        </li>
+        <li>
+          <strong>トランスフォーマー</strong>
+          <a href="../../glossary/attention/">アテンション</a>機構で系列全体の関係を捉える。現代のLLM（大規模言語モデル）の基盤
+        </li>
+        <li>
+          <strong>オートエンコーダ</strong>
+          入力を圧縮・再構成する教師なし的構造。次元削減や異常検知に利用
+        </li>
+        <li>
+          <strong>GAN（敵対的生成ネットワーク）</strong>
+          生成器と識別器が競合しながら学習。画像生成などに応用
+        </li>
+      </ul>
+    </section>
+
+    <section id="techniques">
+      <h2>正則化・最適化・活性化</h2>
+      <p>ディープラーニングの「要素技術」分野で重点的に問われるトピックです。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>活性化関数</strong>
+          ReLU（勾配消失を緩和）、シグモイド・tanh（出力を制限）など。非線形性を与える
+        </li>
+        <li>
+          <strong>ドロップアウト</strong>
+          学習時にランダムにニューロンを無効化し、過学習を抑制
+        </li>
+        <li>
+          <strong>バッチ正規化</strong>
+          各層の入力分布を安定化し、学習を高速化・安定化
+        </li>
+        <li>
+          <strong>勾配消失・勾配爆発</strong>
+          深いネットワークで勾配が小さくなりすぎる／大きくなりすぎる問題。ReLU・LSTM・勾配クリッピングで対処
+        </li>
+        <li>
+          <strong>最適化手法</strong>
+          SGDにモーメンタムやAdamなどを組み合わせ、効率的にパラメータを更新
+        </li>
+        <li>
+          <strong>転移学習</strong>
+          大規模データで学習済みのモデルを、少量データのタスクに再利用。実務でも頻用
+        </li>
+      </ul>
+    </section>
+
+    <section id="patterns">
+      <h2>頻出問題パターン</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>アーキテクチャの選択</strong>
+          「画像の分類」→CNN、「文章の生成」→RNNまたはトランスフォーマー
+        </li>
+        <li>
+          <strong>CNNの構成要素</strong>
+          畳み込み層・プーリング層・全結合層の役割を区別する
+        </li>
+        <li>
+          <strong>過学習対策の選択</strong>
+          ドロップアウト・データ拡張・早期終了・正則化のうち、文脈に合うものを選ぶ
+        </li>
+        <li>
+          <strong>学習の流れの順序</strong>
+          順伝播→損失計算→誤差逆伝播→パラメータ更新、の流れを理解
+        </li>
+        <li>
+          <strong>生成AIとの接続</strong>
+          拡散モデル・LLMなどは応用例分野（domain-05）と重なる。トランスフォーマーと<a href="../../glossary/generative-ai/">生成AI</a>の関係を押さえる
+        </li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>分野別演習で定着させる</strong></p>
+        <p>
+          <a href="../../exams/g-kentei/drill/domain/domain-06/">一問一答「ディープラーニングの概要」</a> ·
+          <a href="../../exams/g-kentei/drill/domain/domain-07/">一問一答「要素技術」</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="study">
+      <h2>学習の進め方</h2>
+      <ol class="tool-example-list">
+        <li>
+          <strong>機械学習の基礎を確認</strong>
+          <a href="../g-kentei-domain-01/">機械学習分野</a>で教師あり学習・過学習・評価指標を押さえる
+        </li>
+        <li>
+          <strong>用語を整理</strong>
+          <a href="../g-kentei-study-05/">頻出用語50選</a>のディープラーニングカテゴリと<a href="../../glossary/deep-learning/">用語辞典</a>
+        </li>
+        <li>
+          <strong>概要→要素技術の順で演習</strong>
+          domain-06を先に50問以上、その後domain-07でCNN・RNN・正則化を強化
+        </li>
+        <li>
+          <strong>応用例で実世界と接続</strong>
+          domain-05で画像・言語・生成AIの応用を確認し、全体像を完成させる
+        </li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>G検定のディープラーニングは何分野に分かれる？</summary>
+          <p class="tool-faq-a">「概要」「要素技術」「応用例」の3分野です。本記事は概要と要素技術を中心に解説しています。応用例は<a href="../../exams/g-kentei/drill/domain/domain-05/">domain-05</a>で演習できます。</p>
+        </details>
+        <details>
+          <summary>CNNとRNNの違いは試験で問われる？</summary>
+          <p class="tool-faq-a">はい。CNNは画像の局所特徴抽出、RNNは時系列・文脈の保持に適しています。トランスフォーマーも近年の重要トピックです。</p>
+        </details>
+        <details>
+          <summary>数式はどこまで必要？</summary>
+          <p class="tool-faq-a">複雑な導出より概念理解が中心です。勾配降下法・誤差逆伝播・損失関数の役割を言葉で説明できるレベルが目安です。</p>
+        </details>
+        <details>
+          <summary>この分野の演習はどこでできる？</summary>
+          <p class="tool-faq-a"><a href="../../exams/g-kentei/drill/domain/domain-06/">domain-06</a>と<a href="../../exams/g-kentei/drill/domain/domain-07/">domain-07</a>で演習できます。当サイトの模擬問題は本番・過去問想定であり、公式の過去問ではありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する学習ガイド</h2>
+        <ul class="tool-related-list">
+          <li><a href="../g-kentei-domain-01/">機械学習分野の要点</a></li>
+          <li><a href="../g-kentei-overview-04/">試験範囲・シラバス10分野</a></li>
+          <li><a href="../g-kentei-study-05/">頻出用語50選</a></li>
+          <li><a href="../g-kentei-study-01/">G検定の勉強法ロードマップ</a></li>
+          <li><a href="../index.html?cat=g-kentei-domain">分野別解説カテゴリ一覧</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">学習ガイド一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/domain/domain-06/">一問一答（DL概要）</a></li>
+          <li><a href="../../exams/g-kentei/drill/domain/domain-07/">一問一答（DL要素技術）</a></li>
+          <li><a href="../../exams/g-kentei/drill/">一問一答 500問</a></li>
+          <li><a href="../../exams/g-kentei/mock/">模擬試験</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/g-kentei/">G検定 試験対策トップ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
