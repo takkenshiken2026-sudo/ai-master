@@ -747,13 +747,17 @@ svg {
   }
 
   .exam-mode-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
     padding: 16px;
   }
 
-  .exam-mode-row__go,
-  .exam-mode-row__buy {
-    margin-top: 16px;
-    padding: 12px 16px;
+  .exam-mode-row__go {
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
+    padding: 12px 18px;
   }
 
   .exam-mode-row__name {
