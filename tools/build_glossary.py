@@ -205,7 +205,7 @@ def build_index_html(data: dict) -> str:
       <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
         <circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5l3 3" stroke-linecap="round"/>
       </svg>
-      <input type="search" id="glossarySearchInput" placeholder="用語・読み・説明文を検索…" autocomplete="off" enterkeyhint="search">
+      <input type="search" id="glossarySearchInput" placeholder="用語・読み・説明文を検索（Enterで実行）…" autocomplete="off" enterkeyhint="search">
     </div>
   </header>
 
