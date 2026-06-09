@@ -105,7 +105,7 @@
       "keyword": "生成AIパスポート 受験料 日程",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-overview-03",
@@ -116,7 +116,7 @@
       "keyword": "生成AIパスポート 合格率 難易度",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-overview-04",
@@ -127,7 +127,7 @@
       "keyword": "生成AIパスポート シラバス",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-overview-05",
