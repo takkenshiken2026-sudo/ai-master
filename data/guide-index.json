@@ -743,7 +743,7 @@
       "keyword": "G検定 当日 注意",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "after-cert-01",
@@ -754,7 +754,7 @@
       "keyword": "G検定 E資格 次",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "after-cert-02",
@@ -765,7 +765,7 @@
       "keyword": "G検定 年収 転職",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "after-cert-03",
