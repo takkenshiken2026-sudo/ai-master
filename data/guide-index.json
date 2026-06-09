@@ -303,7 +303,7 @@
       "keyword": "生成AIパスポート 勉強時間",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-study-03",
@@ -314,7 +314,7 @@
       "keyword": "生成AIパスポート テキスト おすすめ",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-study-04",
@@ -325,7 +325,7 @@
       "keyword": "生成AIパスポート 頻出 用語",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-study-05",
