@@ -9,4 +9,5 @@ const SITE_CONFIG = {
   locale: 'ja_JP',
   lang: 'ja',
   ogImage: 'https://ai-master.jp/assets/images/og-default.jpg',
+  ga4MeasurementId: 'G-FWXFGSH6TD',
 };

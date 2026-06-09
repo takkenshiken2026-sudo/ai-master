@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from glossary_terms import load_terms_csv, sync_json_from_csv, terms_to_json_payload  # noqa: E402
+from site_meta import SITE_GA4_HTML  # noqa: E402
 GLOSSARY_INDEX = ROOT / "glossary" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 SITE_ORIGIN = "https://ai-master.jp"
@@ -177,7 +178,7 @@ def build_index_html(data: dict) -> str:
     ]
   }}
   </script>
-</head>
+{SITE_GA4_HTML}</head>
 <body class="page-body">
 
 <nav class="site-nav">
@@ -318,7 +319,7 @@ def scaffold_term_page(term: dict, categories: dict) -> None:
   <link rel="stylesheet" href="../../assets/css/main.css">
   <link rel="stylesheet" href="../../assets/css/seo.css">
   <link rel="stylesheet" href="../../assets/css/tool-detail.css">
-</head>
+{SITE_GA4_HTML}</head>
 <body class="page-body">
 
 <nav class="site-nav">

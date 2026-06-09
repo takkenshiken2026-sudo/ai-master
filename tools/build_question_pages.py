@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from site_meta import SITE_ICONS_HTML, SITE_ORIGIN, render_og_meta
+from site_meta import SITE_GA4_HTML, SITE_ICONS_HTML, SITE_ORIGIN, render_og_meta
 SITEMAP = ROOT / "sitemap.xml"
 INDEX_JSON = ROOT / "data" / "question-index.json"
 GLOSSARY_TERMS_JSON = ROOT / "data" / "glossary-terms.json"
@@ -240,7 +240,7 @@ def page_shell(
   <link rel="stylesheet" href="{css}hub.css">
   <link rel="stylesheet" href="{css}seo.css">
   <link rel="stylesheet" href="{css}question-detail.css">
-{json_block}</head>
+{json_block}{SITE_GA4_HTML}</head>
 <body class="page-body">
 
 {render_nav(rel_to_root(css_depth))}

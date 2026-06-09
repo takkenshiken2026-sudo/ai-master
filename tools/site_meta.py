@@ -8,6 +8,7 @@ SITE_ORIGIN = "https://ai-master.jp"
 SITE_OG_IMAGE = f"{SITE_ORIGIN}/assets/images/og-default.jpg"
 SITE_OG_WIDTH = 1200
 SITE_OG_HEIGHT = 630
+GA4_MEASUREMENT_ID = "G-FWXFGSH6TD"
 
 SITE_ICONS_HTML = """  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
@@ -15,6 +16,16 @@ SITE_ICONS_HTML = """  <link rel="icon" href="/assets/images/favicon.svg" type="
   <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1A5CDB">
+"""
+
+SITE_GA4_HTML = f"""  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={GA4_MEASUREMENT_ID}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', '{GA4_MEASUREMENT_ID}');
+  </script>
 """
 
 
