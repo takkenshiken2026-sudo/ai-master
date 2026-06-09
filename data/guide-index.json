@@ -160,7 +160,7 @@
       "keyword": "G検定 ITパスポート 違い",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "compare-03",
@@ -171,7 +171,7 @@
       "keyword": "G検定 E資格 違い",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "compare-04",
@@ -182,7 +182,7 @@
       "keyword": "生成AIパスポート ITパスポート 違い",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "compare-05",
