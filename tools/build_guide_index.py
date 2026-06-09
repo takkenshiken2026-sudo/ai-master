@@ -47,14 +47,13 @@ def main() -> None:
             article_id = f"{category}-{cat_counters[category]:02d}"
             priority = row["優先度"].strip()
             keyword = row["想定キーワード"].strip()
-            note = row.get("備考", "").strip()
 
             articles.append(
                 {
                     "id": article_id,
                     "no": no,
                     "name": row["タイトル"].strip(),
-                    "summary": note or keyword,
+                    "summary": "",
                     "category": category,
                     "keyword": keyword,
                     "priority": priority,

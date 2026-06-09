@@ -99,7 +99,7 @@ function renderFeaturedCard(article) {
   const inner =
     badge +
     `<h3 class="hub-featured-name">${escapeHtml(article.name)}</h3>` +
-    `<p class="hub-featured-summary">${escapeHtml(article.summary)}</p>`;
+    (article.summary ? `<p class="hub-featured-summary">${escapeHtml(article.summary)}</p>` : '');
 
   if (article.published) {
     return `<a href="${encodeURI(article.id)}/" class="${cls}">${inner}</a>`;
