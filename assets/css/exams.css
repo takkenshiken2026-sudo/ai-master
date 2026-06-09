@@ -102,22 +102,6 @@ a.exam-pick-card:hover .exam-pick-cta {
   border-style: dashed;
 }
 
-.exam-mode-row--mock {
-  background: var(--red-soft);
-  border-color: var(--red-mid);
-}
-
-a.exam-mode-row--mock:hover {
-  background: var(--red-soft-hover);
-  border-color: var(--red);
-  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.12);
-}
-
-a.exam-mode-row--mock .exam-mode-row__go {
-  background: var(--red);
-  box-shadow: 0 1px 2px rgba(220, 38, 38, 0.22);
-}
-
 .exam-mode-row {
   display: flex;
   align-items: center;
@@ -139,6 +123,23 @@ a.exam-mode-row:hover {
   border-color: var(--blue);
   box-shadow: 0 6px 20px rgba(26, 92, 219, 0.12);
   transform: translateY(-2px);
+}
+
+a.exam-mode-row.exam-mode-row--mock {
+  background: var(--red-soft);
+  border-color: var(--red-mid);
+  box-shadow: 0 1px 3px rgba(220, 38, 38, 0.08);
+}
+
+a.exam-mode-row.exam-mode-row--mock:hover {
+  background: var(--red-soft-hover);
+  border-color: var(--red);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.12);
+}
+
+a.exam-mode-row.exam-mode-row--mock .exam-mode-row__go {
+  background: var(--red);
+  box-shadow: 0 1px 2px rgba(220, 38, 38, 0.22);
 }
 
 a.exam-mode-row:focus-visible {
@@ -214,6 +215,10 @@ a.exam-mode-row:hover .exam-mode-row__go {
 a.exam-mode-row--mock:hover .exam-mode-row__go {
   background: var(--red-hover);
   box-shadow: 0 2px 6px rgba(220, 38, 38, 0.28);
+}
+
+a.exam-mode-row.exam-mode-row--mock:focus-visible {
+  outline-color: var(--red);
 }
 
 .exam-mode-row__go svg {
