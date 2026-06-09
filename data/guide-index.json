@@ -490,7 +490,7 @@
       "keyword": "過学習 とは G検定",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "terms-06",
@@ -501,7 +501,7 @@
       "keyword": "プロンプトインジェクション とは",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "terms-07",
@@ -523,7 +523,7 @@
       "keyword": "AIガバナンス とは",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "audience-01",
