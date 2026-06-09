@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="トークンとは？生成AIの仕組みとG検定・生成AIパスポートでの出題ポイントを試験対策向けにわかりやすく解説。">
+  <title>トークンとは？生成AIの仕組みとG検定での出題ポイント — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/terms-02/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="トークンとは？生成AIの仕組みとG検定での出題ポイント">
+  <meta property="og:description" content="トークンの定義、単語・文字との違い、コンテキストウィンドウとの関係、試験での出題ポイントを整理。">
+  <meta property="og:url" content="https://ai-master.jp/guide/terms-02/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/guide/terms-02/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/guide/terms-02/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/guide/terms-02/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" },
+          { "@type": "ListItem", "position": 3, "name": "トークンとは", "item": "https://ai-master.jp/guide/terms-02/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/guide/terms-02/#article",
+        "headline": "トークンとは？生成AIの仕組みとG検定での出題ポイント",
+        "description": "トークンの定義、単語・文字との違い、コンテキストウィンドウとの関係、試験での出題ポイントを整理。",
+        "url": "https://ai-master.jp/guide/terms-02/",
+        "datePublished": "2026-06-09",
+        "dateModified": "2026-06-09",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/guide/terms-02/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/guide/terms-02/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/guide/terms-02/#webpage",
+        "url": "https://ai-master.jp/guide/terms-02/",
+        "name": "トークンとは？生成AIの仕組みとG検定での出題ポイント",
+        "description": "トークンの定義、単語・文字との違い、コンテキストウィンドウとの関係、試験での出題ポイントを整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/guide/terms-02/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "トークンとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "LLMがテキストを処理する際の最小単位です。単語・記号・語の一部などに分割されます。英語1語が1トークン程度、日本語は1文字が1〜2トークン程度が目安です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "トークンと文字数は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。トークンはモデル固有の分割単位であり、文字数・単語数とは一致しません。日本語は文字数よりトークン数が多くなる傾向があります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "コンテキストウィンドウとは何の関係？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "コンテキストウィンドウはモデルが一度に処理できるトークン数の上限です。入力と出力の合計がこの上限内に収まる必要があります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "どの試験で出題されますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "G検定（NLP・生成AI）と生成AIパスポート（第2章）で出題されます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body guide-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">学習ガイド</a></li>
+      <li aria-current="page">トークンとは</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--guide">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">用語解説</p>
+      <h1>トークンとは？生成AIの仕組みとG検定での出題ポイント</h1>
+      <p class="tool-hero-sub">定義 · 日本語の目安 · コンテキスト上限 · 出題ポイント</p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/guide/terms-02/hero.jpg" alt="カレンダーと時計でトークンの概念を学習する様子" width="1920" height="1280" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/1506784365847-bbad939e9335" target="_blank" rel="noopener noreferrer">Unsplash</a>（NordWood Themes）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-09">2026年6月9日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>トークン（Token）</strong>は、<a href="../terms-07/">LLM</a>がテキストを処理する際の<strong>最小単位</strong>です。「次のトークンを予測する」というLLMの基本動作を理解するうえで欠かせない概念で、G検定・生成AIパスポートの両方で出題されます。本記事では定義・単語・文字との違い・コンテキストウィンドウとの関係・試験の出題ポイントを整理します。詳細は<a href="../../glossary/token/">用語辞典「トークン」</a>もあわせてご覧ください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#definition">トークンとは</a></li>
+        <li><a href="#tokenize">トークン化の仕組み</a></li>
+        <li><a href="#japanese">日本語の目安</a></li>
+        <li><a href="#context">コンテキストウィンドウとの関係</a></li>
+        <li><a href="#exam">試験での出題ポイント</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="definition">
+      <h2>トークンとは</h2>
+      <p>
+        トークンは、LLMが入力テキストを分割して処理する単位です。人間が見る「単語」とは必ずしも一致しません。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>英語の例</strong>
+          「ChatGPT」→「Chat」「GPT」のように分割されることも、「hello」→1トークンになることも
+        </li>
+        <li>
+          <strong>日本語の例</strong>
+          1文字が1トークン程度、または複数文字が1トークンになることもある
+        </li>
+        <li>
+          <strong>記号・スペース</strong>
+          句読点や改行もトークンとしてカウントされる
+        </li>
+        <li>
+          <strong>トークナイザー</strong>
+          テキストをトークンに分割するアルゴリズム。モデルごとに異なる
+        </li>
+      </ul>
+    </section>
+
+    <section id="tokenize">
+      <h2>トークン化の仕組み</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>サブワード分割（BPE等）</strong>
+          頻出する文字列をトークンとして登録し、未知語も部分に分割して処理
+        </li>
+        <li>
+          <strong>なぜ分割が必要か</strong>
+          LLMは離散なトークンIDの系列として入力を受け取り、数値ベクトルに変換して処理
+        </li>
+        <li>
+          <strong>生成の単位</strong>
+          LLMは1トークンずつ次のトークンを予測し、文章を構築する
+        </li>
+      </ul>
+    </section>
+
+    <section id="japanese">
+      <h2>日本語の目安</h2>
+      <p>試験や実務でよく使われるおおよその目安です（モデルにより異なります）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>言語</th>
+            <th>目安</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>英語</strong></td>
+            <td>約4文字＝1トークン（1単語≒1トークン程度）</td>
+          </tr>
+          <tr>
+            <td><strong>日本語</strong></td>
+            <td>約1〜2文字＝1トークン（英語よりトークン効率が低い）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>日本語は同じ文字数でも英語より多くのトークンを消費するため、<a href="../../glossary/context-window/">コンテキストウィンドウ</a>の上限に達しやすい点に注意が必要です。</p>
+    </section>
+
+    <section id="context">
+      <h2>コンテキストウィンドウとの関係</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>コンテキストウィンドウ</strong>
+          モデルが一度に処理できるトークン数の上限（例：8K、128Kトークン）
+        </li>
+        <li>
+          <strong>入力＋出力の合計</strong>
+          プロンプト（入力）と生成文（出力）の合計が上限内に収まる必要がある
+        </li>
+        <li>
+          <strong>API料金</strong>
+          多くのAPIはトークン数に応じて課金される（試験では概念として問われる）
+        </li>
+        <li>
+          <strong>長文の扱い</strong>
+          上限を超える文書は<a href="../../glossary/chunking/">チャンキング</a>（分割）して処理
+        </li>
+      </ul>
+    </section>
+
+    <section id="exam">
+      <h2>試験での出題ポイント</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>試験</th>
+            <th>出題の傾向</th>
+            <th>演習</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>G検定</strong></td>
+            <td>NLP・LLMの基礎、トークン化の概念</td>
+            <td><a href="../../exams/g-kentei/drill/domain/domain-05/">domain-05</a></td>
+          </tr>
+          <tr>
+            <td><strong>生成AIパスポート</strong></td>
+            <td>第2章でLLMの仕組みとして出題。コンテキスト上限の理解</td>
+            <td><a href="../../exams/genai-passport/drill/domain/chapter-02/">第2章</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <ul class="tool-example-list">
+        <li>
+          <strong>定義の選択</strong>
+          トークンの正しい説明（LLMの処理単位、単語と必ず一致しない）
+        </li>
+        <li>
+          <strong>混同の排除</strong>
+          トークン＝文字数、トークン＝バイト数、などの誤り
+        </li>
+        <li>
+          <strong>LLMとの関係</strong>
+          次トークン予測がLLMの基本動作であること
+        </li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>トークンとは何ですか？</summary>
+          <p class="tool-faq-a">LLMがテキストを処理する最小単位です。<a href="../../glossary/token/">用語辞典</a>で詳しく解説しています。</p>
+        </details>
+        <details>
+          <summary>トークンと文字数は同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。日本語は文字数よりトークン数が多くなる傾向があります。</p>
+        </details>
+        <details>
+          <summary>コンテキストウィンドウとは何の関係？</summary>
+          <p class="tool-faq-a">コンテキストウィンドウは処理できるトークン数の上限です。入力と出力の合計が上限内に収まる必要があります。</p>
+        </details>
+        <details>
+          <summary>どの試験で出題されますか？</summary>
+          <p class="tool-faq-a">G検定と生成AIパスポート第2章で出題されます。<a href="../terms-07/">LLMの解説</a>とあわせて学習しましょう。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する学習ガイド</h2>
+        <ul class="tool-related-list">
+          <li><a href="../terms-07/">LLMとは？</a></li>
+          <li><a href="../terms-03/">ファインチューニングとは？</a></li>
+          <li><a href="../terms-04/">RAGとは？</a></li>
+          <li><a href="../genai-study-04/">頻出用語30選</a></li>
+          <li><a href="../index.html?cat=terms">用語解説カテゴリ一覧</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">学習ガイド一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/token/">用語辞典：トークン</a></li>
+          <li><a href="../../glossary/context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../../exams/genai-passport/drill/domain/chapter-02/">一問一答（第2章）</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典トップ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

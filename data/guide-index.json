@@ -457,7 +457,7 @@
       "keyword": "トークン 生成AI とは",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "terms-03",
@@ -468,7 +468,7 @@
       "keyword": "ファインチューニング とは",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "terms-04",
@@ -512,7 +512,7 @@
       "keyword": "LLM とは 大規模言語モデル",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "terms-08",
