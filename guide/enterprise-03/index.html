@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="社内AI資格取得制度の設計方法。受験料補助・奨励金・研修時間の確保など、制度設計のポイントを法人担当者向けに解説。">
+  <title>社内AI資格取得制度の設計方法：補助・奨励金の作り方 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/enterprise-03/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="社内AI資格取得制度の設計方法：補助・奨励金の作り方">
+  <meta property="og:description" content="社内AI資格取得制度の設計ポイント。受験料補助、奨励金、研修時間の確保、運用ルールを解説。">
+  <meta property="og:url" content="https://ai-master.jp/guide/enterprise-03/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/guide/enterprise-03/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/guide/enterprise-03/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/guide/enterprise-03/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" },
+          { "@type": "ListItem", "position": 3, "name": "社内AI資格取得制度", "item": "https://ai-master.jp/guide/enterprise-03/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/guide/enterprise-03/#article",
+        "headline": "社内AI資格取得制度の設計方法：補助・奨励金の作り方",
+        "description": "社内AI資格取得制度の設計ポイント。受験料補助、奨励金、研修時間の確保、運用ルールを解説。",
+        "url": "https://ai-master.jp/guide/enterprise-03/",
+        "datePublished": "2026-06-09",
+        "dateModified": "2026-06-09",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/guide/enterprise-03/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/guide/enterprise-03/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/guide/enterprise-03/#webpage",
+        "url": "https://ai-master.jp/guide/enterprise-03/",
+        "name": "社内AI資格取得制度の設計方法：補助・奨励金の作り方",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/guide/enterprise-03/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "社内AI資格取得制度とは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "社員のAI資格（G検定・生成AIパスポート等）取得を会社が支援するための社内ルールのことです。受験料補助、教材費補助、研修時間の確保、合格時の奨励金などを含みます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "受験料は全額補助すべき？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "企業によって異なります。合格時のみ全額返還する方式、一部補助する方式、事前申請で全額支給する方式などがあります。受験料の金額は公式サイトでご確認ください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "対象資格は何を含める？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "G検定と生成AIパスポートが最も一般的です。E資格など上位資格を含める企業もあります。会社のDX戦略に合わせて対象を定義しましょう。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "制度導入の第一歩は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "まず対象資格と補助範囲を決め、パイロット部門で試行します。成功パターンを固めてから全社展開するのが効果的です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body guide-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">学習ガイド</a></li>
+      <li aria-current="page">社内AI資格取得制度</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--guide">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">法人・企業向け</p>
+      <h1>社内AI資格取得制度の設計方法：補助・奨励金の作り方</h1>
+      <p class="tool-hero-sub">制度の構成要素 · 補助の設計 · 運用ルール</p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/guide/enterprise-03/hero.jpg" alt="社内AI資格取得制度の設計を検討する様子" width="1920" height="1280" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/1454165205744-3b78555e557e" target="_blank" rel="noopener noreferrer">Unsplash</a>（Scott Graham）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-09">2026年6月9日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      社員のAI資格取得を推進するには、<strong>社内制度の設計</strong>が欠かせません。受験料の補助、合格時の奨励金、研修時間の確保——これらを明文化することで、社員の学習意欲を引き出し、推進を持続可能にします。本記事では、社内AI資格取得制度の構成要素、補助・奨励金の設計パターン、運用ルールのポイントを整理します。<a href="../enterprise-01/">G検定推進ガイド</a>・<a href="../enterprise-02/">生成AIパスポート全社展開ガイド</a>とあわせてご覧ください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#overview">制度の構成要素</a></li>
+        <li><a href="#subsidy">受験料補助の設計パターン</a></li>
+        <li><a href="#incentive">奨励金・表彰</a></li>
+        <li><a href="#time">研修時間の確保</a></li>
+        <li><a href="#rules">運用ルール</a></li>
+        <li><a href="#steps">導入のステップ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="overview">
+      <h2>制度の構成要素</h2>
+      <p>社内AI資格取得制度は、次の要素で構成されます。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>対象資格の定義</strong>
+          G検定、生成AIパスポート、E資格など、補助対象となる資格を明記
+        </li>
+        <li>
+          <strong>対象者の範囲</strong>
+          全社員、特定部門、正社員のみなど
+        </li>
+        <li>
+          <strong>補助内容</strong>
+          受験料、教材費、通信教育費など
+        </li>
+        <li>
+          <strong>申請・承認フロー</strong>
+          事前申請、合格後の精算など
+        </li>
+        <li>
+          <strong>研修時間の扱い</strong>
+          業務時間内の学習を認めるか、残業扱いにするか
+        </li>
+        <li>
+          <strong>サービス期間の定め</strong>
+          会社負担で取得後、一定期間の在籍を条件とするか
+        </li>
+      </ul>
+    </section>
+
+    <section id="subsidy">
+      <h2>受験料補助の設計パターン</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>パターン</th>
+            <th>内容</th>
+            <th>メリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>合格時全額返還</td>
+            <td>社員が先に支払い、合格後に会社が全額精算</td>
+            <td>会社のコストを合格者に限定できる</td>
+          </tr>
+          <tr>
+            <td>事前申請で全額支給</td>
+            <td>受験前に申請し、会社が受験料を直接支払いまたは立替</td>
+            <td>社員の金銭的負担がない</td>
+          </tr>
+          <tr>
+            <td>一部補助（定額）</td>
+            <td>受験料の一定額または割合を補助</td>
+            <td>予算をコントロールしやすい</td>
+          </tr>
+          <tr>
+            <td>年間上限あり</td>
+            <td>1人あたり年間○円まで補助</td>
+            <td>複数資格取得も可能にしつつ予算管理</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        受験料の金額は時期により変わるため、<a href="https://www.jdla.org/" target="_blank" rel="noopener noreferrer">JDLA</a>・<a href="https://guga.or.jp/" target="_blank" rel="noopener noreferrer">GUGA</a>の公式サイトで最新情報をご確認ください。
+      </p>
+    </section>
+
+    <section id="incentive">
+      <h2>奨励金・表彰</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>合格祝い金</strong>
+          受験料補助に加え、合格時に一定額の奨励金を支給
+        </li>
+        <li>
+          <strong>部門別表彰</strong>
+          合格率や取得者数で部門を表彰し、競争意識を醸成
+        </li>
+        <li>
+          <strong>社内認定バッジ</strong>
+          社内SNSや名刺に資格保有を表示できる仕組み
+        </li>
+        <li>
+          <strong>キャリア加点</strong>
+          昇進・評価の参考情報として資格取得を位置づけ（人事制度との連動）
+        </li>
+      </ul>
+      <p>奨励金は補助だけでは足りないモチベーション向上策として有効です。ただし、評価制度との連動は慎重に設計してください。</p>
+    </section>
+
+    <section id="time">
+      <h2>研修時間の確保</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>業務時間内の学習を認める</strong>
+          週に2〜4時間を「資格学習時間」として明示的に確保
+        </li>
+        <li>
+          <strong>勉強会の開催</strong>
+          部門単位または全社で定期的なオンライン勉強会を設定
+        </li>
+        <li>
+          <strong>学習リソースの提供</strong>
+          公式テキスト、当サイトの<a href="../../exams/">一問一答・模擬試験</a>へのアクセスを社内で共有
+        </li>
+        <li>
+          <strong>管理者の理解</strong>
+          直属の上司が学習時間を業務として認める文化づくり
+        </li>
+      </ul>
+    </section>
+
+    <section id="rules">
+      <h2>運用ルール</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>申請期限と精算期限</strong>
+          受験の○日前までに申請、合格後○日以内に精算など期限を明確化
+        </li>
+        <li>
+          <strong>再受験の扱い</strong>
+          不合格時の再受験料補助の有無と回数上限
+        </li>
+        <li>
+          <strong>退職時の精算</strong>
+          会社負担で取得後に短期退職した場合の返還ルール
+        </li>
+        <li>
+          <strong>対象外の明記</strong>
+          派遣社員、パートタイマーの扱いを事前に定義
+        </li>
+        <li>
+          <strong>証明書の提出</strong>
+          合格証のコピー提出を精算の条件にする
+        </li>
+      </ul>
+    </section>
+
+    <section id="steps">
+      <h2>導入のステップ</h2>
+      <ol class="tool-example-list">
+        <li>
+          <strong>現状把握</strong>
+          既存の資格取得者数、社員の関心度をアンケートで確認
+        </li>
+        <li>
+          <strong>制度案の作成</strong>
+          対象資格、補助範囲、予算を人事・経理と調整
+        </li>
+        <li>
+          <strong>パイロット運用</strong>
+          1〜2部門で3か月試行し、運用課題を洗い出す
+        </li>
+        <li>
+          <strong>全社展開</strong>
+          ルールを改訂し、社内ポータルで周知
+        </li>
+        <li>
+          <strong>効果測定</strong>
+          取得者数、合格率、社員満足度を定期レビュー
+        </li>
+      </ol>
+      <p>
+        中小企業向けの予算感は<a href="../enterprise-04/">中小企業ガイド</a>も参照してください。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>社内AI資格取得制度とは？</summary>
+          <p class="tool-faq-a">社員のAI資格取得を会社が支援する社内ルールです。受験料補助、研修時間の確保などを含みます。</p>
+        </details>
+        <details>
+          <summary>受験料は全額補助すべき？</summary>
+          <p class="tool-faq-a">合格時全額返還、事前全額支給、一部補助など、企業の予算と方針で選びます。受験料は公式サイトで確認してください。</p>
+        </details>
+        <details>
+          <summary>対象資格は何を含める？</summary>
+          <p class="tool-faq-a">G検定と生成AIパスポートが最も一般的です。DX戦略に合わせて定義しましょう。</p>
+        </details>
+        <details>
+          <summary>制度導入の第一歩は？</summary>
+          <p class="tool-faq-a">対象資格と補助範囲を決め、パイロット部門で試行するのが効果的です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する学習ガイド</h2>
+        <ul class="tool-related-list">
+          <li><a href="../enterprise-01/">社員にG検定を取得させるメリット</a></li>
+          <li><a href="../enterprise-02/">全社員の生成AIパスポート取得</a></li>
+          <li><a href="../enterprise-04/">中小企業の予算感と進め方</a></li>
+          <li><a href="../audience-04/">管理職・経営者のAI資格</a></li>
+          <li><a href="../index.html?cat=enterprise">法人・企業向けカテゴリ一覧</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">学習ガイド一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/">G検定 試験対策</a></li>
+          <li><a href="../../exams/genai-passport/">生成AIパスポート 試験対策</a></li>
+          <li><a href="https://www.jdla.org/" target="_blank" rel="noopener noreferrer">JDLA 公式サイト</a></li>
+          <li><a href="https://guga.or.jp/" target="_blank" rel="noopener noreferrer">GUGA 公式サイト</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/">試験対策一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

@@ -600,7 +600,7 @@
       "keyword": "生成AIパスポート 法人 全社員",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "enterprise-03",
@@ -611,7 +611,7 @@
       "keyword": "AI資格 社内制度 補助金",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "enterprise-04",
@@ -622,7 +622,7 @@
       "keyword": "AI資格 中小企業",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "enterprise-05",
