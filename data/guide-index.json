@@ -567,7 +567,7 @@
       "keyword": "AI資格 管理職 経営者",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "audience-05",
@@ -578,7 +578,7 @@
       "keyword": "AI資格 エンジニア おすすめ",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "enterprise-01",
@@ -589,7 +589,7 @@
       "keyword": "G検定 法人 社員 取得",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "enterprise-02",
