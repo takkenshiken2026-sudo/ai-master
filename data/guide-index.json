@@ -138,7 +138,7 @@
       "keyword": "生成AIパスポート シラバス 改訂",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "compare-01",
@@ -534,7 +534,7 @@
       "keyword": "AI資格 文系 おすすめ",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "audience-02",
@@ -545,7 +545,7 @@
       "keyword": "G検定 大学生 就活",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "audience-03",
@@ -556,7 +556,7 @@
       "keyword": "AI資格 営業 おすすめ",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "audience-04",
