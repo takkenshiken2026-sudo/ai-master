@@ -776,7 +776,7 @@
       "keyword": "G検定 生成AIパスポート 両方",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "after-cert-04",
@@ -787,7 +787,7 @@
       "keyword": "AI資格 履歴書 書き方",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "after-cert-05",
@@ -798,7 +798,7 @@
       "keyword": "G検定 合格後 社内 活用",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     }
   ]
 }
