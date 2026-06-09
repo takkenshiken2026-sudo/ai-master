@@ -633,7 +633,7 @@
       "keyword": "AI資格 人事 制度",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "trends-01",
@@ -644,7 +644,7 @@
       "keyword": "AI法 資格 企業",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "trends-02",
@@ -655,7 +655,7 @@
       "keyword": "AI資格 意味 ChatGPT",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "trends-03",
@@ -666,7 +666,7 @@
       "keyword": "G検定 シラバス 改訂 2026",
       "priority": "高",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "trends-04",
