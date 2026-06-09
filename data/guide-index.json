@@ -710,7 +710,7 @@
       "keyword": "G検定 落ちた 不合格",
       "priority": "高",
       "featured": true,
-      "published": false
+      "published": true
     },
     {
       "id": "exam-tips-03",
@@ -721,7 +721,7 @@
       "keyword": "生成AIパスポート 落ちた 不合格",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "exam-tips-04",
@@ -732,7 +732,7 @@
       "keyword": "G検定 よくある質問 FAQ",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "exam-tips-05",
