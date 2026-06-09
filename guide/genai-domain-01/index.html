@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="生成AIパスポート「プロンプトエンジニアリング」分野の全要点を解説。プロンプト設計、Few-shot・CoT、出力確認と頻出問題パターンを整理。">
+  <title>生成AIパスポート「プロンプトエンジニアリング」分野の全要点 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/genai-domain-01/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="生成AIパスポート「プロンプトエンジニアリング」分野の全要点">
+  <meta property="og:description" content="生成AIパスポートのプロンプトエンジニアリング分野を要点整理。設計原則、技法、出力確認と頻出問題パターンを解説。">
+  <meta property="og:url" content="https://ai-master.jp/guide/genai-domain-01/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/guide/genai-domain-01/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/guide/genai-domain-01/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/guide/genai-domain-01/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" },
+          { "@type": "ListItem", "position": 3, "name": "生成AIパスポート プロンプトエンジニアリング", "item": "https://ai-master.jp/guide/genai-domain-01/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/guide/genai-domain-01/#article",
+        "headline": "生成AIパスポート「プロンプトエンジニアリング」分野の全要点",
+        "description": "生成AIパスポートのプロンプトエンジニアリング分野を要点整理。設計原則、技法、出力確認と頻出問題パターンを解説。",
+        "url": "https://ai-master.jp/guide/genai-domain-01/",
+        "datePublished": "2026-06-09",
+        "dateModified": "2026-06-09",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/guide/genai-domain-01/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/guide/genai-domain-01/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/guide/genai-domain-01/#webpage",
+        "url": "https://ai-master.jp/guide/genai-domain-01/",
+        "name": "生成AIパスポート「プロンプトエンジニアリング」分野の全要点",
+        "description": "生成AIパスポートのプロンプトエンジニアリング分野を要点整理。設計原則、技法、出力確認と頻出問題パターンを解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/guide/genai-domain-01/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "プロンプトエンジニアリングはどの章に該当する？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主に第5章（プロンプト設計・業務活用・出力確認）に該当します。第3章の活用シーンとも関連します。最新の出題範囲はGUGA公式サイトのシラバスで確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Few-shotとZero-shotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Zero-shotは例示なしで指示のみ与える手法、Few-shotはプロンプト内に少数の入出力例を示して望ましい形式を誘導する手法です。試験では使い分けが問われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Temperatureは何を制御する？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "出力のランダム性（多様性）を制御するパラメータです。低いほど決定的で一貫した出力、高いほど創造的だがばらつきのある出力になります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "この分野の演習はどこでできる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "一問一答「第5章」（chapter-05）が中心です。第3章（chapter-03）もあわせて演習しましょう。模擬試験は本番・過去問想定であり、公式の過去問ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body guide-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">学習ガイド</a></li>
+      <li aria-current="page">生成AIパスポート プロンプトエンジニアリング</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--guide">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">生成AIパスポート 分野別解説</p>
+      <h1>生成AIパスポート「プロンプトエンジニアリング」分野の全要点</h1>
+      <p class="tool-hero-sub">設計原則 · Few-shot · CoT · 出力確認 · 演習リンク</p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/guide/genai-domain-01/hero.jpg" alt="チームで生成AIパスポートのプロンプト設計を学ぶ様子" width="1920" height="1280" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/1522202176988-66273c2fd55f" target="_blank" rel="noopener noreferrer">Unsplash</a>（Brooke Cagle）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-09">2026年6月9日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <a href="../../glossary/prompt-engineering/">プロンプトエンジニアリング</a>は、生成AIパスポートの<strong>実務直結度が最も高い分野</strong>のひとつです。シラバス上は主に<strong>第5章</strong>（プロンプト設計・業務活用・出力確認）に該当し、第3章の活用シーンとも重なります。本記事では、<a href="../genai-overview-04/">シラバス5章</a>を踏まえ、<strong>プロンプト設計の基本原則・代表的技法・パラメータ・出力確認・頻出問題パターン</strong>を整理します。最新の出題範囲は<a href="https://guga.or.jp/" target="_blank" rel="noopener noreferrer">生成AI活用普及協会（GUGA）公式サイト</a>でご確認ください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#overview">分野の位置づけ</a></li>
+        <li><a href="#basics">プロンプト設計の基本</a></li>
+        <li><a href="#techniques">代表的な技法</a></li>
+        <li><a href="#parameters">パラメータと制御</a></li>
+        <li><a href="#verification">出力の確認</a></li>
+        <li><a href="#patterns">頻出問題パターン</a></li>
+        <li><a href="#study">学習の進め方</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="overview">
+      <h2>分野の位置づけ</h2>
+      <p>プロンプトエンジニアリングは「生成AIをどう使うか」の実践スキルです。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>第5章が中心</strong>
+          プロンプト設計、業務活用の実例、出力の確認方法
+        </li>
+        <li>
+          <strong>第3章とも関連</strong>
+          RAG・AIエージェントなど、プロンプトと組み合わせて使う活用シーン
+        </li>
+        <li>
+          <strong>第4章のリスク管理とセット</strong>
+          ハルシネーション対策として、出力確認の重要性が問われる
+        </li>
+      </ul>
+    </section>
+
+    <section id="basics">
+      <h2>プロンプト設計の基本</h2>
+      <p>良いプロンプトには共通する設計原則があります。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>役割の明示</strong>
+          「あなたは〇〇の専門家です」のように、AIの立場を指定する
+        </li>
+        <li>
+          <strong>タスクの具体化</strong>
+          何をしてほしいか、入力・出力の形式を明確に書く
+        </li>
+        <li>
+          <strong>制約条件の設定</strong>
+          文字数・トーン・禁止事項（個人情報の出力禁止など）を指定
+        </li>
+        <li>
+          <strong>コンテキストの提供</strong>
+          背景情報や参照資料を与え、回答の精度を高める
+        </li>
+        <li>
+          <strong>段階的な指示</strong>
+          複雑なタスクは手順に分けて指示する
+        </li>
+        <li>
+          <strong><a href="../../glossary/system-prompt/">システムプロンプト</a></strong>
+          モデル全体の振る舞いを定める上位の指示。ユーザープロンプトとは役割が異なる
+        </li>
+      </ul>
+    </section>
+
+    <section id="techniques">
+      <h2>代表的な技法</h2>
+      <p>試験で頻出するプロンプト技法と、その使い分けです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>技法</th>
+            <th>概要</th>
+            <th>使いどころ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong><a href="../../glossary/zero-shot-prompting/">ゼロショット</a></strong></td>
+            <td>例示なしで指示のみ与える</td>
+            <td>シンプルなタスク、汎用的な質問</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../../glossary/few-shot-prompting/">フューショット</a></strong></td>
+            <td>少数の入出力例を示して形式を誘導</td>
+            <td>特定フォーマットの出力、分類タスク</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../../glossary/chain-of-thought/">チェーン・オブ・ソート（CoT）</a></strong></td>
+            <td>推論過程を段階的に出力させる</td>
+            <td>計算・論理問題、複雑な判断</td>
+          </tr>
+          <tr>
+            <td><strong>ロールプレイング</strong></td>
+            <td>特定の役割・視点で回答させる</td>
+            <td>顧客対応文の作成、専門家視点の分析</td>
+          </tr>
+          <tr>
+            <td><strong>自己批判・自己修正</strong></td>
+            <td>一度出力した回答を見直し・改善させる</td>
+            <td>品質向上、ハルシネーションの検出</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="parameters">
+      <h2>パラメータと制御</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong><a href="../../glossary/temperature/">温度（Temperature）</a></strong>
+          出力のランダム性を制御。低い＝一貫性重視、高い＝創造性重視
+        </li>
+        <li>
+          <strong>Top-p（核サンプリング）</strong>
+          確率の累積が閾値に達するまでのトークンから選択。出力の多様性を制御
+        </li>
+        <li>
+          <strong>最大トークン数</strong>
+          出力の長さの上限。<a href="../../glossary/context-window/">コンテキストウィンドウ</a>内で入力と出力を配分
+        </li>
+        <li>
+          <strong>停止シーケンス</strong>
+          特定の文字列で生成を打ち切る設定
+        </li>
+      </ul>
+      <p>業務利用では、正確性が求められる場面ではTemperatureを低く設定する、といった使い分けが問われます。</p>
+    </section>
+
+    <section id="verification">
+      <h2>出力の確認</h2>
+      <p>プロンプト設計だけでなく、<strong>出力の検証</strong>も試験範囲です。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>ファクトチェック</strong>
+          事実関係を原典・公式情報と照合する。特に数値・日付・固有名詞
+        </li>
+        <li>
+          <strong><a href="../../glossary/hallucination/">ハルシネーション</a>の検出</strong>
+          もっともらしいが誤った情報が含まれていないか確認
+        </li>
+        <li>
+          <strong>個人情報・機密情報のチェック</strong>
+          出力に不要な個人情報や社外秘が含まれていないか
+        </li>
+        <li>
+          <strong>ヒューマン・イン・ザ・ループ</strong>
+          重要な判断・公開前の文書は人間が最終確認する
+        </li>
+        <li>
+          <strong>反復改善</strong>
+          出力を評価し、プロンプトを修正して再実行するサイクル
+        </li>
+      </ul>
+    </section>
+
+    <section id="patterns">
+      <h2>頻出問題パターン</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>技法の選択</strong>
+          「出力形式を統一したい」→Few-shot、「複雑な推論が必要」→CoT
+        </li>
+        <li>
+          <strong>Temperatureの設定</strong>
+          正確な要約→低い、ブレインストーミング→高い
+        </li>
+        <li>
+          <strong>プロンプトの改善</strong>
+          曖昧な指示を具体化する、制約を追加する、例を示す
+        </li>
+        <li>
+          <strong>RAGとの違い</strong>
+          プロンプト設計は指示の工夫、RAGは外部データの参照。併用も可能
+        </li>
+        <li>
+          <strong>業務利用の注意</strong>
+          出力確認・個人情報保護・著作権への配慮
+        </li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>章別演習で定着させる</strong></p>
+        <p><a href="../../exams/genai-passport/drill/domain/chapter-05/">生成AIパスポート 一問一答「第5章」</a> — プロンプト設計・業務活用の演習</p>
+      </div>
+    </section>
+
+    <section id="study">
+      <h2>学習の進め方</h2>
+      <ol class="tool-example-list">
+        <li>
+          <strong>用語を押さえる</strong>
+          <a href="../genai-study-04/">頻出用語30選</a>のプロンプト・活用カテゴリと<a href="../../glossary/prompt-engineering/">用語辞典</a>
+        </li>
+        <li>
+          <strong>chapter-05で演習</strong>
+          50問以上解き、技法の使い分けに慣れる
+        </li>
+        <li>
+          <strong>実務で試す</strong>
+          日常のChatGPT利用で、Few-shot・CoTを意識してプロンプトを書き換えてみる
+        </li>
+        <li>
+          <strong>第4章とセット</strong>
+          出力確認・ハルシネーションは<a href="../genai-domain-02/">著作権・個人情報</a>・<a href="../genai-domain-03/">AI倫理</a>とも関連
+        </li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>プロンプトエンジニアリングはどの章に該当する？</summary>
+          <p class="tool-faq-a">主に第5章です。<a href="../genai-overview-04/">シラバス5章</a>と<a href="../../exams/genai-passport/drill/domain/chapter-05/">chapter-05</a>で確認しましょう。</p>
+        </details>
+        <details>
+          <summary>Few-shotとZero-shotの違いは？</summary>
+          <p class="tool-faq-a">Zero-shotは例示なし、Few-shotは少数の入出力例を示して形式を誘導します。<a href="../../glossary/few-shot-prompting/">フューショット</a>の用語辞典も参照してください。</p>
+        </details>
+        <details>
+          <summary>Temperatureは何を制御する？</summary>
+          <p class="tool-faq-a">出力のランダム性です。低いほど一貫した出力、高いほど多様な出力になります。</p>
+        </details>
+        <details>
+          <summary>この分野の演習はどこでできる？</summary>
+          <p class="tool-faq-a"><a href="../../exams/genai-passport/drill/domain/chapter-05/">chapter-05</a>が中心です。当サイトの模擬問題は本番・過去問想定であり、公式の過去問ではありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する学習ガイド</h2>
+        <ul class="tool-related-list">
+          <li><a href="../genai-domain-02/">著作権・個人情報保護の要点</a></li>
+          <li><a href="../genai-domain-03/">AI倫理・ガイドラインの要点</a></li>
+          <li><a href="../genai-overview-04/">シラバス5章</a></li>
+          <li><a href="../genai-study-04/">頻出用語30選</a></li>
+          <li><a href="../index.html?cat=genai-domain">分野別解説カテゴリ一覧</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">学習ガイド一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/domain/chapter-05/">一問一答（第5章）</a></li>
+          <li><a href="../../exams/genai-passport/drill/domain/chapter-03/">一問一答（第3章）</a></li>
+          <li><a href="../../glossary/prompt-engineering/">プロンプトエンジニアリング（用語）</a></li>
+          <li><a href="../../exams/genai-passport/mock/">模擬試験</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/genai-passport/">生成AIパスポート 試験対策トップ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

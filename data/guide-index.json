@@ -413,7 +413,7 @@
       "keyword": "生成AIパスポート プロンプト",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-domain-02",
@@ -424,7 +424,7 @@
       "keyword": "生成AIパスポート 著作権 個人情報",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "genai-domain-03",
@@ -435,7 +435,7 @@
       "keyword": "生成AIパスポート 倫理 ガイドライン",
       "priority": "中",
       "featured": false,
-      "published": false
+      "published": true
     },
     {
       "id": "terms-01",

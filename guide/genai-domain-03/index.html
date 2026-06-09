@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="生成AIパスポート「AI倫理・AI事業者ガイドライン」の要点を解説。AI倫理原則、ガバナンス、国内ガイドラインと頻出問題パターンを整理。">
+  <title>生成AIパスポート「AI倫理・AI事業者ガイドライン」の要点まとめ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/genai-domain-03/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="生成AIパスポート「AI倫理・AI事業者ガイドライン」の要点まとめ">
+  <meta property="og:description" content="生成AIパスポートのAI倫理・ガイドライン分野を要点整理。倫理原則、ガバナンス、国内指針と頻出問題パターンを解説。">
+  <meta property="og:url" content="https://ai-master.jp/guide/genai-domain-03/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/guide/genai-domain-03/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/guide/genai-domain-03/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/guide/genai-domain-03/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" },
+          { "@type": "ListItem", "position": 3, "name": "生成AIパスポート AI倫理・ガイドライン", "item": "https://ai-master.jp/guide/genai-domain-03/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/guide/genai-domain-03/#article",
+        "headline": "生成AIパスポート「AI倫理・AI事業者ガイドライン」の要点まとめ",
+        "description": "生成AIパスポートのAI倫理・ガイドライン分野を要点整理。倫理原則、ガバナンス、国内指針と頻出問題パターンを解説。",
+        "url": "https://ai-master.jp/guide/genai-domain-03/",
+        "datePublished": "2026-06-09",
+        "dateModified": "2026-06-09",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/guide/genai-domain-03/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/guide/genai-domain-03/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/guide/genai-domain-03/#webpage",
+        "url": "https://ai-master.jp/guide/genai-domain-03/",
+        "name": "生成AIパスポート「AI倫理・AI事業者ガイドライン」の要点まとめ",
+        "description": "生成AIパスポートのAI倫理・ガイドライン分野を要点整理。倫理原則、ガバナンス、国内指針と頻出問題パターンを解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/guide/genai-domain-03/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "AI倫理・ガイドラインはどの章に該当する？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "第4章（法律・倫理・セキュリティ）に該当します。著作権・個人情報とあわせて出題比率が高い章です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AI事業者ガイドラインとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "日本政府が公表した、AI事業者が開発・提供時に留意すべき事項をまとめた指針です。公平性・透明性・安全性などの観点が含まれます。最新版は公式サイトで確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ハルシネーション対策は倫理の範囲？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。ハルシネーションは信頼性・安全性の課題であり、出力確認・RAG・ヒューマン・イン・ザ・ループなどの対策が問われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "この分野の演習はどこでできる？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "一問一答「第4章」（chapter-04）で演習できます。模擬試験は本番・過去問想定であり、公式の過去問ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="page-body guide-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">学習ガイド</a></li>
+      <li aria-current="page">生成AIパスポート AI倫理・ガイドライン</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--guide">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">生成AIパスポート 分野別解説</p>
+      <h1>生成AIパスポート「AI倫理・AI事業者ガイドライン」の要点まとめ</h1>
+      <p class="tool-hero-sub">AI倫理 · ガバナンス · 国内ガイドライン · 演習リンク</p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/guide/genai-domain-03/hero.jpg" alt="分析画面を見ながら生成AIパスポートのAI倫理分野を学ぶ様子" width="1920" height="1280" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/1460925895917-afdab827c52f" target="_blank" rel="noopener noreferrer">Unsplash</a>（Carlos Muza）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-09">2026年6月9日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      生成AIパスポートの<strong>第4章</strong>では、著作権・個人情報に加え、<strong>AI倫理</strong>と<strong>AI事業者ガイドライン</strong>が重要な出題テーマです。ビジネスパーソンにとって「生成AIを安全に・適切に使う」ための規範が問われます。本記事では、<a href="../genai-overview-04/">シラバス5章</a>の第4章を中心に、<strong>AI倫理の原則・ガバナンス・国内ガイドライン・リスク対策・頻出問題パターン</strong>を整理します。ガイドラインは改訂されることがあるため、最新版は<a href="https://guga.or.jp/" target="_blank" rel="noopener noreferrer">GUGA公式サイト</a>や政府の公式発表でご確認ください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#overview">分野の位置づけ</a></li>
+        <li><a href="#ethics">AI倫理の原則</a></li>
+        <li><a href="#governance">AIガバナンス</a></li>
+        <li><a href="#guidelines">国内ガイドライン</a></li>
+        <li><a href="#risks">リスクと対策</a></li>
+        <li><a href="#patterns">頻出問題パターン</a></li>
+        <li><a href="#study">学習の進め方</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="overview">
+      <h2>分野の位置づけ</h2>
+      <p>第4章は生成AIパスポートで最も出題比率が高い章です。倫理・ガイドラインは次の観点で問われます。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>原則の理解</strong>
+          公平性・透明性・安全性など、AI倫理のキーワードの意味
+        </li>
+        <li>
+          <strong>ガイドラインの趣旨</strong>
+          政府・業界が示すAI事業者・利用者への指針
+        </li>
+        <li>
+          <strong>実務への適用</strong>
+          ケース形式で「何に注意すべきか」を判断する
+        </li>
+        <li>
+          <strong>関連分野</strong>
+          著作権・個人情報は<a href="../genai-domain-02/">別記事</a>、セキュリティ（プロンプトインジェクション等）も第4章に含まれる
+        </li>
+      </ul>
+    </section>
+
+    <section id="ethics">
+      <h2>AI倫理の原則</h2>
+      <p><a href="../../glossary/ai-ethics-overview/">AI倫理</a>で押さえるべきキーワードです。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong><a href="../../glossary/fairness/">公平性</a></strong>
+          AIの判断が特定の属性で不当に差別されないこと
+        </li>
+        <li>
+          <strong><a href="../../glossary/transparency/">透明性</a></strong>
+          AIの仕組み・データ・判断過程を関係者が把握できる状態
+        </li>
+        <li>
+          <strong><a href="../../glossary/accountability/">説明責任</a></strong>
+          AIの結果に対して誰が責任を負うかを明確にする原則
+        </li>
+        <li>
+          <strong><a href="../../glossary/algorithmic-bias/">アルゴリズムバイアス</a></strong>
+          学習データや設計の偏りにより、特定グループに不利な結果が出る現象
+        </li>
+        <li>
+          <strong><a href="../../glossary/ai-safety/">AI安全性</a></strong>
+          AIが意図しない有害な行動を起こさないよう設計・運用すること
+        </li>
+        <li>
+          <strong><a href="../../glossary/ai-literacy/">AIリテラシー</a></strong>
+          AIの特性・限界・リスクを理解し、適切に活用する能力
+        </li>
+      </ul>
+    </section>
+
+    <section id="governance">
+      <h2>AIガバナンス</h2>
+      <p><a href="../../glossary/ai-governance/">AIガバナンス</a>は、組織がAIを適切に管理するための枠組みです。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>リスク評価</strong>
+          導入前にバイアス・プライバシー・セキュリティなどのリスクを洗い出す
+        </li>
+        <li>
+          <strong><a href="../../glossary/acceptable-use-policy/">利用規程（AUP）</a></strong>
+          社内での生成AI利用ルールを文書化し、従業員に周知
+        </li>
+        <li>
+          <strong><a href="../../glossary/human-in-the-loop/">ヒューマン・イン・ザ・ループ</a></strong>
+          重要な判断・公開前の文書は人間が最終確認する
+        </li>
+        <li>
+          <strong>教育・研修</strong>
+          従業員のAIリテラシー向上、リスク認識の浸透
+        </li>
+        <li>
+          <strong>インシデント対応</strong>
+          問題発生時の報告・対応フローを整備
+        </li>
+      </ul>
+    </section>
+
+    <section id="guidelines">
+      <h2>国内ガイドライン</h2>
+      <p>生成AIパスポートでは、日本政府の指針が出題範囲に含まれます。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>AI事業者ガイドライン</strong>
+          経済産業省・総務省などが公表した、AI事業者向けの留意事項。公平性・透明性・安全性・プライバシー保護などが含まれる
+        </li>
+        <li>
+          <strong>AI原則（AI Principles）</strong>
+          人間中心のAI社会を目指すための基本的な考え方
+        </li>
+        <li>
+          <strong>生成AI利用ガイドライン</strong>
+          生成AIの利用者（企業・個人）向けの留意事項。出力確認・情報漏洩防止など
+        </li>
+        <li>
+          <strong>国際動向</strong>
+          <a href="../../glossary/eu-ai-act/">EU AI Act</a>など、リスクベースの規制枠組み。日本の議論との比較が問われることも
+        </li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>ガイドラインは改訂されます</strong></p>
+        <p>最新の指針は<a href="https://www.meti.go.jp/" target="_blank" rel="noopener noreferrer">経済産業省</a>・<a href="https://www.soumu.go.jp/" target="_blank" rel="noopener noreferrer">総務省</a>・<a href="https://guga.or.jp/" target="_blank" rel="noopener noreferrer">GUGA</a>の公式サイトで確認してください。当サイトの解説は学習補助であり、公式文書に取って代わるものではありません。</p>
+      </div>
+    </section>
+
+    <section id="risks">
+      <h2>リスクと対策</h2>
+      <p>倫理・ガイドラインと直結する、生成AI特有のリスクです。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong><a href="../../glossary/hallucination/">ハルシネーション</a></strong>
+          事実と異なる内容の生成。対策：出力確認、RAG、根拠の明示
+        </li>
+        <li>
+          <strong><a href="../../glossary/hallucination-mitigation/">ハルシネーション対策</a></strong>
+          ファクトチェック、複数ソースとの照合、人間による最終確認
+        </li>
+        <li>
+          <strong><a href="../../glossary/prompt-injection/">プロンプトインジェクション</a></strong>
+          悪意ある入力でAIの振る舞いを操作する攻撃。入力の検証・サニタイズ
+        </li>
+        <li>
+          <strong><a href="../../glossary/jailbreak/">ジェイルブレイク</a></strong>
+          安全制限を回避して有害な出力を引き出す手法。利用規約違反・セキュリティリスク
+        </li>
+        <li>
+          <strong><a href="../../glossary/deepfake/">ディープフェイク</a></strong>
+          AI生成による偽の画像・音声・動画。社会的影響と対策が問われる
+        </li>
+        <li>
+          <strong>バイアスの拡大</strong>
+          偏った学習データにより、差別的な出力が生じるリスク
+        </li>
+      </ul>
+    </section>
+
+    <section id="patterns">
+      <h2>頻出問題パターン</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>ケーススタディ</strong>
+          「採用AIが特定属性で不利」→バイアス・公平性の問題
+        </li>
+        <li>
+          <strong>ガイドラインの趣旨</strong>
+          AI事業者が留意すべき事項として正しいものを選ぶ
+        </li>
+        <li>
+          <strong>ハルシネーション対策</strong>
+          出力確認・RAG・ヒューマン・イン・ザ・ループの選択
+        </li>
+        <li>
+          <strong>セキュリティ</strong>
+          プロンプトインジェクション・機密情報の入力禁止
+        </li>
+        <li>
+          <strong>ガバナンス施策</strong>
+          利用規程の策定、リスク評価、従業員教育
+        </li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>章別演習で定着させる</strong></p>
+        <p><a href="../../exams/genai-passport/drill/domain/chapter-04/">生成AIパスポート 一問一答「第4章」</a> — 倫理・ガイドライン・セキュリティの演習</p>
+      </div>
+    </section>
+
+    <section id="study">
+      <h2>学習の進め方</h2>
+      <ol class="tool-example-list">
+        <li>
+          <strong>倫理キーワードをマインドマップ化</strong>
+          公平性・透明性・説明責任・安全性の関係を図示
+        </li>
+        <li>
+          <strong>chapter-04を重点演習</strong>
+          第4章は出題比率が高い。他章より多めに解く
+        </li>
+        <li>
+          <strong>著作権・個人情報とセット</strong>
+          <a href="../genai-domain-02/">著作権・個人情報</a>と合わせて第4章を網羅的に学習
+        </li>
+        <li>
+          <strong>用語辞典で補強</strong>
+          <a href="../genai-study-04/">頻出用語30選</a>と<a href="../../glossary/ai-governance/">用語辞典</a>
+        </li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>AI倫理・ガイドラインはどの章に該当する？</summary>
+          <p class="tool-faq-a">第4章です。<a href="../genai-domain-02/">著作権・個人情報</a>とあわせて重点学習しましょう。</p>
+        </details>
+        <details>
+          <summary>AI事業者ガイドラインとは？</summary>
+          <p class="tool-faq-a">日本政府が公表した、AI事業者が開発・提供時に留意すべき事項の指針です。最新版は公式サイトで確認してください。</p>
+        </details>
+        <details>
+          <summary>ハルシネーション対策は倫理の範囲？</summary>
+          <p class="tool-faq-a">はい。信頼性・安全性の課題であり、出力確認・RAG・人間による最終確認などが対策として問われます。</p>
+        </details>
+        <details>
+          <summary>この分野の演習はどこでできる？</summary>
+          <p class="tool-faq-a"><a href="../../exams/genai-passport/drill/domain/chapter-04/">chapter-04</a>で演習できます。当サイトの模擬問題は本番・過去問想定であり、公式の過去問ではありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する学習ガイド</h2>
+        <ul class="tool-related-list">
+          <li><a href="../genai-domain-02/">著作権・個人情報保護の要点</a></li>
+          <li><a href="../genai-domain-01/">プロンプトエンジニアリングの要点</a></li>
+          <li><a href="../genai-overview-04/">シラバス5章</a></li>
+          <li><a href="../genai-study-04/">頻出用語30選</a></li>
+          <li><a href="../index.html?cat=genai-domain">分野別解説カテゴリ一覧</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">学習ガイド一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/domain/chapter-04/">一問一答（第4章）</a></li>
+          <li><a href="../../glossary/ai-governance/">AIガバナンス（用語）</a></li>
+          <li><a href="../../glossary/ai-ethics-overview/">AI倫理（用語）</a></li>
+          <li><a href="../../exams/genai-passport/mock/">模擬試験</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/genai-passport/">生成AIパスポート 試験対策トップ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
