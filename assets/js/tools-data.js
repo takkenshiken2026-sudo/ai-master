@@ -523,6 +523,7 @@ const TOOLS = [
     logo: "coefont.ico",
     cat: "audio",
     catLabel: "音声・動画・音楽",
+    article: true,
     tagline: "日本語音声合成AIとして国内需要が高い",
     url: "https://coefont.cloud",
   },
