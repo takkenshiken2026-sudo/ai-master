@@ -825,6 +825,7 @@ const TOOLS = [
     logo: "microsoft.svg",
     cat: "productivity",
     catLabel: "仕事効率化・資料・翻訳",
+    article: true,
     tagline: "Word・Excel・TeamsにAIが統合された法人向け主力製品",
     url: "https://www.microsoft.com/microsoft-365/copilot",
   },
