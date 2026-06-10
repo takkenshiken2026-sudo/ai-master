@@ -1016,6 +1016,7 @@ const TOOLS = [
     logo: "n8n.ico",
     cat: "automation",
     catLabel: "業務自動化",
+    article: true,
     tagline: "セルフホスト可能なオープンソースのワークフロー自動化ツール",
     url: "https://n8n.io",
   },

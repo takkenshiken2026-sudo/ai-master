@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="n8nの機能・料金・使い方を解説。Execution課金（ステップ無制限）、セルフホスト・Community Edition、JS/Pythonコードノード、AI Workflow Builder、Make・Zapierとの比較まで。生成AIパスポート対策にも。">
+  <title>n8nとは？オープンソース業務自動化の機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/n8n/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="n8nとは？オープンソース業務自動化の機能・料金・使い方を解説">
+  <meta property="og:description" content="1実行=1 Execution（ステップ数無制限）、Dockerセルフホスト、JS/Pythonコードノード、AI Workflow Builder。Make Credits・Zapier Tasksとの課金差を2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/n8n/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/n8n/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/n8n/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/n8n/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "n8n", "item": "https://ai-master.jp/tools/n8n/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/n8n/#article",
+        "headline": "n8nとは？オープンソース業務自動化の機能・料金・使い方を解説",
+        "description": "1実行=1 Execution（ステップ数無制限）、Dockerセルフホスト、JS/Pythonコードノード、AI Workflow Builder。Make Credits・Zapier Tasksとの課金差を2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/n8n/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/n8n/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/n8n/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "n8n" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/n8n/#webpage",
+        "url": "https://ai-master.jp/tools/n8n/",
+        "name": "n8nとは？オープンソース業務自動化の機能・料金・使い方を解説",
+        "description": "1実行=1 Execution（ステップ数無制限）、Dockerセルフホスト、JS/Pythonコードノード、AI Workflow Builder。Make Credits・Zapier Tasksとの課金差を2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/n8n/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "n8n",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, Docker, Self-hosted",
+        "description": "Fair-codeのワークフロー自動化。Execution課金（ステップ無制限）、セルフホスト・Community Edition、JS/Pythonコードノード、AI Workflow Builder。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "Community Edition（セルフホスト無料）。Cloud Starter €20/月（年払い・2.5K executions）〜（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "n8n GmbH",
+          "url": "https://n8n.io"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "n8nのExecution（実行）とは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ワークフローが開始から完了まで1回走るたびに1 Executionです。ステップ（ノード）数に関係なく1回とカウントされるため、50ノードのフローも1 Executionです。MakeのCredits（モジュール単位）やZapierのTasks（成功アクション単位）とは数え方が異なります（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "n8nは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GitHubのCommunity EditionをDocker等でセルフホストすれば無料で利用できます。メール登録でフォルダ整理・デバッグピン等が解放されます。n8n CloudはStarter €20/月（年払い・2.5K executions）から。Starter/Proは14日無料トライアル（クレカ不要）あり（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "n8nとMakeの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MakeはクラウドSaaSでCredits（モジュール実行）課金、ノーコードのシナリオ設計が中心です。n8nはセルフホスト可能でExecution課金、JS/Pythonコードノード・Git版管理・API/CLI制御など技術者向けの自由度が高いです。完全クラウドで手早く始めるならMake、インフラ内完結・多段処理の予測可能コストならn8n——という棲み分けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "n8nとZapierの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Zapierは9,000+アプリ連携とZap/Agentsの二層課金が強みで、ノーコード利用者向けです。n8nは400+ノード（カスタム拡張可）で、セルフホスト・コードステップ・Execution課金が特徴です。連携の厚みとテンプレートならZapier、データ主権と開発者体験ならn8n——という整理が試験・実務で使いやすいです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "n8nはオープンソースですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "n8nはFair-code（ソース公開・セルフホスト可）です。Community EditionはGitHubで入手でき、Enterprise/Business向け機能（SSO、Git版管理、環境分離等）は有料プランです。「完全なOSS＝商用利用も制限なし」とは異なるため、社内ポリシー確認が必要な場合があります（2026年6月時点）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">n8n</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/n8n/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">n8n · Fair-code · 業務自動化</p>
+          <h1>n8nとは？オープンソース業務自動化の機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">Execution課金でステップ無制限——セルフホスト可能なワークフロー自動化、コードとUIのハイブリッド設計</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Execution課金</span>
+        <span class="tool-category">セルフホスト</span>
+        <span class="tool-category">AI Workflow Builder</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>n8n Cloud（EU）</li>
+          <li>Docker / セルフホスト</li>
+          <li>API・CLI</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/n8n/og-hero.png" alt="n8n公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：n8n公式（n8n.io）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>n8n</strong>（エヌエイトエヌ）は、Fair-codeの<strong>ワークフロー自動化プラットフォーム</strong>です。課金の核は<strong>Execution</strong>——ワークフローが1回完走するたびに1カウント、<strong>ステップ（ノード）数は課金に含まれない</strong>——という点が<a href="../make/">Make</a>のCreditsや<a href="../zapier/">Zapier</a>のTasksと決定的に異なります。本記事では<a href="#execution-model">Execution課金</a>、<a href="#self-host">セルフホストとCommunity Edition</a>、<a href="#code-ui">コード＋UIハイブリッド</a>、<a href="#ai-workflow">AI Workflow Builder</a>、<a href="#comparison">Make・Zapierとの比較</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">n8nとは</a></li>
+        <li><a href="#execution-model">Execution課金モデル</a></li>
+        <li><a href="#self-host">セルフホストとCommunity Edition</a></li>
+        <li><a href="#code-ui">コード＋UIハイブリッド</a></li>
+        <li><a href="#ai-workflow">AI Workflow Builder</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">主要ツールとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>生成AIパスポートでは、業務自動化（iPaaS）とAIエージェント、外部ツールへの権限・承認の論点が問われます。n8nは<a href="../zapier/">Zapier</a>・<a href="../make/">Make</a>と並ぶ「API連携型の自動化」の具体例として、<strong>RPAやChatGPTそのものではない</strong>点を押さえると整理しやすいです。</p>
+      <p>「n8n＝完全無料のOSS」「Execution＝MakeのCreditと同じ数え方」という誤解に注意してください。n8nは<strong>Fair-code</strong>で、課金は<strong>ワークフロー完走単位</strong>です。</p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0493/">一問一答 TF-0493（自動化と確認作業）</a>、<a href="../../exams/genai-passport/drill/q/tf-0240/">TF-0240（外部ツールと権限）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（承認ステップ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0321/">TF-0321（許可されていないサービスへの入力）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/agent/">AIエージェント</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>n8nとは</h2>
+      <p>n8n（n8n.io）は、ドイツ発の<strong>ワークフロー自動化プラットフォーム</strong>です。GitHub上で<strong>19万+スター</strong>（2026年6月時点・公式）を誇り、技術チーム向けに「ノード」をつないでSaaS・API・DB・AIを連携します。</p>
+      <p><a href="../zapier/">Zapier</a>がノーコード利用者向けの「Zap」中心なのに対し、n8nは<strong>UIで組み立てつつ、任意のステップでJS/Pythonを書ける</strong>設計です。Dockerで自社サーバーに載せられるため、個人情報・社内APIを<strong>クラウド外に閉じたまま</strong>自動化できるのが大きな差別化です。</p>
+      <p>2026年時点、n8nは<strong>AI Workflow Builder</strong>（自然言語からワークフロー生成）、LangChain連携ノード、AI評価（Evaluations）など、生成AIをワークフローに組み込む機能を拡充しています（公式Product Overview）。</p>
+    </section>
+
+    <section id="execution-model">
+      <h2>Execution課金モデル</h2>
+      <p>n8n Cloudの課金の核は<strong>Execution</strong>（本番ワークフローの実行回数）です。公式Pricingの説明では、<strong>ワークフローが開始から完了まで1回走る＝1 Execution</strong>であり、中間のノード数や処理データ量はカウントに影響しません（2026年6月時点）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ツール</th><th>課金単位</th><th>50ステップのフローを1回実行</th><th>試験・実務の注意</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>n8n</strong></td><td><strong>1 Execution</strong></td><td><strong>1回</strong></td><td>多段処理でも予測しやすい</td></tr>
+          <tr><td><a href="../make/">Make</a></td><td>1 Credit / モジュール</td><td>約50 Credits</td><td>イテレーターで急増</td></tr>
+          <tr><td><a href="../zapier/">Zapier</a></td><td>1 Task / 成功アクション</td><td>約50 Tasks</td><td>Agentsは別枠（Activities）</td></tr>
+        </tbody>
+      </table>
+      <p>公式は「他製品では10,000 operationsかかる処理が、n8nなら1 Executionで済む」例を挙げています。逆に、<strong>1分ごとにスケジュール実行</strong>するだけの単純フローでも月8,600回近いExecutionを消費するため、頻度設計は必須です。</p>
+      <h3>本番Executionと開発実行</h3>
+      <p>Cloudプランでは<strong>Production executions</strong>が月次クォータの対象です。エディタ上のテスト実行や手動実行はInsightsダッシュボードで確認できます。Business以上では実行ログの保持期間・同時実行数（concurrent executions）が拡張されます（公式Pricing）。</p>
+    </section>
+
+    <section id="self-host">
+      <h2>セルフホストとCommunity Edition</h2>
+      <p>n8nの最大の特徴の一つは、<strong>Community Edition</strong>をGitHubから入手し、Docker等で自社インフラに載せられる点です。データの所在を自社でコントロールでき、クラウドSaaSにAPIキーを預けたくないケースに向きます。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Community Edition</h3>
+          <p>GitHub公開版。セルフホスト無料。メール登録でフォルダ整理・デバッグピン等を解放（公式Docs）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>n8n Cloud</h3>
+          <p>Frankfurt（EU）ホスト。Starter €20/月〜。インフラ運用不要で始められる。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Business（セルフホスト）</h3>
+          <p>ライセンスキーでSSO・Git版管理・環境分離等を解放。Executionクォータはライセンスサーバーと連携（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Enterprise</h3>
+          <p>200+同時実行、外部Secret Store、SLA付きサポート、365日Insights等。</p>
+        </div>
+      </div>
+      <p>試験では「<strong>セルフホスト可能なiPaaS</strong>＝n8n」という定番整理を覚えておくと、Make/Zapierとの比較問題で点を取りやすくなります。ただしFair-codeのため、<strong>完全OSS（Apache 2.0等）と同一視しない</strong>ことも重要です。</p>
+    </section>
+
+    <section id="code-ui">
+      <h2>コード＋UIハイブリッド</h2>
+      <p>n8nのスローガン「<strong>Code when you need it, UI when you don't</strong>」が示す通り、ノードエディタとコードを行き来できるのが強みです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>機能</th><th>概要</th><th>Make/Zapierとの差</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Code node</strong></td><td>ワークフロー任意位置でJS/Python</td><td>Make CodeはCredits/秒課金</td></tr>
+          <tr><td><strong>HTTP / GraphQL</strong></td><td>カスタムAPI、cURLインポート</td><td>社内RESTを直接叩ける</td></tr>
+          <tr><td><strong>単一ステップ再実行</strong></td><td>フロー全体を再実行せずデバッグ</td><td>開発速度が上がる</td></tr>
+          <tr><td><strong>Mock / Replay</strong></td><td>外部API待ちなしでテスト</td><td>CI/CD連携しやすい</td></tr>
+          <tr><td><strong>Git版管理</strong></td><td>Business以上でworkflow diff</td><td>インフラチームの運用文化に合う</td></tr>
+          <tr><td><strong>API / CLI</strong></td><td>外部からワークフロー実行・管理</td><td>IaC・監視ツールと統合</td></tr>
+        </tbody>
+      </table>
+      <p>ワークフロー定義はJSONとしてエクスポートでき、バージョン管理やレビューに載せやすいのも技術者向けの設計です。</p>
+    </section>
+
+    <section id="ai-workflow">
+      <h2>AI Workflow Builder</h2>
+      <p>2026年時点、n8nは生成AIを<strong>ワークフロー内のノード</strong>として統合する機能を強化しています（公式Product Overview）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>機能</th><th>概要</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>AI Workflow Builder</strong></td><td>自然言語からワークフロー草案を生成。Cloudは50〜1,000 credits/月（プラン依存）</td><td>設計支援——完成品の自動承認ではない</td></tr>
+          <tr><td><strong>LangChain / AI Agent nodes</strong></td><td>LLM・ツール呼び出しをノード化</td><td><a href="../../glossary/agent/">AIエージェント</a>の実装基盤</td></tr>
+          <tr><td><strong>Evaluations</strong></td><td>AIワークフローの精度を本番データで検証</td><td>幻覚・品質管理の論点と接続</td></tr>
+          <tr><td><strong>Human-in-the-loop</strong></td><td>承認ステップを挟める設計</td><td>TF-0271（承認）と整合</td></tr>
+          <tr><td><strong>ローカルLLM連携</strong></td><td><a href="../ollama/">Ollama</a>等とHTTP/Code nodeで接合</td><td>データを外に出さないAI自動化</td></tr>
+        </tbody>
+      </table>
+      <p>AI Workflow Builderの生成結果はそのまま本番投入せず、<strong>権限・個人情報・誤動作</strong>の観点で人間レビューが必要です——TF-0493の「自動化＝確認不要」は×です。</p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>400+ 統合ノード</h3>
+          <p>Slack、Notion、Google、Salesforce、OpenAI等。Communityノードで拡張可能。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Webhook / スケジュール</h3>
+          <p>イベント駆動・定期実行。Webhookはリアルタイム連携の定番。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Data tables</h3>
+          <p>n8n内蔵の軽量DB。ワークフロー間で状態を保持。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Error workflow</h3>
+          <p>失敗時に別フローで通知・リトライ。本番運用の必須パターン。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Queue mode</h3>
+          <p>Enterprise Scaling。複数ワーカーで高負荷分散。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Insights</h3>
+          <p>実行数・成功率ダッシュボード。Pro以上で期間フィルタ拡張。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>「<strong>n8n＝完全無料で商用利用OKなOSS</strong>」は誤りです。Community Editionは無料セルフホストできますが、ライセンスはFair-codeであり、SSO・Git版管理等は有料プランです。</p>
+      <p>「<strong>Execution課金なら常にMake/Zapierより安い</strong>」も一概には言えません。高頻度スケジュール（1分間隔）や大量の独立WebhookはExecutionを急速に消費します。逆に<strong>50ノード超の複雑フロー</strong>ではn8nの方が予測しやすくなることが多いです。</p>
+      <p>「<strong>AI Workflow Builderがあれば設計不要</strong>」——生成されたフローはAPIキー・分岐条件・エラー処理の確認が必須です。試験では自動化ツールの<strong>権限と承認</strong>が別論点として問われます。</p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>以下は公式Pricing（n8n.io/pricing）に基づく<strong>年払い（17%割引）</strong>の整理です。Execution数はプランごとに上限があり、超過時はBusiness以上でオーバージュ請求の可能性があります（公式FAQ）。</p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card"><p class="tool-plan-name">Community</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">セルフホスト（GitHub）</p></div>
+        <div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Starter</p><p class="tool-plan-price">€20/月</p><p class="tool-plan-note">2.5K executions</p></div>
+        <div class="tool-plan-card"><p class="tool-plan-name">Pro</p><p class="tool-plan-price">€50/月</p><p class="tool-plan-note">10K executions</p></div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額（2026年6月時点）</th>
+            <th>Executions/月</th>
+            <th>主な特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Community Edition</strong></td><td><strong>無料</strong></td><td>自社管理</td><td>セルフホスト・ほぼ全機能（Enterprise機能除く）</td></tr>
+          <tr><td><strong>Starter</strong></td><td><strong>€20/月</strong>（年払い）</td><td><strong>2,500</strong></td><td>n8n Cloud・5同時実行・50 AI Builder credits</td></tr>
+          <tr><td><strong>Pro</strong></td><td><strong>€50/月</strong>（年払い）</td><td><strong>10,000</strong></td><td>20同時実行・Git履歴・Global Variables・150 AI credits</td></tr>
+          <tr><td><strong>Business</strong></td><td><strong>€667/月</strong>（年払い）</td><td><strong>40,000</strong></td><td>セルフホスト・SSO/SAML・Git版管理・環境分離</td></tr>
+          <tr><td><strong>Enterprise</strong></td><td>要問合せ</td><td>カスタム</td><td>200+同時実行・SLA・外部Secret Store</td></tr>
+        </tbody>
+      </table>
+      <p>Starter/Proは<strong>14日無料トライアル</strong>（クレカ不要）でPro相当機能を試せます。Businessはセルフホスト向けライセンスキーがメールで届き、Community Editionに適用する形です（公式FAQ）。</p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li><strong>Cloud or セルフホストを選択</strong>手早く試すならCloud無料トライアル、データ主権重視なら<code>docker run n8nio/n8n</code>。</li>
+          <li><strong>ワークフロー新規作成</strong>テンプレートまたは空キャンバス。AI Workflow Builderで草案生成も可。</li>
+          <li><strong>トリガー設定</strong>Webhook・Schedule・App trigger。頻度とExecution消費を見積もる。</li>
+          <li><strong>ノード追加・Code</strong>HTTP/Code nodeで社内API。単一ステップ実行でデバッグ。</li>
+          <li><strong>有効化・Insights確認</strong>本番化後、ダッシュボードでExecution数と失敗率を監視。</li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/n8n/og-hero.png" alt="n8n公式イメージ" width="600" height="314" loading="lazy">
+            <figcaption>出典：n8n公式（n8n.io）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>セキュリティインシデント連携</h3>
+          <p>SIEMアラート→チケット enrichment→Slack通知。Vodafone事例では£2.2M削減（公式）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>社内LLMパイプライン</h3>
+          <p><a href="../ollama/">Ollama</a>＋n8nで文書要約→承認→DB保存。データを外に出さない。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>EC・在庫Webhook</h3>
+          <p>注文Webhook→在庫更新→メール。多段処理も1 Execution。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>DevOps CI連携</h3>
+          <p>GitHub Actions→n8n API→デプロイ通知。JSON workflowをGit管理。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+        <tbody>
+          <tr><td>Execution課金で多段フローのコスト予測がしやすい</td><td>セルフホストは運用・セキュリティパッチが自社責任</td></tr>
+          <tr><td>Community Editionで無料セルフホスト可能</td><td>連携ノード数はZapier（9,000+）より少ない</td></tr>
+          <tr><td>JS/Python・HTTP・Gitで開発者体験が高い</td><td>ノーコードのみユーザーには学習コスト</td></tr>
+          <tr><td>AI Workflow Builder・Evaluations統合</td><td>Fair-code——完全OSSとは異なるライセンス</td></tr>
+          <tr><td>EU（Frankfurt）Cloudでデータ所在が明確</td><td>Business €667/月〜は中小には高額</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>主要ツールとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>n8n</th><th><a href="../make/">Make</a></th><th><a href="../zapier/">Zapier</a></th><th>Power Automate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>課金単位</td><td><strong>Execution</strong>（完走1回）</td><td><strong>Credits</strong>（モジュール）</td><td><strong>Tasks</strong>＋Activities</td><td>フロー実行・Premium</td></tr>
+          <tr><td>ホスティング</td><td>Cloud＋<strong>セルフホスト</strong></td><td>Cloud SaaS</td><td>Cloud SaaS</td><td>Cloud（M365）</td></tr>
+          <tr><td>コード</td><td>JS/Python任意配置</td><td>Make Code（Credits/秒）</td><td>Code by Zapier</td><td>式・カスタムコネクタ</td></tr>
+          <tr><td>連携数</td><td>400+（拡張可）</td><td>3,000+</td><td>9,000+</td><td>Microsoft中心</td></tr>
+          <tr><td>AI統合</td><td>AI Builder・LangChain</td><td>AI Agents・MCP</td><td>Zapier Agents・MCP</td><td>Copilot・AI Builder</td></tr>
+          <tr><td>向くケース</td><td>セルフホスト・技術者</td><td>複雑分岐・Credits効率</td><td>連携厚み・MCP</td><td>M365・Teams中心</td></tr>
+        </tbody>
+      </table>
+      <p>インフラ内完結・多段処理の予測可能コストならn8n、完全クラウドでノーコード重視なら<a href="../make/">Make</a>、連携エコシステムとAI Agents二層なら<a href="../zapier/">Zapier</a>、Microsoft 365中心ならPower Automate——という棲み分けが試験・実務で使いやすいです。</p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>APIキーや個人情報を自社インフラ内に閉じたいエンジニア・情シス</strong></li>
+        <li><strong>50ノード超の複雑フローをExecution単価で運用したいチーム</strong></li>
+        <li><strong>Git・Docker・CI/CD文化のある組織</strong></li>
+        <li><strong>試験対策で「セルフホストiPaaS＝n8n」を押さえたい受験生</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>9,000+アプリのテンプレ厚み</strong>だけが欲しいケース（Zapier向け）、<strong>インフラ運用なしで15分で始めたい非エンジニア</strong>（Make Cloud向け）、<strong>ブラウザGUI操作の自動化</strong>（<a href="../manus/">Manus</a>・RPA向け）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Execution（実行）とは？</summary><p class="tool-faq-a">ワークフローが開始から完了まで1回走るたびに1 Executionです。ステップ（ノード）数に関係なく1回とカウントされるため、50ノードのフローも1 Executionです。MakeのCredits（モジュール単位）やZapierのTasks（成功アクション単位）とは数え方が異なります（2026年6月時点）。</p></details>
+        <details><summary>無料で使えますか？</summary><p class="tool-faq-a">GitHubのCommunity EditionをDocker等でセルフホストすれば無料で利用できます。メール登録でフォルダ整理・デバッグピン等が解放されます。n8n CloudはStarter €20/月（年払い・2.5K executions）から。Starter/Proは14日無料トライアル（クレカ不要）あり（2026年6月時点）。</p></details>
+        <details><summary>Makeとの違いは？</summary><p class="tool-faq-a">MakeはクラウドSaaSでCredits（モジュール実行）課金、ノーコードのシナリオ設計が中心です。n8nはセルフホスト可能でExecution課金、JS/Pythonコードノード・Git版管理・API/CLI制御など技術者向けの自由度が高いです。完全クラウドで手早く始めるならMake、インフラ内完結・多段処理の予測可能コストならn8n——という棲み分けです。</p></details>
+        <details><summary>Zapierとの違いは？</summary><p class="tool-faq-a">Zapierは9,000+アプリ連携とZap/Agentsの二層課金が強みで、ノーコード利用者向けです。n8nは400+ノード（カスタム拡張可）で、セルフホスト・コードステップ・Execution課金が特徴です。連携の厚みとテンプレートならZapier、データ主権と開発者体験ならn8n——という整理が試験・実務で使いやすいです。</p></details>
+        <details><summary>オープンソースですか？</summary><p class="tool-faq-a">n8nはFair-code（ソース公開・セルフホスト可）です。Community EditionはGitHubで入手でき、Enterprise/Business向け機能（SSO、Git版管理、環境分離等）は有料プランです。「完全なOSS＝商用利用も制限なし」とは異なるため、社内ポリシー確認が必要な場合があります（2026年6月時点）。</p></details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://n8n.io" target="_blank" rel="noopener noreferrer">n8n（n8n.io）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://n8n.io/pricing/" target="_blank" rel="noopener noreferrer">料金ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://docs.n8n.io/" target="_blank" rel="noopener noreferrer">ドキュメント</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../make/"><img src="../../assets/images/tools/make/app-icon.png" alt="" width="16" height="16"> Make</a></li>
+          <li><a href="../zapier/"><img src="../../assets/images/tools/zapier/app-icon.png" alt="" width="16" height="16"> Zapier</a></li>
+          <li><a href="../ollama/"><img src="../../assets/images/tools/ollama/app-icon.png" alt="" width="16" height="16"> Ollama</a></li>
+          <li><a href="../manus/"><img src="../../assets/images/tools/manus/app-icon.png" alt="" width="16" height="16"> Manus</a></li>
+          <li class="tool-related-list__soon">Dify <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
