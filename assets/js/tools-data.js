@@ -555,6 +555,7 @@ const TOOLS = [
     logo: "hailuo-ai.png",
     cat: "audio",
     catLabel: "音声・動画・音楽",
+    article: true,
     tagline: "Kling・Pikaと並んで動画生成AI比較記事に頻出",
     url: "https://hailuoai.com/video",
   },

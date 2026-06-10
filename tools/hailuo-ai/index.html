@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hailuo AI（MiniMax・海螺视频）の機能・料金・使い方を解説。贝壳クレジット、低速無制限、Hailuo 2.3モデル階梯、API従量課金、Kling・Runway・Pikaとの比較まで。生成AIパスポート対策にも。">
+  <title>Hailuo AI（MiniMax）とは？動画生成AIの機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/hailuo-ai/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Hailuo AI（MiniMax）とは？動画生成AIの機能・料金・使い方を解説">
+  <meta property="og:description" content="MiniMax三層エコシステム、贝壳クレジットと低速無制限、Hailuo 2.3/2.3-Fast/02のモデル階梯、公式API従量課金を2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/hailuo-ai/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/hailuo-ai/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/hailuo-ai/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/hailuo-ai/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Hailuo AI（MiniMax）", "item": "https://ai-master.jp/tools/hailuo-ai/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/hailuo-ai/#article",
+        "headline": "Hailuo AI（MiniMax）とは？動画生成AIの機能・料金・使い方を解説",
+        "description": "MiniMax三層エコシステム、贝壳クレジットと低速無制限、Hailuo 2.3/2.3-Fast/02のモデル階梯、公式API従量課金を2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/hailuo-ai/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/hailuo-ai/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/hailuo-ai/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Hailuo AI" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/hailuo-ai/#webpage",
+        "url": "https://ai-master.jp/tools/hailuo-ai/",
+        "name": "Hailuo AI（MiniMax）とは？動画生成AIの機能・料金・使い方を解説",
+        "description": "MiniMax三層エコシステム、贝壳クレジットと低速無制限、Hailuo 2.3/2.3-Fast/02のモデル階梯、公式API従量課金を2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/hailuo-ai/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Hailuo AI",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web Browser, API",
+        "description": "中国・MiniMaxが提供する動画生成AI（海螺视频）。Text-to-Video・Image-to-Videoで6〜10秒の動画を生成し、贝壳（シェル）クレジット制で利用できる。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料トライアルあり。Standard $9.99/月〜（2026年6月時点）。API従量課金は768P・6秒で$0.19〜"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "MiniMax",
+          "url": "https://www.minimax.io/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Hailuo AIとMiniMax APIの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hailuo AI（hailuoai.com）は一般向けの動画生成Webサービスで、贝壳（シェル）クレジットと会員プランで利用します。MiniMax Open Platform API（platform.minimax.io）は開発者向けで、動画・LLM・TTS等を従量課金またはVideo Packagesで利用します。同じMiniMaxブランドでも製品ラインが異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hailuo AIは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "無料トライアル用の贝壳（シェル）が付与される場合があります。継続利用はStandard以上の有料会員または贝壳の追加購入が必要です。無料枠の付与数・ウォーターマークの有無はキャンペーンで変わるため、登録時の表示を確認してください（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hailuo AIとKling AIの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらも中国発の動画生成AIですが、Hailuo AIはMiniMax（海螺视频）、Kling AIは快手（Kuaishou）が提供します。クレジット単位（贝壳 vs Credits）、モデル名、上位プランの「低速無制限」設計などが異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "贝壳（シェル）がなくなるとどうなりますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "上位会員プランでは、贝壳を使い切った後もHailuo 01/02など旧世代モデルで低速キューによる無制限生成が可能な場合があります（プラン・モデルにより異なる）。最新のHailuo 2.3系は贝壳消費が前提です（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hailuo AIは商用利用できますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "商用利用の可否はプラン・利用規約・生成物の権利帰属に依存します。Standard以上でウォーターマークなし出力が可能なプランもありますが、案件利用前に公式Terms of Serviceを必ず確認してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Hailuo AI（MiniMax）</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/hailuo-ai/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Hailuo AI · MiniMax · 音声・動画</p>
+          <h1>Hailuo AI（MiniMax）とは？動画生成AIの機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">中国・MiniMax（海螺视频）発の動画生成AI。Hailuo 2.3で身体動作・表情のリアルさに強み</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">無料枠あり</span>
+        <span class="tool-category">動画生成AI</span>
+        <span class="tool-category">贝壳クレジット</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（hailuoai.com）</li>
+          <li>Developer API（platform.minimax.io）</li>
+          <li>768P / 1080P・6〜10秒</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/hailuo-ai/og-hero.png" alt="MiniMax公式イメージ" width="1200" height="630" fetchpriority="high">
+      <figcaption>出典：MiniMax公式（minimax.io）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Hailuo AI</strong>（ハイルオ / 中国語名：<strong>海螺视频</strong>）は、中国のAI企業<strong>MiniMax</strong>が提供する<strong>動画生成AI</strong>サービスです。テキストや画像から6〜10秒の動画を生成し、Web上では<strong>贝壳（シェル）</strong>と呼ばれるクレジットを消費します。本記事では、<a href="#ecosystem">MiniMax三層エコシステム</a>、<a href="#shell-credit">贝壳＋低速無制限</a>という独自の課金設計、<a href="#model-ladder">Hailuo 2.3のモデル階梯</a>、<a href="#comparison">Kling・Runwayとの比較</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Hailuo AIとは</a></li>
+        <li><a href="#ecosystem">MiniMax三層エコシステム</a></li>
+        <li><a href="#model-ladder">Hailuoモデル階梯（2.3 / 2.3-Fast / 02）</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#shell-credit">贝壳クレジットと低速無制限</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">主要ツールとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>生成AIパスポートでは、動画生成AIのカテゴリ分類と利用規約・商用条件の確認が定番です。Hailuo AIは<a href="../kling-ai/">Kling AI</a>や<a href="../runway/">Runway</a>と並ぶ「動画生成AIの具体例」として、開発元（MiniMax）とクレジット制の違いをセットで押さえると得点しやすくなります。</p>
+      <p>「動画生成AI＝すべて同じ料金体系」「中国発＝Klingと同じ会社」という誤解に注意してください。HailuoはMiniMax、Klingは快手（Kuaishou）です。</p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0196/">一問一答 TF-0196（動画生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0197/">TF-0197（動画生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Hailuo AIとは</h2>
+      <p>Hailuo AI（hailuoai.com/video）は、MiniMaxが展開する動画生成サービスです。中国語では「海螺视频（ハイルオ・シーパン）」と呼ばれ、テキストプロンプトや画像から短尺動画を生成します。</p>
+      <p>2025〜2026年にかけて<strong>Hailuo 02</strong>から<strong>Hailuo 2.3 / 2.3-Fast</strong>へとモデルが更新され、身体動作・表情・物理リアリティ・プロンプト追従の改善が公式に訴求されています。解像度は768P・1080P、尺は6秒・10秒が中心です。</p>
+      <p>試験では「MiniMax発の動画生成AI」「Kling・Pika・Runwayと比較される中国系ツールの一つ」として名前が出ることがあります。開発元と課金単位（贝壳）を区別して覚えることが重要です。</p>
+    </section>
+
+    <section id="ecosystem">
+      <h2>MiniMax三層エコシステム</h2>
+      <p>MiniMaxブランドで混同されやすいのが、<strong>一般向けHailuo</strong>と<strong>開発者向けOpen Platform</strong>の二系統です。試験・実務とも、同じ社名でも製品ラインを分けて理解してください。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>レイヤー</th>
+            <th>入口</th>
+            <th>主な用途</th>
+            <th>課金の考え方</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hailuo AI（一般向け）</strong></td>
+            <td>hailuoai.com</td>
+            <td>Web UIでT2V・I2V・Agent等</td>
+            <td>会員プラン＋<strong>贝壳（シェル）</strong>月次付与</td>
+          </tr>
+          <tr>
+            <td><strong>MiniMax Open Platform API</strong></td>
+            <td>platform.minimax.io</td>
+            <td>動画・LLM・TTS・音楽・画像のAPI統合</td>
+            <td><strong>Pay-as-you-go</strong>（動画は1本あたり$0.19〜）</td>
+          </tr>
+          <tr>
+            <td><strong>同一ブランドの隣接製品</strong></td>
+            <td>hailuoai.com（音声タブ等）</td>
+            <td>Text-to-Speech・音声クローン</td>
+            <td>贝壳またはAPI従量（製品ごとに異なる）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>動画生成だけを試すならHailuo AI、自社アプリに組み込むならOpen Platform API——この棲み分けが、Runway（Web＋API一体）やKling（Web中心）との比較軸になります。</p>
+    </section>
+
+    <section id="model-ladder">
+      <h2>Hailuoモデル階梯（2.3 / 2.3-Fast / 02）</h2>
+      <p>MiniMax公式APIドキュメント（2026年6月時点）では、動画生成モデルが世代・用途別に整理されています。Webアプリでも同系統のモデル名が選択できます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>モデル</th>
+            <th>公式の位置づけ</th>
+            <th>解像度・尺</th>
+            <th>API従量（768P・6秒）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MiniMax-Hailuo-2.3</strong></td>
+            <td>身体動作・表情・物理リアリティ・プロンプト追従の強化</td>
+            <td>768P / 1080P、6s / 10s</td>
+            <td><strong>$0.28</strong></td>
+          </tr>
+          <tr>
+            <td><strong>MiniMax-Hailuo-2.3-Fast</strong></td>
+            <td>Image-to-Video向け。効率・コスパ重視</td>
+            <td>768P / 1080P、6s / 10s</td>
+            <td><strong>$0.19</strong></td>
+          </tr>
+          <tr>
+            <td><strong>MiniMax-Hailuo-02</strong></td>
+            <td>1080P・10秒・プロンプト追従（旧世代だが低解像度は安価）</td>
+            <td>512P〜1080P、6s / 10s</td>
+            <td><strong>$0.10</strong>（512P・6s）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Web会員プランでは、最新の2.3系は贝壳消費が前提で、旧世代（Hailuo 01/02）は上位プランで<strong>低速キュー無制限</strong>が付く設計があります（後述）。「最新＝高品質＝高コスト」「旧世代＝低速だが使い放題」という二層構造が、KlingやRunwayにはないHailuoの特徴です。</p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Text-to-Video</h3>
+          <p>テキストプロンプトから6〜10秒の動画を生成。被写体の動き・カメラワーク・スタイルを指示できます。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Image-to-Video</h3>
+          <p>1枚の画像、開始・終了フレーム、参照画像から動画化。2.3-FastはI2V効率向けと公式に位置づけ。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>1080P・10秒生成</h3>
+          <p>Standard以上の有料プランで10秒1080P動画の生成・ウォーターマークなしDLが可能（公式プラン表）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>並列キュー</h3>
+          <p>Standard以上で最大5タスク投入・2タスク同時並列。量産ワークフロー向け（公式プラン表）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Agent・テンプレート</h3>
+          <p>Agent機能やテンプレート動画生成も提供。贝壳消費対象（2026年6月時点）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Developer API</h3>
+          <p>非同期API（タスク作成→ステータス確認→ダウンロード）で自社サービスに組み込み可能。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>代表的な誤解は「<strong>Hailuo AI＝MiniMax API</strong>」です。一般向けWeb（贝壳＋会員）と開発者向けOpen Platform（従量課金）はアカウント・料金体系が異なります。APIの単価表をそのままWebプランに当てはめないでください。</p>
+      <p>もう1つは「<strong>上位プラン＝すべて無制限</strong>」です。尊享（Max）プランでも、無制限が適用されるのは主に<strong>Hailuo 01/02など旧世代モデルの低速キュー</strong>です。最新のHailuo 2.3系は贝壳消費が必要です（2026年6月時点の公式説明）。</p>
+      <p>3つ目は「<strong>中国発＝Kling AIと同じ</strong>」です。どちらも高品質な動画生成で知られますが、開発元・クレジット名称・プラン設計は別会社です。</p>
+    </section>
+
+    <section id="shell-credit">
+      <h2>贝壳クレジットと低速無制限</h2>
+      <p>Hailuo AIのWeb課金の核は<strong>贝壳（バイケ / Shell）</strong>と呼ばれる月次クレジットです。1本あたりの消費量はモデル・解像度・尺で変わり、公式FAQでは例として「4500贝壳 ≒ 6秒768P動画を約180本（Hailuo 2.0モデル）」といった換算が示されています。</p>
+      <h3>贝壳が尽きたとき（上位プラン）</h3>
+      <p>尊享（Max）等の上位会員では、贝壳を使い切った後も<strong>低速キュー</strong>でHailuo 01/02モデルの生成を継続できる場合があります。公式UIでは「贝壳被消耗光了→低速通道でHailuo01/02模型无限生成」と案内されるケースがあります（2026年6月時点）。</p>
+      <p>つまりHailuoの課金は「<strong>最新モデル＝贝壳消費の高速路</strong>」と「<strong>旧モデル＝低速だが使い続けられる保険</strong>」の二層構造です。量産テストや下書きには旧モデル、本番クオリティには2.3系——という使い分けが現実的です。</p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>以下は公式サイト（hailuoai.com）のプラン説明と、海外向け表示（USD）を併記した<strong>2026年6月時点</strong>の整理です。キャンペーン価格・地域差があるため、契約前に必ず公式で確認してください。</p>
+
+      <h3>Web会員プラン（贝壳付与）</h3>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card"><p class="tool-plan-name">Basic</p><p class="tool-plan-price">¥105/月</p><p class="tool-plan-note">1,000贝壳/月</p></div>
+        <div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Standard</p><p class="tool-plan-price">$9.99/月</p><p class="tool-plan-note">4,500贝壳/月</p></div>
+        <div class="tool-plan-card"><p class="tool-plan-name">Master</p><p class="tool-plan-price">$79.99/月</p><p class="tool-plan-note">10,500贝壳/月</p></div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>料金（2026年6月時点）</th>
+            <th>月次贝壳</th>
+            <th>主な特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Basic（基础）</strong></td><td>¥105/月（プロモ¥55）</td><td><strong>1,000</strong></td><td>単一キュー・ウォーターマークあり</td></tr>
+          <tr><td><strong>Standard（标准）</strong></td><td><strong>$9.99/月</strong>（年払い$7.99相当）</td><td><strong>4,500</strong></td><td>1080P・10秒・並列2・ウォーターマークなし</td></tr>
+          <tr><td><strong>Master（大师）</strong></td><td><strong>$79.99/月</strong></td><td><strong>10,000</strong></td><td>Standard相当＋大量贝壳</td></tr>
+          <tr><td><strong>Ultra（至臻）</strong></td><td>¥899/月</td><td><strong>12,000</strong></td><td>Hailuo 01無制限（贝壳非消費）</td></tr>
+          <tr><td><strong>Max（尊享）</strong></td><td><strong>$199.99/月</strong></td><td><strong>20,000</strong></td><td>01/02無制限＋贝壳枯渇時の低速無制限</td></tr>
+        </tbody>
+      </table>
+      <p>StandardプランのPro相当（$34.99/月・4,500贝壳）は海外表示で確認できます。中国サイトではStandard＝¥385/月（プロモ¥196）・4,500贝壳と表記されています。表示通貨・プロモ価格は変動するため、支払い画面の金額を優先してください。</p>
+
+      <h3>Developer API（Pay-as-you-go）</h3>
+      <p>MiniMax Open Platform公式（platform.minimax.io/docs/guides/pricing-paygo、2026年6月時点）の動画従量単価：</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>768P・6秒</th><th>768P・10秒</th><th>1080P・6秒</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Hailuo 2.3-Fast</strong></td><td>$0.19</td><td>$0.32</td><td>$0.33</td></tr>
+          <tr><td><strong>Hailuo 2.3</strong></td><td>$0.28</td><td>$0.56</td><td>$0.49</td></tr>
+          <tr><td><strong>Hailuo-02</strong></td><td>$0.28</td><td>$0.56</td><td>$0.49</td></tr>
+        </tbody>
+      </table>
+      <p>低解像度のHailuo-02（512P・6秒）は<strong>$0.10</strong>と、API経由ではコストを抑えやすい選択肢もあります。大規模利用はVideo Packages（units制）も公式に用意されています。</p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li><strong>アカウント登録</strong>hailuoai.comでアカウントを作成し、付与された贝壳残高を確認します。</li>
+          <li><strong>モデル選択</strong>Hailuo 2.3（高品質）か2.3-Fast（I2V効率）か、旧世代（02）かを用途で選びます。</li>
+          <li><strong>入力</strong>Text-to-Videoならプロンプト、Image-to-Videoなら画像をアップロード。解像度・尺を設定。</li>
+          <li><strong>生成・確認</strong>キューで生成完了を待ち、プレビューで動き・表情を確認。必要なら再生成。</li>
+          <li><strong>書き出し</strong>有料プランでウォーターマークなしDL。商用案件は利用規約を再確認してから納品。</li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/hailuo-ai/og-hero.png" alt="MiniMax公式イメージ" width="600" height="314" loading="lazy">
+            <figcaption>出典：MiniMax公式（minimax.io）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>SNSショート動画の試作</h3>
+          <p>2.3-Fastで画像から短尺クリップを量産。贝壳単価を抑えてA/Bテスト。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>商品PV・コンセプト映像</h3>
+          <p>1080P・10秒生成でプロモーション素材のたたき台を作成。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>アプリ・サービスへのAPI組込</h3>
+          <p>Open Platform APIで動画生成機能を自社プロダクトに統合。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>試験対策の比較学習</h3>
+          <p>Kling・Runway・Pikaと並べ、中国系2社（MiniMax vs 快手）の違いを整理。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+        <tbody>
+          <tr><td>Hailuo 2.3の身体動作・表情品質が高い</td><td>贝壳制で最新モデルは量産コストが読みにくい</td></tr>
+          <tr><td>上位プランの低速無制限（旧モデル）が独自</td><td>UI・サポートは中国語・英語中心</td></tr>
+          <tr><td>API従量課金が公式に明確（$0.19〜/本）</td><td>WebとAPIで料金体系が別</td></tr>
+          <tr><td>1080P・10秒・並列生成（Standard以上）</td><td>長尺編集・本格ポストプロは別ツール併用が必要</td></tr>
+          <tr><td>Standard $9.99/月は動画AIとして参入しやすい</td><td>プラン名・プロモ価格が頻繁に変動</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>主要ツールとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>Hailuo AI</th><th>Kling AI</th><th>Runway</th><th>Pika</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>開発元</td><td>MiniMax（中国）</td><td>Kuaishou（中国）</td><td>Runway（米国）</td><td>Pika Labs（米国）</td></tr>
+          <tr><td>クレジット単位</td><td>贝壳（Shell）</td><td>Credits</td><td>Credits</td><td>Credits</td></tr>
+          <tr><td>独自設計</td><td>旧モデル低速無制限</td><td>Professionalモード</td><td>Gen-4＋編集UI</td><td>Pikaffects</td></tr>
+          <tr><td>API</td><td>platform.minimax.io</td><td>klingai.com API</td><td>runwayml.com API</td><td>pika.art API</td></tr>
+          <tr><td>試験での位置づけ</td><td>MiniMax発・贝壳制</td><td>快手発・Credits制</td><td>米国発・編集統合</td><td>エフェクト特化</td></tr>
+        </tbody>
+      </table>
+      <p>身体表現の品質と贝壳＋低速無制限の設計ならHailuo、快手エコシステムとの親和性なら<a href="../kling-ai/">Kling AI</a>、編集スタジオ一体型なら<a href="../runway/">Runway</a>、SNSエフェクトなら<a href="../pika/">Pika</a>という棲み分けが現実的です。</p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>身体動作・表情のリアルさを重視する動画クリエイター</strong></li>
+        <li><strong>贝壳＋低速無制限で「使い切り不安」を減らしたい量産ユーザー</strong></li>
+        <li><strong>API従量課金で動画生成を自社サービスに組み込みたい開発者</strong></li>
+        <li><strong>試験対策でKlingと並ぶ中国系動画AIの違いを押さえたい受験生</strong></li>
+      </ul>
+      <p>あえて向いていないのは、英語圏サポート・長尺編集だけで完結したいケース（Runway向け）や、エフェクト特化のSNS演出（Pika向け）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Hailuo AIとMiniMax APIの違いは？</summary><p class="tool-faq-a">Hailuo AI（hailuoai.com）は一般向けの動画生成Webサービスで、贝壳（シェル）クレジットと会員プランで利用します。MiniMax Open Platform API（platform.minimax.io）は開発者向けで、動画・LLM・TTS等を従量課金またはVideo Packagesで利用します。同じMiniMaxブランドでも製品ラインが異なります。</p></details>
+        <details><summary>無料で使えますか？</summary><p class="tool-faq-a">無料トライアル用の贝壳（シェル）が付与される場合があります。継続利用はStandard以上の有料会員または贝壳の追加購入が必要です。無料枠の付与数・ウォーターマークの有無はキャンペーンで変わるため、登録時の表示を確認してください（2026年6月時点）。</p></details>
+        <details><summary>Kling AIとの違いは？</summary><p class="tool-faq-a">どちらも中国発の動画生成AIですが、Hailuo AIはMiniMax（海螺视频）、Kling AIは快手（Kuaishou）が提供します。クレジット単位（贝壳 vs Credits）、モデル名、上位プランの「低速無制限」設計などが異なります。</p></details>
+        <details><summary>贝壳がなくなるとどうなりますか？</summary><p class="tool-faq-a">上位会員プランでは、贝壳を使い切った後もHailuo 01/02など旧世代モデルで低速キューによる無制限生成が可能な場合があります（プラン・モデルにより異なる）。最新のHailuo 2.3系は贝壳消費が前提です（2026年6月時点）。</p></details>
+        <details><summary>商用利用できますか？</summary><p class="tool-faq-a">商用利用の可否はプラン・利用規約・生成物の権利帰属に依存します。Standard以上でウォーターマークなし出力が可能なプランもありますが、案件利用前に公式Terms of Serviceを必ず確認してください。</p></details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://hailuoai.com/video" target="_blank" rel="noopener noreferrer">Hailuo AI（hailuoai.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://hailuoai.com/pricing" target="_blank" rel="noopener noreferrer">料金ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://platform.minimax.io/docs/guides/pricing-paygo" target="_blank" rel="noopener noreferrer">MiniMax API料金</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.minimax.io/" target="_blank" rel="noopener noreferrer">MiniMax</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../kling-ai/"><img src="../../assets/images/tools/kling-ai/app-icon.png" alt="" width="16" height="16"> Kling AI</a></li>
+          <li><a href="../pika/"><img src="../../assets/images/tools/pika/app-icon.png" alt="" width="16" height="16"> Pika</a></li>
+          <li><a href="../runway/"><img src="../../assets/images/tools/runway/app-icon.png" alt="" width="16" height="16"> Runway</a></li>
+          <li><a href="../veo-3/"><img src="../../assets/images/tools/veo-3/icon.svg" alt="" width="16" height="16"> Veo 3</a></li>
+          <li><a href="../luma-dream-machine/"><img src="../../assets/images/tools/luma-dream-machine/icon.svg" alt="" width="16" height="16"> Luma Dream Machine</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/gan/">GAN</a></li>
+          <li class="tool-related-list__soon">Text-to-Video（動画生成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
