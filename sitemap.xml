@@ -1426,6 +1426,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ai-master.jp/tools/copy-ai/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-master.jp/tools/grok/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

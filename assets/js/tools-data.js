@@ -31,6 +31,7 @@ const TOOLS = [
     logo: "copy-ai.png",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "コピーライティング特化AIの定番",
     url: "https://www.copy.ai",
   },
