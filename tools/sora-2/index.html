@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sora 2の機能・歴史・2026年サービス終了を解説。OpenAIの物理シミュレーション動画AI、Characters・音声同期、Runway・Veo 3との違い。生成AIパスポート対策にも。">
+  <title>Sora 2とは？OpenAI動画生成AIと2026年終了の教訓を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/sora-2/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Sora 2とは？OpenAI動画生成AIと2026年終了の教訓を解説">
+  <meta property="og:description" content="2024年プレビューで衝撃、Sora 2で物理・音声同期。2026年4月アプリ終了・9月API終了予定。Text-to-Videoの代表例として試験で押さえるポイントを整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/sora-2/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/sora-2/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/sora-2/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/sora-2/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Sora 2", "item": "https://ai-master.jp/tools/sora-2/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/sora-2/#article",
+        "headline": "Sora 2とは？OpenAI動画生成AIと2026年終了の教訓を解説",
+        "description": "2024年プレビューで衝撃、Sora 2で物理・音声同期。2026年4月アプリ終了・9月API終了予定。Text-to-Videoの代表例として試験で押さえるポイントを整理。",
+        "url": "https://ai-master.jp/tools/sora-2/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/sora-2/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/sora-2/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Sora 2" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/sora-2/#webpage",
+        "url": "https://ai-master.jp/tools/sora-2/",
+        "name": "Sora 2とは？OpenAI動画生成AIと2026年終了の教訓を解説",
+        "description": "2024年プレビューで衝撃、Sora 2で物理・音声同期。2026年4月アプリ終了・9月API終了予定。Text-to-Videoの代表例として試験で押さえるポイントを整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/sora-2/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Sora 2",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web Browser, iOS, Android",
+        "description": "OpenAIのText-to-Videoモデル第2世代。物理法則の改善、同期音声・効果音、Characters（本人 likeness）機能を備えた。2026年4月26日に消費者向けアプリを終了、APIは2026年9月24日終了予定。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "当初は無料枠＋ChatGPT Pro向けSora 2 Pro。2026年4月26日時点でアプリ終了（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "OpenAI",
+          "url": "https://openai.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Sora 2は今（2026年6月）使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。OpenAIは2026年3月24日にSoraアプリとAPIの段階的終了を発表し、Sora iOS/Androidアプリとsora.comの消費者向けサービスは2026年4月26日に終了しました。APIは2026年9月24日終了予定です（2026年6月時点・OpenAI公式発表）。新規の動画制作にはRunway・Veo 3・Kling AI等の代替を検討してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SoraとChatGPTの画像生成は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Sora/Sora 2はText-to-Video（動画生成）モデル・サービスで、ChatGPT内の画像生成（DALL·E系）は静止画向けです。OpenAIはSora終了時にChatGPTの画像機能は継続すると明言しています。試験では「OpenAI＝すべて同じ生成物」と一括りにしないでください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Sora 2とRunway・Veo 3の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもText-to-Videoですが、Sora 2はOpenAI製で物理シミュレーション・Characters（本人の likeness 挿入）・ソーシャルアプリが特徴でした。Runwayは独立プラットフォーム（Gen-4等）、Veo 3はGoogle DeepMind製でGemini/Flow/APIから提供——2026年6月時点では後者2つが継続提供中です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Soraはなぜ終了しましたか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OpenAIは公式に詳細理由を限定的にしか公表していませんが、報道では動画生成の計算コスト、収益性、ロボティクス・エージェント等へのリソース再配分が指摘されています。試験では「最先端AI＝必ず長期提供される」とは限らず、コスト・倫理・事業戦略でサービスが終了する例としてSoraを覚える価値があります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Sora 2のCharacters機能とディープフェイクの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Charactersは短い本人確認録画のあと、自分の外見・声をSora生成シーンに挿入する機能です。OpenAIは本人が利用許可を管理・撤回できる設計を掲げましたが、第三者の likeness 無断利用はディープフェイク倫理の典型例です。生成AIパスポートでは同意・出所表示（C2PA等）とセットで理解してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Sora 2</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/openai.svg" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Sora 2 · OpenAI · 音声・動画</p>
+          <h1>Sora 2とは？OpenAI動画生成AIと2026年終了の教訓を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">2024年に「動画のGPT-1 moment」を起こし、Sora 2で物理・音声同期——2026年4月にサービス終了</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Text-to-Video</span>
+        <span class="tool-category">物理シミュレーション</span>
+        <span class="tool-category">2026年4月終了</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">提供形態（終了前）</span>
+        <ul class="tool-platform-chips">
+          <li>Soraアプリ（iOS/Android）</li>
+          <li>sora.com</li>
+          <li>ChatGPT Pro（Sora 2 Pro）</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/sora-2/og-hero.png" alt="OpenAI Sora 2公式の動画生成イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：OpenAI公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Sora 2</strong>は、<strong>OpenAI</strong>が2025年9月に公開した<strong>第2世代Text-to-Videoモデル</strong>です。初代Sora（2024年2月プレビュー）が「動画生成の<strong>GPT‑1 moment</strong>」と称されたのに対し、Sora 2は物理法則・失敗の表現・<strong>同期音声</strong>で大きく進化しました。本記事の独自焦点は、<strong>2026年4月26日の消費者向けサービス終了</strong>（APIは<strong>9月24日終了予定</strong>）——試験で「Text-to-Videoの代表例」として名前が出続ける一方、<strong>新規利用はできない</strong>という現実です。機能の網羅ではなく、<strong>歴史的位置づけ</strong>、<strong>Charactersとディープフェイク</strong>、<strong>Runway/Veo 3との棲み分け</strong>、<strong>終了が示す教訓</strong>に絞って整理します（<strong>2026年6月時点</strong>）。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Sora 2とは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#shutdown">2026年サービス終了</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金（終了前の整理）</a></li>
+        <li><a href="#how-to">利用の経緯と代替</a></li>
+        <li><a href="#use-cases">想定されていた活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット（振り返り）</a></li>
+        <li><a href="#comparison">Runway・Veo 3・Kling AIとの比較</a></li>
+        <li><a href="#recommend">誰が今も学ぶべきか</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、<strong>Text-to-Video（テキストから動画）</strong>は生成AI活用の具体例として問われます。Soraは2024年以降、教科書・ニュース・模擬問題で<strong>動画生成AIの代名詞</strong>になりました——<strong>サービスが終了しても試験用語として残る</strong>典型例です。
+      </p>
+      <p>
+        試験用の整理は次の4点です。<strong>①Sora＝OpenAIの動画生成モデル/サービス（静止画DALL·Eとは別）</strong>。<strong>②Sora 2＝物理・音声の改善＋Characters（ likeness ）</strong>——ディープフェイク・同意と接続。<strong>③2026年4月終了＝「最先端＝永久提供」とは限らない</strong>——コスト・倫理・事業戦略の論点。<strong>④現役の制作先はRunway・Veo 3・Kling AI等</strong>——名前の混同に注意。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0196/">一問一答 TF-0196（動画生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0197/">TF-0197（動画生成AIの活用）</a>、<a href="../../exams/genai-passport/practice/q/hq-0336/">実践演習 HQ-0336（ディープフェイク）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/deepfake/">ディープフェイク</a>、<a href="../../glossary/generative-ai/">生成AI</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Sora 2とは</h2>
+      <p>
+        Sora（空＝<em>sky</em>、無限の創造性を象徴）は、OpenAIが開発した<strong>拡散トランスフォーマー（diffusion transformer）</strong>ベースの動画生成モデルです。2024年2月15日の技術プレビューで、東京の雪道を歩く二人やモンスターのアニメなど<strong>高品質デモ</strong>が公開され、世界規模の注目を集めました。
+      </p>
+      <p>
+        <strong>Sora 2</strong>は2025年9月30日に発表。OpenAI自身が「動画における<strong>GPT‑3.5 moment</strong>」と位置づけ、<strong>体操のトリプルアクセル</strong>や<strong>パドルボードのバックフリップ</strong>など、従来モデルでは困難な物理挙動を改善しました。従来モデルが「プロンプト成功のため現実を歪める」傾向に対し、Sora 2は<strong>ミスショットのリバウンド</strong>のように、失敗も含めた世界状態の一貫性を強化した——と公式ブログは説明しています。
+      </p>
+      <p>
+        提供形態は<strong>Sora iOS/Androidアプリ</strong>（ソーシャルフィード付き）、<strong>sora.com</strong>、<strong>ChatGPT Pro向けSora 2 Pro</strong>（高品質実験版）でした。当初の展開は<strong>米国・カナダ中心</strong>で、日本から直接利用できなかった期間も長く、試験では「名前は世界的・提供は限定」というギャップも意識するとよいです。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Text-to-Video</h3>
+          <p>詳細なプロンプト（カメラ・照明・音響指示まで）から短尺〜中尺の映像を生成。実写・シネマ・アニメ調に対応。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>物理・世界状態</h3>
+          <p>物体の永続性、浮力、剛性など。複数ショットにわたる指示と世界状態の維持（controllability）が強化。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>同期音声</h3>
+          <p>セリフ・効果音・環境音を動画と同時生成。Veo 3と並ぶ「ネイティブ音声」世代の代表例。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Characters</h3>
+          <p>本人の短い録画で identity 確認後、任意のSoraシーンに外見・声を挿入。友人のリミックスも可能（許可制）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ソーシャルアプリ</h3>
+          <p>TikTok型フィードだが、公式は「消費より<strong>創作</strong>」を優先する設計。自然言語で指示できるレコメンド等。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>安全・出所</h3>
+          <p>可視ウォーターマーク、C2PAメタデータ、青少年向け制限、親権管理（ChatGPT経由）など。System Card公開。</p>
+        </div>
+      </div>
+
+      <h3>初代Soraとの違い（試験向け）</h3>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>初代Sora（2024〜）</th>
+            <th>Sora 2（2025〜）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>物理表現</strong></td>
+            <td>デモは印象的だが限界を公式も認める</td>
+            <td>失敗・反動など「世界のルール」が改善</td>
+          </tr>
+          <tr>
+            <td><strong>音声</strong></td>
+            <td>主に無音動画</td>
+            <td>同期ダイアログ・効果音</td>
+          </tr>
+          <tr>
+            <td><strong>提供UI</strong></td>
+            <td>ChatGPT Plus/Pro、sora.com</td>
+            <td>＋専用Soraアプリ（ソーシャル）</td>
+          </tr>
+          <tr>
+            <td><strong>本人挿入</strong></td>
+            <td>限定的</td>
+            <td>Characters機能</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="shutdown">
+      <h2>2026年サービス終了</h2>
+      <p>
+        2026年3月24日、OpenAIはX（旧Twitter）で<strong>SoraアプリとAPIの段階的終了</strong>を発表しました（公式ブログにも「2026年4月26日時点でSoraプロダクトは利用不可」と追記）。スケジュールは次のとおりです（<strong>2026年6月時点・OpenAI公式発表</strong>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>終了日</th>
+            <th>内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Soraアプリ</strong>（iOS/Android）</td>
+            <td>2026年4月26日</td>
+            <td>新規生成・フィード終了</td>
+          </tr>
+          <tr>
+            <td><strong>sora.com</strong>（消費者向け）</td>
+            <td>2026年4月26日</td>
+            <td>ライブラリの扱いは公式案内を確認</td>
+          </tr>
+          <tr>
+            <td><strong>Sora API</strong></td>
+            <td>2026年9月24日（予定）</td>
+            <td>開発者向けも終了予定</td>
+          </tr>
+          <tr>
+            <td><strong>Disney IP連携</strong></td>
+            <td>2026年4月前後</td>
+            <td>2025年12月の$10億投資・キャラクター利用も終了</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        OpenAIは<strong>ChatGPTの画像生成機能は継続</strong>すると明言しています——「OpenAI＝すべて終了」ではありません。報道では、動画生成の<strong>計算コスト</strong>（1日あたり数百万ドル規模との分析）、収益性、<strong>ロボティクス・エージェント</strong>へのリソース再配分が終了背景として挙げられています。試験では「技術的に可能＝事業として継続」とは限らない——<strong>Soraはその事例</strong>として記憶する価値があります。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        「<strong>Sora＝ChatGPTの画像生成</strong>」は×です。ChatGPT内の画像はDALL·E系の<strong>静止画</strong>。Soraは<strong>動画</strong>専用ブランドで、2026年4月に消費者向けは終了しました。
+      </p>
+      <p>
+        「<strong>Sora＝OpenAIのすべてのマルチモーダル機能</strong>」も誤りです。Whisper（音声認識）、GPT-4o（対話）、Operator（エージェント）などと<strong>製品ラインは別</strong>です。
+      </p>
+      <p>
+        「<strong>Sora 2＝Runway/Veo 3の完全上位</strong>」も単純化しすぎです。第三者ベンチマークでは、Seedance・Runway Gen-4.5・Kling 3等が品質面で競合したという報告もあります。試験では<strong>OpenAI製＝唯一の正解</strong>とせず、複数ベンダーが並存する市場として理解してください。
+      </p>
+      <p>
+        「<strong>終了したから試験に出ない</strong>」も×です。Text-to-Videoの<strong>定義・リスク・倫理</strong>はSoraを例に問われ続けます。実務の新規制作先として覚えるのは<a href="../runway/">Runway</a>、<a href="../veo-3/">Veo 3</a>、<a href="../kling-ai/">Kling AI</a>です。
+      </p>
+      <p>
+        「<strong>ウォーターマーク＝改ざん不可能</strong>」も注意です。Sora 2リリース直後、第三者ツールでウォーターマーク除去が報じられました。C2PA等の<strong>出所表示は迂回可能</strong>——試験のディープフェイク対策は「表示があるから安全」とは限りません。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金（終了前の整理）</h2>
+      <p>
+        以下は<strong>サービス終了前</strong>の公式方針の整理です（<strong>2026年6月時点では新規利用不可</strong>）。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Sora 2（一般）</p>
+          <p class="tool-plan-price">無料枠</p>
+          <p class="tool-plan-note">招待制アプリ · 計算資源に応じた上限 · 追加生成は将来の従量課金を示唆</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">ChatGPT Plus</p>
+          <p class="tool-plan-price">$20/月</p>
+          <p class="tool-plan-note">初代Sora利用枠（地域・時期により異なる）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">ChatGPT Pro</p>
+          <p class="tool-plan-price">$200/月</p>
+          <p class="tool-plan-note">Sora 2 Pro（高品質実験版）on sora.com</p>
+        </div>
+      </div>
+      <p>
+        OpenAIは「現時点の収益化は追加動画の従量課金のみを検討」とし、広告フィードによる収益化は避ける方針を掲げていました。終了の背景には、この<strong>高コスト・低収益</strong>構造が分析として繰り返し指摘されています。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>利用の経緯と代替</h2>
+      <ol class="tool-steps">
+          <li>
+            <strong>2024年2月</strong> — 技術プレビュー公開。Red team・クリエイター限定アクセス。
+          </li>
+          <li>
+            <strong>2024年12月</strong> — ChatGPT Plus/Pro（米加）へ初代Sora段階公開。
+          </li>
+          <li>
+            <strong>2025年9月</strong> — Sora 2＋Soraアプリ（招待制）リリース。Androidは2か月後。
+          </li>
+          <li>
+            <strong>2025年12月</strong> — Disney IP連携（$10億投資発表）。
+          </li>
+          <li>
+            <strong>2026年3〜4月</strong> — 終了発表→4月26日にアプリ停止。
+          </li>
+          <li>
+            <strong>2026年6月以降の代替</strong> — 新規制作は<a href="../runway/">Runway</a>、<a href="../veo-3/">Veo 3</a>、<a href="../kling-ai/">Kling AI</a>、<a href="../pika/">Pika</a>等を公式Pricingで比較。
+          </li>
+        </ol>
+      <p>
+        既存ユーザーは終了前に公式案内に従い<strong>作品のエクスポート</strong>を確認してください。API利用者は<strong>2026年9月24日</strong>までの移行期間（予定）に留意します。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>想定されていた活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>コンセプト・プレビズ</h3>
+          <p>映画・CMの絵コンテ代わり。 Tyler Perry氏がスタジオ拡張を見送ったエピソードで話題に。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>SNS・ショート</h3>
+          <p>縦型フィードでリミックス文化。ただし「SlopTok（低品質AI映像）」批判も。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>パーソナルコミュニケーション</h3>
+          <p>Charactersで本人をシーンに挿入——新しいメッセージ体裁としてOpenAIが訴求。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>IP・エンタメ</h3>
+          <p>Disneyキャラクター（Mickey、Yoda等）のファン動画——終了とともに契約も解消。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>教育・デモ</h3>
+          <p>物理現象や歴史シーンの可視化——ただし<strong>事実確認</strong>は必須（偽史料リスク）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>世界モデル研究</h3>
+          <p>OpenAIはロボティクス向け「物理世界理解」の研究基盤としても位置づけ。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット（振り返り）</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット（あった点）</th>
+            <th>デメリット・限界</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2024年プレビューでText-to-Videoを社会に普及</td>
+            <td>2026年4月消費者向け終了——継続利用不可</td>
+          </tr>
+          <tr>
+            <td>Sora 2の物理・音声は業界ベンチマーク</td>
+            <td>計算コストが高く事業化が困難だった</td>
+          </tr>
+          <tr>
+            <td>Charactersの同意管理設計は先進的</td>
+            <td>ウォーターマーク迂回・偽情報リスク</td>
+          </tr>
+          <tr>
+            <td>C2PA・青少年保護など安全文書が充実</td>
+            <td>著作権（opt-out方式）でMPA等から批判</td>
+          </tr>
+          <tr>
+            <td>創作優先のソーシャル設計</td>
+            <td>米加中心で日本ユーザーはアクセス困難だった</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Runway・Veo 3・Kling AIとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>Sora 2</th>
+            <th>Runway</th>
+            <th>Veo 3</th>
+            <th>Kling AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>提供元</strong></td>
+            <td>OpenAI</td>
+            <td>Runway ML</td>
+            <td>Google DeepMind</td>
+            <td>Kuaishou系</td>
+          </tr>
+          <tr>
+            <td><strong>2026年6月</strong></td>
+            <td>終了（APIは9月まで）</td>
+            <td>継続</td>
+            <td>継続</td>
+            <td>継続</td>
+          </tr>
+          <tr>
+            <td><strong>強み</strong></td>
+            <td>物理・Characters・話題性</td>
+            <td>Gen-4・編集UI統合</td>
+            <td>Gemini連携・音声同期</td>
+            <td>ショート動画・コスパ</td>
+          </tr>
+          <tr>
+            <td><strong>アクセス</strong></td>
+            <td>（終了）米加招待→終了</td>
+            <td>グローバルWeb</td>
+            <td>Google AI / API</td>
+            <td>Web・アプリ</td>
+          </tr>
+          <tr>
+            <td><strong>試験での整理</strong></td>
+            <td>T2Vの歴史的代表例</td>
+            <td>T2Vプラットフォーム</td>
+            <td>Google製T2Vモデル</td>
+            <td>アジア発T2V</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        2026年6月時点で<strong>新規制作</strong>を始めるなら、終了済みのSoraではなく上記3サービスを公式Pricingで比較してください。試験では<strong>Sora＝概念例</strong>、<strong>Runway/Veo/Kling＝現役の選択肢</strong>と役割分担すると混乱しません。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>誰が今も学ぶべきか</h2>
+      <ul>
+        <li><strong>生成AIパスポート/G検定でText-to-Video・ディープフェイクを整理したい受験生</strong></li>
+        <li><strong>2024〜2026年のAI史（ブームと終了）を理解したいビジネスパーソン</strong></li>
+        <li><strong>Characters・C2PA・著作権論争をケーススタディしたい法務・広報</strong></li>
+      </ul>
+      <p>
+        <strong>新規の動画制作だけが目的</strong>なら、Sora 2ではなく<a href="../runway/">Runway</a>・<a href="../veo-3/">Veo 3</a>・<a href="../kling-ai/">Kling AI</a>を選んでください。説明動画の内製化なら<a href="../nolang/">NoLang</a>や<a href="../heygen/">HeyGen</a>——用途で分けるのが2026年の現実的な地図です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Sora 2は今（2026年6月）使えますか？</summary>
+          <p class="tool-faq-a">いいえ。OpenAIは2026年3月24日にSoraアプリとAPIの段階的終了を発表し、Sora iOS/Androidアプリとsora.comの消費者向けサービスは2026年4月26日に終了しました。APIは2026年9月24日終了予定です（2026年6月時点・OpenAI公式発表）。新規の動画制作にはRunway・Veo 3・Kling AI等の代替を検討してください。</p>
+        </details>
+        <details>
+          <summary>SoraとChatGPTの画像生成は同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。Sora/Sora 2はText-to-Video（動画生成）モデル・サービスで、ChatGPT内の画像生成（DALL·E系）は静止画向けです。OpenAIはSora終了時にChatGPTの画像機能は継続すると明言しています。試験では「OpenAI＝すべて同じ生成物」と一括りにしないでください。</p>
+        </details>
+        <details>
+          <summary>Sora 2とRunway・Veo 3の違いは？</summary>
+          <p class="tool-faq-a">どちらもText-to-Videoですが、Sora 2はOpenAI製で物理シミュレーション・Characters（本人の likeness 挿入）・ソーシャルアプリが特徴でした。Runwayは独立プラットフォーム（Gen-4等）、Veo 3はGoogle DeepMind製でGemini/Flow/APIから提供——2026年6月時点では後者2つが継続提供中です。</p>
+        </details>
+        <details>
+          <summary>Soraはなぜ終了しましたか？</summary>
+          <p class="tool-faq-a">OpenAIは公式に詳細理由を限定的にしか公表していませんが、報道では動画生成の計算コスト、収益性、ロボティクス・エージェント等へのリソース再配分が指摘されています。試験では「最先端AI＝必ず長期提供される」とは限らず、コスト・倫理・事業戦略でサービスが終了する例としてSoraを覚える価値があります。</p>
+        </details>
+        <details>
+          <summary>Sora 2のCharacters機能とディープフェイクの関係は？</summary>
+          <p class="tool-faq-a">Charactersは短い本人確認録画のあと、自分の外見・声をSora生成シーンに挿入する機能です。OpenAIは本人が利用許可を管理・撤回できる設計を掲げましたが、第三者の likeness 無断利用はディープフェイク倫理の典型例です。生成AIパスポートでは同意・出所表示（C2PA等）とセットで理解してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://openai.com/sora/" target="_blank" rel="noopener noreferrer">Sora（終了案内）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://openai.com/index/sora-2/" target="_blank" rel="noopener noreferrer">Sora 2発表（OpenAI）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://openai.com/index/sora-2-system-card/" target="_blank" rel="noopener noreferrer">System Card</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../veo-3/"><img src="../../assets/images/tools/veo-3/icon.svg" alt="" width="16" height="16"> Veo 3</a></li>
+          <li><a href="../runway/"><img src="../../assets/images/tools/runway/app-icon.png" alt="" width="16" height="16"> Runway</a></li>
+          <li><a href="../kling-ai/"><img src="../../assets/images/tools/kling-ai/app-icon.png" alt="" width="16" height="16"> Kling AI</a></li>
+          <li><a href="../pika/"><img src="../../assets/images/tools/pika/app-icon.png" alt="" width="16" height="16"> Pika</a></li>
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/chatgpt/app-icon.png" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../dalle/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> DALL·E</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/deepfake/">ディープフェイク</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Video（動画生成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

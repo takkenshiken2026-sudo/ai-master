@@ -683,6 +683,7 @@ const TOOLS = [
     logo: "openai.svg",
     cat: "audio",
     catLabel: "音声・動画・音楽",
+    article: true,
     tagline: "Sora初代は提供終了したが後継のSora 2として復活",
     url: "https://openai.com/sora/",
   },
