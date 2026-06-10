@@ -17196,6 +17196,108 @@
       "notes": "開発元: OpenAI"
     },
     {
+      "id": "gpt-5",
+      "name": "GPT-5",
+      "yomi": "GPT-5",
+      "reading": "G",
+      "summary": "統合推論システムと400Kコンテキストを搭載した新世代フラッグシップLLM。",
+      "category": "models-tech",
+      "sortKey": "G",
+      "status": "planned",
+      "tier": 2,
+      "exams": [
+        "g-kentei",
+        "genai-passport"
+      ],
+      "priority": "",
+      "notes": "開発元: OpenAI"
+    },
+    {
+      "id": "gpt-5-1",
+      "name": "GPT-5.1",
+      "yomi": "GPT-5.1",
+      "reading": "G",
+      "summary": "8種のパーソナリティとInstant/Thinking 2モードを搭載したGPT-5後継。",
+      "category": "models-tech",
+      "sortKey": "G",
+      "status": "planned",
+      "tier": 2,
+      "exams": [
+        "g-kentei",
+        "genai-passport"
+      ],
+      "priority": "",
+      "notes": "開発元: OpenAI"
+    },
+    {
+      "id": "gpt-5-2",
+      "name": "GPT-5.2",
+      "yomi": "GPT-5.2",
+      "reading": "G",
+      "summary": "instant/thinking/Proの3モード構成。コードレッド対応で前倒しリリース。",
+      "category": "models-tech",
+      "sortKey": "G",
+      "status": "planned",
+      "tier": 2,
+      "exams": [
+        "g-kentei",
+        "genai-passport"
+      ],
+      "priority": "",
+      "notes": "開発元: OpenAI"
+    },
+    {
+      "id": "gpt-5-3-codex",
+      "name": "GPT-5.3-Codex",
+      "yomi": "GPT-5.3-Codex",
+      "reading": "G",
+      "summary": "エージェント型コーディング特化LLM。自己開発参加・安全性High分類。",
+      "category": "models-tech",
+      "sortKey": "G",
+      "status": "planned",
+      "tier": 2,
+      "exams": [
+        "g-kentei",
+        "genai-passport"
+      ],
+      "priority": "",
+      "notes": "開発元: OpenAI"
+    },
+    {
+      "id": "gpt-5-4",
+      "name": "GPT-5.4",
+      "yomi": "GPT-5.4",
+      "reading": "G",
+      "summary": "computer use内蔵の汎用フロンティアモデル。事実誤り33%削減。",
+      "category": "models-tech",
+      "sortKey": "G",
+      "status": "planned",
+      "tier": 2,
+      "exams": [
+        "g-kentei",
+        "genai-passport"
+      ],
+      "priority": "",
+      "notes": "開発元: OpenAI"
+    },
+    {
+      "id": "gpt-5-5",
+      "name": "GPT-5.5",
+      "yomi": "GPT-5.5",
+      "reading": "G",
+      "summary": "コードネームSpud。GPT-5.4同等のレイテンシで知性向上した現行フラッグシップ。",
+      "category": "models-tech",
+      "sortKey": "G",
+      "status": "planned",
+      "tier": 2,
+      "exams": [
+        "g-kentei",
+        "genai-passport"
+      ],
+      "priority": "",
+      "notes": "開発元: OpenAI"
+    },
+    {
       "id": "dall-e-2",
       "name": "DALL·E 2",
       "yomi": "DALL·E 2",

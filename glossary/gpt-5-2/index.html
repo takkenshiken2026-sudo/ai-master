@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPT-5.2とは？OpenAIが2025年12月にリリースしたLLM。instant・thinking・Pro 3モード搭載、Gemini 3 Pro対抗として緊急リリース。G検定・生成AIパスポート対策にも。">
+  <title>GPT-5.2とは？instant/thinking/Pro 3モードとコードレッド前倒しリリース — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt-5-2/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GPT-5.2とは？instant/thinking/Pro 3モードとコードレッド前倒しリリース">
+  <meta property="og:description" content="3モード構成のGPTファミリー。競合対応で前倒しリリースされた経緯と推論コストの段階設計を整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt-5-2/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/"},
+          {"@type": "ListItem", "position": 2, "name": "用語辞典", "item": "https://ai-master.jp/glossary/"},
+          {"@type": "ListItem", "position": 3, "name": "GPT-5.2", "item": "https://ai-master.jp/glossary/gpt-5-2/"}
+        ]
+      },
+      {
+        "@type": "DefinedTerm",
+        "name": "GPT-5.2",
+        "alternateName": "Generative Pre-trained Transformer 5.2",
+        "description": "OpenAIが2025年12月11日にリリースした大規模言語モデルファミリー。instant・thinking・Pro の3モード構成で、Gemini 3 Proへの対抗リリースとして知られる。"
+      },
+      {
+        "@type": "Article",
+        "headline": "GPT-5.2とは？instant/thinking/Pro 3モードとコードレッド前倒しリリース",
+        "datePublished": "2025-12-11",
+        "dateModified": "2026-06-10"
+      },
+      {
+        "@type": "WebPage",
+        "url": "https://ai-master.jp/glossary/gpt-5-2/",
+        "name": "GPT-5.2とは？instant/thinking/Pro 3モードとコードレッド前倒しリリース"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+                    "@type": "Question",
+                    "name": "GPT-5.2はなぜ「コードレッド」と関係があるのですか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "GPT-5.2のリリース直前、GoogleのGemini 3 Proが当時の主要マルチモーダルモデルとして広く評価されていました。報道によるとOpenAI社内では「コードレッド」と呼ばれる緊急対応メモが回覧され、当初予定していた12月末リリースを12月11日に前倒ししたとされています。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "GPT-5.2 ThinkingとGPT-5.2 Proの違いは何ですか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "どちらも推論モデルですが、GPT-5.2 Proはより多くの推論時間とコンピュートを使います。複雑さの度合いが高く時間を要するタスクにはPro、比較的早く解を出したい場合はThinkingが適しています。"
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "GPT-5.2 ThinkingはいつChatGPTから廃止されますか？",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "GPT-5.4のリリース（2026年3月5日）に伴い、GPT-5.2 ThinkingはChatGPTの有料ユーザー向けに「レガシーモデル」として3ヶ月間維持された後、2026年6月5日に廃止予定です。"
+                    }
+          }
+]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPT-5.2</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPT-5.2とは？instant/thinking/Pro 3モードとコードレッド前倒しリリース</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃーごてんに ／ 英：GPT-5.2（Generative Pre-trained Transformer 5.2）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPT-5.2</strong>とは、OpenAIが2025年12月11日にリリースした大規模<a href="../llm/">言語モデル</a>ファミリーです。<strong>instant・thinking・Pro の3モード</strong>を1ファミリーで提供し、Googleの Gemini 3 Pro が主要マルチモーダルモデルとして注目を集める中で「コードレッド」対応として前倒しリリースされた経緯でも知られます。本記事は<strong>「GPT-5.2＝単なるGPT-5.1の小幅改良」という誤解</strong>を中心に解説します。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">GPT-5.2とは</a></li>
+        <li><a href="#modes">3モードの構成と使い分け</a></li>
+        <li><a href="#context">リリースの背景（コードレッド）</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では、GPT-5.2の3モード構成（instant / thinking / Pro）が「推論コストと性能のトレードオフ設計」の具体例として出題されます。
+        同一ファミリー内で推論量（compute）を段階的に増やす設計は、LLMのスケーリング戦略の理解として重要です。
+      </p>
+      <p>
+        生成AIパスポートでは「競合AIモデルの動向と企業の対応」という文脈で登場します。
+        Gemini 3 Proの登場がGPT-5.2の前倒しリリースに影響した点は、AI業界の競争構造を理解する実例です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428（APIコスト）</a>、<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141（マルチモーダル）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>GPT-5.2とは</h2>
+      <p>
+        GPT-5.2は、GPT-5.1の後継として2025年12月11日にリリースされた大規模言語モデルファミリーです。
+        ChatGPTおよびMicrosoft Copilotに組み込まれており、マルチモーダル（テキスト・画像）に対応した基盤モデルです。
+      </p>
+      <p>
+        GPT-5.2のリリースはGPT-5.1から約1ヶ月という短いサイクルで行われました。
+        これはGoogleのGemini 3 Proが当時の主要マルチモーダルモデルとして広く評価されていたことへの競争的な対応とみられており、
+        メディアが報じた「コードレッド」メモによって当初予定の12月末から前倒しされたとされています。
+      </p>
+      <p>
+        また、コーディング特化のバリアント「GPT-5.2-Codex」も同時にリリースされました。
+        このコーディングモデルの流れは後の<a href="../gpt-5-3-codex/">GPT-5.3-Codex</a>へと発展していきます。
+      </p>
+    </section>
+    <section id="modes">
+      <h2>3モードの構成と使い分け</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モード</th><th>特徴</th><th>推論タイプ</th><th>主な用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>GPT-5.2 instant</td><td>高速応答</td><td>非推論</td><td>日常的な質問・チャット</td></tr>
+          <tr><td>GPT-5.2 thinking</td><td>標準推論・拡張推論</td><td>推論モデル</td><td>中〜高難度の問題</td></tr>
+          <tr><td>GPT-5.2 Pro</td><td>最大推論時間・コンピュート</td><td>推論モデル（高コスト）</td><td>最高難度タスク・研究用途</td></tr>
+        </tbody>
+      </table>
+      <p>
+        GPT-5.2 thinkingには「標準思考」と「拡張思考」の2段階があります。
+        拡張思考はより多くのトークンを使い、難しい数学・コーディング・科学的推論で特に効果を発揮します。
+      </p>
+    </section>
+    <section id="context">
+      <h2>リリースの背景（コードレッド）</h2>
+      <p>
+        GPT-5.2のリリースから約3週間前、GoogleはGemini 3 Proを公開しました。
+        TechCrunchなどのメディアは、OpenAI社内でGeminiへの対応を巡る「コードレッド」メモが回覧されたと報じており、
+        これがGPT-5.2のリリース前倒しにつながったとされています。
+      </p>
+      <p>
+        この競争的リリースの背景は、AI業界における「フロンティアモデル競争」の実態を示すものとして、
+        試験の文脈でも産業動向の事例として引用されることがあります。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>誤った説明</th><th>正しい理解</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GPT-5.2はGPT-5.1の小幅なアップデートに過ぎない</td>
+            <td>3モード構成への再編と推論深度の段階化は設計上の大きな変更。コーディング特化バリアント（Codex）も追加</td>
+          </tr>
+          <tr>
+            <td>GPT-5.2 ProはChatGPT Proプランの専用モデル名である</td>
+            <td>GPT-5.2 Proはモデルのバリアント名。ChatGPT Proはサービスのサブスクリプションプラン名で別概念</td>
+          </tr>
+          <tr>
+            <td>GPT-5.2 Thinkingは2026年現在も現役で使える</td>
+            <td>2026年6月5日にChatGPTから廃止予定。GPT-5.4 Thinkingへの移行が推奨されている</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>GPT-5.2はなぜ「コードレッド」と関係があるのですか？</summary>
+          <p class="tool-faq-a">GPT-5.2のリリース直前、GoogleのGemini 3 Proが当時の主要マルチモーダルモデルとして広く評価されていました。報道によるとOpenAI社内では「コードレッド」と呼ばれる緊急対応メモが回覧され、当初予定していた12月末リリースを12月11日に前倒ししたとされています。</p>
+        </details>
+        <details>
+          <summary>GPT-5.2 ThinkingとGPT-5.2 Proの違いは何ですか？</summary>
+          <p class="tool-faq-a">どちらも推論モデルですが、GPT-5.2 Proはより多くの推論時間とコンピュートを使います。複雑さの度合いが高く時間を要するタスクにはPro、比較的早く解を出したい場合はThinkingが適しています。</p>
+        </details>
+        <details>
+          <summary>GPT-5.2 ThinkingはいつChatGPTから廃止されますか？</summary>
+          <p class="tool-faq-a">GPT-5.4のリリース（2026年3月5日）に伴い、GPT-5.2 ThinkingはChatGPTの有料ユーザー向けに「レガシーモデル」として3ヶ月間維持された後、2026年6月5日に廃止予定です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428 · APIコスト</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141 · マルチモーダル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpt-5-1/">GPT-5.1</a></li>
+          <li><a href="../gpt-5-3-codex/">GPT-5.3-Codex</a></li>
+          <li><a href="../gpt-5-4/">GPT-5.4</a></li>
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li class="tool-related-list__soon">推論モデル（準備中）</li>
+          <li class="tool-related-list__soon">マルチモーダルモデル（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

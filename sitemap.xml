@@ -1306,6 +1306,36 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ai-master.jp/glossary/gpt-5/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/glossary/gpt-5-1/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/glossary/gpt-5-2/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/glossary/gpt-5-3-codex/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/glossary/gpt-5-4/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/glossary/gpt-5-5/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-master.jp/glossary/claude-1/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
