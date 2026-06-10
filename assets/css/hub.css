@@ -272,6 +272,12 @@
 .hub-list-row--planned .hub-list-link {
   cursor: default;
 }
+.hub-list-row--planned .hub-list-pill {
+  flex-shrink: 0;
+}
+.hub-featured-card .hub-list-pill {
+  margin-bottom: 8px;
+}
 .hub-list-row--planned:hover .hub-list-name {
   color: var(--ink);
 }

@@ -98,9 +98,15 @@ function renderFeatured(cat, page, q, sort) {
 
 function renderTermRow(term) {
   const catLabel = categories[term.category] || term.category;
+  const status = term.published
+    ? ''
+    : '<span class="hub-list-pill">準備中</span>';
   const inner =
     `<div class="hub-list-body">` +
+    `<div class="hub-list-top">` +
     `<h2 class="hub-list-name">${escapeHtml(term.name)}</h2>` +
+    status +
+    `</div>` +
     (term.yomi ? `<p class="hub-list-sub">${escapeHtml(term.yomi)}</p>` : '') +
     (term.summary ? `<p class="hub-list-desc">${escapeHtml(term.summary)}</p>` : '') +
     `</div>` +
@@ -273,7 +279,7 @@ function render() {
       const scope = catLabel ? `${catLabel}: ` : '';
       meta.textContent = `${scope}${filtered.length.toLocaleString()}件（全${allTerms.length.toLocaleString()}件中）`;
     } else {
-      meta.textContent = `${allTerms.length.toLocaleString()}件（解説公開 ${publishedCount}件）`;
+      meta.textContent = `${allTerms.length.toLocaleString()}件（解説公開 ${publishedCount.toLocaleString()}件 · 準備中 ${(allTerms.length - publishedCount).toLocaleString()}件）`;
     }
   }
   if (range) {

@@ -78,9 +78,15 @@ function renderArticleRow(article) {
   const catLabel = categories[article.category] || article.category;
   const salary = formatSalary(article);
   const sub = salary || article.yomi || '';
+  const status = article.published
+    ? ''
+    : '<span class="hub-list-pill">準備中</span>';
   const inner =
     `<div class="hub-list-body">` +
+    `<div class="hub-list-top">` +
     `<h2 class="hub-list-name">${escapeHtml(article.name)}</h2>` +
+    status +
+    `</div>` +
     (sub ? `<p class="hub-list-sub">${escapeHtml(sub)}</p>` : '') +
     (article.summary ? `<p class="hub-list-desc">${escapeHtml(article.summary)}</p>` : '') +
     `</div>` +
@@ -97,7 +103,9 @@ function renderArticleRow(article) {
 
 function renderFeaturedCard(article) {
   const cls = article.published ? 'hub-featured-card' : 'hub-featured-card hub-featured-card--planned';
+  const badge = article.published ? '' : '<span class="hub-list-pill">準備中</span>';
   const inner =
+    badge +
     `<h3 class="hub-featured-name">${escapeHtml(article.name)}</h3>` +
     `<p class="hub-featured-summary">${escapeHtml(article.summary)}</p>`;
 
@@ -220,7 +228,7 @@ function render() {
     if (q || cat !== 'all') {
       meta.textContent = `${catLabel ? `${catLabel}: ` : ''}${filtered.length}件（全${allArticles.length}件中）`;
     } else {
-      meta.textContent = `${allArticles.length}件（解説公開 ${publishedCount}件）`;
+      meta.textContent = `${allArticles.length}件（公開 ${publishedCount}件 · 準備中 ${allArticles.length - publishedCount}件）`;
     }
   }
   if (range) range.textContent = `${start + 1}〜${end}件を表示`;

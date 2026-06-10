@@ -1,13 +1,5 @@
 /* 学習ガイド一覧 */
 
-.hub-list-row--planned .hub-list-pill {
-  flex-shrink: 0;
-}
-
-.hub-featured-card .hub-list-pill {
-  margin-bottom: 8px;
-}
-
 .guide-cta {
   display: flex;
   flex-wrap: wrap;

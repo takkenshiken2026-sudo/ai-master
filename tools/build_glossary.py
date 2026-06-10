@@ -202,7 +202,7 @@ def build_index_html(data: dict) -> str:
 
   <header class="hub-header">
     <h1>AI用語辞典</h1>
-    <p class="hub-intro">G検定・生成AIパスポートの学習に役立つAI用語を、わかりやすく解説しています。カテゴリで絞り込みながら調べられます。解説記事のある用語から順次公開しています。</p>
+    <p class="hub-intro">G検定・生成AIパスポートの学習に役立つAI用語を、わかりやすく解説しています。カテゴリで絞り込みながら調べられます。解説記事のある用語から順次公開しています（未公開は「準備中」でクリックできません）。</p>
     <div class="search-wrap hub-search">
       <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
         <circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5l3 3" stroke-linecap="round"/>
@@ -220,7 +220,7 @@ def build_index_html(data: dict) -> str:
 
   <div class="hub-meta-row">
     <div>
-      <p class="hub-result-meta" id="glossaryResultMeta">{len(terms)}件（解説公開 {published_count}件）</p>
+      <p class="hub-result-meta" id="glossaryResultMeta">{len(terms)}件（解説公開 {published_count}件 · 準備中 {len(terms) - published_count}件）</p>
       <p class="hub-result-range" id="glossaryResultRange"></p>
     </div>
     <div class="hub-sort-wrap">
