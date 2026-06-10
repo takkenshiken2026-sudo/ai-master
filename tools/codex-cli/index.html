@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Codex CLI（OpenAI）の機能・料金・使い方を解説。Rust製OSSエージェント、Sandbox・Approval modes、AGENTS.md・MCP、ChatGPT Plus同梱、Claude Code・Copilotとの比較まで。生成AIパスポート対策にも。">
+  <title>Codex CLIとは？OpenAIのターミナルコーディングエージェントを解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/codex-cli/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Codex CLIとは？OpenAIのターミナルコーディングエージェントを解説">
+  <meta property="og:description" content="Rust製OSS・ローカルSandbox、5時間枠のLocal/Cloud Tasks、AGENTS.md・MCP。ChatGPT Plus同梱とAPI Key従量の二経路を2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/codex-cli/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/codex-cli/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/codex-cli/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/codex-cli/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Codex CLI", "item": "https://ai-master.jp/tools/codex-cli/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/codex-cli/#article",
+        "headline": "Codex CLIとは？OpenAIのターミナルコーディングエージェントを解説",
+        "description": "Rust製OSS・ローカルSandbox、5時間枠のLocal/Cloud Tasks、AGENTS.md・MCP。ChatGPT Plus同梱とAPI Key従量の二経路を2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/codex-cli/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/codex-cli/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/codex-cli/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Codex CLI" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/codex-cli/#webpage",
+        "url": "https://ai-master.jp/tools/codex-cli/",
+        "name": "Codex CLIとは？OpenAIのターミナルコーディングエージェントを解説",
+        "description": "Rust製OSS・ローカルSandbox、5時間枠のLocal/Cloud Tasks、AGENTS.md・MCP。ChatGPT Plus同梱とAPI Key従量の二経路を2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/codex-cli/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Codex CLI",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Windows, Linux",
+        "description": "OpenAIのローカル実行コーディングエージェント。Rust製OSS。Sandbox・Approval modes、AGENTS.md、MCP、Codex Cloud連携。ChatGPT Plus/Pro同梱。",
+        "offers": {
+          "@type": "Offer",
+          "price": "20",
+          "priceCurrency": "USD",
+          "description": "ChatGPT Plus $20/月〜にCodex CLI同梱。API Keyはトークン従量（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "OpenAI",
+          "url": "https://openai.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Codex CLIは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChatGPT Plus・Pro・Business・Enterprise/EduプランにCodex CLIが同梱されます（2026年6月時点・公式）。FreeプランではCodex CLIの本格利用は制限されます。API Keyのみの利用はクラウド機能なしでトークン従量課金になります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Codex CLIとClaude Codeの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもターミナルCLIのコーディングエージェントですが、Codex CLIはOpenAI製・Rust OSS・ChatGPTサブスク同梱・Sandbox/Approval modesが特徴です。Claude CodeはAnthropic製・CLAUDE.md・MCPで、Pro/Maxサブスクが中心です。モデルエコシステムと課金母体（ChatGPT vs Claude）の違いが試験・実務での整理ポイントです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SandboxとApproval modesとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sandboxはシェルコマンドの実行範囲を制限するポリシー（例：workspace-write）。Approval modesはコマンド実行前に人間承認を求める設定（on-request / never等）です。ローカル作業では--sandbox workspace-write --ask-for-approval on-requestが公式推奨（2026年6月時点・CLI Reference）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AGENTS.mdとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "リポジトリに置くエージェント向け指示ファイルで、プロジェクトの規約・コンテキストをCodexに渡します。Claude CodeのCLAUDE.mdと同系統。大きすぎると5時間枠の使用量を消費するため、ネスト配置で節約するのが公式のベストプラクティスです（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Codex CLIとGitHub Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CopilotはIDE内の行補完・チャットが中心です。Codex CLIはターミナルTUIでリポジトリを読み、ファイル変更・コマンド実行・Codex Cloudタスク・コードレビューまで進めるエージェントです。補完特化か、CLIエージェントか——が本質的な違いです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Codex CLI</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/codex-cli/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">OpenAI · Codex · コーディング</p>
+          <h1>Codex CLIとは？OpenAIのターミナルコーディングエージェントを解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">Rust製OSS——ローカルSandboxで読む・書く・実行する。ChatGPT同梱、Codex CloudとCLIを1ターミナルで往復</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Rust OSS</span>
+        <span class="tool-category">Sandbox</span>
+        <span class="tool-category">AGENTS.md · MCP</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>macOS / Linux / Windows</li>
+          <li>ChatGPT Plus同梱</li>
+          <li>API Key（従量）</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/codex-cli/og-hero.png" alt="Codex CLI公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：OpenAI公式（developers.openai.com/codex）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Codex CLI</strong>は、OpenAIが提供する<strong>ローカル実行のコーディングエージェント</strong>です。ターミナルから<code>codex</code>を起動すると、選択ディレクトリ内のコードを<strong>読み・変更・実行</strong>します。Rust製で<strong>オープンソース</strong>、<strong>ChatGPT Plus/Pro</strong>等に同梱——単体SaaSではなくサブスク一体型——が2026年時点の大きな特徴です。本記事では<a href="#sandbox-approval">Sandbox・Approval modes</a>、<a href="#usage-limits">5時間枠の使用量</a>、<a href="#agents-mcp">AGENTS.md・MCP</a>、<a href="#comparison">Claude Code・Copilotとの違い</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Codex CLIとは</a></li>
+        <li><a href="#sandbox-approval">Sandbox・Approval modes</a></li>
+        <li><a href="#usage-limits">使用量と5時間枠</a></li>
+        <li><a href="#agents-mcp">AGENTS.md・MCP・Subagents</a></li>
+        <li><a href="#cloud-hybrid">Codex Cloudとのハイブリッド</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金・利用形態（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">主要ツールとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>生成AIパスポートでは、AIコーディング支援と<strong>エージェントの権限・外部連携</strong>が問われます。Codex CLIは<a href="../../glossary/agent/">AIエージェント</a>の具体例として、<strong>ローカルでシェルを実行できる</strong>点と、<strong>Sandbox・承認</strong>でリスクを抑える設計が試験と接続します。</p>
+      <p>「Codex CLI＝<a href="../../glossary/codex-model/">Codexモデル</a>そのもの」「Copilotと同じ補完ツール」という混同に注意してください。CLIエージェントは<strong>プロジェクト単位の自律実行</strong>が前提です。</p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0240/">TF-0240（外部ツールと権限）</a>、<a href="../../exams/genai-passport/drill/q/tf-0243/">TF-0243（AIエージェント）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（承認ステップ）</a></p>
+        <p>用語：<a href="../../glossary/codex-model/">Codex</a> · <a href="../../glossary/agent/">AIエージェント</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Codex CLIとは</h2>
+      <p>Codex CLI（developers.openai.com/codex/cli）は、OpenAIの<strong>coding agent</strong>をターミナルから動かすCLIです。macOS・Windows・Linuxに対応し、WindowsはPowerShellネイティブのSandboxまたはWSL2が選択肢です（公式CLI setup）。</p>
+      <p>GitHub上の<strong>openai/codex</strong>リポジトリで公開されている<strong>Rust製OSS</strong>——速度と効率を重視——であり、<code>codex</code>コマンドで対話型TUI（Terminal UI）セッションが始まります。IDE拡張・Web・iOSもCodexエコシステムの一部ですが、本記事の焦点は<strong>CLIのローカルエージェント</strong>です。</p>
+      <p><a href="../chatgpt/">ChatGPT</a> Plus・Pro・Business・Edu・Enterpriseに<strong>Codexが同梱</strong>（公式Pricing）。別途「Codexだけの月額」ではなく、ChatGPTプランの一部としてLocal Messages・Cloud Tasks・Code Review枠が付与されます。</p>
+    </section>
+
+    <section id="sandbox-approval">
+      <h2>Sandbox・Approval modes</h2>
+      <p>Codex CLIの試験・実務で最重要なのは、<strong>エージェントがシェルを実行できる</strong>ことへのガードレールです（2026年6月時点・CLI Reference）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>仕組み</th><th>概要</th><th>試験・実務の整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Sandbox</strong></td><td>モデル生成コマンドの実行ポリシー（<code>workspace-write</code>等）</td><td>書き込み範囲をワークスペースに限定</td></tr>
+          <tr><td><strong>Approval modes</strong></td><td>実行前の人間承認（<code>on-request</code> / <code>never</code>等）</td><td>TF-0271（承認）と整合</td></tr>
+          <tr><td><strong><code>codex sandbox</code></strong></td><td>Codex内部と同ポリシーで任意コマンドを試験実行</td><td>本番前の安全確認</td></tr>
+          <tr><td><strong><code>--add-dir</code></strong></td><td>追加ディレクトリへの書き込み許可</td><td><code>danger-full-access</code>より安全</td></tr>
+        </tbody>
+      </table>
+      <p>公式推奨のローカル作業例：<code>--sandbox workspace-write --ask-for-approval on-request</code>。非対話の<code>exec</code>スクリプトでは<code>never</code>を選ぶ一方、<strong><code>--yolo</code>（承認・Sandboxバイパス）</strong>は隔離VM内など限定的用途のみ——試験では「便利だから常時YOLO」は×です。</p>
+    </section>
+
+    <section id="usage-limits">
+      <h2>使用量と5時間枠</h2>
+      <p>Codex CLIのChatGPT同梱利用は、<strong>Local Messages</strong>と<strong>Cloud Tasks</strong>が<strong>5時間ウィンドウを共有</strong>します（2026年6月時点・公式Pricing FAQ）。モデル・タスク規模・コンテキスト量で消費量が変動します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>プラン例</th><th>GPT-5.3-Codex Local / 5h</th><th>Cloud Tasks / 5h</th><th>Code Reviews / 5h</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Plus</strong></td><td>30〜150</td><td>10〜60</td><td>20〜50</td></tr>
+          <tr><td><strong>Pro 5x</strong></td><td>150〜750</td><td>50〜300</td><td>100〜250</td></tr>
+          <tr><td><strong>Pro 20x</strong></td><td>600〜3000</td><td>200〜1200</td><td>400〜1000</td></tr>
+        </tbody>
+      </table>
+      <p>上限到達後は<strong>Credits追加購入</strong>、小さいモデル（GPT-5.4-mini等）への切替、または<strong>API Key従量</strong>で継続できます。セッション中は<code>/status</code>で残枠確認（公式）。GPT-5.3-Codex-SparkはPro限定リサーチプレビュー（低レイテンシ）です。</p>
+    </section>
+
+    <section id="agents-mcp">
+      <h2>AGENTS.md・MCP・Subagents</h2>
+      <p>プロジェクト文脈は<strong>AGENTS.md</strong>——リポジトリにネスト配置可能——でCodexに渡します。Claude CodeのCLAUDE.mdと同系統で、公式はファイルサイズ抑制を推奨（Credits/枠節約のため）。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>MCP</h3>
+          <p>Model Context Protocolで外部ツール・データに接続。不要時は無効化推奨（公式FAQ）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Subagents</h3>
+          <p>複雑タスクを並列サブエージェントに分割（公式CLI overview）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3><code>codex exec</code></h3>
+          <p>スクリプト化で反復ワークフローを自動化。CI連携の入口。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Code Review Agent</h3>
+          <p>別エージェントがコミット/プッシュ前にレビュー（ローカル実行）。</p>
+        </div>
+      </div>
+      <p><code>/model</code>でGPT-5.4・GPT-5.3-Codex等を切替、推論レベルも調整可能。画像入力・CLI内画像生成もサポート（公式）。</p>
+    </section>
+
+    <section id="cloud-hybrid">
+      <h2>Codex Cloudとのハイブリッド</h2>
+      <p>Codex CLIから<strong>Codex Cloud tasks</strong>を起動し、環境を選んで結果diffをターミナルに適用——ローカルとクラウドを行き来せずに済む——のが2026年時点の差別化です（公式CLI overview）。</p>
+      <p><strong>Code Review</strong>のGitHub連携（<code>@Codex</code>タグ・自動PRレビュー）はCloud Tasks / Code Reviews枠を消費し、<strong>ローカルレビュー</strong>は一般使用量に含まれます（公式Pricing FAQ）。試験では「レビュー＝全部GitHub経由」と覚えないでください。</p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>対話型TUI</h3>
+          <p><code>codex</code>でインタラクティブセッション。<code>codex resume</code>で再開。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Web search</h3>
+          <p>最新情報取得。デフォルトはキャッシュモード、<code>--search</code>でライブ。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>IDE extension</h3>
+          <p>CLIと同エンジンをエディタから利用（Codexエコシステム）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>API Key mode</h3>
+          <p>サブスクCloud機能なし・新モデル遅延あり・トークン従量のみ。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Enterprise controls</h3>
+          <p>SAML SSO・RBAC・監査ログ・Compliance API（Enterprise）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Slack / GitHub連携</h3>
+          <p>Cloud-based integrations（Business以上・公式Pricing）。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>「<strong>Codex CLI＝GitHub Copilot</strong>」——CopilotはIDE補完中心、Codex CLIは<strong>ターミナルエージェント</strong>です。</p>
+      <p>「<strong>ChatGPT Plus＝無制限Codex</strong>」——5時間枠のLocal/Cloud共有上限があり、大規模リポジトリ・長セッションは早く枯渇します（公式FAQ）。</p>
+      <p>「<strong>オープンソース＝API不要で無料</strong>」——CLI本体はOSSですが、モデル利用は<strong>ChatGPTサブスクまたはAPI Key</strong>が必要です。FreeプランではCodex CLIは実質制限されます。</p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金・利用形態（2026年6月時点）</h2>
+      <p>Codex CLI単体の月額はなく、主に次の2経路です（公式Pricing）。</p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">ChatGPT同梱</p><p class="tool-plan-price">Plus〜</p><p class="tool-plan-note">Local+Cloud+Review枠</p></div>
+        <div class="tool-plan-card"><p class="tool-plan-name">API Key</p><p class="tool-plan-price">従量</p><p class="tool-plan-note">CLI/SDKのみ・Cloud機能なし</p></div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>経路</th><th>料金目安</th><th>Codex CLI</th><th>Cloud / GitHub Review</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ChatGPT Plus</strong></td><td>$20/月（2026年6月時点）</td><td>同梱・5h枠（モデル依存）</td><td>GPT-5.3-CodexでCloud/Review可</td></tr>
+          <tr><td><strong>ChatGPT Pro</strong></td><td>Pro 5x / 20x</td><td>5〜20倍の枠</td><td>Codex-Spark（research preview）</td></tr>
+          <tr><td><strong>Business / Enterprise</strong></td><td>席課金・カスタム</td><td>同梱・Credits拡張</td><td>SSO・監査・Slack等</td></tr>
+          <tr><td><strong>API Key only</strong></td><td>トークン従量</td><td>CLI/SDK利用可</td><td>Cloud機能・新モデル優先なし</td></tr>
+        </tbody>
+      </table>
+      <p>上限超過時はCredits購入。GPT-5.4-mini等への切替で枠を節約できます（公式FAQ）。Enterpriseはデフォルトでビジネスデータを学習に使わない方針（公式）。</p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li><strong>CLIインストール</strong>公式CLI setupに従いmacOS/Windows/Linuxへ導入。</li>
+          <li><strong>ChatGPTログイン</strong>Plus以上で認証。API Keyのみも選択可。</li>
+          <li><strong>AGENTS.md作成</strong>プロジェクトルールを簡潔に。サブディレクトリに分割。</li>
+          <li><strong>安全設定で起動</strong><code>codex --sandbox workspace-write --ask-for-approval on-request</code></li>
+          <li><strong>レビュー→コミット</strong>Code Review Agentまたは人間確認後にpush。</li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/codex-cli/og-hero.png" alt="Codex CLI公式イメージ" width="600" height="314" loading="lazy">
+            <figcaption>出典：OpenAI公式（developers.openai.com/codex）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>レガシー移行スクリプト</h3>
+          <p><code>codex exec</code>で定型的な移行をバッチ化。Sandbox内で検証。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>PR前ローカルレビュー</h3>
+          <p>Code Review Agentでセキュリティ・スタイルを事前チェック。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>重いリファクタをCloudへ</h3>
+          <p>CLIからCodex Cloud task→diff適用。ローカルマシン負荷を回避。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>Enterprise統制</h3>
+          <p>RBAC・監査ログ付きWorkspaceでエージェント利用を可視化。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+        <tbody>
+          <tr><td>Rust OSSでローカルファースト・高速</td><td>ChatGPTサブスク/APIが別途必要</td></tr>
+          <tr><td>Sandbox+Approvalで実行リスクを設計可能</td><td>5時間枠共有で長時間作業は計画要</td></tr>
+          <tr><td>ChatGPT Plus同梱でCopilot追加不要も可</td><td>API KeyモードはCloud機能なし</td></tr>
+          <tr><td>CLI↔Cloudハイブリッド・MCP・Subagents</td><td>IDE一体型（Cursor）よりTUI学習コスト</td></tr>
+          <tr><td>AGENTS.mdでチーム規約をコード化</td><td>モデル名・枠は変動しやすい</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>主要ツールとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>Codex CLI</th><th><a href="../claude-code/">Claude Code</a></th><th><a href="../github-copilot/">GitHub Copilot</a></th><th><a href="../warp/">Warp</a></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>形態</td><td><strong>CLI TUI（Rust OSS）</strong></td><td>CLI＋IDE＋Desktop</td><td>IDE拡張中心</td><td>AIターミナル</td></tr>
+          <tr><td>課金母体</td><td>ChatGPT Plus/Pro</td><td>Claude Pro/Max</td><td>Copilotサブスク</td><td>Warpサブスク</td></tr>
+          <tr><td>実行制御</td><td>Sandbox・Approval</td><td>権限プロンプト</td><td>主に編集提案</td><td>Agent＋ブロック</td></tr>
+          <tr><td>自律度</td><td>ファイル編集・シェル・Cloud</td><td>リポジトリ全体・Git/PR</td><td>補完・チャット</td><td>コマンド生成</td></tr>
+          <tr><td>向くケース</td><td>OpenAI派CLIエージェント</td><td>Anthropic派エージェント</td><td>日常補完</td><td>ターミナル作業加速</td></tr>
+        </tbody>
+      </table>
+      <p>OpenAIエコシステムでCLIエージェントならCodex CLI、Anthropicなら<a href="../claude-code/">Claude Code</a>、IDE補完なら<a href="../github-copilot/">GitHub Copilot</a>、ターミナルUX強化なら<a href="../warp/">Warp</a>——という棲み分けが試験・実務で使いやすいです。</p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>ChatGPT Plus/Pro契約済みでターミナルエージェントを試したい開発者</strong></li>
+        <li><strong>Sandboxでシェル実行を統制しつつ自律コーディングしたいチーム</strong></li>
+        <li><strong>CLI→Codex Cloud→diff適用のハイブリッドフローを求める人</strong></li>
+        <li><strong>試験対策で「CLIコーディングエージェント＝Sandbox+承認」と整理したい受験生</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>IDE一体のAIネイティブ編集</strong>（<a href="../cursor/">Cursor</a>向け）、<strong>非OpenAIモデル固定</strong>（<a href="../claude-code/">Claude Code</a>向け）、<strong>完全ノーコード自動化</strong>（<a href="../make/">Make</a>向け）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>無料で使えますか？</summary><p class="tool-faq-a">ChatGPT Plus・Pro・Business・Enterprise/EduプランにCodex CLIが同梱されます（2026年6月時点・公式）。FreeプランではCodex CLIの本格利用は制限されます。API Keyのみの利用はクラウド機能なしでトークン従量課金になります。</p></details>
+        <details><summary>Claude Codeとの違いは？</summary><p class="tool-faq-a">どちらもターミナルCLIのコーディングエージェントですが、Codex CLIはOpenAI製・Rust OSS・ChatGPTサブスク同梱・Sandbox/Approval modesが特徴です。Claude CodeはAnthropic製・CLAUDE.md・MCPで、Pro/Maxサブスクが中心です。モデルエコシステムと課金母体（ChatGPT vs Claude）の違いが試験・実務での整理ポイントです。</p></details>
+        <details><summary>SandboxとApproval modesとは？</summary><p class="tool-faq-a">Sandboxはシェルコマンドの実行範囲を制限するポリシー（例：workspace-write）。Approval modesはコマンド実行前に人間承認を求める設定（on-request / never等）です。ローカル作業では--sandbox workspace-write --ask-for-approval on-requestが公式推奨（2026年6月時点・CLI Reference）。</p></details>
+        <details><summary>AGENTS.mdとは？</summary><p class="tool-faq-a">リポジトリに置くエージェント向け指示ファイルで、プロジェクトの規約・コンテキストをCodexに渡します。Claude CodeのCLAUDE.mdと同系統。大きすぎると5時間枠の使用量を消費するため、ネスト配置で節約するのが公式のベストプラクティスです（2026年6月時点）。</p></details>
+        <details><summary>GitHub Copilotとの違いは？</summary><p class="tool-faq-a">CopilotはIDE内の行補完・チャットが中心です。Codex CLIはターミナルTUIでリポジトリを読み、ファイル変更・コマンド実行・Codex Cloudタスク・コードレビューまで進めるエージェントです。補完特化か、CLIエージェントか——が本質的な違いです。</p></details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener noreferrer">Codex CLI（OpenAI Developers）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://developers.openai.com/codex/pricing" target="_blank" rel="noopener noreferrer">料金・使用量</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/openai/codex" target="_blank" rel="noopener noreferrer">GitHub（OSS）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-code/"><img src="../../assets/images/tools/claude-code/app-icon.png" alt="" width="16" height="16"> Claude Code</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/app-icon.png" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../warp/"><img src="../../assets/images/tools/warp/app-icon.png" alt="" width="16" height="16"> Warp</a></li>
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li class="tool-related-list__soon">Continue.dev <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/codex-model/">Codex</a></li>
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

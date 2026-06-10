@@ -1661,6 +1661,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ai-master.jp/tools/codex-cli/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-master.jp/tools/cline/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

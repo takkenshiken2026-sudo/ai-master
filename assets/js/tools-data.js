@@ -384,6 +384,7 @@ const TOOLS = [
     logo: "openai.svg",
     cat: "code",
     catLabel: "コーディング",
+    article: true,
     tagline: "OpenAIのCLIコーディングエージェント",
     url: "https://developers.openai.com/codex/cli",
   },
