@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="COCOとは？物体検出・セグメンテーションの標準ベンチマークデータセット。YOLOやU-Netとの違いをG検定向けに解説。">
+  <title>COCOとは？物体検出の共通言語——標準データセットが測るもの — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/coco-dataset/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="COCOとは？物体検出の共通言語——標準データセットが測るもの">
+  <meta property="og:description" content="MS COCO。画像認識モデルの性能比較に使われる物体検出・セグメンテーションの標準データセット。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/coco-dataset/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "COCO",
+        "alternateName": ["COCO", "ココ", "MS COCO", "Common Objects in Context"],
+        "description": "物体検出・セグメンテーションなどの性能評価に広く使われる画像認識の標準データセット。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "COCOは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Common Objects in Contextの略で、日常シーンの写真に物体の位置や領域などのアノテーションが付いた、画像認識の標準ベンチマークデータセットです。物体検出やセグメンテーションの性能比較に広く使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "COCOとYOLOは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。COCOは評価用のデータセット、YOLOは物体検出モデルの名前です。YOLOなどのモデル性能をCOCO上で測る、という関係です（G-324）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "COCOはモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。COCOは学習・評価に使うデータセット（ベンチマーク）です。CNNや物体検出アルゴリズムそのものではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">COCO</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>COCOとは？物体検出の共通言語——標準データセットが測るもの</h1>
+    <p class="tool-hero-sub">読み：ここ ／ 英：COCO（Common Objects in Context／MS COCO）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>COCO</strong>（Common Objects in Context）は、日常の写真に<strong>物体の位置・領域・カテゴリ</strong>などのラベルが付いた、画像認識の<strong>標準ベンチマーク・データセット</strong>です。YOLOやFaster R-CNNのような<strong>モデル名</strong>ではなく、それらの性能を<strong>同じ物差しで測る「共通言語」</strong>——本記事は画像枚数の暗記ではなく、<strong>「何を測るデータセットか」</strong>と試験でのすり替え回避に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#benchmark">ベンチマークの役割</a></li>
+        <li><a href="#tasks">測るタスクの地図</a></li>
+        <li><a href="#annotations">アノテーションの種類</a></li>
+        <li><a href="#vs-models">モデルとの関係</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="benchmark">
+      <h2>ベンチマークの役割</h2>
+      <p>
+        機械学習では「精度が高い」と言うために、<strong>同じテスト問題</strong>でモデルを比較します。画像認識分野では、COCOが長く<strong>物体検出・セグメンテーション</strong>の代表ベンチマークとして使われてきました。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>学習データ</strong> — モデルがパターンを学ぶための画像とラベル</li>
+        <li><strong>評価データ</strong> — 学習に使わなかった画像で性能を測る</li>
+        <li><strong>ベンチマーク</strong> — 研究コミュニティが<strong>共通の評価セット</strong>として採用したデータセット</li>
+      </ul>
+      <p>
+        COCOは<strong>アルゴリズムそのものではなく</strong>、論文や製品が「COCOで○%」と報告するときの<strong>比較基準</strong>です。
+      </p>
+    </section>
+
+    <section id="tasks">
+      <h2>測るタスクの地図</h2>
+      <p>COCOは複数タスクの評価に使われます。試験では<strong>タスクの定義</strong>とセットで整理します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>何を予測するか</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>物体検出</strong></td><td>画像内の<strong>どこに何があるか</strong>（バウンディングボックス＋カテゴリ）</td><td><a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>、<a href="../../exams/g-kentei/practice/q/g-324/">G-324</a></td></tr>
+          <tr><td><strong>セグメンテーション</strong></td><td>画素単位で<strong>領域を分類</strong></td><td><a href="../../exams/g-kentei/drill/q/tf-122/">TF-122</a>、<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a></td></tr>
+          <tr><td><strong>画像分類</strong></td><td>画像全体のカテゴリ</td><td><a href="../cnn/">CNN</a>の古典タスク</td></tr>
+          <tr><td><strong>キャプション</strong></td><td>画像の説明文</td><td><a href="../blip/">BLIP</a>など視覚言語タスク</td></tr>
+        </tbody>
+      </table>
+      <p>
+        物体検出は「<strong>どこに何があるか</strong>」、セグメンテーションは「<strong>各画素がどの領域か</strong>」——この違いがG-324のYOLOとU-Netの対比にも現れます。
+      </p>
+    </section>
+
+    <section id="annotations">
+      <h2>アノテーションの種類</h2>
+      <p>「Context（文脈）」の名のとおり、COCOは<strong>複数物体が共存する日常シーン</strong>の画像が多いのが特徴です。</p>
+      <ul class="tool-example-list">
+        <li><strong>バウンディングボックス</strong> — 矩形で物体の位置を指定（物体検出）</li>
+        <li><strong>セグメンテーションマスク</strong> — 画素ごとの領域ラベル（セマンティック／インスタンス）</li>
+        <li><strong>カテゴリラベル</strong> — 人・車・犬など80クラス前後の物体カテゴリ</li>
+        <li><strong>キャプション</strong> — 画像を説明する英文（一部タスク）</li>
+      </ul>
+      <p>
+        セマンティックセグメンテーションは<strong>同じクラス内の個体を区別しない</strong>（TF-116）。インスタンスセグメンテーションは個体ごとに分ける——この区別もCOCO文脈でよく出ます。
+      </p>
+    </section>
+
+    <section id="vs-models">
+      <h2>モデルとの関係</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>種類</th><th>COCOとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>COCO</strong></td><td><strong>データセット</strong></td><td>性能を測る物差し</td></tr>
+          <tr><td><strong>YOLO</strong></td><td>物体検出<strong>モデル</strong></td><td>COCOで検出精度を報告することが多い（G-324）</td></tr>
+          <tr><td><strong>Faster R-CNN</strong></td><td>物体検出モデル</td><td><a href="../cnn/">CNN</a>ベースの検出パイプライン</td></tr>
+          <tr><td><strong>U-Net</strong></td><td>セグメンテーション<strong>モデル</strong></td><td>医用画像でも有名。タスクは検出と別（G-324）</td></tr>
+          <tr><td><strong><a href="../clip-model/">CLIP</a></strong></td><td>視覚言語モデル</td><td>データセットではない</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験の誤答では、データセット名を<strong>モデル名</strong>や<strong>損失関数</strong>とすり替えるパターンがあります（CTCの誤答に物体検出が混ざる、など）。<strong>データ vs アルゴリズム</strong>の層を分けて覚えます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 物体検出・セグメンテーションの<strong>標準データセット</strong>（ベンチマーク）</li>
+        <li><strong>略称</strong> — Common Objects in <strong>Context</strong></li>
+        <li><strong>位置づけ</strong> — モデルではなく<strong>評価・学習用の画像集合</strong></li>
+        <li><strong>関連タスク</strong> — 物体検出（G-316）、セグメンテーション（TF-122）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>、<a href="../../exams/g-kentei/practice/q/g-324/">G-324</a>、<a href="../../exams/g-kentei/drill/q/tf-122/">TF-122</a>、<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a>、<a href="../../exams/g-kentei/practice/q/g-318/">G-318</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>COCO＝YOLO</td><td>データセット vs 物体検出モデル（G-324）</td></tr>
+          <tr><td>COCO＝CNN</td><td>ベンチマーク vs ネットワーク構造</td></tr>
+          <tr><td>COCO＝セグメンテーション手法</td><td>評価データ vs U-Net等のモデル</td></tr>
+          <tr><td>COCO＝NLPのコーパス</td><td>画像認識 vs テキスト（<a href="../nlp/">NLP</a>）</td></tr>
+          <tr><td>COCO＝CTC</td><td>画像データ vs 音声系列の損失（G-358のC）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>COCOは何ですか？</summary><p class="tool-faq-a">Common Objects in Contextの略で、日常シーンの写真に物体の位置や領域などのアノテーションが付いた、画像認識の標準ベンチマークデータセットです。物体検出やセグメンテーションの性能比較に広く使われます。</p></details>
+        <details><summary>COCOとYOLOは同じですか？</summary><p class="tool-faq-a">いいえ。COCOは評価用のデータセット、YOLOは物体検出モデルの名前です。YOLOなどのモデル性能をCOCO上で測る、という関係です（<a href="../../exams/g-kentei/practice/q/g-324/">G-324</a>）。</p></details>
+        <details><summary>COCOはモデルですか？</summary><p class="tool-faq-a">いいえ。COCOは学習・評価に使うデータセット（ベンチマーク）です。CNNや物体検出アルゴリズムそのものではありません。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-316/">G-316 · 物体検出タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-324/">G-324 · YOLOとU-Net</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-122/">TF-122 · セグメンテーション</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-116/">TF-116 · セマンティック vs インスタンス</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../detr/">DETR</a></li>
+          <li><a href="../dice-loss/">Dice Loss</a></li>
+          <li><a href="../cbam/">CBAM</a></li>
+          <li><a href="../beit/">BEiT</a></li>
+          <li><a href="../clip-model/">CLIP</a></li>
+          <li><a href="../blip/">BLIP</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

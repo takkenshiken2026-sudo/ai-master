@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPT-4 Turboとは？GPT-4の高速・低コスト版と128Kコンテキスト拡張。ベースモデルとの違い、コンテキストウィンドウ、試験での整理を生成AIパスポート向けに解説。">
+  <title>GPT-4 Turboとは？高速・低コストと128Kコンテキスト拡張 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt-4-turbo/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="GPT-4 Turboとは？高速・低コストと128Kコンテキスト拡張">
+  <meta property="og:description" content="GPT-4を実務向けに最適化したTurbo版。速度・コスト・長文コンテキストの3軸を試験向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt-4-turbo/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GPT-4 Turbo",
+        "alternateName": ["GPT4 Turbo", "GPT-4-Turbo"],
+        "description": "GPT-4を高速化・低コスト化しコンテキストを128Kに拡張した実務向けモデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GPT-4 TurboとGPT-4の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GPT-4 TurboはベースのGPT-4を実務向けに最適化した版です。応答速度とAPIコストの改善、128Kトークン規模のコンテキスト拡張が主な特徴として整理します。試験では「Turbo＝別系列」ではなく「GPT-4の改良版」という位置づけが中心です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "128Kコンテキストとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "モデルが一度に参照できる入力・会話履歴の上限が約128,000トークン規模まで拡張されたことを指します。長い文書や長いやり取りを扱いやすくなる一方、コンテキストが大きいから自動で最新情報を検索できるわけではありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-4 Turboは試験で暗記が必要ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "生成AIパスポートではGPT-4やGPT-4oなど主要モデル名の系列整理が中心で、Turboの細部仕様を単独で問う問題は少ない傾向です。ただしコンテキストウィンドウの概念（TF-0170）は関連が深いため、速度・コスト・長文対応の文脈でセットで覚えるとよいです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPT-4 Turbo</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPT-4 Turboとは？高速・低コストと128Kコンテキスト拡張</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃーよんターボ ／ 英：GPT-4 Turbo</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPT-4 Turbo</strong>は、<a href="../gpt-4/">GPT-4</a>を<strong>高速化・低コスト化</strong>し、<a href="../context-window/">コンテキストウィンドウ</a>を<strong>128Kトークン規模</strong>に拡張した実務向けモデルです。本記事はベンチマークの細部より、<strong>「性能の別モデル」ではなく「GPT-4の実装最適化」</strong>という切り口で試験と実務の誤解を整理します。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#turbo-concept">Turboとは何を最適化したか</a></li>
+        <li><a href="#context-128k">128Kコンテキストの意味</a></li>
+        <li><a href="#vs-gpt4">ベースGPT-4との整理</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、GPT-4 Turbo単体の仕様より<strong>GPT系列の変遷</strong>（<a href="../../exams/genai-passport/drill/q/tf-0139/">TF-0139</a>）と<strong>コンテキストウィンドウ</strong>の概念（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>）が関連深いです。Turboを覚えるときは「128K＝長文を扱える上限」という整理が試験の核心です。
+      </p>
+      <p>
+        コンテキストが大きいから<strong>最新情報を自動検索できる</strong>わけではありません（<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169</a>）。長い入力を参照できることと、リアルタイムの外部検索は別の機能です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170（コンテキストウィンドウ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169（コンテキスト≠自動検索）</a>、<a href="../../exams/genai-passport/drill/q/tf-0139/">TF-0139（GPT-4系列）</a></p>
+        <p>実践演習：<a href="../../exams/genai-passport/practice/q/hq-0171/">HQ-0171（マルチモーダルと実務判断）</a></p>
+      </div>
+    </section>
+    <section id="turbo-concept">
+      <h2>Turboとは何を最適化したか</h2>
+      <p>
+        「Turbo」は自動車のターボのように、<strong>同じ世代の能力をより実務向けに回す</strong>イメージで理解すると試験と実務の両方で混乱しにくくなります。GPT-4 Turboは2023年末に発表され、主に次の3点が話題になりました。
+      </p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>速度</h3>
+          <p>応答レイテンシの改善。APIや<a href="../../tools/chatgpt/">ChatGPT</a>での待ち時間短縮に寄与</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コスト</h3>
+          <p>トークン単価の引き下げ。大量利用・長文処理の経済性が向上</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>知識の鮮度</h3>
+          <p>学習データのカットオフ更新（2026年6月時点の詳細は公式確認）。ただしリアルタイム検索とは別</p>
+        </div>
+      </div>
+      <p>
+        試験では「Turbo＝GPT-5」「Turbo＝完全に別アーキテクチャ」と答えるのは誤りです。<strong>GPT-4の改良版</strong>として系列表に並べます。
+      </p>
+    </section>
+    <section id="context-128k">
+      <h2>128Kコンテキストの意味</h2>
+      <p>
+        <a href="../context-window/">コンテキストウィンドウ</a>は、モデルが応答を作る際に<strong>一度に参照できる入力・会話履歴の範囲</strong>です。GPT-4 Turboでは約<strong>128,000トークン</strong>規模まで拡張され、長い契約書・議事録・コードベースなどをまとめて渡しやすくなりました。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>概念</th><th>意味</th><th>試験での注意</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>コンテキスト拡張</strong></td><td>長い文脈を保持して応答</td><td>長文要約・照合に有利</td></tr>
+          <tr><td><strong>128K</strong></td><td>上限の目安（トークン数）</td><td>細かな数値暗記より概念優先</td></tr>
+          <tr><td><strong>検索機能</strong></td><td>外部の最新情報取得</td><td>コンテキスト拡大とは無関係（TF-0169）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        長い入力を渡しても、モデルが文書の<strong>すべてを均等に注意</strong>するとは限りません。実務では重要箇所の明示や段階的な処理が有効な場面もあります。
+      </p>
+    </section>
+    <section id="vs-gpt4">
+      <h2>ベースGPT-4との整理</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr><th>観点</th><th>ベースGPT-4</th><th>GPT-4 Turbo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>位置づけ</strong></td><td>マルチモーダル・推論強化の次世代</td><td>同能力帯の<strong>実務最適化版</strong></td></tr>
+          <tr><td><strong>速度・コスト</strong></td><td>当初は高コスト・低速寄り</td><td>高速・低コストを志向</td></tr>
+          <tr><td><strong>コンテキスト</strong></td><td>初期は8K/32Kなど段階的</td><td><strong>128K</strong>が目印</td></tr>
+          <tr><td><strong>試験</strong></td><td>系列の中核（TF-0139）</td><td>実装・運用の文脈で補足</td></tr>
+        </tbody>
+      </table>
+      <p>
+        2026年6月時点では、後続のGPT-4oなどが登場し、ChatGPTのデフォルトモデルも更新されています。料金・提供形態は変動しやすいため、試験では<strong>概念の整理</strong>を優先し、最新の公式情報は利用時に確認してください。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GPT-4 Turbo＝GPT-4o</td><td>TurboはGPT-4の最適化版。4oはオムニ統合の別世代</td></tr>
+          <tr><td>128K＝無制限の記憶</td><td>参照上限の拡張。忘却や要約の誤りは起こりうる</td></tr>
+          <tr><td>コンテキスト拡大＝最新情報検索</td><td>入力範囲の話。外部検索は別機能（TF-0169）</td></tr>
+          <tr><td>Turbo＝常にベースより高精度</td><td>速度・コスト・長文対応の最適化が主眼。用途で使い分け</td></tr>
+          <tr><td>Turbo＝<a href="../gpt-3-5/">GPT-3.5</a>の別名</td><td>世代も能力帯も異なる。系列表で区別</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>GPT-4 TurboとGPT-4の違いは？</summary>
+          <p class="tool-faq-a">GPT-4 TurboはベースのGPT-4を実務向けに最適化した版です。応答速度とAPIコストの改善、128Kトークン規模のコンテキスト拡張が主な特徴として整理します。試験では「Turbo＝別系列」ではなく「GPT-4の改良版」という位置づけが中心です。</p>
+        </details>
+        <details>
+          <summary>128Kコンテキストとは何ですか？</summary>
+          <p class="tool-faq-a">モデルが一度に参照できる入力・会話履歴の上限が約128,000トークン規模まで拡張されたことを指します。長い文書や長いやり取りを扱いやすくなる一方、コンテキストが大きいから自動で最新情報を検索できるわけではありません。</p>
+        </details>
+        <details>
+          <summary>GPT-4 Turboは試験で暗記が必要ですか？</summary>
+          <p class="tool-faq-a">生成AIパスポートではGPT-4やGPT-4oなど主要モデル名の系列整理が中心で、Turboの細部仕様を単独で問う問題は少ない傾向です。ただしコンテキストウィンドウの概念（TF-0170）は関連が深いため、速度・コスト・長文対応の文脈でセットで覚えるとよいです。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · コンテキストウィンドウ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169 · コンテキスト≠自動検索</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0139/">TF-0139 · GPT-4系列</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0171/">HQ-0171 · マルチモーダルと実務判断</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpt-4/">GPT-4</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../gpt-3-5/">GPT-3.5</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../../tools/chatgpt/">ChatGPT</a></li>
+          <li><a href="../gpt-4o/">GPT-4o</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

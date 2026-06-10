@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Falconとは？TII（UAE）のオープンウェイト大規模言語モデル。LLaMA・Mistralとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Falconとは？砂漠の鷹——TIIが切り開いた中東圏のオープンウェイトLLM — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/falcon-llm/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Falconとは？砂漠の鷹——TIIが切り開いた中東圏のオープンウェイトLLM">
+  <meta property="og:description" content="Technology Innovation InstituteによるオープンウェイトLLMファミリー。基盤モデルとして多様な下流タスクに適用可能。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/falcon-llm/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Falcon",
+        "alternateName": ["Falcon", "ファルコン", "Falcon LLM"],
+        "description": "UAEのTechnology Innovation Institute（TII）が開発するオープンウェイト大規模言語モデルファミリー。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Falconは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "アラブ首長国連邦のTIIが開発する大規模言語モデル（LLM）ファミリーです。オープンウェイトとして公開され、テキスト生成・要約・質問応答などにファインチューニングやプロンプトで適用できる基盤モデルとして位置づけられます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FalconとLLaMAは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもオープンウェイト系のLLMファミリーですが、開発元（TII vs Meta）とモデル設計が異なります。いずれも基盤モデルとして下流タスクに適用できる点は共通です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FalconはChatGPTですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Falconは基盤となるLLMファミリー（モデル名）であり、ChatGPTはOpenAIが提供する対話型サービス（製品名）です。層を混同しないことが重要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Falcon</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Falconとは？砂漠の鷹——TIIが切り開いた中東圏のオープンウェイトLLM</h1>
+    <p class="tool-hero-sub">読み：ファルコン ／ 英：Falcon（Technology Innovation Institute）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Falcon</strong>は、UAE（アラブ首長国連邦）の<strong>Technology Innovation Institute（TII）</strong>が開発する<strong>オープンウェイト<a href="../llm/">LLM</a></strong>ファミリーです。<a href="../llama/">LLaMA</a>がMetaから、<a href="../mistral/">Mistral</a>が欧州から——という地図のなかで、Falconは<strong>中東圏がオープン系基盤モデルを公開した</strong>象徴として業界史に残ります。本記事はパラメータ表の暗記ではなく、<strong>「開発元の地理とオープンウェイトの意味」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#who-tii">TIIと開発の背景</a></li>
+        <li><a href="#open-weights">オープンウェイトとしての位置</a></li>
+        <li><a href="#foundation">基盤モデルとしての使い方</a></li>
+        <li><a href="#geo-map">LLM勢力地図でのFalcon</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="who-tii">
+      <h2>TIIと開発の背景</h2>
+      <p>
+        Falconは<strong>TII</strong>（Technology Innovation Institute）——UAEの研究機関——が開発・公開したLLM系列です。2022〜2023年頃、Falcon 7B・40Bなどがオープンウェイトとしてリリースされ、当時のオープン系LLMの選択肢を広げました。
+      </p>
+      <p>
+        試験では細かなバージョンより、<strong>開発元＝TII（UAE）</strong>——OpenAI（米）・Google（米）・Meta（米）・Anthropic（米）・Mistral（仏）・DeepSeek（中）と並べて区別——が要点です。
+      </p>
+    </section>
+
+    <section id="open-weights">
+      <h2>オープンウェイトとしての位置</h2>
+      <p>
+        Falconの重みは研究・開発者が取得し、ローカル推論や<a href="../fine-tuning/">ファインチューニング</a>に使える——<strong>オープンウェイト</strong>——として公開されました。ただし「オープン＝無条件で自由」ではありません。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>論点</th><th>試験向けの整理</th><th>演習</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ライセンス確認</strong></td><td>商用条件・表示義務などを読む必要がある</td><td>TF-478</td></tr>
+          <tr><td><strong>完全自由は×</strong></td><td>オープンソースでも条件は異なる</td><td>TF-479</td></tr>
+          <tr><td><strong>閉源APIとの違い</strong></td><td>重みを自前で扱える選択肢</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../llama/">LLaMA</a>や<a href="../deepseek/">DeepSeek</a>と同様、利用前に<strong>ライセンス条項の確認</strong>は必須です（2026年6月時点の条項は公式で確認してください）。
+      </p>
+    </section>
+
+    <section id="foundation">
+      <h2>基盤モデルとしての使い方</h2>
+      <p>
+        Falconは<a href="../foundation-model/">基盤モデル</a>——大規模データで事前学習され、下流タスクに適用できる——の一例です（<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>事前学習</strong> — 大量テキストで言語能力を獲得</li>
+        <li><strong>適用</strong> — <a href="../prompt/">プロンプト</a>、<a href="../fine-tuning/">ファインチューニング</a>、<a href="../lora/">LoRA</a>で用途特化</li>
+        <li><strong>サイズ展開</strong> — 7B・40B・180Bなど規模別のバリアント</li>
+      </ul>
+      <p>
+        Falcon＝チャットボット製品、ではありません。<a href="../../tools/chatgpt/">ChatGPT</a>のような<strong>サービス名</strong>と、Falconのような<strong>モデル名</strong>——層を分けることが生成AIパスポートの定番の罠回避です。
+      </p>
+    </section>
+
+    <section id="geo-map">
+      <h2>LLM勢力地図でのFalcon</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ファミリー</th><th>開発元・地域</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../gpt/">GPT</a></strong></td><td>OpenAI（米）</td><td>閉源API中心の代表</td></tr>
+          <tr><td><strong><a href="../llama/">LLaMA</a></strong></td><td>Meta（米）</td><td>オープンウェイトの生根</td></tr>
+          <tr><td><strong><a href="../mistral/">Mistral</a></strong></td><td>Mistral AI（仏）</td><td>欧州発オープンウェイト</td></tr>
+          <tr><td><strong>Falcon</strong></td><td>TII（UAE）</td><td>中東圏発オープンウェイト</td></tr>
+          <tr><td><strong><a href="../deepseek/">DeepSeek</a></strong></td><td>深度求索（中）</td><td>推論・コスト効率で注目</td></tr>
+        </tbody>
+      </table>
+      <p>
+        性能ランキングの数値は日々変わります。試験では<strong>誰が・何を・どの公開形態で</strong>——開発元とモデル／サービスの層——を押さえる方が安定して得点できます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — TII（UAE）の<strong>オープンウェイトLLM</strong>ファミリー</li>
+        <li><strong>層</strong> — 基盤モデル（G-396）。ChatGPT等のサービス名ではない</li>
+        <li><strong>利用</strong> — ライセンス条件の確認必須（TF-478 / TF-479）</li>
+        <li><strong>すり替え回避</strong> — BERT・画像生成・物体検出ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>、<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>、<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Falcon＝ChatGPT</td><td>モデル名 vs 対話サービス</td></tr>
+          <tr><td>Falcon＝LLaMA</td><td>TII/UAE vs Meta。別ファミリー</td></tr>
+          <tr><td>Falcon＝オープンソース＝完全自由</td><td>ライセンス条件あり（TF-479は×）</td></tr>
+          <tr><td>Falcon＝<a href="../bert/">BERT</a></td><td>生成系LLM vs 理解系エンコーダ</td></tr>
+          <tr><td>Falcon＝<a href="../generative-ai/">生成AI</a>全体</td><td>LLMファミリーの一つ</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Falconは何をするモデルですか？</summary><p class="tool-faq-a">アラブ首長国連邦のTIIが開発する大規模言語モデル（LLM）ファミリーです。オープンウェイトとして公開され、テキスト生成・要約・質問応答などにファインチューニングやプロンプトで適用できる基盤モデルとして位置づけられます。</p></details>
+        <details><summary>FalconとLLaMAは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもオープンウェイト系のLLMファミリーですが、開発元（TII vs Meta）とモデル設計が異なります。いずれも基盤モデルとして下流タスクに適用できる点は共通です。</p></details>
+        <details><summary>FalconはChatGPTですか？</summary><p class="tool-faq-a">いいえ。Falconは基盤となるLLMファミリー（モデル名）であり、ChatGPTはOpenAIが提供する対話型サービス（製品名）です。層を混同しないことが重要です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-478/">TF-478 · ライセンス確認</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-479/">TF-479 · オープンソースの誤解</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · 開発元の区別</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../mistral/">Mistral</a></li>
+          <li><a href="../deepseek/">DeepSeek</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

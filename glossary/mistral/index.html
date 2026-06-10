@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mistralとは？効率的なオープンウェイトLLMファミリーの意味、GPT・Claudeとの違い、ライセンス注意をG検定向けに解説。">
+  <title>Mistralとは？効率重視のオープンウェイト——閉源APIの対極軸 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/mistral/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mistralとは？効率重視のオープンウェイト——閉源APIの対極軸">
+  <meta property="og:description" content="フランス発のLLMファミリー。オープンウェイトと効率設計。自社ホストとライセンス確認が鍵。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/mistral/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Mistral",
+        "alternateName": ["Mistral", "ミストラル", "Mistral AI"],
+        "description": "効率的なオープンウェイトLLMファミリー。フランスのMistral AIが開発。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Mistralとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "フランスのMistral AIが開発する大規模言語モデルファミリーです。オープンウェイトモデルを公開し、効率と性能のバランスを重視する点が特徴として知られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MistralとChatGPTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ChatGPTはOpenAIの対話サービス、Mistralは別企業のモデルファミリーです。開発元と製品ラインを混同しないことが試験の核心です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "オープンウェイト＝無条件で自由に使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。モデルごとにライセンス条件があり、商用利用・再配布・表示義務などを確認する必要があります。オープンソース＝完全自由、とは答えません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Mistral</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Mistralとは？効率重視のオープンウェイト——閉源APIの対極軸</h1>
+    <p class="tool-hero-sub">読み：みすとらる ／ 英：Mistral（Mistral AI）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Mistral</strong>は、フランスの<strong>Mistral AI</strong>が開発する<a href="../llm/">LLM</a>ファミリーです。<a href="../../tools/chatgpt/">ChatGPT</a>（OpenAI）や<a href="../claude-model/">Claude</a>（Anthropic）が<strong>閉じたAPI・サービス</strong>を中心に展開するのに対し、Mistralは<strong>オープンウェイト</strong>——重みを公開し自社環境で動かせる——と<strong>効率設計</strong>を前面に出した、第三の極として注目されました。本記事はベンチマーク暗記ではなく、<strong>「閉源API vs オープンウェイト」の地図</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Mistralとは</a></li>
+        <li><a href="#open-weights">オープンウェイトの意味</a></li>
+        <li><a href="#efficiency">効率という設計思想</a></li>
+        <li><a href="#closed-vs-open">閉源APIとの対比</a></li>
+        <li><a href="#license">ライセンスの注意</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Mistral専用の一問一答は少ないですが、<strong>主要LLMファミリーの開発元</strong>の整理——OpenAI／Google／Anthropic／Meta／Mistral AI——が試験文脈に入ります。Mistral＝OpenAI、とは答えません。
+      </p>
+      <p>
+        オープンウェイトモデルを使う場合、<strong>ライセンス条件の確認</strong>が必要です（<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>）。「オープンソース＝完全に自由」は×（<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a>）。
+      </p>
+      <p>
+        Mistralも<a href="../foundation-model/">基盤モデル</a>の一種として、事前学習後に<a href="../fine-tuning/">ファインチューニング</a>やプロンプトで下流タスクに適応しうる——という整理は<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>の文脈と共通です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478（OSSライセンス確認）</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479（完全自由は誤り）</a>、<a href="../../exams/g-kentei/practice/q/g-396/">G-396（基盤モデル）</a></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claudeの開発元区別）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Mistralとは</h2>
+      <p>
+        2023年、Mistral AIは<strong>Mistral 7B</strong>などのコンパクトなオープンウェイトモデルを公開し、同等サイズ帯で高い性能——「小さくて強い」——を訴求しました。その後、Mixtral（混合専門家／MoE）や大型版へとファミリーが拡張されています。
+      </p>
+      <p>
+        欧州発のAIスタートアップとして、<a href="../gemini-model/">Gemini</a>（Google）・<a href="../gpt/">GPT</a>（OpenAI）・<a href="../claude-model/">Claude</a>（Anthropic）に並ぶ<strong>独立したLLM系列</strong>として試験・実務の地図に載せます。
+      </p>
+    </section>
+    <section id="open-weights">
+      <h2>オープンウェイトの意味</h2>
+      <p>「オープンウェイト」とは、学習済みの<strong>モデル重み</strong>が公開され、自社サーバーやオンプレミスで推論できる——という提供形態です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>閉源API（例：GPT API）</th><th>オープンウェイト（例：Mistral）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>重み</strong></td><td>非公開</td><td>公開（モデルによる）</td></tr>
+          <tr><td><strong>実行場所</strong></td><td>提供者のクラウド</td><td>自社GPU・エッジも可</td></tr>
+          <tr><td><strong>データ</strong></td><td>API経由で送信</td><td>オンプレなら社内に閉じやすい</td></tr>
+          <tr><td><strong>ライセンス</strong></td><td>利用規約</td><td>モデルごとのOSS系ライセンス</td></tr>
+        </tbody>
+      </table>
+      <p>オープンウェイト＝オープンソースソフトウェア全体、ではありません。TF-478の「条件を確認する」が実務・試験の要点です。</p>
+    </section>
+    <section id="efficiency">
+      <h2>効率という設計思想</h2>
+      <p>Mistralの訴求の核は<strong>パラメータあたりの性能</strong>——同じ計算コストでより賢く——です。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>コンパクトモデル（7B級）</strong>
+          エッジ・社内サーバーで動かしやすいサイズ
+        </li>
+        <li>
+          <strong>Mixtral（MoE）</strong>
+          混合専門家——全パラメータを毎回使わず、部分活性で効率化
+        </li>
+        <li>
+          <strong>API提供も並行</strong>
+          オープンウェイトとクラウドAPIの両方を展開
+        </li>
+      </ul>
+      <p>試験ではMoEの数式より、<strong>「効率重視のオープン系LLMファミリー」</strong>と答えられることが重要です。</p>
+    </section>
+    <section id="closed-vs-open">
+      <h2>閉源APIとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ファミリー</th><th>開発元</th><th>試験での一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="../gpt/">GPT</a> / ChatGPT</td><td>OpenAI</td><td>閉源API・対話サービスが中心</td></tr>
+          <tr><td><a href="../claude-model/">Claude</a></td><td>Anthropic</td><td>安全性重視の対話LLM</td></tr>
+          <tr><td><a href="../gemini-model/">Gemini</a></td><td>Google</td><td>マルチモーダルLLM</td></tr>
+          <tr><td><strong>Mistral</strong></td><td>Mistral AI</td><td>オープンウェイト・効率重視</td></tr>
+          <tr><td>LLaMA（別記事予定）</td><td>Meta</td><td>オープン系LLMの代表例</td></tr>
+        </tbody>
+      </table>
+      <p>第三極として覚えると、HQ-0316系の<strong>開発元すり替え</strong>問題にも応用できます。</p>
+    </section>
+    <section id="license">
+      <h2>ライセンスの注意</h2>
+      <p>オープンウェイトモデルは「無料で何でもできる」わけではありません。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>論点</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>商用利用</strong></td><td>ライセンスごとに可否が異なる</td></tr>
+          <tr><td><strong>再配布</strong></td><td>改変モデルの公開条件を確認</td></tr>
+          <tr><td><strong>表示義務</strong></td><td>クレジット表示が必要な場合あり（TF-479は×）</td></tr>
+          <tr><td><strong>利用規約</strong></td><td>API利用時は別途ToS</td></tr>
+        </tbody>
+      </table>
+      <p>社内導入では、<strong>データの持ち出し</strong>と<strong>ライセンス遵守</strong>をセットで検討します。Mistralの強み（オンプレ）を活かすなら、法務・情報セキュリティとの連携が前提です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Mistral＝OpenAI</td><td>Mistral AI vs OpenAI</td></tr>
+          <tr><td>Mistral＝ChatGPT</td><td>モデルファミリー vs サービス</td></tr>
+          <tr><td>オープンウェイト＝完全自由</td><td>TF-479</td></tr>
+          <tr><td>Mistral＝画像生成専用</td><td>主にLLMファミリー</td></tr>
+          <tr><td>オープン＝品質保証なしで常に劣る</td><td>用途とサイズによる。一概に劣るとは言えない</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Mistralとは何ですか？</summary>
+          <p class="tool-faq-a">フランスのMistral AIが開発する大規模言語モデルファミリーです。オープンウェイトモデルを公開し、効率と性能のバランスを重視する点が特徴として知られます。</p>
+        </details>
+        <details>
+          <summary>MistralとChatGPTは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。ChatGPTはOpenAIの対話サービス、Mistralは別企業のモデルファミリーです。開発元と製品ラインを混同しないことが試験の核心です。</p>
+        </details>
+        <details>
+          <summary>オープンウェイト＝無条件で自由に使えますか？</summary>
+          <p class="tool-faq-a">いいえ。モデルごとにライセンス条件があり、商用利用・再配布・表示義務などを確認する必要があります。オープンソース＝完全自由、とは答えません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-478/">TF-478 · OSSライセンス</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-479/">TF-479 · 完全自由は誤り</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../falcon-llm/">Falcon</a></li>
+          <li><a href="../deepseek/">DeepSeek</a></li>
+          <li><a href="../codex-model/">Codex</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

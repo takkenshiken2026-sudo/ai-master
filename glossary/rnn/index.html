@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RNN（再帰型ニューラルネットワーク）とは？系列データの内部状態・CNN・Transformerとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>RNNとは？記憶のループ——時間軸に沿った系列処理 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/rnn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RNNとは？記憶のループ——時間軸に沿った系列処理">
+  <meta property="og:description" content="過去の情報を内部状態に残し、時系列・文章を順次処理。Transformer以前の系列の古典。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/rnn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "RNN",
+        "alternateName": ["RNN", "再帰型ニューラルネットワーク", "Recurrent Neural Network"],
+        "description": "系列データを扱うため、過去の情報を内部状態として利用するニューラルネットワーク。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "RNNの定義として正しいのは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "系列データを扱うため、過去の情報を内部状態として利用するニューラルネットワーク、と整理します。時系列データや文章など、順序のあるデータの処理に向いた設計です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RNNとCNNの使い分けは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RNNは時系列・文章など系列データ向き、CNNは画像の局所特徴抽出向き、と対比します。データの性質とモデル設計の対応が試験で問われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RNN＝現代のLLMの基盤ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "現代の大規模言語モデルの主役はTransformer系です。RNNは系列処理の古典的アーキテクチャとして理解し、Transformerとの対比で押さえるのが試験向けです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">RNN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>RNNとは？記憶のループ——時間軸に沿った系列処理</h1>
+    <p class="tool-hero-sub">読み：あーるえぬえぬ ／ 英：RNN（Recurrent Neural Network／再帰型ニューラルネットワーク）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>RNN</strong>（再帰型ニューラルネットワーク）は、<strong>過去の情報を内部状態（隠れ状態）に残しながら</strong>、時系列に沿って入力を処理するニューラルネットワークです。<a href="../cnn/">CNN</a>が画像の空間パターンを扱うのに対し、RNNは<strong>時間の矢印に沿った系列</strong>——株価、音声、文章——を扱う設計として発展しました。本記事は数式の暗記ではなく、<strong>「なぜループ構造が系列に効くのか」</strong>と試験でのすり替え回避に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">RNNとは</a></li>
+        <li><a href="#hidden-state">内部状態のループ</a></li>
+        <li><a href="#use-cases">向いているデータ</a></li>
+        <li><a href="#limits">限界と勾配問題</a></li>
+        <li><a href="#vs-cnn-transformer">CNN・Transformerとの対比</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の骨格は<strong>「系列データを扱うため、過去の情報を内部状態として利用するニューラルネットワーク」</strong>（<a href="../../exams/genai-passport/practice/q/hq-0328/">HQ-0328</a>）。
+      </p>
+      <p>
+        データとモデルの対応——<strong>系列→RNN、画像→CNN</strong>——が頻出です（<a href="../../exams/g-kentei/practice/q/g-239/">G-239</a>）。逆の対応を選ぶのは×です。
+      </p>
+      <p>
+        RNNは<a href="../generative-ai/">生成AI</a>サービス名でも<a href="../claude-model/">Claude</a>でもありません。製品説明が主語に付いた選択肢は別概念です（HQ-0328のB・C）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0328/">HQ-0328（定義）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-239/">G-239（CNNとの対比）</a>、<a href="../../exams/g-kentei/drill/q/tf-097/">TF-097（BPTT）</a>、<a href="../../exams/g-kentei/drill/q/tf-419/">TF-419（Transformerとの関係）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>RNNとは</h2>
+      <p>
+        RNNの「再帰（Recurrent）」は、<strong>同じ重みを時間ステップごとに繰り返し適用し、出力を次の入力にフィードバックする</strong>——というループ構造を指します。英語の Recurrent と日本語の「回帰」は別語です。試験文に「回帰型」と書かれることがありますが、正しくは<strong>再帰型</strong>です。
+      </p>
+      <p>
+        初期の代表例として<strong>エルマンネットワーク</strong>（隠れ状態を次に渡す）や<strong>ジョルダンネットワーク</strong>（出力を文脈に使う）が挙げられます（<a href="../../exams/g-kentei/practice/q/g-246/">G-246</a>）。細部の暗記より「ループで過去を覚える」イメージで十分なことが多いです。
+      </p>
+    </section>
+    <section id="hidden-state">
+      <h2>内部状態のループ</h2>
+      <p>ある時刻の入力と、ひとつ前の隠れ状態から、新しい隠れ状態を計算する——という流れが基本です。</p>
+      <ol class="tool-steps">
+        <li><strong>入力を1ステップずつ処理</strong> — 文章なら語、時系列なら各時点の値</li>
+        <li><strong>隠れ状態を更新</strong> — これまでの文脈を圧縮した「記憶」</li>
+        <li><strong>次のステップへ伝播</strong> — 同じ重みでループ</li>
+        <li><strong>出力</strong> — 分類・次語予測・回帰などタスクに応じる</li>
+      </ol>
+      <p>
+        学習では<strong>BPTT</strong>（Backpropagation Through Time）——時間方向にネットワークを展開して<a href="../backpropagation/">誤差逆伝播</a>——が使われます（<a href="../../exams/g-kentei/drill/q/tf-097/">TF-097</a>）。
+      </p>
+    </section>
+    <section id="use-cases">
+      <h2>向いているデータ</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>時系列予測</strong>
+          気温、株価、センサー値の次の値
+        </li>
+        <li>
+          <strong>文章の分類・タグ付け</strong>
+          各時刻の隠れ状態から感情や品詞を推定
+        </li>
+        <li>
+          <strong>音声・信号</strong>
+          時間軸に沿ったパターン認識。音声認識では<a href="../ctc/">CTC</a>損失と組み合わせることが多い
+        </li>
+      </ul>
+      <p>格子状の画像データは<a href="../cnn/">CNN</a>の方が典型です。試験では<strong>データの形</strong>からモデルを選ぶ力が問われます。</p>
+    </section>
+    <section id="limits">
+      <h2>限界と勾配問題</h2>
+      <p>ループ構造は系列に効く一方、長い系列では学習が難しくなります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>問題</th><th>ざっくりした意味</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>勾配消失</strong></td><td>勾配がほぼゼロになり更新が止まる</td><td>長期依存が学習しにくい</td></tr>
+          <tr><td><strong>勾配爆発</strong></td><td>勾配が巨大になり不安定</td><td>RNNで起こりやすい（G-136）</td></tr>
+          <tr><td><strong>対策の系譜</strong></td><td><a href="../lstm/">LSTM</a>などゲート付きRNN</td><td>長期依存の緩和（G-242）</td></tr>
+        </tbody>
+      </table>
+      <p>現代の大規模言語モデルは<a href="../transformer/">Transformer</a>が主役ですが、RNNの限界——長距離依存の難しさ——を理解することが、Transformerの利点（Self-Attention）を押さえる近道になります。</p>
+    </section>
+    <section id="vs-cnn-transformer">
+      <h2>CNN・Transformerとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th></th><th>RNN</th><th>CNN</th><th>Transformer</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>得意なデータ</strong></td><td>系列・時系列</td><td>画像の格子</td><td>言語系列（注意機構）</td></tr>
+          <tr><td><strong>処理の流れ</strong></td><td>順次（ループ）</td><td>畳み込み走査</td><td>並列的な注意計算</td></tr>
+          <tr><td><strong>長距離依存</strong></td><td>苦労しやすい</td><td>空間の遠方は層で</td><td>Attentionで直接</td></tr>
+          <tr><td><strong>現代LLM</strong></td><td>主役ではない</td><td>主役ではない</td><td>基盤（TF-419）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>RNN＝Claude / Copilot</td><td>系列モデル vs 生成AIサービス</td></tr>
+          <tr><td>RNN＝生成AIの定義</td><td>HQ-0328のDは別概念</td></tr>
+          <tr><td>系列→CNNが典型</td><td>G-239は逆</td></tr>
+          <tr><td>回帰型＝線形回帰</td><td>再帰（Recurrent）の誤読に注意</td></tr>
+          <tr><td>RNN＝現代LLMの基盤</td><td>Transformer系が主役</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>RNNの定義として正しいのは？</summary>
+          <p class="tool-faq-a">系列データを扱うため、過去の情報を内部状態として利用するニューラルネットワーク、と整理します。時系列データや文章など、順序のあるデータの処理に向いた設計です。</p>
+        </details>
+        <details>
+          <summary>RNNとCNNの使い分けは？</summary>
+          <p class="tool-faq-a">RNNは時系列・文章など系列データ向き、CNNは画像の局所特徴抽出向き、と対比します。データの性質とモデル設計の対応が試験で問われます。</p>
+        </details>
+        <details>
+          <summary>RNN＝現代のLLMの基盤ですか？</summary>
+          <p class="tool-faq-a">現代の大規模言語モデルの主役はTransformer系です。RNNは系列処理の古典的アーキテクチャとして理解し、Transformerとの対比で押さえるのが試験向けです。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/practice/q/hq-0328/">HQ-0328 · RNNの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-239/">G-239 · CNNとの対比</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-097/">TF-097 · BPTT</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-419/">TF-419 · Transformer</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../gru/">GRU</a></li>
+          <li><a href="../elmo/">ELMo</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../ctc/">CTC</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -115,6 +115,8 @@
           <tr><td><strong>二値分類</strong></td><td>バイナリ交差エントロピー</td><td>確率出力との整合</td></tr>
           <tr><td><strong>多クラス分類</strong></td><td>交差エントロピー</td><td>正解クラスの確率を上げる</td></tr>
           <tr><td><strong>LLM</strong></td><td>次トークン交差エントロピー</td><td>正解トークンの尤度を最大化</td></tr>
+          <tr><td><strong>音声認識</strong></td><td><a href="../ctc/">CTC</a></td><td>整列なしの系列変換（<a href="../../exams/g-kentei/practice/q/g-358/">G-358</a>）</td></tr>
+          <tr><td><strong>セグメンテーション</strong></td><td><a href="../dice-loss/">Dice Loss</a></td><td>予測マスクと正解の<strong>重なり</strong>を直接最適化</td></tr>
         </tbody>
       </table>
       <p>タスクと出力形式に合った損失を選ばないと、勾配が意味をなさないことがあります。</p>
@@ -179,6 +181,9 @@
           <li><a href="../supervised-learning/">教師あり学習</a></li>
           <li><a href="../overfitting/">過学習</a></li>
           <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../ctc/">CTC</a></li>
+          <li><a href="../dice-loss/">Dice Loss</a></li>
+          <li><a href="../focal-loss/">Focal Loss</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

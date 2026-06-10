@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPT-3.5とは？ChatGPTに搭載され普及したモデルの意味、インストラクション追従・RLHF、GPT-3との違いをG検定・生成AIパスポート向けに解説。">
+  <title>GPT-3.5とは？ChatGPT普及とインストラクション追従 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt-3-5/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="GPT-3.5とは？ChatGPT普及とインストラクション追従">
+  <meta property="og:description" content="ChatGPTに搭載され高速・低コストで普及したGPT-3.5。インストラクション追従とRLHFの文脈で試験向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt-3-5/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GPT-3.5",
+        "alternateName": ["GPT 3.5"],
+        "description": "ChatGPTに搭載され、高速・低コストで広く普及したOpenAIの言語モデル。インストラクション追従の強化が特徴。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GPT-3.5とChatGPTの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GPT-3.5はChatGPTの中核となるモデル系列の一つ、ChatGPTは対話型のサービスです。試験では「ChatGPT＝GPT-3.5そのもの」と混同せず、サービスとモデルを分けて答えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-3.5とGPT-3の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GPT-3は大規模化とFew-shotの汎用性が話題になった世代、GPT-3.5はインストラクション追従を強化しChatGPT普及の基盤となった世代です。系列の順序と役割の違いが試験の焦点です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-3.5はRLHFを使う？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChatGPT向けの調整ではRLHF（人間のフィードバックを用いた強化学習）が用いられたことが知られています。試験ではRLHFの定義と、対話品質向上の文脈で結び付けて整理するとよいです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPT-3.5</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPT-3.5とは？ChatGPT普及とインストラクション追従</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃーさんてんご ／ 英：GPT-3.5</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPT-3.5</strong>は、<a href="../../tools/chatgpt/">ChatGPT</a>に搭載され<strong>高速・低コスト</strong>で広く普及した<a href="../gpt/">GPT</a>系列のモデルです。<a href="../gpt-3/">GPT-3</a>の大規模化・API提供とは異なり、本記事は<strong>対話型サービスとの接点</strong>と<strong>インストラクション追従</strong>（指示への従順さ）という試験向けの切り口で整理します。2026年6月時点の提供状況は公式情報で確認してください。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#chatgpt-bridge">ChatGPTとモデルの接点</a></li>
+        <li><a href="#instruction">インストラクション追従とRLHF</a></li>
+        <li><a href="#vs-gpt3">GPT-3との整理</a></li>
+        <li><a href="#misread">よくある誤解</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、GPT-3.5は<strong>ChatGPTの歴史やGPTモデルの変遷</strong>を学ぶ文脈で扱われます（<a href="../../exams/genai-passport/drill/q/tf-0138/">TF-0138</a>）。細かな内部仕様より、<a href="../gpt-1/">GPT-1</a>→<a href="../gpt-2/">GPT-2</a>→<a href="../gpt-3/">GPT-3</a>→<strong>GPT-3.5</strong>→GPT-4という<strong>系列の流れ</strong>の中で位置づけることが中心です。
+      </p>
+      <p>
+        G検定でも<a href="../llm/">大規模言語モデル</a>の発展としてGPT系列が問われることがありますが、GPT-3.5個別の数値暗記より、<strong>ChatGPT普及の転換点</strong>として覚える方が実用的です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0138/">TF-0138（GPT-3.5）</a>、<a href="../../exams/genai-passport/drill/q/tf-0137/">TF-0137（GPT-3）</a>、<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311（RLHF）</a></p>
+      </div>
+    </section>
+    <section id="chatgpt-bridge">
+      <h2>ChatGPTとモデルの接点</h2>
+      <p>
+        2022年のChatGPT登場で、一般ユーザーが<a href="../generative-ai/">生成AI</a>に触れる入口が一気に広がりました。その中核にGPT-3.5系列が使われ、<strong>モデル（技術）</strong>と<strong>ChatGPT（サービス）</strong>が同時に話題になったのがこの世代の特徴です。
+      </p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>モデル（GPT-3.5）</h3>
+          <p>OpenAIが提供する言語モデル。APIや各サービスから利用される<strong>技術基盤</strong>。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>サービス（ChatGPT）</h3>
+          <p>対話UI・履歴管理・機能追加を含む<strong>利用体験</strong>。中で動くモデルは世代更新される。</p>
+        </div>
+      </div>
+      <p>
+        試験では「ChatGPT＝GPT-3.5」と同一視する選択肢に注意してください。ChatGPTは後からGPT-4系など別モデルも搭載しており、<strong>サービス名とモデル名は別概念</strong>です。
+      </p>
+    </section>
+    <section id="instruction">
+      <h2>インストラクション追従とRLHF</h2>
+      <p>
+        GPT-3.5世代の大きな進歩は、ユーザーからの<strong>指示（インストラクション）に沿った応答</strong>の改善です。<a href="../gpt-3/">GPT-3</a>のFew-shotが「例示でタスクを示す」話題だったのに対し、GPT-3.5は<strong>対話として使いやすい出力</strong>が重視されました。
+      </p>
+      <p>
+        その調整には<a href="../rlhf/">RLHF</a>（Reinforcement Learning from Human Feedback：人間のフィードバックを用いた強化学習）が用いられたことが知られています。人間評価者の好みを反映し、有害・無関係な出力を抑える方向へ調整する手法として試験でも扱われます。
+      </p>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr><th>観点</th><th>GPT-3.5で押さえること</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>強み</strong></td><td>対話品質・応答速度・コストのバランス。ChatGPT普及の基盤</td></tr>
+          <tr><td><strong>限界</strong></td><td><a href="../hallucination/">ハルシネーション</a>や最新情報の不足は後続モデルでも課題として残る</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="vs-gpt3">
+      <h2>GPT-3との整理</h2>
+      <p>
+        同じGPT系列でも、試験で問われる<strong>役割の違い</strong>を表にまとめます。パラメータ数の細部より、この対比を優先してください。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>GPT-3</th><th>GPT-3.5</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>試験の焦点</strong></td><td>大規模化・Few-shot・API提供</td><td>ChatGPT普及・インストラクション追従</td></tr>
+          <tr><td><strong>主な利用像</strong></td><td>開発者向けAPI中心</td><td>一般向け対話サービス（ChatGPT）</td></tr>
+          <tr><td><strong>調整の話題</strong></td><td>プロンプト内の例示（Few-shot）</td><td><a href="../rlhf/">RLHF</a>による対話品質の向上</td></tr>
+          <tr><td><strong>系列上の位置</strong></td><td>GPT-3の次はGPT-3.5、その次がGPT-4</td><td>同上（順序のすり替えに注意）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="misread">
+      <h2>よくある誤解</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>誤解：GPT-3.5＝GPT-3の別名</strong>
+          <p>系列内の別世代です。GPT-3の次に位置づけ、GPT-4の前に来ます。</p>
+        </li>
+        <li>
+          <strong>誤解：ChatGPTと言えば常にGPT-3.5</strong>
+          <p>ChatGPTはサービス名であり、搭載モデルは更新されます。2026年6月時点のモデルは公式で確認してください。</p>
+        </li>
+        <li>
+          <strong>誤解：RLHF＝ファインチューニングと同じ</strong>
+          <p>RLHFは人間フィードバックによる強化学習、<a href="../fine-tuning/">ファインチューニング</a>は追加データでの重み更新。別の調整手法です。</p>
+        </li>
+      </ul>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>GPT-3.5とChatGPTの関係は？</summary>
+          <p class="tool-faq-a">GPT-3.5はChatGPTの中核となるモデル系列の一つ、ChatGPTは対話型のサービスです。試験では「ChatGPT＝GPT-3.5そのもの」と混同せず、サービスとモデルを分けて答えます。</p>
+        </details>
+        <details>
+          <summary>GPT-3.5とGPT-3の違いは？</summary>
+          <p class="tool-faq-a">GPT-3は大規模化とFew-shotの汎用性が話題になった世代、GPT-3.5はインストラクション追従を強化しChatGPT普及の基盤となった世代です。系列の順序と役割の違いが試験の焦点です。</p>
+        </details>
+        <details>
+          <summary>GPT-3.5はRLHFを使う？</summary>
+          <p class="tool-faq-a">ChatGPT向けの調整ではRLHF（人間のフィードバックを用いた強化学習）が用いられたことが知られています。試験ではRLHFの定義と、対話品質向上の文脈で結び付けて整理するとよいです。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0138/">TF-0138 · GPT-3.5の位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0137/">TF-0137 · GPT-3と系列</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311 · RLHFの定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../tools/chatgpt/">ChatGPT</a></li>
+          <li><a href="../gpt-3/">GPT-3</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../gpt-4/">GPT-4</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GloVeとは？共起統計から単語ベクトルを学習する分散表現手法。word2vec・ELMoとの違いをG検定向けに解説。">
+  <title>GloVeとは？共起表から語を埋める——カウントの統計で分散表現を学ぶ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/glove/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GloVeとは？共起表から語を埋める——カウントの統計で分散表現を学ぶ">
+  <meta property="og:description" content="Global Vectors。コーパス全体の共起統計から単語の密なベクトル表現を得るNLPの古典的手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/glove/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GloVe",
+        "alternateName": ["GloVe", "Global Vectors", "グローブ", "グローベクトル"],
+        "description": "コーパス全体の単語共起統計（カウントベース）から、単語の低次元密ベクトル（分散表現）を学習する自然言語処理の手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GloVeは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "大規模テキストから単語の共起回数などの統計を集め、その情報をもとに各単語を低次元の密なベクトル（分散表現）として学習する手法です。意味的に近い語ほどベクトルが近くなることを目指します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GloVeとword2vecは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも単語の分散表現を学習しますが、GloVeはコーパス全体の共起統計（カウントベース）を主に使い、word2vecは周辺語予測などのニューラル言語モデル的な学習（予測ベース）が中心です。目的は近いが学習の出発点が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GloVeとELMoは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。GloVeは語ごとに固定の分散表現（静的埋め込み）を得ます。ELMoは双方向LSTMから文脈に応じて変わる動的な埋め込みを出力します。文脈の扱い方が根本的に異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GloVe</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GloVeとは？共起表から語を埋める——カウントの統計で分散表現を学ぶ</h1>
+    <p class="tool-hero-sub">読み：グローブ ／ 英：GloVe（Global Vectors for Word Representation）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GloVe</strong>（Global Vectors）は、コーパス全体の<strong>共起統計</strong>——「どの語がどの語と一緒に出たか」——から単語の<a href="../embedding/">埋め込み</a>ベクトルを学ぶ<a href="../nlp/">NLP</a>手法です。word2vecが<strong>予測で学ぶ</strong>のに対し、GloVeは<strong>カウントを全局で見る</strong>——本記事は行列分解の細部より、<strong>「予測派 vs 統計派」の分岐</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-embed">なぜ分散表現が要るか</a></li>
+        <li><a href="#cooccurrence">共起という手がかり</a></li>
+        <li><a href="#count-vs-predict">カウント派と予測派</a></li>
+        <li><a href="#static-vs-context">静的 vs 文脈依存</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-embed">
+      <h2>なぜ分散表現が要るか</h2>
+      <p>
+        ワンホットベクトルは語彙数次元で1箇所だけが1の<strong>疎な表現</strong>です。<a href="../../exams/g-kentei/practice/q/g-343/">G-343</a>が示すように、「犬」と「猫」のような意味的に近い語の距離は、ワンホットでは直接表しにくい。
+      </p>
+      <p>
+        <strong>分散表現</strong>は低次元の<strong>密なベクトル</strong>で、意味的な近さを幾何学的な距離として扱えます（<a href="../../exams/g-kentei/drill/q/tf-134/">TF-134</a>）。GloVeはその分散表現を得る古典的手法の一つです。
+      </p>
+    </section>
+
+    <section id="cooccurrence">
+      <h2>共起という手がかり</h2>
+      <p>GloVeの出発点は<strong>共起行列</strong>——大規模テキストで語 <em>i</em> と語 <em>j</em> がどれだけ同時に現れたか——です。</p>
+      <ol class="tool-steps">
+        <li><strong>集計</strong> — コーパス全体で共起回数をカウント</li>
+        <li><strong>学習</strong> — ベクトルの内積が共起の対数比に近づくよう最適化</li>
+        <li><strong>得られるもの</strong> — 各語に1本の固定ベクトル（静的埋め込み）</li>
+      </ol>
+      <p>
+        「国王−男＋女≈女王」のような<strong>意味の算術</strong>がよく引用されます。試験では個別の例題より、<strong>共起統計から密ベクトルを学ぶ</strong>という位置づけが要点です。
+      </p>
+    </section>
+
+    <section id="count-vs-predict">
+      <h2>カウント派と予測派</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>学習の出発点</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GloVe</strong></td><td>コーパス全体の<strong>共起統計</strong></td><td>カウントベース（全局統計）</td></tr>
+          <tr><td><strong>word2vec</strong></td><td>周辺語<strong>予測</strong>（CBOW/スキップグラム）</td><td>予測ベース（<a href="../../exams/g-kentei/practice/q/g-336/">G-336</a>）</td></tr>
+          <tr><td><strong>BoW / TF-IDF</strong></td><td>文書内の出現回数</td><td>特徴量。語ベクトル学習とは別文脈（G-344）</td></tr>
+          <tr><td><strong>fastText</strong></td><td>部分語を含む予測</td><td>未知語に強み（TF-136）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-335/">G-335</a>・<a href="../../exams/g-kentei/drill/q/tf-129/">TF-129</a>はword2vec向けですが、どちらも<strong>単語の分散表現を学習するNLP手法</strong>という同じ棚にGloVeが並びます。物体検出モデルではありません（G-335、<a href="../../exams/g-kentei/practice/q/g-327/">G-327</a>）。
+      </p>
+    </section>
+
+    <section id="static-vs-context">
+      <h2>静的 vs 文脈依存</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>世代</th><th>代表</th><th>語ベクトルの性質</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>静的埋め込み</strong></td><td>GloVe、word2vec</td><td>語ごとに<strong>1本</strong>のベクトル</td></tr>
+          <tr><td><strong>文脈依存</strong></td><td><a href="../elmo/">ELMo</a>、<a href="../bert/">BERT</a></td><td>同じ語でも<strong>文脈で変わる</strong></td></tr>
+          <tr><td><strong>現代LLM</strong></td><td><a href="../gpt/">GPT</a>など</td><td>トークン埋め込み＋深層で文脈統合</td></tr>
+        </tbody>
+      </table>
+      <p>
+        GloVeは<a href="../../exams/g-kentei/practice/q/g-344/">G-344</a>の文脈で、MFCC（音声特徴）やBoWとは区別される<strong>NLPの表現学習</strong>です。現場では歴史的な基礎として理解し、最新RAGの埋め込みは別モデル（sentence-transformers等）が使われることも——試験では世代の整理が中心です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>共起統計</strong>から単語の分散表現を学習</li>
+        <li><strong>対比</strong> — word2vec＝予測ベース、GloVe＝カウントベース</li>
+        <li><strong>性質</strong> — 静的埋め込み（文脈で変わらない）</li>
+        <li><strong>すり替え回避</strong> — 画像・音声・物体検出ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-343/">G-343</a>、<a href="../../exams/g-kentei/practice/q/g-335/">G-335</a>、<a href="../../exams/g-kentei/practice/q/g-344/">G-344</a>、<a href="../../exams/g-kentei/practice/q/g-336/">G-336</a>、<a href="../../exams/g-kentei/drill/q/tf-129/">TF-129</a>、<a href="../../exams/g-kentei/drill/q/tf-134/">TF-134</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GloVe＝word2vec</td><td>カウント vs 予測。目的は近い</td></tr>
+          <tr><td>GloVe＝<a href="../elmo/">ELMo</a></td><td>静的 vs 文脈依存</td></tr>
+          <tr><td>GloVe＝<a href="../bert/">BERT</a></td><td>単語埋め込み手法 vs Transformer事前学習</td></tr>
+          <tr><td>GloVe＝物体検出</td><td>NLP vs 画像（G-335）</td></tr>
+          <tr><td>GloVe＝TF-IDF</td><td>語ベクトル学習 vs 文書特徴量（G-344）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GloVeは何をする手法ですか？</summary><p class="tool-faq-a">大規模テキストから単語の共起回数などの統計を集め、その情報をもとに各単語を低次元の密なベクトル（分散表現）として学習する手法です。意味的に近い語ほどベクトルが近くなることを目指します。</p></details>
+        <details><summary>GloVeとword2vecは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらも単語の分散表現を学習しますが、GloVeはコーパス全体の共起統計（カウントベース）を主に使い、word2vecは周辺語予測などのニューラル言語モデル的な学習（予測ベース）が中心です。目的は近いが学習の出発点が異なります。</p></details>
+        <details><summary>GloVeとELMoは同じですか？</summary><p class="tool-faq-a">同じではありません。GloVeは語ごとに固定の分散表現（静的埋め込み）を得ます。ELMoは双方向LSTMから文脈に応じて変わる動的な埋め込みを出力します。文脈の扱い方が根本的に異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-343/">G-343 · ワンホットと分散表現</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-335/">G-335 · word2vec（同棚）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-344/">G-344 · 埋め込みの区別</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-129/">TF-129 · 分散表現</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../elmo/">ELMo</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li class="tool-related-list__soon">word2vec（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

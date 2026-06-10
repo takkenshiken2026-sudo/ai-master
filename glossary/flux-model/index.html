@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FLUXとは？Black Forest Labsの高品質テキスト画像生成モデル。Stable Diffusion・DALL·Eとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>FLUXとは？プロンプトへの忠実度を競う——拡散モデル世代の新しい旗印 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/flux-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="FLUXとは？プロンプトへの忠実度を競う——拡散モデル世代の新しい旗印">
+  <meta property="og:description" content="Black Forest Labsによるテキスト画像生成モデルファミリー。拡散モデル系の高品質Text-to-Imageの代表例。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/flux-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "FLUX",
+        "alternateName": ["FLUX", "フラックス", "FLUX.1"],
+        "description": "Black Forest Labsが開発する高品質テキスト画像生成（Text-to-Image）モデルファミリー。拡散モデル系の画像生成AI。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "FLUXは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "テキストの説明（プロンプト）から画像を生成するText-to-Imageモデルファミリーです。Black Forest Labsが開発し、拡散モデル系として高い描写精度とプロンプトへの忠実度で知られます。dev・schnellなど用途別のバリアントがあります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FLUXとStable Diffusionは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも拡散モデル系のText-to-Imageですが、開発元・モデル設計・ライセンスが異なる別のモデルファミリーです。いずれもテキストから画像を生成する点は共通です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FLUXはText-to-Imageそのものですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Text-to-Imageはテキストから画像を生成するタスクの名称であり、FLUXはそのタスクを実現する特定のモデルファミリー（固有名詞）です。DALL·EやStable Diffusionと同じ層の整理になります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">FLUX</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>FLUXとは？プロンプトへの忠実度を競う——拡散モデル世代の新しい旗印</h1>
+    <p class="tool-hero-sub">読み：フラックス ／ 英：FLUX（Black Forest Labs）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>FLUX</strong>は、<strong>Black Forest Labs</strong>が開発する<a href="../text-to-image/">Text-to-Image</a>モデルファミリーです。<a href="../stable-diffusion/">Stable Diffusion</a>がローカル生成を広め、<a href="../dalle-model/">DALL·E</a>がサービス連携で普及した流れのなかで、FLUXは<strong>プロンプトへの忠実度と描写品質</strong>——「指示どおりの一枚」を出す力——で注目を集めました。本記事はバージョン表の暗記ではなく、<strong>「タスク名とモデル名の層」</strong>の整理に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#text-to-image">Text-to-Imageというタスク</a></li>
+        <li><a href="#what-flux">FLUXの位置づけ</a></li>
+        <li><a href="#tech-layer">技術の層</a></li>
+        <li><a href="#vs-others">他モデルとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="text-to-image">
+      <h2>Text-to-Imageというタスク</h2>
+      <p>
+        <strong>Text-to-Image</strong>（テキスト画像生成）は、<strong>文章の説明から画像を新規生成する</strong>タスクです（<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>、<a href="../../exams/g-kentei/practice/q/g-391/">G-391</a>）。
+      </p>
+      <p>
+        試験で最も重要な整理は、<strong>タスク名 ≠ モデル名</strong>という点です。Text-to-Imageは「何をするか」、FLUX・DALL·E・Stable Diffusionは「誰が・どの設計で実現するか」——層を混同しないことが得点源になります。
+      </p>
+    </section>
+
+    <section id="what-flux">
+      <h2>FLUXの位置づけ</h2>
+      <p>
+        FLUXは<a href="../generative-ai/">生成AI</a>のうち、<strong>画像生成</strong>ドメインの<strong>モデルファミリー名</strong>です。2024年頃の公開以降、高品質な出力とプロンプト追従性で評価され、クリエイティブツールやAPI経由のサービスに組み込まれています。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>FLUX</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>開発元</strong></td><td>Black Forest Labs</td><td>Stable Diffusion創業メンバー系のスタートアップ</td></tr>
+          <tr><td><strong>タスク</strong></td><td>Text-to-Image</td><td>テキスト→画像（TF-0190）</td></tr>
+          <tr><td><strong>技術系譜</strong></td><td><a href="../denoising-diffusion/">拡散モデル</a>系</td><td>GANではない（G-394）</td></tr>
+          <tr><td><strong>バリアント</strong></td><td>dev / schnell 等</td><td>品質重視 vs 高速生成など用途別</td></tr>
+        </tbody>
+      </table>
+      <p>料金・API・ライセンスは2026年6月時点で変動しやすいため、利用時は公式の利用条件を確認してください。</p>
+    </section>
+
+    <section id="tech-layer">
+      <h2>技術の層</h2>
+      <p>FLUXを試験用に分解すると、次の層になります。</p>
+      <ol class="tool-steps">
+        <li><strong>生成AI</strong> — 新しいコンテンツを作る技術全般</li>
+        <li><strong>Text-to-Image</strong> — テキストから画像を生成する<strong>タスク</strong></li>
+        <li><strong>拡散モデル</strong> — ノイズ除去で画像を合成する<strong>手法の一族</strong>（<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>）</li>
+        <li><strong>FLUX</strong> — その実装の<strong>特定モデル名</strong></li>
+      </ol>
+      <p>
+        <a href="../latent-diffusion/">潜在拡散</a>や<a href="../controlnet/">ControlNet</a>のような周辺技術と組み合わせて使われることもありますが、試験では「FLUX＝拡散モデル全体」ではなく、<strong>一つのモデルファミリー</strong>と答えるのが安全です（Stable Diffusion記事と同じ整理）。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他モデルとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>性質</th><th>FLUXとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Text-to-Image</strong></td><td>タスク名</td><td>FLUXが実現する対象</td></tr>
+          <tr><td><strong><a href="../dalle-model/">DALL·E</a></strong></td><td>OpenAIのモデル系列</td><td>同タスク・別開発元（G-394）</td></tr>
+          <tr><td><strong>Stable Diffusion</strong></td><td>オープン寄りの潜在拡散系列</td><td>同タスク・別モデル</td></tr>
+          <tr><td><strong><a href="../imagen/">Imagen</a></strong></td><td>Googleの系列</td><td>同タスク・別開発元</td></tr>
+          <tr><td><strong><a href="../gan/">GAN</a></strong></td><td>生成器と識別器の対戦</td><td>別系統の生成手法</td></tr>
+          <tr><td><strong><a href="../clip-model/">CLIP</a></strong></td><td>画像とテキストの共通埋め込み</td><td>条件付けに使われることはあるが別物</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Black Forest Labsの<strong>高品質Text-to-Image</strong>モデルファミリー</li>
+        <li><strong>層</strong> — タスク（Text-to-Image）vs モデル名（FLUX）</li>
+        <li><strong>技術</strong> — 拡散モデル系。GAN・CNN分類ではない</li>
+        <li><strong>リスク</strong> — 著作権・肖像権の確認（TF-0211）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>、<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>、<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-391/">G-391</a>、<a href="../../exams/g-kentei/practice/q/g-394/">G-394</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>FLUX＝Text-to-Image</td><td>モデル名 vs タスク名（G-391）</td></tr>
+          <tr><td>FLUX＝Stable Diffusion</td><td>別開発元・別モデルファミリー</td></tr>
+          <tr><td>FLUX＝拡散モデル全体</td><td>拡散系の<strong>一実装</strong></td></tr>
+          <tr><td>FLUX＝<a href="../llm/">LLM</a></td><td>画像生成 vs テキスト生成</td></tr>
+          <tr><td>FLUX＝<a href="../cnn/">CNN</a>物体検出</td><td>生成 vs 認識（G-394）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>FLUXは何をするモデルですか？</summary><p class="tool-faq-a">テキストの説明（プロンプト）から画像を生成するText-to-Imageモデルファミリーです。Black Forest Labsが開発し、拡散モデル系として高い描写精度とプロンプトへの忠実度で知られます。dev・schnellなど用途別のバリアントがあります。</p></details>
+        <details><summary>FLUXとStable Diffusionは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらも拡散モデル系のText-to-Imageですが、開発元・モデル設計・ライセンスが異なる別のモデルファミリーです。いずれもテキストから画像を生成する点は共通です。</p></details>
+        <details><summary>FLUXはText-to-Imageそのものですか？</summary><p class="tool-faq-a">いいえ。Text-to-Imageはテキストから画像を生成するタスクの名称であり、FLUXはそのタスクを実現する特定のモデルファミリー（固有名詞）です。DALL·EやStable Diffusionと同じ層の整理になります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190 · Text-to-Image定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184 · 拡散と画像生成</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-394/">G-394 · DALL·Eとの比較</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211 · 権利確認</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../dalle-model/">DALL·E</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

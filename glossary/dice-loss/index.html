@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dice Lossとは？セグメンテーションで予測と正解の重なりを直接最適化する損失関数。交差エントロピーとの違いをG検定向けに解説。">
+  <title>Dice Lossとは？重なりを直接狙う——セグメンテーションの境界を損失で測る — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/dice-loss/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Dice Lossとは？重なりを直接狙う——セグメンテーションの境界を損失で測る">
+  <meta property="og:description" content="Dice係数に基づき、予測マスクと正解マスクの重なりを直接最大化するセグメンテーション向け損失関数。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/dice-loss/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Dice Loss",
+        "alternateName": ["Dice Loss", "ダイスロス", "Dice係数損失"],
+        "description": "セグメンテーションで予測領域と正解領域の重なり（Dice係数）を直接最大化する損失関数。1からDice係数を引いた形で最小化する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Dice Lossは何をする損失関数ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像セグメンテーションで、モデルが出力した領域マスクと正解マスクがどれだけ重なるか（Dice係数）を直接評価し、その重なりを大きくする方向へ学習する損失です。画素ごとの分類誤差だけでなく、領域全体の一致を重視します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Dice Lossと交差エントロピーは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。交差エントロピーは各画素のクラス予測確率と正解ラベルのずれを積み上げます。Dice Lossは予測領域と正解領域の重なり率を直接最適化します。セグメンテーションでは両方を組み合わせることもありますが、目的の測り方が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Dice Lossは物体検出の損失ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主にセグメンテーション向けです。物体検出はバウンディングボックスの位置とクラスを扱い、Dice Lossは画素単位の領域マスクの重なりを扱います。タスクと損失の対応を混同しないことが重要です（G-194）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Dice Loss</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Dice Lossとは？重なりを直接狙う——セグメンテーションの境界を損失で測る</h1>
+    <p class="tool-hero-sub">読み：ダイスロス ／ 英：Dice Loss</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Dice Loss</strong>は、<strong>予測マスクと正解マスクがどれだけ重なるか</strong>——<strong>Dice係数</strong>——を直接学習目標にする<a href="../loss-function/">損失関数</a>です。分類で使う<strong>交差エントロピー</strong>が「画素ごとの正誤」を積み上げるのに対し、Dice Lossは<strong>領域全体の一致</strong>を測る——本記事は係数の導出式の暗記ではなく、<strong>「なぜセグメンテーションで重なりを損失にするのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#segmentation-task">セグメンテーションというタスク</a></li>
+        <li><a href="#overlap">重なりで測る発想</a></li>
+        <li><a href="#vs-cross-entropy">交差エントロピーとの違い</a></li>
+        <li><a href="#when-useful">いつ効くか</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="segmentation-task">
+      <h2>セグメンテーションというタスク</h2>
+      <p>
+        セグメンテーションは、画像の<strong>各画素にクラスを割り当てる</strong>タスクです。物体検出が「どこに何があるか」を矩形で示すのに対し、セグメンテーションは<strong>輪郭に沿った領域</strong>を推定します（<a href="../../exams/g-kentei/practice/q/g-317/">G-317</a>、<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a>）。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-325/">G-325</a>のFCNや<a href="../../exams/g-kentei/drill/q/tf-122/">TF-122</a>のU-Netは、画素単位の予測を行うセグメンテーション向けモデルです。モデルが出力するのは「この画素は腫瘍か背景か」といった<strong>マスク</strong>——Dice Lossはこのマスク同士の<strong>重なり</strong>を評価します。
+      </p>
+    </section>
+
+    <section id="overlap">
+      <h2>重なりで測る発想</h2>
+      <p>Dice係数は、2つの領域 A（正解）と B（予測）の<strong>重なりの度合い</strong>を 0〜1 で表します。</p>
+      <blockquote>
+        <p>Dice係数 ≈ 2 ×（重なり画素数）÷（Aの画素数 ＋ Bの画素数）</p>
+      </blockquote>
+      <p>
+        完全に一致すれば1、全く重ならなければ0に近づきます。学習では<strong>Dice Loss ＝ 1 − Dice係数</strong>として、この値を小さくする——つまり重なりを大きくする——方向へ<a href="../backpropagation/">誤差逆伝播</a>します（<a href="../../exams/g-kentei/practice/q/g-204/">G-204</a>）。
+      </p>
+      <p>
+        評価指標の<strong>IoU</strong>（Intersection over Union）と親戚関係にあり、どちらも「領域の一致」を測ります。試験では係数の厳密な式より、<strong>重なりを直接最適化する損失</strong>という位置づけが要点です。
+      </p>
+    </section>
+
+    <section id="vs-cross-entropy">
+      <h2>交差エントロピーとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>損失</th><th>何を測るか</th><th>典型タスク</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>交差エントロピー</strong></td><td>各画素のクラス確率と正解ラベルのずれ</td><td>分類・セグメンテーション全般（G-194）</td></tr>
+          <tr><td><strong>Dice Loss</strong></td><td>予測領域と正解領域の<strong>重なり率</strong></td><td>セグメンテーション（特に小さな領域）</td></tr>
+          <tr><td><strong><a href="../ctc/">CTC</a></strong></td><td>整列なしの系列ラベル学習</td><td>音声認識（G-358）</td></tr>
+          <tr><td><strong>MSE</strong></td><td>予測値と正解値の二乗誤差</td><td>回帰</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-194/">G-194</a>が示すように、損失は<strong>タスクの性質に合わせて選ぶ</strong>必要があります。セグメンテーションでも交差エントロピーだけでは、前景画素が少ない（不均衡な）画像で学習が偏ることがあります。Dice Lossは<strong>領域全体の一致</strong>を直接押し上げる補助輪として使われます。
+      </p>
+    </section>
+
+    <section id="when-useful">
+      <h2>いつ効くか</h2>
+      <ul class="tool-steps">
+        <li><strong>小さな病変・細い血管</strong> — 正解領域が画像全体に対して極端に小さい医用画像</li>
+        <li><strong>境界の精度</strong> — 輪郭のズレを、画素正解率より重なりで厳しく評価したいとき</li>
+        <li><strong>組み合わせ学習</strong> — 交差エントロピーとDice Lossを<strong>併用</strong>し、局所分類と領域一致の両方を狙う設計</li>
+      </ul>
+      <p>
+        Dice Lossは<a href="../cnn/">CNN</a>やU-Netなど<strong>どのモデルにも付けられる損失の選択肢</strong>であり、モデル名そのものではありません。Mask R-CNNのインスタンスセグメンテーション（<a href="../../exams/g-kentei/drill/q/tf-124/">TF-124</a>）でもマスク品質の評価・学習に類似の考え方が使われます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — セグメンテーションで<strong>重なり（Dice係数）</strong>を直接最適化する損失</li>
+        <li><strong>タスク</strong> — 画素単位の領域推定。物体検出のバウンディングボックス損失ではない</li>
+        <li><strong>対比</strong> — 交差エントロピー＝画素分類、Dice＝領域一致（G-194の文脈）</li>
+        <li><strong>すり替え回避</strong> — CTC・MSE・評価指標のF値そのものではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-194/">G-194</a>、<a href="../../exams/g-kentei/practice/q/g-204/">G-204</a>、<a href="../../exams/g-kentei/practice/q/g-317/">G-317</a>、<a href="../../exams/g-kentei/practice/q/g-325/">G-325</a>、<a href="../../exams/g-kentei/drill/q/tf-122/">TF-122</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Dice Loss＝交差エントロピー</td><td>画素分類 vs 領域重なり</td></tr>
+          <tr><td>Dice Loss＝<a href="../ctc/">CTC</a></td><td>セグメンテーション vs 音声系列（G-358）</td></tr>
+          <tr><td>Dice Loss＝物体検出損失</td><td>マスクの重なり vs バウンディングボックス</td></tr>
+          <tr><td>Dice Loss＝U-Net</td><td>損失関数 vs モデル名（G-324）</td></tr>
+          <tr><td>重なり＝交差検証</td><td>損失の話 vs 評価手法（G-112）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Dice Lossは何をする損失関数ですか？</summary><p class="tool-faq-a">画像セグメンテーションで、モデルが出力した領域マスクと正解マスクがどれだけ重なるか（Dice係数）を直接評価し、その重なりを大きくする方向へ学習する損失です。画素ごとの分類誤差だけでなく、領域全体の一致を重視します。</p></details>
+        <details><summary>Dice Lossと交差エントロピーは同じですか？</summary><p class="tool-faq-a">同じではありません。交差エントロピーは各画素のクラス予測確率と正解ラベルのずれを積み上げます。Dice Lossは予測領域と正解領域の重なり率を直接最適化します。セグメンテーションでは両方を組み合わせることもありますが、目的の測り方が異なります。</p></details>
+        <details><summary>Dice Lossは物体検出の損失ですか？</summary><p class="tool-faq-a">主にセグメンテーション向けです。物体検出はバウンディングボックスの位置とクラスを扱い、Dice Lossは画素単位の領域マスクの重なりを扱います。タスクと損失の対応を混同しないことが重要です（<a href="../../exams/g-kentei/practice/q/g-194/">G-194</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-194/">G-194 · タスクに合った損失</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-204/">G-204 · 損失の目的</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-317/">G-317 · セグメンテーション</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-122/">TF-122 · U-Net/DeepLab</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../focal-loss/">Focal Loss</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../fcn/">FCN</a></li>
+          <li><a href="../ctc/">CTC</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

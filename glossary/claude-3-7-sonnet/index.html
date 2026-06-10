@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 3.7 Sonnetとは？拡張思考モード搭載のClaude標準モデルの意味、3.5 Sonnet・o1との違いをG検定向けに解説。">
+  <title>Claude 3.7 Sonnetとは？拡張思考モードと推論のSonnet化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-3-7-sonnet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 3.7 Sonnetとは？拡張思考モードと推論のSonnet化">
+  <meta property="og:description" content="思考モードを別系列に切らずSonnetへ統合。コーディング・分析の推論強化。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-3-7-sonnet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 3.7 Sonnet",
+        "alternateName": ["Claude 3.7 Sonnet", "クロード 3.7 ソネット"],
+        "description": "拡張思考モード（Extended Thinking）を搭載したClaude Sonnet系モデル。コーディング・分析の推論を強化。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "拡張思考モードとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "回答前にモデルがより多くの内部推論を行う動作モードです。OpenAI o1の「考える時間」と思想は近いですが、Anthropicはo系列を切らずSonnet名称のまま提供します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "3.7 Sonnetと3.5 Sonnetの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "3.7は思考モードによる推論深化が最大の差分です。3.5がコーディング性能の底上げだったのに対し、3.7は難問で「考えてから答える」設計を標準帯に載せました。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "思考モードなら必ず正確ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。推論過程が丁寧に見えても計算や事実の誤りは起こり得ます。段階的に考えさせることと正確性の保証は別問題です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 3.7 Sonnet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 3.7 Sonnetとは？拡張思考モードと推論のSonnet化</h1>
+    <p class="tool-hero-sub">読み：くろーど さんてんなな そねっと ／ 英：Claude 3.7 Sonnet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 3.7 Sonnet</strong>は、<strong>拡張思考モード（Extended Thinking）</strong>を搭載した<a href="../claude-model/">Claude</a> <strong>Sonnet系</strong>モデルです。<a href="../claude-3-5-sonnet/">3.5 Sonnet</a>がコーディングで標準帯を強化したのに対し、3.7は<strong>「考えてから答える」推論</strong>をSonnetに統合——<a href="../o1-model/">OpenAI o1</a>のように別系列（o）を切らない——Anthropic流の設計です。本記事はスペック暗記ではなく、<strong>思考モード・CoT・o系列の三層整理</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">3.7 Sonnetとは</a></li>
+        <li><a href="#extended-thinking">拡張思考モード</a></li>
+        <li><a href="#three-layers">CoT・モデル内思考・o系列</a></li>
+        <li><a href="#coding-analysis">コーディングと分析での効き方</a></li>
+        <li><a href="#vs-3-5">3.5 Sonnetとの差分</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        3.7 Sonnet専用の一問一答は少ないですが、関連論点は頻出です。<strong>「段階的に考えさせる＝必ず正確」</strong>は×（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>、<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459</a>）。
+      </p>
+      <p>
+        複雑な依頼は段階に分けると確認しやすい（<a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476</a>）——これは<strong>ユーザーのプロンプト設計</strong>であり、拡張思考モードの<strong>モデル内推論</strong>とは別レイヤーです。
+      </p>
+      <p>
+        開発元はAnthropic（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）。3.7 Sonnetは<strong>o1そのものではない</strong>——系列名と提供者を混同しないことが重要です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>、<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459</a>、<a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476</a></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150（コード支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claude）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>3.7 Sonnetとは</h2>
+      <p>
+        2025年初頭、Anthropicは<strong>Claude 3.7 Sonnet</strong>を公開しました。整数世代の Claude 4 へ進む前の<strong>ドットアップデート</strong>であり、Sonnet名称を維持したまま<strong>推論特化の機能</strong>を載せたモデルです。
+      </p>
+      <p>
+        ユーザーは通常モードと拡張思考モードを切り替えられ、難問では内部推論を増やしてから回答します。コーディング・データ分析・数学的推論が主な訴求領域で、<a href="../claude-3-5-sonnet/">3.5 Sonnet</a>の「開発者のデフォルト」を<strong>推論面でも強化</strong>した位置づけです。
+      </p>
+    </section>
+    <section id="extended-thinking">
+      <h2>拡張思考モード</h2>
+      <p>
+        拡張思考（Extended Thinking）は、回答前にモデルが<strong>内部的な推論ステップ</strong>を多めに使う動作です。<a href="../gemini-2-5-pro/">Gemini 2.5 Pro</a>の思考モード、<a href="../o1-model/">o1</a>の「考える時間」と思想は共通します。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>通常モード</strong> — 速い応答。日常の対話・軽いコーディング</li>
+        <li><strong>拡張思考</strong> — 内部推論を増やし、難問・複合タスクに挑む</li>
+        <li><strong>可視化</strong> — 推論過程の一部がユーザーに見える場合がある（実装はサービス依存）</li>
+        <li><strong>トレードオフ</strong> — 遅く・高コストになりうる。正確性の完全保証ではない</li>
+      </ol>
+      <p>Anthropicの特徴は、推論強化を<strong>別ブランド（o）にせずSonnetへ統合</strong>した点です。試験では「3.7 Sonnet＝OpenAI o3」と単純対応させないことが安全です。</p>
+    </section>
+    <section id="three-layers">
+      <h2>CoT・モデル内思考・o系列</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>誰が制御するか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>プロンプト技法</strong></td><td><a href="../chain-of-thought/">Chain-of-Thought</a></td><td>ユーザーが「段階的に考えて」と指示</td></tr>
+          <tr><td><strong>モデル内思考（Claude）</strong></td><td>3.7 Sonnet 拡張思考</td><td>モデルが内部推論を増やす</td></tr>
+          <tr><td><strong>別系列（OpenAI）</strong></td><td><a href="../o1-model/">o1</a> / <a href="../o3/">o3</a></td><td>GPT番号とは別の「o」ライン</td></tr>
+        </tbody>
+      </table>
+      <p>3層は補完しうますが同一ではありません。TF-0476の「段階的依頼」と拡張思考モードを<strong>重ねて覚えない</strong>ことが混乱防止のコツです。</p>
+    </section>
+    <section id="coding-analysis">
+      <h2>コーディングと分析での効き方</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>複雑なバグ調査</strong>
+          仮説を立てながらログとコードを突合——思考モードが有利
+        </li>
+        <li>
+          <strong>大規模リファクタリング</strong>
+          設計判断を段階的に検証（TF-0150のコード支援文脈）
+        </li>
+        <li>
+          <strong>データ分析</strong>
+          多表・多グラフの統合解釈で見落としを減らす狙い
+        </li>
+        <li>
+          <strong>単純な補完・整形</strong>
+          通常モードや<a href="../claude-3-5-haiku/">3.5 Haiku</a>で十分なことが多い
+        </li>
+      </ul>
+      <p>生成コードは引き続きレビュー・テスト必須です（TF-0460）。思考が深いほど<strong>もっともらしい誤り</strong>にも注意が必要です。</p>
+    </section>
+    <section id="vs-3-5">
+      <h2>3.5 Sonnetとの差分</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>3.5 Sonnet</th><th>3.7 Sonnet</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>主な強化</td><td>コーディング性能・速度</td><td>拡張思考・推論深化</td></tr>
+          <tr><td>推論モード</td><td>通常応答中心</td><td>拡張思考モード搭載</td></tr>
+          <tr><td>系列上の位置</td><td>3.5ドット世代</td><td>3.7ドット世代（4の前段）</td></tr>
+          <tr><td>後続</td><td>3.7へ</td><td>Claude 4 Sonnet（別記事予定）</td></tr>
+        </tbody>
+      </table>
+      <p>Sonnetという<strong>階層名は不変</strong>ですが、各ドット世代で「何を強化するか」が変わる——3.5はコード、3.7は思考——という系列史の読み方が試験に役立ちます。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>3.7 Sonnet＝o1</td><td>Anthropic Sonnet vs OpenAI o系列</td></tr>
+          <tr><td>拡張思考＝CoT</td><td>モデル内設計 vs プロンプト技法</td></tr>
+          <tr><td>思考モード＝必ず正確</td><td>TF-0460・TF-0459</td></tr>
+          <tr><td>3.7＝3.5</td><td>ドット世代が異なる</td></tr>
+          <tr><td>3.7 Sonnet＝Claude 4</td><td>4は後続の整数世代</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>拡張思考モードとは何ですか？</summary>
+          <p class="tool-faq-a">回答前にモデルがより多くの内部推論を行う動作モードです。OpenAI o1の「考える時間」と思想は近いですが、Anthropicはo系列を切らずSonnet名称のまま提供します。</p>
+        </details>
+        <details>
+          <summary>3.7 Sonnetと3.5 Sonnetの違いは？</summary>
+          <p class="tool-faq-a">3.7は思考モードによる推論深化が最大の差分です。3.5がコーディング性能の底上げだったのに対し、3.7は難問で「考えてから答える」設計を標準帯に載せました。</p>
+        </details>
+        <details>
+          <summary>思考モードなら必ず正確ですか？</summary>
+          <p class="tool-faq-a">いいえ。推論過程が丁寧に見えても計算や事実の誤りは起こり得ます。段階的に考えさせることと正確性の保証は別問題です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 説明できる≠正確</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476 · 段階的依頼</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150 · コード支援</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../claude-3-5-sonnet/">Claude 3.5 Sonnet</a></li>
+          <li><a href="../claude-3-5-haiku/">Claude 3.5 Haiku</a></li>
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../o1-model/">OpenAI o1</a></li>
+          <li><a href="../claude-4-sonnet/">Claude 4 Sonnet</a></li>
+          <li><a href="../claude-4-opus/">Claude 4 Opus</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BPEとは？頻出ペアを統合して語彙を構築するサブワードトークン化。LLMのTokenizerとの関係をG検定・生成AIパスポート向けに解説。">
+  <title>BPEとは？頻出ペアを育てる——語彙を分割で組み立てるトークン化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/bpe/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BPEとは？頻出ペアを育てる——語彙を分割で組み立てるトークン化">
+  <meta property="og:description" content="Byte Pair Encoding。文字から始めて頻出ペアを繰り返し統合し、サブワード語彙を学習するトークナイザの代表手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/bpe/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "BPE",
+        "alternateName": ["BPE", "ビーピーイー", "Byte Pair Encoding", "バイトペアエンコーディング"],
+        "description": "頻出する文字・サブワードのペアを繰り返し統合して語彙を構築するサブワードトークン化手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BPEは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "コーパス内で最も頻繁に現れる文字やサブワードのペアを繰り返し統合し、語彙（トークンの一覧）を構築するトークン化手法です。単語を一塊とみなさず、頻出部分をサブワードとして学習する点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BPEとトークンは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "違います。BPEはテキストをトークン列に分割するための語彙構築・トークン化の手法です。トークンは分割後の処理単位そのものを指します。GPTなどのTokenizerはBPE系の手法を採用していることが多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BPEとBoWは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BPEはLLM向けのサブワードトークン化です。BoW（Bag of Words）は文書を単語の出現回数ベクトルで表す古典的な文書表現手法であり、目的も時代も異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">BPE</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>BPEとは？頻出ペアを育てる——語彙を分割で組み立てるトークン化</h1>
+    <p class="tool-hero-sub">読み：びーぴーいー ／ 英：BPE（Byte Pair Encoding）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>BPE</strong>（Byte Pair Encoding）は、コーパス内で<strong>最も頻繁に現れるペアを繰り返し統合</strong>し、<strong>語彙（トークンの一覧）</strong>を構築するサブワード・トークン化手法です。<a href="../token/">トークン</a>が「LLMが処理する最小単位」なら、BPEは「その単位を<strong>どう切るか</strong>」の設計図。本記事はマージ回数の暗記ではなく、<strong>「なぜ単語を丸ごと持たず、分割で語彙を育てるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#problem">単語単位の限界</a></li>
+        <li><a href="#merge">ペア統合の直感</a></li>
+        <li><a href="#llm">LLMのTokenizerとの関係</a></li>
+        <li><a href="#vs-others">似た用語との区別</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="problem">
+      <h2>単語単位の限界</h2>
+      <p>
+        もし語彙を「辞書に載る単語だけ」に限定すると、次の問題が起きます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>未知語</strong> — 学習時に見なかった語をどう扱うか</li>
+        <li><strong>語彙の爆発</strong> — 複合語・固有名詞・造語で辞書が際限なく膨らむ</li>
+        <li><strong>言語差</strong> — 日本語など、単語境界が曖昧な言語での分割</li>
+      </ul>
+      <p>
+        BPEは<strong>サブワード</strong>——語の一部や文字のまとまり——を語彙の素片にします。「unhappiness」を一語として覚えるのではなく、「un」「happi」「ness」のような<strong>頻出パーツ</strong>を組み合わせて表現するイメージです。
+      </p>
+    </section>
+
+    <section id="merge">
+      <h2>ペア統合の直感</h2>
+      <p>試験向けの手順イメージは次のとおりです。</p>
+      <ol class="tool-steps">
+        <li><strong>初期</strong> — 文字（またはバイト）単位からスタート</li>
+        <li><strong>カウント</strong> — コーパス内で最も頻繁な<strong>隣接ペア</strong>を探す</li>
+        <li><strong>統合</strong> — そのペアを新しいシンボル（サブワード）として語彙に追加</li>
+        <li><strong>繰り返し</strong> — 目標の語彙サイズに達するまでマージを続ける</li>
+      </ol>
+      <p>
+        名前の <strong>Byte Pair</strong> は、元々バイト列に対してペア統合を行う発想に由来します。結果として、よく使われる文字列ほど長いトークンになり、まれな語は短い断片の組み合わせで表現されます。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-347/">G-347</a>のfastTextが「文字n-gramで部分語情報を使う」と説明されるのと同様、<strong>語の内部構造を活かす</strong>発想の一族です（fastText自体はBPEではありませんが、サブワード思想は近い）。
+      </p>
+    </section>
+
+    <section id="llm">
+      <h2>LLMのTokenizerとの関係</h2>
+      <p>
+        現代の<a href="../llm/">LLM</a>（<a href="../gpt/">GPT</a>系列など）は、学習前にテキストを<strong>トークン列</strong>に変換します。この分割器が<strong>Tokenizer（トークナイザ）</strong>で、BPEやその改良（SentencePiece、WordPieceなど）が広く使われます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>何が起きるか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>事前学習前</strong></td><td>コーパスからBPEで<strong>語彙を構築</strong></td></tr>
+          <tr><td><strong>推論時</strong></td><td>入力テキストを語彙に沿って<strong>トークンID列</strong>に変換</td></tr>
+          <tr><td><strong>生成時</strong></td><td>モデルが次の<strong>トークン</strong>を1つずつ予測（<a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        だから「1単語＝1トークン」とは限りません（<a href="../token/">トークン</a>記事参照）。BPEの語彙次第で、英単語の一部や日本語の数文字が1トークンになります。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>似た用語との区別</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>役割</th><th>BPEとの違い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../token/">トークン</a></strong></td><td>処理・生成の<strong>単位</strong></td><td>BPEはトークンを<strong>作る手法</strong></td></tr>
+          <tr><td><strong><a href="../bag-of-words/">BoW</a></strong></td><td>文書の<strong>特徴ベクトル</strong></td><td>古典的な文書表現。トークン化とは別目的</td></tr>
+          <tr><td><strong>n-gram</strong></td><td>連続語列のモデル</td><td>言語モデル。BPEは語彙構築</td></tr>
+          <tr><td><strong>ワンホット</strong></td><td>1語の疎な符号化</td><td>単語の符号化。BPEはサブワード語彙の構築</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 頻出ペアを統合して<strong>語彙を構築</strong>するトークン化（サブワード）</li>
+        <li><strong>目的</strong> — 未知語対応・語彙サイズの抑制・多言語対応</li>
+        <li><strong>位置づけ</strong> — <a href="../token/">トークン</a>を作るTokenizerの中核手法の一つ</li>
+        <li><strong>すり替え回避</strong> — BoW、埋め込み、Transformerそのものではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156</a>、<a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178</a>　G検定：<a href="../../exams/g-kentei/practice/q/g-244/">G-244</a>、<a href="../../exams/g-kentei/practice/q/g-347/">G-347</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>BPE＝BoW</td><td>トークン化 vs 文書の出現回数ベクトル</td></tr>
+          <tr><td>BPE＝トークンそのもの</td><td>トークンを<strong>定義する手法</strong></td></tr>
+          <tr><td>BPE＝word2vec</td><td>語彙構築 vs 意味ベクトルの学習</td></tr>
+          <tr><td>BPE＝Transformer</td><td>前処理 vs モデルアーキテクチャ</td></tr>
+          <tr><td>1単語＝必ず1トークン</td><td>サブワード分割されうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>BPEは何をする手法ですか？</summary><p class="tool-faq-a">コーパス内で最も頻繁に現れる文字やサブワードのペアを繰り返し統合し、語彙（トークンの一覧）を構築するトークン化手法です。単語を一塊とみなさず、頻出部分をサブワードとして学習する点が特徴です。</p></details>
+        <details><summary>BPEとトークンは同じですか？</summary><p class="tool-faq-a">違います。BPEはテキストをトークン列に分割するための語彙構築・トークン化の手法です。トークンは分割後の処理単位そのものを指します。GPTなどのTokenizerはBPE系の手法を採用していることが多いです。</p></details>
+        <details><summary>BPEとBoWは同じですか？</summary><p class="tool-faq-a">いいえ。BPEはLLM向けのサブワードトークン化です。BoW（Bag of Words）は文書を単語の出現回数ベクトルで表す古典的な文書表現手法であり、目的も時代も異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156 · トークンの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178 · 次トークン生成</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-244/">G-244 · 教師強制とトークン</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-347/">G-347 · サブワード（fastText）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../bag-of-words/">Bag of Words</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

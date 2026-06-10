@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BERTとは？双方向エンコーダ型の事前学習モデルの意味、GPT・Transformerとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>BERTとは？エンコーダ革命——双方向の「理解」専用 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/bert/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BERTとは？エンコーダ革命——双方向の「理解」専用">
+  <meta property="og:description" content="Transformerエンコーダで前後の文脈を同時に学ぶ。生成より理解・分類の土台。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/bert/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "BERT",
+        "alternateName": ["BERT", "バート", "Bidirectional Encoder Representations from Transformers"],
+        "description": "Googleが開発したTransformerエンコーダ型の自然言語処理モデル。前後の文脈を同時に考慮する双方向学習が特徴。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BERTとGPTの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもTransformer系ですが、BERTはエンコーダ型で双方向の文脈理解に強く、GPTはデコーダ型で次トークン予測による文章生成に強い、と整理します。試験では構造（エンコーダ／デコーダ）と得意タスクの対比が重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BERTは文章を生成するモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主目的は双方向の言語表現の学習であり、分類・質問応答・固有表現抽出など理解系タスク向きです。自己回帰的な長文生成はGPT型の方が典型です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BERTは画像認識用のCNNですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BERTは自然言語処理向けのTransformerエンコーダモデルです。画像の物体検出専用モデルやCNN・GANとは別物です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">BERT</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>BERTとは？エンコーダ革命——双方向の「理解」専用</h1>
+    <p class="tool-hero-sub">読み：ばーと ／ 英：BERT（Bidirectional Encoder Representations from Transformers）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>BERT</strong>（Bidirectional Encoder Representations from Transformers）は、Googleが2018年に公開した<strong>自然言語処理向けの事前学習モデル</strong>です。<a href="../gpt/">GPT</a>がデコーダで「次の語を予測しながら<strong>生成</strong>」するのに対し、BERTは<a href="../transformer/">Transformer</a>の<strong>エンコーダ</strong>で文の<strong>前後両方の文脈</strong>を同時に見て<strong>理解</strong>する——という設計が試験の核心です。本記事は層構造の暗記ではなく、<strong>「なぜ双方向エンコーダが理解タスクの土台になったか」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">BERTとは</a></li>
+        <li><a href="#bidirectional">双方向文脈の意味</a></li>
+        <li><a href="#pretraining">事前学習（MLM・NSP）</a></li>
+        <li><a href="#vs-gpt">GPTとの対比</a></li>
+        <li><a href="#tasks">得意なタスク</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の骨格は<strong>「Transformerのエンコーダを用いた双方向的な文脈表現を学習する言語モデル」</strong>（<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>、<a href="../../exams/g-kentei/drill/q/tf-131/">TF-131</a>）。
+      </p>
+      <p>
+        誤答では、<strong>BERT＝物体検出専用CNN</strong>（<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>）、<strong>BERT＝画像生成GAN</strong>（<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426</a>）など、別分野のモデル名とのすり替えに注意します。
+      </p>
+      <p>
+        BERTは<a href="../llm/">LLM</a>の源流の一つですが、現代の対話型生成AI（<a href="../../tools/chatgpt/">ChatGPT</a>等）の中核は<strong>デコーダ型の自己回帰生成</strong>です。BERT＝ChatGPT、とは答えません。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-337/">G-337（定義）</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>、<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426（GANすり替え）</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-338/">G-338（LLMとの整理）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>BERTとは</h2>
+      <p>
+        BERTは、大量のテキストで<strong>事前学習（Pre-training）</strong>された言語表現モデルです。公開当初は機械翻訳の下流タスクで高得点を記録し、「事前学習＋少量のファインチューニング」で多様なNLPタスクに転用できる——という<strong>転移学習の成功例</strong>として知られました。
+      </p>
+      <p>
+        名前の <strong>Bidirectional</strong> は「双方向」——単語の意味を決めるとき、<strong>左の文脈も右の文脈も同時に</strong>参照する——ことを示します。これが従来の左から右だけの言語モデルとの大きな違いです。
+      </p>
+    </section>
+    <section id="bidirectional">
+      <h2>双方向文脈の意味</h2>
+      <p>例文：「彼は銀行で働き、川の<strong>岸</strong>を歩いた」——「岸」が何を指すかは、前後の語（銀行／川）に依存します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>文脈の見方</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>従来の言語モデル（左→右）</td><td>過去の語だけ参照</td><td>生成に自然。理解は片側文脈</td></tr>
+          <tr><td><strong>BERT（双方向）</strong></td><td>左右両方を同時参照</td><td>理解・分類に有利</td></tr>
+          <tr><td><a href="../gpt/">GPT（因果的マスク）</a></td><td>未来を見ない（生成のため）</td><td>続き書き・対話生成</td></tr>
+        </tbody>
+      </table>
+      <p>双方向だからといって「未来を見て不正解を覗く」わけではなく、<strong>学習時のマスク設計</strong>で左右の文脈を統合する——という理解で試験に十分なことが多いです。</p>
+    </section>
+    <section id="pretraining">
+      <h2>事前学習（MLM・NSP）</h2>
+      <p>BERTの事前学習で名前が出やすい二つのタスクです。細部の数式より<strong>役割</strong>を押さえます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>ざっくりした内容</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>MLM</strong>（Masked Language Model）</td><td>文中の一部をマスクし、隠れた語を当てる</td><td>双方向文脈を学ぶ</td></tr>
+          <tr><td><strong>NSP</strong>（Next Sentence Prediction）</td><td>二文が連続かどうかを判別</td><td>文書レベルの関係を学ぶ</td></tr>
+        </tbody>
+      </table>
+      <p>学習後は<a href="../fine-tuning/">ファインチューニング</a>で感情分類・質問応答などに適応します。BERT自体は<strong>アーキテクチャ＋事前学習済み重み</strong>のパッケージとして語られることが多いです。</p>
+    </section>
+    <section id="vs-gpt">
+      <h2>GPTとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th></th><th>BERT（エンコーダ型）</th><th>GPT（デコーダ型）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Transformerの側</strong></td><td>エンコーダ</td><td>デコーダ</td></tr>
+          <tr><td><strong>文脈</strong></td><td>双方向</td><td>因果的（未来を見ない）</td></tr>
+          <tr><td><strong>主な学習</strong></td><td>マスク言語モデル等</td><td>次トークン予測</td></tr>
+          <tr><td><strong>得意</strong></td><td>分類・理解・検索表現</td><td>生成・続き書き・対話</td></tr>
+          <tr><td><strong>試験</strong></td><td>TF-425</td><td><a href="../../exams/g-kentei/drill/q/tf-427/">TF-427</a></td></tr>
+        </tbody>
+      </table>
+      <p>詳細な対比は<a href="../gpt-architecture/">GPTアーキテクチャ</a>記事でも整理しています。どちらも<a href="../transformer/">Transformer</a>の子孫ですが、<strong>使う側と学習目的</strong>が異なります。</p>
+    </section>
+    <section id="tasks">
+      <h2>得意なタスク</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>文章分類</strong>
+          レビューのポジ／ネガ判定、トピック分類
+        </li>
+        <li>
+          <strong>固有表現抽出</strong>
+          人名・地名・組織名の抽出
+        </li>
+        <li>
+          <strong>質問応答</strong>
+          段落から答えのスパンを特定（読解型）
+        </li>
+        <li>
+          <strong>意味検索の表現</strong>
+          文や段落をベクトル化し類似検索
+        </li>
+      </ul>
+      <p>長い対話文の<strong>自由生成</strong>は、現代では<a href="../gpt-4/">GPT-4</a>などデコーダ型<a href="../llm/">LLM</a>が主役です。BERTは「理解の時代」の代表として覚えると系列史が整理しやすくなります。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>BERT＝GPT</td><td>エンコーダ型 vs デコーダ型</td></tr>
+          <tr><td>BERT＝CNN</td><td>NLP vs 画像の畳み込み（G-323）</td></tr>
+          <tr><td>BERT＝GAN</td><td>TF-426。生成器・識別器の競合とは無関係</td></tr>
+          <tr><td>BERT＝Transformer全体</td><td>Transformerの派生モデルの一つ</td></tr>
+          <tr><td>双方向＝対話型ChatGPT</td><td>理解系事前学習 vs 生成型サービス</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>BERTとGPTの違いは？</summary>
+          <p class="tool-faq-a">どちらもTransformer系ですが、BERTはエンコーダ型で双方向の文脈理解に強く、GPTはデコーダ型で次トークン予測による文章生成に強い、と整理します。試験では構造（エンコーダ／デコーダ）と得意タスクの対比が重要です。</p>
+        </details>
+        <details>
+          <summary>BERTは文章を生成するモデルですか？</summary>
+          <p class="tool-faq-a">主目的は双方向の言語表現の学習であり、分類・質問応答・固有表現抽出など理解系タスク向きです。自己回帰的な長文生成はGPT型の方が典型です。</p>
+        </details>
+        <details>
+          <summary>BERTは画像認識用のCNNですか？</summary>
+          <p class="tool-faq-a">いいえ。BERTは自然言語処理向けのTransformerエンコーダモデルです。画像の物体検出専用モデルやCNN・GANとは別物です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERTの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-425/">TF-425 · エンコーダ型</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-426/">TF-426 · GANすり替え</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · 物体検出との区別</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../gelu/">GELU</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../albert/">ALBERT</a></li>
+          <li><a href="../deberta/">DeBERTa</a></li>
+          <li><a href="../electra/">ELECTRA</a></li>
+          <li><a href="../elmo/">ELMo</a></li>
+          <li><a href="../bart-model/">BART</a></li>
+          <li><a href="../beit/">BEiT</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

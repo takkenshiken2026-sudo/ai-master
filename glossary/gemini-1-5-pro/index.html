@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gemini 1.5 Proとは？最大100万トークンの長コンテキスト対応モデルの意味、1.0 Proとの違い、実務での長文・動画処理をG検定・生成AIパスポート向けに解説。">
+  <title>Gemini 1.5 Proとは？百万トークン長コンテキストの転換点 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gemini-1-5-pro/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gemini 1.5 Proとは？百万トークン長コンテキストの転換点">
+  <meta property="og:description" content="1.5世代の標準モデル。コンテキスト最大100万トークンで長文・長時間動画の一括処理が可能に。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gemini-1-5-pro/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Gemini 1.5 Pro",
+        "alternateName": ["Gemini 1.5 Pro", "ジェミニ 1.5 プロ"],
+        "description": "Gemini 1.5世代の標準モデル。最大100万トークンのコンテキストウィンドウで長文・長時間メディアの処理に対応。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "100万トークンとはどのくらいの量ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "目安として数十万語規模のテキストや、長時間の動画・大量のコードを一度のプロンプトに含められるレベルです。正確な換算は言語やトークナイザーで変わるため、試験では「非常に長い文脈を扱える」という概念理解が中心です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "1.5 Proと1.0 Proの最大の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "世代が異なり、1.5 Proはコンテキストウィンドウの大幅拡張（最大100万トークン）が最大の特徴です。名称のProは共通ですが、1.0 Proとは別モデルとして整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "長コンテキストなら最新情報も自動で入りますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。コンテキスト拡張は入力できる文脈の長さの話であり、ウェブ検索やリアルタイム知識更新とは別機能です。長いPDFを渡せても、学習データのカットオフ以降の事象は自動では反映されません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../gemini-model/">Gemini</a></li>
+      <li aria-current="page">Gemini 1.5 Pro</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Gemini 1.5 Proとは？百万トークン長コンテキストの転換点</h1>
+    <p class="tool-hero-sub">読み：じぇみに いちてんご ぷろ ／ 英：Gemini 1.5 Pro</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Gemini 1.5 Pro</strong>は、<a href="../gemini-model/">Gemini</a> 1.5世代の<strong>標準モデル</strong>で、最大<strong>100万トークン</strong>規模の<a href="../context-window/">コンテキストウィンドウ</a>が最大の特徴です。<a href="../gemini-1-0-pro/">1.0 Pro</a>が性能バランスの中核だったのに対し、1.5 Proは<strong>「一度に読める量」</strong>を桁違いに広げ、長文書・コードベース・長時間動画の一括分析を可能にしました。本記事はベンチマークの細部より、<strong>長コンテキストが実務と試験で何を変えるか</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">1.5 Proとは</a></li>
+        <li><a href="#million-context">100万トークンの意味</a></li>
+        <li><a href="#use-cases">長コンテキストが効く場面</a></li>
+        <li><a href="#vs-1-0">1.0 Proとの世代差</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        個別スペックの暗記より、<strong>コンテキストウィンドウ</strong>の概念が核心です。「モデルが一度に扱える入力や会話履歴の長さに関係する」（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>）。1.5 Proはその<strong>上限が極めて大きい具体例</strong>として整理します。
+      </p>
+      <p>
+        よくある誤解は、ウィンドウが大きいほど<strong>最新情報を自動検索できる</strong>という説明です（<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169</a>は×）。長い文脈を参照できることと、リアルタイムの外部知識取得は別です。
+      </p>
+      <p>
+        <a href="../token/">トークン</a>は一文全体だけを指す単位ではありません（<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156</a>は×）。100万トークンは「単語数＝100万」ではなく、<strong>モデル内部の分割単位の上限</strong>と理解します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170（コンテキストウィンドウ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169（コンテキスト≠自動検索）</a>、<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156（トークンの定義）</a></p>
+        <p>実践演習：<a href="../../exams/genai-passport/practice/q/hq-0171/">HQ-0171（マルチモーダルと実務判断）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>1.5 Proとは</h2>
+      <p>
+        2024年に発表されたGemini 1.5は、1.0からの<strong>世代更新</strong>です。1.5 Proはその標準帯で、<a href="../multimodal-ai/">マルチモーダル</a>能力を維持しつつ、Mixture-of-Experts（MoE）などの効率化と<strong>長コンテキスト対応</strong>を前面に出しました。
+      </p>
+      <p>
+        デモでは数時間の動画を丸ごと入力し、特定シーンの検索や要約を行う例が示され、<strong>「分割して要約を重ねる」従来ワークフロー</strong>を短縮できる可能性が話題になりました。試験ではデモの細部より、<strong>長いメディアを一括処理できる設計</strong>という整理が重要です。
+      </p>
+    </section>
+    <section id="million-context">
+      <h2>100万トークンの意味</h2>
+      <p>
+        当時の競合モデルが128Kトークン規模（例：<a href="../gpt-4-turbo/">GPT-4 Turbo</a>の128K）を公表する中、1.5 Proの<strong>最大100万トークン</strong>は「長さの競争」における転換点でした。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>短いコンテキスト</th><th>1.5 Pro（長コンテキスト）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>入力の切り方</td><td>章ごと・ページごとに分割が必要</td><td>長文書をまとめて渡しやすい</td></tr>
+          <tr><td>照合・要約</td><td>文脈の欠落リスク</td><td>全体構造を一度に参照可能</td></tr>
+          <tr><td>コスト</td><td>分割回数が増える</td><td>1回の呼び出しで済む場合がある</td></tr>
+          <tr><td>限界</td><td>—</td><td>無制限ではない。上限超過は切り捨てやエラー</td></tr>
+        </tbody>
+      </table>
+      <p>「業界最長」と言われたのは<strong>公表時点の比較</strong>です。後続世代や他社モデルでも上限は更新され続けるため、数値の暗記より<strong>コンテキスト拡張の意味</strong>を押さえます。</p>
+    </section>
+    <section id="use-cases">
+      <h2>長コンテキストが効く場面</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>契約・規程の横断チェック</strong>
+          数百ページの文書から矛盾条項や定義の揺れを探す
+        </li>
+        <li>
+          <strong>コードベース理解</strong>
+          複数リポジトリのソースを一度に渡し、依存関係を説明させる
+        </li>
+        <li>
+          <strong>長時間動画・音声</strong>
+          会議録画全体から発言者別の論点抽出（マルチモーダル入力）
+        </li>
+        <li>
+          <strong>長い対話の継続</strong>
+          過去のやり取りを切らずに参照するカスタマーサポート
+        </li>
+      </ul>
+      <p>いずれも「入力が長い＝正答が保証される」わけではありません。<a href="../hallucination/">ハルシネーション</a>や見落としは長コンテキストでも起こり得ます。</p>
+    </section>
+    <section id="vs-1-0">
+      <h2>1.0 Proとの世代差</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>1.0 Pro</th><th>1.5 Pro</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>世代</td><td>初代標準</td><td>後続標準</td></tr>
+          <tr><td>主な訴求</td><td>性能・コストのバランス</td><td>長コンテキスト＋効率化</td></tr>
+          <tr><td>コンテキスト</td><td>当時の標準的な上限</td><td>最大100万トークン（公表値）</td></tr>
+          <tr><td>高速版</td><td>—</td><td><a href="../gemini-1-5-flash/">1.5 Flash</a>（別記事）</td></tr>
+        </tbody>
+      </table>
+      <p>名称の「Pro」は世代をまたいで<strong>標準帯のラベル</strong>として継承されています。1.0 Proと1.5 Proを同一モデルとみなさないことが試験でも実務でも重要です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>100万トークン＝無制限</td><td>上限はある。超過分は扱えない</td></tr>
+          <tr><td>長コンテキスト＝最新ニュース自動反映</td><td>検索・RAG等は別機能（TF-0169）</td></tr>
+          <tr><td>1.5 Pro＝1.0 ProのTurbo版だけ</td><td>世代更新。長コンテキストが本質的な差分</td></tr>
+          <tr><td>1.5 Pro＝1.5 Flash</td><td>同一世代の別階層。Flashは高速・低コスト帯</td></tr>
+          <tr><td>長い入力なら必ず正確</td><td>幻覚・見落としは起こりうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>100万トークンとはどのくらいの量ですか？</summary>
+          <p class="tool-faq-a">目安として数十万語規模のテキストや、長時間の動画・大量のコードを一度のプロンプトに含められるレベルです。正確な換算は言語やトークナイザーで変わるため、試験では「非常に長い文脈を扱える」という概念理解が中心です。</p>
+        </details>
+        <details>
+          <summary>1.5 Proと1.0 Proの最大の違いは？</summary>
+          <p class="tool-faq-a">世代が異なり、1.5 Proはコンテキストウィンドウの大幅拡張（最大100万トークン）が最大の特徴です。名称のProは共通ですが、1.0 Proとは別モデルとして整理します。</p>
+        </details>
+        <details>
+          <summary>長コンテキストなら最新情報も自動で入りますか？</summary>
+          <p class="tool-faq-a">いいえ。コンテキスト拡張は入力できる文脈の長さの話であり、ウェブ検索やリアルタイム知識更新とは別機能です。長いPDFを渡せても、学習データのカットオフ以降の事象は自動では反映されません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · コンテキストウィンドウ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169 · コンテキスト≠自動検索</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0171/">HQ-0171 · マルチモーダル実務判断</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../gemini-1-0-pro/">Gemini 1.0 Pro</a></li>
+          <li><a href="../gemini-1-5-flash/">Gemini 1.5 Flash</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

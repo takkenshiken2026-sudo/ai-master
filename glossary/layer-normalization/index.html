@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="レイヤー正規化（Layer Normalization）とは？各サンプル内の特徴次元で正規化しTransformerの学習を安定化する技法。バッチ正規化との違いをG検定向けに解説。">
+  <title>レイヤー正規化とは？サンプル内で整える——バッチに頼らないTransformerの正規化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/layer-normalization/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="レイヤー正規化とは？サンプル内で整える——バッチに頼らないTransformerの正規化">
+  <meta property="og:description" content="各サンプル内の特徴方向で正規化。ミニバッチサイズに依存しにくくTransformerで標準的。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/layer-normalization/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "レイヤー正規化",
+        "alternateName": ["レイヤー正規化", "Layer Normalization", "LN", "層正規化"],
+        "description": "各サンプル内の特徴次元で中間層の出力を正規化し、Transformerなどの学習を安定化する技法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "レイヤー正規化とバッチ正規化の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "バッチ正規化はミニバッチ内のサンプル間で統計を取ります。レイヤー正規化は各サンプル内の特徴方向で正規化するため、ミニバッチサイズに依存しにくく、Transformerなどの系列モデルで広く使われます（G-224、TF-089）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Transformerでレイヤー正規化が使われる理由は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "系列長やバッチサイズが変わっても、サンプルごとに層内の特徴を正規化できるためです。ミニバッチが小さい・可変長の学習でも統計が安定しやすい点が試験の要点です（G-226）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "レイヤー正規化は正則化ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。レイヤー正規化は正規化層の一種で、中間表現の分布を整えて学習を安定化するのが主目的です。L1/L2やドロップアウトなどの正則化（過学習抑制）とは目的が異なります（G-299）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">レイヤー正規化</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>レイヤー正規化とは？サンプル内で整える——バッチに頼らないTransformerの正規化</h1>
+    <p class="tool-hero-sub">読み：れいやーせいきか ／ 英：Layer Normalization（LN）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>レイヤー正規化</strong>（Layer Normalization）は、<strong>各サンプル内の特徴次元</strong>で中間層の出力を正規化し、学習を安定化する技法です。<a href="../batch-normalization/">バッチ正規化</a>が「横の仲間（ミニバッチ）」の統計を使うのに対し、レイヤー正規化は<strong>「縦の1本（サンプル内）」</strong>だけで整える。本記事は数式の導出ではなく、<strong>「なぜTransformerはバッチではなく層で正規化するか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#axis">統計を取る軸の違い</a></li>
+        <li><a href="#mechanism">レイヤー正規化の仕組み</a></li>
+        <li><a href="#transformer">Transformerでの位置づけ</a></li>
+        <li><a href="#vs-batch">バッチ正規化との対比</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="axis">
+      <h2>統計を取る軸の違い</h2>
+      <p>
+        正規化層の設計で最も重要なのは、<strong>平均・分散をどの次元で計算するか</strong>です。試験ではこの軸の違いが頻出です（<a href="../../exams/g-kentei/practice/q/g-224/">G-224</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>統計の軸</th><th>イメージ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>バッチ正規化</strong></td><td><strong>ミニバッチ内</strong>のサンプル間</td><td>同じ層の「横並びのデータ」で平均を取る</td></tr>
+          <tr><td><strong>レイヤー正規化</strong></td><td><strong>各サンプル内</strong>の特徴方向</td><td>1サンプル内の「縦の特徴ベクトル」で平均を取る</td></tr>
+        </tbody>
+      </table>
+      <p>
+        レイヤー正規化は<strong>バッチの大きさに依存しない</strong>——ミニバッチが1件でも、サンプル内に十分な特徴次元があれば統計を計算できます。これが系列モデルとの相性の良さにつながります。
+      </p>
+    </section>
+
+    <section id="mechanism">
+      <h2>レイヤー正規化の仕組み</h2>
+      <p>試験で問われる定義の骨格は次のとおりです（<a href="../../exams/g-kentei/drill/q/tf-089/">TF-089</a>）。</p>
+      <ul class="tool-steps">
+        <li><strong>対象</strong> — ある層の<strong>中間表現</strong>（活性値）</li>
+        <li><strong>範囲</strong> — <strong>1サンプル内</strong>の全特徴（層の出力次元）にわたって平均・分散を計算</li>
+        <li><strong>目的</strong> — 分布を整え、<strong>学習の安定化</strong>に寄与（<a href="../../exams/g-kentei/practice/q/g-222/">G-222</a>）</li>
+      </ul>
+      <p>
+        正規化後、学習可能なスケール・シフトパラメータで表現力を戻す——という流れは<a href="../batch-normalization/">バッチ正規化</a>と同型です。違いは<strong>統計の取り方</strong>だけ、と整理すると混同しにくくなります。
+      </p>
+    </section>
+
+    <section id="transformer">
+      <h2>Transformerでの位置づけ</h2>
+      <p>
+        原論文の<a href="../transformer/">Transformer</a>では、各サブ層のあとに<strong>残差接続＋レイヤー正規化</strong>が置かれます。Attentionブロックの直後、Feed-Forwardの直後——いずれも「層の出力を整えてから次へ渡す」役割です。
+      </p>
+      <p>
+        Transformerがレイヤー正規化を好む理由として、試験では次が正解になります（<a href="../../exams/g-kentei/practice/q/g-226/">G-226</a>）。
+      </p>
+      <blockquote>
+        <p>ミニバッチサイズに依存しにくく、系列モデルでも各サンプル内の特徴を正規化しやすいため</p>
+      </blockquote>
+      <p>
+        可変長の系列（文の長さがバラバラ）や、バッチサイズが小さい学習では、バッチ正規化の統計が不安定になりやすい——という文脈とセットで覚えると実感が湧きます（<a href="../../exams/g-kentei/practice/q/g-310/">G-310</a>）。
+      </p>
+    </section>
+
+    <section id="vs-batch">
+      <h2>バッチ正規化との対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>バッチ正規化</th><th>レイヤー正規化</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>統計の取り方</td><td>ミニバッチ内</td><td>各サンプル内</td></tr>
+          <tr><td>バッチサイズ依存</td><td>小さいと不安定になりうる</td><td><strong>依存しにくい</strong></td></tr>
+          <tr><td>向きやすいモデル</td><td><a href="../cnn/">CNN</a>など</td><td><a href="../transformer/">Transformer</a>、<a href="../rnn/">RNN</a>系</td></tr>
+          <tr><td>試験の組み合わせ</td><td>（あ）バッチ正規化</td><td>（い）レイヤー正規化（G-224）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../regularization/">正則化</a>とは別物です。レイヤー正規化は<strong>分布の整備</strong>、正則化は<strong>過学習抑制</strong>——名称が似ているため混同注意（<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a>、<a href="../../exams/g-kentei/drill/q/tf-090/">TF-090</a>）。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 各サンプル内の特徴方向で正規化（TF-089）</li>
+        <li><strong>用途</strong> — <a href="../transformer/">Transformer</a>などで広く使われる</li>
+        <li><strong>利点</strong> — ミニバッチサイズに<strong>依存しにくい</strong>（G-226）</li>
+        <li><strong>対比</strong> — バッチ正規化＝ミニバッチ内、レイヤー正規化＝サンプル内（G-224）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-089/">TF-089</a>、<a href="../../exams/g-kentei/practice/q/g-224/">G-224</a>、<a href="../../exams/g-kentei/practice/q/g-226/">G-226</a>、<a href="../../exams/g-kentei/practice/q/g-225/">G-225</a>、<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a>、<a href="../../exams/g-kentei/practice/q/g-310/">G-310</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>レイヤー正規化＝バッチ正規化</td><td>統計を取る軸が異なる（G-224）</td></tr>
+          <tr><td>レイヤー正規化＝畳み込み層</td><td>正規化層。畳み込みとは別（G-226のB）</td></tr>
+          <tr><td>レイヤー正規化＝正則化</td><td>学習安定化 vs 過学習抑制（G-299）</td></tr>
+          <tr><td>レイヤー正規化＝方策勾配法</td><td>強化学習の更新手法ではない（G-226のD）</td></tr>
+          <tr><td>（あ）（い）の対応を逆にする</td><td>（あ）バッチ正規化、（い）レイヤー正規化が正（G-224）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>レイヤー正規化とバッチ正規化の違いは？</summary><p class="tool-faq-a">バッチ正規化はミニバッチ内のサンプル間で統計を取ります。レイヤー正規化は各サンプル内の特徴方向で正規化するため、ミニバッチサイズに依存しにくく、Transformerなどの系列モデルで広く使われます（<a href="../../exams/g-kentei/practice/q/g-224/">G-224</a>、<a href="../../exams/g-kentei/drill/q/tf-089/">TF-089</a>）。</p></details>
+        <details><summary>Transformerでレイヤー正規化が使われる理由は？</summary><p class="tool-faq-a">系列長やバッチサイズが変わっても、サンプルごとに層内の特徴を正規化できるためです。ミニバッチが小さい・可変長の学習でも統計が安定しやすい点が試験の要点です（<a href="../../exams/g-kentei/practice/q/g-226/">G-226</a>）。</p></details>
+        <details><summary>レイヤー正規化は正則化ですか？</summary><p class="tool-faq-a">いいえ。レイヤー正規化は正規化層の一種で、中間表現の分布を整えて学習を安定化するのが主目的です。L1/L2やドロップアウトなどの正則化（過学習抑制）とは目的が異なります（<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-089/">TF-089 · レイヤー正規化の定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-224/">G-224 · バッチ正規化との対比</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-226/">G-226 · Transformerで使われる理由</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-299/">G-299 · 正則化との違い</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../batch-normalization/">バッチ正規化</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../regularization/">正則化</a></li>
+          <li><a href="../deep-learning/">深層学習</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

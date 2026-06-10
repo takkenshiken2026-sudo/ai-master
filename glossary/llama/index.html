@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LLaMAとは？Metaのオープン系LLMファミリーの意味、GPT・Mistralとの違い、ライセンス注意をG検定向けに解説。">
+  <title>LLaMAとは？研究から産業へ——オープンLLMの巨大生根 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/llama/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="LLaMAとは？研究から産業へ——オープンLLMの巨大生根">
+  <meta property="og:description" content="Metaが公開したオープン系LLM。ローカル実行・派生モデルエコシステムの起点。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/llama/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "LLaMA",
+        "alternateName": ["LLaMA", "Llama", "ラマ", "Large Language Model Meta AI"],
+        "description": "Metaが開発するオープン系大規模言語モデルファミリー。研究・産業双方で派生モデルの基盤となった。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "LLaMAの開発元は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Meta（旧Facebook）です。OpenAI・Google・Anthropicとは別の開発元として整理します。試験では開発元のすり替えに注意します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LLaMAとChatGPTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。LLaMAはMetaのモデルファミリー、ChatGPTはOpenAIの対話サービスです。モデルとサービス、開発元を混同しないことが重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LLaMA＝完全オープンで制限なしですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。世代やモデルごとにライセンス条件があり、商用利用・再配布・申請要件などを確認する必要があります。オープンウェイト＝完全自由、とは答えません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">LLaMA</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>LLaMAとは？研究から産業へ——オープンLLMの巨大生根</h1>
+    <p class="tool-hero-sub">読み：らま ／ 英：LLaMA（Large Language Model Meta AI）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>LLaMA</strong>（Large Language Model Meta AI）は、<strong>Meta</strong>が開発する<a href="../llm/">LLM</a>ファミリーです。2023年の公開以降、<strong>オープンウェイト</strong>——重みを研究者・開発者が取得し、ローカルで動かせる——という形で、閉源API中心だった業界に<strong>巨大な生根</strong>を広げました。<a href="../mistral/">Mistral</a>や<a href="../deepseek/">DeepSeek</a>以前に、「オープン系LLMの標準」として語られた存在です。本記事はバージョン暗記ではなく、<strong>「なぜLLaMAがエコシステムの起点になったか」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">LLaMAとは</a></li>
+        <li><a href="#open-ecosystem">オープンウェイトとエコシステム</a></li>
+        <li><a href="#generations">世代の流れ（試験向け）</a></li>
+        <li><a href="#local-finetune">ローカル実行と派生モデル</a></li>
+        <li><a href="#vs-closed">閉源モデルとの位置</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        LLaMA専用の一問一答は少ないですが、<strong>開発元はMeta</strong>——OpenAI・Google・Anthropicと区別——として整理します。LLaMA＝ChatGPT、LLaMA＝Gemini、は×です。
+      </p>
+      <p>
+        オープンウェイト・オープンソース系モデルを使う際は<strong>ライセンス条件の確認</strong>が必要です（<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>）。完全自由、は×（<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a>）。
+      </p>
+      <p>
+        LLaMAは<a href="../foundation-model/">基盤モデル</a>の代表例の一つ——大規模事前学習後、<a href="../fine-tuning/">ファインチューニング</a>や<a href="../lora/">LoRA</a>で下流タスクへ——という整理は<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>と共通です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a>、<a href="../../exams/g-kentei/practice/q/g-396/">G-396（基盤モデル）</a></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（開発元の区別）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>LLaMAとは</h2>
+      <p>
+        LLaMAは、Meta AI（旧Facebook AI Research）が開発する<strong>大規模言語モデル系列</strong>です。名前の <strong>LLaMA</strong> はラマ（動物）の語源でも知られ、MetaのブランドとしてLLaMA 1→2→3→3.xと世代が進みました。
+      </p>
+      <p>
+        当初は研究コミュニティ向けに重みが限定公開され、漏洩を経て派生モデルが爆発的に増えた——というエピソードも業界史の一部です。その後、より明確なライセンスで<strong>オープンウェイト</strong>が広く提供される方向へ進みました。
+      </p>
+    </section>
+    <section id="open-ecosystem">
+      <h2>オープンウェイトとエコシステム</h2>
+      <p>LLaMAの歴史的意義は、<strong>閉じたAPIだけではないLLMの世界</strong>を一般化した点にあります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>効果</th><th>意味</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ローカル推論</strong></td><td>自社GPU・オンプレで動かせる選択肢</td></tr>
+          <tr><td><strong>派生モデル</strong></td><td>コミュニティがFT・マージ・量子化した無数の派生</td></tr>
+          <tr><td><strong>研究加速</strong></td><td>論文・再現実験の共通ベース</td></tr>
+          <tr><td><strong>産業利用</strong></td><td>カスタムモデルの土台（ライセンス遵守前提）</td></tr>
+        </tbody>
+      </table>
+      <p><a href="../mistral/">Mistral</a>が「効率重視の欧州発オープンウェイト」、LLaMAは<strong>「Big Techが切り開いたオープン系のデファクト」</strong>——対比で覚えると系列史が整理しやすくなります。</p>
+    </section>
+    <section id="generations">
+      <h2>世代の流れ（試験向け）</h2>
+      <p>細かなパラメータ暗記より、<strong>世代が上がるほど性能・コンテキスト・マルチモーダルが強化</strong>——という流れで十分なことが多いです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>世代</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LLaMA 1</td><td>オープン系LLMブームの起点（2023年前後）</td></tr>
+          <tr><td>LLaMA 2</td><td>ライセンス整理・商用利用の議論が具体化</td></tr>
+          <tr><td>LLaMA 3 / 3.x</td><td>性能向上・サイズバリエーション拡大</td></tr>
+        </tbody>
+      </table>
+      <p>「LLaMA 3＝GPT-4と同一」などの単純対応は避け、<strong>Metaのオープン系LLMファミリー</strong>として答えます。</p>
+    </section>
+    <section id="local-finetune">
+      <h2>ローカル実行と派生モデル</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>量子化（4bit等）</strong>
+          消費者GPUでも動かす工夫
+        </li>
+        <li>
+          <strong><a href="../lora/">LoRA</a> / フルFT</strong>
+          社内データで用途特化
+        </li>
+        <li>
+          <strong>マージ・蒸留</strong>
+          複数モデルを組み合わせた派生
+        </li>
+        <li>
+          <strong>エージェント基盤</strong>
+          ローカルLLMをツール連携に載せる構成
+        </li>
+      </ul>
+      <p>派生モデル名は試験範囲外のことも多いです。重要なのは<strong>LLaMAが土台になりうる</strong>という構造理解です。</p>
+    </section>
+    <section id="vs-closed">
+      <h2>閉源モデルとの位置</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ファミリー</th><th>開発元</th><th>提供の典型</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="../gpt/">GPT</a> / ChatGPT</td><td>OpenAI</td><td>閉源API・サービス</td></tr>
+          <tr><td><a href="../gemini-model/">Gemini</a></td><td>Google</td><td>クラウド統合</td></tr>
+          <tr><td><strong>LLaMA</strong></td><td>Meta</td><td>オープンウェイト中心</td></tr>
+          <tr><td><a href="../mistral/">Mistral</a></td><td>Mistral AI</td><td>オープンウェイト＋API</td></tr>
+        </tbody>
+      </table>
+      <p>閉源が最高性能のイメージが強くても、オープン系は<strong>データ主権・コスト・カスタマイズ</strong>で選ばれます。用途で使い分ける、が実務の整理です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>LLaMA＝OpenAI</td><td>Meta vs OpenAI</td></tr>
+          <tr><td>LLaMA＝ChatGPT</td><td>モデルファミリー vs サービス</td></tr>
+          <tr><td>LLaMA＝Mistral</td><td>別企業・別系列</td></tr>
+          <tr><td>オープンウェイト＝完全自由</td><td>TF-479</td></tr>
+          <tr><td>LLaMA＝画像生成専用</td><td>主にLLM（言語）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>LLaMAの開発元は？</summary>
+          <p class="tool-faq-a">Meta（旧Facebook）です。OpenAI・Google・Anthropicとは別の開発元として整理します。試験では開発元のすり替えに注意します。</p>
+        </details>
+        <details>
+          <summary>LLaMAとChatGPTは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。LLaMAはMetaのモデルファミリー、ChatGPTはOpenAIの対話サービスです。モデルとサービス、開発元を混同しないことが重要です。</p>
+        </details>
+        <details>
+          <summary>LLaMA＝完全オープンで制限なしですか？</summary>
+          <p class="tool-faq-a">いいえ。世代やモデルごとにライセンス条件があり、商用利用・再配布・申請要件などを確認する必要があります。オープンウェイト＝完全自由、とは答えません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-478/">TF-478 · OSSライセンス</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-479/">TF-479 · 完全自由は誤り</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../mistral/">Mistral</a></li>
+          <li><a href="../falcon-llm/">Falcon</a></li>
+          <li><a href="../gemma/">Gemma</a></li>
+          <li><a href="../deepseek/">DeepSeek</a></li>
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

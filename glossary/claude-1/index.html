@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 1とは？Anthropic初のClaudeモデルの意味、安全性と有用性のバランス、RLHFと系列史の起点をG検定向けに解説。">
+  <title>Claude 1とは？有害と有用のバランスを設計した第一号 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-1/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 1とは？有害と有用のバランスを設計した第一号">
+  <meta property="og:description" content="Anthropic初の対話モデル。性能競争より安全に使えるAIの原型。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-1/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 1",
+        "alternateName": ["Claude Instant", "クロード 1"],
+        "description": "Anthropic初のClaude対話モデル。安全性と有用性のバランスを重視した設計。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claude 1の特徴は何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Anthropicが初めて一般提供したClaude世代で、有害出力を抑えつつ実用的な対話を目指した点が特徴です。後続世代ほど長コンテキストやマルチモーダルは前面に出ていませんが、安全志向の系列の起点として理解すると試験に役立ちます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude 1とChatGPTは同時期ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChatGPT（GPT-3.5）が2022年末に話題化したのに対し、Claude 1は2023年初頭のAPI提供など、やや後の登場です。試験では開発元（Anthropic vs OpenAI）の区別が中心で、発売順の暗記は不要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "安全性重視ならハルシネーションは起きませんか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。安全性は有害・不適切な出力の抑制に焦点を当てた設計であり、事実誤認（ハルシネーション）の完全排除を意味しません。G検定でも安全性と事実性は別軸として扱われます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 1</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 1とは？有害と有用のバランスを設計した第一号</h1>
+    <p class="tool-hero-sub">読み：くろーど いち ／ 英：Claude 1</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 1</strong>は、<a href="../claude-model/">Claude</a>ファミリーの<strong>初代（第一世代）</strong>モデルです。2023年初頭のAPI提供などを通じて登場し、当時の競合が性能・話題性を競う中、Anthropicは<strong>「有害でないこと」と「実務で使えること」の両立</strong>——いわゆる Helpful / Harmless / Honest のバランス——を前面に出しました。本記事はスペック表の暗記ではなく、<strong>安全志向の系列がここから始まった</strong>という歴史的意味に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Claude 1とは</a></li>
+        <li><a href="#dual-mandate">有害と有用の二重課題</a></li>
+        <li><a href="#alignment-stack">アライメント手法の文脈</a></li>
+        <li><a href="#vs-chatgpt-era">ChatGPTブーム時代の位置</a></li>
+        <li><a href="#lineage">後続世代への引き継ぎ</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        個別の「Claude 1」暗記より、<strong>Anthropicの主要生成AI</strong>としての位置づけが中心です（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）。Claude 1はその<strong>系列の起点</strong>であり、試験では「Anthropicが提供するモデル群の初代」と整理できれば十分なことが多いです。
+      </p>
+      <p>
+        G検定では、モデル評価に<strong>安全性・事実性の確認</strong>が必要になる場面が問われます（<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>）。Claude 1が掲げた安全志向は、この倫理・品質の文脈と接続しますが、「安全設計＝評価不要」ではありません。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claudeの位置づけ）</a>、<a href="../../exams/genai-passport/practice/q/hq-0317/">HQ-0317（Claudeの役割）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-350/">G-350（安全性・事実性の確認）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Claude 1とは</h2>
+      <p>
+        2023年3月頃、Anthropicは開発者向けAPIで<strong>Claude</strong>を公開しました。当初は<strong>Claude v1</strong>と<strong>Claude Instant</strong>（より軽量・高速な変種）の二層があり、企業のパートナー限定提供から段階的に広がりました。
+      </p>
+      <p>
+        技術的には大規模な<a href="../transformer/">Transformer</a>ベースの言語モデルですが、試験で問われるのはアーキテクチャの細部より、<strong>誰が提供する製品か</strong>と<strong>何を重視した設計か</strong>です。
+      </p>
+    </section>
+    <section id="dual-mandate">
+      <h2>有害と有用の二重課題</h2>
+      <p>LLMを実務に載せるとき、二つの力が衝突します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方向</th><th>求められること</th><th>失敗パターン</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Harmless（有害でない）</strong></td><td>暴力・違法・差別的出力を拒否</td><td>過度な拒否で何も答えない</td></tr>
+          <tr><td><strong>Helpful（有用）</strong></td><td>業務・学習で使える具体回答</td><td>危険な依頼にも従ってしまう</td></tr>
+          <tr><td><strong>Honest（正直）</strong></td><td>わからないことを認める</td><td>もっともらしい誤情報を生成</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Claude 1はこの三つ（HHH）のバランスを<strong>製品設計の中心</strong>に置いた初期世代です。後続の Claude 2 以降は長コンテキストや性能競争が加わりますが、<strong>安全と有用の緊張関係</strong>は系列を通じて続くテーマです。
+      </p>
+    </section>
+    <section id="alignment-stack">
+      <h2>アライメント手法の文脈</h2>
+      <p>
+        Claude 1の時代、Anthropicは<strong><a href="../rlhf/">RLHF</a></strong>（人間フィードバックによる強化学習）で好ましい応答へ調整する手法を採用していました。<a href="../alignment/">アライメント</a>は「人間の意図に沿わせる」上位概念、RLHFはその<strong>実現手法の一つ</strong>——という整理が試験でも重要です。
+      </p>
+      <p>
+        やがて<a href="../constitutional-ai/">Constitutional AI</a>（原則に基づく自己修正）などが公表され、<strong>人間ラベラだけに依存しない安全化</strong>の方向へ進みます。Claude 1はその流れの<strong>出発点</strong>にあり、後続世代へ手法が洗練されていきました。
+      </p>
+      <p>RLHFや安全設計をしても、<a href="../hallucination/">ハルシネーション</a>は別問題として残ります。好みの調整と事実の正確性は一致しません。</p>
+    </section>
+    <section id="vs-chatgpt-era">
+      <h2>ChatGPTブーム時代の位置</h2>
+      <p>
+        2022年末の<a href="../../tools/chatgpt/">ChatGPT</a>公開が一般の生成AIブームを起こしたのに対し、Claude 1は<strong>やや後から</strong>、開発者・企業向けAPIとして登場しました。ナラティブの違いは次のとおりです。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>ChatGPT</strong> — 誰でも触れる対話UIで普及速度を最大化</li>
+        <li><strong>Claude 1</strong> — API・パートナー経由で、安全に組み込む用途を想定</li>
+      </ul>
+      <p>試験では「どちらが先に発売されたか」より、<strong>OpenAI vs Anthropic</strong>の開発元区別が核心です。Claude 1はAnthropic系列の<strong>初代</strong>として覚えます。</p>
+    </section>
+    <section id="lineage">
+      <h2>後続世代への引き継ぎ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>世代</th><th>Claude 1からの主な進化</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="../claude-2/">Claude 2</a></td><td>100Kコンテキストなど長文強化</td></tr>
+          <tr><td><a href="../claude-2-1/">Claude 2.1</a></td><td>200K・ハルシネーション低減の訴求</td></tr>
+          <tr><td>Claude 3</td><td><a href="../claude-3-sonnet/">Sonnet</a>等の三層＋マルチモーダル</td></tr>
+          <tr><td>Claude 3.5以降</td><td>コーディング・思考モードの強化</td></tr>
+        </tbody>
+      </table>
+      <p>現行の主力は Claude 3.5 / 3.7 / 4 世代ですが、Claude 1は<strong>「安全に使える対話AIを製品として出した第一号」</strong>として系列史に残ります。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Claude 1＝ChatGPT</td><td>Anthropic vs OpenAI。別製品</td></tr>
+          <tr><td>Claude 1＝Claude 3</td><td>世代が異なる別モデル</td></tr>
+          <tr><td>安全重視＝ハルシネーションなし</td><td>有害抑制と事実正確性は別（G-350）</td></tr>
+          <tr><td>Claude 1＝RLHF</td><td>製品名 vs 学習手法</td></tr>
+          <tr><td>初代だから現在も最上位</td><td>後続世代へ移行。1は歴史的起点</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Claude 1の特徴は何ですか？</summary>
+          <p class="tool-faq-a">Anthropicが初めて一般提供したClaude世代で、有害出力を抑えつつ実用的な対話を目指した点が特徴です。後続世代ほど長コンテキストやマルチモーダルは前面に出ていませんが、安全志向の系列の起点として理解すると試験に役立ちます。</p>
+        </details>
+        <details>
+          <summary>Claude 1とChatGPTは同時期ですか？</summary>
+          <p class="tool-faq-a">ChatGPT（GPT-3.5）が2022年末に話題化したのに対し、Claude 1は2023年初頭のAPI提供など、やや後の登場です。試験では開発元（Anthropic vs OpenAI）の区別が中心で、発売順の暗記は不要です。</p>
+        </details>
+        <details>
+          <summary>安全性重視ならハルシネーションは起きませんか？</summary>
+          <p class="tool-faq-a">いいえ。安全性は有害・不適切な出力の抑制に焦点を当てた設計であり、事実誤認（ハルシネーション）の完全排除を意味しません。G検定でも安全性と事実性は別軸として扱われます。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0317/">HQ-0317 · Claudeの役割</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-350/">G-350 · 安全性・事実性の確認</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../claude-2/">Claude 2</a></li>
+          <li><a href="../claude-2-1/">Claude 2.1</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

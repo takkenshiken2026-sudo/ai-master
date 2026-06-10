@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BLEUスコアとは？機械翻訳の自動評価で出る0〜1の数値の意味と限界。人手評価との併用をG検定向けに解説。">
+  <title>BLEUスコアとは？0から1の尺で読む——自動評価スコアの意味と限界 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/bleu-score/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BLEUスコアとは？0から1の尺で読む——自動評価スコアの意味と限界">
+  <meta property="og:description" content="BLEU指標が出力する数値スコアの読み方。高いほど参照訳に近いが、品質・事実性の完全な保証にはならない。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/bleu-score/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "BLEUスコア",
+        "alternateName": ["BLEUスコア", "BLEU Score", "ブルースコア"],
+        "description": "BLEU指標によって算出される機械翻訳の自動評価スコア。参照訳とのn-gram一致度を0〜1付近の数値で表す。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BLEUスコアが高いとはどういう意味ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "機械翻訳の出力が、人手の参照訳とn-gramレベルでより多く一致していることを示します。一般に高いほど参照訳に近い訳だと解釈されますが、同義語の言い換えを拾えないなど指標固有の限界もあります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BLEUスコアだけで翻訳品質は十分ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "十分とは言えません。文章生成や要約では、自動評価指標だけでは品質や事実性を完全に測れないことがあります。人手評価や安全性・事実性の確認と併用する必要があります（G-350）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BLEUスコアと損失は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "違います。損失は学習時に勾配降下で最小化する目的関数です。BLEUスコアは学習後や開発中にモデル出力を評価する指標の値であり、役割が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">BLEUスコア</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>BLEUスコアとは？0から1の尺で読む——自動評価スコアの意味と限界</h1>
+    <p class="tool-hero-sub">読み：ぶるーすこあ ／ 英：BLEU Score</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>BLEUスコア</strong>は、<a href="../bleu/">BLEU</a>指標を候補訳と参照訳に適用して得られる<strong>数値</strong>です。論文やベンチマークで「BLEU=0.42」のように報告されるのがこれ。本記事は指標の定義の繰り返しではなく、<strong>「スコアの高低が何を意味し、何を意味しないか」</strong>——評価実務の読み方——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#number">スコアは何の数値か</a></li>
+        <li><a href="#read">高い・低いの読み方</a></li>
+        <li><a href="#limits">自動スコアの限界</a></li>
+        <li><a href="#human">人手評価との併用</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="number">
+      <h2>スコアは何の数値か</h2>
+      <p>
+        BLEUスコアは、機械翻訳システムの出力文（<strong>候補訳</strong>）を、人手で用意した<strong>参照訳</strong>と比較して算出します。<a href="../bleu/">BLEU</a>指標が内部で見るのは、主に<strong>n-gramの一致度</strong>と、訳が極端に短すぎないかを調整する<strong>簡潔さペナルティ</strong>（brevity penalty）です。
+      </p>
+      <p>
+        表示は多くの場合<strong>0〜1</strong>（またはパーセント換算）で、<strong>1に近いほど参照訳との語句・語順の重なりが大きい</strong>——と読みます。絶対値の「何点以上が合格」より、<strong>システム同士の比較</strong>や<strong>改善前後の差</strong>として使われることが多いです。
+      </p>
+    </section>
+
+    <section id="read">
+      <h2>高い・低いの読み方</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>状況</th><th>解釈のしかた</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>スコアが上がった</td><td>参照訳とのn-gram一致が増えた<strong>可能性</strong>。モデル改善の一つのシグナル</td></tr>
+          <tr><td>スコアが高い</td><td>参照訳に<strong>表面的に近い</strong>訳。必ずしも自然・正確とは限らない</td></tr>
+          <tr><td>スコアが低い</td><td>語彙・語順の一致が少ない。参照訳と大きく異なる言い回しの可能性</td></tr>
+          <tr><td>同義語で言い換え</td><td>意味は正しくてもスコアは<strong>上がりにくい</strong>（指標の盲点）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では「BLEUスコアが高い＝翻訳が完璧」「事実性も保証される」と答えるのは危険です。スコアは<strong>参照訳との一致の代理指標</strong>に過ぎません。
+      </p>
+    </section>
+
+    <section id="limits">
+      <h2>自動スコアの限界</h2>
+      <p>
+        <a href="../nlp/">自然言語処理</a>、とくに<strong>文章生成・要約・翻訳</strong>では、自動評価指標だけでは品質や<strong>事実性</strong>を完全に測れない——という注意が試験でも問われます（<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>同義語・言い換え</strong> — 正しい別表現を低評価しうる</li>
+        <li><strong>幻覚・事実誤り</strong> — 参照訳に偶然一致すれば高得点になりうる</li>
+        <li><strong>自然さ・有用性</strong> — 数値だけでは人間の満足度は測れない</li>
+        <li><strong>安全性・偏り</strong> — 有害出力の有無はBLEUでは分からない</li>
+      </ul>
+      <p>
+        <a href="../recall/">再現率</a>のFAQでも触れられるように、自由生成の品質評価では<strong>人手評価</strong>やタスク固有の指標が併用されます。BLEUスコアは<strong>開発の足がかり</strong>であり、最終判断の銀弾ではありません。
+      </p>
+    </section>
+
+    <section id="human">
+      <h2>人手評価との併用</h2>
+      <p>G-350の正解は次の整理です。</p>
+      <blockquote>
+        <p>自動評価指標だけでなく、タスクによっては人手評価や安全性・事実性の確認も必要になる</p>
+      </blockquote>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>評価の層</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>BLEUスコア</strong></td><td>大量の候補を<strong>素早く比較</strong>。開発・研究のベンチマーク</td></tr>
+          <tr><td><strong>人手評価</strong></td><td>流暢さ・適切さ・有用性の<strong>最終確認</strong></td></tr>
+          <tr><td><strong>事実性チェック</strong></td><td>ハルシネーション・誤訳の検出（自動指標の外）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../loss-function/">損失関数</a>で学習し、BLEUスコアで開発中に評価し、リリース前に人手で確認する——という<strong>三層</strong>で役割が分かれます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>意味</strong> — 参照訳との<strong>n-gram一致</strong>を0〜1付近で表した値</li>
+        <li><strong>用途</strong> — 主に<strong>機械翻訳</strong>の自動評価（G-340の文脈）</li>
+        <li><strong>限界</strong> — 自動指標だけでは品質・事実性を<strong>完全には測れない</strong>（G-350）</li>
+        <li><strong>区別</strong> — 損失関数・正解率・ディープブルーとは別</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>、<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>、<a href="../../exams/g-kentei/practice/q/g-334/">G-334</a>、<a href="../../exams/g-kentei/drill/q/tf-324/">TF-324</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>BLEUスコア＝損失</td><td>評価指標の値 vs 学習の目的関数</td></tr>
+          <tr><td>高スコア＝事実性も保証</td><td>参照訳との一致。真偽の判定ではない（G-350）</td></tr>
+          <tr><td>自動指標だけで十分</td><td>人手評価・安全性確認も必要（G-350）</td></tr>
+          <tr><td>BLEUスコア＝正解率</td><td>分類の正解率とは別概念</td></tr>
+          <tr><td>評価データは不要</td><td>参照訳・テストセットが要る（G-350の誤答）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>BLEUスコアが高いとはどういう意味ですか？</summary><p class="tool-faq-a">機械翻訳の出力が、人手の参照訳とn-gramレベルでより多く一致していることを示します。一般に高いほど参照訳に近い訳だと解釈されますが、同義語の言い換えを拾えないなど指標固有の限界もあります。</p></details>
+        <details><summary>BLEUスコアだけで翻訳品質は十分ですか？</summary><p class="tool-faq-a">十分とは言えません。文章生成や要約では、自動評価指標だけでは品質や事実性を完全に測れないことがあります。人手評価や安全性・事実性の確認と併用する必要があります（<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>）。</p></details>
+        <details><summary>BLEUスコアと損失は同じですか？</summary><p class="tool-faq-a">違います。損失は学習時に勾配降下で最小化する目的関数です。BLEUスコアは学習後や開発中にモデル出力を評価する指標の値であり、役割が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-350/">G-350 · NLP評価の注意</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-340/">G-340 · 機械翻訳</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-334/">G-334 · n-gram</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-324/">TF-324 · ディープブルー（混同注意）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bleu/">BLEU</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../f1-score/">F値</a></li>
+          <li><a href="../bart-model/">BART</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

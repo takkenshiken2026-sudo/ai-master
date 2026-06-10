@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CUDAとは？NVIDIA GPU向け並列計算プラットフォーム。GPUハードウェアと深層学習フレームワークの関係をG検定向けに解説。">
+  <title>CUDAとは？GPU計算の共通土台——深層学習を並列化するプラットフォーム — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/cuda/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CUDAとは？GPU計算の共通土台——深層学習を並列化するプラットフォーム">
+  <meta property="og:description" content="Compute Unified Device Architecture。NVIDIA GPUで並列演算を実行するためのソフトウェア基盤。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/cuda/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "CUDA",
+        "alternateName": ["CUDA", "クーダ", "Compute Unified Device Architecture"],
+        "description": "NVIDIA GPU上で並列計算を実行するためのソフトウェアプラットフォーム。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "CUDAは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "NVIDIAが提供するGPU向け並列計算プラットフォームです。GPUハードウェアそのものではなく、深層学習などの大量演算をGPU上で動かすためのソフトウェア基盤として位置づけられます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CUDAとGPUは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "違います。GPUは並列演算に強いプロセッサ（ハードウェア）、CUDAはNVIDIA GPU向けの並列計算プラットフォーム（ソフトウェア）です。試験では層を分けて整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CUDAとTPUは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。CUDAはNVIDIA GPU向けの並列計算基盤、TPUはGoogleが設計した機械学習向け専用プロセッサです。いずれも深層学習の高速化に関わりますが、別物です（G-119）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">CUDA</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">基礎・機械学習</p>
+    <h1>CUDAとは？GPU計算の共通土台——深層学習を並列化するプラットフォーム</h1>
+    <p class="tool-hero-sub">読み：くーだ ／ 英：CUDA（Compute Unified Device Architecture）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>CUDA</strong>は、NVIDIA製<a href="../gpu/">GPU</a>上で<strong>並列計算を実行するためのソフトウェア基盤</strong>です。チップの型番暗記ではなく、<strong>「ハードウェア（GPU）と学習コードのあいだにある共通土台」</strong>——本記事はAPIの細部ではなく、試験で問われる<strong>GPU・TPU・CPUとの層の違い</strong>と、<a href="../alexnet/">AlexNet</a>以降のDL実用化との関係に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#layers">ハードとソフトの三層</a></li>
+        <li><a href="#why-dl">深層学習になぜ効くか</a></li>
+        <li><a href="#stack">フレームワークとの関係</a></li>
+        <li><a href="#history">AlexNetと計算資源</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="layers">
+      <h2>ハードとソフトの三層</h2>
+      <p>試験では次の<strong>層の分離</strong>が得点の近道です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ハードウェア</strong></td><td><a href="../gpu/">GPU</a>、CPU、TPU</td><td>物理的な計算チップ（<a href="../../exams/g-kentei/practice/q/g-154/">G-154</a>）</td></tr>
+          <tr><td><strong>プラットフォーム</strong></td><td><strong>CUDA</strong></td><td>NVIDIA GPUで並列演算を動かす<strong>ソフトウェア基盤</strong></td></tr>
+          <tr><td><strong>フレームワーク</strong></td><td>PyTorch、TensorFlow など</td><td>モデル定義・学習ループの高水準API</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「GPUを買った＝すぐ深層学習が速い」ではありません。<strong>CUDA対応のドライバ・ライブラリ</strong>と、フレームワークのGPU版が揃って初めて、行列演算がGPU上で走ります。
+      </p>
+    </section>
+
+    <section id="why-dl">
+      <h2>深層学習になぜ効くか</h2>
+      <p>
+        <a href="../deep-learning/">ディープラーニング</a>は、同じ形の行列演算を<strong>大量のデータ・パラメータ</strong>に対して繰り返します。GPUは数千のコアで並列処理でき、この「同じ計算の繰り返し」に向いています（<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>、<a href="../../exams/g-kentei/practice/q/g-010/">G-010</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>GPU</strong> — 並列演算に強い<strong>プロセッサ</strong></li>
+        <li><strong>CUDA</strong> — そのプロセッサに<strong>計算カーネルを投げる</strong>ための基盤</li>
+        <li><strong>効果</strong> — 学習・推論の<strong>高速化</strong>（精度そのものではない）</li>
+      </ul>
+      <p>
+        G-010の誤答「GPUを使えば<strong>必ず高精度</strong>」は×。CUDAも<strong>計算を速くする土台</strong>であり、データやモデル設計を代替しません。
+      </p>
+    </section>
+
+    <section id="stack">
+      <h2>フレームワークとの関係</h2>
+      <p>実務では次の流れでGPU計算が使われます（概念図）。</p>
+      <ol class="tool-steps">
+        <li><strong>モデル定義</strong> — PyTorch等でレイヤーを記述</li>
+        <li><strong>GPU転送</strong> — テンソルをGPUメモリへ（<code>.cuda()</code> や <code>device=cuda</code> など）</li>
+        <li><strong>カーネル実行</strong> — CUDA経由で畳み込み・行列積などが並列実行</li>
+        <li><strong>結果取得</strong> — 損失・勾配をCPUへ戻してログや保存</li>
+      </ol>
+      <p>
+        cuDNNなどの<strong>深層学習向けライブラリ</strong>もCUDA上で動き、<a href="../cnn/">CNN</a>の畳み込みを高速化します。試験ではライブラリ名の暗記より、<strong>「GPU＋その上のソフト基盤」</strong>という整理が中心です。
+      </p>
+    </section>
+
+    <section id="history">
+      <h2>AlexNetと計算資源</h2>
+      <p>
+        第三次AIブームでは、データ・アルゴリズムに加え<strong>計算資源</strong>が重要と語られます（<a href="../../exams/g-kentei/drill/q/tf-334/">TF-334</a>）。
+      </p>
+      <p>
+        <a href="../alexnet/">AlexNet</a>（2012年）がGPUを活用して深層学習の実用性を示した象徴的出来事として試験に登場します。CUDAという名前が直接出なくても、<strong>「GPU並列＋深層CNN」</strong>の組み合わせが現代DLの前提になった、と歴史的に接続できます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>プロセッサ</th><th>特徴</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>CPU</strong></td><td>汎用・逐次処理向き</td><td>G-154の（あ）</td></tr>
+          <tr><td><strong>GPU</strong>＋CUDA</td><td>大規模並列</td><td>TF-055、G-118</td></tr>
+          <tr><td><strong>TPU</strong></td><td>ML向けASIC</td><td><a href="../../exams/g-kentei/practice/q/g-119/">G-119</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — NVIDIA GPU向け<strong>並列計算プラットフォーム</strong>（ソフトウェア基盤）</li>
+        <li><strong>GPUとの違い</strong> — ハード（GPU）vs ソフト（CUDA）</li>
+        <li><strong>目的</strong> — 行列・テンソル演算の<strong>高速化</strong>。精度保証ではない</li>
+        <li><strong>すり替え回避</strong> — TPU、CNN、正則化、データ拡張ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>、<a href="../../exams/g-kentei/practice/q/g-010/">G-010</a>、<a href="../../exams/g-kentei/practice/q/g-118/">G-118</a>、<a href="../../exams/g-kentei/practice/q/g-154/">G-154</a>、<a href="../../exams/g-kentei/practice/q/g-119/">G-119</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CUDA＝GPUチップ</td><td>ソフトウェア基盤 vs ハードウェア</td></tr>
+          <tr><td>CUDA＝TPU</td><td>NVIDIA向け vs Google MLチップ（G-119）</td></tr>
+          <tr><td>CUDA＝モデル精度向上</td><td>計算高速化。G-010の誤答Cに注意</td></tr>
+          <tr><td>DLはGPU不要</td><td>実用的DLではGPUが標準（<a href="../../exams/g-kentei/drill/q/tf-335/">TF-335</a>は×）</td></tr>
+          <tr><td>CUDA＝PyTorch</td><td>基盤 vs 高水準フレームワーク</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>CUDAは何ですか？</summary><p class="tool-faq-a">NVIDIAが提供するGPU向け並列計算プラットフォームです。GPUハードウェアそのものではなく、深層学習などの大量演算をGPU上で動かすためのソフトウェア基盤として位置づけられます。</p></details>
+        <details><summary>CUDAとGPUは同じですか？</summary><p class="tool-faq-a">違います。GPUは並列演算に強いプロセッサ（ハードウェア）、CUDAはNVIDIA GPU向けの並列計算プラットフォーム（ソフトウェア）です。試験では層を分けて整理します。</p></details>
+        <details><summary>CUDAとTPUは同じですか？</summary><p class="tool-faq-a">いいえ。CUDAはNVIDIA GPU向けの並列計算基盤、TPUはGoogleが設計した機械学習向け専用プロセッサです。いずれも深層学習の高速化に関わりますが、別物です（<a href="../../exams/g-kentei/practice/q/g-119/">G-119</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-055/">TF-055 · GPUと並列演算</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-010/">G-010 · DLでGPUが使われる理由</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-118/">G-118 · 計算資源の重要性</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-154/">G-154 · CPUとGPUの対比</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

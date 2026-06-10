@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DPOとは？好みデータから直接LLMを最適化する手法。RLHFとの違いとアライメント文脈での整理をG検定・生成AIパスポート向けに解説。">
+  <title>DPOとは？報酬モデルを飛ばす——好みデータで直接方策を整える — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/dpo/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DPOとは？報酬モデルを飛ばす——好みデータで直接方策を整える">
+  <meta property="og:description" content="Direct Preference Optimization。選ばれた回答と却下された回答のペアから、報酬モデルと強化学習を経ずに方策を最適化するアライメント手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/dpo/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "DPO",
+        "alternateName": ["DPO", "Direct Preference Optimization", "直接選好最適化"],
+        "description": "人間の選好ペア（良い回答 vs 悪い回答）から、報酬モデルと強化学習を経ずに言語モデルの方策を直接最適化する手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "DPOは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じプロンプトに対し、人が選んだ回答（chosen）と選ばなかった回答（rejected）のペアから、言語モデルがより好ましい出力をするよう直接学習する手法です。RLHFのように報酬モデルを別途学習しPPOで方策更新する段階を簡略化したアプローチとして知られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DPOとRLHFは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。RLHFは人間の好みを報酬モデルに変換し、強化学習（PPOなど）で方策を更新する多段パイプラインです。DPOは好みペアから方策を直接最適化し、報酬モデル学習とRLの工程を省略する方向の手法です。いずれもアライメントの実装手段として語られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DPOはアライメントの定義ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。アライメントは人間の意図や価値観に沿わせる上位の考え方です。DPOはその実現手法の一つであり、RLHFやConstitutional AIと並ぶ調整・安全化の手段として位置づけられます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">DPO</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>DPOとは？報酬モデルを飛ばす——好みデータで直接方策を整える</h1>
+    <p class="tool-hero-sub">読み：ディーピーオー ／ 英：DPO（Direct Preference Optimization）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>DPO</strong>（Direct Preference Optimization／直接選好最適化）は、「どちらの回答が良いか」という<strong>好みペア</strong>から、<a href="../llm/">LLM</a>の出力方針を<strong>直接</strong>学習する手法です。<a href="../rlhf/">RLHF</a>が報酬モデル＋強化学習（PPOなど）の<strong>多段パイプライン</strong>だったのに対し、DPOはその中間工程を飛ばす<strong>近道</strong>——本記事は損失関数の導出ではなく、<strong>「何を省略したか」</strong>という整理に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#preference-data">好みデータという共通入力</a></li>
+        <li><a href="#rlhf-pipeline">RLHFが踏む3段階</a></li>
+        <li><a href="#dpo-shortcut">DPOが省略するもの</a></li>
+        <li><a href="#vs-others">RLHF・CAI・FTとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="preference-data">
+      <h2>好みデータという共通入力</h2>
+      <p>
+        RLHFもDPOも、出発点は似ています。同じプロンプトに対し、モデルが複数の回答を生成し、<strong>人がより良い方を選ぶ</strong>——この「chosen（選ばれた）／rejected（却下された）」のペアが好みデータです。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-370/">G-370</a>が示すように、RLHFは「人間のフィードバックを<strong>報酬モデル</strong>などに反映してモデルを調整する」考え方です。DPOも<strong>人間の好みに近づける</strong>目的は同じですが、<strong>反映の経路</strong>が異なります。
+      </p>
+    </section>
+
+    <section id="rlhf-pipeline">
+      <h2>RLHFが踏む3段階</h2>
+      <p>試験でよく出る<a href="../rlhf/">RLHF</a>の流れをおさらいします（<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311</a>）。</p>
+      <ol class="tool-steps">
+        <li><strong>SFT</strong> — 良い応答例で<a href="../fine-tuning/">ファインチューニング</a></li>
+        <li><strong>報酬モデル</strong> — 好みペアから「回答の質」を数値化するモデルを学習</li>
+        <li><strong>強化学習</strong> — 報酬が高くなるよう方策を更新（<strong>PPO</strong>など、<a href="../../exams/g-kentei/practice/q/g-366/">G-366</a>）</li>
+      </ol>
+      <p>
+        この3段目が、実装・安定性の面でコストや難易度の源になりやすい——DPOはここに着目した後続手法の一つです。
+      </p>
+    </section>
+
+    <section id="dpo-shortcut">
+      <h2>DPOが省略するもの</h2>
+      <p>DPOの設計思想はシンプルに言えば次のとおりです。</p>
+      <blockquote>
+        <p>好みペアから、報酬モデルを明示的に学習せず、言語モデルの方策を<strong>直接</strong>最適化する。</p>
+      </blockquote>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>工程</th><th>RLHF</th><th>DPO</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>好みデータ</td><td>使う</td><td>使う</td></tr>
+          <tr><td>報酬モデル</td><td><strong>別途学習</strong></td><td>明示的に<strong>省略</strong></td></tr>
+          <tr><td>強化学習（PPO等）</td><td><strong>実施</strong></td><td>直接最適化で<strong>代替</strong></td></tr>
+          <tr><td>目的</td><td>望ましい出力へ調整</td><td>同左（<a href="../alignment/">アライメント</a>の手段）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では数式より「<strong>RLHFの簡略化・代替</strong>」として押さえるのが効率的です。製品がDPOかRLHFかは公開情報に依存するため、<strong>概念の層</strong>（目的・入力・工程の違い）で答える姿勢が重要です。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>RLHF・CAI・FTとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>入力・手段</th><th>位置づけ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>DPO</strong></td><td>好みペア → <strong>直接</strong>方策最適化</td><td>アライメントの実装手法</td></tr>
+          <tr><td><strong><a href="../rlhf/">RLHF</a></strong></td><td>好み → 報酬モデル → RL</td><td>代表的多段パイプライン</td></tr>
+          <tr><td><strong><a href="../constitutional-ai/">Constitutional AI</a></strong></td><td>原則に基づく自己批判・修正</td><td>人間FB依存を減らす別方向</td></tr>
+          <tr><td><strong><a href="../fine-tuning/">ファインチューニング</a></strong></td><td>正解ラベル付きデータで追加学習</td><td>好み最適化とは目的が異なることも</td></tr>
+          <tr><td><strong><a href="../alignment/">アライメント</a></strong></td><td>—</td><td>上位概念。DPOは<strong>手段の一つ</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        DPO＝ChatGPT、DPO＝RLHFの定義（<a href="../../exams/genai-passport/drill/q/tf-0166/">TF-0166</a>のようなすり替え）——いずれも試験の定番の罠です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 好みデータから<strong>直接</strong>方策を最適化する手法</li>
+        <li><strong>対比</strong> — RLHFは報酬モデル＋強化学習の多段構成（G-370、HQ-0311）</li>
+        <li><strong>層</strong> — アライメントの<strong>実装の一つ</strong>。定義そのものではない</li>
+        <li><strong>すり替え回避</strong> — 対話サービス名・教師なし学習・データ拡張ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-370/">G-370</a>、<a href="../../exams/g-kentei/drill/q/tf-149/">TF-149</a>、<a href="../../exams/g-kentei/practice/q/g-366/">G-366（PPO）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311</a>、<a href="../../exams/genai-passport/drill/q/tf-0166/">TF-0166</a>、<a href="../../exams/genai-passport/drill/q/tf-0124/">TF-0124</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>DPO＝RLHF</td><td>直接最適化 vs 報酬モデル＋RL</td></tr>
+          <tr><td>DPO＝アライメントの定義</td><td>手段 vs 上位の考え方</td></tr>
+          <tr><td>DPO＝Constitutional AI</td><td>好みペア最適化 vs 原則ベース自己修正</td></tr>
+          <tr><td>DPO＝ChatGPT</td><td>学習手法 vs 対話サービス（TF-0166）</td></tr>
+          <tr><td>DPO＝事前学習</td><td>調整・安全化の<strong>事後</strong>工程</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>DPOは何をする手法ですか？</summary><p class="tool-faq-a">同じプロンプトに対し、人が選んだ回答（chosen）と選ばなかった回答（rejected）のペアから、言語モデルがより好ましい出力をするよう直接学習する手法です。RLHFのように報酬モデルを別途学習しPPOで方策更新する段階を簡略化したアプローチとして知られます。</p></details>
+        <details><summary>DPOとRLHFは同じですか？</summary><p class="tool-faq-a">同じではありません。RLHFは人間の好みを報酬モデルに変換し、強化学習（PPOなど）で方策を更新する多段パイプラインです。DPOは好みペアから方策を直接最適化し、報酬モデル学習とRLの工程を省略する方向の手法です。いずれもアライメントの実装手段として語られます。</p></details>
+        <details><summary>DPOはアライメントの定義ですか？</summary><p class="tool-faq-a">いいえ。アライメントは人間の意図や価値観に沿わせる上位の考え方です。DPOはその実現手法の一つであり、RLHFやConstitutional AIと並ぶ調整・安全化の手段として位置づけられます。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-370/">G-370 · RLHF</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-149/">TF-149 · RLHFの略称</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311 · RLHFの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0166/">TF-0166 · 誤った説明</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../constitutional-ai/">Constitutional AI</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../reinforcement-learning/">強化学習</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

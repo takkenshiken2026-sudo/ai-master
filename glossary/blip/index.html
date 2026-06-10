@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BLIPとは？画像キャプション・VQA向けの視覚言語事前学習モデル。Image CaptioningとText-to-Imageの違いをG検定向けに解説。">
+  <title>BLIPとは？見る・聞く・答える——画像と言葉を結ぶ視覚言語の事前学習 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/blip/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BLIPとは？見る・聞く・答える——画像と言葉を結ぶ視覚言語の事前学習">
+  <meta property="og:description" content="画像とテキストを統合してキャプション生成・視覚質問応答を行うマルチモーダル事前学習モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/blip/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "BLIP",
+        "alternateName": ["BLIP", "ブリップ", "Bootstrapping Language-Image Pre-training"],
+        "description": "画像キャプション生成や視覚質問応答（VQA）向けの視覚言語事前学習モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BLIPは何ができるモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像の内容を文章で説明する画像キャプション生成や、画像と質問文を入力として答える視覚質問応答（VQA）など、画像と言語を組み合わせるマルチモーダルタスク向けの事前学習モデルです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BLIPとText-to-Imageは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "違います。BLIPは主に画像を理解して言葉で説明・回答する方向（画像→文章）の視覚言語モデルです。文章から画像を生成するText-to-Image（DALL·Eなど）は別タスクです（G-390）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BLIPはテキスト専用のLLMですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BLIPは画像とテキストの両方を扱うマルチモーダルモデルです。テキストだけを扱うLLMや、画像だけを分類するCNNとは棲み分けが異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">BLIP</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>BLIPとは？見る・聞く・答える——画像と言葉を結ぶ視覚言語の事前学習</h1>
+    <p class="tool-hero-sub">読み：ブリップ ／ 英：BLIP（Bootstrapping Language-Image Pre-training）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>BLIP</strong>（Bootstrapping Language-Image Pre-training）は、<strong>画像とテキストを一緒に学ぶ</strong>視覚言語の事前学習モデルです。写真を見て説明文を書く<strong>画像キャプション</strong>、画像について質問に答える<strong>VQA</strong>——<a href="../multimodal-ai/">マルチモーダルAI</a>の「理解側」を担う代表の一つ。本記事は層構造の暗記ではなく、<strong>「画像→言葉」の橋をどう架けるか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#tasks">得意な二つのタスク</a></li>
+        <li><a href="#bootstrap">ブートストラップの意味</a></li>
+        <li><a href="#architecture">視覚言語モデルの位置づけ</a></li>
+        <li><a href="#vs-others">似た概念との区別</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="tasks">
+      <h2>得意な二つのタスク</h2>
+      <p>試験でマルチモーダル例として頻出なのが、次の二つです（<a href="../../exams/g-kentei/practice/q/g-392/">G-392</a>）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>入力</th><th>出力</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Image Captioning</strong><br>（画像キャプション）</td>
+            <td>画像</td>
+            <td>説明文</td>
+            <td>画像の内容を<strong>文章で説明</strong>（<a href="../../exams/g-kentei/practice/q/g-390/">G-390</a>、<a href="../../exams/g-kentei/drill/q/tf-167/">TF-167</a>）</td>
+          </tr>
+          <tr>
+            <td><strong>VQA</strong><br>（Visual Question Answering）</td>
+            <td>画像＋質問文</td>
+            <td>回答文</td>
+            <td>画像内容に基づいて<strong>質問に答える</strong>（G-392）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        どちらも<strong>画像認識と自然言語処理の組み合わせ</strong>——視覚情報を捉え、言葉で表現する——という<a href="../multimodal-ai/">マルチモーダル</a>の典型です（<a href="../../exams/g-kentei/drill/q/tf-166/">TF-166</a>）。
+      </p>
+    </section>
+
+    <section id="bootstrap">
+      <h2>ブートストラップの意味</h2>
+      <p>
+        名前の <strong>Bootstrapping</strong> は、ざっくり「自分で学習用のデータを増やしながら学ぶ」イメージです。BLIPでは、モデルが生成したキャプションなどを<strong>フィルタリングして学習データを拡充</strong>し、視覚と言語の対応を強化する——という設計が特徴として知られます。
+      </p>
+      <p>
+        試験では細部のデータ生成ループまで暗記する必要はありません。<strong>「大規模な画像―テキストペアで事前学習し、下流タスクに転移する」</strong>——<a href="../foundation-model/">基盤モデル</a>の思想——と接続して覚えるのが効率的です。
+      </p>
+    </section>
+
+    <section id="architecture">
+      <h2>視覚言語モデルの位置づけ</h2>
+      <p>BLIPは次の系譜の<strong>一モデル名</strong>として整理します。</p>
+      <ul class="tool-steps">
+        <li><strong>視覚</strong> — 画像を<a href="../cnn/">CNN</a>やVision Transformerでエンコード（<a href="../beit/">BEiT</a>などの画像事前学習と関連）</li>
+        <li><strong>言語</strong> — <a href="../transformer/">Transformer</a>系でテキストを処理</li>
+        <li><strong>融合</strong> — 画像特徴と言語特徴を<strong>共通の意味空間</strong>で結ぶ</li>
+        <li><strong>転移</strong> — <a href="../fine-tuning/">ファインチューニング</a>でキャプション・VQAなどに適応</li>
+      </ul>
+      <p>
+        <a href="../gpt-4/">GPT-4</a>や<a href="../gemini-model/">Gemini</a>のような製品レベルのマルチモーダル対話とは世代も規模も異なりますが、<strong>「画像＋言語」</strong>という試験定義（<a href="../../exams/g-kentei/practice/q/g-389/">G-389</a>）にはBLIPも該当します。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>似た概念との区別</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>方向・役割</th><th>BLIPとの違い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Text-to-Image</strong></td><td>文章→画像生成</td><td>BLIPは主に<strong>画像→言葉</strong>（G-390のBは×）</td></tr>
+          <tr><td><strong><a href="../text-to-image/">テキスト画像生成</a></strong></td><td><a href="../dalle-model/">DALL·E</a>等</td><td>生成の別系統。キャプションとは逆方向</td></tr>
+          <tr><td><strong><a href="../llm/">LLM</a></strong></td><td>テキスト中心</td><td>BLIPは<strong>画像入力が前提</strong>の視覚言語モデル</td></tr>
+          <tr><td><strong><a href="../cnn/">CNN</a></strong></td><td>画像分類・検出</td><td>BLIPは言語出力まで含む<strong>マルチモーダル</strong></td></tr>
+          <tr><td><strong><a href="../clip-model/">CLIP</a></strong></td><td>画像―テキストの埋め込み</td><td>対照学習の代表。BLIPはキャプション・VQA寄り</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>分野</strong> — 画像キャプション・<strong>VQA</strong>向けの視覚言語事前学習</li>
+        <li><strong>タスク</strong> — Image Captioning＝画像を文章で説明、VQA＝画像＋質問に回答</li>
+        <li><strong>マルチモーダル</strong> — 画像と言語の<strong>組み合わせ</strong>（G-389、TF-166）</li>
+        <li><strong>すり替え回避</strong> — Text-to-Image、話者識別、強化学習ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-390/">G-390</a>、<a href="../../exams/g-kentei/practice/q/g-392/">G-392</a>、<a href="../../exams/g-kentei/practice/q/g-389/">G-389</a>、<a href="../../exams/g-kentei/drill/q/tf-167/">TF-167</a>、<a href="../../exams/g-kentei/drill/q/tf-166/">TF-166</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>画像キャプション＝文章から画像生成</td><td>画像→文章。Text-to-Imageは逆（G-390）</td></tr>
+          <tr><td>VQA＝Image Captioning</td><td>質問応答 vs 説明文生成。別タスク（G-392）</td></tr>
+          <tr><td>BLIP＝純粋なCNN</td><td>視覚＋言語のマルチモーダルモデル</td></tr>
+          <tr><td>BLIP＝ChatGPT</td><td>研究モデル名 vs 対話サービス</td></tr>
+          <tr><td>マルチモーダル＝画像生成だけ</td><td>理解・対話・キャプションも含む</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>BLIPは何ができるモデルですか？</summary><p class="tool-faq-a">画像の内容を文章で説明する画像キャプション生成や、画像と質問文を入力として答える視覚質問応答（VQA）など、画像と言語を組み合わせるマルチモーダルタスク向けの事前学習モデルです。</p></details>
+        <details><summary>BLIPとText-to-Imageは同じですか？</summary><p class="tool-faq-a">違います。BLIPは主に画像を理解して言葉で説明・回答する方向（画像→文章）の視覚言語モデルです。文章から画像を生成するText-to-Image（DALL·Eなど）は別タスクです（<a href="../../exams/g-kentei/practice/q/g-390/">G-390</a>）。</p></details>
+        <details><summary>BLIPはテキスト専用のLLMですか？</summary><p class="tool-faq-a">いいえ。BLIPは画像とテキストの両方を扱うマルチモーダルモデルです。テキストだけを扱うLLMや、画像だけを分類するCNNとは棲み分けが異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-390/">G-390 · Image Captioning</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-392/">G-392 · VQAとキャプション</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-389/">G-389 · マルチモーダルAI</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-167/">TF-167 · 画像キャプション</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../beit/">BEiT</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../clip-model/">CLIP</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

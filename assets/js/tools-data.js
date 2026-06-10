@@ -707,11 +707,13 @@ const TOOLS = [
 const CATEGORIES = [
   { id: 'all', label: 'すべて' },
   { id: "chat", label: "チャットAI" },
+  { id: "agent", label: "AIエージェント" },
   { id: "image", label: "画像生成" },
   { id: "code", label: "コーディング" },
   { id: "audio", label: "音声・動画" },
   { id: "productivity", label: "仕事効率化" },
   { id: "research", label: "検索・リサーチ" },
+  { id: "automation", label: "業務自動化" },
   { id: "local", label: "ローカル" },
 ];
 

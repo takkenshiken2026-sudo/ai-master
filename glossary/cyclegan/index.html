@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CycleGANとは？ペアなしデータで2つのドメイン間の画像変換を学ぶGAN。Pix2Pix・DCGANとの違いをG検定向けに解説。">
+  <title>CycleGANとは？ペアなしで翻訳する——循環の約束でドメインを結ぶGAN — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/cyclegan/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CycleGANとは？ペアなしで翻訳する——循環の約束でドメインを結ぶGAN">
+  <meta property="og:description" content="対応ペアがなくても2つの画像ドメイン間の変換を学習するGAN。馬とシマウマ、昼と夜の変換が代表例。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/cyclegan/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "CycleGAN",
+        "alternateName": ["CycleGAN", "サイクルGAN", "サイクルじぇーえぬ"],
+        "description": "対応するペア画像がなくても、2つのドメイン間の画像変換を学習できるGAN。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "CycleGANは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "対応するペア画像がなくても、2つのドメイン（例：馬とシマウマ、昼と夜）間の画像変換を学習できるGANです。Pix2Pixがペアデータを必要とするのに対し、ペアなし変換が特徴です（G-376）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CycleGANとPix2Pixは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Pix2Pixは入力と出力のペア画像を使って変換を学習します（G-375）。CycleGANはペアがなくても、循環一貫性などの制約で2つのドメイン間の変換を学びます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CycleGANは拡散モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。CycleGANはGAN系の画像変換モデルです。近年のText-to-Imageで主流の拡散モデル（Stable Diffusionなど）とは別系統です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">CycleGAN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>CycleGANとは？ペアなしで翻訳する——循環の約束でドメインを結ぶGAN</h1>
+    <p class="tool-hero-sub">読み：サイクルじぇーえぬ ／ 英：CycleGAN</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>CycleGAN</strong>は、<strong>対応するペア画像がなくても</strong>、2つの画像ドメイン（馬↔シマウマ、昼↔夜など）の<strong>相互変換</strong>を学習する<a href="../gan/">GAN</a>です。Pix2Pixが「線画と写真のペア」を要求するのに対し、CycleGANは<strong>「Aに行って戻れば元に戻る」循環の約束</strong>で整列を代用——本記事は損失式の暗記ではなく、その<strong>ペアなし翻訳の発想</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#pair-problem">ペア問題の壁</a></li>
+        <li><a href="#cycle">循環一貫性の直感</a></li>
+        <li><a href="#domains">ドメイン変換の例</a></li>
+        <li><a href="#vs-pix2pix">Pix2Pix・DCGANとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="pair-problem">
+      <h2>ペア問題の壁</h2>
+      <p>
+        画像変換の古典的課題は、「入力画像Aに対応する正解画像B」を<strong>ペアで揃える</strong>ことです。線画→彩色写真なら、同じ構図の線画と写真が必要になります（<a href="../../exams/g-kentei/practice/q/g-375/">G-375</a>のPix2Pix）。
+      </p>
+      <p>
+        しかし「馬の写真集」と「シマウマの写真集」には、<strong>1対1の対応</strong>がありません。同じ構図・同じポーズで撮ったペアを集めるのは現実的でない——CycleGANはこの<strong>ペアなし</strong>の状況を想定します。
+      </p>
+      <blockquote>
+        <p>対応するペア画像がなくても、2つのドメイン間の画像変換を学習できるモデル。（G-376）</p>
+      </blockquote>
+    </section>
+
+    <section id="cycle">
+      <h2>循環一貫性の直感</h2>
+      <p>ペアがないとき、CycleGANは<strong>循環（Cycle）</strong>で整合性を担保します。</p>
+      <ol class="tool-steps">
+        <li><strong>順変換 G</strong> — ドメインXの画像をドメインY風に変換</li>
+        <li><strong>逆変換 F</strong> — ドメインYの画像をドメインX風に変換</li>
+        <li><strong>循環損失</strong> — X→Y→X と戻したとき、<strong>元の画像に近い</strong>べき</li>
+        <li><strong>GAN損失</strong> — 変換結果が本物のY（またはX）らしく見えるよう識別器と競合</li>
+      </ol>
+      <p>
+        「馬→シマウマ風→馬に戻る」——この<strong>往復の約束</strong>が、ペアラベルの代わりに「変換が意味を保っている」手がかりになります。試験では循環損失の数式より、<strong>ペアなしでも学習できる理由</strong>が問われます。
+      </p>
+    </section>
+
+    <section id="domains">
+      <h2>ドメイン変換の例</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ドメインX</th><th>ドメインY</th><th>変換のイメージ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>馬</td><td>シマウマ</td><td>模様・色調のスタイル変換（G-376の例）</td></tr>
+          <tr><td>昼の風景</td><td>夜の風景</td><td>照明・色調の変換</td></tr>
+          <tr><td>夏の写真</td><td>冬の写真</td><td>季節・天候の見た目変換</td></tr>
+          <tr><td>写真</td><td>絵画風</td><td>スタイル転送（style transfer）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        いずれも<strong>ドメイン変換</strong>——ある分布の画像を別分布らしく見せる——タスクです。<a href="../text-to-image/">Text-to-Image</a>の「文章から新規生成」とは目的が異なります。
+      </p>
+    </section>
+
+    <section id="vs-pix2pix">
+      <h2>Pix2Pix・DCGANとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>必要データ</th><th>主な用途</th><th>試験</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Pix2Pix</strong></td><td><strong>ペア</strong>画像（入力↔出力）</td><td>線画→写真など</td><td>G-375</td></tr>
+          <tr><td><strong>CycleGAN</strong></td><td>2ドメインの<strong>非ペア</strong>集合</td><td>馬↔シマウマ、昼↔夜</td><td>G-376</td></tr>
+          <tr><td><strong>DCGAN</strong></td><td>単一ドメインの画像</td><td>ランダムノイズから<strong>新規生成</strong></td><td>G-374</td></tr>
+          <tr><td><strong><a href="../gan/">GAN</a>一般</strong></td><td>—</td><td>生成器と識別器の対戦</td><td>G-373、HQ-0157</td></tr>
+        </tbody>
+      </table>
+      <p>
+        DCGANは「ゼロから画像を生む」、Pix2Pixは「ペアで翻訳する」、CycleGANは「ペアなしで翻訳する」——<strong>データの前提</strong>で整理するとすり替えを防げます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — ペア画像がなくても<strong>2ドメイン間の変換</strong>を学習（G-376）</li>
+        <li><strong>対比</strong> — Pix2Pixは<strong>ペア必須</strong>（G-375）</li>
+        <li><strong>系譜</strong> — <a href="../gan/">GAN</a>の画像変換系。拡散モデルではない</li>
+        <li><strong>例</strong> — 馬とシマウマ、昼と夜（試験解説の定番）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-376/">G-376</a>、<a href="../../exams/g-kentei/practice/q/g-375/">G-375</a>、<a href="../../exams/g-kentei/practice/q/g-374/">G-374</a>、<a href="../../exams/g-kentei/practice/q/g-373/">G-373</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CycleGAN＝Pix2Pix</td><td>非ペア vs ペア必須</td></tr>
+          <tr><td>CycleGAN＝DCGAN</td><td>ドメイン変換 vs ノイズからの新規生成</td></tr>
+          <tr><td>CycleGAN＝教師あり学習</td><td>ペアラベルなし。GANの枠組み</td></tr>
+          <tr><td>CycleGAN＝<a href="../cnn/">CNN</a>そのもの</td><td>GANベースの変換モデル名</td></tr>
+          <tr><td>CycleGAN＝Text-to-Image</td><td>画像→画像変換 vs テキスト→画像生成</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>CycleGANは何をするモデルですか？</summary><p class="tool-faq-a">対応するペア画像がなくても、2つのドメイン（例：馬とシマウマ、昼と夜）間の画像変換を学習できるGANです。Pix2Pixがペアデータを必要とするのに対し、ペアなし変換が特徴です（<a href="../../exams/g-kentei/practice/q/g-376/">G-376</a>）。</p></details>
+        <details><summary>CycleGANとPix2Pixは同じですか？</summary><p class="tool-faq-a">いいえ。Pix2Pixは入力と出力のペア画像を使って変換を学習します（<a href="../../exams/g-kentei/practice/q/g-375/">G-375</a>）。CycleGANはペアがなくても、循環一貫性などの制約で2つのドメイン間の変換を学びます。</p></details>
+        <details><summary>CycleGANは拡散モデルですか？</summary><p class="tool-faq-a">いいえ。CycleGANはGAN系の画像変換モデルです。近年のText-to-Imageで主流の拡散モデル（Stable Diffusionなど）とは別系統です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-376/">G-376 · CycleGANの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-375/">G-375 · Pix2Pixとの対比</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-374/">G-374 · DCGAN</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-373/">G-373 · 生成器と識別器</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gan/">GAN</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

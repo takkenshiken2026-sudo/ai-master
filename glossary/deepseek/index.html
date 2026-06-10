@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DeepSeekとは？中国発オープンウェイトLLMファミリーの意味、推論モデル・GPTとの違いをG検定向けに解説。">
+  <title>DeepSeekとは？推理コストの破壊——オープンウェイトの性价比革命 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/deepseek/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DeepSeekとは？推理コストの破壊——オープンウェイトの性价比革命">
+  <meta property="og:description" content="中国発の高性能オープンウェイトLLM。推論特化とコスト効率が業界を揺るがした系列。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/deepseek/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "DeepSeek",
+        "alternateName": ["DeepSeek", "ディープシーク", "深度求索"],
+        "description": "中国発の高性能オープンウェイトLLMファミリー。推論特化とコスト効率で注目された。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "DeepSeekの開発元は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "中国のDeepSeek（深度求索）です。OpenAI・Anthropic・Google・Metaとは別の開発元として整理します。試験では開発元のすり替えに注意します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DeepSeekとOpenAI o1は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。推論強化という思想は近い場合がありますが、別企業の別系列です。DeepSeek R1とo1を単純に同一視しないことが安全です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DeepSeek＝無条件で自由に使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。オープンウェイトでもモデルごとにライセンス条件があり、商用利用・再配布・表示義務などを確認する必要があります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">DeepSeek</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>DeepSeekとは？推理コストの破壊——オープンウェイトの性价比革命</h1>
+    <p class="tool-hero-sub">読み：でぃーぷしーく ／ 英：DeepSeek（深度求索）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>DeepSeek</strong>（深度求索）は、中国発の<strong>オープンウェイト<a href="../llm/">LLM</a>ファミリー</strong>です。<a href="../llama/">LLaMA</a>がオープン系の生根を広げ、<a href="../mistral/">Mistral</a>が欧州から効率を押し出したのに対し、DeepSeekは<strong>推論性能とコスト効率（性价比）</strong>——高い性能を低コストで——を前面に出し、閉源最上位モデルとの比較を業界の話題にしました。本記事はベンチマーク数値の暗記ではなく、<strong>「推論モデル競争における第三地理圏」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">DeepSeekとは</a></li>
+        <li><a href="#reasoning-line">推論系列（R1）の意味</a></li>
+        <li><a href="#cost-revolution">コスト効率という衝撃</a></li>
+        <li><a href="#open-weights">オープンウェイトの位置</a></li>
+        <li><a href="#geo-poles">米・欧・中の三極地図</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        DeepSeek専用の一問一答は現時点で少ないですが、<strong>開発元の区別</strong>——DeepSeek＝中国発、OpenAI＝米国、Anthropic＝米国、Google＝米国、Meta＝米国、Mistral＝フランス——は主要LLM整理の延長です。
+      </p>
+      <p>
+        推論強化モデルは<a href="../o1-model/">OpenAI o1</a>、<a href="../gemini-2-5-pro/">Gemini 2.5 Pro</a>（思考モード）、<a href="../claude-3-7-sonnet/">Claude 3.7 Sonnet</a>（拡張思考）など複数社が展開——<strong>DeepSeek R1＝o1そのもの</strong>と答えるのは避け、別系列として整理します。
+      </p>
+      <p>
+        オープンウェイト利用時の<strong>ライセンス確認</strong>（<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a>）と、推論が深くても<strong>正確性の保証はない</strong>（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）は共通論点です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/practice/q/g-396/">G-396（基盤モデル）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（正確性）</a>、<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（開発元区別）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>DeepSeekとは</h2>
+      <p>
+        DeepSeekは、中国のAI企業<strong>深度求索（DeepSeek）</strong>が開発するLLM系列です。汎用チャットモデル（V2/V3系）に加え、<strong>推論特化</strong>のR1系列を公開し、数学・コード・論理タスクでの性能と、学習・推論の<strong>コスト効率</strong>が注目されました。
+      </p>
+      <p>
+        多くのモデルが<strong>オープンウェイト</strong>として公開され、研究・産業の双方から「閉源だけが高性能」という前提を揺るがす存在として語られます。試験では個別スコアより<strong>中国発・オープンウェイト・推論強化</strong>の三つ組で整理します。
+      </p>
+    </section>
+    <section id="reasoning-line">
+      <h2>推論系列（R1）の意味</h2>
+      <p>DeepSeek R1は、回答前に<strong>長い思考（チェーン・オブ・思考）</strong>を行う推論強化モデルとして位置づけられます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>プロンプト技法</strong></td><td><a href="../chain-of-thought/">Chain-of-Thought</a></td><td>ユーザーが段階的に指示</td></tr>
+          <tr><td><strong>推論特化モデル</strong></td><td>DeepSeek R1、<a href="../o1-model/">o1</a></td><td>モデル内で推論を深化</td></tr>
+          <tr><td><strong>標準帯の思考モード</strong></td><td>2.5 Pro、3.7 Sonnet</td><td>別系列名を切らず統合</td></tr>
+        </tbody>
+      </table>
+      <p>思想は近くても、<strong>提供者・系列名・提供形態</strong>は別です。R1の推論過程が見えても、TF-0460の論点——もっともらしい誤り——は残ります。</p>
+    </section>
+    <section id="cost-revolution">
+      <h2>コスト効率という衝撃</h2>
+      <p>DeepSeekが話題になった背景の一つは、<strong>同等クラスの性能をより低い学習・推論コストで</strong>——という訴求です。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>API価格</strong>
+          閉源最上位より安い料金設定が議論を呼んだ
+        </li>
+        <li>
+          <strong>オープンウェイト</strong>
+          自社ホストでコスト管理しやすい
+        </li>
+        <li>
+          <strong>蒸留・派生</strong>
+          小さいモデルへ推論能力を移植する動き
+        </li>
+      </ul>
+      <p>試験では具体的なドル単価の暗記より、<strong>「高性能オープンウェイトLLM」</strong>として開発元と特徴を答えられることが重要です。APIコスト意識は<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428</a>とも通じます。</p>
+    </section>
+    <section id="open-weights">
+      <h2>オープンウェイトの位置</h2>
+      <p>DeepSeekは<a href="../llama/">LLaMA</a>・<a href="../mistral/">Mistral</a>と同じく、重み公開型のファミリーです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>論点</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ライセンス</strong></td><td>モデルごとに条件確認（TF-478）</td></tr>
+          <tr><td><strong>データ主権</strong></td><td>オンプレ実行の選択肢</td></tr>
+          <tr><td><strong>セキュリティ</strong></td><td>自社環境でも入出力の検証は必要</td></tr>
+          <tr><td><strong>正確性</strong></td><td>オープンでもハルシネーションは起こりうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="geo-poles">
+      <h2>米・欧・中の三極地図</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>地域</th><th>代表ファミリー</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>米国</td><td>GPT、Claude、Gemini（Google）</td><td>閉源API・サービスが強い</td></tr>
+          <tr><td>欧州</td><td>Mistral</td><td>オープンウェイト・効率</td></tr>
+          <tr><td>米国（Meta）</td><td>LLaMA</td><td>オープン系の生根</td></tr>
+          <tr><td><strong>中国</strong></td><td><strong>DeepSeek</strong></td><td>オープンウェイト・推論・コスト</td></tr>
+        </tbody>
+      </table>
+      <p>地理的标签は製品選定の一要素であり、<strong>性能・ライセンス・データ取扱い</strong>とセットで判断する、が実務の整理です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>DeepSeek＝OpenAI</td><td>別企業・別国</td></tr>
+          <tr><td>DeepSeek R1＝o1</td><td>推論思想は近いが別系列</td></tr>
+          <tr><td>DeepSeek＝ChatGPT</td><td>モデルファミリー vs サービス</td></tr>
+          <tr><td>オープンウェイト＝完全自由</td><td>TF-479</td></tr>
+          <tr><td>推論強化＝必ず正確</td><td>TF-0460</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>DeepSeekの開発元は？</summary>
+          <p class="tool-faq-a">中国のDeepSeek（深度求索）です。OpenAI・Anthropic・Google・Metaとは別の開発元として整理します。試験では開発元のすり替えに注意します。</p>
+        </details>
+        <details>
+          <summary>DeepSeekとOpenAI o1は同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。推論強化という思想は近い場合がありますが、別企業の別系列です。DeepSeek R1とo1を単純に同一視しないことが安全です。</p>
+        </details>
+        <details>
+          <summary>DeepSeek＝無条件で自由に使えますか？</summary>
+          <p class="tool-faq-a">いいえ。オープンウェイトでもモデルごとにライセンス条件があり、商用利用・再配布・表示義務などを確認する必要があります。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-478/">TF-478 · OSSライセンス</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 正確性</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428 · APIコスト</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../mistral/">Mistral</a></li>
+          <li><a href="../falcon-llm/">Falcon</a></li>
+          <li><a href="../o1-model/">OpenAI o1</a></li>
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

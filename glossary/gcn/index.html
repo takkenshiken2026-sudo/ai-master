@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GCN（Graph Convolutional Network）とは？グラフ上で近傍ノードの特徴を集約するGNN。CNN・GATとの違いをG検定向けに解説。">
+  <title>GCNとは？隣の特徴を混ぜる——格子のないグラフにCNNの畳み込み発想を移植 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gcn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GCNとは？隣の特徴を混ぜる——格子のないグラフにCNNの畳み込み発想を移植">
+  <meta property="og:description" content="Graph Convolutional Networkはグラフの近傍を畳み込み的に集約するGNN。画像CNNやGATとの対比で整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gcn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Graph Convolutional Network",
+        "alternateName": ["GCN", "Graph Convolutional Network", "グラフ畳み込みネットワーク", "グラフコンボリューショナルネットワーク"],
+        "description": "ノードとエッジで表されるグラフデータについて、各ノードが隣接ノードの特徴を重み付きで集約し自身の表現を更新するグラフニューラルネットワーク（GNN）の代表的な一種。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GCN（Graph Convolutional Network）とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "グラフ上の各ノードが、エッジでつながった近傍ノードの特徴ベクトルを集約して自身の表現を更新するニューラルネットワークです。画像の格子に対するCNNの畳み込みと同様に「近所の情報を混ぜる」発想を、ノード・エッジ構造のデータに適用したGNNとして知られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GCNとCNNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。CNNは画像のような規則的な格子状データにフィルタを適用し局所特徴を抽出します。GCNは友人関係や分子結合など、隣接関係が不規則なグラフデータで近傍を集約します。畳み込みの発想は通じますが、入力の形と演算の対象が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GCNとGATは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもグラフニューラルネットワークですが、GCNはグラフ構造に基づく固定の集約係数で近傍を混ぜるのに対し、GATは隣接ノードごとに学習した注意重みで集約します。近傍の重要度を動的に選ぶかどうかが大きな違いです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Graph Convolutional Network（GCN）</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GCNとは？隣の特徴を混ぜる——格子のないグラフにCNNの畳み込み発想を移植</h1>
+    <p class="tool-hero-sub">読み：グラフコンボリューショナルネットワーク ／ 英：Graph Convolutional Network（GCN）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Graph Convolutional Network（GCN）</strong>は、<strong>グラフ上の近傍ノード</strong>の特徴を集約して各ノードの表現を更新する<a href="../neural-network/">ニューラルネットワーク</a>（GNN）です。<a href="../cnn/">CNN</a>が画像の「上下左右の画素」を混ぜるのに対し、GCNは<strong>エッジでつながった隣人</strong>を混ぜる——本記事はスペクトル理論の細部より、<strong>「格子の畳み込みをグラフにどう写したか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-graph">なぜグラフ専用のNNが要るか</a></li>
+        <li><a href="#conv-analogy">CNNとのたとえ</a></li>
+        <li><a href="#gcn-layer">GCN層がやること</a></li>
+        <li><a href="#vs-gat">GAT・Transformerとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-graph">
+      <h2>なぜグラフ専用のNNが要るか</h2>
+      <p>
+        ユーザー同士のつながり、論文の引用関係、駅の路線網——こうしたデータは<strong>表や画像のように整列していません</strong>。ノード（頂点）とエッジ（辺）で関係だけが与えられ、隣接の数も相手もバラバラです。
+      </p>
+      <p>
+        通常の全結合<a href="../neural-network/">ニューラルネットワーク</a>にそのまま入れると、<strong>誰と誰がつながっているか</strong>という構造情報が失われます。GNNはこの構造を保ったまま学習する家族で、GCNはその中でも<strong>シンプルで影響力の大きい基礎形</strong>です。
+      </p>
+    </section>
+
+    <section id="conv-analogy">
+      <h2>CNNとのたとえ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>CNN（画像）</th><th>GCN（グラフ）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>データの形</strong></td><td>格子状の画素グリッド</td><td>ノード・エッジのネットワーク</td></tr>
+          <tr><td><strong>「近所」</strong></td><td>上下左右の画素（<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>）</td><td>エッジで直接つながった隣接ノード</td></tr>
+          <tr><td><strong>演算のイメージ</strong></td><td>フィルタで局所特徴を抽出</td><td>近傍特徴を重み付きで<strong>集約・混合</strong></td></tr>
+          <tr><td><strong>層を重ねると</strong></td><td>受容野が広がる</td><td>ホップ数が増え、遠いノードの情報も間接的に届く</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では「GCN＝CNN」と答えず、<strong>発想の共通点（局所集約）</strong>と<strong>データ構造の違い</strong>をセットで覚えるのが安全です。
+      </p>
+    </section>
+
+    <section id="gcn-layer">
+      <h2>GCN層がやること</h2>
+      <p>1層のGCNは、ざっくり次の流れです。</p>
+      <ol class="tool-steps">
+        <li><strong>変換</strong> — 各ノードの特徴ベクトルに学習可能な行列を掛ける</li>
+        <li><strong>集約</strong> — 隣接ノード（としばしば自分自身）の変換後特徴を足し合わせる</li>
+        <li><strong>正規化</strong> — ノードの次数（つながりの数）などでスケールを揃える</li>
+        <li><strong>活性化</strong> — 非線形関数を通して次の層へ渡す</li>
+      </ol>
+      <p>
+        重要なのは、近傍への重みが<strong>グラフ構造から決まる固定の係数</strong>である点です。誰が隣かはエッジで決まり、学習で変わるのは特徴の変換行列側——<a href="../graph-attention-network/">GAT</a>が後から「どの隣を強く見るか」まで学習する、という系譜の出発点と捉えると整理しやすいです。
+      </p>
+      <p>
+        タスク例：論文のジャンル分類（ノード分類）、薬物・分子の物性予測、推薦のユーザー・商品グラフ。いずれも<strong>関係の形</strong>が予測に効きます。
+      </p>
+    </section>
+
+    <section id="vs-gat">
+      <h2>GAT・Transformerとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>データ</th><th>集約の仕方</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GCN</strong></td><td>グラフ</td><td>構造に基づく<strong>固定の近傍集約</strong></td></tr>
+          <tr><td><strong><a href="../graph-attention-network/">GAT</a></strong></td><td>グラフ</td><td><strong>学習した注意重み</strong>で近傍を集約</td></tr>
+          <tr><td><strong><a href="../transformer/">Transformer</a></strong></td><td>系列</td><td>Self-Attentionで系列内を（実質）全結合</td></tr>
+          <tr><td><strong><a href="../cnn/">CNN</a></strong></td><td>画像格子</td><td>畳み込みフィルタで局所抽出</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>のAttentionは系列モデルの文脈で出題されます。GCNはAttentionそのものではなく、<strong>グラフ上のメッセージパッシング</strong>——近所から情報を受け取って更新する——という別の設計軸です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — グラフ上で<strong>近傍集約</strong>するGNN。畳み込み的演算</li>
+        <li><strong>データ</strong> — ノード・エッジ・特徴。画像格子や系列とは別</li>
+        <li><strong>対比</strong> — CNN＝格子、GCN＝グラフ、GAT＝注意付きグラフ集約</li>
+        <li><strong>すり替え回避</strong> — Transformer・RNN・物体検出モデルではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>、<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a>、<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>、<a href="../../exams/g-kentei/practice/q/g-019/">G-019</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GCN＝CNN</td><td>発想は近いがデータ構造が異なる</td></tr>
+          <tr><td>GCN＝<a href="../graph-attention-network/">GAT</a></td><td>固定集約 vs 注意重み</td></tr>
+          <tr><td>GCN＝<a href="../transformer/">Transformer</a></td><td>グラフGNN vs 系列モデル</td></tr>
+          <tr><td>GCN＝<a href="../rnn/">RNN</a></td><td>グラフ近傍 vs 系列の時間方向</td></tr>
+          <tr><td>GCN＝畳み込みカーネル</td><td>モデル全体 vs 画像用のフィルタ部品</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GCN（Graph Convolutional Network）とは何ですか？</summary><p class="tool-faq-a">グラフ上の各ノードが、エッジでつながった近傍ノードの特徴ベクトルを集約して自身の表現を更新するニューラルネットワークです。画像の格子に対するCNNの畳み込みと同様に「近所の情報を混ぜる」発想を、ノード・エッジ構造のデータに適用したGNNとして知られます。</p></details>
+        <details><summary>GCNとCNNは同じですか？</summary><p class="tool-faq-a">同じではありません。CNNは画像のような規則的な格子状データにフィルタを適用し局所特徴を抽出します。GCNは友人関係や分子結合など、隣接関係が不規則なグラフデータで近傍を集約します。畳み込みの発想は通じますが、入力の形と演算の対象が異なります。</p></details>
+        <details><summary>GCNとGATは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもグラフニューラルネットワークですが、GCNはグラフ構造に基づく固定の集約係数で近傍を混ぜるのに対し、GATは隣接ノードごとに学習した注意重みで集約します。近傍の重要度を動的に選ぶかどうかが大きな違いです。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · CNNの局所特徴</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-416/">TF-416 · NNはデータから学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-295/">G-295 · Attention（対比）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-019/">G-019 · 系列モデル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../graph-attention-network/">GAT</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

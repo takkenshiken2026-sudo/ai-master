@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Codexとは？OpenAIのコード生成特化モデルの意味、GitHub Copilot・ChatGPTとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Codexとは？コードという第一言語——Copilotのエンジン — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/codex-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Codexとは？コードという第一言語——Copilotのエンジン">
+  <meta property="og:description" content="OpenAIのコード生成特化モデル。GitHub Copilotの基盤。モデルとMicrosoftサービスの層を分ける。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/codex-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Codex",
+        "alternateName": ["Codex", "コーデックス", "OpenAI Codex"],
+        "description": "OpenAIのコード生成特化モデル。GitHub Copilotの基盤として知られる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "CodexとGitHub Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CodexはOpenAIのコード生成モデル、GitHub CopilotはMicrosoftが提供するコード支援サービスです。CopilotはCodexなどのモデルを基盤にしうるが同一ではありません。試験ではモデルとサービスの層を分けます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Codexはコード支援の文脈で扱われますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。生成AIやAIによるコード生成・コード支援の文脈で扱われる項目です。ChatGPT周辺の主要モデル名として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Codexの生成コードはそのまま本番に使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。コード支援モデルでも、生成結果のレビュー・テスト・セキュリティ確認は必要です。もっともらしい実装と正確な実装は別問題です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Codex</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Codexとは？コードという第一言語——Copilotのエンジン</h1>
+    <p class="tool-hero-sub">読み：こーでっくす ／ 英：Codex（OpenAI Codex）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Codex</strong>は、OpenAIが公開した<strong>コード生成特化</strong>の言語モデル系列です。<a href="../gpt/">GPT</a>が自然言語全般を扱うのに対し、Codexは<strong>プログラミング言語を第一言語</strong>として学習・推論する——という設計が特徴で、<strong>GitHub Copilot</strong>の初期基盤として広く知られました。本記事はAPI仕様の暗記ではなく、<strong>「モデル（Codex）とサービス（Copilot）の層」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Codexとは</a></li>
+        <li><a href="#code-first">コード第一言語の意味</a></li>
+        <li><a href="#model-vs-copilot">モデルとCopilotの分離</a></li>
+        <li><a href="#lineage">コード支援の系譜</a></li>
+        <li><a href="#limits">実務と試験の限界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Codexは<strong>生成AIやAIによるコード支援の文脈</strong>で扱われる項目です（<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150</a>）。ChatGPT周辺の主要モデル名として、<strong>コード生成・補完</strong>に関係する、と整理します。
+      </p>
+      <p>
+        <a href="../../tools/copilot/">GitHub Copilot</a>は<strong>Microsoftが提供する生成AI支援機能・サービス群</strong>（<a href="../../exams/genai-passport/drill/q/tf-0143/">TF-0143</a>、<a href="../../exams/genai-passport/practice/q/hq-0318/">HQ-0318</a>）。Codex＝Copilot、と同一視しないことが試験の骨格です。
+      </p>
+      <p>
+        生成コードの正確性——もっともらしい≠正しい——は別論点です（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150（Codex・コード支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0143/">TF-0143（Copilot）</a>、<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（正確性）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Codexとは</h2>
+      <p>
+        2021年頃、OpenAIは<strong>Codex</strong>を公開しました。<a href="../gpt-3/">GPT-3</a>系をベースに、公開リポジトリなどの<strong>ソースコード</strong>で追加学習したモデルで、関数の実装・バグ修正・コメント生成など、開発者のエディタ内での<strong>コード補完</strong>を可能にしました。
+      </p>
+      <p>
+        一般向けチャットの<a href="../../tools/chatgpt/">ChatGPT</a>が対話全般を担うのに対し、Codexは<strong>IDEに埋め込まれるコード特化エンジン</strong>——という位置づけが試験・実務の整理に効きます。
+      </p>
+    </section>
+    <section id="code-first">
+      <h2>コード第一言語の意味</h2>
+      <p>Codexの設計思想は「自然言語も扱えるが、<strong>主戦場はプログラミング言語</strong>」です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>入力</th><th>出力</th><th>典型用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>関数の先頭・コメント</td><td>続きのコード</td><td>インライン補完</td></tr>
+          <tr><td>自然言語の指示</td><td>コード片</td><td>「○○する関数を書いて」</td></tr>
+          <tr><td>既存コード＋エラー</td><td>修正案</td><td>デバッグ補助</td></tr>
+        </tbody>
+      </table>
+      <p>Pythonを中心に、複数言語に対応が広がりました。試験では言語リストの暗記より、<strong>コード生成特化モデル</strong>として答えられることが重要です。</p>
+    </section>
+    <section id="model-vs-copilot">
+      <h2>モデルとCopilotの分離</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>提供者</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>モデル</strong></td><td>Codex、後継のGPT系コードモデル</td><td>OpenAI</td></tr>
+          <tr><td><strong>サービス</strong></td><td>GitHub Copilot</td><td>Microsoft（GitHub経由）</td></tr>
+          <tr><td><strong>統合先</strong></td><td>VS Code、JetBrains等</td><td>エディタ拡張</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Copilotは<strong>自動的に正確性や権利を保証する仕組み</strong>ではありません（HQ-0318の誤答）。Codex/Copilotの出力も<strong>人間のレビュー</strong>が前提です。
+      </p>
+      <p>HQ-0270のように、Copilot＝Microsoft、Gemini＝Google——<strong>開発元のすり替え</strong>にも注意します。CodexはOpenAIのモデル名です。</p>
+    </section>
+    <section id="lineage">
+      <h2>コード支援の系譜</h2>
+      <p>コード支援はCodexで終わりではありません。系列史として整理します。</p>
+      <ol class="tool-steps">
+        <li><strong>Codex</strong> — コード補完の実用化。Copilotの基盤として話題に</li>
+        <li><strong>ChatGPTのコードモード</strong> — 対話型でコード生成・説明</li>
+        <li><strong><a href="../gpt-4-1/">GPT-4.1</a>等</strong> — API向けコーディング特化の大型モデル</li>
+        <li><strong><a href="../claude-3-5-sonnet/">Claude 3.5 Sonnet</a>等</strong> — 競合各社のコーディング強化</li>
+      </ol>
+      <p>TF-0150はこの<strong>系譜を知っているか</strong>を問う文脈です。個別バージョンの暗記より、Codex＝コード支援の<strong>歴史的な代表名</strong>として押さえます。</p>
+    </section>
+    <section id="limits">
+      <h2>実務と試験の限界</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>セキュリティ</strong>
+          脆弱なコード・秘密情報の混入リスク
+        </li>
+        <li>
+          <strong>ライセンス</strong>
+          学習データに由来するコード断片の権利問題
+        </li>
+        <li>
+          <strong>品質</strong>
+          動くが非効率、テスト未通過の提案
+        </li>
+        <li>
+          <strong>コンテキスト</strong>
+          巨大リポジトリは<a href="../context-window/">コンテキストウィンドウ</a>の制約（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>）
+        </li>
+      </ul>
+      <p>コード支援は<strong>生産性向上の道具</strong>であり、品質保証の代替ではありません。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Codex＝Copilot</td><td>OpenAIモデル vs Microsoftサービス</td></tr>
+          <tr><td>Codex＝ChatGPT</td><td>コード特化 vs 汎用対話</td></tr>
+          <tr><td>Codex＝Claude</td><td>OpenAI vs Anthropic</td></tr>
+          <tr><td>コード生成＝常に正確</td><td>TF-0460</td></tr>
+          <tr><td>Copilot＝出力を自動保証</td><td>HQ-0318の誤答</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>CodexとGitHub Copilotの違いは？</summary>
+          <p class="tool-faq-a">CodexはOpenAIのコード生成モデル、GitHub CopilotはMicrosoftが提供するコード支援サービスです。CopilotはCodexなどのモデルを基盤にしうるが同一ではありません。試験ではモデルとサービスの層を分けます。</p>
+        </details>
+        <details>
+          <summary>Codexはコード支援の文脈で扱われますか？</summary>
+          <p class="tool-faq-a">はい。生成AIやAIによるコード生成・コード支援の文脈で扱われる項目です。ChatGPT周辺の主要モデル名として整理します。</p>
+        </details>
+        <details>
+          <summary>Codexの生成コードはそのまま本番に使えますか？</summary>
+          <p class="tool-faq-a">いいえ。コード支援モデルでも、生成結果のレビュー・テスト・セキュリティ確認は必要です。もっともらしい実装と正確な実装は別問題です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150 · Codex・コード支援</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0143/">TF-0143 · Copilot</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0318/">HQ-0318 · Copilotの注意点</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../tools/copilot/">GitHub Copilot（ツール解説）</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../gpt-4-1/">GPT-4.1</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../mistral/">Mistral</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

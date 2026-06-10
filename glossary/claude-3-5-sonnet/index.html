@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 3.5 Sonnetとは？コーディング性能を強化したClaude標準モデルの意味、3 Sonnet・GPT-4oとの違いをG検定向けに解説。">
+  <title>Claude 3.5 Sonnetとは？コーディングで食い込む中間世代の標準 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-3-5-sonnet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 3.5 Sonnetとは？コーディングで食い込む中間世代の標準">
+  <meta property="og:description" content="3と4の間のドットアップデート。Sonnet名称は継承、武器はコーディング。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-3-5-sonnet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 3.5 Sonnet",
+        "alternateName": ["Claude 3.5 Sonnet", "クロード 3.5 ソネット"],
+        "description": "Claude 3.5世代の標準モデル。コーディング性能を大幅強化し、GPT-4oと競合する水準を目指す。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "3.5 Sonnetと3 Sonnetの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "名称のSonnetは共通ですが、3.5は中間世代アップデートでコーディング・推論・速度が強化された別モデルです。試験では世代番号（3 / 3.5 / 4）を混同しないことが重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "3.5 Sonnetはコーディング専用モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "専用モデルではなく、汎用の標準帯です。ただしコーディング性能の強化が最大の訴求点の一つであり、実務では開発支援のデフォルトとして選ばれることが多くなりました。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "生成コードはそのまま本番に使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。コーディング性能が高くても、生成コードのレビューとテストは必要です。もっともらしい説明と正確な実装は別問題として整理します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 3.5 Sonnet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 3.5 Sonnetとは？コーディングで食い込む中間世代の標準</h1>
+    <p class="tool-hero-sub">読み：くろーど さんてんご そねっと ／ 英：Claude 3.5 Sonnet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 3.5 Sonnet</strong>は、<a href="../claude-model/">Claude</a> <strong>3.5世代</strong>の標準モデルです。<a href="../claude-3-sonnet/">3 Sonnet</a>が「世代3の顔」——マルチモーダル標準帯の確立——だったのに対し、3.5 Sonnetは<strong>世代番号は半歩進んだ中間更新</strong>ながら、<strong>コーディング性能</strong>を刃にして<a href="../gpt-4o/">GPT-4o</a>世代と競合するモデルでした。本記事はベンチマーク表の暗記ではなく、<strong>「なぜ汎用Sonnetが開発者のデフォルトになったか」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">3.5 Sonnetとは</a></li>
+        <li><a href="#dot-release">3と4の間のドット世代</a></li>
+        <li><a href="#coding-wedge">コーディングという楔（くさび）</a></li>
+        <li><a href="#vs-gpt4o">GPT-4oとの競合軸</a></li>
+        <li><a href="#review-discipline">生成コードのレビュー規律</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        開発元はAnthropic（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）。3.5 Sonnetは<strong>Claude系列の標準帯</strong>であり、OpenAIの<a href="../gpt-4o/">GPT-4o</a>（<a href="../../exams/genai-passport/drill/q/tf-0147/">TF-0147</a>）と<strong>開発元が異なる別製品</strong>です。単純な対応表にしないことが重要です。
+      </p>
+      <p>
+        コーディング文脈では、コード支援モデルの系譜——<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150</a>（Codex等）——と並べ、3.5 Sonnetを<strong>汎用LLMのコーディング強化版</strong>として整理します。Codexそのものではありません。
+      </p>
+      <p>
+        生成コードはレビュー必須——説明が丁寧でも実装が正しいとは限りません（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claude）</a>、<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150（コード支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（正確性）</a></p>
+        <p>関連：<a href="../../exams/genai-passport/drill/q/tf-0147/">TF-0147（GPT-4o・競合の整理）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>3.5 Sonnetとは</h2>
+      <p>
+        2024年6月頃、Anthropicは<strong>Claude 3.5 Sonnet</strong>を公開しました。Claude 3の Opus / Sonnet / Haiku から<strong>半年ほどで中間世代</strong>が差し込まれ、Sonnet名称はそのままに能力が底上げされる——というリリース戦略が特徴です。
+      </p>
+      <p>
+        公開時にはソフトウェアエンジニアリングベンチマークや実務のコーディングタスクで高評価が報じられ、claude.ai のデフォルトも3.5 Sonnetへ移行しました。<strong>「開発者が最初に選ぶClaude」</strong>としての地位を固めたモデルと整理できます。
+      </p>
+    </section>
+    <section id="dot-release">
+      <h2>3と4の間のドット世代</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>種類</th><th>例</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>整数世代</strong></td><td>Claude 3 → Claude 4</td><td>大きな世代更新</td></tr>
+          <tr><td><strong>ドット世代</strong></td><td>Claude 3 → 3.5</td><td>同系統の中間強化。3.5 Sonnetはここ</td></tr>
+          <tr><td><strong>階層名</strong></td><td>Sonnet / Haiku / Opus</td><td>世代をまたぐ標準・軽量・最上位ラベル</td></tr>
+        </tbody>
+      </table>
+      <p>「3.5 Sonnet＝3 Sonnet」と同一視しないこと、また「3.5＝4」でもないこと——<strong>番号の粒度</strong>を試験で区別します。</p>
+    </section>
+    <section id="coding-wedge">
+      <h2>コーディングという楔（くさび）</h2>
+      <p>3 Sonnetがマルチモーダル一般業務の標準だったのに対し、3.5 Sonnetの差別化は<strong>コード</strong>に集中しました。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>実装・リファクタリング</strong>
+          複数ファイルにまたがる変更の提案
+        </li>
+        <li>
+          <strong>デバッグ</strong>
+          エラーログとソースの突合、修正パッチの生成
+        </li>
+        <li>
+          <strong>テスト生成</strong>
+          境界条件を意識したユニットテスト案
+        </li>
+        <li>
+          <strong>コードレビュー補助</strong>
+          セキュリティ・可読性の指摘草案
+        </li>
+      </ul>
+      <p>
+        これは<a href="../o4-mini/">o4 mini</a>や<a href="../gemini-2-5-pro/">Gemini 2.5 Pro</a>など、他社の「コーディング強化」と<strong>同じ戦場</strong>での競争です。試験では開発元の区別が核心で、ベンチマーク順位の暗記は不要です。
+      </p>
+    </section>
+    <section id="vs-gpt4o">
+      <h2>GPT-4oとの競合軸</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Claude 3.5 Sonnet</th><th>GPT-4o</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>開発元</td><td>Anthropic</td><td>OpenAI</td></tr>
+          <tr><td>系列</td><td>Claude Sonnet帯</td><td>GPT-4オムニ系列</td></tr>
+          <tr><td>当時の訴求</td><td>コーディング・分析の底上げ</td><td>オムニ統合・音声対話</td></tr>
+          <tr><td>試験</td><td>TF-0142</td><td>TF-0147</td></tr>
+        </tbody>
+      </table>
+      <p>どちらも「2024年の実務主力」として比較されますが、<strong>同一モデル・同一開発元ではない</strong>——比較問題の入れ替えに注意します。</p>
+    </section>
+    <section id="review-discipline">
+      <h2>生成コードのレビュー規律</h2>
+      <p>コーディング性能が上がっても、試験・実務で変わらない原則があります。</p>
+      <ol class="tool-steps">
+        <li><strong>生成</strong> — 3.5 Sonnetが草案・パッチを出力</li>
+        <li><strong>レビュー</strong> — 人間またはCIが論理・セキュリティを確認</li>
+        <li><strong>テスト</strong> — 自動テストで回帰を検知</li>
+        <li><strong>限界</strong> — もっともらしいコードでもバグは残りうる（TF-0460）</li>
+      </ol>
+      <p>TF-0150が示すコード支援の歴史（Codex → Copilot等）と同様、<strong>支援ツール＝品質保証の代替ではない</strong>という整理が試験の核心です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>3.5 Sonnet＝3 Sonnet</td><td>中間世代の別モデル</td></tr>
+          <tr><td>3.5 Sonnet＝Codex</td><td>汎用Sonnet vs コード特化系列（TF-0150）</td></tr>
+          <tr><td>3.5 Sonnet＝GPT-4o</td><td>Anthropic vs OpenAI</td></tr>
+          <tr><td>コーディング最強＝本番直デプロイ可</td><td>レビュー・テスト必須</td></tr>
+          <tr><td>3.5 Sonnet＝Claude 4 Sonnet</td><td>世代が異なる（後続）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>3.5 Sonnetと3 Sonnetの違いは？</summary>
+          <p class="tool-faq-a">名称のSonnetは共通ですが、3.5は中間世代アップデートでコーディング・推論・速度が強化された別モデルです。試験では世代番号（3 / 3.5 / 4）を混同しないことが重要です。</p>
+        </details>
+        <details>
+          <summary>3.5 Sonnetはコーディング専用モデルですか？</summary>
+          <p class="tool-faq-a">専用モデルではなく、汎用の標準帯です。ただしコーディング性能の強化が最大の訴求点の一つであり、実務では開発支援のデフォルトとして選ばれることが多くなりました。</p>
+        </details>
+        <details>
+          <summary>生成コードはそのまま本番に使えますか？</summary>
+          <p class="tool-faq-a">いいえ。コーディング性能が高くても、生成コードのレビューとテストは必要です。もっともらしい説明と正確な実装は別問題として整理します。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150 · コード支援</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 正確性</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../claude-3-sonnet/">Claude 3 Sonnet</a></li>
+          <li><a href="../claude-3-opus/">Claude 3 Opus</a></li>
+          <li><a href="../gpt-4o/">GPT-4o</a></li>
+          <li><a href="../claude-3-5-haiku/">Claude 3.5 Haiku</a></li>
+          <li><a href="../claude-3-7-sonnet/">Claude 3.7 Sonnet</a></li>
+          <li><a href="../claude-4-sonnet/">Claude 4 Sonnet</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

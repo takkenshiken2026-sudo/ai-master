@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gemini 1.0 Nanoとは？端末上で動作するGemini最軽量モデルの意味、エッジAI・オンデバイス推論、クラウドProとの違いをG検定向けに解説。">
+  <title>Gemini 1.0 Nanoとは？端末上の最軽量Geminiとエッジ推論 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gemini-1-0-nano/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gemini 1.0 Nanoとは？端末上の最軽量Geminiとエッジ推論">
+  <meta property="og:description" content="クラウドのUltra・Proとは対極。スマホ等の端末で推論するGemini 1.0世代の最軽量モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gemini-1-0-nano/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Gemini 1.0 Nano",
+        "alternateName": ["Gemini Nano", "ジェミニ 1.0 ナノ"],
+        "description": "Gemini 1.0世代の最軽量モデル。スマートフォン等の端末上でオンデバイス推論を行う。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Gemini 1.0 Nanoはどこで動きますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "クラウドではなく端末（スマートフォン等）上で推論します。PixelなどのAndroid端末に組み込まれ、通信なし・低遅延で要約や返信草案などを処理する用途が想定されます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NanoとProの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "実行場所とモデル規模が異なります。Proはクラウド中心の標準モデル、Nanoは端末上の最軽量版です。Nanoは計算資源が限られるため能力はProより抑えられますが、プライバシーと応答速度の面で利点があります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "エッジAIとNanoの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "NanoはエッジAI（端末側推論）の具体例です。G検定ではエッジAIを「クラウドではなく端末や機器の近くで推論する形態」と整理し、軽量モデルがその実現手段の一つとして問われます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../gemini-model/">Gemini</a></li>
+      <li aria-current="page">Gemini 1.0 Nano</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Gemini 1.0 Nanoとは？端末上の最軽量Geminiとエッジ推論</h1>
+    <p class="tool-hero-sub">読み：じぇみに いちてんぜろ なの ／ 英：Gemini 1.0 Nano</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Gemini 1.0 Nano</strong>は、<a href="../gemini-model/">Gemini</a> 1.0世代の<strong>最軽量モデル</strong>で、データセンターではなく<strong>スマートフォン等の端末上</strong>で推論します。クラウドの<a href="../gemini-1-0-pro/">Pro</a>や<a href="../gemini-1-0-ultra/">Ultra</a>が「能力最大化」を目指すのに対し、Nanoは<strong>低遅延・通信不要・プライバシー</strong>——エッジAIの利点——を取りにいく設計です。本記事は階層表の暗記ではなく、<strong>「なぜLLMを端末に載せるのか」</strong>という問いに答えます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">1.0 Nanoとは</a></li>
+        <li><a href="#on-device">オンデバイス推論の仕組み</a></li>
+        <li><a href="#edge-benefits">エッジAIがもたらす3つの利点</a></li>
+        <li><a href="#nano-vs-cloud">NanoとクラウドProの対比</a></li>
+        <li><a href="#lightweight">軽量化の文脈</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定では<strong>エッジAI</strong>が「クラウドではなく端末や機器の近くでAI推論を行う利用形態」（<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>）として問われます。Gemini Nanoは、その<strong>LLM版の具体例</strong>として整理できます。
+      </p>
+      <p>
+        端末では計算資源が限られるため<strong>モデル軽量化</strong>が必要になります（<a href="../../exams/g-kentei/practice/q/g-403/">G-403</a>）。Nanoは最初から小さく設計されたモデルであり、プルーニングや量子化など後から軽くする手法（<a href="../../exams/g-kentei/practice/q/g-025/">G-025</a>）とは<strong>設計段階の選択</strong>として区別して覚えます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-408/">G-408（エッジAI）</a>、<a href="../../exams/g-kentei/practice/q/g-403/">G-403（モデル軽量化の理由）</a>、<a href="../../exams/g-kentei/practice/q/g-025/">G-025（軽量化手法の区別）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>1.0 Nanoとは</h2>
+      <p>
+        Gemini 1.0発表時、Googleは<strong>3段階のサイズ</strong>——Ultra・Pro・Nano——を同時に提示しました。Nanoはそのうち<strong>端末専用</strong>の変種で、Pixel 8 Proなどに組み込まれ、Recorderアプリの要約やGboardの返信草案など、<strong>短いタスクをローカルで処理</strong>する用途が示されました。
+      </p>
+      <p>
+        名称の「Nano」はナノメートルではなく、<strong>ナノ（極小）サイズのモデル</strong>という製品上の階層名です。試験では「Geminiの最軽量・端末向け」としてUltra/Proと並べて答えます。
+      </p>
+    </section>
+    <section id="on-device">
+      <h2>オンデバイス推論の仕組み</h2>
+      <p>
+        通常の<a href="../gemini-1-0-pro/">Gemini Pro</a>は、プロンプトをインターネット経由でGoogleのサーバーに送り、クラウドGPUで推論して結果を返します。Nanoは<strong>端末内のNPU（ニューラル処理ユニット）やCPU</strong>上で推論が完結する設計を目指します。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>通信不要</strong>——機内モードや電波の弱い環境でも動作しうる</li>
+        <li><strong>データが外に出にくい</strong>——音声メモや下書きがクラウドに送信されないケースがある</li>
+        <li><strong>即時応答</strong>——往復レイテンシがネットワークに依存しにくい</li>
+      </ul>
+      <p>一方、端末のメモリ・電力・発熱には上限があり、<strong>モデルサイズはProより大幅に小さく</strong>なります。複雑な推論や長文生成はクラウドProに任せる<strong>ハイブリッド構成</strong>が現実的です。</p>
+    </section>
+    <section id="edge-benefits">
+      <h2>エッジAIがもたらす3つの利点</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>利点</th><th>Nanoでのイメージ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>低遅延</strong></td><td>録音要約や入力補助を待たずに表示</td></tr>
+          <tr><td><strong>通信量削減</strong></td><td>毎回APIを叩かずバッテリー・料金を節約</td></tr>
+          <tr><td><strong>プライバシー</strong></td><td>端末内完結で機微データの外部送信を抑える</td></tr>
+        </tbody>
+      </table>
+      <p>G-408の解説どおり、エッジAIは利点と引き換えに<strong>計算資源の制約</strong>を受け入れる選択です。Nanoは「小型LLMでエッジの利点を取る」Googleの回答と言えます。</p>
+    </section>
+    <section id="nano-vs-cloud">
+      <h2>NanoとクラウドProの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Nano（端末）</th><th>Pro（クラウド）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>実行場所</td><td>スマホ・端末内</td><td>Googleデータセンター</td></tr>
+          <tr><td>モデル規模</td><td>最軽量</td><td>標準（バランス型）</td></tr>
+          <tr><td>得意タスク</td><td>短い要約・草案・分類</td><td>汎用対話・業務処理・API連携</td></tr>
+          <tr><td>ネットワーク</td><td>不要でも可</td><td>基本的に必要</td></tr>
+          <tr><td>能力の上限</td><td>複雑推論は不向き</td><td>Ultra未満でも高い汎用性</td></tr>
+        </tbody>
+      </table>
+      <p>「NanoだからGemini全体が端末だけで動く」わけではありません。<strong>用途に応じてNanoとクラウドを使い分ける</strong>のがGemini 1.0世代の設計思想です。</p>
+    </section>
+    <section id="lightweight">
+      <h2>軽量化の文脈</h2>
+      <p>
+        G検定の軽量化分野（G-025、G-403）では、プルーニング・量子化・蒸留など<strong>既存モデルを小さくする手法</strong>が問われます。Nanoはそれらを適用した結果というより、<strong>最初から端末向けに設計された小規模LLM</strong>です。
+      </p>
+      <p>
+        いずれにせよ「限られた計算資源で推論する」という<strong>課題設定は共通</strong>です。試験ではエッジAI＝利用形態、軽量化＝その実現手段、Nano＝Geminiにおける端末向け製品名——とレイヤーを分けて答えます。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Nano＝Proの無料版</td><td>実行場所と規模が異なる別階層</td></tr>
+          <tr><td>Nano＝常にオフラインで全機能</td><td>軽量タスク向け。難問はクラウドへ</td></tr>
+          <tr><td>Nano＝エッジAIそのもの</td><td>エッジAIの具体例。概念はより広い（G-408）</td></tr>
+          <tr><td>Nano＝量子化</td><td>製品名 vs 軽量化手法（G-025）</td></tr>
+          <tr><td>端末推論＝誤りなし</td><td>能力は抑えられ、<a href="../hallucination/">ハルシネーション</a>も起こりうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Gemini 1.0 Nanoはどこで動きますか？</summary>
+          <p class="tool-faq-a">クラウドではなく端末（スマートフォン等）上で推論します。PixelなどのAndroid端末に組み込まれ、通信なし・低遅延で要約や返信草案などを処理する用途が想定されます。</p>
+        </details>
+        <details>
+          <summary>NanoとProの違いは？</summary>
+          <p class="tool-faq-a">実行場所とモデル規模が異なります。Proはクラウド中心の標準モデル、Nanoは端末上の最軽量版です。Nanoは計算資源が限られるため能力はProより抑えられますが、プライバシーと応答速度の面で利点があります。</p>
+        </details>
+        <details>
+          <summary>エッジAIとNanoの関係は？</summary>
+          <p class="tool-faq-a">NanoはエッジAI（端末側推論）の具体例です。G検定ではエッジAIを「クラウドではなく端末や機器の近くで推論する形態」と整理し、軽量モデルがその実現手段の一つとして問われます。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · エッジAI</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-403/">G-403 · モデル軽量化の理由</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-025/">G-025 · 軽量化手法の区別</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li><a href="../gemini-1-0-ultra/">Gemini 1.0 Ultra</a></li>
+          <li><a href="../gemini-1-0-pro/">Gemini 1.0 Pro</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

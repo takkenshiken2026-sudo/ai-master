@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NLP（自然言語処理）とは？翻訳・要約・感情分析など言語技術の分野、LLMとの関係をG検定向けに解説。">
+  <title>NLPとは？言葉の処理圏——テキスト専門の応用ドメイン — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/nlp/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="NLPとは？言葉の処理圏——テキスト専門の応用ドメイン">
+  <meta property="og:description" content="人間の言語をコンピュータで扱う技術分野。古典的手法からLLM時代までの地図。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/nlp/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "NLP",
+        "alternateName": ["NLP", "自然言語処理", "Natural Language Processing"],
+        "description": "人間が日常的に使う言語をコンピュータが理解・生成するための技術分野。翻訳・要約・感情分析などに活用される。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "NLPの定義として正しいのは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "人間が使う言語をコンピュータで処理する技術分野、と整理します。機械翻訳、質問応答、文書要約、感情分析などが含まれます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NLPとLLMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。NLPは言語を扱う応用分野全体の名称であり、LLMはその中で使われる大規模言語モデルの一種です。分野 vs モデルクラスの関係です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NLP＝画像認識ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。NLPはテキスト・言語が対象です。画像認識は別分野（コンピュータビジョン）であり、扱うデータが異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">NLP</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>NLPとは？言葉の処理圏——テキスト専門の応用ドメイン</h1>
+    <p class="tool-hero-sub">読み：えぬえるぴー ／ 英：NLP（Natural Language Processing／自然言語処理）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>NLP</strong>（Natural Language Processing／自然言語処理）は、<strong>人間の言語をコンピュータで扱う</strong>技術分野です。画像認識や音声処理と並ぶ<strong>AIの応用ドメイン</strong>の一つで、翻訳・要約・感情分析・質問応答などが含まれます。<a href="../llm/">LLM</a>や<a href="../../tools/chatgpt/">ChatGPT</a>はその<strong>最新の道具</strong>ですが、NLPそのものではありません。本記事は手法の網羅ではなく、<strong>「分野・タスク・モデル」の三層地図</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">NLPとは</a></li>
+        <li><a href="#tasks">主要タスク</a></li>
+        <li><a href="#history-layers">古典からLLMまでの層</a></li>
+        <li><a href="#vs-other-domains">画像・音声との境界</a></li>
+        <li><a href="#evaluation">評価の注意点</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の骨格は<strong>「人間が使う言語をコンピュータで処理する技術分野」</strong>（<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126</a>）。形態素解析、機械翻訳、質問応答、文書要約、感情分析などが含まれる、とセットで覚えます。
+      </p>
+      <p>
+        機械翻訳は<strong>「ある言語の文を別の言語の文へ変換するNLPタスク」</strong>（<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>）。セグメンテーション（画像）や話者識別（音声）とは別です。
+      </p>
+      <p>
+        NLPモデルの評価では、自動指標だけで品質・事実性を完全に測れないことがある——人手評価や安全性の確認が重要、という論点も出ます（<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126（定義）</a>、<a href="../../exams/g-kentei/practice/q/g-340/">G-340（機械翻訳）</a>、<a href="../../exams/g-kentei/practice/q/g-350/">G-350（評価）</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-337/">G-337（BERT）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>NLPとは</h2>
+      <p>
+        NLPは<strong>分野名</strong>——単一のモデルや製品ではありません。人間が日常使う「自然言語」（日本語、英語など）を、コンピュータが<strong>理解・変換・生成</strong>するための技術全体を指します。
+      </p>
+      <p>
+        ルールベースの辞書照合から統計的手法、深層学習、そして<a href="../foundation-model/">基盤モデル</a>時代の<a href="../llm/">LLM</a>まで、中身の技術は時代とともに変わりますが、<strong>対象が言語である</strong>ことは不変です。
+      </p>
+    </section>
+    <section id="tasks">
+      <h2>主要タスク</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>内容</th><th>試験での例</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>機械翻訳</strong></td><td>言語A→言語B</td><td>G-340</td></tr>
+          <tr><td><strong>文書要約</strong></td><td>長文を短く要約</td><td>TF-126の解説</td></tr>
+          <tr><td><strong>質問応答</strong></td><td>文書から答えを抽出</td><td>BERTの得意領域</td></tr>
+          <tr><td><strong>感情分析</strong></td><td>ポジ／ネガ判定</td><td>分類タスクの代表</td></tr>
+          <tr><td><strong>形態素解析</strong></td><td>語の切り出し・品詞</td><td>前処理の基本</td></tr>
+        </tbody>
+      </table>
+      <p>タスクは<strong>何をしたいか</strong>、モデル（BERT、GPT等）は<strong>どう実現するか</strong>——この分離が試験の整理のコツです。</p>
+    </section>
+    <section id="history-layers">
+      <h2>古典からLLMまでの層</h2>
+      <p>NLPの歴史を試験向けに三層で俯瞰します。細部の暗記より<strong>時代の流れ</strong>が目的です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>時代</th><th>代表的手法</th><th>特徴</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>古典</td><td><a href="../bag-of-words/">BoW</a>、n-gram</td><td>語の出現情報を数値化（TF-127）</td></tr>
+          <tr><td>深層学習</td><td><a href="../rnn/">RNN</a>、<a href="../lstm/">LSTM</a>、<a href="../cnn/">CNN</a>（文分類）</td><td>系列・文脈の学習</td></tr>
+          <tr><td>Transformer期</td><td><a href="../bert/">BERT</a>、<a href="../gpt/">GPT</a></td><td>Attentionによる飛躍</td></tr>
+          <tr><td>基盤モデル期</td><td><a href="../llm/">LLM</a>、<a href="../../tools/chatgpt/">ChatGPT</a></td><td>汎用対話・生成</td></tr>
+        </tbody>
+      </table>
+      <p>LLMはNLPの<strong>最新章</strong>であり、NLP＝LLMだけ、とは答えません。<a href="../bag-of-words/">BoW</a>もNLPの歴史の一部です。</p>
+    </section>
+    <section id="vs-other-domains">
+      <h2>画像・音声との境界</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>分野</th><th>対象データ</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>NLP</strong></td><td>テキスト・自然言語</td><td>翻訳・要約など</td></tr>
+          <tr><td>コンピュータビジョン</td><td>画像・動画</td><td><a href="../cnn/">CNN</a>が典型</td></tr>
+          <tr><td>音声処理</td><td>音声波形</td><td>MFCC、<a href="../ctc/">CTC</a>、話者識別など</td></tr>
+        </tbody>
+      </table>
+      <p>TF-126の解説にあるように、<strong>扱う対象が異なる</strong>——この一言で多くのすり替えを防げます。</p>
+    </section>
+    <section id="evaluation">
+      <h2>評価の注意点</h2>
+      <p>
+        翻訳には<a href="../bleu/">BLEU</a>などの自動指標、分類には正解率やF値——タスクごとに評価方法は異なります。とくに<strong>文章生成・要約</strong>では、自動指標だけでは品質や<strong>事実性</strong>を完全に測れないことがあります（G-350）。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>自動評価の限界</strong>
+          もっともらしいが事実と異なる出力を見逃すことがある
+        </li>
+        <li>
+          <strong>人手評価</strong>
+          自然さ・有用性・安全性の確認
+        </li>
+        <li>
+          <strong>安全性・偏り</strong>
+          有害出力や差別的表現のチェック
+        </li>
+      </ul>
+      <p>LLM時代になっても、<strong>評価データを用いる必要がない</strong>は×（G-350の誤答）——という整理は有効です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>NLP＝LLM</td><td>分野 vs モデルクラス</td></tr>
+          <tr><td>NLP＝ChatGPT</td><td>分野 vs サービス</td></tr>
+          <tr><td>機械翻訳＝画像セグメンテーション</td><td>G-340の誤答パターン</td></tr>
+          <tr><td>NLP＝CNN</td><td>言語 vs 画像</td></tr>
+          <tr><td>評価不要</td><td>G-350の誤答</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>NLPの定義として正しいのは？</summary>
+          <p class="tool-faq-a">人間が使う言語をコンピュータで処理する技術分野、と整理します。機械翻訳、質問応答、文書要約、感情分析などが含まれます。</p>
+        </details>
+        <details>
+          <summary>NLPとLLMは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。NLPは言語を扱う応用分野全体の名称であり、LLMはその中で使われる大規模言語モデルの一種です。分野 vs モデルクラスの関係です。</p>
+        </details>
+        <details>
+          <summary>NLP＝画像認識ですか？</summary>
+          <p class="tool-faq-a">いいえ。NLPはテキスト・言語が対象です。画像認識は別分野（コンピュータビジョン）であり、扱うデータが異なります。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-126/">TF-126 · NLPの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-340/">G-340 · 機械翻訳</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-350/">G-350 · 評価の注意</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERT</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../bart-model/">BART</a></li>
+          <li><a href="../bleu/">BLEU</a></li>
+          <li><a href="../bag-of-words/">Bag of Words</a></li>
+          <li><a href="../bpe/">BPE</a></li>
+          <li><a href="../ctc/">CTC</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

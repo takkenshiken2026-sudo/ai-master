@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPT-4oとは？オムニ（omni）モデルの意味、テキスト・画像・音声のネイティブ統合、GPT-4との違いをG検定・生成AIパスポート向けに解説。">
+  <title>GPT-4oとは？オムニ統合・音声対話とリアルタイム処理 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt-4o/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="GPT-4oとは？オムニ統合・音声対話とリアルタイム処理">
+  <meta property="og:description" content="テキスト・画像・音声を単一モデルで統合処理するOpenAIのオムニモデル。マルチモーダルの次の段階を試験向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt-4o/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GPT-4o",
+        "alternateName": ["GPT4o", "GPT-4o omni"],
+        "description": "テキスト・画像・音声をネイティブに統合処理するOpenAIのオムニモデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GPT-4oの「o」は何の略ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "omni（全能・全て）を意味し、複数のモダリティを単一モデルで扱う設計を示します。試験では略語の暗記より、テキスト・画像・音声を統合処理できるモデルとして系列に位置づけることが中心です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-4oとGPT-4の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GPT-4は主にテキスト中心に画像入力を追加した世代、GPT-4oはテキスト・画像・音声をよりネイティブに統合し、低レイテンシーの音声対話なども可能にした後続モデルとして整理します。試験では別世代として順序を区別することが重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-4oは試験で出題されますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "生成AIパスポートでは、ChatGPTやGPTモデル系列の変遷を学ぶ文脈でGPT-4oが扱われる項目があります。細かな性能比較より、シラバス上のモデル名として系列に含まれるかが問われやすいです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPT-4o</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPT-4oとは？オムニ統合・音声対話とリアルタイム処理</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃーよーん ／ 英：GPT-4o（omni）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPT-4o</strong>は、OpenAIが2024年に発表した<strong>オムニ（omni）モデル</strong>です。テキスト・画像・音声を<strong>単一のモデルでネイティブに統合処理</strong>し、低レイテンシーの音声対話も可能にしました。本記事は<a href="../gpt-4/">GPT-4</a>の「画像入力の追加」とは別軸で、<strong>モダリティ統合の設計思想</strong>——後付けではなく一体処理——を試験向けに整理します。機能の変遷は<strong>2026年6月時点</strong>の情報です。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#omni-meaning">「o＝omni」とは</a></li>
+        <li><a href="#native-vs-bolt">ネイティブ統合 vs 後付けマルチモーダル</a></li>
+        <li><a href="#voice-realtime">音声対話とリアルタイム性</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、GPT-4oは<strong>ChatGPTやGPTモデル系列の変遷を学ぶ際にシラバスで扱われる項目</strong>として出題されます（<a href="../../exams/genai-passport/drill/q/tf-0147/">TF-0147</a>）。正解のポイントは「GPT-4の次の世代として系列に含まれるか」であり、ベンチマークの細部暗記ではありません。
+      </p>
+      <p>
+        <a href="../multimodal-ai/">マルチモーダルAI</a>の定義——テキスト・画像・音声など複数形式を扱える性質（<a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131</a>、<a href="../../exams/genai-passport/drill/q/tf-0192/">TF-0192</a>）——と結び付けて、GPT-4oを<strong>マルチモーダル進化の具体例</strong>として答えると整理しやすいです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0147/">TF-0147（GPT-4oの位置づけ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0139/">TF-0139（GPT-4系列）</a>、<a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131（マルチモーダル定義）</a></p>
+        <p>実践演習：<a href="../../exams/genai-passport/practice/q/hq-0219/">HQ-0219（マルチモーダル）</a></p>
+      </div>
+    </section>
+    <section id="omni-meaning">
+      <h2>「o＝omni」とは</h2>
+      <p>
+        「o」は<strong>omni（全能・全て）</strong>を意味します。試験では略語の語源より、<strong>複数のモダリティを1つのモデルで扱う</strong>という設計方針を覚えることが重要です。
+      </p>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>テキスト</h3>
+          <p>従来どおりの対話・要約・コード生成。GPT系列の基盤能力を継承</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>画像</h3>
+          <p>写真・図表の理解。チャート読み取りや視覚的な質問応答</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>音声</h3>
+          <p>音声入力の理解と音声での応答。テキスト経由の往復より低遅延な対話</p>
+        </div>
+      </div>
+      <p>50言語以上への対応も話題になりましたが、試験では多言語数の暗記より<strong>モダリティ統合</strong>の文脈で押さえれば十分なことが多いです。</p>
+    </section>
+    <section id="native-vs-bolt">
+      <h2>ネイティブ統合 vs 後付けマルチモーダル</h2>
+      <p>
+        <a href="../gpt-4/">GPT-4</a>は「テキスト中心のLLMに画像入力を足した」世代として整理できます。GPT-4oは、入出力のパイプラインを<strong>最初から一体</strong>として設計した点が試験・実務の説明で差になります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>GPT-4</th><th>GPT-4o</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>マルチモーダルの捉え方</strong></td><td>画像入力の拡張</td><td>テキスト・画像・音声の<strong>オムニ統合</strong></td></tr>
+          <tr><td><strong>音声</strong></td><td>別パイプラインが一般的</td><td>モデル内で音声を直接扱う設計</td></tr>
+          <tr><td><strong>試験の焦点</strong></td><td>マルチモーダル化の転換点</td><td>系列の<strong>次世代</strong>としての位置づけ</td></tr>
+          <tr><td><strong>混同注意</strong></td><td>GPT-4＝GPT-4o ではない</td><td>別モデル名として順序を区別</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="voice-realtime">
+      <h2>音声対話とリアルタイム性</h2>
+      <p>
+        GPT-4oの話題の一つは、<strong>音声での自然な対話</strong>と応答の速さです。従来は音声→文字起こし→LLM→音声合成のように段階を踏むことが多く、遅延や不自然さが課題でした。オムニ設計ではこの段数を減らし、会話体験を改善する方向性が示されました。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>試験向けの整理</strong>
+          「リアルタイム音声＝常に正確」ではない。出力検証と<a href="../hallucination/">ハルシネーション</a>への配慮はテキスト利用時と同様
+        </li>
+        <li>
+          <strong>サービスとの関係</strong>
+          <a href="../../tools/chatgpt/">ChatGPT</a>の音声モードなど<strong>製品機能</strong>と、GPT-4oという<strong>モデル名</strong>は別レイヤーで整理する
+        </li>
+        <li>
+          <strong>個人情報</strong>
+          音声・画像にも機密が含まれうる。マルチモーダル入力時のデータ取り扱い（<a href="../../exams/genai-passport/drill/q/tf-0288/">TF-0288</a>）はテキストと同様に重要
+        </li>
+      </ul>
+      <p>2026年6月時点では、提供形態やデフォルトモデルは更新されています。試験では「いまのChatGPTのデフォルト」より<strong>系列の流れ</strong>を優先してください。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GPT-4o＝GPT-4</td><td>系列内の別世代。TF-0147は4o単体の位置づけ</td></tr>
+          <tr><td>オムニ＝マルチエージェント</td><td>複数モダリティの統合 vs 複数AIの協調。別概念</td></tr>
+          <tr><td>音声対応＝音声生成AI専用</td><td>対話型LLMの入出力拡張。音楽生成（Suno等）とは別系譜</td></tr>
+          <tr><td>マルチモーダル＝画像生成</td><td>入力として画像を扱う ≠ DALL·E等の画像生成モデル</td></tr>
+          <tr><td>GPT-4o＝ChatGPT</td><td>モデル vs サービス（<a href="../gpt/">GPT</a>三層の整理）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>GPT-4oの「o」は何の略ですか？</summary>
+          <p class="tool-faq-a">omni（全能・全て）を意味し、複数のモダリティを単一モデルで扱う設計を示します。試験では略語の暗記より、テキスト・画像・音声を統合処理できるモデルとして系列に位置づけることが中心です。</p>
+        </details>
+        <details>
+          <summary>GPT-4oとGPT-4の違いは？</summary>
+          <p class="tool-faq-a">GPT-4は主にテキスト中心に画像入力を追加した世代、GPT-4oはテキスト・画像・音声をよりネイティブに統合し、低レイテンシーの音声対話なども可能にした後続モデルとして整理します。試験では別世代として順序を区別することが重要です。</p>
+        </details>
+        <details>
+          <summary>GPT-4oは試験で出題されますか？</summary>
+          <p class="tool-faq-a">生成AIパスポートでは、ChatGPTやGPTモデル系列の変遷を学ぶ文脈でGPT-4oが扱われる項目があります。細かな性能比較より、シラバス上のモデル名として系列に含まれるかが問われやすいです。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0147/">TF-0147 · GPT-4oの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0139/">TF-0139 · GPT-4系列</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131 · マルチモーダル定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpt-4/">GPT-4</a></li>
+          <li><a href="../gpt-4-turbo/">GPT-4 Turbo</a></li>
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../gpt-4-1/">GPT-4.1</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

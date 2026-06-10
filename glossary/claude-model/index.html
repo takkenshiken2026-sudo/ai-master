@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claudeとは？Anthropicの対話型LLMファミリーの意味、ChatGPT・Geminiとの違い、Haiku・Sonnet・Opusの階層をG検定・生成AIパスポート向けに解説。">
+  <title>Claudeとは？Anthropicの安全性重視LLMファミリー — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claudeとは？Anthropicの安全性重視LLMファミリー">
+  <meta property="og:description" content="Anthropicが提供する主要な生成AI。開発元の区別と安全性志向が試験の核心。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude",
+        "alternateName": ["Anthropic Claude", "クロード"],
+        "description": "Anthropicの対話型大規模言語モデルファミリー。安全性と有用性のバランスを重視した設計。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ClaudeとChatGPTの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ClaudeはAnthropicのモデル・サービス群、ChatGPTはOpenAIの対話型サービスです。開発元と製品ラインを混同しないことが試験の核心です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Haiku・Sonnet・Opusとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude 3以降のサイズ階層名です。Haikuは最軽量・高速、Sonnetは標準バランス、Opusは最上位性能——という役割で覚えます。試験では世代番号（3、3.5、4等）とセットで整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claudeは試験で出題されますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。生成AIパスポート第2章ではChatGPT以外の主要生成AIとして扱われ、「Anthropicが提供する主要な生成AIサービス・モデル群」として区別が問われます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Claude</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claudeとは？Anthropicの安全性重視LLMファミリー</h1>
+    <p class="tool-hero-sub">読み：くろーど ／ 英：Claude</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude</strong>（クロード）は、<strong>Anthropic</strong>が開発する<strong>対話型<a href="../llm/">大規模言語モデル</a>ファミリー</strong>です。OpenAIの<a href="../../tools/chatgpt/">ChatGPT</a>、Googleの<a href="../gemini-model/">Gemini</a>と並ぶ<strong>第三極</strong>として知られ、<strong>安全性と有用性のバランス</strong>——有害出力を抑えつつ実務で使える応答を届ける——を設計思想の中心に置きます。本記事は個別バージョンの性能比較より、<strong>開発元の区別と系列の読み方</strong>を試験向けに整理します。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Claudeとは</a></li>
+        <li><a href="#safety-first">安全性を前面にした設計</a></li>
+        <li><a href="#poetry-tiers">詩の名前で示す階層</a></li>
+        <li><a href="#competitors">主要競合との整理</a></li>
+        <li><a href="#model-vs-tech">モデル名と技術用語のすり替え</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Claudeは<strong>ChatGPT以外の主要な生成AI</strong>としてシラバスで扱われます（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）。正解の骨格は「<strong>Anthropicが提供する主要な生成AIサービス・モデル群</strong>」です（<a href="../../exams/genai-passport/practice/q/hq-0317/">HQ-0317</a>、<a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316</a>）。
+      </p>
+      <p>
+        Gemini・Copilotとの比較では、<strong>開発元の入れ替え</strong>に注意します。Claude＝Google、Gemini＝Anthropicのような選択肢は典型的な×パターンです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claudeの位置づけ）</a>、<a href="../../exams/genai-passport/practice/q/hq-0317/">HQ-0317（Claudeの役割説明）</a>、<a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316（Gemini vs Claude）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Claudeとは</h2>
+      <p>
+        Anthropicは2021年に設立され、元OpenAI研究者らが中心となって<strong>安全なAI</strong>を掲げて立ち上げられました。Claudeはその対話型モデルの<strong>製品名・系列名</strong>で、Webアプリ、API、Slack連携、企業向け提供など複数の形で展開されます。
+      </p>
+      <p>
+        世代は Claude 1 → 2 → 2.1 → 3（Haiku / Sonnet / Opus）→ 3.5 → 3.7 → 4 と進み、試験では細部の暗記より<strong>AnthropicのLLMファミリー</strong>として答えられることが重要です。
+      </p>
+    </section>
+    <section id="safety-first">
+      <h2>安全性を前面にした設計</h2>
+      <p>
+        Claudeの差別化は「ベンチマーク1位」だけではなく、<strong><a href="../alignment/">アライメント</a></strong>——人間の意図や価値観に沿った振る舞い——を重視する点にあります。Anthropicは<a href="../rlhf/">RLHF</a>に加え、<a href="../constitutional-ai/">Constitutional AI</a>——原則に基づく自己修正——などを公表してきました。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>安全性重視</strong></td><td>有害・違法な出力を拒否しやすい設計思想</td></tr>
+          <tr><td><strong>有用性</strong></td><td>過度な拒否だけでは実務で使えない——両立が課題</td></tr>
+          <tr><td><strong>安全性＝正確</strong></td><td>別問題。<a href="../hallucination/">ハルシネーション</a>は起こりうる</td></tr>
+          <tr><td><strong>安全性＝アライメント</strong></td><td>関連するが同一ではない。アライメントは上位概念</td></tr>
+        </tbody>
+      </table>
+      <p>G検定のAI倫理分野では、自動評価だけでなく<strong>安全性・事実性の確認</strong>が必要になる場面も問われます（<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>）。Claudeはその文脈で「安全志向の代表例の一つ」として位置づけられます。</p>
+    </section>
+    <section id="poetry-tiers">
+      <h2>詩の名前で示す階層</h2>
+      <p>
+        Claude 3以降、サイズ階層は<strong>Haiku（俳句）・Sonnet（十四行詩）・Opus（大作）</strong>という文学形式の名称で示されます。Googleの Ultra/Pro/Flash や OpenAIの GPT番号とは<strong>命名体系が異なる</strong>点が試験の整理ポイントです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名称</th><th>位置づけ</th><th>試験での一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Haiku</strong></td><td>最軽量</td><td>高速・低コスト</td></tr>
+          <tr><td><strong>Sonnet</strong></td><td>標準</td><td>速度と性能のバランス</td></tr>
+          <tr><td><strong>Opus</strong></td><td>最上位</td><td>複雑な推論・分析</td></tr>
+        </tbody>
+      </table>
+      <p>「3.5 Sonnet」「4 Opus」のように、<strong>世代番号＋階層名</strong>をセットで覚えます。Haikuだけではどの世代か特定できません。</p>
+    </section>
+    <section id="competitors">
+      <h2>主要競合との整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名称</th><th>開発元</th><th>試験での一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Claude</strong></td><td>Anthropic</td><td>安全性重視の対話LLMファミリー</td></tr>
+          <tr><td><a href="../../tools/chatgpt/">ChatGPT</a> / <a href="../gpt/">GPT</a></td><td>OpenAI</td><td>対話サービス / モデル系列</td></tr>
+          <tr><td><a href="../gemini-model/">Gemini</a></td><td>Google</td><td>マルチモーダルLLMファミリー</td></tr>
+          <tr><td>Copilot</td><td>Microsoft 等</td><td>業務・Office連携のアシスタント</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="model-vs-tech">
+      <h2>モデル名と技術用語のすり替え</h2>
+      <p>
+        比較問題では、Claudeを<strong>CNN・RNN・Transformerそのもの</strong>と説明する選択肢に注意します。Claudeは<strong>生成AIの製品・モデル群</strong>であり、畳み込みや系列モデルといった基盤技術とは別レイヤーです（<a href="../../exams/genai-passport/drill/q/tf-0145/">TF-0145</a>は×）。
+      </p>
+      <p>アーキテクチャの話（<a href="../transformer/">Transformer</a>等）と、提供者の話（Anthropic）を混同しないことが、HQ-0316・HQ-0317系の問題で求められる力です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Claude＝ChatGPT</td><td>Anthropic vs OpenAI</td></tr>
+          <tr><td>Claude＝Gemini</td><td>Anthropic vs Google（HQ-0316）</td></tr>
+          <tr><td>Claude＝CNN</td><td>製品名 vs 画像認識の基盤技術（TF-0145）</td></tr>
+          <tr><td>安全性重視＝誤りなし</td><td>有害出力の抑制と事実の正確性は別</td></tr>
+          <tr><td>Haiku＝Claude全体</td><td>階層名の一つ。ファミリーはClaude</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ClaudeとChatGPTの違いは？</summary>
+          <p class="tool-faq-a">ClaudeはAnthropicのモデル・サービス群、ChatGPTはOpenAIの対話型サービスです。開発元と製品ラインを混同しないことが試験の核心です。</p>
+        </details>
+        <details>
+          <summary>Haiku・Sonnet・Opusとは？</summary>
+          <p class="tool-faq-a">Claude 3以降のサイズ階層名です。Haikuは最軽量・高速、Sonnetは標準バランス、Opusは最上位性能——という役割で覚えます。試験では世代番号（3、3.5、4等）とセットで整理します。</p>
+        </details>
+        <details>
+          <summary>Claudeは試験で出題されますか？</summary>
+          <p class="tool-faq-a">はい。生成AIパスポート第2章ではChatGPT以外の主要生成AIとして扱われ、「Anthropicが提供する主要な生成AIサービス・モデル群」として区別が問われます。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0317/">HQ-0317 · Claudeの役割説明</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316 · Gemini vs Claude</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../tools/claude/">Claude（ツール解説）</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../claude-1/">Claude 1</a></li>
+          <li><a href="../claude-2/">Claude 2</a></li>
+          <li><a href="../claude-2-1/">Claude 2.1</a></li>
+          <li><a href="../claude-3-haiku/">Claude 3 Haiku</a></li>
+          <li><a href="../claude-3-sonnet/">Claude 3 Sonnet</a></li>
+          <li><a href="../claude-3-opus/">Claude 3 Opus</a></li>
+          <li><a href="../claude-3-5-sonnet/">Claude 3.5 Sonnet</a></li>
+          <li><a href="../claude-3-5-haiku/">Claude 3.5 Haiku</a></li>
+          <li><a href="../claude-3-7-sonnet/">Claude 3.7 Sonnet</a></li>
+          <li><a href="../claude-4-sonnet/">Claude 4 Sonnet</a></li>
+          <li><a href="../claude-4-opus/">Claude 4 Opus</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

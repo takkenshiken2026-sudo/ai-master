@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AlexNetとは？2012年ImageNetで深層学習ブームを起こした先駆的CNN。GPU活用・ReLU・ドロップアウトとの関係をG検定向けに解説。">
+  <title>AlexNetとは？2012年の一撃——GPUとCNNで深層学習を現実にした先駆者 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/alexnet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AlexNetとは？2012年の一撃——GPUとCNNで深層学習を現実にした先駆者">
+  <meta property="og:description" content="ILSVRC 2012で圧勝し、CNN・GPU・正則化技術の組み合わせがDL実用化の象徴となった歴史的モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/alexnet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "AlexNet",
+        "alternateName": ["AlexNet", "アレックスネット"],
+        "description": "2012年の画像認識コンペティションで深層学習の有効性を印象づけた、CNNを用いた先駆的画像分類モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "AlexNetは何をしたモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2012年の画像認識コンペティション（ILSVRC、ImageNetデータセット）で高い性能を示し、深層学習の実用的有効性を広く印象づけたCNNモデルです。GPU活用、ReLU、ドロップアウトなども含め、現代DLの礎となった出来事として試験に登場します（TF-330）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AlexNetとCNNの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AlexNetは畳み込みニューラルネットワーク（CNN）を用いた画像分類モデルの代表例です。CNNというアーキテクチャの一実装であり、「画像の局所特徴を畳み込みで捉える」というCNNの定義そのものではありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AlexNetはランダムフォレストですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。AlexNetは深層畳み込みニューラルネットワークであり、決定木を組み合わせるランダムフォレストとは仕組みが異なります（TF-331）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">AlexNet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>AlexNetとは？2012年の一撃——GPUとCNNで深層学習を現実にした先駆者</h1>
+    <p class="tool-hero-sub">読み：アレックスネット ／ 英：AlexNet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>AlexNet</strong>は、<strong>2012年の画像認識コンペティション</strong>で圧倒的な成績を示し、<a href="../deep-learning/">深層学習</a>の実用性を世間に印象づけた<strong>CNNモデル</strong>です。本記事は畳み込み層の数やカーネルサイズの暗記ではなく、<strong>「なぜこの一撃が第三次AIブームの象徴になったか」</strong>——歴史と試験の接点——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#2012">2012年、何が起きたか</a></li>
+        <li><a href="#what-is">AlexNetとは何か</a></li>
+        <li><a href="#ingredients">成功の材料——GPU・ReLU・ドロップアウト</a></li>
+        <li><a href="#vs-cnn">CNNアーキテクチャとの関係</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="2012">
+      <h2>2012年、何が起きたか</h2>
+      <p>
+        <strong>ILSVRC</strong>（ImageNet Large Scale Visual Recognition Challenge）は、<strong>ImageNet</strong>データセットを用いた画像分類などの競技会です（<a href="../../exams/g-kentei/drill/q/tf-328/">TF-328</a>）。2012年、AlexNetが従来手法を大きく上回る性能を示し、<strong>ディープラーニング普及の重要な契機</strong>になった——と試験では整理されます。
+      </p>
+      <p>
+        それ以前もニューラルネットの研究はありましたが、「大規模データ＋深いCNN＋十分な計算資源」が揃って<strong>実世界のベンチマークで勝つ</strong>——この組み合わせが、産業と研究の両方に強いインパクトを与えました。
+      </p>
+    </section>
+
+    <section id="what-is">
+      <h2>AlexNetとは何か</h2>
+      <p>
+        AlexNetは<strong>畳み込みニューラルネットワーク（CNN）</strong>を用いた<strong>画像分類モデル</strong>の名前です（<a href="../../exams/g-kentei/drill/q/tf-330/">TF-330</a>）。特定のコンペで優勝した<strong>一つの設計</strong>であり、<a href="../cnn/">CNN</a>というアーキテクチャ全体の別名ではありません。
+      </p>
+      <p>
+        試験では次の一文が骨格です。
+      </p>
+      <blockquote>
+        <p>AlexNetは、2012年の画像認識コンペティションで深層学習の有効性を印象づけたモデルとして知られる。</p>
+      </blockquote>
+      <p>
+        現代の<a href="../llm/">LLM</a>や<a href="../transformer/">Transformer</a>が言語の主役になった今でも、AlexNetは<strong>画像DLの歴史的ランドマーク</strong>として問われ続けます。
+      </p>
+    </section>
+
+    <section id="ingredients">
+      <h2>成功の材料——GPU・ReLU・ドロップアウト</h2>
+      <p>TF-330の解説では、AlexNetの文脈で次の要素がセットで語られます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>試験向けの役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../cnn/">CNN</a></strong></td><td>画像の局所特徴を畳み込みで抽出する<strong>骨格</strong></td></tr>
+          <tr><td><strong><a href="../gpu/">GPU</a></strong>＋<a href="../cuda/">CUDA</a></td><td>大規模並列演算で学習を<strong>現実的な時間</strong>に（<a href="../../exams/g-kentei/practice/q/g-010/">G-010</a>）</td></tr>
+          <tr><td><strong>ReLU</strong></td><td>活性化関数。勾配消失を和らげ学習を安定化</td></tr>
+          <tr><td><strong><a href="../dropout/">ドロップアウト</a></strong></td><td>過学習を抑える<strong>正則化</strong>手法</td></tr>
+        </tbody>
+      </table>
+      <p>
+        第三次AIブームでは、データ・アルゴリズムに加え<strong>計算資源</strong>が重要——という語り口の中で、AlexNetとGPUの組み合わせが象徴的出来事として引用されます。
+      </p>
+    </section>
+
+    <section id="vs-cnn">
+      <h2>CNNアーキテクチャとの関係</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>何を指すか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>CNN</strong></td><td>畳み込み層を中心とした<strong>ネットワーク構造の一般名</strong>。「画像の局所特徴を畳み込みで捉える」（<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>）</td></tr>
+          <tr><td><strong>AlexNet</strong></td><td>CNNを用いた<strong>特定の歴史的モデル</strong>（2012年コンペの勝者）</td></tr>
+          <tr><td><strong><a href="../3d-cnn/">3D CNN</a></strong></td><td>時間軸を加えた畳み込み——動画向けの別設計</td></tr>
+        </tbody>
+      </table>
+      <p>
+        CNN＝GAN（生成器と識別器を競わせる枠組み）ではありません（<a href="../../exams/genai-passport/practice/q/hq-0322/">HQ-0322</a>）。AlexNetも<strong>画像分類のCNN</strong>であり、GANそのものではありません。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>年と舞台</strong> — <strong>2012年</strong>の画像認識コンペ（ILSVRC／ImageNet）</li>
+        <li><strong>モデル種別</strong> — <strong>CNN</strong>を用いた画像分類モデル（TF-330）</li>
+        <li><strong>歴史的意義</strong> — 深層学習の<strong>実用的成功</strong>を印象づけた代表例</li>
+        <li><strong>関連技術</strong> — GPU、ReLU、ドロップアウトがセットで語られる</li>
+        <li><strong>すり替え回避</strong> — ランダムフォレスト（×：TF-331）、LLM（×）など</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-330/">TF-330</a>、<a href="../../exams/g-kentei/drill/q/tf-331/">TF-331</a>、<a href="../../exams/g-kentei/drill/q/tf-328/">TF-328</a>、<a href="../../exams/g-kentei/practice/q/g-010/">G-010</a>　生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>AlexNet＝ランダムフォレスト</td><td>CNNベースの深層学習モデル（TF-331）</td></tr>
+          <tr><td>AlexNet＝CNNという用語そのもの</td><td>CNNを用いた<strong>特定モデル名</strong></td></tr>
+          <tr><td>AlexNet＝GAN</td><td>画像分類のCNN。GANは生成器・識別器の対戦枠組み</td></tr>
+          <tr><td>AlexNet＝LLMやTransformer</td><td>2012年の<strong>画像認識</strong>の歴史。言語モデルとは別系統</td></tr>
+          <tr><td>GPUがあればデータ不要</td><td>データ・モデル設計も不可欠（G-010）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>AlexNetは何をしたモデルですか？</summary><p class="tool-faq-a">2012年の画像認識コンペティション（ILSVRC、ImageNetデータセット）で高い性能を示し、深層学習の実用的有効性を広く印象づけたCNNモデルです。GPU活用、ReLU、ドロップアウトなども含め、現代DLの礎となった出来事として試験に登場します（<a href="../../exams/g-kentei/drill/q/tf-330/">TF-330</a>）。</p></details>
+        <details><summary>AlexNetとCNNの関係は？</summary><p class="tool-faq-a">AlexNetは畳み込みニューラルネットワーク（CNN）を用いた画像分類モデルの代表例です。CNNというアーキテクチャの一実装であり、「画像の局所特徴を畳み込みで捉える」というCNNの定義そのものではありません。</p></details>
+        <details><summary>AlexNetはランダムフォレストですか？</summary><p class="tool-faq-a">いいえ。AlexNetは深層畳み込みニューラルネットワークであり、決定木を組み合わせるランダムフォレストとは仕組みが異なります（<a href="../../exams/g-kentei/drill/q/tf-331/">TF-331</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-330/">TF-330 · AlexNetの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-331/">TF-331 · ランダムフォレストすり替え（×）</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-328/">TF-328 · ILSVRCとImageNet</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-010/">G-010 · GPUと深層学習</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../densenet/">DenseNet</a></li>
+          <li><a href="../efficientnet/">EfficientNet</a></li>
+          <li><a href="../googlenet/">GoogLeNet</a></li>
+          <li><a href="../he-initialization/">He初期化</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../cuda/">CUDA</a></li>
+          <li><a href="../deep-learning/">深層学習</a></li>
+          <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../gelu/">GELU</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

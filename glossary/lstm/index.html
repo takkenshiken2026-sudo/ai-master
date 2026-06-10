@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LSTM（長・短期記憶）とは？ゲート機構と長期依存・RNN・Transformerとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>LSTMとは？ゲートで記憶を選別——長期依存の救命筏 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/lstm/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="LSTMとは？ゲートで記憶を選別——長期依存の救命筏">
+  <meta property="og:description" content="セル状態とゲートで勾配消失を緩和。RNNの改良として長い系列に挑む。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/lstm/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "LSTM",
+        "alternateName": ["LSTM", "長・短期記憶", "Long Short-Term Memory"],
+        "description": "RNNの一種。ゲート機構とセル状態で長期的な依存関係を扱いやすくし、勾配消失問題を緩和する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "LSTMの定義として正しいのは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RNNの一種で、長期的な依存関係を扱いやすくする仕組みを持つモデル、と整理します。ゲート機構とセル状態により、通常のRNNが苦手とする長期依存と勾配消失問題の緩和を目指します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LSTMが導入された主な目的は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RNNで長期依存関係を扱う際の勾配消失問題を緩和するため、が試験向けの整理です。ゲートで「何を覚え、何を忘れるか」を制御します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LSTMとTransformerは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。LSTMはRNN系の改良モデル、TransformerはSelf-Attentionを中核とする別アーキテクチャです。現代LLMの主役はTransformer側です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">LSTM</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>LSTMとは？ゲートで記憶を選別——長期依存の救命筏</h1>
+    <p class="tool-hero-sub">読み：えるえすてぃーえむ ／ 英：LSTM（Long Short-Term Memory／長・短期記憶）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>LSTM</strong>（Long Short-Term Memory／長・短期記憶）は、<a href="../rnn/">RNN</a>の<strong>改良版</strong>です。素朴なRNNが長い系列で<strong>勾配消失</strong>により「遠い過去を忘れる」問題に対し、LSTMは<strong>ゲート</strong>で記憶の保持と破棄を制御し、長期依存を扱いやすくしました。本記事はゲートの数式暗記ではなく、<strong>「なぜRNNの次にLSTMが必要だったか」</strong>——系列史の救命筏——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">LSTMとは</a></li>
+        <li><a href="#why-lstm">RNNの限界と導入目的</a></li>
+        <li><a href="#gates">ゲートとセル状態</a></li>
+        <li><a href="#short-long">「長期」と「短期」の意味</a></li>
+        <li><a href="#vs-gru-transformer">GRU・Transformerとの位置</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の骨格は<strong>「RNNの一種で、長期的な依存関係を扱いやすくする仕組みを持つモデル」</strong>（<a href="../../exams/genai-passport/practice/q/hq-0329/">HQ-0329</a>）。
+      </p>
+      <p>
+        導入目的は<strong>「RNNで長期依存関係を扱う際の勾配消失問題を緩和するため」</strong>（<a href="../../exams/g-kentei/practice/q/g-242/">G-242</a>）。ゲート機構の説明として、長期依存を扱うRNN系である、と整理します（<a href="../../exams/g-kentei/practice/q/g-401/">G-401</a>）。
+      </p>
+      <p>
+        LSTMは<a href="../cnn/">CNN</a>の畳み込みでも<a href="../gan/">GAN</a>の対戦学習でもありません。説明文の主語と仕組みの対応を確認します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0329/">HQ-0329（定義）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-242/">G-242（導入目的）</a>、<a href="../../exams/g-kentei/practice/q/g-401/">G-401（ゲート機構）</a>、<a href="../../exams/g-kentei/drill/q/tf-415/">TF-415（GRUとの関係）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>LSTMとは</h2>
+      <p>
+        LSTMは1990年代に提案され、2010年代の深層学習ブームで<strong>機械翻訳・音声認識・時系列予測</strong>などに広く使われました。<a href="../transformer/">Transformer</a>登場以前は、長い文章や系列を扱うタスクの<strong>定番</strong>の一つでした。
+      </p>
+      <p>
+        名前の <strong>Long Short-Term Memory</strong> は、短期の計算ループの中で<strong>長期に保持すべき情報を選び分ける</strong>——という設計思想を表します。試験ではゲートの細部より<strong>RNNの改良・長期依存・勾配消失の緩和</strong>の三つ組で答えられることが重要です。
+      </p>
+    </section>
+    <section id="why-lstm">
+      <h2>RNNの限界と導入目的</h2>
+      <p><a href="../rnn/">RNN</a>は内部状態で過去を覚えますが、系列が長くなると誤差逆伝播の勾配が指数関数的に小さくなる——<strong>勾配消失</strong>——ため、遠い過去の情報が学習に届きにくくなります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>課題</th><th>素朴なRNN</th><th>LSTM</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>長期依存</td><td>苦手</td><td>セル状態で保持しやすい</td></tr>
+          <tr><td>勾配消失</td><td>起こりやすい</td><td>ゲートで緩和（G-242）</td></tr>
+          <tr><td>系列の扱い</td><td>順次ループ</td><td>順次ループ（RNN系）</td></tr>
+        </tbody>
+      </table>
+      <p>LSTMは<strong>万能の終着点</strong>ではありません。現代の大規模言語モデルはTransformerが主役ですが、LSTMは「RNNがどこで詰まり、どう改良されたか」を理解するための重要な中継点です。</p>
+    </section>
+    <section id="gates">
+      <h2>ゲートとセル状態</h2>
+      <p>LSTMの核心は<strong>セル状態（Cell State）</strong>——長期記憶のレール——と、それを制御する<strong>ゲート</strong>です。試験向けに役割だけ整理します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>役割（試験向け）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>忘却ゲート</strong></td><td>過去の記憶のどれを捨てるか</td></tr>
+          <tr><td><strong>入力ゲート</strong></td><td>新しい情報のどれを記憶に入れるか</td></tr>
+          <tr><td><strong>出力ゲート</strong></td><td>記憶のどれを今の出力に使うか</td></tr>
+          <tr><td><strong>セル状態</strong></td><td>長期に渡って運ばれる情報の通路</td></tr>
+        </tbody>
+      </table>
+      <p>隠れ状態は「今の出力用の要約」、セル状態は「長く保ちたい記憶」——とイメージすると、ゲートの意味が掴みやすくなります。数式やシグモイドの詳細は試験範囲外のことも多いです。</p>
+    </section>
+    <section id="short-long">
+      <h2>「長期」と「短期」の意味</h2>
+      <p>「長・短期記憶」は人間の心理学そのものではなく、<strong>ネットワーク設計の比喩</strong>です。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>短期</strong>
+          各時刻の隠れ状態——直近の文脈の要約
+        </li>
+        <li>
+          <strong>長期</strong>
+          セル状態——系列のはるか昔の情報も保持しうる通路
+        </li>
+      </ul>
+      <p>例：「彼は1990年に東京で働き始め、……（長い文）……<strong>その都市</strong>に戻った」——「その都市」が東京であることは、遠い過去の情報への依存です。LSTMはこうした<strong>長距離の参照</strong>を学習しやすくするために設計されました。</p>
+    </section>
+    <section id="vs-gru-transformer">
+      <h2>GRU・Transformerとの位置</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>位置づけ</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>LSTM</strong></td><td>ゲート付きRNNの代表</td><td>長期依存・勾配消失緩和</td></tr>
+          <tr><td><strong>GRU</strong></td><td>LSTMより単純なゲート構造</td><td>同じくRNN系（TF-415）</td></tr>
+          <tr><td><a href="../transformer/">Transformer</a></td><td>Self-Attentionで系列を処理</td><td>現代LLMの基盤。RNNを使わない</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Transformerは「遠い位置を直接つなぐ」ことで長期依存に挑みます（<a href="../../exams/g-kentei/practice/q/g-294/">G-294</a>）。LSTMは「ループの中で記憶を選別する」路線——<strong>系列史の二つの回答</strong>として並べて覚えると整理がつきます。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>LSTM＝Transformer</td><td>RNN系 vs Attention系</td></tr>
+          <tr><td>LSTM＝CNNのプーリング</td><td>G-242の誤答パターン</td></tr>
+          <tr><td>LSTM＝GAN</td><td>系列モデル vs 生成の枠組み</td></tr>
+          <tr><td>ゲート＝特徴量重要度（Permutation Importance）</td><td>G-401のすり替え</td></tr>
+          <tr><td>LSTM＝現代LLMの標準</td><td>Transformerが主役</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>LSTMの定義として正しいのは？</summary>
+          <p class="tool-faq-a">RNNの一種で、長期的な依存関係を扱いやすくする仕組みを持つモデル、と整理します。ゲート機構とセル状態により、通常のRNNが苦手とする長期依存と勾配消失問題の緩和を目指します。</p>
+        </details>
+        <details>
+          <summary>LSTMが導入された主な目的は？</summary>
+          <p class="tool-faq-a">RNNで長期依存関係を扱う際の勾配消失問題を緩和するため、が試験向けの整理です。ゲートで「何を覚え、何を忘れるか」を制御します。</p>
+        </details>
+        <details>
+          <summary>LSTMとTransformerは同じですか？</summary>
+          <p class="tool-faq-a">いいえ。LSTMはRNN系の改良モデル、TransformerはSelf-Attentionを中核とする別アーキテクチャです。現代LLMの主役はTransformer側です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/practice/q/hq-0329/">HQ-0329 · LSTMの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-242/">G-242 · 導入目的</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-401/">G-401 · ゲート機構</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-294/">G-294 · Transformerとの対比</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../gru/">GRU</a></li>
+          <li><a href="../elmo/">ELMo</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

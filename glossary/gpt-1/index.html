@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPT-1とは？OpenAI初のGPTモデルの意味、Transformer基盤、GPT系列の出発点としての位置づけをG検定・生成AIパスポート向けに解説。">
+  <title>GPT-1とは？OpenAI初のGPTモデル・系列の出発点 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt-1/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="GPT-1とは？OpenAI初のGPTモデル・系列の出発点">
+  <meta property="og:description" content="Transformerによる言語生成の原点となった初代GPT。系列の発展を理解するための出発点。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt-1/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GPT-1",
+        "alternateName": ["GPT 1", "Generative Pre-trained Transformer 1"],
+        "description": "OpenAIが2018年に公開した初代GPT。Transformerベースの言語モデルとしてGPT系列の基礎を確立した。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GPT-1はChatGPTのことですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。GPT-1は2018年の研究モデルであり、2022年登場のChatGPT（サービス）やその中核モデルとは別物です。試験ではモデル名とサービス名を分けて答えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-1は試験で暗記が必要ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "パラメータ数の細かい暗記より、GPT系列の初期モデルとして位置づけられること——GPT-2以降の発展の出発点——が重要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPT-1</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPT-1とは？OpenAI初のGPTモデル・系列の出発点</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃーわん ／ 英：GPT-1</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約5分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPT-1</strong>は、OpenAIが2018年に発表した<strong>初代のGPT（Generative Pre-trained Transformer）モデル</strong>です。<a href="../transformer/">Transformer</a>を基盤にした言語モデルとして、後の<a href="../gpt/">GPT</a>系列の原型を示しました。本記事はベンチマークの細部より、<strong>試験で押さえる系列の流れ</strong>——GPT-1が「どこから始まったか」——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">GPT-1とは</a></li>
+        <li><a href="#series">GPT系列の中での位置</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、GPT-1は<strong>GPTモデル系列の初期モデル</strong>として扱われます（<a href="../../exams/genai-passport/drill/q/tf-0117/">TF-0117</a>）。GPT-2・GPT-3・GPT-3.5・GPT-4へと続く<strong>発展の出発点</strong>として整理するのが試験対策の基本です。
+      </p>
+      <p>
+        細かなパラメータ数や論文の数値より、「<strong>Transformerベースの自己回帰言語モデル系列の最初</strong>」という位置づけが問われます。性能比較の暗記は優先度が低いです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0117/">TF-0117（GPT-1の位置づけ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0136/">TF-0136（GPT-2）</a>、<a href="../../exams/genai-passport/drill/q/tf-0137/">TF-0137（GPT-3）</a></p>
+        <p>系列全体：<a href="../gpt/">GPTの解説記事</a> · <a href="../../tools/chatgpt/">ChatGPTの解説記事</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>GPT-1とは</h2>
+      <p>
+        GPT-1は、<a href="../gpt-architecture/">GPTアーキテクチャ</a>（デコーダのみの<a href="../transformer/">Transformer</a>）を用いた<strong>事前学習＋ファインチューニング</strong>の言語モデルです。大規模テキストでまず学習し、下流タスク用に調整する二段階の枠組みが、後の<a href="../llm/">LLM</a>研究の標準的な流れの先駆けとなりました。
+      </p>
+      <p>
+        規模は現行モデルと比べ非常に小さく（約1.17億パラメーター）、研究論文として公開された段階のモデルです。一般ユーザーが直接触るサービスとして広まったのは、はるか後の<a href="../../tools/chatgpt/">ChatGPT</a>以降です。
+      </p>
+    </section>
+    <section id="series">
+      <h2>GPT系列の中での位置</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>試験で覚えるポイント</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GPT-1</strong></td><td>系列の<strong>初代</strong>。Transformer言語モデルの原型</td></tr>
+          <tr><td><a href="../gpt-2/">GPT-2</a></td><td>GPT-1の約10倍規模。生成品質の向上が話題に</td></tr>
+          <tr><td><a href="../gpt-3/">GPT-3</a></td><td>大規模化とFew-shot学習で汎用性が注目</td></tr>
+          <tr><td>GPT-3.5以降</td><td>インストラクション追従・ChatGPTの基盤へ</td></tr>
+        </tbody>
+      </table>
+      <p>試験では「どのモデルが最新で最強か」より、<strong>系列としてどう発展したか</strong>の流れを答えられることが重要です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GPT-1＝ChatGPT</td><td>2018年の研究モデル vs 2022年以降のサービス</td></tr>
+          <tr><td>GPT-1＝<a href="../generative-ai/">生成AI</a>全体</td><td>GPTは生成AIを実現するモデル系列の一つ</td></tr>
+          <tr><td>GPT-1＝BERT</td><td>GPTはデコーダ系の生成、BERTはエンコーダ系が典型</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>GPT-1はChatGPTのことですか？</summary>
+          <p class="tool-faq-a">いいえ。GPT-1は2018年の研究モデルであり、2022年登場のChatGPT（サービス）やその中核モデルとは別物です。試験ではモデル名とサービス名を分けて答えます。</p>
+        </details>
+        <details>
+          <summary>GPT-1は試験で暗記が必要ですか？</summary>
+          <p class="tool-faq-a">パラメータ数の細かい暗記より、GPT系列の初期モデルとして位置づけられること——GPT-2以降の発展の出発点——が重要です。</p>
+        </details>
+        <details>
+          <summary>GPT-1とGPTアーキテクチャの違いは？</summary>
+          <p class="tool-faq-a">GPTアーキテクチャは設計の型（デコーダのみTransformer）、GPT-1はその型を使った最初の具体モデルです。詳しくは<a href="../gpt-architecture/">GPTアーキテクチャ</a>の記事を参照してください。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0117/">TF-0117 · GPT-1の位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0137/">TF-0137 · GPT-3と系列の流れ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../gpt-2/">GPT-2</a></li>
+          <li><a href="../gpt-3/">GPT-3</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

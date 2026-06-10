@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GoogLeNetとは？Inceptionモジュールで複数スケールの畳み込みを並列化した効率CNN。VGG・ResNetとの違いをG検定向けに解説。">
+  <title>GoogLeNetとは？並列の窓で見る——複数スケールを一度に畳むInception — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/googlenet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GoogLeNetとは？並列の窓で見る——複数スケールを一度に畳むInception">
+  <meta property="og:description" content="Inceptionモジュールで1×1・3×3・5×5畳み込みとプーリングを並列化した効率重視のCNN。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/googlenet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GoogLeNet",
+        "alternateName": ["GoogLeNet", "GoogleNet", "インセプション", "Inception v1"],
+        "description": "Inceptionモジュールを用い、複数サイズの畳み込みとプーリングを並列に組み合わせて多様なスケールの特徴を効率的に捉えるCNNアーキテクチャ。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GoogLeNetは何をするCNNですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Inceptionモジュールを中核とする画像認識向けCNNです。1×1、3×3、5×5の畳み込みとプーリングを並列に実行し、複数スケールの特徴を同時に捉えながらパラメータ数と計算量を抑える設計として知られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GoogLeNetとVGGは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。VGGは3×3畳み込みを深く積み重ねるシンプルな設計、GoogLeNetはInceptionモジュールで異なるサイズの畳み込みを並列に組み合わせる設計です。いずれも画像認識向けCNNですが、深さの与え方が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Inceptionモジュールとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "複数サイズの畳み込みフィルタとプーリングを並列に適用し、その出力をチャネル方向に結合するCNNの構成ブロックです。GoogLeNetの設計思想の中心であり、多様な受容野の特徴を一度に得るための部品です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GoogLeNet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GoogLeNetとは？並列の窓で見る——複数スケールを一度に畳むInception</h1>
+    <p class="tool-hero-sub">読み：グーグルネット ／ 英：GoogLeNet（Inception v1）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GoogLeNet</strong>は、<strong>Inceptionモジュール</strong>を中核とする<a href="../cnn/">CNN</a>です。VGGが「同じ3×3を深く積む」なら、GoogLeNetは<strong>異なるサイズの窓を並べて同時に見る</strong>——本記事は層数の暗記より、<strong>「なぜ並列畳み込みが効率化につながるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#scale-problem">スケールの多様性問題</a></li>
+        <li><a href="#inception">Inceptionモジュール</a></li>
+        <li><a href="#efficiency">効率化の工夫</a></li>
+        <li><a href="#cnn-line">CNN系譜での位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="scale-problem">
+      <h2>スケールの多様性問題</h2>
+      <p>
+        画像には<strong>小さい物体</strong>も<strong>大きい物体</strong>も混在します。受容野が小さいフィルタは細部に、大きいフィルタは広い文脈に強い——どちらか一方だけでは特徴が足りません。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-321/">G-321</a>が問うのは、この課題への応答です。後の<a href="../fpn/">FPN</a>が検出でマルチスケール特徴をピラミッド化するのも、同じ「スケールの多様性」への別アプローチです。
+      </p>
+    </section>
+
+    <section id="inception">
+      <h2>Inceptionモジュール</h2>
+      <p>Inceptionの核心は<strong>並列処理</strong>です。</p>
+      <ol class="tool-steps">
+        <li><strong>1×1畳み込み</strong> — チャネル数を抑えるボトルネックにも</li>
+        <li><strong>3×3畳み込み</strong> — 中程度の受容野</li>
+        <li><strong>5×5畳み込み</strong> — より広い受容野</li>
+        <li><strong>プーリング</strong> — 空間情報の要約</li>
+        <li><strong>結合</strong> — 各枝の出力をチャネル方向に連結</li>
+      </ol>
+      <p>
+        試験の正解文は「<strong>複数サイズの畳み込みを組み合わせるCNN</strong>」（G-321）——Inceptionモジュール＝GoogLeNetの設計思想、とセットで覚えます。
+      </p>
+    </section>
+
+    <section id="efficiency">
+      <h2>効率化の工夫</h2>
+      <p>並列に見えて計算が爆発しやすい——そこで<strong>1×1畳み込み</strong>が効きます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>工夫</th><th>目的</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1×1ボトルネック</strong></td><td>3×3・5×5の前でチャネルを減らし計算量を抑制</td></tr>
+          <tr><td><strong>並列 vs 直列</strong></td><td>複数スケールを<strong>1層で</strong>同時に得る</td></tr>
+          <tr><td><strong>パラメータ効率</strong></td><td>深くしつつ全結合的な肥大を避ける</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../efficientnet/">EfficientNet</a>が深さ・幅・解像度を複合スケールするのは別世代の効率化ですが、GoogLeNetは<strong>アーキテクチャ部品（Inception）で効率と多スケールを両立</strong>した先駆けとしてCNN史に残ります。
+      </p>
+    </section>
+
+    <section id="cnn-line">
+      <h2>CNN系譜での位置</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>設計のキーワード</th><th>試験リンク</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../alexnet/">AlexNet</a></strong></td><td>DLブームの契機・ReLU</td><td>G-319</td></tr>
+          <tr><td><strong>VGG</strong></td><td>3×3を深く積む</td><td>TF-119</td></tr>
+          <tr><td><strong>GoogLeNet</strong></td><td><strong>Inception・並列多スケール</strong></td><td><strong>G-321</strong></td></tr>
+          <tr><td><strong>ResNet</strong></td><td>残差接続で超深層化</td><td>G-322</td></tr>
+          <tr><td><strong><a href="../densenet/">DenseNet</a></strong></td><td>全層密結合</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>Inceptionモジュール</strong>で複数サイズの畳み込みを組み合わせるCNN</li>
+        <li><strong>目的</strong> — 多様なスケールの特徴を効率的に捉える</li>
+        <li><strong>対比</strong> — VGG＝直列の3×3、GoogLeNet＝並列の多スケール</li>
+        <li><strong>すり替え回避</strong> — NLP・物体検出モデル名・GANではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-321/">G-321</a>、<a href="../../exams/g-kentei/practice/q/g-319/">G-319</a>、<a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>、<a href="../../exams/g-kentei/drill/q/tf-119/">TF-119</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GoogLeNet＝VGG</td><td>並列多スケール vs 直列3×3</td></tr>
+          <tr><td>GoogLeNet＝ResNet</td><td>Inception vs 残差接続</td></tr>
+          <tr><td>GoogLeNet＝<a href="../bert/">BERT</a></td><td>画像CNN vs NLP（G-323）</td></tr>
+          <tr><td>GoogLeNet＝<a href="../faster-rcnn/">Faster R-CNN</a></td><td>分類CNN vs 物体検出</td></tr>
+          <tr><td>Inception＝<a href="../transformer/">Transformer</a></td><td>CNN部品 vs 系列Attention</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GoogLeNetは何をするCNNですか？</summary><p class="tool-faq-a">Inceptionモジュールを中核とする画像認識向けCNNです。1×1、3×3、5×5の畳み込みとプーリングを並列に実行し、複数スケールの特徴を同時に捉えながらパラメータ数と計算量を抑える設計として知られます。</p></details>
+        <details><summary>GoogLeNetとVGGは同じですか？</summary><p class="tool-faq-a">同じではありません。VGGは3×3畳み込みを深く積み重ねるシンプルな設計、GoogLeNetはInceptionモジュールで異なるサイズの畳み込みを並列に組み合わせる設計です。いずれも画像認識向けCNNですが、深さの与え方が異なります。</p></details>
+        <details><summary>Inceptionモジュールとは何ですか？</summary><p class="tool-faq-a">複数サイズの畳み込みフィルタとプーリングを並列に適用し、その出力をチャネル方向に結合するCNNの構成ブロックです。GoogLeNetの設計思想の中心であり、多様な受容野の特徴を一度に得るための部品です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-321/">G-321 · GoogLeNetの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-322/">G-322 · ResNet（対比）</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-119/">TF-119 · VGG（対比）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-319/">G-319 · AlexNet</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../efficientnet/">EfficientNet</a></li>
+          <li><a href="../fpn/">FPN</a></li>
+          <li><a href="../densenet/">DenseNet</a></li>
+          <li><a href="../cbam/">CBAM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

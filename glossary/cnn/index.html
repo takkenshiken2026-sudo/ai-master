@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CNN（畳み込みニューラルネットワーク）とは？画像の局所特徴を段階的に抽出する仕組み、RNN・GANとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>CNNとは？局所パターンの階層——画像の「目」の設計 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/cnn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CNNとは？局所パターンの階層——画像の「目」の設計">
+  <meta property="og:description" content="フィルターでエッジから高次特徴へ。画像認識の古典的基盤。GANやLLMとは別物。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/cnn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "CNN",
+        "alternateName": ["CNN", "畳み込みニューラルネットワーク", "Convolutional Neural Network"],
+        "description": "画像認識に特化したニューラルネットワーク。フィルターで局所的な特徴を段階的に抽出する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "CNNの定義として正しいのは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像などの局所的な特徴を畳み込み処理で捉えるニューラルネットワーク、と整理します。エッジや模様などの低次特徴から、より高次の特徴へ段階的に表現を学習する点が試験の要点です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CNNとGANの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CNNは畳み込み層を中心としたネットワーク構造の一種です。GANは生成器と識別器を競わせる生成モデルの枠組みであり、CNN＝GANとは答えません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CNNとRNNの使い分けは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CNNは画像の局所特徴抽出向き、RNNは時系列や文章など順序データの処理向き、と対比します。データの性質とモデルの設計思想の対応が試験で問われます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">CNN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>CNNとは？局所パターンの階層——画像の「目」の設計</h1>
+    <p class="tool-hero-sub">読み：しーえぬえぬ ／ 英：CNN（Convolutional Neural Network／畳み込みニューラルネットワーク）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>CNN</strong>（畳み込みニューラルネットワーク）は、<strong>画像の局所的なパターン</strong>——エッジ、模様、形——を<strong>畳み込みフィルター</strong>で段階的に抽出する深層学習の<strong>アーキテクチャ</strong>です。<a href="../llm/">LLM</a>や<a href="../../tools/chatgpt/">ChatGPT</a>が言語の世界を担うのに対し、CNNは長く<strong>画像認識の「目」</strong>として位置づけられてきました。本記事は層の数式暗記ではなく、<strong>「なぜ畳み込みが画像に効くのか」</strong>と試験でのすり替え回避に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">CNNとは</a></li>
+        <li><a href="#convolution">畳み込みの直感</a></li>
+        <li><a href="#hierarchy">低次→高次の階層</a></li>
+        <li><a href="#weight-sharing">重み共有とプーリング</a></li>
+        <li><a href="#vs-others">RNN・GAN・LLMとの区別</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の骨格は<strong>「画像などの局所的な特徴を畳み込み処理で捉えるニューラルネットワーク」</strong>（<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>）。
+      </p>
+      <p>
+        誤答では、<strong>CNN＝GAN</strong>（生成器と識別器を競わせるモデル：<a href="../../exams/genai-passport/practice/q/hq-0322/">HQ-0322</a>）、<strong>CNN＝ClaudeやChatGPT</strong>（<a href="../../exams/genai-passport/drill/q/tf-0145/">TF-0145</a>）など、別概念の説明が主語だけ差し替えられているパターンに注意します。
+      </p>
+      <p>
+        データとモデルの対応——<strong>画像→CNN、系列→RNN</strong>——も頻出です（<a href="../../exams/g-kentei/practice/q/g-239/">G-239</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298（定義）</a>、<a href="../../exams/genai-passport/practice/q/hq-0322/">HQ-0322（GANすり替え）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>、<a href="../../exams/g-kentei/practice/q/g-239/">G-239（RNNとの対比）</a>、<a href="../../exams/g-kentei/practice/q/g-275/">G-275（畳み込み層）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>CNNとは</h2>
+      <p>
+        CNNは、画像分類・物体検出・顔認識など<strong>格子状データ（ピクセル格子）</strong>の認識で広く使われてきたネットワーク構造です。物体検出の性能は<a href="../coco-dataset/">COCO</a>などの標準ベンチマークで比較されることが多いです。全結合層だけではパラメータが爆発し、空間的な局所性を活かしにくい——という課題に対し、<strong>畳み込み層</strong>が「近傍だけを見るフィルター」を繰り返し適用する設計で応えました。
+      </p>
+      <p>
+        現代の画像生成は<a href="../text-to-image/">拡散モデル</a>など別系統が主役ですが、試験ではCNNが<strong>画像認識の古典的基盤</strong>として問われることが多く、理解の土台として重要です。
+      </p>
+    </section>
+    <section id="convolution">
+      <h2>畳み込みの直感</h2>
+      <p>小さな<strong>フィルター（カーネル）</strong>を画像上でスライドさせ、各位置で内積を取る——これが畳み込みの基本イメージです。</p>
+      <ol class="tool-steps">
+        <li><strong>局所性</strong> — 一度に見るのは小さな領域（3×3など）。遠くのピクセルは後段の層で間接的に</li>
+        <li><strong>同じフィルターを全体に適用</strong> — 左上のエッジも右下のエッジも同じ検出器で探す</li>
+        <li><strong>スライドして走査</strong> — 画像全体を網羅し特徴マップを得る</li>
+        <li><strong>段階を重ねる</strong> — 浅い層はエッジ、深い層は部品・物体らしさへ</li>
+      </ol>
+      <p>「畳み込み＝画像を圧縮して消す」ではなく、<strong>特徴を抽出して表現を変換する</strong>——という理解が試験向けです。</p>
+    </section>
+    <section id="hierarchy">
+      <h2>低次→高次の階層</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層の深さ</th><th>捉えやすい特徴</th><th>例</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>浅い層</td><td>低次特徴</td><td>エッジ、色の境界、単純な模様</td></tr>
+          <tr><td>中間層</td><td>中次特徴</td><td>角、テクスチャ、目・鼻のような部品</td></tr>
+          <tr><td>深い層</td><td>高次特徴</td><td>顔、車、動物といった物体カテゴリ</td></tr>
+        </tbody>
+      </table>
+      <p>TF-401の解説にあるように、<strong>低次から高次へ段階的に表現を学習する</strong>——この階層性がCNNの試験要点です。</p>
+    </section>
+    <section id="weight-sharing">
+      <h2>重み共有とプーリング</h2>
+      <p>畳み込み層の設計思想で、試験に触れやすい二点です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>概念</th><th>意味</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>重み共有</strong></td><td>同じフィルターを画像全体に適用</td><td>パラメータ削減・位置不変性（G-275）</td></tr>
+          <tr><td><strong>プーリング</strong></td><td>領域を要約して次元を下げる</td><td>計算効率・大まかな位置の頑健性</td></tr>
+        </tbody>
+      </table>
+      <p>「重み共有＝学習しない」は誤りです。共有するのは<strong>パラメータの使い方</strong>であり、フィルター自体は学習で更新されます。</p>
+    </section>
+    <section id="vs-others">
+      <h2>RNN・GAN・LLMとの区別</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>何を指すか</th><th>CNNとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>CNN</strong></td><td>畳み込みを中心としたネット構造</td><td>——</td></tr>
+          <tr><td><a href="../gan/">GAN</a></td><td>生成器と識別器の対戦学習</td><td>別枠組み。識別器にCNNを使うことはあるが同一ではない</td></tr>
+          <tr><td>RNN</td><td>系列の順次処理</td><td>画像 vs 時系列の典型対比（G-239）</td></tr>
+          <tr><td><a href="../transformer/">Transformer</a> / <a href="../llm/">LLM</a></td><td>言語の注意機構・大規模言語モデル</td><td>別ドメイン。Claude≠CNN（TF-0145）</td></tr>
+        </tbody>
+      </table>
+      <p>CNNは<strong>構造の名前</strong>、GANは<strong>学習の枠組み</strong>、LLMは<strong>言語モデルのクラス</strong>——層を混同しないことが生成AIパスポート第2章の得点源です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CNN＝GAN</td><td>HQ-0322。構造 vs 生成の枠組み</td></tr>
+          <tr><td>CNN＝ChatGPT</td><td>画像認識の基盤 vs 対話サービス</td></tr>
+          <tr><td>CNN＝BERT</td><td>画像畳み込み vs NLPエンコーダ</td></tr>
+          <tr><td>画像→RNNが典型</td><td>G-239は逆。画像→CNN</td></tr>
+          <tr><td>CNN＝物体検出そのもの</td><td>Faster R-CNN等はCNNを含むが別モデル名</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>CNNの定義として正しいのは？</summary>
+          <p class="tool-faq-a">画像などの局所的な特徴を畳み込み処理で捉えるニューラルネットワーク、と整理します。エッジや模様などの低次特徴から、より高次の特徴へ段階的に表現を学習する点が試験の要点です。</p>
+        </details>
+        <details>
+          <summary>CNNとGANの違いは？</summary>
+          <p class="tool-faq-a">CNNは畳み込み層を中心としたネットワーク構造の一種です。GANは生成器と識別器を競わせる生成モデルの枠組みであり、CNN＝GANとは答えません。</p>
+        </details>
+        <details>
+          <summary>CNNとRNNの使い分けは？</summary>
+          <p class="tool-faq-a">CNNは画像の局所特徴抽出向き、RNNは時系列や文章など順序データの処理向き、と対比します。データの性質とモデルの設計思想の対応が試験で問われます。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298 · CNNの定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0322/">HQ-0322 · GANすり替え</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · 局所特徴</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-239/">G-239 · RNNとの対比</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../densenet/">DenseNet</a></li>
+          <li><a href="../efficientnet/">EfficientNet</a></li>
+          <li><a href="../googlenet/">GoogLeNet</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../fcn/">FCN</a></li>
+          <li><a href="../fpn/">FPN</a></li>
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../detr/">DETR</a></li>
+          <li><a href="../cbam/">CBAM</a></li>
+          <li><a href="../gan/">GAN</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../3d-cnn/">3D CNN</a></li>
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

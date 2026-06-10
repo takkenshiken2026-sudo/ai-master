@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 3 Sonnetとは？Claude 3世代の標準モデルの意味、Haiku・Opusとの使い分け、マルチモーダル対応をG検定向けに解説。">
+  <title>Claude 3 Sonnetとは？世代3の顔となる標準中核 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-3-sonnet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 3 Sonnetとは？世代3の顔となる標準中核">
+  <meta property="og:description" content="Claude 3のバランス帯。テキストからマルチモーダルへ、2系からの世代更新の主役。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-3-sonnet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 3 Sonnet",
+        "alternateName": ["Claude Sonnet", "クロード 3 ソネット"],
+        "description": "Claude 3世代の標準モデル。速度と性能のバランスに優れ、マルチモーダル入力に対応。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claude 3 Sonnetの位置づけは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude 3世代の標準帯です。Haikuが最軽量、Opusが最上位の一方、Sonnetは多くのユーザーが日常で触れるバランス型として広く提供されました。試験では「Sonnet＝標準・バランス」と役割で区別します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude 3 Sonnetと2.1の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "世代が異なります。2.1は2系の改良版で主にテキスト長文、3 Sonnetは世代更新でマルチモーダル（画像等）と新しい三層（Haiku/Sonnet/Opus）を導入したモデルです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Sonnetはマルチモーダルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude 3世代は画像入力などマルチモーダル能力が強化され、Sonnetもその恩恵を受けます。ただしマルチモーダル＝誤りなしではなく、ハルシネーションや誤認識は起こり得ます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 3 Sonnet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 3 Sonnetとは？世代3の顔となる標準中核</h1>
+    <p class="tool-hero-sub">読み：くろーど すりー そねっと ／ 英：Claude 3 Sonnet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 3 Sonnet</strong>は、<a href="../claude-model/">Claude</a> 3世代の<strong>標準モデル</strong>です。<a href="../claude-2-1/">Claude 2.1</a>が2系テキスト長文の完成形だったのに対し、3 Sonnetは<strong>世代更新</strong>——<a href="../multimodal-ai/">マルチモーダル</a>対応と Haiku / Sonnet / Opus の三層——の<strong>中心に立つ顔</strong>でした。本記事はベンチマーク争いではなく、<strong>「なぜ最上位OpusではなくSonnetがデフォルトになるのか」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">3 Sonnetとは</a></li>
+        <li><a href="#gen3-shift">2系から3系への転換</a></li>
+        <li><a href="#multimodal">マルチモーダル標準帯</a></li>
+        <li><a href="#tier-choice">三層の使い分け</a></li>
+        <li><a href="#sweet-spot">性能とコストのスイートスポット</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Sonnetは<strong>Claude 3世代の標準帯</strong>として整理します。開発元は<strong>Anthropic</strong>（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）。Haiku / Sonnet / Opus は<strong>同一世代内のサイズ名</strong>であり、世代番号（3）と混同しないことが重要です。
+      </p>
+      <p>
+        Claude 3のマルチモーダルは「テキスト、画像、音声など複数種類の情報を扱える性質」（<a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131</a>、<a href="../../exams/genai-passport/practice/q/hq-0315/">HQ-0315</a>）の具体例です。マルチモーダルを<a href="../rlhf/">RLHF</a>と入れ替えた説明は×（HQ-0315）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claudeの位置づけ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131（マルチモーダル）</a>、<a href="../../exams/genai-passport/practice/q/hq-0315/">HQ-0315（マルチモーダル定義）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-169/">TF-169（マルチモーダル）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>3 Sonnetとは</h2>
+      <p>
+        2024年3月、AnthropicはClaude 3を発表し、<strong>Sonnet</strong>を最初に広く提供する標準帯として位置づけました。公開時のベンチマークでは、前世代の最上位に相当する性能を<strong>Sonnetが担う</strong>——つまり「標準帯が強くなった」——というナラティブが話題になりました。
+      </p>
+      <p>
+        Webアプリ（claude.ai）やAPIのデフォルト級モデルとして、<strong>最も多くのユーザーが触れたClaude 3の実体</strong>がSonnetであることが多いです。後続の 3.5 Sonnet が主力へ移行しても、「Sonnet＝標準帯」という<strong>命名規則</strong>は継承されています。
+      </p>
+    </section>
+    <section id="gen3-shift">
+      <h2>2系から3系への転換</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Claude 2 / 2.1</th><th>Claude 3 Sonnet</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>世代</td><td>2系（2.1は改良版）</td><td>3系（世代更新）</td></tr>
+          <tr><td>階層名</td><td>単一系統が中心</td><td>Haiku / Sonnet / Opus</td></tr>
+          <tr><td>入力</td><td>主にテキスト</td><td>テキスト＋画像（マルチモーダル）</td></tr>
+          <tr><td>主な訴求</td><td>100K〜200K長文</td><td>性能刷新＋マルチモーダル</td></tr>
+        </tbody>
+      </table>
+      <p>2.1の長コンテキスト路線は3系でも継承されますが、Sonnetの価値は<strong>「長さ」だけでなく総合能力の底上げ</strong>——特に画像を含む実務——にシフトした点にあります。</p>
+    </section>
+    <section id="multimodal">
+      <h2>マルチモーダル標準帯</h2>
+      <p>
+        Claude 3 Sonnetは、チャートやスクリーンショット、手書きメモなどの<strong>画像入力</strong>を扱えるようになり、文書理解の幅が広がりました。試験では次を押さえます。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>定義</strong> — 複数種類の情報を扱える性質（TF-0131）</li>
+        <li><strong>限界</strong> — マルチモーダルでも<a href="../hallucination/">ハルシネーション</a>は起こりうる</li>
+        <li><strong>すり替え</strong> — マルチモーダル≠RLHF（HQ-0315）</li>
+      </ul>
+      <p>Opusが最難推論向けでも、<strong>日常の画像付き業務</strong>——報告書の図表要約、UIスクショの説明——ではSonnetがコストと速度のバランスで選ばれます。</p>
+    </section>
+    <section id="tier-choice">
+      <h2>三層の使い分け</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>選ぶ目安</th><th>向くモデル</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>大量の短い分類・タグ付け</td><td><a href="../claude-3-haiku/">Haiku</a></td></tr>
+          <tr><td>日常の対話・文書要約・画像付き業務</td><td><strong>Sonnet</strong></td></tr>
+          <tr><td>複雑な推論・研究レベルの分析</td><td><a href="../claude-3-opus/">Opus</a></td></tr>
+        </tbody>
+      </table>
+      <p>「常にOpusが最適」ではありません。<a href="../gemini-1-0-pro/">Gemini Pro</a>や<a href="../gpt-4/">GPT-4</a>系列と同様、<strong>標準帯が実務のデフォルト</strong>になる設計が各社共通です。</p>
+    </section>
+    <section id="sweet-spot">
+      <h2>性能とコストのスイートスポット</h2>
+      <p>Sonnetが「世代3の顔」になる理由は、次のトレードオフにあります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Haiku寄り</th><th>Sonnet寄り</th><th>Opus寄り</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>応答品質</td><td>単純タスクで十分</td><td>多くの業務で十分</td><td>難問で有利</td></tr>
+          <tr><td>速度</td><td>最速</td><td>バランス</td><td>重くなりがち</td></tr>
+          <tr><td>APIコスト</td><td>最低</td><td>中程度</td><td>高め</td></tr>
+          <tr><td>提供範囲</td><td>バッチ向け</td><td>広くデフォルト</td><td>難問・限定用途</td></tr>
+        </tbody>
+      </table>
+      <p>試験では数値の暗記より、<strong>Sonnet＝Claude 3の標準・バランス</strong>という役割対比が核心です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>3 Sonnet＝3.5 Sonnet</td><td>世代内の別バージョン。名称は共通</td></tr>
+          <tr><td>Sonnet＝Claude全体</td><td>3世代の標準階層</td></tr>
+          <tr><td>Sonnet＝Opusの劣化版だけ</td><td>意図的な標準帯設計</td></tr>
+          <tr><td>マルチモーダル＝誤りなし</td><td>能力の説明。幻覚は起こりうる</td></tr>
+          <tr><td>Sonnet＝Gemini</td><td>Anthropic vs Google</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Claude 3 Sonnetの位置づけは？</summary>
+          <p class="tool-faq-a">Claude 3世代の標準帯です。Haikuが最軽量、Opusが最上位の一方、Sonnetは多くのユーザーが日常で触れるバランス型として広く提供されました。試験では「Sonnet＝標準・バランス」と役割で区別します。</p>
+        </details>
+        <details>
+          <summary>Claude 3 Sonnetと2.1の違いは？</summary>
+          <p class="tool-faq-a">世代が異なります。2.1は2系の改良版で主にテキスト長文、3 Sonnetは世代更新でマルチモーダル（画像等）と新しい三層（Haiku/Sonnet/Opus）を導入したモデルです。</p>
+        </details>
+        <details>
+          <summary>Sonnetはマルチモーダルですか？</summary>
+          <p class="tool-faq-a">Claude 3世代は画像入力などマルチモーダル能力が強化され、Sonnetもその恩恵を受けます。ただしマルチモーダル＝誤りなしではなく、ハルシネーションや誤認識は起こり得ます。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131 · マルチモーダル</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0315/">HQ-0315 · マルチモーダル定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../claude-3-haiku/">Claude 3 Haiku</a></li>
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../claude-2-1/">Claude 2.1</a></li>
+          <li><a href="../claude-3-opus/">Claude 3 Opus</a></li>
+          <li><a href="../claude-3-5-sonnet/">Claude 3.5 Sonnet</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

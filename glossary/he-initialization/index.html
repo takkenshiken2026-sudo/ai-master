@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="He初期化とは？ReLU向けに重みの分散を調整する初期化手法。Xavier初期化・勾配消失との違いをG検定向けに解説。">
+  <title>He初期化とは？ReLUに合わせて分散を整える——学習開始時の勾配を守る初期化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/he-initialization/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="He初期化とは？ReLUに合わせて分散を整える——学習開始時の勾配を守る初期化">
+  <meta property="og:description" content="Kaiming Heの重み初期化。ReLU系活性化で層を重ねても信号・勾配のスケールを保ちやすくする。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/he-initialization/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "He初期化",
+        "alternateName": ["He Initialization", "He初期化", "カイミング初期化", "Kaiming Initialization"],
+        "description": "ReLU系活性化関数を想定し、重みの初期分散を調整して深いネットワークでも順伝播・逆伝播の信号スケールを保ちやすくする重み初期化手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "He初期化は何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "深いニューラルネットワークの学習開始時に、重みをランダム分布からサンプリングする際の分散設定の一つです。ReLUが正の領域で勾配を保ちやすい性質に合わせ、層を重ねても活性化の分散が極端に縮小・膨張しにくいよう設計されています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "He初期化とXavier初期化は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも重みの初期分散を理論的に調整する手法ですが、Xavier（Glorot）初期化はシグモイドやtanhなどの飽和しやすい活性化を想定し、He初期化はReLU系を想定します。活性化の性質に合わせて分散の式が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "He初期化は活性化関数ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。He初期化は学習前に重みへ値を与える初期化手法であり、ReLUやGELUのような活性化関数そのものではありません。学習の安定化のための出発点の設定です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">He初期化</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>He初期化とは？ReLUに合わせて分散を整える——学習開始時の勾配を守る初期化</h1>
+    <p class="tool-hero-sub">読み：エイチイーしょきか ／ 英：He Initialization（Kaiming Initialization）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>He初期化</strong>（Kaiming Initialization）は、<strong>ReLU系</strong>の<a href="../gelu/">活性化関数</a>を前提に、<a href="../neural-network/">ニューラルネットワーク</a>の<strong>重みの初期分散</strong>を調整する手法です。学習は<a href="../backpropagation/">誤差逆伝播</a>で進みますが、初期重みが不適切だと層を重ねた瞬間に信号や勾配が<strong>縮みすぎ・膨らみすぎ</strong>——He初期化は<strong>出発点のスケールを整える</strong>——本記事は分散の式より、<strong>「なぜReLUの時代に必要になったか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-init">初期化が効く理由</a></li>
+        <li><a href="#relu-context">ReLU時代の文脈</a></li>
+        <li><a href="#he-idea">He初期化の直感</a></li>
+        <li><a href="#vs-xavier">Xavier初期化との違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-init">
+      <h2>初期化が効く理由</h2>
+      <p>
+        深いネットワークでは、順伝播の<strong>活性化の大きさ</strong>と逆伝播の<strong>勾配の大きさ</strong>が層ごとに変化します。初期重みが大きすぎれば勾配爆発、小さすぎれば<a href="../../exams/g-kentei/practice/q/g-124/">勾配消失</a>——学習がまともに始まりません。
+      </p>
+      <p>
+        初期化は<strong>学習アルゴリズムそのものではなく</strong>、最初の重みの与え方です。<a href="../../exams/g-kentei/practice/q/g-453/">G-453</a>の誤答選択肢「重みをランダムに初期化する手法」は、サンプリングバイアスとすり替えられます——He初期化は<strong>ランダム＋分散の理論調整</strong>という、より具体的な技法です。
+      </p>
+    </section>
+
+    <section id="relu-context">
+      <h2>ReLU時代の文脈</h2>
+      <p><a href="../alexnet/">AlexNet</a>以降、隠れ層の<strong>ReLU</strong>が標準になりました（<a href="../../exams/g-kentei/practice/q/g-158/">G-158</a>、<a href="../../exams/g-kentei/drill/q/tf-384/">TF-384</a>）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>活性化</th><th>勾配の性質</th><th>初期化との関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>シグモイド/tanh</strong></td><td>飽和域で勾配が小さくなりやすい</td><td>Xavier（Glorot）初期化が想定</td></tr>
+          <tr><td><strong>ReLU</strong></td><td>正の領域で勾配1、負は0</td><td><strong>He初期化</strong>が想定</td></tr>
+          <tr><td><strong>ソフトマックス</strong></td><td>出力層の確率化</td><td>初期化の話とは別（G-156）</td></tr>
+        </tbody>
+      </table>
+      <p>ReLUは勾配消失を<strong>緩和しやすい</strong>一方、負の入力を切り落とすため、信号の分散の扱いはシグモイド時代とは異なります——He初期化はその差分に対応します。</p>
+    </section>
+
+    <section id="he-idea">
+      <h2>He初期化の直感</h2>
+      <p>ざっくり言えば、<strong>ReLUを通しても層をまたいで分散が極端に変わらない</strong>よう、重みの初期スケールを決めます。</p>
+      <ul class="tool-steps">
+        <li><strong>入力</strong> — 重みをゼロ近傍のランダム分布からサンプル</li>
+        <li><strong>調整</strong> — ファンイン（入力側の次元数）などに応じて分散を設定</li>
+        <li><strong>効果</strong> — 深いCNNでも学習初期の順伝播・逆伝播が安定しやすい</li>
+      </ul>
+      <p>
+        試験では分散の厳密な式より、<strong>ReLU向けの重み初期化</strong>というラベルで十分なことが多いです。後続の<a href="../layer-normalization/">レイヤー正規化</a>やバッチ正規化（<a href="../../exams/g-kentei/practice/q/g-276/">G-276</a>）は、学習<strong>中</strong>の分布を整える別の層——初期化は<strong>学習前</strong>の出発点、と役割を分けます。
+      </p>
+    </section>
+
+    <section id="vs-xavier">
+      <h2>Xavier初期化との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>想定する活性化</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Xavier（Glorot）</strong></td><td>シグモイド・tanh</td><td>飽和型活性化の時代</td></tr>
+          <tr><td><strong>He（Kaiming）</strong></td><td><strong>ReLU系</strong></td><td>CNN深層化の時代</td></tr>
+          <tr><td><strong>ゼロ初期化</strong></td><td>—</td><td>対称性問題で隠れ層に不適</td></tr>
+        </tbody>
+      </table>
+      <p>どちらも「ランダム初期化」より一歩進んだ<strong>分散設計</strong>です。活性化関数を変えたら、初期化の最適解も変わる——という対応関係が試験の要点です。</p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>ReLU向け</strong>の重み初期分散調整</li>
+        <li><strong>目的</strong> — 深いネットで勾配消失・爆発を抑え、学習を安定化</li>
+        <li><strong>対比</strong> — Xavier＝飽和型、He＝ReLU系。活性化≠初期化</li>
+        <li><strong>すり替え回避</strong> — 正則化・バッチ正規化・サンプリングバイアスではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-158/">G-158</a>、<a href="../../exams/g-kentei/practice/q/g-124/">G-124</a>、<a href="../../exams/g-kentei/practice/q/g-196/">G-196</a>、<a href="../../exams/g-kentei/drill/q/tf-384/">TF-384</a>、<a href="../../exams/g-kentei/practice/q/g-276/">G-276</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>He初期化＝ReLU</td><td>重みの初期設定 vs 活性化関数</td></tr>
+          <tr><td>He初期化＝Xavier</td><td>ReLU想定 vs 飽和型想定</td></tr>
+          <tr><td>He初期化＝バッチ正規化</td><td>学習前 vs 学習中の分布調整</td></tr>
+          <tr><td>He初期化＝サンプリングバイアス</td><td>重み初期化 vs データ偏り（G-453）</td></tr>
+          <tr><td>He初期化＝<a href="../loss-function/">損失関数</a></td><td>初期重み vs 誤差の定義</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>He初期化は何ですか？</summary><p class="tool-faq-a">深いニューラルネットワークの学習開始時に、重みをランダム分布からサンプリングする際の分散設定の一つです。ReLUが正の領域で勾配を保ちやすい性質に合わせ、層を重ねても活性化の分散が極端に縮小・膨張しにくいよう設計されています。</p></details>
+        <details><summary>He初期化とXavier初期化は同じですか？</summary><p class="tool-faq-a">同じではありません。どちらも重みの初期分散を理論的に調整する手法ですが、Xavier（Glorot）初期化はシグモイドやtanhなどの飽和しやすい活性化を想定し、He初期化はReLU系を想定します。活性化の性質に合わせて分散の式が異なります。</p></details>
+        <details><summary>He初期化は活性化関数ですか？</summary><p class="tool-faq-a">いいえ。He初期化は学習前に重みへ値を与える初期化手法であり、ReLUやGELUのような活性化関数そのものではありません。学習の安定化のための出発点の設定です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-158/">G-158 · ReLUが広く使われる理由</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-124/">G-124 · 勾配消失</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-384/">TF-384 · ReLUの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-276/">G-276 · バッチ正規化（対比）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../layer-normalization/">レイヤー正規化</a></li>
+          <li class="tool-related-list__soon">Xavier初期化（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

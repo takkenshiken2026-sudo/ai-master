@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 3 Haikuとは？Claude 3最軽量モデルの意味、Sonnet・Opusとの階層、大量API処理をG検定・生成AIパスポート向けに解説。">
+  <title>Claude 3 Haikuとは？俳句の軽さと大量処理の入口 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-3-haiku/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 3 Haikuとは？俳句の軽さと大量処理の入口">
+  <meta property="og:description" content="Claude 3世代の最軽量帯。詩的命名のHaikuが担う速度とコスト効率。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-3-haiku/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 3 Haiku",
+        "alternateName": ["Claude Haiku", "クロード 3 ハイク"],
+        "description": "Claude 3世代の最軽量モデル。高速・低コストで大量処理やリアルタイム応答向け。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Haikuは何を意味しますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "俳句（haiku）から取った階層名で、短く軽い形式の詩にちなみ、最軽量・高速のモデル帯を示します。試験では文学の知識より「Haiku＝最軽量、Sonnet＝標準、Opus＝最上位」の役割で覚えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude 3 HaikuとSonnetの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同一世代（Claude 3）のサイズ階層差です。Haikuは速度とコストを優先し、Sonnetは性能と速度のバランスを取った標準帯です。難問・深い分析はSonnetやOpus向き、大量の分類・短い要約はHaiku向きと整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Haikuは無料版ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Haikuはモデル階層の名称であり、無料プランや旧モデルとは別軸です。APIではトークン課金があり、軽量だから無料という意味ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 3 Haiku</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 3 Haikuとは？俳句の軽さと大量処理の入口</h1>
+    <p class="tool-hero-sub">読み：くろーど すりー はいく ／ 英：Claude 3 Haiku</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 3 Haiku</strong>は、<a href="../claude-model/">Claude</a> 3世代の<strong>最軽量モデル</strong>です。Googleの Flash、OpenAIの mini 系列と同様、<strong>1件の最高品質より1万件の処理速度</strong>を狙う帯域ですが、Anthropicは Ultra/Pro ではなく<strong>俳句・十四行詩・大作</strong>——Haiku / Sonnet / Opus——という詩的な階層名を採用しました。本記事は命名の暗記ではなく、<strong>「HaikuがClaude 3大量処理の入口になる」</strong>という実務と試験の切り口に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Claude 3 Haikuとは</a></li>
+        <li><a href="#poetry-tier">詩の名前が示す役割</a></li>
+        <li><a href="#throughput">大量処理の設計思想</a></li>
+        <li><a href="#haiku-vs-others">他社の軽量帯との対比</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        個別ベンチマークより、<strong>AnthropicのClaude階層</strong>として整理します。Haiku＝最軽量、Sonnet＝標準、Opus＝最上位——この<strong>3段の役割名</strong>は<a href="../claude-model/">Claude</a>記事で系列共通です。試験では必ず<strong>世代番号（3）</strong>とセットで答えます。
+      </p>
+      <p>
+        開発元の区別（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）と、API大量利用時の<strong>コスト意識</strong>（<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428</a>）が実務寄りの論点です。Haikuは「安いから品質が低いだけ」ではなく、<strong>意図的な製品階層</strong>です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claudeの位置づけ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428（APIコスト）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Claude 3 Haikuとは</h2>
+      <p>
+        2024年3月、Anthropicは<strong>Claude 3</strong>ファミリー——<a href="../claude-3-sonnet/">Sonnet</a>・Opus・Haiku——を発表しました。Haikuはそのうち<strong>最後に広く提供された軽量帯</strong>で、企業のデータパイプラインやカスタマーサポートの<strong>一次処理</strong>向けに位置づけられました。
+      </p>
+      <p>
+        Claude 3世代は<a href="../multimodal-ai/">マルチモーダル</a>（画像入力など）にも対応が進みましたが、Haikuの主戦場は依然<strong>テキスト中心の大量・高速タスク</strong>です。画像理解まで含めるとコストとレイテンシのトレードオフが変わるため、用途で使い分けます。
+      </p>
+    </section>
+    <section id="poetry-tier">
+      <h2>詩の名前が示す役割</h2>
+      <p>Haiku（俳句）は<strong>短い形式の詩</strong>——17音の凝縮——にちなんだ名称です。製品上の意味は「短く速く返す」ことに対応します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>階層名</th><th>文学でのイメージ</th><th>モデルでの役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Haiku</strong></td><td>最短の詩形</td><td>最軽量・高速・低コスト</td></tr>
+          <tr><td><a href="../claude-3-sonnet/">Sonnet</a></td><td>十四行詩（中編）</td><td>標準・バランス</td></tr>
+          <tr><td>Opus</td><td>大規模な作品</td><td>最上位・深い推論</td></tr>
+        </tbody>
+      </table>
+      <p>Googleの Pro/Flash、OpenAIの GPT-4o/mini と<strong>命名は異なる</strong>が、「軽量帯＝大量処理」という思想は各社共通です。</p>
+    </section>
+    <section id="throughput">
+      <h2>大量処理の設計思想</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>シナリオ</th><th>Haiku向き</th><th>Sonnet/Opus向き</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>問い合わせの一次分類（1日数千件）</td><td>◎</td><td>コスト過多になりがち</td></tr>
+          <tr><td>商品タグの自動付与</td><td>◎</td><td>単純タスクでは過剰</td></tr>
+          <tr><td>契約書の深い照合・矛盾分析</td><td>△</td><td>◎</td></tr>
+          <tr><td>複雑なコーディング設計</td><td>△</td><td>◎（Opus寄り）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        二段構成——<strong>Haikuでふるい分け → 難件だけSonnetへ</strong>——はTF-0428のコスト意識と両立する実務パターンです。
+      </p>
+    </section>
+    <section id="haiku-vs-others">
+      <h2>他社の軽量帯との対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>開発元</th><th>軽量帯の名称</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Claude 3 Haiku</strong></td><td>Anthropic</td><td>Haiku</td></tr>
+          <tr><td><a href="../gemini-1-5-flash/">Gemini 1.5 Flash</a></td><td>Google</td><td>Flash</td></tr>
+          <tr><td>GPT-4o mini 等</td><td>OpenAI</td><td>mini 系列</td></tr>
+          <tr><td><a href="../gemini-1-0-nano/">Gemini Nano</a></td><td>Google</td><td>端末上（別レイヤー）</td></tr>
+        </tbody>
+      </table>
+      <p>Haikuは<strong>クラウドAPIの軽量帯</strong>です。端末上の<a href="../gemini-1-0-nano/">Nano</a>のようにオンデバイス推論を指す名称ではありません。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Haiku＝Claude全体</td><td>3世代の最軽量階層。ファミリーは<a href="../claude-model/">Claude</a></td></tr>
+          <tr><td>Haiku＝3.5 Haiku</td><td>世代が異なる場合あり。番号をセットで確認</td></tr>
+          <tr><td>Haiku＝無料プラン</td><td>モデル階層名。課金体系とは別</td></tr>
+          <tr><td>Haiku＝常に劣化版</td><td>大量処理では最適解になりうる</td></tr>
+          <tr><td>Haiku＝俳句生成専用</td><td>文学形式にちなんだ製品名。俳句以外も扱う</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Haikuは何を意味しますか？</summary>
+          <p class="tool-faq-a">俳句（haiku）から取った階層名で、短く軽い形式の詩にちなみ、最軽量・高速のモデル帯を示します。試験では文学の知識より「Haiku＝最軽量、Sonnet＝標準、Opus＝最上位」の役割で覚えます。</p>
+        </details>
+        <details>
+          <summary>Claude 3 HaikuとSonnetの違いは？</summary>
+          <p class="tool-faq-a">同一世代（Claude 3）のサイズ階層差です。Haikuは速度とコストを優先し、Sonnetは性能と速度のバランスを取った標準帯です。難問・深い分析はSonnetやOpus向き、大量の分類・短い要約はHaiku向きと整理します。</p>
+        </details>
+        <details>
+          <summary>Haikuは無料版ですか？</summary>
+          <p class="tool-faq-a">いいえ。Haikuはモデル階層の名称であり、無料プランや旧モデルとは別軸です。APIではトークン課金があり、軽量だから無料という意味ではありません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428 · APIコスト</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../claude-3-sonnet/">Claude 3 Sonnet</a></li>
+          <li><a href="../claude-2-1/">Claude 2.1</a></li>
+          <li><a href="../claude-3-opus/">Claude 3 Opus</a></li>
+          <li><a href="../claude-3-5-haiku/">Claude 3.5 Haiku</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

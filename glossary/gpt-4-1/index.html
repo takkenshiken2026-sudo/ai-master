@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPT-4.1とは？コーディング特化・API専用モデルの意味、mini/nanoファミリー、ChatGPTとの提供形態の違いをG検定向けに解説。">
+  <title>GPT-4.1とは？コーディング特化・API向けモデルファミリー — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt-4-1/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="GPT-4.1とは？コーディング特化・API向けモデルファミリー">
+  <meta property="og:description" content="長文コンテキストとコーディング精度を強化したAPI/Playground専用モデル。mini・nanoファミリーの整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt-4-1/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GPT-4.1",
+        "alternateName": ["GPT4.1", "GPT-4.1"],
+        "description": "長文コンテキストとコーディング精度を強化したOpenAIのAPI向けモデルファミリー。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GPT-4.1はChatGPTで使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GPT-4.1は主にAPIやPlayground向けに提供されるモデルとして整理されます。一般ユーザー向けチャットのデフォルトモデルとは別の提供チャネルである点が試験・実務の整理で重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-4.1とGPT-4.1 mini・nanoの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同一ファミリー内のサイズ違いです。4.1が標準、miniが速度とコストのバランス、nanoが最小・最速でエッジや大量処理向け、という整理が試験向けです。細かなパラメータ暗記より役割分担を押さえれば十分なことが多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-4.1はGPT-4のバージョンアップですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "名前は4.1ですが、消費者向けGPT-4の単純な置き換えではなく、コーディング特化とAPI提供に軸を置いた派生ラインとして理解するのが安全です。GPT-4・GPT-4oとの系列順序と提供形態を混同しないことが重要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPT-4.1</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPT-4.1とは？コーディング特化・API向けモデルファミリー</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃーてんいち ／ 英：GPT-4.1</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPT-4.1</strong>は、OpenAIが2025年にリリースした<strong>コーディングと長文処理に強いAPI向けモデル</strong>です。<a href="../../tools/chatgpt/">ChatGPT</a>のチャットUI向けではなく、<strong>開発者がAPI経由で組み込む</strong>用途に軸を置いた提供形態が特徴です。本記事は性能ベンチマークの細部より、<strong>「誰が・どのチャネルで使うモデルか」</strong>——消費者向けチャット vs 開発者向けAPI——という切り口で整理します。料金・提供範囲は<strong>2026年6月時点</strong>の情報です。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#api-channel">API専用提供という意味</a></li>
+        <li><a href="#coding-focus">コーディング特化の整理</a></li>
+        <li><a href="#family">mini・nanoファミリー</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        G検定・生成AIパスポートでは、個別のGPT-4.1の仕様を単独で深掘りするより、<strong>コード生成・API利用・モデルとサービスの区別</strong>の文脈で整理するのが現実的です。Codexなどコード支援モデルが系列の中でどう位置づけられるか（<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150</a>）と並べて考えると迷いにくいです。
+      </p>
+      <p>
+        API経由の利用では、モデルだけでなく<strong>データ・ログ・権限</strong>もセキュリティ管理の対象になります（<a href="../../exams/g-kentei/drill/q/tf-201/">G検定 TF-201</a>）。GPT-4.1を業務に組み込む想定では、この全体設計が試験のケース問題にもつながります。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150（Codex・コード支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170（コンテキストウィンドウ）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-201/">TF-201（APIとセキュリティ）</a>、<a href="../../exams/g-kentei/drill/q/tf-427/">TF-427（自己回帰モデル）</a></p>
+      </div>
+    </section>
+    <section id="api-channel">
+      <h2>API専用提供という意味</h2>
+      <p>
+        GPT系列には、一般ユーザーがブラウザやアプリで触る<strong>チャット向けモデル</strong>と、開発者がHTTP APIで呼び出す<strong>組み込み向けモデル</strong>があります。GPT-4.1は後者に近い位置づけです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>レイヤー</th><th>例</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>サービス</strong></td><td><a href="../../tools/chatgpt/">ChatGPT</a></td><td>ユーザーが触るUI・体験</td></tr>
+          <tr><td><strong>チャット向けモデル</strong></td><td>GPT-4o など</td><td>デフォルト会話モデルとして話題に</td></tr>
+          <tr><td><strong>API向けモデル</strong></td><td><strong>GPT-4.1</strong> ファミリー</td><td>アプリ・業務システムへの<strong>組み込み</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        「GPT-4.1＝いまのChatGPTの中身」と同一視すると、提供チャネルの問題で誤答しやすくなります。<a href="../gpt/">GPT</a>記事の三層（サービス・モデル・アーキテクチャ）に、<strong>提供チャネル</strong>を足して四層で覚えると安定します。
+      </p>
+    </section>
+    <section id="coding-focus">
+      <h2>コーディング特化の整理</h2>
+      <p>
+        GPT-4.1は、リポジトリ全体の理解・バグ修正の提案・テストコード生成など、<strong>ソフトウェア開発ワークフロー</strong>での利用を想定した強化が話題になりました。試験ではHumanEvalの点数暗記より、次の整理が中心です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>コード補完の系譜</strong> — Codex（GitHub Copilotの基盤）から、より大規模なコード支援へ発展した文脈（<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150</a>）</li>
+        <li><strong>長文コンテキスト</strong> — 大きなコードベースを一度に参照するには<a href="../context-window/">コンテキストウィンドウ</a>が重要（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>）</li>
+        <li><strong>限界</strong> — 生成コードも人間のレビュー・テストが必要。自動デプロイはリスク</li>
+      </ul>
+      <p>
+        AIによるコード生成は便利ですが、ライセンス・セキュリティ・品質の観点から<strong>出力の検証</strong>は必須です。試験のケース問題では「そのまま本番反映」が×になるパターンが多いです。
+      </p>
+    </section>
+    <section id="family">
+      <h2>mini・nanoファミリー</h2>
+      <p>GPT-4.1は単体ではなく、サイズ違いの3モデルが同時にリリースされました。</p>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">モデル</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">向いている用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>GPT-4.1</strong></td>
+            <td>高精度が必要なコーディング・長文解析</td>
+          </tr>
+          <tr>
+            <td><strong>GPT-4.1 mini</strong></td>
+            <td>速度とコストのバランス。日常的なAPI呼び出し</td>
+          </tr>
+          <tr>
+            <td><strong>GPT-4.1 nano</strong></td>
+            <td>最小・最速。分類・要約など大量の軽量処理</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>試験では3サイズの細部仕様より、<strong>大・中・小の役割分担</strong>——精度 vs 速度 vs コスト——を答えられることが重要です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GPT-4.1＝GPT-4のマイナーアップデート</td><td>コーディング・API軸の派生ライン。提供チャネルも異なる</td></tr>
+          <tr><td>GPT-4.1＝ChatGPTのデフォルト</td><td>チャットUI向けとAPI向けは別整理</td></tr>
+          <tr><td>コーディング特化＝バグなし</td><td>性能向上とレビュー必要性は両立</td></tr>
+          <tr><td>API利用＝追加コストなし</td><td>トークン課金・運用コストが発生（実務の前提）</td></tr>
+          <tr><td>GPT-4.1＝GPT-4o</td><td>別モデル。4oはオムニ統合、4.1はAPI・コーディング軸</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>GPT-4.1はChatGPTで使えますか？</summary>
+          <p class="tool-faq-a">GPT-4.1は主にAPIやPlayground向けに提供されるモデルとして整理されます。一般ユーザー向けチャットのデフォルトモデルとは別の提供チャネルである点が試験・実務の整理で重要です。</p>
+        </details>
+        <details>
+          <summary>GPT-4.1とGPT-4.1 mini・nanoの違いは？</summary>
+          <p class="tool-faq-a">同一ファミリー内のサイズ違いです。4.1が標準、miniが速度とコストのバランス、nanoが最小・最速でエッジや大量処理向け、という整理が試験向けです。細かなパラメータ暗記より役割分担を押さえれば十分なことが多いです。</p>
+        </details>
+        <details>
+          <summary>GPT-4.1はGPT-4のバージョンアップですか？</summary>
+          <p class="tool-faq-a">名前は4.1ですが、消費者向けGPT-4の単純な置き換えではなく、コーディング特化とAPI提供に軸を置いた派生ラインとして理解するのが安全です。GPT-4・GPT-4oとの系列順序と提供形態を混同しないことが重要です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150 · Codexとコード支援</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · コンテキストウィンドウ</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-201/">TF-201 · APIとセキュリティ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpt-4/">GPT-4</a></li>
+          <li><a href="../gpt-4o/">GPT-4o</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../codex-model/">Codex</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

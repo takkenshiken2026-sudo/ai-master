@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gemmaとは？Googleのオープンウェイト軽量LLMファミリー。Gemini・LLaMAとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Gemmaとは？軽量で開く——Googleがオープンウェイトで降ろした小さめLLM — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gemma/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gemmaとは？軽量で開く——Googleがオープンウェイトで降ろした小さめLLM">
+  <meta property="og:description" content="Google DeepMindのオープンウェイト軽量LLM。研究・端末・ファインチューニング向けの基盤モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gemma/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Gemma",
+        "alternateName": ["Gemma", "ジェマ", "Gemma LLM"],
+        "description": "Googleが公開するオープンウェイトの軽量大規模言語モデルファミリー。研究・端末展開・ファインチューニング向けの基盤モデルとして位置づけられる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Gemmaは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Googleが提供するオープンウェイトの軽量LLMファミリーです。大規模なGeminiとは別系統で、比較的小さいパラメータ規模のモデルを重み公開し、テキスト生成や下流タスクへのファインチューニングの土台として使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GemmaとGeminiは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。GeminiはGoogleの主力マルチモーダルLLMファミリー（クラウドサービス中心）であり、Gemmaはオープンウェイトの軽量LLM系列です。開発元は同じGoogle系ですが、公開形態・規模・用途の整理が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GemmaとLLaMAは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもオープンウェイト系のLLMファミリーですが、開発元（Google vs Meta）とモデル設計が異なります。いずれも基盤モデルとしてファインチューニングや研究に使われる点は共通です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Gemma</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Gemmaとは？軽量で開く——Googleがオープンウェイトで降ろした小さめLLM</h1>
+    <p class="tool-hero-sub">読み：ジェマ ／ 英：Gemma</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Gemma</strong>は、Googleが公開する<strong>オープンウェイトの軽量<a href="../llm/">LLM</a></strong>ファミリーです。<a href="../gemini-model/">Gemini</a>がクラウドの主力艦隊なら、Gemmaは<strong>重みを配布して手元で動かせる小型艦</strong>——本記事はベンチマークの数値暗記ではなく、<strong>「Google内でGeminiとGemmaがどう役割分担するか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#open-light">オープンかつ軽量の意味</a></li>
+        <li><a href="#vs-gemini">Geminiとの棲み分け</a></li>
+        <li><a href="#open-weight-line">オープンウェイトLLMの地図</a></li>
+        <li><a href="#use-cases">向いている使い方</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="open-light">
+      <h2>オープンかつ軽量の意味</h2>
+      <p>
+        <strong>オープンウェイト</strong>は、学習済みの重み（モデルパラメータ）が公開され、研究や自社環境での利用・<a href="../fine-tuning/">ファインチューニング</a>が可能な形態です（<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>）。「完全に制約なし」とは限らず、ライセンス条件は必ず確認します（<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a>）。
+      </p>
+      <p>
+        <strong>軽量</strong>は、フラッグシップLLMよりパラメータ規模が小さい——端末・エッジ・コスト制約のある環境で動かしやすい——という整理です（<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>）。量子化やプルーニングといった<strong>圧縮手法</strong>そのものではありません（<a href="../../exams/g-kentei/practice/q/g-409/">G-409</a>）。
+      </p>
+    </section>
+
+    <section id="vs-gemini">
+      <h2>Geminiとの棲み分け</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Gemini</th><th>Gemma</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>位置づけ</strong></td><td>Googleの<strong>主力</strong>マルチモーダルLLM</td><td><strong>オープンウェイト</strong>の軽量LLM</td></tr>
+          <tr><td><strong>公開形態</strong></td><td>主にAPI・クラウドサービス</td><td>重みを<strong>ダウンロード</strong>して利用</td></tr>
+          <tr><td><strong>規模感</strong></td><td>大規模・マルチモーダル</td><td>比較的<strong>小さめ</strong>の系列</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>マルチモーダルAIの文脈（TF-0141）</td><td>オープン系<strong>基盤モデル</strong>（G-396）</td></tr>
+        </tbody>
+      </table>
+      <p>名前が似ていますが、<strong>Gemma＝Geminiの略称</strong>と答えるのは誤りです。</p>
+    </section>
+
+    <section id="open-weight-line">
+      <h2>オープンウェイトLLMの地図</h2>
+      <p>2020年代のLLM史では、クローズドAPI型とオープンウェイト型が並走します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ファミリー</th><th>開発元</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../llama/">LLaMA</a></strong></td><td>Meta</td><td>オープンウェイトの代表格</td></tr>
+          <tr><td><strong><a href="../falcon-llm/">Falcon</a></strong></td><td>TII（UAE）</td><td>中東圏のオープン系</td></tr>
+          <tr><td><strong>Gemma</strong></td><td>Google</td><td>軽量オープン系</td></tr>
+          <tr><td><strong><a href="../gpt/">GPT</a></strong></td><td>OpenAI</td><td>主にAPI提供（オープンウェイトではない）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>の<strong>基盤モデル</strong>——大量データで事前学習され、様々な下流タスクに適用できる——という定義に、Gemmaも位置づけられます。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>向いている使い方</h2>
+      <ul class="tool-steps">
+        <li><strong>研究・教育</strong> — 重みを触って実験・再現がしやすい</li>
+        <li><strong>ファインチューニング</strong> — <a href="../lora/">LoRA</a>などで社内データに適応</li>
+        <li><strong>端末・エッジ</strong> — 小規模モデルはオンデバイス推論と相性がよい（G-408）</li>
+        <li><strong>すり替え回避</strong> — 対話サービスそのもの（<a href="../../tools/chatgpt/">ChatGPT</a>等）ではない</li>
+      </ul>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Googleの<strong>オープンウェイト軽量LLM</strong></li>
+        <li><strong>対比</strong> — Gemini＝主力クラウド、Gemma＝オープン軽量</li>
+        <li><strong>系譜</strong> — LLaMA・Falconと並ぶオープン系基盤モデル</li>
+        <li><strong>層</strong> — モデル名 ≠ サービス名 ≠ 圧縮手法</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>、<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>、<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141</a>（Geminiとの対比）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Gemma＝Gemini</td><td>軽量オープン vs 主力マルチモーダル</td></tr>
+          <tr><td>Gemma＝<a href="../../tools/chatgpt/">ChatGPT</a></td><td>モデルファミリー vs 対話サービス</td></tr>
+          <tr><td>Gemma＝<a href="../bert/">BERT</a></td><td>生成系LLM vs エンコーダ型NLP</td></tr>
+          <tr><td>Gemma＝量子化</td><td>モデル名 vs 圧縮手法（G-404）</td></tr>
+          <tr><td>Gemma＝<a href="../llama/">LLaMA</a></td><td>Google vs Meta。どちらもオープン系</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Gemmaは何をするモデルですか？</summary><p class="tool-faq-a">Googleが提供するオープンウェイトの軽量LLMファミリーです。大規模なGeminiとは別系統で、比較的小さいパラメータ規模のモデルを重み公開し、テキスト生成や下流タスクへのファインチューニングの土台として使われます。</p></details>
+        <details><summary>GemmaとGeminiは同じですか？</summary><p class="tool-faq-a">同じではありません。GeminiはGoogleの主力マルチモーダルLLMファミリー（クラウドサービス中心）であり、Gemmaはオープンウェイトの軽量LLM系列です。開発元は同じGoogle系ですが、公開形態・規模・用途の整理が異なります。</p></details>
+        <details><summary>GemmaとLLaMAは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもオープンウェイト系のLLMファミリーですが、開発元（Google vs Meta）とモデル設計が異なります。いずれも基盤モデルとしてファインチューニングや研究に使われる点は共通です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · エッジAI</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-478/">TF-478 · OSSライセンス</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141 · Gemini（対比）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../falcon-llm/">Falcon</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

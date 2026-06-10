@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BEiTとは？マスク画像モデリングでVision Transformerを事前学習する手法。BERTのMLMを画像に移植した自己教師あり学習をG検定向けに解説。">
+  <title>BEiTとは？画像の穴埋めで覚える——BERT流のマスク画像事前学習 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/beit/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BEiTとは？画像の穴埋めで覚える——BERT流のマスク画像事前学習">
+  <meta property="og:description" content="画像パッチをマスクして復元させる事前学習。ViTにラベルなしデータで表現を学ばせる自己教師ありの代表手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/beit/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "BEiT",
+        "alternateName": ["BEiT", "ビート", "BERT Pre-training of Image Transformers"],
+        "description": "マスク画像モデリングでVision Transformerをラベルなしデータから事前学習する自己教師あり手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BEiTの事前学習は何をしますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像をパッチに分割し、一部のパッチをマスク（隠す）して、残りの文脈から隠れた部分の表現を当てるマスク画像モデリングを行います。BERTのマスク語予測（MLM）を画像領域に移植した設計です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BEiTとBERTの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BEiTは名前の通り、BERTの事前学習思想——データの一部を隠して予測させる自己教師あり学習——をVision Transformer（画像のTransformer）に適用した手法です。テキスト用BERTそのものではありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BEiTはCNNですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BEiTはVision Transformerを事前学習する手法であり、画像をパッチ列としてTransformerで処理する系統です。畳み込みニューラルネットワーク（CNN）とはアーキテクチャが異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">BEiT</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>BEiTとは？画像の穴埋めで覚える——BERT流のマスク画像事前学習</h1>
+    <p class="tool-hero-sub">読み：ビート ／ 英：BEiT（BERT Pre-training of Image Transformers）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>BEiT</strong>（BERT Pre-training of Image Transformers）は、<strong>マスク画像モデリング</strong>——画像の一部を隠して復元させる——ことで<strong>Vision Transformer（ViT）</strong>をラベルなしデータから事前学習する手法です。<a href="../bert/">BERT</a>がテキストの「穴埋め」で文脈を学ぶのに対し、BEiTは<strong>パッチの穴埋め</strong>で視覚表現を学ぶ。本記事はトークナイザの細部ではなく、<strong>「NLPの事前学習レシピを画像に移植した」</strong>という設計思想に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#masked">マスク画像モデリングとは</a></li>
+        <li><a href="#pipeline">BEiTの学習の流れ</a></li>
+        <li><a href="#vs-bert">BERTのMLMとの対応</a></li>
+        <li><a href="#vit">ViTとの関係</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="masked">
+      <h2>マスク画像モデリングとは</h2>
+      <p>
+        <strong>自己教師あり学習</strong>は、人手のラベルなしに、<strong>データ自身から擬似的な正解</strong>を作って学習する枠組みです（<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>）。「人間が毎回口頭で教える」わけではありません（<a href="../../exams/genai-passport/drill/q/tf-0162/">TF-0162</a>は×）。
+      </p>
+      <p>
+        BEiTの自己教師あり課題は<strong>マスク画像モデリング（Masked Image Modeling）</strong>です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>分割</strong> — 画像を固定サイズの<strong>パッチ</strong>に区切る</li>
+        <li><strong>マスク</strong> — ランダムに一部パッチを<strong>隠す</strong></li>
+        <li><strong>予測</strong> — 見えているパッチの文脈から、隠れた部分の<strong>表現を復元</strong></li>
+      </ul>
+      <p>
+        テキストで「私は___に行った」の空欄を埋めるのと同型で、画像では「この領域に何があったか」を推測させます。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>BEiTの学習の流れ</h2>
+      <p>試験向けに、BEiTを次のパイプラインで整理します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1. 事前学習</strong></td><td>大量の<strong>ラベルなし画像</strong>でマスク画像モデリング。汎用的な視覚表現を獲得</td></tr>
+          <tr><td><strong>2. ファインチューニング</strong></td><td>少量のラベル付きデータで画像分類など<strong>下流タスク</strong>に適応（<a href="../fine-tuning/">ファインチューニング</a>）</td></tr>
+          <tr><td><strong>3. 位置づけ</strong></td><td><a href="../foundation-model/">基盤モデル</a>思想の画像版——事前学習→転移</td></tr>
+        </tbody>
+      </table>
+      <p>
+        人手アノテーションを全画像に付けるコストを避けつつ、<strong>大規模データで表現を学ぶ</strong>——という利点が自己教師ありの要点です。
+      </p>
+    </section>
+
+    <section id="vs-bert">
+      <h2>BERTのMLMとの対応</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>BERT（テキスト）</th><th>BEiT（画像）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>モデル</td><td><a href="../transformer/">Transformer</a>エンコーダ</td><td>Vision Transformer（ViT）</td></tr>
+          <tr><td>入力単位</td><td>トークン（語）</td><td>パッチ（画像の切れ端）</td></tr>
+          <tr><td>事前学習課題</td><td>MLM（マスク語予測）</td><td><strong>マスク画像モデリング</strong></td></tr>
+          <tr><td>学習の型</td><td>自己教師あり</td><td>自己教師あり</td></tr>
+          <tr><td>下流タスク</td><td>分類・QAなど</td><td>画像分類・検出など</td></tr>
+        </tbody>
+      </table>
+      <p>
+        BEiTは<strong>BERTそのものではなく</strong>、BERTの事前学習レシピを画像に移植した手法です。名前の <strong>BE</strong>i<strong>T</strong> は BERT と Image Transformers を掛け合わせた略称として覚えます。
+      </p>
+    </section>
+
+    <section id="vit">
+      <h2>ViTとの関係</h2>
+      <p>
+        <strong>Vision Transformer（ViT）</strong>は、画像をパッチに分割し、パッチ列を<a href="../transformer/">Transformer</a>に入力して画像認識を行うモデルです（<a href="../../exams/g-kentei/drill/q/tf-123/">TF-123</a>、<a href="../../exams/g-kentei/practice/q/g-328/">G-328</a>）。
+      </p>
+      <blockquote>
+        <p>画像をパッチに分割し、Transformerの仕組みを画像認識に適用するモデルである。</p>
+      </blockquote>
+      <p>
+        BEiTは<strong>ViTをどう事前学習するか</strong>の手法名です。ViT＝アーキテクチャ、BEiT＝事前学習レシピ——と役割を分けると試験で混乱しにくくなります。
+      </p>
+      <p>
+        <a href="../cnn/">CNN</a>が畳み込みで局所特徴を捉えるのに対し、ViT系は<strong>パッチ間のAttention</strong>で関係を学びます。BEiTはそのViTに、ラベルなしデータで<strong>事前学習の土台</strong>を与える橋渡しです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — マスク画像モデリングで<strong>ViTを事前学習</strong>する手法</li>
+        <li><strong>学習の型</strong> — <strong>自己教師あり学習</strong>（データから擬似ラベルを作る：G-384）</li>
+        <li><strong>BERTとの関係</strong> — MLMの<strong>画像版</strong>という整理</li>
+        <li><strong>ViTとの関係</strong> — ViT＝モデル構造、BEiT＝事前学習手法</li>
+        <li><strong>すり替え回避</strong> — CNN、GAN、テキスト用BERTそのものではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-123/">TF-123</a>、<a href="../../exams/g-kentei/practice/q/g-328/">G-328</a>、<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>　生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161</a>、<a href="../../exams/genai-passport/drill/q/tf-0162/">TF-0162</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>BEiT＝テキスト用BERT</td><td>画像ViTの<strong>事前学習手法</strong>。BERT流の設計</td></tr>
+          <tr><td>BEiT＝CNN</td><td>TransformerベースのViT系。畳み込み中心ではない</td></tr>
+          <tr><td>BEiT＝ViTそのもの</td><td>ViT＝アーキテクチャ、BEiT＝事前学習レシピ</td></tr>
+          <tr><td>自己教師あり＝人間が口頭で教える</td><td>データから擬似課題を作る（TF-0162は×）</td></tr>
+          <tr><td>マスク画像モデリング＝データ拡張</td><td>学習課題の設計。反転・クロップなどの拡張とは別</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>BEiTの事前学習は何をしますか？</summary><p class="tool-faq-a">画像をパッチに分割し、一部のパッチをマスク（隠す）して、残りの文脈から隠れた部分の表現を当てるマスク画像モデリングを行います。BERTのマスク語予測（MLM）を画像領域に移植した設計です。</p></details>
+        <details><summary>BEiTとBERTの関係は？</summary><p class="tool-faq-a">BEiTは名前の通り、BERTの事前学習思想——データの一部を隠して予測させる自己教師あり学習——をVision Transformer（画像のTransformer）に適用した手法です。テキスト用BERTそのものではありません。</p></details>
+        <details><summary>BEiTはCNNですか？</summary><p class="tool-faq-a">いいえ。BEiTはVision Transformerを事前学習する手法であり、画像をパッチ列としてTransformerで処理する系統です。畳み込みニューラルネットワーク（CNN）とはアーキテクチャが異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-123/">TF-123 · Vision Transformer</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-328/">G-328 · ViTの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-384/">G-384 · 自己教師あり学習</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161 · 自己教師あり学習</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../blip/">BLIP</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li class="tool-related-list__soon">Vision Transformer（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

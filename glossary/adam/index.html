@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Adamとは？勾配の一次・二次モーメントでパラメータごとに学習率を調整する適応的最適化手法。SGDとの違いをG検定向けに解説。">
+  <title>Adamとは？パラメータごとに歩幅を調整——一次・二次モーメントの適応的最適化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/adam/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Adamとは？パラメータごとに歩幅を調整——一次・二次モーメントの適応的最適化">
+  <meta property="og:description" content="MomentumとRMSpropの考えを組み合わせ、各重みに適応的な学習率で更新する深層学習の定番最適化手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/adam/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Adam",
+        "alternateName": ["Adam", "アダム", "Adaptive Moment Estimation"],
+        "description": "勾配の一次・二次モーメントを用い、パラメータごとに適応的な学習率で更新する代表的な最適化アルゴリズム。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Adamの一次・二次モーメントとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "一次モーメントは勾配の移動平均（勢い・方向の滑らかさ）に相当し、二次モーメントは勾配の二乗の移動平均（各パラメータの更新の大きさの目安）に相当します。Adamはこの2つを組み合わせて、パラメータごとに実効的な歩幅を決めます（TF-079）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Adamと勾配降下法（SGD）の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "勾配降下法は基本的に全パラメータで同じ学習率を使います。Adamは過去の勾配情報からパラメータごとに歩幅を調整する適応的手法です。勾配の計算は誤差逆伝播などで行い、Adamはその勾配をどう使って更新するかを決める最適化アルゴリズムです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "学習率はAdamが自動で決めますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Adamは各パラメータの実効歩幅を適応的に調整しますが、全体のスケールを決めるベース学習率などのハイパーパラメータは依然として人が設定します。学習率そのものが誤差逆伝播で自動更新されるわけではありません（TF-052）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Adam</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Adamとは？パラメータごとに歩幅を調整——一次・二次モーメントの適応的最適化</h1>
+    <p class="tool-hero-sub">読み：アダム ／ 英：Adam（Adaptive Moment Estimation）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Adam</strong>（Adaptive Moment Estimation）は、<strong>勾配の一次モーメントと二次モーメント</strong>を使って、各パラメータの更新歩幅を<strong>個別に調整する</strong>適応的最適化アルゴリズムです。本記事は<a href="../backpropagation/">誤差逆伝播法</a>の層構造の話ではなく、<strong>「同じ学習率では歩きにくい地形を、重みごとに歩幅を変えて下る」</strong>——更新の設計——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#pipeline">学習パイプラインでの位置づけ</a></li>
+        <li><a href="#moments">一次・二次モーメント</a></li>
+        <li><a href="#adaptive">適応的学習率の意味</a></li>
+        <li><a href="#family">最適化手法の一族</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="pipeline">
+      <h2>学習パイプラインでの位置づけ</h2>
+      <p>
+        深層学習の1ステップは、ざっくり次の流れです。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>順伝播</strong> — 入力から予測を出す</li>
+        <li><strong>損失計算</strong> — 正解との差を<a href="../loss-function/">損失関数</a>で数値化</li>
+        <li><strong>勾配計算</strong> — <a href="../backpropagation/">誤差逆伝播法</a>で各重みへの勾配を求める</li>
+        <li><strong>パラメータ更新</strong> — <strong>Adam</strong>などの最適化手法で重みを動かす</li>
+      </ul>
+      <p>
+        <a href="../gradient-descent/">勾配降下法</a>は「勾配の反対方向へ進む」という<strong>基本方針</strong>です。Adamはその方針を守りつつ、<strong>どれだけ進むか</strong>をパラメータごとに賢く変える発展形です。
+      </p>
+    </section>
+
+    <section id="moments">
+      <h2>一次・二次モーメント</h2>
+      <p>試験で頻出なのが「一次・二次モーメント」という言い回しです（<a href="../../exams/g-kentei/drill/q/tf-079/">TF-079</a>）。直感は次のとおりです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>何を平均しているか</th><th>役割のイメージ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>一次モーメント</strong></td><td>勾配そのものの移動平均</td><td>更新の<strong>方向と勢い</strong>を滑らかにする（Momentumに近い）</td></tr>
+          <tr><td><strong>二次モーメント</strong></td><td>勾配の二乗の移動平均</td><td>勾配が大きく振れるパラメータの<strong>歩幅を抑える</strong>（RMSpropに近い）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        名前の <strong>A</strong>daptive <strong>M</strong>oment <strong>E</strong>stimation は、この2つのモーメント推定に由来します。数式の暗記より、<strong>「2種類の勾配統計で歩幅を決める」</strong>と覚えると選択肢問題に強くなります。
+      </p>
+    </section>
+
+    <section id="adaptive">
+      <h2>適応的学習率の意味</h2>
+      <p>
+        ニューラルネットの重みは層や役割によって勾配のスケールが大きく異なります。全パラメータに<strong>同じ学習率</strong>だけを当てると、ある重みは更新しすぎ、別の重みはほとんど動かない——といった不均衡が起きます。
+      </p>
+      <p>
+        Adamは<strong>パラメータごとに実効的な歩幅</strong>を変えるため、「適応的学習率」と説明されます。ただし、これは<strong>ベース学習率が不要になる</strong>という意味ではありません。全体のスケールを決めるハイパーパラメータは依然として設定します（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>：学習率はハイパーパラメータ）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>混同しやすい点</strong></p>
+        <p>推論時の<a href="../temperature/">Temperature</a>や、<a href="../alibi/">ALiBi</a>の位置バイアスとは無関係です。Adamは<strong>学習時の最適化</strong>の話です。</p>
+      </div>
+    </section>
+
+    <section id="family">
+      <h2>最適化手法の一族</h2>
+      <p>G検定ではAdamを<strong>代表例</strong>として、他の名前と並べて整理する問題が出ます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>SGD</strong></td><td>勾配方向へ更新。ミニバッチで勾配を計算（<a href="../../exams/g-kentei/practice/q/g-141/">G-141</a>）</td></tr>
+          <tr><td><strong>Momentum</strong></td><td>過去の勾配の勢いを足し、坂道を転がるイメージ</td></tr>
+          <tr><td><strong>AdaGrad / RMSprop</strong></td><td>パラメータごとに学習率を縮める適応系の祖先</td></tr>
+          <tr><td><strong>Adam</strong></td><td>一次・二次モーメントを組み合わせた<strong>定番の適応的手法</strong>（TF-079）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../deep-learning/">深層学習</a>や<a href="../llm/">LLM</a>の学習でも、Adam系の最適化が広く使われます。大規模学習では分散処理などが加わりますが、<strong>勾配で重みを更新する</strong>という骨格は同じです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 勾配の<strong>一次モーメントと二次モーメント</strong>を利用する代表的な最適化手法（TF-079）</li>
+        <li><strong>適応的</strong> — パラメータごとに<strong>実効的な学習率</strong>を変える</li>
+        <li><strong>役割分担</strong> — 勾配計算は逆伝播、更新方針はAdam（勾配降下法の発展）</li>
+        <li><strong>ハイパーパラメータ</strong> — ベース学習率などは依然として人が設定。逆伝播で自動更新されるわけではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-079/">TF-079</a>、<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>、<a href="../../exams/g-kentei/drill/q/tf-076/">TF-076</a>、<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>、<a href="../../exams/g-kentei/practice/q/g-190/">G-190</a>、<a href="../../exams/g-kentei/drill/domain/domain-06/">ディープラーニングの概要</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Adam＝誤差逆伝播法</td><td>逆伝播は<strong>勾配の計算</strong>、Adamは<strong>更新</strong>（TF-075）</td></tr>
+          <tr><td>Adam＝学習率が完全自動</td><td>適応的だが、ベース学習率など<strong>ハイパーパラメータは設定する</strong></td></tr>
+          <tr><td>一次モーメント＝損失関数</td><td>一次モーメントは<strong>勾配の移動平均</strong></td></tr>
+          <tr><td>最適化＝損失を直接書き換える</td><td>損失は予測と正解から計算。最適化は<strong>重みを動かして</strong>損失を下げる</td></tr>
+          <tr><td>SGD＝訓練データを使わない</td><td>訓練データで勾配を計算する（G-141）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Adamの一次・二次モーメントとは？</summary><p class="tool-faq-a">一次モーメントは勾配の移動平均（勢い・方向の滑らかさ）に相当し、二次モーメントは勾配の二乗の移動平均（各パラメータの更新の大きさの目安）に相当します。Adamはこの2つを組み合わせて、パラメータごとに実効的な歩幅を決めます（<a href="../../exams/g-kentei/drill/q/tf-079/">TF-079</a>）。</p></details>
+        <details><summary>Adamと勾配降下法（SGD）の違いは？</summary><p class="tool-faq-a">勾配降下法は基本的に全パラメータで同じ学習率を使います。Adamは過去の勾配情報からパラメータごとに歩幅を調整する適応的手法です。勾配の計算は誤差逆伝播などで行い、Adamはその勾配をどう使って更新するかを決める最適化アルゴリズムです。</p></details>
+        <details><summary>学習率はAdamが自動で決めますか？</summary><p class="tool-faq-a">Adamは各パラメータの実効歩幅を適応的に調整しますが、全体のスケールを決めるベース学習率などのハイパーパラメータは依然として人が設定します。学習率そのものが誤差逆伝播で自動更新されるわけではありません（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-079/">TF-079 · Adam（一次・二次モーメント）</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-075/">TF-075 · 勾配降下法</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-052/">TF-052 · ハイパーパラメータ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-190/">G-190 · 学習率の役割</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../deep-learning/">深層学習</a></li>
+          <li><a href="../adamw/">AdamW</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

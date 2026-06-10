@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FlashAttentionとは？メモリ効率の良い高速注意計算の実装。Transformer・LLMとの関係をG検定向けに解説。">
+  <title>FlashAttentionとは？メモリの往復を減らす——注意の数学は同じでIO効率だけ変えた実装 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/flash-attention/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="FlashAttentionとは？メモリの往復を減らす——注意の数学は同じでIO効率だけ変えた実装">
+  <meta property="og:description" content="IO-awareな注意機構の高速実装。大規模LLMの学習・推論でメモリと速度を改善。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/flash-attention/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "FlashAttention",
+        "alternateName": ["FlashAttention", "Flash Attention", "フラッシュアテンション"],
+        "description": "GPUメモリへの読み書き（IO）を意識したタイル分割により、標準的な注意計算と同等の結果をより高速・低メモリで行う実装手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "FlashAttentionは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Self-Attentionなどの注意計算を、GPUの高速メモリと低速メモリの間のデータ転送（IO）を減らすよう最適化した実装です。計算結果は標準的な注意と同等であり、アーキテクチャそのものではなく実装・アルゴリズムの改良として位置づけられます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FlashAttentionとAttentionは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Attentionは文脈上重要な位置に重みを置く仕組みそのもの、FlashAttentionはその計算を高速・省メモリに行う実装です。Transformerの構成要素はAttentionのまま、内部の計算方法が効率化されます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FlashAttentionは新しいTransformerですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。FlashAttentionはTransformerやLLMの注意層を置き換える別アーキテクチャではなく、既存の注意計算を効率的に実行するための実装技術です。GPTやBERTの設計思想を変えるものではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">FlashAttention</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>FlashAttentionとは？メモリの往復を減らす——注意の数学は同じでIO効率だけ変えた実装</h1>
+    <p class="tool-hero-sub">読み：フラッシュアテンション ／ 英：FlashAttention</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>FlashAttention</strong>は、<a href="../attention/">Attention</a>（注意機構）の<strong>計算の仕方を変えず</strong>、GPU上での<strong>メモリ読み書き（IO）を減らして速くする</strong>実装です。<a href="../transformer/">Transformer</a>や<a href="../llm/">LLM</a>が長い文脈を扱うほど、注意の中間結果がメモリを圧迫する——FlashAttentionはこの<strong>ボトルネックを実装側で解く</strong>——本記事はタイル分割の数式より、<strong>「仕組み vs 実装」の層</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#attention-cost">注意のコスト問題</a></li>
+        <li><a href="#io-bottleneck">IOがボトルネックになる理由</a></li>
+        <li><a href="#flash-idea">FlashAttentionの直感</a></li>
+        <li><a href="#vs-others">Attention・Transformerとの関係</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="attention-cost">
+      <h2>注意のコスト問題</h2>
+      <p>
+        <a href="../attention/">Attention</a>は、系列内のどの位置をどれだけ見るかを重みで決める仕組みです（<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>）。<a href="../transformer/">Transformer</a>はSelf-Attentionを積み重ね、<a href="../gpt/">GPT</a>や<a href="../bert/">BERT</a>の基盤になっています（<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>）。
+      </p>
+      <p>
+        系列長を <em>N</em> とすると、標準的な注意はおおむね <strong>O(N²)</strong> の計算・メモリがかかります。トークン数が増えるほど、<a href="../context-window/">コンテキストウィンドウ</a>を広げたLLMほど負荷が跳ね上がる——これが長文対応の実務課題です。
+      </p>
+    </section>
+
+    <section id="io-bottleneck">
+      <h2>IOがボトルネックになる理由</h2>
+      <p>GPUには<strong>速いオンチップメモリ（SRAM）</strong>と<strong>大きいが遅いメインメモリ（HBM）</strong>があります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>素朴な注意実装</th><th>問題</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>中間行列</strong></td><td>Attentionスコア全体をHBMに書き出す</td><td>メモリ帯域を消費</td></tr>
+          <tr><td><strong>系列が長い</strong></td><td>中間結果が膨大に</td><td>速度・メモリ両方が限界</td></tr>
+          <tr><td><strong>計算自体</strong></td><td>理論上は並列化可能</td><td>IO待ちでGPUが遊ぶ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では「FlashAttention＝計算量をO(N)にした」といった極端な説明は避け、<strong>IO効率の改善</strong>——メモリ往復を減らして実効速度を上げる——と整理するのが安全です。
+      </p>
+    </section>
+
+    <section id="flash-idea">
+      <h2>FlashAttentionの直感</h2>
+      <p>FlashAttentionの核心は<strong>タイル（分割）計算</strong>です。</p>
+      <ol class="tool-steps">
+        <li><strong>分割</strong> — Q・K・Vを小さなブロックに分ける</li>
+        <li><strong>オンチップで計算</strong> — ブロック単位で注意を計算し、中間結果のHBM書き出しを最小化</li>
+        <li><strong>逐次融合</strong> — ブロック結果を正しく合成し、<strong>標準注意と同等の出力</strong>を得る</li>
+      </ol>
+      <p>
+        新しい「注意の種類」ではなく、<strong>同じAttentionをより賢く実行するエンジン</strong>——たとえば同じ式の行列積を、キャッシュに載るサイズで分割して計算する——という位置づけです。
+      </p>
+      <p>
+        その結果、大規模<a href="../llm/">LLM</a>の学習・推論で<strong>より長い系列</strong>や<strong>より大きなバッチ</strong>が現実的になり、後続のFlashAttention-2など改良も登場しました。試験では世代番号より「効率化実装」で十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>Attention・Transformerとの関係</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>性質</th><th>関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Attention</strong></td><td>重み付き情報集約の<strong>仕組み</strong></td><td>数学的な概念（G-295）</td></tr>
+          <tr><td><strong>Transformer</strong></td><td>Self-Attentionを中核とした<strong>アーキテクチャ</strong></td><td>FlashAttentionで中身は同じ</td></tr>
+          <tr><td><strong>FlashAttention</strong></td><td>注意計算の<strong>高速実装</strong></td><td>IO最適化。別モデル名ではない</td></tr>
+          <tr><td><strong><a href="../alibi/">ALiBi</a></strong></td><td>位置情報の与え方の設計</td><td>実装効率とは別の改良軸</td></tr>
+          <tr><td><strong><a href="../cbam/">CBAM</a></strong></td><td>CNN向けの注意</td><td>系列Attentionとは別</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — メモリ効率の良い<strong>注意計算の実装</strong></li>
+        <li><strong>層</strong> — 仕組み（Attention）≠ 実装（FlashAttention）≠ アーキテクチャ（Transformer）</li>
+        <li><strong>効果</strong> — 速度向上・メモリ削減。長文LLMの実務に効く</li>
+        <li><strong>すり替え回避</strong> — 課金方式（TF-0110）・新しいTransformer名ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>、<a href="../../exams/g-kentei/practice/q/g-180/">G-180（メモリとバッチ）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>、<a href="../../exams/genai-passport/drill/q/tf-0110/">TF-0110</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>FlashAttention＝Attention</td><td>実装 vs 仕組み</td></tr>
+          <tr><td>FlashAttention＝Transformer</td><td>計算エンジン vs 全体設計</td></tr>
+          <tr><td>FlashAttention＝GPT</td><td>実装技術 vs LLMファミリー</td></tr>
+          <tr><td>FlashAttention＝API課金</td><td>TF-0110は×</td></tr>
+          <tr><td>FlashAttention＝量子化</td><td>IO最適化 vs ビット数削減（G-404）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>FlashAttentionは何ですか？</summary><p class="tool-faq-a">Self-Attentionなどの注意計算を、GPUの高速メモリと低速メモリの間のデータ転送（IO）を減らすよう最適化した実装です。計算結果は標準的な注意と同等であり、アーキテクチャそのものではなく実装・アルゴリズムの改良として位置づけられます。</p></details>
+        <details><summary>FlashAttentionとAttentionは同じですか？</summary><p class="tool-faq-a">同じではありません。Attentionは文脈上重要な位置に重みを置く仕組みそのもの、FlashAttentionはその計算を高速・省メモリに行う実装です。Transformerの構成要素はAttentionのまま、内部の計算方法が効率化されます。</p></details>
+        <details><summary>FlashAttentionは新しいTransformerですか？</summary><p class="tool-faq-a">いいえ。FlashAttentionはTransformerやLLMの注意層を置き換える別アーキテクチャではなく、既存の注意計算を効率的に実行するための実装技術です。GPTやBERTの設計思想を変えるものではありません。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-295/">G-295 · Attentionの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformer</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0110/">TF-0110 · 課金方式は×</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-180/">G-180 · メモリとバッチ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../alibi/">ALiBi</a></li>
+          <li><a href="../grouped-query-attention/">GQA</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

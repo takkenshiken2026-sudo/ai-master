@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GRU（Gated Recurrent Unit）とは？LSTMを簡略化したゲート付きRNN。系列モデル・長期依存・LSTMとの違いをG検定向けに解説。">
+  <title>GRUとは？ゲートを絞った軽量版——LSTMの冗長さを削った系列モデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gru/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GRUとは？ゲートを絞った軽量版——LSTMの冗長さを削った系列モデル">
+  <meta property="og:description" content="Gated Recurrent UnitはLSTMより単純なゲート付きRNN。長期依存と勾配消失の緩和を目指す。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gru/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GRU",
+        "alternateName": ["GRU", "Gated Recurrent Unit", "ゲーテッドリカレントユニット", "ゲート付きリカレントユニット"],
+        "description": "LSTMを簡略化したゲート付きRNN。更新ゲートとリセットゲートで過去情報の保持と忘却を制御し、長期依存関係の学習を助ける。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GRU（Gated Recurrent Unit）とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RNNの改良版で、ゲート機構により長期的な依存関係を扱いやすくする系列モデルです。LSTMを簡略化した形として説明され、更新ゲートとリセットゲートで何を覚え何を忘れるかを制御します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GRUとLSTMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもゲート付きRNNですが、LSTMはセル状態と複数のゲートを持つ一方、GRUはゲート数を減らし構造を単純化したモデルです。目的は共通で、長期依存と勾配消失の緩和です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GRUは決定木のようなルールベース手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。GRUはニューラルネットワークの系列モデルであり、データからパラメータを学習します。人間が分岐条件を手入力する決定木やルールベース手法ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GRU（Gated Recurrent Unit）</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GRUとは？ゲートを絞った軽量版——LSTMの冗長さを削った系列モデル</h1>
+    <p class="tool-hero-sub">読み：ジーアールユー ／ 英：GRU（Gated Recurrent Unit）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GRU</strong>（Gated Recurrent Unit）は、<a href="../lstm/">LSTM</a>を<strong>薄くした</strong><a href="../rnn/">RNN</a>です。長い系列で起きる<strong>勾配消失</strong>への対策という目的はLSTMと同じなのに、セル状態を分離せず<strong>ゲートを2つに絞る</strong>——本記事はゲート名の暗記より、<strong>「LSTMの次に何を削ったか」</strong>——系列モデルの軽量化——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#rnn-problem">RNNが抱える問題</a></li>
+        <li><a href="#lstm-first">LSTMが足したもの</a></li>
+        <li><a href="#gru-simplify">GRUが削ったもの</a></li>
+        <li><a href="#when-use">いつGRUが選ばれるか</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="rnn-problem">
+      <h2>RNNが抱える問題</h2>
+      <p>
+        <a href="../rnn/">RNN</a>は系列を<strong>時間方向に順番処理</strong>し、内部状態に過去を圧縮して保持します（<a href="../../exams/genai-passport/practice/q/hq-0328/">HQ-0328</a>）。しかし系列が長いと<strong>勾配消失</strong>で遠い過去の情報が学習に届きにくくなります（<a href="../../exams/g-kentei/practice/q/g-242/">G-242</a>）。
+      </p>
+      <p>
+        ゲート付きRNNはこの課題への応答です。<a href="../../exams/g-kentei/practice/q/g-279/">G-279</a>が示すように、LSTMとGRUは<strong>畳み込みのストライド</strong>など別概念の説明ではありません。
+      </p>
+    </section>
+
+    <section id="lstm-first">
+      <h2>LSTMが足したもの</h2>
+      <p><a href="../lstm/">LSTM</a>は<strong>セル状態</strong>という長期記憶のレーンと、入力・忘却・出力の<strong>3つのゲート</strong>で「何を覚え、何を捨てるか」を細かく制御します（<a href="../../exams/g-kentei/practice/q/g-401/">G-401</a>）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>LSTM</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>記憶の構造</strong></td><td>セル状態＋隠れ状態の二系統</td></tr>
+          <tr><td><strong>ゲート</strong></td><td>入力・忘却・出力の3つ</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>長期依存の<strong>救命筏</strong>（G-242）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="gru-simplify">
+      <h2>GRUが削ったもの</h2>
+      <p>GRUはLSTMの役割を保ちつつ、構造を<strong>統合・簡略化</strong>しました。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>LSTM</th><th>GRU</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>状態</strong></td><td>セル状態＋隠れ状態</td><td><strong>隠れ状態に統合</strong></td></tr>
+          <tr><td><strong>ゲート数</strong></td><td>3（入力・忘却・出力）</td><td><strong>2</strong>（更新・リセット）</td></tr>
+          <tr><td><strong>パラメータ</strong></td><td>多め</td><td>少なめ・計算が軽い</td></tr>
+          <tr><td><strong>試験の一言</strong></td><td>セル状態と複数ゲート</td><td><strong>LSTMの簡略化</strong>（G-279）</td></tr>
+        </tbody>
+      </table>
+      <ul class="tool-steps">
+        <li><strong>更新ゲート</strong> — 過去の状態をどれだけ新情報に置き換えるか</li>
+        <li><strong>リセットゲート</strong> — 過去の影響をどれだけ切るか</li>
+      </ul>
+      <p>
+        どちらのゲートも0〜1の<strong>連続的な制御</strong>——「覚える／忘れる」を学習で決める点はLSTMと同じ思想です。
+      </p>
+    </section>
+
+    <section id="when-use">
+      <h2>いつGRUが選ばれるか</h2>
+      <p>
+        タスクによってLSTMとGRUの優劣は変わりますが、試験では<strong>系譜の整理</strong>が中心です。音声・時系列の小〜中規模モデル、学習コストを抑えたい場面でGRUが選ばれることがあります。
+      </p>
+      <p>
+        一方、現代の大規模言語モデルの主役は<a href="../transformer/">Transformer</a>です（<a href="../../exams/g-kentei/practice/q/g-294/">G-294</a>）。GRUは<strong>系列深層学習の歴史</strong>——RNN→LSTM/GRU→Transformer——を理解するピースとして押さえます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>LSTMを簡略化したゲート付きRNN</strong>（G-279）</li>
+        <li><strong>目的</strong> — 長期依存・勾配消失の緩和（G-242）</li>
+        <li><strong>対比</strong> — LSTM＝セル状態＋3ゲート、GRU＝2ゲートで軽量</li>
+        <li><strong>すり替え回避</strong> — 決定木・CNN・Transformerではない（TF-416）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-279/">G-279</a>、<a href="../../exams/g-kentei/practice/q/g-291/">G-291</a>、<a href="../../exams/g-kentei/practice/q/g-242/">G-242</a>、<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0328/">HQ-0328</a>（RNNの前提）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GRU＝LSTM</td><td>簡略化版 vs セル状態あり</td></tr>
+          <tr><td>GRU＝決定木</td><td>NN系列モデル vs ルールベース（TF-416）</td></tr>
+          <tr><td>GRU＝<a href="../cnn/">CNN</a></td><td>時間系列 vs 画像格子</td></tr>
+          <tr><td>GRU＝<a href="../transformer/">Transformer</a></td><td>再帰型 vs Self-Attention</td></tr>
+          <tr><td>GRU＝畳み込みストライド</td><td>ゲート付きRNN vs CNN用語（G-279）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GRU（Gated Recurrent Unit）とは何ですか？</summary><p class="tool-faq-a">RNNの改良版で、ゲート機構により長期的な依存関係を扱いやすくする系列モデルです。LSTMを簡略化した形として説明され、更新ゲートとリセットゲートで何を覚え何を忘れるかを制御します。</p></details>
+        <details><summary>GRUとLSTMは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもゲート付きRNNですが、LSTMはセル状態と複数のゲートを持つ一方、GRUはゲート数を減らし構造を単純化したモデルです。目的は共通で、長期依存と勾配消失の緩和です。</p></details>
+        <details><summary>GRUは決定木のようなルールベース手法ですか？</summary><p class="tool-faq-a">いいえ。GRUはニューラルネットワークの系列モデルであり、データからパラメータを学習します。人間が分岐条件を手入力する決定木やルールベース手法ではありません。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-279/">G-279 · LSTMとGRU</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-291/">G-291 · 系列モデルの組合せ</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-416/">TF-416 · 決定木すり替えは×</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-242/">G-242 · 勾配消失</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../elmo/">ELMo</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

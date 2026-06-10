@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="バッチ正規化（Batch Normalization）とは？ミニバッチ統計で中間層の分布を整え学習を安定化する技法。正則化との違いをG検定向けに解説。">
+  <title>バッチ正規化とは？ミニバッチの統計で層の地形を整える——分布シフトへの対処 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/batch-normalization/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="バッチ正規化とは？ミニバッチの統計で層の地形を整える——分布シフトへの対処">
+  <meta property="og:description" content="ミニバッチ内の平均・分散で活性値を正規化し、深層学習の学習安定化と高速化に寄与する正規化層。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/batch-normalization/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "バッチ正規化",
+        "alternateName": ["バッチ正規化", "Batch Normalization", "BN", "バッチノーマライゼーション"],
+        "description": "ミニバッチ内の統計量を用いて中間層の出力を正規化し、学習の安定化や高速化に寄与する技法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "バッチ正規化は何をする技法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ミニバッチ内の平均や分散を用いて中間層の活性値を正規化し、学習を安定させる手法です。勾配の流れを改善し、学習を速く進めやすくする効果が期待されます（G-017、TF-088）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "バッチ正規化と正則化は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "違います。バッチ正規化は正規化層の一種で、中間表現の分布を整えて学習を安定化するのが主目的です。正則化はL1/L2やドロップアウトなど、過学習を抑えるための制約や工夫を指します。名称が似ているため混同に注意します（G-299、TF-090）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ミニバッチサイズが小さいとどうなりますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "バッチ正規化はミニバッチ内の統計量に依存するため、バッチサイズが小さいと平均・分散の推定が不安定になり、学習が不安定になる場合があります（TF-088）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">バッチ正規化</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>バッチ正規化とは？ミニバッチの統計で層の地形を整える——分布シフトへの対処</h1>
+    <p class="tool-hero-sub">読み：ばっちせいきか ／ 英：Batch Normalization（BN）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>バッチ正規化</strong>（Batch Normalization）は、<strong>ミニバッチ内の平均・分散</strong>を使って中間層の活性値を正規化し、<a href="../deep-learning/">深層学習</a>の<strong>学習を安定化</strong>する技法です。本記事は正規化の数式の導出ではなく、<strong>「層ごとに分布がずれる問題を、バッチ統計でいかに整えるか」</strong>——内部共変量シフトへの対処——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#problem">何が困っていたか</a></li>
+        <li><a href="#mechanism">バッチ正規化の仕組み</a></li>
+        <li><a href="#effects">期待される効果</a></li>
+        <li><a href="#family">正規化層の一族</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="problem">
+      <h2>何が困っていたか</h2>
+      <p>
+        深いネットワークでは、学習が進むにつれ<strong>各層の入力分布が変わり続ける</strong>——いわゆる<strong>内部共変量シフト</strong>——ことがあります。下流の層は「いつも同じ分布の入力が来る」と仮定しにくくなり、<a href="../gradient-descent/">勾配降下法</a>の更新が不安定になります。
+      </p>
+      <p>
+        学習率を極端に小さくする以外に、<strong>層の直前で分布を整える</strong>——それが正規化層の発想です。バッチ正規化はその代表格として、2010年代の<a href="../cnn/">CNN</a>学習を大きく楽にした技法の一つです。
+      </p>
+    </section>
+
+    <section id="mechanism">
+      <h2>バッチ正規化の仕組み</h2>
+      <p>試験で問われる定義の骨格は次の一文です。</p>
+      <blockquote>
+        <p>ミニバッチ内の活性値を正規化し、学習を安定させる手法である。</p>
+      </blockquote>
+      <p>概念として押さえるポイントは3つです。</p>
+      <ul class="tool-steps">
+        <li><strong>対象</strong> — 中間層の<strong>活性値</strong>（各層の出力）</li>
+        <li><strong>統計</strong> — いま処理している<strong>ミニバッチ内</strong>の平均・分散</li>
+        <li><strong>操作</strong> — 平均0・分散1付近に<strong>スケール調整</strong>（学習可能なパラメータで再スケールすることもある）</li>
+      </ul>
+      <p>
+        ミニバッチとは、<a href="../gradient-descent/">勾配降下法</a>で一度にまとめて処理する小さなデータの束です。バッチ正規化は<strong>「同じバッチ内のサンプル同士」</strong>で統計を取る——という点が、後述のレイヤー正規化との違いになります。
+      </p>
+    </section>
+
+    <section id="effects">
+      <h2>期待される効果</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>効果</th><th>試験向けの説明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>学習の安定化</strong></td><td>中間層の分布を整え、更新が暴れにくくなる（<a href="../../exams/g-kentei/practice/q/g-222/">G-222</a>）</td></tr>
+          <tr><td><strong>学習の高速化</strong></td><td>勾配の流れが改善し、やや大きめの学習率でも進みやすい場合がある</td></tr>
+          <tr><td><strong>正則化効果</strong></td><td>ミニバッチごとのノイズがわずかに働くこともあるが、<strong>主目的は過学習抑制ではない</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        ミニバッチサイズが<strong>小さすぎる</strong>と、統計量の推定が不安定になり効果が落ちる——という注意も試験に出ます（<a href="../../exams/g-kentei/drill/q/tf-088/">TF-088</a>）。
+      </p>
+    </section>
+
+    <section id="family">
+      <h2>正規化層の一族</h2>
+      <p>正規化層は「どの軸で平均・分散を取るか」で名前が分かれます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>統計の取り方</th><th>向きやすい場面</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>バッチ正規化</strong></td><td><strong>ミニバッチ内</strong>のサンプル間</td><td>CNNなど、バッチが十分ある学習</td></tr>
+          <tr><td><strong><a href="../layer-normalization/">レイヤー正規化</a></strong></td><td><strong>各サンプル内</strong>の特徴方向</td><td><a href="../transformer/">Transformer</a>など（<a href="../../exams/g-kentei/drill/q/tf-089/">TF-089</a>）</td></tr>
+          <tr><td>インスタンス正規化</td><td>サンプル×チャンネルごと</td><td>スタイル変換など</td></tr>
+          <tr><td>グループ正規化</td><td>チャンネルをグループ化</td><td>小バッチでも安定（<a href="../../exams/g-kentei/practice/q/g-289/">G-289</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../regularization/">正則化</a>（L1/L2、<a href="../dropout/">ドロップアウト</a>、<a href="../early-stopping/">早期終了</a>）とは<strong>目的が異なります</strong>。正規化層は分布を整えて学習を安定化、正則化は過学習を抑える——という整理がG-299の正解です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — ミニバッチ内の統計量で中間層の出力を<strong>正規化</strong>（TF-088、G-017）</li>
+        <li><strong>目的</strong> — 学習の<strong>安定化・高速化</strong>。正規化層の主目的（G-222）</li>
+        <li><strong>正則化との違い</strong> — 名称は似るが意味は別（G-299、TF-090）</li>
+        <li><strong>注意点</strong> — 小さいミニバッチでは統計が不安定になりうる</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-088/">TF-088</a>、<a href="../../exams/g-kentei/practice/q/g-017/">G-017</a>、<a href="../../exams/g-kentei/practice/q/g-222/">G-222</a>、<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a>、<a href="../../exams/g-kentei/drill/q/tf-090/">TF-090</a>、<a href="../../exams/g-kentei/drill/q/tf-089/">TF-089</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>バッチ正規化＝正則化</td><td>正規化層 vs 過学習抑制の考え方（G-299）</td></tr>
+          <tr><td>バッチ正規化＝データ拡張</td><td>画像反転などの拡張とは別（G-017のC）</td></tr>
+          <tr><td>バッチ正規化＝量子化</td><td>重みを整数化する手法ではない（G-017のB）</td></tr>
+          <tr><td>バッチ正規化＝同義語置換</td><td>NLPの言い換え処理ではない（G-017のD）</td></tr>
+          <tr><td>バッチ正規化＝レイヤー正規化</td><td>統計の取る軸が異なる（TF-089）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>バッチ正規化は何をする技法ですか？</summary><p class="tool-faq-a">ミニバッチ内の平均や分散を用いて中間層の活性値を正規化し、学習を安定させる手法です。勾配の流れを改善し、学習を速く進めやすくする効果が期待されます（<a href="../../exams/g-kentei/practice/q/g-017/">G-017</a>、<a href="../../exams/g-kentei/drill/q/tf-088/">TF-088</a>）。</p></details>
+        <details><summary>バッチ正規化と正則化は同じですか？</summary><p class="tool-faq-a">違います。バッチ正規化は正規化層の一種で、中間表現の分布を整えて学習を安定化するのが主目的です。正則化はL1/L2やドロップアウトなど、過学習を抑えるための制約や工夫を指します。名称が似ているため混同に注意します（<a href="../../exams/g-kentei/practice/q/g-299/">G-299</a>、<a href="../../exams/g-kentei/drill/q/tf-090/">TF-090</a>）。</p></details>
+        <details><summary>ミニバッチサイズが小さいとどうなりますか？</summary><p class="tool-faq-a">バッチ正規化はミニバッチ内の統計量に依存するため、バッチサイズが小さいと平均・分散の推定が不安定になり、学習が不安定になる場合があります（<a href="../../exams/g-kentei/drill/q/tf-088/">TF-088</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-088/">TF-088 · バッチ正規化の定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-017/">G-017 · バッチ正規化</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-299/">G-299 · 正規化層と正則化の違い</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-089/">TF-089 · レイヤー正規化</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../regularization/">正則化</a></li>
+          <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../deep-learning/">深層学習</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../layer-normalization/">レイヤー正規化</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

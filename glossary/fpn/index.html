@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FPNとは？トップダウンと横接続でマルチスケール特徴を構築するCNNモジュール。物体検出との関係をG検定向けに解説。">
+  <title>FPNとは？ピラミッドで見る——トップダウンと横接続で大小の物体を逃さない — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/fpn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="FPNとは？ピラミッドで見る——トップダウンと横接続で大小の物体を逃さない">
+  <meta property="og:description" content="Feature Pyramid Network。CNNの多層特徴をピラミッド状に融合し、物体検出でマルチスケールを扱う設計。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/fpn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "FPN",
+        "alternateName": ["FPN", "Feature Pyramid Network", "特徴ピラミッドネットワーク"],
+        "description": "CNNの各層特徴をトップダウン経路と横接続で融合し、マルチスケールの特徴ピラミッドを構築するモジュール。物体検出で広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "FPNは何をするモジュールですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CNNの浅い層（高解像度・細かい特徴）と深い層（低解像度・大まかな文脈）をトップダウン経路と横接続で融合し、複数スケールの特徴ピラミッドを作る設計です。大小さまざまな物体の検出に使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FPNと物体検出モデルは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。FPNは特徴抽出の部品（モジュール）であり、Faster R-CNNやMask R-CNNなどの物体検出モデルに組み込まれてマルチスケール検出を可能にします。検出モデルそのものの別名ではありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FPNはセグメンテーション専用ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主に物体検出の文脈で語られるマルチスケール特徴の設計です。セグメンテーションでもマルチスケール特徴は重要ですが、FPNは物体検出パイプラインへの組み込みが代表例として知られます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">FPN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>FPNとは？ピラミッドで見る——トップダウンと横接続で大小の物体を逃さない</h1>
+    <p class="tool-hero-sub">読み：エフピーエヌ ／ 英：FPN（Feature Pyramid Network）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>FPN</strong>（Feature Pyramid Network）は、<a href="../cnn/">CNN</a>の各層から得られる<strong>異なるスケールの特徴</strong>を、<strong>トップダウン経路</strong>と<strong>横接続（ラテラル接続）</strong>で融合するモジュールです。物体検出で「遠くの小さな車」と「手前の大きな人」を同時に扱うには、<strong>一つの解像度だけでは足りない</strong>——本記事は畳み込みの細部より、<strong>「なぜ特徴をピラミッド状に束ねるのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#scale-problem">スケールの壁</a></li>
+        <li><a href="#pyramid">特徴ピラミッドの直感</a></li>
+        <li><a href="#top-down">トップダウンと横接続</a></li>
+        <li><a href="#detection">物体検出への組み込み</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="scale-problem">
+      <h2>スケールの壁</h2>
+      <p>
+        物体検出は「どこに何があるか」を扱うタスクです（<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>）。しかし画像内の物体は<strong>大きさがばらばら</strong>——同じ「車」でも、遠景では数ピクセル、近景では画面の半分を占めます。
+      </p>
+      <p>
+        <a href="../cnn/">CNN</a>は層が深くなるほど受容野は広がりますが、空間解像度は下がります。浅い層は<strong>細かい位置情報</strong>に強く、深い層は<strong>大まかな文脈</strong>に強い——どちらか一方だけでは検出が苦しくなります。GoogLeNetのInceptionが複数サイズの畳み込みを並べる発想（<a href="../../exams/g-kentei/practice/q/g-321/">G-321</a>）も、同じ「スケールの多様性」への応答です。
+      </p>
+    </section>
+
+    <section id="pyramid">
+      <h2>特徴ピラミッドの直感</h2>
+      <p>FPNは、CNN backbone から複数段の特徴マップを取り出し、<strong>ピラミッド状</strong>に整理します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段</th><th>特徴の性質</th><th>向く物体</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>高解像度・浅層</strong></td><td>細かいエッジ・テクスチャ</td><td>小さな物体</td></tr>
+          <tr><td><strong>中間</strong></td><td>中程度のパターン</td><td>中サイズ</td></tr>
+          <tr><td><strong>低解像度・深層</strong></td><td>広い文脈・セマンティクス</td><td>大きな物体</td></tr>
+        </tbody>
+      </table>
+      <p>
+        各段で検出ヘッドを置く——<strong>マルチスケール検出</strong>——という設計がFPNの目的です。試験では「マルチスケール特徴の構築」がキーワードになります。
+      </p>
+    </section>
+
+    <section id="top-down">
+      <h2>トップダウンと横接続</h2>
+      <p>FPNの工夫は二つの経路の組み合わせです。</p>
+      <ol class="tool-steps">
+        <li><strong>ボトムアップ</strong> — 通常のCNN順伝播で、段ごとの特徴マップを得る</li>
+        <li><strong>トップダウン</strong> — 深い層の特徴を上に向かってアップサンプリングし、文脈を浅い層へ伝播</li>
+        <li><strong>横接続（ラテラル）</strong> — 同じ段のボトムアップ特徴とトップダウン特徴を<strong>足し合わせて融合</strong></li>
+      </ol>
+      <p>
+        深い層の「意味」と浅い層の「位置」——<strong>両方を各スケールで使える</strong>のがFPNの要点です。数式の暗記より、この<strong>情報の流れ</strong>を説明できれば試験に十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="detection">
+      <h2>物体検出への組み込み</h2>
+      <p>
+        FPNは<strong>単体の検出モデル名ではなく</strong>、検出パイプラインの<strong>部品</strong>です。Faster R-CNNやMask R-CNN（<a href="../../exams/g-kentei/drill/q/tf-124/">TF-124</a>）に組み込まれ、<a href="../coco-dataset/">COCO</a>などのベンチマークでマルチスケール検出の精度向上に寄与しました。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>性質</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>FPN</strong></td><td>特徴ピラミッドを<strong>構築するモジュール</strong></td></tr>
+          <tr><td><strong>YOLO / SSD</strong></td><td>マルチスケールを別設計で実現する検出モデル（TF-121）</td></tr>
+          <tr><td><strong><a href="../detr/">DETR</a></strong></td><td>Transformer系の端から端検出。FPNとは別系譜</td></tr>
+          <tr><td><strong><a href="../fcn/">FCN</a></strong></td><td>セグメンテーション向け。画素マップ出力</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — トップダウン＋横接続で<strong>マルチスケール特徴ピラミッド</strong>を構築</li>
+        <li><strong>用途</strong> — 物体検出の<strong>特徴抽出部品</strong>。モデル名そのものではない</li>
+        <li><strong>動機</strong> — 大小さまざまな物体に対応するためのスケール融合</li>
+        <li><strong>すり替え回避</strong> — セグメンテーション損失・NLP・生成AIではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>、<a href="../../exams/g-kentei/practice/q/g-321/">G-321</a>、<a href="../../exams/g-kentei/drill/q/tf-121/">TF-121</a>、<a href="../../exams/g-kentei/drill/q/tf-124/">TF-124</a></p>
+        <p>関連：<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>FPN＝Faster R-CNN</td><td>特徴モジュール vs 検出モデル全体</td></tr>
+          <tr><td>FPN＝<a href="../detr/">DETR</a></td><td>CNN系ピラミッド vs Transformer検出</td></tr>
+          <tr><td>FPN＝画像分類</td><td>マルチスケール特徴 vs ラベル1つ</td></tr>
+          <tr><td>FPN＝<a href="../efficientnet/">EfficientNet</a></td><td>検出向けスケール融合 vs 効率化スケーリング</td></tr>
+          <tr><td>ピラミッド＝画像の縮小</td><td>特徴マップの多段融合</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>FPNは何をするモジュールですか？</summary><p class="tool-faq-a">CNNの浅い層（高解像度・細かい特徴）と深い層（低解像度・大まかな文脈）をトップダウン経路と横接続で融合し、複数スケールの特徴ピラミッドを作る設計です。大小さまざまな物体の検出に使われます。</p></details>
+        <details><summary>FPNと物体検出モデルは同じですか？</summary><p class="tool-faq-a">同じではありません。FPNは特徴抽出の部品（モジュール）であり、Faster R-CNNやMask R-CNNなどの物体検出モデルに組み込まれてマルチスケール検出を可能にします。検出モデルそのものの別名ではありません。</p></details>
+        <details><summary>FPNはセグメンテーション専用ですか？</summary><p class="tool-faq-a">主に物体検出の文脈で語られるマルチスケール特徴の設計です。セグメンテーションでもマルチスケール特徴は重要ですが、FPNは物体検出パイプラインへの組み込みが代表例として知られます。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-316/">G-316 · 物体検出タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-321/">G-321 · マルチスケール特徴</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-121/">TF-121 · YOLO/SSD</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-124/">TF-124 · Mask R-CNN</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../googlenet/">GoogLeNet</a></li>
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../detr/">DETR</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../fcn/">FCN</a></li>
+          <li><a href="../cbam/">CBAM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

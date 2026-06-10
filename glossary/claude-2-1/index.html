@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 2.1とは？200Kコンテキストとハルシネーション低減を掲げた改良版の意味、Claude 2との違いをG検定・生成AIパスポート向けに解説。">
+  <title>Claude 2.1とは？200Kと信頼性強化のマイナーアップデート — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-2-1/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 2.1とは？200Kと信頼性強化のマイナーアップデート">
+  <meta property="og:description" content="Claude 2の改良版。コンテキスト倍増と幻覚低減の訴求——マーケティングと試験の整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-2-1/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 2.1",
+        "alternateName": ["Claude 2.1", "クロード 2.1"],
+        "description": "Claude 2の改良版。最大200Kトークンのコンテキストとハルシネーション低減を訴求したAnthropicのモデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claude 2.1は新世代ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude 3のような世代更新ではなく、Claude 2の改良版（マイナーアップデート）です。100Kから200Kへのコンテキスト拡張と、信頼性・ハルシネーション低減の訴求が主な差分として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ハルシネーション低減は完全消滅を意味しますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。低減は発生頻度や深刻度を抑える方向の改善であり、事実誤認がゼロになる保証ではありません。試験ではハルシネーションの定義（事実と異なるもっともらしい生成）を押さえ、重要情報は人が確認する必要があると答えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "200Kと100Kの違いは試験で暗記必須ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "数値の丸暗記より、2が100K・2.1が200Kへ拡張したという系列の流れと、コンテキストウィンドウが「一度に扱える文脈の上限」であることの理解が中心です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 2.1</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 2.1とは？200Kと信頼性強化のマイナーアップデート</h1>
+    <p class="tool-hero-sub">読み：くろーど にてんいち ／ 英：Claude 2.1</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 2.1</strong>は、<a href="../claude-2/">Claude 2</a>の<strong>改良版</strong>です。<a href="../claude-2/">Claude 2</a>が100Kコンテキストで「長文へピボット」したのに対し、2.1は<strong>200Kへの倍増</strong>に加え、<strong>ハルシネーション低減</strong>を製品メッセージの中心に据えました。本記事は数値の暗記ではなく、<strong>マイナーアップデートで何が変わり、何が変わらないか</strong>——特に「低減」と「消滅」の違い——を試験向けに整理します。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Claude 2.1とは</a></li>
+        <li><a href="#minor-update">マイナーアップデートの意味</a></li>
+        <li><a href="#200k">200Kコンテキスト</a></li>
+        <li><a href="#hallucination">ハルシネーション低減の読み方</a></li>
+        <li><a href="#vs-claude-2">Claude 2との差分</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        <strong>ハルシネーション</strong>は「AIが事実と異なる内容をもっともらしく生成する現象」（<a href="../../exams/genai-passport/drill/q/tf-0129/">TF-0129</a>）。Claude 2.1の「低減」訴求を聞いても、<strong>ゼロになる</strong>と答えるのは誤りです（<a href="../../exams/genai-passport/practice/q/hq-0242/">HQ-0242</a>、<a href="../../exams/genai-passport/drill/q/tf-0387/">TF-0387</a>）。
+      </p>
+      <p>
+        コンテキスト200Kは<a href="../context-window/">コンテキストウィンドウ</a>の拡張（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>）であり、<a href="../rag/">RAG</a>やウェブ検索の代替ではありません（<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0129/">TF-0129（ハルシネーション定義）</a>、<a href="../../exams/genai-passport/practice/q/hq-0242/">HQ-0242（ハルシネーションの正しい記述）</a>、<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170（コンテキストウィンドウ）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Claude 2.1とは</h2>
+      <p>
+        2023年11月頃、Anthropicは<strong>Claude 2.1</strong>をリリースしました。Claude 3のような<strong>世代番号の跳躍</strong>ではなく、2系の<strong>ドットアップデート</strong>——中身の改善を同じ製品ラインで届ける——形式です。
+      </p>
+      <p>
+        公開時の訴求は二つ。<strong>最大200,000トークン</strong>のコンテキストと、<strong>幻覚（ハルシネーション）の低減・指示追従の改善</strong>。長文処理をさらに広げつつ、企業利用で気になる<strong>信頼性</strong>を前面に出した世代と整理できます。
+      </p>
+    </section>
+    <section id="minor-update">
+      <h2>マイナーアップデートの意味</h2>
+      <p>LLMのバージョンには、大きく二つの更新パターンがあります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>種類</th><th>例</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>世代更新</strong></td><td>Claude 2 → Claude 3</td><td>アーキテクチャ・能力の大きな刷新</td></tr>
+          <tr><td><strong>マイナー更新</strong></td><td>Claude 2 → Claude 2.1</td><td>同系統の改良。コンテキスト・信頼性の改善</td></tr>
+        </tbody>
+      </table>
+      <p>
+        2.1を「Claude 3」と混同しないことが重要です。Haiku / Sonnet / Opus の三層やマルチモーダルは<strong>Claude 3以降</strong>の話であり、2.1は<strong>2系の延長</strong>です。
+      </p>
+    </section>
+    <section id="200k">
+      <h2>200Kコンテキスト</h2>
+      <p>
+        <a href="../claude-2/">Claude 2</a>の100Kから<strong>200K（20万トークン）</strong>へ倍増しました。実務では、より大きなコードベースや複数文書の束を<strong>1リクエスト</strong>に載せやすくなります。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>長い規程セット</strong> — 複数PDFを跨いだ定義の整合チェック</li>
+        <li><strong>大規模ログ分析</strong> — 分割による文脈断絶リスクの低減</li>
+        <li><strong>長い対話履歴</strong> — サポート案件の全経緯を保持</li>
+      </ul>
+      <p>200Kでも<strong>無制限ではない</strong>。上限超過の入力は切り捨てやエラーになり、コストも入力トークンに比例して増えます。</p>
+    </section>
+    <section id="hallucination">
+      <h2>ハルシネーション低減の読み方</h2>
+      <p>
+        製品発表で「ハルシネーションを2倍低減」などと言われることがありますが、試験・実務では次のように読み解きます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>表現</th><th>意味</th><th>意味しないこと</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>低減</strong></td><td>発生しにくく・軽くなる方向の改善</td><td>完全に起こらない</td></tr>
+          <tr><td><strong>信頼性向上</strong></td><td>指示追従・一貫性の改善も含む</td><td>人間確認が不要</td></tr>
+          <tr><td><strong>長文対応</strong></td><td>文脈を保ちやすい</td><td>事実の正確性が自動保証</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../hallucination/">ハルシネーション</a>はマルチモーダルや長コンテキストとは別概念です（HQ-0242では、ハルシネーションをマルチモーダル定義と入れ替えた選択肢が×）。重要な契約・数値・法務判断は、<strong>公式情報や人による確認</strong>が依然必要です（TF-0387）。
+      </p>
+    </section>
+    <section id="vs-claude-2">
+      <h2>Claude 2との差分</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>Claude 2</th><th>Claude 2.1</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>位置づけ</td><td>第2世代</td><td>2の改良版</td></tr>
+          <tr><td>コンテキスト</td><td>最大100K</td><td>最大200K</td></tr>
+          <tr><td>前面の訴求</td><td>長文処理へのピボット</td><td>長文＋ハルシネーション低減</td></tr>
+          <tr><td>後続</td><td>2.1へ</td><td>Claude 3（別世代）</td></tr>
+        </tbody>
+      </table>
+      <p>現行の主力は Claude 3.5 / 4 世代ですが、2.1は<strong>「信頼性を製品メッセージに載せ始めた2系の完成形」</strong>として系列史に残ります。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>2.1＝Claude 3</td><td>2系の改良版 vs 次世代</td></tr>
+          <tr><td>低減＝消滅</td><td>TF-0129・HQ-0242の論点</td></tr>
+          <tr><td>200K＝RAG不要</td><td>外部知識の検索・更新は別設計</td></tr>
+          <tr><td>2.1＝安全性だけのモデル</td><td>長コンテキストも主訴求</td></tr>
+          <tr><td>Anthropic＝OpenAI</td><td>開発元の区別（TF-0142）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Claude 2.1は新世代ですか？</summary>
+          <p class="tool-faq-a">Claude 3のような世代更新ではなく、Claude 2の改良版（マイナーアップデート）です。100Kから200Kへのコンテキスト拡張と、信頼性・ハルシネーション低減の訴求が主な差分として整理します。</p>
+        </details>
+        <details>
+          <summary>ハルシネーション低減は完全消滅を意味しますか？</summary>
+          <p class="tool-faq-a">いいえ。低減は発生頻度や深刻度を抑える方向の改善であり、事実誤認がゼロになる保証ではありません。試験ではハルシネーションの定義（事実と異なるもっともらしい生成）を押さえ、重要情報は人が確認する必要があると答えます。</p>
+        </details>
+        <details>
+          <summary>200Kと100Kの違いは試験で暗記必須ですか？</summary>
+          <p class="tool-faq-a">数値の丸暗記より、2が100K・2.1が200Kへ拡張したという系列の流れと、コンテキストウィンドウが「一度に扱える文脈の上限」であることの理解が中心です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0129/">TF-0129 · ハルシネーション定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0242/">HQ-0242 · ハルシネーションの記述</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · コンテキストウィンドウ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../claude-2/">Claude 2</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../claude-3-haiku/">Claude 3 Haiku</a></li>
+          <li><a href="../claude-3-sonnet/">Claude 3 Sonnet</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gemini 2.0 Flashとは？リアルタイム処理とマルチモーダル強化を担う2.0世代Flashの意味、1.5 Flashとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Gemini 2.0 Flashとは？ライブ対話とリアルタイムマルチモーダル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gemini-2-0-flash/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gemini 2.0 Flashとは？ライブ対話とリアルタイムマルチモーダル">
+  <meta property="og:description" content="2.0世代の高速帯。バッチ処理の効率から、音声・映像のライブ対話へ設計目標がシフト。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gemini-2-0-flash/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Gemini 2.0 Flash",
+        "alternateName": ["Gemini 2.0 Flash", "ジェミニ 2.0 フラッシュ"],
+        "description": "Gemini 2.0世代の高速モデル。リアルタイム処理とマルチモーダル性能を強化し、ライブ対話やエージェント用途に対応。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "2.0 Flashと1.5 Flashの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "名称のFlashは共通ですが世代が異なります。1.5 Flashは大量API処理のスループット経済が中心で、2.0 Flashはリアルタイムの音声・映像対話やツール連携などライブ体験の強化が訴求点です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "リアルタイム処理とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ユーザーが話している最中やカメラ映像が流れている最中に、ほぼ遅延なく応答・理解を返す処理です。バッチで後からまとめて処理する方式とは対照的で、対話UXやライブアシストに重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "2.0 FlashはAIエージェントそのものですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。2.0 Flashはツール利用やマルチモーダル入力に強いモデルであり、エージェントは計画・実行・監視を組み合わせたシステム全体です。モデル能力とエージェント設計は別レイヤーです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../gemini-model/">Gemini</a></li>
+      <li aria-current="page">Gemini 2.0 Flash</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Gemini 2.0 Flashとは？ライブ対話とリアルタイムマルチモーダル</h1>
+    <p class="tool-hero-sub">読み：じぇみに にてんぜろ ふらっしゅ ／ 英：Gemini 2.0 Flash</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Gemini 2.0 Flash</strong>は、<a href="../gemini-model/">Gemini</a> 2.0世代の<strong>高速帯モデル</strong>です。<a href="../gemini-1-5-flash/">1.5 Flash</a>が「1万件を安く回す」<strong>スループット</strong>を前面に出したのに対し、2.0 Flashは<strong>話しながら・映しながら応答するライブ体験</strong>——リアルタイムの音声・映像入力と低遅延出力——を訴求します。本記事はFlash名の継承の説明ではなく、<strong>「速さ」の目的がバッチから対話へ移った</strong>転換点に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">2.0 Flashとは</a></li>
+        <li><a href="#realtime">リアルタイム処理の意味</a></li>
+        <li><a href="#live-multimodal">ライブマルチモーダル</a></li>
+        <li><a href="#vs-1-5">1.5 Flashとの世代差</a></li>
+        <li><a href="#agent-layer">エージェントとの境界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        個別スペックの暗記より、<strong>マルチモーダル</strong>と<strong>モデル階層</strong>の整理が中心です。複数のデータ形式を扱える性質（<a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131</a>）として2.0 Flashを具体例に据え、Googleの主要生成AIである点（<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141</a>）と合わせて答えます。
+      </p>
+      <p>
+        ツール連携や自律的な行動が話題になる一方、<strong>モデル＝エージェント全体</strong>ではありません（<a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238</a>）。2.0 Flashはエージェント実装の<strong>頭脳の候補</strong>であり、計画・監視・権限管理は別設計です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131（マルチモーダル）</a>、<a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238（エージェント定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141（Geminiの位置づけ）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-169/">TF-169（マルチモーダル）</a></p>
+        <p>実践演習：<a href="../../exams/genai-passport/practice/q/hq-0171/">HQ-0171（マルチモーダル実務判断）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>2.0 Flashとは</h2>
+      <p>
+        2024年末に発表されたGemini 2.0は、1.5からの<strong>世代更新</strong>です。2.0 Flashはその高速帯で、Google AI StudioやGeminiアプリ、開発者向けAPIの<strong>デフォルト級モデル</strong>として展開されました。
+      </p>
+      <p>
+        公開時のデモでは、カメラ映像を見ながら物体を説明する、音声で途切れなく会話する、コード実行や検索ツールを組み合わせる——といった<strong>インタラクティブな体験</strong>が強調されました。OpenAIの<a href="../gpt-4o/">GPT-4o</a>がオムニ統合で音声対話を訴求した流れと並び、<strong>「速いFlash」がライブ対話の主役</strong>になった世代と整理できます。
+      </p>
+    </section>
+    <section id="realtime">
+      <h2>リアルタイム処理の意味</h2>
+      <p>「リアルタイム」はマーケティング用語ではなく、試験・実務では次の<strong>体験要件</strong>として捉えます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>処理の流れ</th><th>UXの特徴</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>バッチ型</strong></td><td>入力をまとめて送り、後から結果を受け取る</td><td>大量処理・コスト効率（1.5 Flash寄り）</td></tr>
+          <tr><td><strong>ストリーミング型</strong></td><td>生成を少しずつ返す</td><td>待ち時間の体感短縮</td></tr>
+          <tr><td><strong>ライブ型</strong></td><td>音声・映像を連続入力しながら応答</td><td>対話・案内・通訳に近い体験（2.0 Flash寄り）</td></tr>
+        </tbody>
+      </table>
+      <p>2.0 Flashは後者——<strong>入力が止まるのを待たずに理解と応答を続ける</strong>——設計を強化したモデルとして位置づけられます。ただし「リアルタイム＝遅延ゼロ」ではなく、ネットワークや端末性能の影響は残ります。</p>
+    </section>
+    <section id="live-multimodal">
+      <h2>ライブマルチモーダル</h2>
+      <p>2.0 Flashの訴求は、静止画1枚の分析だけでなく、<strong>時間軸のある入力</strong>を扱う点にあります。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>ライブ映像</strong>
+          カメラ越しの作業を見て、手順を音声で案内する
+        </li>
+        <li>
+          <strong>連続音声</strong>
+          ユーザーが話し終える前に相槌や補足を返す対話
+        </li>
+        <li>
+          <strong>画面共有</strong>
+          デスクトップ画面を見ながら操作手順を説明する
+        </li>
+        <li>
+          <strong>ツール呼び出し</strong>
+          検索・コード実行など外部機能と組み合わせる
+        </li>
+      </ul>
+      <p>
+        <a href="../multimodal-ai/">マルチモーダルAI</a>の定義（TF-0131）は「複数形式を扱える性質」であり、2.0 Flashはその<strong>ライブ用途への延伸</strong>です。形式が増えても<a href="../hallucination/">ハルシネーション</a>や誤認識は起こり得ます。
+      </p>
+    </section>
+    <section id="vs-1-5">
+      <h2>1.5 Flashとの世代差</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>1.5 Flash</th><th>2.0 Flash</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>世代</td><td>1.5</td><td>2.0</td></tr>
+          <tr><td>「速さ」の主戦場</td><td>API大量バッチ・分類</td><td>ライブ対話・低遅延マルチモーダル</td></tr>
+          <tr><td>兄弟モデル</td><td><a href="../gemini-1-5-pro/">1.5 Pro</a></td><td><a href="../gemini-2-5-pro/">2.5 Pro</a>（後続世代）</td></tr>
+          <tr><td>競合の整理</td><td>コスト効率の比較</td><td><a href="../gpt-4o/">GPT-4o</a>等とのライブ体験比較</td></tr>
+        </tbody>
+      </table>
+      <p>「Flash」は世代をまたぐ<strong>高速帯のブランド</strong>ですが、各世代で最適化される「速さ」の意味は変わります。2.0と1.5を同一モデルとみなさないことが重要です。</p>
+    </section>
+    <section id="agent-layer">
+      <h2>エージェントとの境界</h2>
+      <p>
+        2.0 Flashはツール利用やマルチステップタスクに強いと紹介されますが、<a href="../agent/">AIエージェント</a>——目標設定、計画、ツール実行、結果検証の<strong>ループ全体</strong>——とは別物です（TF-0238）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>レイヤー</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>2.0 Flash（モデル）</strong></td><td>入力理解・推論・ツール呼び出しの判断</td></tr>
+          <tr><td><strong>オーケストレーション</strong></td><td>どのツールをいつ使うかのワークフロー設計</td></tr>
+          <tr><td><strong>ガバナンス</strong></td><td>権限、ログ、人間の承認（<a href="../../exams/genai-passport/drill/q/tf-0270/">TF-0270</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>試験では「ツールが使えるモデル＝自律エージェント」と一般化しないことが安全です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>2.0 Flash＝1.5 Flash</td><td>世代が異なる。設計目標もシフト</td></tr>
+          <tr><td>リアルタイム＝常に正確</td><td>低遅延と正確性は別軸</td></tr>
+          <tr><td>2.0 Flash＝GPT-4o</td><td>Google vs OpenAI。開発元が異なる</td></tr>
+          <tr><td>2.0 Flash＝エージェント</td><td>モデル vs システム構成（TF-0238）</td></tr>
+          <tr><td>マルチモーダル＝誤りなし</td><td>能力の説明。幻覚は起こりうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>2.0 Flashと1.5 Flashの違いは？</summary>
+          <p class="tool-faq-a">名称のFlashは共通ですが世代が異なります。1.5 Flashは大量API処理のスループット経済が中心で、2.0 Flashはリアルタイムの音声・映像対話やツール連携などライブ体験の強化が訴求点です。</p>
+        </details>
+        <details>
+          <summary>リアルタイム処理とは何ですか？</summary>
+          <p class="tool-faq-a">ユーザーが話している最中やカメラ映像が流れている最中に、ほぼ遅延なく応答・理解を返す処理です。バッチで後からまとめて処理する方式とは対照的で、対話UXやライブアシストに重要です。</p>
+        </details>
+        <details>
+          <summary>2.0 FlashはAIエージェントそのものですか？</summary>
+          <p class="tool-faq-a">同じではありません。2.0 Flashはツール利用やマルチモーダル入力に強いモデルであり、エージェントは計画・実行・監視を組み合わせたシステム全体です。モデル能力とエージェント設計は別レイヤーです。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0131/">TF-0131 · マルチモーダル</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238 · エージェント定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-169/">TF-169 · マルチモーダル（G検定）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li><a href="../gemini-1-5-flash/">Gemini 1.5 Flash</a></li>
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../gpt-4o/">GPT-4o</a></li>
+          <li><a href="../agent/">AIエージェント</a></li>
+          <li><a href="../gemini-2-5-flash/">Gemini 2.5 Flash</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

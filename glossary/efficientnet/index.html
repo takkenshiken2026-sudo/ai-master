@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EfficientNetとは？深さ・幅・解像度を複合スケールした効率CNN。AlexNet・ResNetとの違いをG検定向けに解説。">
+  <title>EfficientNetとは？三つのノブを同時に回す——複合スケーリングでCNNを効率化する — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/efficientnet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="EfficientNetとは？三つのノブを同時に回す——複合スケーリングでCNNを効率化する">
+  <meta property="og:description" content="Compound Scaling。層の深さ・チャネル幅・入力解像度をバランスよく拡大する効率重視のCNNアーキテクチャ。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/efficientnet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "EfficientNet",
+        "alternateName": ["EfficientNet", "エフィシェントネット"],
+        "description": "層の深さ・チャネル幅・入力解像度を複合スケーリングでバランスよく拡大し、精度と計算効率を両立するCNNアーキテクチャ。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "EfficientNetは何をするアーキテクチャですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像認識向けのCNN設計で、層の深さ・チャネル幅・入力解像度の三つを複合スケーリングでバランスよく拡大し、少ない計算量で高い精度を狙うアーキテクチャです。モバイルやエッジでも使われる効率重視の代表例として知られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "EfficientNetとResNetは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ResNetは残差接続で深いネットワークの学習を可能にしたCNNの代表です。EfficientNetは深さだけでなく幅と解像度も含めた複合スケーリングで効率と精度のバランスを取る別設計です。いずれも画像認識向けCNNですが、工夫の焦点が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "EfficientNetはBERTですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。EfficientNetは画像認識向けのCNNアーキテクチャ、BERTは自然言語処理向けのTransformerエンコーダです。ドメインも構造も異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">EfficientNet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>EfficientNetとは？三つのノブを同時に回す——複合スケーリングでCNNを効率化する</h1>
+    <p class="tool-hero-sub">読み：エフィシェントネット ／ 英：EfficientNet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>EfficientNet</strong>は、Googleが提案した<strong>効率重視の<a href="../cnn/">CNN</a></strong>です。<a href="../alexnet/">AlexNet</a>が「深くして勝つ」、<a href="../densenet/">DenseNet</a>やResNetが「つなぎ方で深くする」方向だったのに対し、EfficientNetは<strong>深さ・幅・解像度の三つを同時に</strong>バランスよく拡大する——<strong>複合スケーリング（Compound Scaling）</strong>——本記事は係数φの暗記ではなく、<strong>「なぜ一軸だけ伸ばすと非効率になるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#scale-problem">スケールの三つのノブ</a></li>
+        <li><a href="#compound">複合スケーリングの直感</a></li>
+        <li><a href="#mbconv">土台となる畳み込みブロック</a></li>
+        <li><a href="#vs-others">他のCNNとの位置づけ</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="scale-problem">
+      <h2>スケールの三つのノブ</h2>
+      <p>CNNを大きくする方法は、おおむね三つに分けられます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ノブ</th><th>何を増やすか</th><th>単独で伸ばすと…</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>深さ（Depth）</strong></td><td>層の数</td><td>勾配・過学習の課題（ResNetが対処、<a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>）</td></tr>
+          <tr><td><strong>幅（Width）</strong></td><td>チャネル数・フィルタ数</td><td>パラメータ爆発、特徴の冗長化</td></tr>
+          <tr><td><strong>解像度（Resolution）</strong></td><td>入力画像のピクセル数</td><td>計算量が二乗的に増加</td></tr>
+        </tbody>
+      </table>
+      <p>
+        従来は「層だけ深く」「チャネルだけ太く」と<strong>一軸ずつ</strong>試すことが多かった。EfficientNetは、三つを<strong>一定の比率で同時に</strong>伸ばす方が精度あたりの計算コストが良い——という発見を体系化しました。
+      </p>
+    </section>
+
+    <section id="compound">
+      <h2>複合スケーリングの直感</h2>
+      <p>複合スケーリングの考え方はシンプルです。</p>
+      <blockquote>
+        <p>深さ・幅・解像度を、同じ倍率 φ で<strong>協調的に</strong>拡大する。</p>
+      </blockquote>
+      <ol class="tool-steps">
+        <li><strong>ベースネット</strong> — 小さく効率の良い基本構造（MobileNet系の畳み込みブロック）を設計</li>
+        <li><strong>スケール係数 φ</strong> — B0, B1, B2… と段階的に三つのノブを同時に拡大</li>
+        <li><strong>精度とFLOPs</strong> — 同じ計算量でより高精度、同じ精度でより軽量——を両立</li>
+      </ol>
+      <p>
+        試験では「<strong>深さ・幅・解像度を複合スケール</strong>」がキーワードです。<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>の量子化やプルーニングといった<strong>事後の軽量化</strong>とは別で、<strong>設計段階</strong>から効率を狙うアプローチです。
+      </p>
+    </section>
+
+    <section id="mbconv">
+      <h2>土台となる畳み込みブロック</h2>
+      <p>
+        EfficientNetの骨格は<strong>MBConv</strong>（Mobile Inverted Bottleneck Convolution）など、<strong>深度方向畳み込み＋畳み込みの組み合わせ</strong>でパラメータを抑えるブロックです。詳細の暗記より、<strong>「軽量ブロック × 複合スケール」</strong>の二層構造で理解すれば試験に十分なことが多いです。
+      </p>
+      <p>
+        <a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>のCNN定義——畳み込みで局所特徴を捉える——は共通ですが、EfficientNetは<strong>どのCNNよりも「計算あたりの精度」</strong>を重視した設計名として位置づけられます。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他のCNNとの位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>工夫の焦点</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../alexnet/">AlexNet</a></strong></td><td>深層CNNの実用化（2012年）</td><td>歴史的ランドマーク</td></tr>
+          <tr><td><strong>ResNet</strong></td><td>残差接続で<strong>深く</strong>学習</td><td>G-235 / G-322</td></tr>
+          <tr><td><strong><a href="../densenet/">DenseNet</a></strong></td><td>密結合で<strong>特徴再利用</strong></td><td>接続設計の別解</td></tr>
+          <tr><td><strong>EfficientNet</strong></td><td>三軸の<strong>複合スケール</strong>で効率化</td><td>精度/FLOPsのバランス</td></tr>
+          <tr><td><strong><a href="../bert/">BERT</a></strong></td><td>NLPの事前学習</td><td>別ドメイン（G-323）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 深さ・幅・解像度を<strong>複合スケール</strong>した効率CNN</li>
+        <li><strong>キーワード</strong> — Compound Scaling、計算効率と精度の両立</li>
+        <li><strong>対比</strong> — ResNet＝残差、DenseNet＝密結合、EfficientNet＝三軸スケール</li>
+        <li><strong>すり替え回避</strong> — 軽量化手法全般・NLPモデル・物体検出専用名ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>、<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>、<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>EfficientNet＝ResNet</td><td>複合スケール vs 残差接続</td></tr>
+          <tr><td>EfficientNet＝量子化</td><td>設計時の効率 vs 事後の軽量化（G-406）</td></tr>
+          <tr><td>EfficientNet＝<a href="../cnn/">CNN</a>全体の別名</td><td>一アーキテクチャ名</td></tr>
+          <tr><td>EfficientNet＝モバイルアプリ</td><td>モデル設計。製品名ではない</td></tr>
+          <tr><td>解像度スケール＝画像拡大処理</td><td>入力サイズの設計選択</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>EfficientNetは何をするアーキテクチャですか？</summary><p class="tool-faq-a">画像認識向けのCNN設計で、層の深さ・チャネル幅・入力解像度の三つを複合スケーリングでバランスよく拡大し、少ない計算量で高い精度を狙うアーキテクチャです。モバイルやエッジでも使われる効率重視の代表例として知られます。</p></details>
+        <details><summary>EfficientNetとResNetは同じですか？</summary><p class="tool-faq-a">同じではありません。ResNetは残差接続で深いネットワークの学習を可能にしたCNNの代表です。EfficientNetは深さだけでなく幅と解像度も含めた複合スケーリングで効率と精度のバランスを取る別設計です。いずれも画像認識向けCNNですが、工夫の焦点が異なります。</p></details>
+        <details><summary>EfficientNetはBERTですか？</summary><p class="tool-faq-a">いいえ。EfficientNetは画像認識向けのCNNアーキテクチャ、BERTは自然言語処理向けのTransformerエンコーダです。ドメインも構造も異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-322/">G-322 · ResNetの意義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · CNNの局所特徴</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-406/">G-406 · モデル軽量化</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298 · CNNの定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../densenet/">DenseNet</a></li>
+          <li><a href="../cbam/">CBAM</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

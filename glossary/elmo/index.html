@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ELMoとは？双方向LSTMで文脈に応じた語埋め込みを与える手法。word2vec・BERTとの違いをG検定向けに解説。">
+  <title>ELMoとは？語の意味は文脈で変わる——双方向LSTMが与えた文脈埋め込み — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/elmo/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ELMoとは？語の意味は文脈で変わる——双方向LSTMが与えた文脈埋め込み">
+  <meta property="og:description" content="Embeddings from Language Models。双方向LSTMで文脈依存の単語表現を出力する、Transformer前の代表的手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/elmo/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ELMo",
+        "alternateName": ["ELMo", "エルモ", "Embeddings from Language Models"],
+        "description": "双方向LSTMで学習した言語モデルから、文脈に応じて変わる単語の埋め込みベクトルを取り出す手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ELMoは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "事前学習した双方向LSTM言語モデルから、各単語の文脈依存の埋め込みベクトルを取り出し、下流のNLPタスクに渡す手法です。同じ語でも前後の文脈によってベクトルが変わる点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ELMoとword2vecは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。word2vecは語ごとに固定の分散表現を学習します。ELMoは文脈に応じて語のベクトルが変わる動的な埋め込みです。いずれもNLPの表現学習ですが、文脈の扱い方が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ELMoとBERTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ELMoは双方向LSTMベースの文脈埋め込み、BERTはTransformerエンコーダによる双方向事前学習モデルです。いずれも文脈を見ますが、系譜とアーキテクチャが異なり、BERTはELMoの後に登場した次世代の代表です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ELMo</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ELMoとは？語の意味は文脈で変わる——双方向LSTMが与えた文脈埋め込み</h1>
+    <p class="tool-hero-sub">読み：エルモ ／ 英：ELMo（Embeddings from Language Models）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ELMo</strong>は、2018年に注目された<strong>文脈埋め込み</strong>の手法です。word2vecが語ごとに<strong>固定のベクトル</strong>を与えるのに対し、ELMoは<strong>双方向<a href="../lstm/">LSTM</a></strong>で学習した言語モデルから、<strong>その文脈での語の意味</strong>をベクトルとして取り出します——本記事は層の結合式の暗記ではなく、<strong>「静的埋め込みから動的埋め込みへ」</strong>というTransformer前の転換点に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#static-limit">固定ベクトルの限界</a></li>
+        <li><a href="#contextual">文脈で変わる意味</a></li>
+        <li><a href="#how-elmo">ELMoのざっくり構造</a></li>
+        <li><a href="#timeline">word2vec・BERTとの系列</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="static-limit">
+      <h2>固定ベクトルの限界</h2>
+      <p>
+        word2vecは単語の<strong>分散表現</strong>を学習する古典的手法です（<a href="../../exams/g-kentei/practice/q/g-335/">G-335</a>、<a href="../../exams/g-kentei/practice/q/g-344/">G-344</a>）。「犬」と「子犬」が近いベクトルになる——<a href="../embedding/">埋め込み</a>の直感はここから広がりました。
+      </p>
+      <p>
+        しかし word2vec では「<strong>bank</strong>」は常に同じベクトルです。川の<strong>岸</strong>の bank と、金融機関の bank は文脈で意味が変わるのに、固定ベクトルでは区別できません。ELMoはこの<strong>多義語問題</strong>に正面から応え、文脈に応じたベクトルを出力します。
+      </p>
+    </section>
+
+    <section id="contextual">
+      <h2>文脈で変わる意味</h2>
+      <p>ELMoのキーワードは<strong>文脈依存（contextual）</strong>です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>ベクトルの性質</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>word2vec</strong></td><td>語ごとに<strong>1つ</strong>の固定ベクトル</td><td>分散表現の古典（G-335）</td></tr>
+          <tr><td><strong>ELMo</strong></td><td>文ごとに<strong>変わる</strong>動的ベクトル</td><td>双方向LSTMの文脈埋め込み</td></tr>
+          <tr><td><strong><a href="../bert/">BERT</a></strong></td><td>文脈で変わる（Transformer）</td><td>次世代の事前学習（G-337）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        同じ語でも、前後の文脈によってベクトルが変わる——これがELMoの本質です。下流タスク（固有表現抽出・感情分類など）では、この動的ベクトルを特徴量として使います。
+      </p>
+    </section>
+
+    <section id="how-elmo">
+      <h2>ELMoのざっくり構造</h2>
+      <ol class="tool-steps">
+        <li><strong>文字レベルCNN</strong> — 語の綴りから初期表現を得る（未知語への頑健性）</li>
+        <li><strong>双方向LSTM</strong> — 左から・右からの文脈をそれぞれ処理（<a href="../../exams/g-kentei/practice/q/g-242/">G-242</a>）</li>
+        <li><strong>層の組み合わせ</strong> — 各LSTM層の出力を重み付きで合成し、語の埋め込みを生成</li>
+        <li><strong>下流タスク</strong> — 固定したELMoベクトル＋タスク用層で<a href="../fine-tuning/">ファインチューニング</a>（または重み固定のまま利用）</li>
+      </ol>
+      <p>
+        <a href="../rnn/">RNN</a>系列の延長上にあり、<a href="../../exams/g-kentei/practice/q/g-308/">G-308</a>が示す長期依存の課題を<a href="../lstm/">LSTM</a>で緩和した設計です。現代の<a href="../llm/">LLM</a>は<a href="../transformer/">Transformer</a>が主役ですが、ELMoは「文脈埋め込み」という概念を広めた<strong>橋渡し</strong>として試験に残ります。
+      </p>
+    </section>
+
+    <section id="timeline">
+      <h2>word2vec・BERTとの系列</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>時代</th><th>代表</th><th>骨格</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>〜2013頃</td><td>word2vec</td><td>静的分散表現</td></tr>
+          <tr><td>2018</td><td><strong>ELMo</strong></td><td>双方向LSTMの<strong>動的</strong>埋め込み</td></tr>
+          <tr><td>2018〜</td><td>BERT</td><td>Transformerエンコーダの事前学習（TF-425）</td></tr>
+          <tr><td>現在</td><td>LLM</td><td>大規模デコーダ型生成</td></tr>
+        </tbody>
+      </table>
+      <p>
+        ELMo＝BERT、ELMo＝word2vec——いずれも×です。系列史では<strong>ELMo → BERT → LLM</strong>と理解すると、すり替えに強くなります。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 双方向LSTMの<strong>文脈埋め込み</strong>。Transformer前の代表的手法</li>
+        <li><strong>キーワード</strong> — 文脈依存・動的埋め込み。固定word2vecとの対比</li>
+        <li><strong>系譜</strong> — <a href="../nlp/">NLP</a>の表現学習。画像CNN・GANではない</li>
+        <li><strong>すり替え回避</strong> — BERT・LLM・物体検出モデルではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-335/">G-335</a>、<a href="../../exams/g-kentei/practice/q/g-344/">G-344</a>、<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>、<a href="../../exams/g-kentei/practice/q/g-242/">G-242</a>、<a href="../../exams/g-kentei/practice/q/g-308/">G-308</a></p>
+        <p>関連：<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>、<a href="../../exams/g-kentei/practice/q/g-279/">G-279</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ELMo＝word2vec</td><td>動的文脈埋め込み vs 固定分散表現</td></tr>
+          <tr><td>ELMo＝BERT</td><td>LSTM系 vs Transformerエンコーダ</td></tr>
+          <tr><td>ELMo＝<a href="../llm/">LLM</a></td><td>特徴抽出 vs 大規模生成モデル</td></tr>
+          <tr><td>ELMo＝<a href="../cnn/">CNN</a></td><td>NLP vs 画像（G-239）</td></tr>
+          <tr><td>ELMo＝<a href="../embedding-model/">埋め込みモデル</a>全般</td><td>特定手法名 vs 現代の汎用カテゴリ</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ELMoは何をする手法ですか？</summary><p class="tool-faq-a">事前学習した双方向LSTM言語モデルから、各単語の文脈依存の埋め込みベクトルを取り出し、下流のNLPタスクに渡す手法です。同じ語でも前後の文脈によってベクトルが変わる点が特徴です。</p></details>
+        <details><summary>ELMoとword2vecは同じですか？</summary><p class="tool-faq-a">同じではありません。word2vecは語ごとに固定の分散表現を学習します。ELMoは文脈に応じて語のベクトルが変わる動的な埋め込みです。いずれもNLPの表現学習ですが、文脈の扱い方が異なります。</p></details>
+        <details><summary>ELMoとBERTは同じですか？</summary><p class="tool-faq-a">同じではありません。ELMoは双方向LSTMベースの文脈埋め込み、BERTはTransformerエンコーダによる双方向事前学習モデルです。いずれも文脈を見ますが、系譜とアーキテクチャが異なり、BERTはELMoの後に登場した次世代の代表です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-335/">G-335 · word2vec</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-344/">G-344 · 埋め込みの区別</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERT</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-242/">G-242 · LSTM</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../glove/">GloVe</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

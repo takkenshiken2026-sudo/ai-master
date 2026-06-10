@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GAT（Graph Attention Network）とは？グラフの隣接ノードに注意の重みを学習して集約するGNN。TransformerのAttentionとの違いをG検定向けに解説。">
+  <title>GATとは？隣を選んで集める——グラフの形を崩さず注意の重みで学ぶGNN — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/graph-attention-network/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GATとは？隣を選んで集める——グラフの形を崩さず注意の重みで学ぶGNN">
+  <meta property="og:description" content="Graph Attention Networkは近傍ノードへの注意重みを学習するグラフニューラルネットワーク。系列Attentionとはデータ構造が異なる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/graph-attention-network/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Graph Attention Network",
+        "alternateName": ["GAT", "Graph Attention Network", "グラフアテンションネットワーク", "グラフ注意ネットワーク"],
+        "description": "グラフ構造データの各ノードについて、隣接ノードへの注意重みを学習し、重要な近傍から特徴を集約するグラフニューラルネットワーク（GNN）の一種。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GAT（Graph Attention Network）とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ノードとエッジで表されるグラフデータに対し、各ノードが隣接ノードのどれにどれだけ注目するかを注意機構で学習し、近傍の特徴を重み付きで集約するグラフニューラルネットワークです。SNSの友人関係や分子構造など、非格子状の関係データに適用されます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GATとTransformerのAttentionは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも「重要な部分に重みを置く」という発想は共通ですが、Transformerは系列（トークン列）上のSelf-Attention、GATはグラフ上の隣接ノードへの注意です。データ構造と集約の対象が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GATとGCNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもグラフニューラルネットワークですが、GCNは近傍をほぼ均等に（固定の集約係数で）畳み込むのに対し、GATは隣接ノードごとに学習した注意重みで集約します。近傍の重要度を動的に選べる点がGATの特徴です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Graph Attention Network（GAT）</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GATとは？隣を選んで集める——グラフの形を崩さず注意の重みで学ぶGNN</h1>
+    <p class="tool-hero-sub">読み：グラフアテンションネットワーク ／ 英：Graph Attention Network（GAT）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Graph Attention Network（GAT）</strong>は、<strong>グラフ上の隣接ノード</strong>に<a href="../attention/">Attention</a>の重みを学習して特徴を集約する<a href="../neural-network/">ニューラルネットワーク</a>（GNN）です。画像の格子や文章の系列とは違い、SNSや分子のように<strong>ノードとエッジで関係が表されるデータ</strong>——GATはその形を保ったまま「どの隣に目を向けるか」を学ぶ——本記事は式の暗記より、<strong>「系列Attentionと何が違うか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#graph-data">グラフというデータ</a></li>
+        <li><a href="#gnn-basics">GNNがやること</a></li>
+        <li><a href="#gat-mechanism">GATの仕組み</a></li>
+        <li><a href="#vs-transformer">TransformerのAttentionとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="graph-data">
+      <h2>グラフというデータ</h2>
+      <p>すべてのデータが画像（格子）やテキスト（系列）として並ぶわけではありません。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>意味</th><th>例</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ノード</strong></td><td>個体・地点・原子など</td><td>ユーザー、論文、化合物の原子</td></tr>
+          <tr><td><strong>エッジ</strong></td><td>ノード間の関係</td><td>フォロー、引用、化学結合</td></tr>
+          <tr><td><strong>特徴</strong></td><td>各ノードに付く属性ベクトル</td><td>プロフィール、論文の埋め込み</td></tr>
+        </tbody>
+      </table>
+      <p>
+        隣接関係はノードごとに<strong>数も相手もバラバラ</strong>——これが<a href="../cnn/">CNN</a>や<a href="../transformer/">Transformer</a>とは根本的に異なる点です。GATはこの<strong>非格子・非系列</strong>の世界向けのモデルです。
+      </p>
+    </section>
+
+    <section id="gnn-basics">
+      <h2>GNNがやること</h2>
+      <p><strong>グラフニューラルネットワーク（GNN）</strong>は、各ノードが近傍ノードの情報を取り込み、自身の表現を更新する反復です。</p>
+      <ol class="tool-steps">
+        <li><strong>メッセージ</strong> — 隣接ノードから特徴を送る</li>
+        <li><strong>集約</strong> — 受け取った特徴をまとめる</li>
+        <li><strong>更新</strong> — 自分のノード表現を書き換える</li>
+      </ol>
+      <p>
+        古典的なGCN（Graph Convolutional Network）は近傍を<strong>ほぼ均等に</strong>集約します。GATはここに<strong>注意の重み</strong>を挟み、「どの隣が今の予測に効くか」をノードごとに変えます——<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>のAttentionの発想をグラフ領域に持ち込んだと捉えると整理しやすいです。
+      </p>
+    </section>
+
+    <section id="gat-mechanism">
+      <h2>GATの仕組み</h2>
+      <p>あるノードが隣接ノード <em>j</em> にどれだけ注目するかを、学習可能なスコアから求め、<strong>ソフトマックスで正規化した重み</strong>で近傍特徴を足し合わせます（<a href="../../exams/g-kentei/practice/q/g-304/">G-304</a>の文脈——内積とスケーリングの考え方は系列Attentionと通じます）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>GCN的な集約</th><th>GAT</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>近傍の扱い</strong></td><td>構造に基づく固定の重み</td><td><strong>学習した注意重み</strong></td></tr>
+          <tr><td><strong>柔軟性</strong></td><td>全隣をほぼ同格に</td><td>重要な隣を強調</td></tr>
+          <tr><td><strong>Multi-Head</strong></td><td>—</td><td>複数の注目視点を並列に（Transformerと同様の発想）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        用途例：論文引用ネットワークでのジャンル分類、分子の物性予測、推薦システムのユーザー・商品グラフ。いずれも<strong>関係の形</strong>が予測に効くタスクです。
+      </p>
+    </section>
+
+    <section id="vs-transformer">
+      <h2>TransformerのAttentionとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>比較軸</th><th>Transformer（Self-Attention）</th><th>GAT</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>データ</strong></td><td>トークン<strong>系列</strong></td><td>ノード・エッジの<strong>グラフ</strong></td></tr>
+          <tr><td><strong>注目先</strong></td><td>系列内の任意位置（全結合）</td><td><strong>エッジでつながった隣接</strong>のみ</td></tr>
+          <tr><td><strong>代表タスク</strong></td><td>翻訳・文章生成（<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>）</td><td>ノード分類・リンク予測</td></tr>
+          <tr><td><strong>関連実装</strong></td><td><a href="../flash-attention/">FlashAttention</a>（IO効率化）</td><td>グラフ構造に沿った局所集約</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「Attention」という語が共通でも、<strong>GAT＝Transformer</strong>と答えるのは誤りです。発想の借用はあっても、アーキテクチャ・入力・タスクは別系統です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — グラフの<strong>近傍に注意機構</strong>を適用するGNN</li>
+        <li><strong>データ</strong> — ノード・エッジ・特徴。画像格子や系列とは別</li>
+        <li><strong>対比</strong> — GCN＝均等集約、GAT＝注意で重み付き集約</li>
+        <li><strong>すり替え回避</strong> — Transformer・CNN・<a href="../rnn/">RNN</a>の説明をそのまま当てはめない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>、<a href="../../exams/g-kentei/practice/q/g-304/">G-304</a>、<a href="../../exams/g-kentei/practice/q/g-019/">G-019</a>、<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>（Transformerとの対比用）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GAT＝Transformer</td><td>グラフGNN vs 系列モデル</td></tr>
+          <tr><td>GAT＝<a href="../cnn/">CNN</a></td><td>関係グラフ vs 画像格子（HQ-0298）</td></tr>
+          <tr><td>GAT＝<a href="../rnn/">RNN</a></td><td>グラフ集約 vs 系列の内部状態</td></tr>
+          <tr><td>GAT＝GCN</td><td>注意重みあり vs 固定集約</td></tr>
+          <tr><td>GAT＝課金方式</td><td>モデル名 vs API用語（TF-0110は×）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GAT（Graph Attention Network）とは何ですか？</summary><p class="tool-faq-a">ノードとエッジで表されるグラフデータに対し、各ノードが隣接ノードのどれにどれだけ注目するかを注意機構で学習し、近傍の特徴を重み付きで集約するグラフニューラルネットワークです。SNSの友人関係や分子構造など、非格子状の関係データに適用されます。</p></details>
+        <details><summary>GATとTransformerのAttentionは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらも「重要な部分に重みを置く」という発想は共通ですが、Transformerは系列（トークン列）上のSelf-Attention、GATはグラフ上の隣接ノードへの注意です。データ構造と集約の対象が異なります。</p></details>
+        <details><summary>GATとGCNは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもグラフニューラルネットワークですが、GCNは近傍をほぼ均等に（固定の集約係数で）畳み込むのに対し、GATは隣接ノードごとに学習した注意重みで集約します。近傍の重要度を動的に選べる点がGATの特徴です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-295/">G-295 · Attentionの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-304/">G-304 · スケーリングとソフトマックス</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-416/">TF-416 · NNはデータから学習</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformer（対比）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../gcn/">GCN</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

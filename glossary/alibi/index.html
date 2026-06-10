@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ALiBiとは？学習不要の線形位置バイアスで長文外挿を改善するAttention手法。位置エンコーディングとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>ALiBiとは？学習せず距離で順序を刻む——位置エンコーディングの代役 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/alibi/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ALiBiとは？学習せず距離で順序を刻む——位置エンコーディングの代役">
+  <meta property="og:description" content="Attentionに距離に比例する線形バイアスを加え、学習済み位置埋め込みなしで語順を与える手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/alibi/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ALiBi",
+        "alternateName": ["ALiBi", "アリビ", "Attention with Linear Biases"],
+        "description": "学習不要の線形位置バイアスでAttentionに語順情報を与え、長文外挿を改善する手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ALiBiと位置エンコーディングの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "位置エンコーディングは各トークンに位置ベクトルを足し込む方式が典型です。ALiBiはAttentionスコアにトークン間距離に比例する線形バイアスを加えるだけで、別途学習する位置埋め込みを置かない設計です。どちらも語順をモデルに伝える目的は同じです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ALiBiは個人情報の匿名加工ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。ALiBiはTransformer系モデルの位置情報付与手法です。位置エンコーディングを匿名加工の制度と混同する誤答は試験でも出題されます（TF-0112）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "長文外挿とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "学習時より長い入力長で推論しても性能が極端に落ちにくい性質のことです。ALiBiは距離に基づく単純なバイアス設計により、固定長で学習した位置埋め込みより外挿しやすいと報告されています。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ALiBi</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ALiBiとは？学習せず距離で順序を刻む——位置エンコーディングの代役</h1>
+    <p class="tool-hero-sub">読み：アリビ ／ 英：ALiBi（Attention with Linear Biases）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ALiBi</strong>（Attention with Linear Biases）は、<a href="../transformer/">Transformer</a>の<strong>Self-Attentionに、トークン間の距離に比例する線形バイアスを加える</strong>ことで語順を伝える手法です。本記事は<a href="../attention/">Attention</a>の計算式の細部ではなく、<strong>「学習済みの位置ベクトルを置かず、距離だけで順序を刻む」</strong>——位置情報の設計思想——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-order">なぜ語順が要るのか</a></li>
+        <li><a href="#mechanism">ALiBiの仕組み（概念）</a></li>
+        <li><a href="#vs-pe">位置エンコーディングとの対比</a></li>
+        <li><a href="#extrapolation">長文外挿の話</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-order">
+      <h2>なぜ語順が要るのか</h2>
+      <p>
+        <a href="../transformer/">Transformer</a>のSelf-Attentionは、文内の語同士の<strong>関係</strong>を重み付けで捉えますが、<strong>どちらが先に来たか</strong>という順序情報は、そのままでは持ちません。だから「猫が魚を食べた」と「魚が猫を食べた」を区別するには、<strong>位置・順序をモデルに渡す仕組み</strong>が必要です。
+      </p>
+      <p>
+        古典的な解は<strong>位置エンコーディング</strong>——各位置にベクトルを足し込む方式です。ALiBiはその代わりに、<strong>Attentionのスコア計算の段階で距離ペナルティを入れる</strong>別ルートを取ります。
+      </p>
+    </section>
+
+    <section id="mechanism">
+      <h2>ALiBiの仕組み（概念）</h2>
+      <p>試験では数式より<strong>設計の要点</strong>が問われます。ALiBiの核心は次の3点です。</p>
+      <ul class="tool-steps">
+        <li><strong>線形バイアス</strong> — クエリとキーの位置が離れるほど、Attentionスコアに<strong>一定の傾きで減点</strong>（または加点）する</li>
+        <li><strong>学習不要の位置表現</strong> — 位置ごとに学習する埋め込み行列を<strong>別途持たない</strong>（ヘッドごとの傾きなどはハイパーパラメータとして設定）</li>
+        <li><strong>Attentionの中に組み込む</strong> — 入力ベクトルへの加算ではなく、<strong>注意重みの計算時</strong>に距離情報を反映</li>
+      </ul>
+      <p>
+        イメージとしては、<strong>近い語ほど注目しやすく、遠い語ほど注目が薄れる</strong>——という「距離の物差し」をAttentionに直接刻む設計です。<a href="../llm/">LLM</a>の文脈長を伸ばす研究の文脈でも名前が出ることがあります。
+      </p>
+    </section>
+
+    <section id="vs-pe">
+      <h2>位置エンコーディングとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>位置エンコーディング（典型）</th><th>ALiBi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>位置情報の与え方</td><td>各トークン表現に<strong>位置ベクトルを加算</strong></td><td>Attentionスコアに<strong>距離バイアス</strong>を加算</td></tr>
+          <tr><td>学習パラメータ</td><td>学習可能な位置埋め込みが多い</td><td>位置埋め込み層を<strong>省略</strong>しやすい</td></tr>
+          <tr><td>試験での整理</td><td>「系列内の位置情報を与える」（<a href="../../exams/g-kentei/drill/q/tf-423/">TF-423</a>）</td><td>位置エンコーディングの<strong>代替設計</strong>として理解</td></tr>
+          <tr><td>共通目的</td><td colspan="2">Self-Attentionだけでは持たない<strong>語順・位置</strong>を補う</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どちらも「匿名加工」「法律上の制度」ではありません（<a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112</a>）。位置情報の<strong>技術的な付与方法</strong>の話です。
+      </p>
+    </section>
+
+    <section id="extrapolation">
+      <h2>長文外挿の話</h2>
+      <p>
+        固定長で学習した位置埋め込みは、<strong>学習時より長い入力</strong>にそのまま当てはめると性能が落ちやすい——という課題があります。ALiBiは距離に基づく<strong>単純で連続的なルール</strong>なので、学習長を超えた位置でもバイアスを計算でき、<strong>長文外挿</strong>（extrapolation）に有利とされることが多いです。
+      </p>
+      <p>
+        試験では「ALiBi＝必ず無限長で完璧」まで暗記する必要はありません。<strong>位置設計の選択肢の一つで、長文への拡張を意識した手法</strong>——と整理すれば十分です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>目的</strong> — Transformerに<strong>語順・位置情報</strong>を与える（位置エンコーディングと同じ大目的）</li>
+        <li><strong>手法</strong> — Attentionに<strong>線形な位置バイアス</strong>を加える。別名の頭文字は Attention with <strong>L</strong>inear <strong>Bi</strong>ases</li>
+        <li><strong>特徴</strong> — 学習済み位置埋め込みを<strong>使わない設計</strong>。長文外挿の改善が狙いとして挙げられる</li>
+        <li><strong>すり替え回避</strong> — 位置エンコーディング＝匿名加工（×）、ALiBi＝RNNのゲート（×）など</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-423/">TF-423</a>、<a href="../../exams/g-kentei/practice/q/g-312/">G-312</a>　生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112</a>、<a href="../../exams/genai-passport/practice/q/hq-0260/">HQ-0260</a>、<a href="../../exams/genai-passport/practice/q/hq-0212/">HQ-0212</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ALiBi＝位置エンコーディングそのもの</td><td>位置情報を与える<strong>別手法</strong>。目的は近いが実装は異なる</td></tr>
+          <tr><td>位置エンコーディング＝個人情報の匿名加工</td><td>系列の位置情報を与える技術（TF-0112）</td></tr>
+          <tr><td>Self-Attentionだけで語順が分かる</td><td>順序情報を<strong>別途補う</strong>必要がある（G-312）</td></tr>
+          <tr><td>ALiBi＝学習率の適応的手法</td><td>最適化（<a href="../adam/">Adam</a>など）とは別レイヤーの話</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ALiBiと位置エンコーディングの違いは？</summary><p class="tool-faq-a">位置エンコーディングは各トークンに位置ベクトルを足し込む方式が典型です。ALiBiはAttentionスコアにトークン間距離に比例する線形バイアスを加えるだけで、別途学習する位置埋め込みを置かない設計です。どちらも語順をモデルに伝える目的は同じです。</p></details>
+        <details><summary>ALiBiは個人情報の匿名加工ですか？</summary><p class="tool-faq-a">いいえ。ALiBiはTransformer系モデルの位置情報付与手法です。位置エンコーディングを匿名加工の制度と混同する誤答は試験でも出題されます（<a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112</a>）。</p></details>
+        <details><summary>長文外挿とは何ですか？</summary><p class="tool-faq-a">学習時より長い入力長で推論しても性能が極端に落ちにくい性質のことです。ALiBiは距離に基づく単純なバイアス設計により、固定長で学習した位置埋め込みより外挿しやすいと報告されています。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-423/">TF-423 · 位置エンコーディング</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-312/">G-312 · 位置エンコーディング</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112 · 位置エンコーディング（×）</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0260/">HQ-0260 · 位置エンコーディング</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

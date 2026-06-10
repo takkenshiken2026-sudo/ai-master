@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPT-3とは？1750億パラメータの大規模言語モデルの意味、Few-shot学習、API提供とGPT系列の転換点をG検定・生成AIパスポート向けに解説。">
+  <title>GPT-3とは？大規模言語モデルの転換点・Few-shotとAPI — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gpt-3/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="GPT-3とは？大規模言語モデルの転換点・Few-shotとAPI">
+  <meta property="og:description" content="1750億パラメータ規模でFew-shotの汎用性が注目されたGPT系列の転換点。API経由で提供された画期的なモデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gpt-3/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GPT-3",
+        "alternateName": ["GPT 3"],
+        "description": "OpenAIが2020年に発表した1750億パラメータ規模の大規模言語モデル。Few-shot学習の汎用性とAPI提供が注目された。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GPT-3とChatGPTの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GPT-3は基盤となる大規模言語モデル、ChatGPTは対話型のサービスです。ChatGPTの初期版はGPT-3.5系を使い、GPT-3そのものを直接触る一般向けチャットとは別の整理です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GPT-3のFew-shotとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "少数の例示（プロンプト内のサンプル）だけで新しいタスクに適応できる性質を指します。試験ではファインチューニングなしでも多様なタスクが可能になった点が重要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GPT-3</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GPT-3とは？大規模言語モデルの転換点・Few-shotとAPI</h1>
+    <p class="tool-hero-sub">読み：じーぴーてぃーすリー ／ 英：GPT-3</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GPT-3</strong>は、OpenAIが2020年に発表した<strong>1750億パラメータ規模</strong>の<a href="../llm/">大規模言語モデル</a>です。<a href="../few-shot-prompting/">Few-shot</a>（少数例示）による汎用性と<strong>API経由の提供</strong>が注目され、<a href="../generative-ai/">生成AI</a>ビジネスの転換点となりました。本記事はベンチマークの細部より、<strong>試験で押さえる系列の位置づけ</strong>と<strong>モデル・サービスの区別</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">GPT-3とは</a></li>
+        <li><a href="#few-shot">Few-shotと汎用性</a></li>
+        <li><a href="#series">GPT系列の中での位置</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、GPT-3は<strong>ChatGPTの歴史を理解するうえで扱われる重要なモデル</strong>として出題されます（<a href="../../exams/genai-passport/drill/q/tf-0137/">TF-0137</a>）。<a href="../gpt-1/">GPT-1</a>・<a href="../gpt-2/">GPT-2</a>・GPT-3.5・GPT-4と並べ、<strong>系列の発展</strong>として整理するのが基本です。
+      </p>
+      <p>
+        G検定では個別のGPT-3の仕様より、<a href="../gpt/">GPT</a>系列が<strong>自己回帰型の言語モデル</strong>であること、<a href="../transformer/">Transformer</a>基盤であることが問われることが多いです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0137/">TF-0137（GPT-3）</a>、<a href="../../exams/genai-passport/drill/q/tf-0138/">TF-0138（GPT-3.5）</a>、<a href="../../exams/genai-passport/drill/q/tf-0139/">TF-0139（GPT-4）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-427/">TF-427（自己回帰モデル）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>GPT-3とは</h2>
+      <p>
+        GPT-3は、<a href="../gpt-architecture/">GPTアーキテクチャ</a>に基づく<strong>自己回帰型の言語モデル</strong>で、当時としては突出した規模（1750億パラメーター）を持ちました。大規模な事前学習により、追加の<a href="../fine-tuning/">ファインチューニング</a>なしでも多様なタスクに対応できる可能性が示されました。
+      </p>
+      <p>
+        一般ユーザー向けのチャットUIとして広まったのは<a href="../../tools/chatgpt/">ChatGPT</a>（GPT-3.5系を搭載）以降であり、GPT-3は主に<strong>開発者向けAPI</strong>として提供された段階のモデルです。
+      </p>
+    </section>
+    <section id="few-shot">
+      <h2>Few-shotと汎用性</h2>
+      <p>
+        GPT-3の注目点の一つは<strong>Few-shot学習</strong>です。<a href="../prompt/">プロンプト</a>内に少数の入出力例を示すだけで、翻訳・要約・分類など異なるタスクに適応できる性質が報告されました。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>概要</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Zero-shot</strong></td><td>例示なしで指示のみ</td><td><a href="../zero-shot-prompting/">ゼロショットプロンプト</a></td></tr>
+          <tr><td><strong>Few-shot</strong></td><td>少数の例をプロンプトに含める</td><td>ファインチューニングなしの汎用性の話題に</td></tr>
+          <tr><td><strong>Fine-tuning</strong></td><td>追加データで重みを更新</td><td>別の調整手法（<a href="../fine-tuning/">ファインチューニング</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="series">
+      <h2>GPT系列の中での位置</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>試験で覚えるポイント</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="../gpt-2/">GPT-2</a></td><td>規模拡大で生成品質が話題に</td></tr>
+          <tr><td><strong>GPT-3</strong></td><td><strong>大規模化＋Few-shot</strong>。API提供の転換点</td></tr>
+          <tr><td><a href="../gpt-3-5/">GPT-3.5</a></td><td>インストラクション追従。ChatGPTの基盤へ</td></tr>
+          <tr><td><a href="../gpt-4/">GPT-4</a></td><td>マルチモーダル対応など次世代へ</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GPT-3＝ChatGPT</td><td>モデル vs サービス。ChatGPTはGPT-3.5系から本格普及</td></tr>
+          <tr><td>GPT-3＝GPT-3.5</td><td>系列内の別世代。試験では順序を区別</td></tr>
+          <tr><td>Few-shot＝ファインチューニング</td><td>プロンプト内の例示 vs 重みの追加学習</td></tr>
+          <tr><td>大規模＝常に正確</td><td><a href="../hallucination/">ハルシネーション</a>のリスクは残る</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>GPT-3とChatGPTの関係は？</summary>
+          <p class="tool-faq-a">GPT-3は基盤となる大規模言語モデル、ChatGPTは対話型のサービスです。ChatGPTの初期版はGPT-3.5系を使い、GPT-3そのものを直接触る一般向けチャットとは別の整理です。</p>
+        </details>
+        <details>
+          <summary>GPT-3のFew-shotとは？</summary>
+          <p class="tool-faq-a">少数の例示（プロンプト内のサンプル）だけで新しいタスクに適応できる性質を指します。試験ではファインチューニングなしでも多様なタスクが可能になった点が重要です。</p>
+        </details>
+        <details>
+          <summary>1750億パラメータは暗記必須？</summary>
+          <p class="tool-faq-a">試験によっては出ることがありますが、多くの問題では「GPT-3は大規模化の転換点」という位置づけの方が重要です。細かな数値より系列の流れを優先してください。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0137/">TF-0137 · GPT-3の位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0138/">TF-0138 · GPT-3.5</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-427/">TF-427 · 自己回帰モデル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gpt-2/">GPT-2</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../few-shot-prompting/">Few-shotプロンプト</a></li>
+          <li><a href="../gpt-3-5/">GPT-3.5</a></li>
+          <li><a href="../gpt-4/">GPT-4</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

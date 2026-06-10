@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DenseNetとは？層間を密結合し特徴を再利用するCNN。ResNetの残差接続との違いをG検定向けに解説。">
+  <title>DenseNetとは？全層をつなぐ密結合——特徴マップを再利用して深くする — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/densenet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DenseNetとは？全層をつなぐ密結合——特徴マップを再利用して深くする">
+  <meta property="og:description" content="Dense Connectivity。各層がそれ以前の全層の特徴マップを受け取り結合するCNNアーキテクチャ。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/densenet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "DenseNet",
+        "alternateName": ["DenseNet", "デンスネット", "Densely Connected Convolutional Networks"],
+        "description": "各層がそれ以前の全層からの特徴マップを受け取り結合する密結合CNN。特徴の再利用で効率的に深いネットワークを構築する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "DenseNetは何をするアーキテクチャですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像認識向けのCNN設計で、各層がそれ以前のすべての層から特徴マップを受け取り、チャネル方向に結合（concatenate）して処理する密結合構造が特徴です。浅い層の特徴を深い層まで再利用し、パラメータ効率と学習の安定化を狙います。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DenseNetとResNetは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ResNetはスキップ結合で入力を出力に足し合わせ残差を学習しやすくします（G-235、G-322）。DenseNetは以前の全層の特徴を結合して受け渡す密結合です。どちらも深いCNNの学習を助けますが、接続の仕方が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DenseNetはBERTですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。DenseNetは画像認識向けのCNNアーキテクチャ、BERTは自然言語処理向けのTransformerエンコーダです。ドメインも構造も異なります（G-323）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">DenseNet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>DenseNetとは？全層をつなぐ密結合——特徴マップを再利用して深くする</h1>
+    <p class="tool-hero-sub">読み：デンスネット ／ 英：DenseNet（Densely Connected Convolutional Networks）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>DenseNet</strong>は、<strong>すべての前層から特徴マップを受け取る</strong>——層と層の間を<strong>密（Dense）に結ぶ</strong>——<a href="../cnn/">CNN</a>アーキテクチャです。ResNetが「入力を足し合わせて<strong>残差</strong>を学ぶ」飛び石だったのに対し、DenseNetは「浅い層の特徴をそのまま<strong>結合して再利用</strong>する」——本記事はブロック数の暗記ではなく、<strong>「特徴の受け渡し方」</strong>という設計の違いに焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#deep-problem">深くすると何が起きるか</a></li>
+        <li><a href="#dense-connectivity">密結合の直感</a></li>
+        <li><a href="#vs-resnet">ResNetとの対比</a></li>
+        <li><a href="#benefits">特徴再利用のメリット</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="deep-problem">
+      <h2>深くすると何が起きるか</h2>
+      <p>
+        <a href="../alexnet/">AlexNet</a>以降、<a href="../cnn/">CNN</a>は層を深くして表現力を上げてきました。しかし単純に積み上げるだけでは、<strong>勾配が届きにくい</strong>・<strong>冗長な特徴を再学習する</strong>といった問題が出ます（<a href="../../exams/g-kentei/practice/q/g-237/">G-237</a>）。
+      </p>
+      <p>
+        ResNetは<strong>スキップ結合</strong>で入力を後段に足し、残差を学びやすくしました（<a href="../../exams/g-kentei/practice/q/g-235/">G-235</a>、<a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>）。DenseNetは別の答え——<strong>前の層の特徴を捨てずに次へ渡す</strong>——を提示します。
+      </p>
+    </section>
+
+    <section id="dense-connectivity">
+      <h2>密結合の直感</h2>
+      <p>DenseNetの<strong>Dense Connectivity</strong>は次のルールです。</p>
+      <blockquote>
+        <p>第 <em>l</em> 層は、第 1 層から第 <em>l</em>−1 層までの<strong>すべての特徴マップ</strong>を入力として受け取る。</p>
+      </blockquote>
+      <ol class="tool-steps">
+        <li><strong>畳み込み・正規化</strong> — 受け取った特徴を処理</li>
+        <li><strong>結合（concatenate）</strong> — 新しい特徴を既存のチャネル列に<strong>追加</strong></li>
+        <li><strong>次層へ</strong> — より多くの手がかりを持った状態で深くなる</li>
+      </ol>
+      <p>
+        ResNetの「足し算（+）」ではなく「チャネル方向の結合」——この<strong>接続の型</strong>がDenseNetの識別子です。試験では「密結合」「特徴の再利用」がキーワードになります。
+      </p>
+    </section>
+
+    <section id="vs-resnet">
+      <h2>ResNetとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th></th><th>ResNet</th><th>DenseNet</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>接続</strong></td><td>スキップ結合（ショートカット）</td><td>全前層からの<strong>密結合</strong></td></tr>
+          <tr><td><strong>演算</strong></td><td>入力を出力に<strong>加算</strong>（残差）</td><td>特徴マップを<strong>結合</strong>（concat）</td></tr>
+          <tr><td><strong>狙い</strong></td><td>深くても勾配が伝わる（G-278）</td><td>浅い特徴を深層まで<strong>再利用</strong></td></tr>
+          <tr><td><strong>試験</strong></td><td>G-235 / G-322 / G-303</td><td>CNNの密結合アーキテクチャ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どちらも「深いCNNを学習可能にする」系譜ですが、<strong>ResNet＝DenseNet</strong>とは答えません。接続の意味——残差 vs 密結合——を一言で言い分けられると得点源になります。
+      </p>
+    </section>
+
+    <section id="benefits">
+      <h2>特徴再利用のメリット</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>効果</th><th>試験向けの説明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>パラメータ効率</strong></td><td>浅い層の特徴を再学習せず、少ないフィルタで深くできる</td></tr>
+          <tr><td><strong>勾配の流れ</strong></td><td>ショートパスが多く、深層でも学習信号が届きやすい（G-237の文脈）</td></tr>
+          <tr><td><strong>多スケール特徴</strong></td><td>低次（エッジ）から高次まで、層ごとに参照可能</td></tr>
+        </tbody>
+      </table>
+      <p>
+        DenseNetは<a href="../batch-normalization/">バッチ正規化</a>や<a href="../dropout/">ドロップアウト</a>と組み合わせて使われることもありますが、試験の核心は<strong>CNNの接続設計</strong>としての位置づけです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 層間を<strong>密結合</strong>し、特徴マップを<strong>再利用</strong>するCNN</li>
+        <li><strong>対比</strong> — ResNet＝残差の<strong>加算</strong>、DenseNet＝全前層からの<strong>結合</strong></li>
+        <li><strong>タスク</strong> — 画像認識（分類・特徴抽出）。物体検出モデル名そのものではない</li>
+        <li><strong>すり替え回避</strong> — BERT・GAN・LLMではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-235/">G-235</a>、<a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>、<a href="../../exams/g-kentei/practice/q/g-303/">G-303</a>、<a href="../../exams/g-kentei/practice/q/g-237/">G-237</a></p>
+        <p>関連：<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298（CNN）</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>DenseNet＝ResNet</td><td>密結合・結合 vs 残差・加算</td></tr>
+          <tr><td>DenseNet＝<a href="../cnn/">CNN</a>全体の別名</td><td>CNNの<strong>一アーキテクチャ</strong>。AlexNet等と並ぶ設計名</td></tr>
+          <tr><td>DenseNet＝<a href="../bert/">BERT</a></td><td>画像CNN vs NLPエンコーダ（G-323）</td></tr>
+          <tr><td>DenseNet＝<a href="../detr/">DETR</a></td><td>畳み込み密結合 vs Transformer検出</td></tr>
+          <tr><td>密結合＝データ拡張</td><td>ネットワーク構造の話。CutMix等とは無関係</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>DenseNetは何をするアーキテクチャですか？</summary><p class="tool-faq-a">画像認識向けのCNN設計で、各層がそれ以前のすべての層から特徴マップを受け取り、チャネル方向に結合（concatenate）して処理する密結合構造が特徴です。浅い層の特徴を深い層まで再利用し、パラメータ効率と学習の安定化を狙います。</p></details>
+        <details><summary>DenseNetとResNetは同じですか？</summary><p class="tool-faq-a">同じではありません。ResNetはスキップ結合で入力を出力に足し合わせ残差を学習しやすくします（<a href="../../exams/g-kentei/practice/q/g-235/">G-235</a>、<a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>）。DenseNetは以前の全層の特徴を結合して受け渡す密結合です。どちらも深いCNNの学習を助けますが、接続の仕方が異なります。</p></details>
+        <details><summary>DenseNetはBERTですか？</summary><p class="tool-faq-a">いいえ。DenseNetは画像認識向けのCNNアーキテクチャ、BERTは自然言語処理向けのTransformerエンコーダです。ドメインも構造も異なります（<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-235/">G-235 · ResNetの残差学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-322/">G-322 · ResNetの意義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-303/">G-303 · 残差接続</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298 · CNNの定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../efficientnet/">EfficientNet</a></li>
+          <li><a href="../cbam/">CBAM</a></li>
+          <li><a href="../batch-normalization/">バッチ正規化</a></li>
+          <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../detr/">DETR</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

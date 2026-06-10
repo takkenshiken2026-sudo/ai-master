@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AdamWとは？重み減衰をAdamの更新から分離した改良版最適化手法。L2正則化との違いをG検定向けに解説。">
+  <title>AdamWとは？正則化と更新を分離——Adamに足した重み減衰の設計 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/adamw/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AdamWとは？正則化と更新を分離——Adamに足した重み減衰の設計">
+  <meta property="og:description" content="適応的学習率のAdamに、重み減衰を正しく分離して組み合わせたLLM学習の定番最適化。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/adamw/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "AdamW",
+        "alternateName": ["AdamW", "アダムダブリュー", "Adam with decoupled weight decay"],
+        "description": "重み減衰をAdamの勾配更新から分離した改良版の適応的最適化アルゴリズム。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "AdamWとAdamの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Adamは一次・二次モーメントで適応的に更新します。AdamWはそのAdam更新に加え、重み減衰（weight decay）を勾配に混ぜ込まず、重みそのものを縮める処理として分離して適用します。L2正則化をAdamにそのまま足す実装との挙動の違いを意識した改良版です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AdamWとL2正則化は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "目的は近く、重みが大きくなりすぎるのを抑えて過学習を防ぐ点で正則化の一族です。ただしAdam系ではL2ペナルティを損失に足して勾配に混ぜる方法と、重み減衰を更新から分離する方法で効き方が異なります。試験ではL2正則化の概念（G-167）とAdamの概念（TF-079）を別々に押さえ、AdamWはその組み合わせ改良として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LLMの学習でも使われますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。大規模言語モデルの事前学習・ファインチューニングではAdamWが広く使われます。勾配計算は誤差逆伝播、更新はAdamWという骨格は小規模モデルと同じです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">AdamW</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>AdamWとは？正則化と更新を分離——Adamに足した重み減衰の設計</h1>
+    <p class="tool-hero-sub">読み：アダムダブリュー ／ 英：AdamW（Adam with decoupled weight decay）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>AdamW</strong>は、<a href="../adam/">Adam</a>の適応的更新に<strong>重み減衰（weight decay）</strong>を正しく組み合わせた最適化アルゴリズムです。本記事はモーメント推定の数式の暗記ではなく、<strong>「正則化の罰を勾配に混ぜるのか、重みの縮小として分離するのか」</strong>——更新設計の分岐——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#problem">AdamにL2を足すと何が起きるか</a></li>
+        <li><a href="#decouple">分離（decouple）の意味</a></li>
+        <li><a href="#vs-l2">L2正則化との関係</a></li>
+        <li><a href="#pipeline">学習パイプラインでの位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="problem">
+      <h2>AdamにL2を足すと何が起きるか</h2>
+      <p>
+        <a href="../regularization/">L2正則化</a>は、重みの二乗和にペナルティを課して<strong>重みが大きくなりすぎるのを抑える</strong>手法です（<a href="../../exams/g-kentei/practice/q/g-167/">G-167</a>）。古典的な<a href="../gradient-descent/">勾配降下法</a>では、損失にL2項を足して勾配を計算すれば、更新と正則化が一貫します。
+      </p>
+      <p>
+        しかし<a href="../adam/">Adam</a>のように<strong>パラメータごとに歩幅を変える</strong>最適化では、L2ペナルティを勾配に混ぜ込むと、正則化の効き方が意図とずれる——という問題が指摘されました。適応的学習率が、正則化まで「歪めて」しまうイメージです。
+      </p>
+      <p>
+        AdamWはこのズレを直すため、<strong>重み減衰をAdamのモーメント更新から切り離す</strong>設計です。名前の <strong>W</strong> は <strong>W</strong>eight decay（重み減衰）を表します。
+      </p>
+    </section>
+
+    <section id="decouple">
+      <h2>分離（decouple）の意味</h2>
+      <p>試験向けに、AdamとAdamWの違いを次の表で整理します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Adam</th><th>AdamW</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>更新の核</td><td>一次・二次モーメントによる<strong>適応的更新</strong>（TF-079）</td><td>Adamと同じ適応的更新</td></tr>
+          <tr><td>重み減衰</td><td>L2を損失に足して<strong>勾配経由</strong>で効かせる実装が多かった</td><td>重み減衰を<strong>更新から分離</strong>して直接適用</td></tr>
+          <tr><td>試験での整理</td><td>適応的最適化の代表</td><td>Adam＋<strong>正しく分離した</strong>重み減衰</td></tr>
+          <tr><td>用途</td><td>深層学習全般</td><td><a href="../llm/">LLM</a>学習で特に定番</td></tr>
+        </tbody>
+      </table>
+      <p>
+        直感としては、Adamが「地形に合わせて歩幅を変えながら下る」最適化だとすれば、AdamWはその一歩の<strong>あとに重みを少し縮める</strong>——正則化を別チャンネルで入れる——イメージです。
+      </p>
+    </section>
+
+    <section id="vs-l2">
+      <h2>L2正則化との関係</h2>
+      <p>
+        重み減衰とL2正則化は、<strong>「重みを小さく保つ」</strong>という目的で近い概念です。SGDでは実質的に同等の効果として語られることもあります。
+      </p>
+      <p>
+        ただしAdam系では、<strong>実装の仕方</strong>によって正則化の効き方が変わります。試験では次の2層で覚えると混乱しにくいです。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>概念層</strong> — L2正則化＝損失にペナルティを足して過学習を抑える（G-167）</li>
+        <li><strong>最適化層</strong> — AdamW＝Adamの更新と重み減衰を<strong>分離した改良版</strong></li>
+      </ul>
+      <p>
+        <a href="../dropout/">ドロップアウト</a>や<a href="../early-stopping/">早期終了</a>のように、損失にペナルティを足さない正則化もあります。AdamWは<strong>重みの大きさを直接抑える</strong>系の話です。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>学習パイプラインでの位置</h2>
+      <ul class="tool-steps">
+        <li><strong>順伝播・損失</strong> — 予測誤差を<a href="../loss-function/">損失関数</a>で計算</li>
+        <li><strong>勾配</strong> — <a href="../backpropagation/">誤差逆伝播法</a>で各重みへの勾配を求める</li>
+        <li><strong>更新</strong> — <strong>AdamW</strong>が勾配とモーメントから重みを動かし、重み減衰を適用</li>
+      </ul>
+      <p>
+        ベース学習率や重み減衰係数は<strong>ハイパーパラメータ</strong>として人が設定します（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）。AdamWが「すべて自動」とは答えません。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>Adamの延長</strong> — 一次・二次モーメントの適応的更新はAdamと同じ系統（TF-079）</li>
+        <li><strong>Wの意味</strong> — <strong>W</strong>eight decay。重み減衰を更新から<strong>分離（decouple）</strong>した改良版</li>
+        <li><strong>正則化との接続</strong> — L2正則化の目的（重み抑制・過学習防止）と関連（G-167）</li>
+        <li><strong>すり替え回避</strong> — AdamW＝逆伝播、AdamW＝ドロップアウト、などは×</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-079/">TF-079</a>、<a href="../../exams/g-kentei/practice/q/g-167/">G-167</a>、<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>、<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>、<a href="../../exams/g-kentei/drill/domain/domain-06/">ディープラーニングの概要</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>AdamW＝誤差逆伝播法</td><td>逆伝播は<strong>勾配計算</strong>、AdamWは<strong>更新</strong></td></tr>
+          <tr><td>AdamW＝L2正則化と完全同一</td><td>目的は近いが、Adam系では<strong>実装の分離</strong>がポイント</td></tr>
+          <tr><td>AdamW＝ドロップアウト</td><td>ドロップアウトはユニットの無効化。AdamWは<strong>最適化</strong></td></tr>
+          <tr><td>重み減衰係数も勾配で自動学習</td><td>ハイパーパラメータとして<strong>設定する</strong>（TF-052）</td></tr>
+          <tr><td>AdamW＝推論時のTemperature</td><td>学習時の最適化。推論設定とは無関係</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>AdamWとAdamの違いは？</summary><p class="tool-faq-a">Adamは一次・二次モーメントで適応的に更新します。AdamWはそのAdam更新に加え、重み減衰（weight decay）を勾配に混ぜ込まず、重みそのものを縮める処理として分離して適用します。L2正則化をAdamにそのまま足す実装との挙動の違いを意識した改良版です。</p></details>
+        <details><summary>AdamWとL2正則化は同じですか？</summary><p class="tool-faq-a">目的は近く、重みが大きくなりすぎるのを抑えて過学習を防ぐ点で正則化の一族です。ただしAdam系ではL2ペナルティを損失に足して勾配に混ぜる方法と、重み減衰を更新から分離する方法で効き方が異なります。試験ではL2正則化の概念（<a href="../../exams/g-kentei/practice/q/g-167/">G-167</a>）とAdamの概念（<a href="../../exams/g-kentei/drill/q/tf-079/">TF-079</a>）を別々に押さえ、AdamWはその組み合わせ改良として整理します。</p></details>
+        <details><summary>LLMの学習でも使われますか？</summary><p class="tool-faq-a">はい。大規模言語モデルの事前学習・ファインチューニングではAdamWが広く使われます。勾配計算は誤差逆伝播、更新はAdamWという骨格は小規模モデルと同じです。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-079/">TF-079 · Adam（一次・二次モーメント）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-167/">G-167 · L2正則化</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-052/">TF-052 · ハイパーパラメータ</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-075/">TF-075 · 勾配降下法</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../adam/">Adam</a></li>
+          <li><a href="../regularization/">正則化</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gemini 1.0 Proとは？性能とコストのバランスを取ったGemini標準モデルの意味、Ultraとの使い分け、API・サービス展開をG検定・生成AIパスポート向けに解説。">
+  <title>Gemini 1.0 Proとは？実務の標準中核と性能コストのバランス — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gemini-1-0-pro/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gemini 1.0 Proとは？実務の標準中核と性能コストのバランス">
+  <meta property="og:description" content="1.0世代の標準モデル。最上位Ultraではなく、広く提供された実務のデフォルト。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gemini-1-0-pro/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Gemini 1.0 Pro",
+        "alternateName": ["Gemini Pro", "ジェミニ 1.0 プロ"],
+        "description": "Gemini 1.0世代の標準モデル。性能とコストのバランスに優れ、APIや消費者向けサービスで広く提供された。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Gemini 1.0 ProとUltraの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同一世代の階層差です。Ultraは最上位で難易度の高い推論向け、Proは性能とコストのバランスを取った標準版として広く提供されました。試験では「Pro＝標準・バランス」「Ultra＝最上位」と役割で区別します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Proは「安い版のUltra」ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "単なる廉価版ではなく、多くのユースケースで十分な性能を、より低いレイテンシ・コストで届ける設計です。常にUltraが最適とは限らず、Proが実務のデフォルトになる場面が多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "1.5 Proと1.0 Proは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "名称にProは共通ですが世代が異なります。1.5 Proは長コンテキスト（最大100万トークン）など後続世代の強化が加わった別モデルです。試験では世代番号（1.0 / 1.5 / 2.x）を混同しないことが重要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../gemini-model/">Gemini</a></li>
+      <li aria-current="page">Gemini 1.0 Pro</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Gemini 1.0 Proとは？実務の標準中核と性能コストのバランス</h1>
+    <p class="tool-hero-sub">読み：じぇみに いちてんぜろ ぷろ ／ 英：Gemini 1.0 Pro</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Gemini 1.0 Pro</strong>は、<a href="../gemini-model/">Gemini</a> 1.0世代の<strong>標準モデル</strong>です。<a href="../gemini-1-0-ultra/">Ultra</a>がベンチマークと最難タスク向けの旗印だったのに対し、Proは<strong>性能・速度・コストのバランス</strong>を取り、チャットアプリやAPIで<strong>最も広く触れられた実体</strong>でした。本記事は階層の説明ではなく、<strong>「なぜ最上位ではなくProがデフォルトになるのか」</strong>——実務の選び方——に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">1.0 Proとは</a></li>
+        <li><a href="#sweet-spot">性能とコストのスイートスポット</a></li>
+        <li><a href="#deployment">どこで使われたか</a></li>
+        <li><a href="#pro-vs-ultra">ProとUltraの使い分け</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Gemini系列では<strong>Pro＝標準・バランス</strong>、Ultra＝最上位、Nano＝端末軽量——という<strong>階層の役割名</strong>が試験の整理軸です。1.0 Proは「Googleの初代Geminiの<strong>標準モデル</strong>」として覚えます。
+      </p>
+      <p>
+        開発元の区別は<a href="../gemini-model/">Gemini</a>記事の通り、Google提供の主要生成AIである点が核心です（<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141</a>）。個別の1.0 Proのスペック暗記より、<strong>Proという名前が世代をまたいで「標準帯」を示す</strong>ことを押さえます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141（Geminiの位置づけ）</a>、<a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316（Gemini vs Claude）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>1.0 Proとは</h2>
+      <p>
+        2023年末のGemini 1.0発表時、Proは<strong>一般公開の中心</strong>として位置づけられました。Bard（のちのGeminiアプリ）やGoogle AI Studio、Vertex AI APIなど、開発者・一般ユーザーが最初に触れるのがProであることが多く、Ultraは限定提供や段階的ロールアウトでした。
+      </p>
+      <p>
+        <a href="../multimodal-ai/">マルチモーダル</a>能力はUltraと同系統ですが、モデル規模を抑えることで<strong>応答速度と推論コスト</strong>を改善しています。後続の1.5 Pro・2.5 Proへと「標準帯」の名称は継承され、1.0 Proはその<strong>原型</strong>と捉えると系列史が整理しやすくなります。
+      </p>
+    </section>
+    <section id="sweet-spot">
+      <h2>性能とコストのスイートスポット</h2>
+      <p>大規模モデル選定では、常に最上位が最適とは限りません。1.0 Proが示したのは次のトレードオフです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Ultra寄り</th><th>Pro寄り（1.0 Pro）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>推論精度</td><td>難問・複合推論で有利</td><td>日常業務の多くで十分</td></tr>
+          <tr><td>レイテンシ</td><td>重い処理で遅くなりがち</td><td>対話体験に向く応答速度</td></tr>
+          <tr><td>APIコスト</td><td>トークン単価・計算量が大</td><td>大量呼び出しに耐える</td></tr>
+          <tr><td>提供範囲</td><td>限定・段階公開</td><td>広くデフォルト提供</td></tr>
+        </tbody>
+      </table>
+      <p>
+        OpenAIの「GPT-4」と「GPT-4 Turbo」の関係、Anthropicの「Opus」と「Sonnet」と同様、<strong>最上位と標準の二層</strong>は各社共通の製品戦略です。試験では数値より<strong>役割の対比</strong>を答えられることが重要です。
+      </p>
+    </section>
+    <section id="deployment">
+      <h2>どこで使われたか</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>消費者チャット</strong>
+          Bard / Geminiアプリの初期デフォルト。一般ユーザーが「Geminiを使った」体験の多くはPro経由
+        </li>
+        <li>
+          <strong>開発者API</strong>
+          Google AI Studio・Vertex AIで<code>gemini-pro</code>系エンドポイントとして提供
+        </li>
+        <li>
+          <strong>業務連携</strong>
+          Workspaceへの組み込みでも、全社展開にはコストと速度のバランスが求められProが適する場面が多い
+        </li>
+      </ul>
+      <p>「Gemini＝Ultra」ではなく、<strong>実務の顔はPro</strong>だった——という整理が、試験でも実務でも役立ちます。</p>
+    </section>
+    <section id="pro-vs-ultra">
+      <h2>ProとUltraの使い分け</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>選ぶ目安</th><th>向くモデル</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>要約・メール下書き・FAQ応答</td><td><strong>Pro</strong></td></tr>
+          <tr><td>大量のAPIバッチ処理</td><td><strong>Pro</strong>（コスト効率）</td></tr>
+          <tr><td>複雑なマルチステップ推論・最高精度が必須</td><td>Ultra（1.0世代）</td></tr>
+          <tr><td>スマホ上の即時応答・オフライン寄り</td><td><a href="../gemini-1-0-nano/">Nano</a>（別階層）</td></tr>
+        </tbody>
+      </table>
+      <p>現行世代では1.5・2.xのProが主力ですが、<strong>「Pro＝標準帯」という命名規則</strong>は変わっていません。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Pro＝Ultraの劣化版だけ</td><td>標準帯として設計された別サイズ。多くの用途で意図的な選択</td></tr>
+          <tr><td>1.0 Pro＝1.5 Pro</td><td>世代が異なる。1.5は長コンテキスト等で別強化</td></tr>
+          <tr><td>Pro＝無料版</td><td>提供プランとモデル階層は別軸。Proは性能帯の名称</td></tr>
+          <tr><td>Gemini Pro＝GPT-4</td><td>開発元・系列が異なる。単純な対応表にしない</td></tr>
+          <tr><td>Proならハルシネーションなし</td><td>標準でも<a href="../hallucination/">ハルシネーション</a>は起こりうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Gemini 1.0 ProとUltraの違いは？</summary>
+          <p class="tool-faq-a">同一世代の階層差です。Ultraは最上位で難易度の高い推論向け、Proは性能とコストのバランスを取った標準版として広く提供されました。試験では「Pro＝標準・バランス」「Ultra＝最上位」と役割で区別します。</p>
+        </details>
+        <details>
+          <summary>Proは「安い版のUltra」ですか？</summary>
+          <p class="tool-faq-a">単なる廉価版ではなく、多くのユースケースで十分な性能を、より低いレイテンシ・コストで届ける設計です。常にUltraが最適とは限らず、Proが実務のデフォルトになる場面が多いです。</p>
+        </details>
+        <details>
+          <summary>1.5 Proと1.0 Proは同じですか？</summary>
+          <p class="tool-faq-a">名称にProは共通ですが世代が異なります。1.5 Proは長コンテキスト（最大100万トークン）など後続世代の強化が加わった別モデルです。試験では世代番号（1.0 / 1.5 / 2.x）を混同しないことが重要です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141 · Geminiの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316 · Gemini vs Claude</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li><a href="../gemini-1-0-ultra/">Gemini 1.0 Ultra</a></li>
+          <li><a href="../gemini-1-0-nano/">Gemini 1.0 Nano</a></li>
+          <li><a href="../../tools/gemini/">Gemini（ツール解説）</a></li>
+          <li><a href="../gemini-1-5-pro/">Gemini 1.5 Pro</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

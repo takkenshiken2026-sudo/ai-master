@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 2とは？100Kコンテキスト対応のClaude第2世代の意味、Claude 1との違い、長文処理の実務をG検定・生成AIパスポート向けに解説。">
+  <title>Claude 2とは？100Kコンテキストへピボットした第2世代 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-2/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 2とは？100Kコンテキストへピボットした第2世代">
+  <meta property="og:description" content="安全志向の系列が長文処理へ主戦場を移した転換点。最大100Kトークンのコンテキスト。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-2/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 2",
+        "alternateName": ["Claude 2.0", "クロード 2"],
+        "description": "AnthropicのClaude第2世代モデル。最大100Kトークンのコンテキストウィンドウで長文処理能力を大幅に強化。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claude 2の最大の特徴は何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "最大約100,000トークン規模のコンテキストウィンドウです。長い契約書やコードベースを分割せずに渡しやすくなり、Claude系列の訴求が安全性だけでなく長文処理へ広がった転換点と整理できます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude 2とClaude 2.1の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2.1は2の改良版で、コンテキストを200Kに拡張し、ハルシネーション低減を前面に出しました。試験では「2＝100Kの第2世代」「2.1＝200Kの改良版」と世代と数値を分けて覚えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "100Kコンテキストなら分割不要ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "多くの実務文書は分割回数を減らせますが、無制限ではありません。上限を超える入力は扱えず、長いからといって事実誤認が消えるわけでもありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 2</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 2とは？100Kコンテキストへピボットした第2世代</h1>
+    <p class="tool-hero-sub">読み：くろーど に ／ 英：Claude 2</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 2</strong>は、<a href="../claude-model/">Claude</a>の<strong>第2世代</strong>モデルです。<a href="../claude-1/">Claude 1</a>が安全志向の<strong>原型</strong>だったのに対し、Claude 2は<strong>最大100Kトークン</strong>の<a href="../context-window/">コンテキストウィンドウ</a>を前面に出し、長い文書・コードを<strong>分割せずに読ませる</strong>用途へ主戦場を移しました。本記事はベンチマーク争いではなく、<strong>「長さの競争」にAnthropicが参入した転換点</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Claude 2とは</a></li>
+        <li><a href="#100k">100Kコンテキストの意味</a></li>
+        <li><a href="#workflow">長文ワークフローの変化</a></li>
+        <li><a href="#vs-claude-1">Claude 1との世代差</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        個別スペックの暗記より、<strong>コンテキストウィンドウ</strong>の概念が核心です。「モデルが一度に扱える入力や会話履歴の長さに関係する」（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>）。Claude 2は<strong>上限が大きい具体例</strong>（100K）として整理します。
+      </p>
+      <p>
+        ウィンドウ拡張は<strong>最新情報の自動検索</strong>ではありません（<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169</a>は×）。長いPDFを渡せても、学習データのカットオフ以降の事象は自動では反映されません。
+      </p>
+      <p>
+        開発元は引き続き<strong>Anthropic</strong>です（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）。「Claude 2＝OpenAI」「Claude 2＝Gemini」の入れ替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170（コンテキストウィンドウ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169（コンテキスト≠自動検索）</a>、<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claudeの位置づけ）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>Claude 2とは</h2>
+      <p>
+        2023年7月頃、Anthropicは<strong>Claude 2</strong>を公開しました。一般向けWebアプリ（claude.ai）の提供も拡大し、<a href="../claude-1/">Claude 1</a>のAPI中心の印象から、<strong>より広いユーザー層</strong>へ踏み込んだ世代でもあります。
+      </p>
+      <p>
+        当時、OpenAIは<a href="../gpt-4-turbo/">GPT-4 Turbo</a>で128Kコンテキストを訴求し、Googleは後続の長コンテキスト競争へ移行していました。Claude 2の100Kは<strong>「長文を扱えるモデル」競争への参入</strong>として位置づけられ、安全性だけでなく<strong>実務の文書処理</strong>でも選ばれるようになった転換点です。
+      </p>
+    </section>
+    <section id="100k">
+      <h2>100Kコンテキストの意味</h2>
+      <p>
+        100K（10万）トークンは、目安として<strong>数十万語規模のテキスト</strong>や、中〜大規模のコードベースを一度のプロンプトに含められるレベルです。正確な換算は言語や<a href="../token/">トークン</a>化方式で変わるため、試験では「非常に長い文脈を扱える」という<strong>概念理解</strong>が中心です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>短いコンテキスト時代</th><th>Claude 2（100K）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>入力の切り方</td><td>章・ファイルごとに分割</td><td>長文書をまとめて渡しやすい</td></tr>
+          <tr><td>照合・要約</td><td>文脈の欠落リスク</td><td>全体構造を一度に参照可能</td></tr>
+          <tr><td>APIコスト</td><td>分割呼び出しが増える</td><td>1回で済む場合がある</td></tr>
+          <tr><td>限界</td><td>—</td><td>無制限ではない</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="workflow">
+      <h2>長文ワークフローの変化</h2>
+      <p>Claude 2以前は、長い資料を扱う典型ワークフローは次のようでした。</p>
+      <ol class="tool-steps">
+        <li><strong>分割</strong> — PDFやログをチャンクに切る</li>
+        <li><strong>逐次要約</strong> — 各部分を別々に要約</li>
+        <li><strong>統合</strong> — 要約を人間またはモデルが再統合</li>
+        <li><strong>リスク</strong> — 境界で文脈が欠落し、矛盾を見落とす</li>
+      </ol>
+      <p>
+        100K対応は、この手間を<strong>短縮しうる</strong>設計です。契約書の条項横断チェック、社内規程の整合性確認、複数ファイルにまたがるコード理解など、<strong>「全体を一度に見る」</strong>タスクで効果が出やすくなりました。ただし長い入力でも<a href="../hallucination/">ハルシネーション</a>や見落としは起こり得ます。
+      </p>
+    </section>
+    <section id="vs-claude-1">
+      <h2>Claude 1との世代差</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>Claude 1</th><th>Claude 2</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>世代</td><td>初代</td><td>第2世代</td></tr>
+          <tr><td>主な訴求</td><td>安全・有用のバランス（HHH）</td><td>100K長コンテキスト</td></tr>
+          <tr><td>提供形態</td><td>API中心</td><td>Webアプリ拡大</td></tr>
+          <tr><td>後続</td><td>—</td><td><a href="../claude-2-1/">Claude 2.1</a>（200K・信頼性強化）</td></tr>
+        </tbody>
+      </table>
+      <p>安全志向は<strong>系列を通じた土台</strong>であり、Claude 2はその上に<strong>長文能力</strong>を積み上げた世代と捉えると系列史が整理しやすくなります。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Claude 2＝Claude 2.1</td><td>2.1は改良版。200Kは2.1の訴求</td></tr>
+          <tr><td>100K＝無制限</td><td>上限はある。超過分は扱えない</td></tr>
+          <tr><td>長コンテキスト＝自動検索</td><td>別機能（TF-0169）</td></tr>
+          <tr><td>Claude 2＝Gemini 1.5 Pro</td><td>開発元・世代が異なる。数値比較だけで同一視しない</td></tr>
+          <tr><td>長い入力なら正確</td><td>ハルシネーションは起こりうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Claude 2の最大の特徴は何ですか？</summary>
+          <p class="tool-faq-a">最大約100,000トークン規模のコンテキストウィンドウです。長い契約書やコードベースを分割せずに渡しやすくなり、Claude系列の訴求が安全性だけでなく長文処理へ広がった転換点と整理できます。</p>
+        </details>
+        <details>
+          <summary>Claude 2とClaude 2.1の違いは？</summary>
+          <p class="tool-faq-a">2.1は2の改良版で、コンテキストを200Kに拡張し、ハルシネーション低減を前面に出しました。試験では「2＝100Kの第2世代」「2.1＝200Kの改良版」と世代と数値を分けて覚えます。</p>
+        </details>
+        <details>
+          <summary>100Kコンテキストなら分割不要ですか？</summary>
+          <p class="tool-faq-a">多くの実務文書は分割回数を減らせますが、無制限ではありません。上限を超える入力は扱えず、長いからといって事実誤認が消えるわけでもありません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · コンテキストウィンドウ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169 · コンテキスト≠自動検索</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../claude-1/">Claude 1</a></li>
+          <li><a href="../claude-2-1/">Claude 2.1</a></li>
+          <li><a href="../gpt-4-turbo/">GPT-4 Turbo</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -22,21 +22,25 @@ ICON_DIR = ROOT / "assets" / "images" / "tools"
 
 CAT_MAP = {
     "チャットAI": "chat",
+    "AIエージェント": "agent",
     "画像生成": "image",
     "コーディング": "code",
     "音声・動画・音楽": "audio",
     "仕事効率化・資料・翻訳": "productivity",
     "検索・リサーチ": "research",
+    "業務自動化": "automation",
     "ローカル・上級者向け": "local",
 }
 
 FILTER_LABELS = {
     "chat": "チャットAI",
+    "agent": "AIエージェント",
     "image": "画像生成",
     "code": "コーディング",
     "audio": "音声・動画",
     "productivity": "仕事効率化",
     "research": "検索・リサーチ",
+    "automation": "業務自動化",
     "local": "ローカル",
 }
 
@@ -69,6 +73,16 @@ SHARED_LOGO = {
     "replit": "replit.svg",
     "v0": "vercel.svg",
     "bolt-new": "bolt-new.svg",
+    "chatgpt-operator": "openai.svg",
+    "codex-cli": "openai.svg",
+    "sora-2": "openai.svg",
+    "claude-code": "anthropic.svg",
+    "microsoft-365-copilot": "microsoft.svg",
+    "microsoft-designer": "microsoft.svg",
+    "microsoft-power-automate": "microsoft.svg",
+    "google-workspace-ai": "google.svg",
+    "adobe-express": "adobe.svg",
+    "bing-image-creator": "microsoft.svg",
 }
 
 # 取得元ドメインの上書き（公式URLとアイコンホストが異なる場合）
@@ -132,7 +146,14 @@ DIRECT_ICON_URL = {
 }
 
 
+NAME_TO_ID = {
+    "イルシル": "irushiru",
+}
+
+
 def slugify(name: str) -> str:
+    if name in NAME_TO_ID:
+        return NAME_TO_ID[name]
     base = re.sub(r"（[^）]*）", "", name).strip()
     base = base.replace("·", "-")
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", base).strip("-").lower()
@@ -157,8 +178,26 @@ def slugify(name: str) -> str:
         "notion-ai": "notion-ai",
         "raycast-ai": "raycast-ai",
         "fireflies-ai": "fireflies-ai",
+        "chatgpt-operator": "chatgpt-operator",
+        "claude-code": "claude-code",
+        "continue-dev": "continue-dev",
+        "microsoft-365-copilot": "microsoft-365-copilot",
+        "microsoft-designer": "microsoft-designer",
+        "microsoft-power-automate": "microsoft-power-automate",
+        "google-workspace-ai": "google-workspace-ai",
+        "slack-ai": "slack-ai",
+        "zoom-ai-companion": "zoom-ai-companion",
+        "adobe-express": "adobe-express",
+        "codex-cli": "codex-cli",
+        "haiper-ai": "haiper-ai",
+        "hailuo-ai": "hailuo-ai",
+        "napkin-ai": "napkin-ai",
+        "sora-2": "sora-2",
+        "copy-ai": "copy-ai",
+        "surfer-ai": "surfer-ai",
+        "irushiru": "irushiru",
     }
-    return aliases.get(slug, slug)
+    return aliases.get(slug, slug) or NAME_TO_ID.get(name, slug)
 
 
 def load_rows(xlsx: Path) -> list[dict]:
@@ -428,12 +467,14 @@ def main() -> None:
         if not tools:
             raise SystemExit("tools-data.js からツールを読み込めませんでした")
     else:
-        src = XLSX_DEFAULT if XLSX_DEFAULT.exists() else XLSX_PROJECT
-        if not src.exists():
-            raise SystemExit(f"Excel not found: {src}")
         XLSX_PROJECT.parent.mkdir(parents=True, exist_ok=True)
-        if src != XLSX_PROJECT:
-            shutil.copy2(src, XLSX_PROJECT)
+        if XLSX_PROJECT.exists():
+            src = XLSX_PROJECT
+        elif XLSX_DEFAULT.exists():
+            shutil.copy2(XLSX_DEFAULT, XLSX_PROJECT)
+            src = XLSX_PROJECT
+        else:
+            raise SystemExit(f"Excel not found: {XLSX_PROJECT}")
         tools = load_rows(src)
 
     refreshed = 0

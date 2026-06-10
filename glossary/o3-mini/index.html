@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="o3 miniとは？o3ファミリーの軽量推論モデルの意味、STEM・コスト効率、o1・o3との違いをG検定向けに解説。">
+  <title>o3 miniとは？軽量推論モデルとSTEM・コスト効率のバランス — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/o3-mini/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="o3 miniとは？軽量推論モデルとSTEM・コスト効率のバランス">
+  <meta property="og:description" content="o3の軽量版。STEM・数学・コーディング向けのコスト効率の高い推論モデルとして整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/o3-mini/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "o3 mini",
+        "alternateName": ["o3-mini", "OpenAI o3 mini"],
+        "description": "o3の軽量版。STEM・数学・コーディング向けのコスト効率の高い推論モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "o3 miniはo3の劣化版ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "単純な劣化版ではなく、速度とコストを優先しつつ推論能力を維持する設計です。難易度の高い問題ではフル版o3の方が有利な場合もありますが、日常のSTEM・コーディング課題ではminiで十分なことが多い、という整理が試験向けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "o3 miniとGPT-4o miniは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。GPT-4o miniはGPTオムニ系列の軽量版、o3 miniはo推論系列の軽量版です。命名にminiが付く点は共通ですが、系列と用途が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "o3 miniは試験で暗記が必要ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "個別仕様の暗記より、o系列の推論特化ラインと、miniがコスト効率・STEM向けであることの整理が重要です。ベンチマーク数値の丸暗記は優先度が低い傾向です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">o3 mini</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>o3 miniとは？軽量推論モデルとSTEM・コスト効率のバランス</h1>
+    <p class="tool-hero-sub">読み：おーすりーみに ／ 英：o3 mini</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>o3 mini</strong>は、OpenAIの<strong>o3推論系列の軽量版</strong>です。フル版o3より<strong>高速・低コスト</strong>でありながら、数学・科学・コーディング（STEM）課題での推論を重視した設計です。本記事は<a href="../o1-model/">o1</a>の「考える時間」の話題とは別軸で、<strong>推論モデルのサイズ階層</strong>——いつminiで足り、いつフル版が必要か——を試験向けに整理します。提供状況は<strong>2026年6月時点</strong>の情報です。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#o3-family">o3ファミリーの入り口</a></li>
+        <li><a href="#stem">STEM・コーディング向けの整理</a></li>
+        <li><a href="#cost-tradeoff">コスト・速度・精度のトレードオフ</a></li>
+        <li><a href="#mini-naming">「mini」命名のすり替え</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        o3 mini単体の仕様暗記より、<strong>推論特化のo系列</strong>と<strong>軽量版の役割</strong>が問われやすい整理です。推論を強化しても、複雑な計算を誤ることがある（<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459</a>）——miniだから例外ではありません。
+      </p>
+      <p>
+        API利用ではトークン課金・運用コストが発生します（<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428</a>）。推論モデルは思考トークンを多く消費しやすいため、<strong>miniのコスト優位</strong>は実務・試験のケース問題で効いてくる論点です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459（計算の誤り）</a>、<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（説明≠正確）</a>、<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428（APIコスト）</a></p>
+        <p>o系列の前提：<a href="../o1-model/">OpenAI o1</a></p>
+      </div>
+    </section>
+    <section id="o3-family">
+      <h2>o3ファミリーの入り口</h2>
+      <p>
+        <a href="../o1-model/">o1</a>に続くo系列の後継として<strong>o3</strong>が登場し、o3 miniはそのファミリーで<strong>最初に広く公開された軽量版</strong>の一つとして整理できます。試験では世代の細部より、次の階層を覚えます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>試験での位置づけ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="../o1-model/">o1</a></td><td>推論特化の先駆。o系列の出発点</td></tr>
+          <tr><td><strong>o3 mini</strong></td><td>o3の<strong>軽量・低コスト</strong>版。STEM向け</td></tr>
+          <tr><td><a href="../o3/">o3</a> / o3-pro</td><td>フル版。視覚推論・ツール利用など高度用途</td></tr>
+          <tr><td><a href="../o4-mini/">o4 mini</a></td><td>さらに後続の軽量推論（別世代）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="stem">
+      <h2>STEM・コーディング向けの整理</h2>
+      <p>o3 miniは、次のような課題で<strong>コスト効率よく推論</strong>させたい場面を想定したモデルとして紹介されます。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>数学</h3>
+          <p>方程式・証明・オリンピック級の問題。ただし最終確認は人間または計算ツールで</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>科学</h3>
+          <p>物理・化学の論理推論。単位換算や数値は要検証（TF-0459）</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>コーディング</h3>
+          <p>アルゴリズム設計・バグ修正の提案。生成コードはレビュー必須</p>
+        </div>
+      </div>
+      <p>
+        STEM向けでも「推論特化＝専門家超え」ではありません（<a href="../../exams/genai-passport/drill/q/tf-0436/">TF-0436</a>）。miniは<strong>十分な場面を広くカバー</strong>するためのバランス型、という整理が試験向けです。
+      </p>
+    </section>
+    <section id="cost-tradeoff">
+      <h2>コスト・速度・精度のトレードオフ</h2>
+      <p>推論モデルは、回答前の内部思考で<strong>追加トークン</strong>を消費します。miniはそのコストを抑えつつ実用性を確保する設計です。</p>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">o3 mini の強み</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>フル版o3より低コスト・高速</td>
+            <td>最高難度の問題ではフル版に劣る場合がある</td>
+          </tr>
+          <tr>
+            <td>STEM・コーディングの大量処理に向く</td>
+            <td>思考トークン分、通常チャットより課金が増えやすい</td>
+          </tr>
+          <tr>
+            <td>API組み込みの推論タスクに現実的</td>
+            <td>出力検証・<a href="../hallucination/">ハルシネーション</a>対策は依然必要</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="mini-naming">
+      <h2>「mini」命名のすり替え</h2>
+      <p>OpenAIには複数の「mini」モデルがあります。<strong>名前だけで系列を判断しない</strong>ことが試験でも重要です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>系列</th><th>主な用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>GPT-4o mini</td><td>GPTオムニ</td><td>汎用チャットの低コスト版</td></tr>
+          <tr><td>GPT-4.1 mini</td><td>GPT API・コーディング</td><td>開発者向けAPIのバランス型</td></tr>
+          <tr><td><strong>o3 mini</strong></td><td><strong>o推論</strong></td><td>STEM推論のコスト効率版</td></tr>
+          <tr><td>o4-mini</td><td>o推論（後続）</td><td>ツール利用・コーディング強化の軽量版</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>o3 mini＝GPT-4o mini</td><td>o系列 vs GPT系列。miniはサイズ階層の共通語</td></tr>
+          <tr><td>o3 mini＝o3の完全同等</td><td>軽量版。難問ではフル版が有利な場合あり</td></tr>
+          <tr><td>推論mini＝計算ミスなし</td><td>TF-0459。検証は必要</td></tr>
+          <tr><td>o3 mini＝o1の名称変更</td><td>別世代（o1→o3）。能力・提供形態が進化</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>o3 miniはo3の劣化版ですか？</summary>
+          <p class="tool-faq-a">単純な劣化版ではなく、速度とコストを優先しつつ推論能力を維持する設計です。難易度の高い問題ではフル版o3の方が有利な場合もありますが、日常のSTEM・コーディング課題ではminiで十分なことが多い、という整理が試験向けです。</p>
+        </details>
+        <details>
+          <summary>o3 miniとGPT-4o miniは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。GPT-4o miniはGPTオムニ系列の軽量版、o3 miniはo推論系列の軽量版です。命名にminiが付く点は共通ですが、系列と用途が異なります。</p>
+        </details>
+        <details>
+          <summary>o3 miniは試験で暗記が必要ですか？</summary>
+          <p class="tool-faq-a">個別仕様の暗記より、o系列の推論特化ラインと、miniがコスト効率・STEM向けであることの整理が重要です。ベンチマーク数値の丸暗記は優先度が低い傾向です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459 · 計算の誤り</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428 · APIコスト</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0436/">TF-0436 · 専門家超えは×</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../o1-model/">OpenAI o1</a></li>
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../o3/">o3</a></li>
+          <li><a href="../o4-mini/">o4 mini</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

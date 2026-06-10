@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 4 Opusとは？Claude 4最高性能モデルの意味、4 Sonnetとの使い分け、高度推論・長文処理をG検定向けに解説。">
+  <title>Claude 4 Opusとは？軽量侵食のあと——最上位の再定義 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-4-opus/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 4 Opusとは？軽量侵食のあと——最上位の再定義">
+  <meta property="og:description" content="3.5 Haikuが侵食した最上位領域を、4 Opusがどう取り戻すか。難問専用の大作モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-4-opus/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 4 Opus",
+        "alternateName": ["Claude 4 Opus", "クロード 4 オーパス"],
+        "description": "Claude 4ファミリーの最高性能モデル。高度な推論・長文処理・複雑分析に対応。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claude 4 Opusと4 Sonnetの使い分けは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同一世代のサイズ差です。日常の対話・実務の大半は4 Sonnet、研究レベルの分析・多段推論・最高精度が必須の難問は4 Opus向きと整理します。常にOpusが最適とは限りません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "3.5 HaikuがOpus級なら4 Opusは不要ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。軽量帯の性能向上は「中程度の難問を安く回す」方向であり、最難問・長期推論・最高品質が必要な領域では4 Opusが依然最上位として位置づけられます。比較表現と製品階層を混同しないことが重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "4 Opus＝常に正確ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。最上位モデルでもハルシネーションや計算誤りは起こり得ます。ベンチマーク最高＝実務の全タスクで正確、とは答えません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 4 Opus</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 4 Opusとは？軽量侵食のあと——最上位の再定義</h1>
+    <p class="tool-hero-sub">読み：くろーど よん おーぱす ／ 英：Claude 4 Opus</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 4 Opus</strong>は、<a href="../claude-model/">Claude</a> 4世代の<strong>最高性能モデル</strong>です。<a href="../claude-3-opus/">3 Opus</a>が「難問専用の重い頭脳」として登場したのに対し、4 Opusは<strong><a href="../claude-3-5-haiku/">3.5 Haiku</a>による軽量帯の侵食</strong>——「Opus級を安く」——のあと、<strong>最上位階層が何のために残るか</strong>を問い直すモデルです。本記事はベンチマーク暗記ではなく、<strong>「いつOpusのコストを払う価値があるか」</strong>の再定義に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">4 Opusとは</a></li>
+        <li><a href="#tier-erosion">軽量帯の侵食とOpusの役割</a></li>
+        <li><a href="#hard-tasks">4 Opusが効く難問</a></li>
+        <li><a href="#long-context">長文・長期推論</a></li>
+        <li><a href="#opus-vs-sonnet">4 Opusと4 Sonnetの境界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Opusは<strong>Claude 4世代の最上位階層</strong>として整理します。開発元はAnthropic（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）。Haiku＝最軽量、Sonnet＝標準、Opus＝最上位——文学形式の命名は<a href="../claude-3-opus/">3 Opus</a>記事と同じ骨格です。
+      </p>
+      <p>
+        ベンチマーク最高＝常に正確、は×（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>、<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459</a>）。推論が深く見えても、計算や事実の誤りは起こり得ます。
+      </p>
+      <p>
+        長文入力の設計（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>、<a href="../../exams/genai-passport/drill/q/tf-0169/">TF-0169</a>）はOpus級タスクと相性がよい一方、<strong>コンテキストが長い＝正確</strong>でもありません。APIコスト意識（<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428</a>）とセットで考えます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>、<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>、<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170（コンテキスト）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-350/">G-350（安全性・事実性の確認）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>4 Opusとは</h2>
+      <p>
+        2025年、Anthropicは<strong>Claude 4</strong>ファミリーとともに<strong>Claude 4 Opus</strong>を公開しました。<a href="../claude-4-sonnet/">4 Sonnet</a>が標準帯——日常と実務のデフォルト——を担うのに対し、Opusは<strong>最難問にだけ使う最上位</strong>として位置づけられます。
+      </p>
+      <p>
+        公開時の訴求は、高度な推論、複雑な分析、長い文脈にまたがる照合、研究・戦略レベルのタスクです。3 Opusが「大作の重さ」を象徴したように、4 Opusは<strong>世代4の旗艦</strong>です。
+      </p>
+    </section>
+    <section id="tier-erosion">
+      <h2>軽量帯の侵食とOpusの役割</h2>
+      <p>Claude系列史の転換点は、<a href="../claude-3-5-haiku/">3.5 Haiku</a>が「前世代Opus級」を謳ったことです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>時期</th><th>最上位の意味</th><th>変化</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Claude 3時代</td><td>Opusだけが最難問</td><td>Haikuは単純タスク専用</td></tr>
+          <tr><td>3.5 Haiku登場</td><td>軽量帯が中程度の難問を侵食</td><td>「Opus級」が比較表現に</td></tr>
+          <tr><td><strong>Claude 4 Opus</strong></td><td>最難問・長期推論の<strong>再独占</strong></td><td>軽量と標準では届かない領域を明示</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では<strong>「Opus級」＝Opus製品</strong>と混同しないこと。比較マーケティングと階層名は別レイヤーです。4 Opusは<strong>製品としての最上位</strong>——HaikuやSonnetの上位——として答えます。
+      </p>
+    </section>
+    <section id="hard-tasks">
+      <h2>4 Opusが効く難問</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>多段の論理推論</strong>
+          前提の矛盾検出、反例の探索、仮説の精緻化
+        </li>
+        <li>
+          <strong>契約・規制文書の深い照合</strong>
+          条項間の整合性、例外条項の網羅的チェック
+        </li>
+        <li>
+          <strong>研究レベルの要約・統合</strong>
+          複数論文・報告書を横断し、争点を構造化する
+        </li>
+        <li>
+          <strong>大規模コードベースの設計判断</strong>
+          アーキテクチャ全体のトレードオフ分析（レビューは依然必須）
+        </li>
+      </ul>
+      <p>
+        単純な分類・タグ付け・一次応答は<a href="../claude-3-5-haiku/">3.5 Haiku</a>や<a href="../claude-4-sonnet/">4 Sonnet</a>で十分なことが多く、Opusは<strong>エスカレーション先</strong>として設計します。
+      </p>
+    </section>
+    <section id="long-context">
+      <h2>長文・長期推論</h2>
+      <p>
+        Opus級タスクはしばしば<strong>長い入力</strong>とセットです。<a href="../claude-2-1/">Claude 2.1</a>が200Kコンテキストを訴求した流れを受け、3・4世代でも長文処理は重要な差別化軸です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>論点</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>長コンテキスト</strong></td><td>一度に多くの文脈を渡せる設計（TF-0170）</td></tr>
+          <tr><td><strong>長期推論</strong></td><td>多段の思考・検証を要する難問</td></tr>
+          <tr><td><strong>限界</strong></td><td>長くても見落とし・誤読は起こりうる</td></tr>
+          <tr><td><strong>コスト</strong></td><td>入力トークン増＝課金増（TF-0428）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../claude-3-7-sonnet/">3.7 Sonnet</a>の拡張思考が「考える時間」を標準帯に載せたのに対し、4 Opusは<strong>思考の深さと文脈の広さを最上位で同時に</strong>狙う——という読み方が系列史に沿います。
+      </p>
+    </section>
+    <section id="opus-vs-sonnet">
+      <h2>4 Opusと4 Sonnetの境界</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>4 Sonnet</th><th>4 Opus</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>階層</td><td>標準</td><td>最上位</td></tr>
+          <tr><td>主な用途</td><td>日常・実務のデフォルト</td><td>最難問・研究級</td></tr>
+          <tr><td>コスト</td><td>Opusより低い</td><td>最も高い帯</td></tr>
+          <tr><td>速度</td><td>Opusより速い</td><td>重い処理向き</td></tr>
+          <tr><td>選び方</td><td>まずSonnetで試す</td><td>Sonnetで不足したら昇格</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>常にOpus</strong>は実務でも試験でも過剰になりがちです。二段構成——Sonnetで試行 → 難件だけOpus——はTF-0428のコスト意識と両立する定石です。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>4 Opus＝4 Sonnet</td><td>同一世代の別サイズ</td></tr>
+          <tr><td>4 Opus＝3 Opus</td><td>世代4 vs 世代3</td></tr>
+          <tr><td>Opus級＝4 Opus</td><td>比較表現 vs 製品名</td></tr>
+          <tr><td>最上位＝誤りなし</td><td>TF-0460・TF-0459</td></tr>
+          <tr><td>Opus＝常に使うべき</td><td>コストと速度のトレードオフ</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Claude 4 Opusと4 Sonnetの使い分けは？</summary>
+          <p class="tool-faq-a">同一世代のサイズ差です。日常の対話・実務の大半は4 Sonnet、研究レベルの分析・多段推論・最高精度が必須の難問は4 Opus向きと整理します。常にOpusが最適とは限りません。</p>
+        </details>
+        <details>
+          <summary>3.5 HaikuがOpus級なら4 Opusは不要ですか？</summary>
+          <p class="tool-faq-a">いいえ。軽量帯の性能向上は「中程度の難問を安く回す」方向であり、最難問・長期推論・最高品質が必要な領域では4 Opusが依然最上位として位置づけられます。比較表現と製品階層を混同しないことが重要です。</p>
+        </details>
+        <details>
+          <summary>4 Opus＝常に正確ですか？</summary>
+          <p class="tool-faq-a">いいえ。最上位モデルでもハルシネーションや計算誤りは起こり得ます。ベンチマーク最高＝実務の全タスクで正確、とは答えません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 正確性</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · コンテキストウィンドウ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-350/">G-350 · 安全性・事実性</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../claude-4-sonnet/">Claude 4 Sonnet</a></li>
+          <li><a href="../claude-3-opus/">Claude 3 Opus</a></li>
+          <li><a href="../claude-3-5-haiku/">Claude 3.5 Haiku</a></li>
+          <li><a href="../claude-3-7-sonnet/">Claude 3.7 Sonnet</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

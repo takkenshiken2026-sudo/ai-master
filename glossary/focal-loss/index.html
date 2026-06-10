@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Focal Lossとは？易しい例の影響を抑え難例に学習を集中させる分類損失。物体検出の不均衡問題と交差エントロピーとの違いをG検定向けに解説。">
+  <title>Focal Lossとは？易しい例を遠ざける——不均衡検出で難例だけ学習を強める損失 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/focal-loss/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Focal Lossとは？易しい例を遠ざける——不均衡検出で難例だけ学習を強める損失">
+  <meta property="og:description" content="分類損失に難易度の重み付けを加え、物体検出の前景・背景不均衡で効く。RetinaNetで有名。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/focal-loss/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Focal Loss",
+        "alternateName": ["Focal Loss", "フォーカルロス", "焦点損失"],
+        "description": "分類損失に難易度に応じた重み付けを加え、正しく分類できている易しい例の寄与を抑え、難しい例への学習を強める損失関数。物体検出のクラス不均衡で広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Focal Lossは何をする損失関数ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "分類タスクで、すでに正しく予測できている易しい例の損失寄与を小さくし、誤分類しやすい難しい例により学習が集中するよう設計された損失です。物体検出では背景画素が圧倒的に多く、交差エントロピーだけでは易しい負例に学習が偏る問題への対策として知られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Focal Lossと交差エントロピーは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。交差エントロピーは予測確率と正解ラベルのずれを測る基本的な分類損失です。Focal Lossは交差エントロピーを土台に、予測の確信度（易しさ）に応じて損失を減衰させる係数を掛けた拡張です。目的は「難例への注目」です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Focal LossとF値は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。F値は適合率と再現率の調和平均であり、学習後のモデル評価指標です。Focal Lossは学習中に使う損失関数であり、名前に「Focal」があっても評価指標のF値とは無関係です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Focal Loss</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Focal Lossとは？易しい例を遠ざける——不均衡検出で難例だけ学習を強める損失</h1>
+    <p class="tool-hero-sub">読み：フォーカルロス ／ 英：Focal Loss</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Focal Loss</strong>は、<strong>すでに正しく分類できている易しい例</strong>の損失寄与を抑え、<strong>難しい例に学習を集中</strong>させる分類用の<a href="../loss-function/">損失関数</a>です。物体検出では背景候補が前景より圧倒的に多く、交差エントロピーだけでは「当たり前の負例」に勾配が吸われる——Focal Lossは<strong>難易度で損失を再配分する</strong>——本記事はγやαの式より、<strong>「なぜ易しい例が学習を阻むか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#imbalance-problem">不均衡が起きる場面</a></li>
+        <li><a href="#easy-examples">易しい例が支配する理由</a></li>
+        <li><a href="#focal-idea">Focal Lossの直感</a></li>
+        <li><a href="#vs-others">他の損失・指標との違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="imbalance-problem">
+      <h2>不均衡が起きる場面</h2>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>が示す<strong>物体検出</strong>では、画像内の各候補位置について「物体か背景か」を分類します。前景（物体）の候補は少なく、背景の候補は膨大——<strong>クラス不均衡</strong>が構造的に起きます。
+      </p>
+      <p>
+        教師あり分類全般でも、正例が極端に少ないデータでは正解率だけでは性能を見誤ります（<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/practice/q/g-108/">G-108</a>）。Focal Lossは<strong>学習段階</strong>でこの偏りに対処する損失の一つです。評価段階のF値やAUCとは別のレイヤーです。
+      </p>
+    </section>
+
+    <section id="easy-examples">
+      <h2>易しい例が支配する理由</h2>
+      <p>交差エントロピーは、予測が正解に近いほど損失が小さくなります——これは正常な挙動です。しかし物体検出では次の問題が起きます。</p>
+      <ol class="tool-steps">
+        <li><strong>候補が大量</strong> — アンカーやグリッドから数万の分類対象が出る</li>
+        <li><strong>背景が大半</strong> — その多くは「明らかな背景」で正解率が高い</li>
+        <li><strong>勾配の偏り</strong> — 易しい負例の損失が積み上がり、<strong>本当に難しい前景候補</strong>への更新が相対的に弱くなる</li>
+      </ol>
+      <p>
+        二段検出の<a href="../faster-rcnn/">Faster R-CNN</a>も一段のYOLOも、この不均衡に直面します。Focal Lossは<strong>RetinaNet</strong>（一段検出）とともに広く知られましたが、損失そのものはモデルに依存しない<strong>分類ヘッドへの付け替え可能な部品</strong>です。
+      </p>
+    </section>
+
+    <section id="focal-idea">
+      <h2>Focal Lossの直感</h2>
+      <p>Focal Lossは、ざっくり言えば<strong>「当たり前に正解できている例の損失をさらに小さくする」</strong>係数を交差エントロピーに掛けます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>予測の状態</th><th>従来の交差エントロピー</th><th>Focal Lossの効果</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>易しい正例</strong>（高確信で正解）</td><td>すでに損失は小さい</td><td>さらに重みを下げ、学習から遠ざける</td></tr>
+          <tr><td><strong>難しい正例</strong>（低確信・誤り気味）</td><td>損失は大きい</td><td>重みを保ち、<strong>学習の主役</strong>にする</td></tr>
+          <tr><td><strong>易しい負例</strong>（背景を高確信で外す）</td><td>大量に積み上がる</td><td>寄与を大幅に削り、前景学習にリソースを回す</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では係数γ・αの暗記より、<strong>難易度で損失を再配分する</strong>という設計思想が要点です。<a href="../../exams/g-kentei/practice/q/g-194/">G-194</a>が示すように、損失はタスクの性質に合わせて選びます——分類の基本は交差エントロピー、不均衡検出ではFocal Lossが代表例の一つです。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他の損失・指標との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>性質</th><th>関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>交差エントロピー</strong></td><td>分類の基本損失</td><td>Focal Lossの土台（G-194、<a href="../../exams/g-kentei/drill/q/tf-063/">TF-063</a>）</td></tr>
+          <tr><td><strong><a href="../dice-loss/">Dice Loss</a></strong></td><td>領域の重なりを直接最適化</td><td>セグメンテーション向け。分類の難例重みとは別軸</td></tr>
+          <tr><td><strong>F値</strong></td><td>適合率と再現率の評価指標</td><td>学習後の評価（G-470）。損失ではない</td></tr>
+          <tr><td><strong>クラス重み付け</strong></td><td>クラスごとに損失を固定倍率</td><td>頻度の偏り対策。Focalは<strong>例ごとの難易度</strong>も見る</td></tr>
+          <tr><td><strong>MSE</strong></td><td>回帰の二乗誤差</td><td>分類損失ではない（G-471）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 難例に重みを置く<strong>分類損失</strong>。不均衡検出で有効</li>
+        <li><strong>課題</strong> — 易しい負例が多く、交差エントロピーだけでは学習が偏る</li>
+        <li><strong>対比</strong> — 損失（学習）≠ F値（評価）≠ 検出モデル名</li>
+        <li><strong>文脈</strong> — 物体検出タスク（G-316）・代表検出モデル（G-323）とセットで整理</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-194/">G-194</a>、<a href="../../exams/g-kentei/practice/q/g-064/">G-064</a>、<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>、<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>、<a href="../../exams/g-kentei/drill/q/tf-063/">TF-063</a>、<a href="../../exams/g-kentei/drill/q/tf-462/">TF-462</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Focal Loss＝F値</td><td>損失関数 vs 評価指標</td></tr>
+          <tr><td>Focal Loss＝交差エントロピー</td><td>難例重み付き拡張 vs 基本形</td></tr>
+          <tr><td>Focal Loss＝<a href="../dice-loss/">Dice Loss</a></td><td>分類の難易度 vs 領域重なり</td></tr>
+          <tr><td>Focal Loss＝RetinaNet/YOLO</td><td>損失 vs 検出モデル（G-323）</td></tr>
+          <tr><td>Focal Loss＝<a href="../fcn/">FCN</a></td><td>分類損失 vs セグメンテーションモデル</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Focal Lossは何をする損失関数ですか？</summary><p class="tool-faq-a">分類タスクで、すでに正しく予測できている易しい例の損失寄与を小さくし、誤分類しやすい難しい例により学習が集中するよう設計された損失です。物体検出では背景画素が圧倒的に多く、交差エントロピーだけでは易しい負例に学習が偏る問題への対策として知られます。</p></details>
+        <details><summary>Focal Lossと交差エントロピーは同じですか？</summary><p class="tool-faq-a">同じではありません。交差エントロピーは予測確率と正解ラベルのずれを測る基本的な分類損失です。Focal Lossは交差エントロピーを土台に、予測の確信度（易しさ）に応じて損失を減衰させる係数を掛けた拡張です。目的は「難例への注目」です。</p></details>
+        <details><summary>Focal LossとF値は同じですか？</summary><p class="tool-faq-a">同じではありません。F値は適合率と再現率の調和平均であり、学習後のモデル評価指標です。Focal Lossは学習中に使う損失関数であり、名前に「Focal」があっても評価指標のF値とは無関係です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-194/">G-194 · タスクに合った損失</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-064/">G-064 · 不均衡と正解率</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-316/">G-316 · 物体検出タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · 検出モデルの代表例</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../dice-loss/">Dice Loss</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

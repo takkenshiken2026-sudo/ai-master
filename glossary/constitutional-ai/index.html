@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Constitutional AIとは？原則に基づき自己修正する安全志向の学習手法。RLHF・アライメント・Claudeとの違いをG検定向けに解説。">
+  <title>Constitutional AIとは？原則で自己修正する——安全性志向の学習設計 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/constitutional-ai/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Constitutional AIとは？原則で自己修正する——安全性志向の学習設計">
+  <meta property="og:description" content="Constitutional AI。AIの行動原則を明示し、モデル自身の批判と修正で有害出力を抑えるアライメント手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/constitutional-ai/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Constitutional AI",
+        "alternateName": ["Constitutional AI", "コンスティテューショナルAI", "憲法的AI"],
+        "description": "原則（憲法）に基づきモデル自身が出力を批判・修正し、安全で望ましい振る舞いを学ぶアライメント手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Constitutional AIとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AIの行動原則（憲法）を明示し、モデルが自身の出力を原則に照らして批判・修正することで、有害でない望ましい応答を学ぶアライメント手法です。Anthropicが公表し、Claudeの安全化に関わる技術の一つとして語られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Constitutional AIとRLHFは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。RLHFは人間のフィードバックを報酬に変換して調整する手法です。Constitutional AIは原則に基づく自己批判・修正を重視し、人間ラベラへの依存を減らす方向の研究として位置づけられます。併用・発展形もあります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Constitutional AIとアライメントは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。アライメントは人間の意図に沿わせる上位の考え方です。Constitutional AIはその実現手法の一つであり、定義そのものではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Constitutional AI</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Constitutional AIとは？原則で自己修正する——安全性志向の学習設計</h1>
+    <p class="tool-hero-sub">読み：コンスティテューショナルえーあい ／ 英：Constitutional AI（CAI）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Constitutional AI</strong>（憲法的AI／CAI）は、<strong>行動原則——いわば「憲法」——を明示</strong>し、<a href="../llm/">LLM</a>が<strong>自身の出力を批判・修正</strong>することで、有害でない応答を学ぶ<a href="../alignment/">アライメント</a>手法です。<a href="../rlhf/">RLHF</a>が人間の好み評価を中心に据えるのに対し、CAIは<strong>「原則に照らして自分で直す」</strong>——本記事はAnthropicの実装細部ではなく、試験で整理すべき<strong>目的・層・すり替え</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#constitution">憲法——何を書くか</a></li>
+        <li><a href="#self-critique">自己批判と修正の流れ</a></li>
+        <li><a href="#vs-rlhf">RLHFとの違い</a></li>
+        <li><a href="#claude">Claudeとの関係</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="constitution">
+      <h2>憲法——何を書くか</h2>
+      <p>
+        Constitutional AIの「Constitutional（憲法的）」は、国家の法律ではなく、<strong>AIが守るべき行動原則の一覧</strong>を指します。
+      </p>
+      <ul class="tool-example-list">
+        <li>有害・違法な内容を助長しない</li>
+        <li>差別的・侮辱的な表現を避ける</li>
+        <li>プライバシーを侵害しない</li>
+        <li>正直で、不確かなときは限界を認める</li>
+      </ul>
+      <p>
+        試験では条文の暗記は不要です。要点は<strong>「原則を明示し、それに沿う振る舞いを学習する」</strong>——安全志向の学習設計、という一文です。
+      </p>
+    </section>
+
+    <section id="self-critique">
+      <h2>自己批判と修正の流れ</h2>
+      <p>概念としての2段階は次のとおりです（簡略化）。</p>
+      <ol class="tool-steps">
+        <li><strong>批判段階</strong> — モデルが有害になりうる応答を生成し、<strong>憲法に照らして自己批判</strong>する（「なぜこれは問題か」）</li>
+        <li><strong>修正段階</strong> — 批判を踏まえ<strong>望ましい応答に書き直す</strong>。修正後の応答で教師あり学習</li>
+        <li><strong>（発展）</strong> — 好ましい応答を報酬とする<strong>RLAIF</strong>（AIフィードバックからの強化学習）へつなぐ研究もある</li>
+      </ol>
+      <p>
+        RLHFが「人間がAとBどちらが良いか選ぶ」中心なら、CAIは<strong>「原則に基づきモデル自身が直す」</strong>比重を高める発想です。人間ラベラの負荷や一貫性の課題への応答として位置づけられます。
+      </p>
+    </section>
+
+    <section id="vs-rlhf">
+      <h2>RLHFとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>RLHF</th><th>Constitutional AI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>信号の源</strong></td><td><strong>人間</strong>の好み・ランキング</td><td><strong>原則</strong>＋自己批判・修正</td></tr>
+          <tr><td><strong>学習枠組み</strong></td><td>報酬モデル＋強化学習（G-370）</td><td>教師あり＋（発展的に）AIフィードバック</td></tr>
+          <tr><td><strong>上位概念</strong></td><td colspan="2">いずれも<a href="../alignment/">アライメント</a>の<strong>実現手法</strong>（定義そのものではない）</td></tr>
+          <tr><td><strong>限界</strong></td><td colspan="2">有害出力の完全排除は保証されない（<a href="../../exams/g-kentei/drill/q/tf-486/">TF-486</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        生成AIパスポートではRLHFの定義が頻出（HQ-0311等）ですが、<strong>RLHFの説明をアライメントの定義にすり替える</strong>のは×（HQ-0288）。CAIも同様に、<strong>手法名≠アライメント全体</strong>として整理します。
+      </p>
+    </section>
+
+    <section id="claude">
+      <h2>Claudeとの関係</h2>
+      <p>
+        Constitutional AIは<strong>Anthropic</strong>が公表した研究手法で、<a href="../claude-model/">Claude</a>の安全化ストーリーと結びついて語られます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>CAI</strong> — 学習・調整の<strong>手法</strong></li>
+        <li><strong>Claude</strong> — 対話型<a href="../llm/">LLM</a>の<strong>製品・モデル名</strong></li>
+        <li><strong>安全性</strong> — 誤作動・悪用への配慮（<a href="../../exams/g-kentei/drill/q/tf-272/">TF-272</a>）</li>
+      </ul>
+      <p>
+        「Claude＝Constitutional AI」ではありません。ChatGPTがRLHFを使うのと同様、<strong>製品は複数の手法を組み合わせる</strong>と理解するのが試験向けです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>原則に基づき自己修正</strong>する安全志向の学習手法</li>
+        <li><strong>層</strong> — アライメントの<strong>実装手法の一つ</strong>（目的そのものではない）</li>
+        <li><strong>対比</strong> — RLHF（人間FB）、<a href="../dpo/">DPO</a>（好みの直接最適化）との違い。併用もありうる</li>
+        <li><strong>すり替え回避</strong> — 法律の憲法、GAN、データ拡張ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-370/">G-370</a>、<a href="../../exams/g-kentei/drill/q/tf-272/">TF-272</a>、<a href="../../exams/g-kentei/drill/q/tf-486/">TF-486</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0124/">TF-0124</a>、<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311</a>、<a href="../../exams/genai-passport/drill/q/tf-0166/">TF-0166</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CAI＝アライメントの定義</td><td>実現手法の一つ vs 上位の考え方</td></tr>
+          <tr><td>CAI＝RLHF</td><td>原則＋自己修正 vs 人間フィードバック（G-370）</td></tr>
+          <tr><td>CAI＝Claude</td><td>手法 vs 製品名</td></tr>
+          <tr><td>CAI＝有害出力を完全排除</td><td>安全性向上を狙うが保証ではない</td></tr>
+          <tr><td>CAI＝日本国憲法の適用</td><td>AI行動原則の比喩。法律分野の用語ではない</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Constitutional AIとは何ですか？</summary><p class="tool-faq-a">AIの行動原則（憲法）を明示し、モデルが自身の出力を原則に照らして批判・修正することで、有害でない望ましい応答を学ぶアライメント手法です。Anthropicが公表し、Claudeの安全化に関わる技術の一つとして語られます。</p></details>
+        <details><summary>Constitutional AIとRLHFは同じですか？</summary><p class="tool-faq-a">同じではありません。RLHFは人間のフィードバックを報酬に変換して調整する手法です。Constitutional AIは原則に基づく自己批判・修正を重視し、人間ラベラへの依存を減らす方向の研究として位置づけられます。併用・発展形もあります。</p></details>
+        <details><summary>Constitutional AIとアライメントは同じですか？</summary><p class="tool-faq-a">いいえ。アライメントは人間の意図に沿わせる上位の考え方です。Constitutional AIはその実現手法の一つであり、定義そのものではありません。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-370/">G-370 · RLHF</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-272/">TF-272 · AIの安全性</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0124/">TF-0124 · アライメント</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311 · RLHFの定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../dpo/">DPO</a></li>
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../ai-safety/">AI安全性</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../system-prompt/">システムプロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

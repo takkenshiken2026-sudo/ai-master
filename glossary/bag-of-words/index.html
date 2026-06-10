@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bag of Words（BoW）とは？語順を捨てて出現回数で文書を数値化する古典的NLP手法。TF-IDF・埋め込みとの違いをG検定向けに解説。">
+  <title>Bag of Wordsとは？語順を捨てて数える——古典的な文書の数値化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/bag-of-words/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bag of Wordsとは？語順を捨てて数える——古典的な文書の数値化">
+  <meta property="og:description" content="文書を単語の出現有無・回数ベクトルで表す。シンプルだが語順情報は失われる古典NLPの土台。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/bag-of-words/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Bag of Words",
+        "alternateName": ["Bag of Words", "BoW", "バッグオブワーズ", "語袋モデル"],
+        "description": "文書を単語の出現有無や出現回数で表す古典的な自然言語処理の文書表現手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Bag of Words（BoW）とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "文書を単語の出現有無や出現回数で表す方法です。語順よりも単語が何回出たかに着目し、文書を数値ベクトルに変換します。Bag-of-Wordsの略でBoWとも呼ばれます（G-332、TF-127）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BoWの弱点は何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "単語の順序情報が失われやすい点です。「犬が猫を追う」と「猫が犬を追う」が同じベクトルになりうる。ただしシンプルで文書分類などの入門的タスクでは有効に使われてきました。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BoWとLLMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BoWは古典的な文書の特徴表現です。LLMは大規模なニューラルネットによる言語モデルであり、文脈や語順を扱えます。NLPの歴史の異なる章として整理します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Bag of Words</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Bag of Wordsとは？語順を捨てて数える——古典的な文書の数値化</h1>
+    <p class="tool-hero-sub">読み：ばっぐおぶわーず ／ 英：Bag of Words（BoW）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Bag of Words</strong>（語袋モデル／BoW）は、文書を<strong>単語の出現有無や出現回数</strong>だけで表す——いわば「語を袋に入れてシャッフルした」——古典的な<a href="../nlp/">自然言語処理</a>の手法です。<a href="../llm/">LLM</a>が文脈を深く読む時代にも、試験では<strong>語順を捨てる設計</strong>が意図的なトレードオフとして問われます。本記事は実装の細部ではなく、<strong>「なぜ数えるだけでも一度は有用だったか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#metaphor">袋のたとえ</a></li>
+        <li><a href="#vector">文書ベクトルの作り方</a></li>
+        <li><a href="#tradeoff">語順を捨てるトレードオフ</a></li>
+        <li><a href="#evolution">TF-IDF・埋め込みへの流れ</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="metaphor">
+      <h2>袋のたとえ</h2>
+      <p>
+        文書から単語を取り出し、<strong>順序を無視して袋に入れる</strong>——それが Bag of Words のイメージです。袋の中身は「どの語が何個あるか」だけが分かり、元の並びは失われます。
+      </p>
+      <p>
+        試験の定義は次の一文が骨格です（<a href="../../exams/g-kentei/practice/q/g-332/">G-332</a>、<a href="../../exams/g-kentei/drill/q/tf-127/">TF-127</a>）。
+      </p>
+      <blockquote>
+        <p>文書を単語の出現有無や出現回数で表す表現方法である。</p>
+      </blockquote>
+      <p>
+        機械学習は数値入力を要求するため、テキストを<strong>数値ベクトル</strong>に変換する必要があります。BoWはその最も素朴な答えの一つです。
+      </p>
+    </section>
+
+    <section id="vector">
+      <h2>文書ベクトルの作り方</h2>
+      <p>概念としての手順は次のとおりです。</p>
+      <ul class="tool-steps">
+        <li><strong>語彙の決定</strong> — コーパス全体から単語一覧（語彙）を作る</li>
+        <li><strong>カウント</strong> — 各文書で、語彙の各語が<strong>何回出たか</strong>を数える</li>
+        <li><strong>ベクトル化</strong> — 出現回数（または0/1の有無）を並べた<strong>ベクトル</strong>が文書の特徴量になる</li>
+      </ul>
+      <p>
+        1語だけを語彙数次元で1にする<strong>ワンホットベクトル</strong>（<a href="../../exams/g-kentei/drill/q/tf-134/">TF-134</a>）は、BoWの極端な特殊例——1語だけを見る——に近いイメージです。BoWは<strong>文書全体</strong>の語カウントをベクトルにします。
+      </p>
+    </section>
+
+    <section id="tradeoff">
+      <h2>語順を捨てるトレードオフ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>BoWの性質</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>着目点</strong></td><td>語順より<strong>出現有無・回数</strong>（TF-127）</td></tr>
+          <tr><td><strong>利点</strong></td><td>シンプル。文書分類・検索の入門で使いやすい</td></tr>
+          <tr><td><strong>弱点</strong></td><td><strong>語順情報が失われやすい</strong>（G-332の解説）</td></tr>
+          <tr><td><strong>意味</strong></td><td>「犬が猫を追う」と「猫が犬を追う」が同じベクトルになりうる</td></tr>
+        </tbody>
+      </table>
+      <p>
+        現代の<a href="../transformer/">Transformer</a>や<a href="../llm/">LLM</a>は語順・文脈を扱えますが、BoWは<strong>NLPの古典層</strong>として試験に残ります（<a href="../nlp/">NLP</a>記事の歴史表）。
+      </p>
+    </section>
+
+    <section id="evolution">
+      <h2>TF-IDF・埋め込みへの流れ</h2>
+      <p>BoWは単独で終わらず、次の発展形へつながります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>BoWからの変化</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>BoW</strong></td><td>素の出現回数</td><td>G-332、TF-127</td></tr>
+          <tr><td><strong>TF-IDF</strong></td><td>ありふれた語の重みを<strong>下げる</strong></td><td><a href="../../exams/g-kentei/practice/q/g-333/">G-333</a></td></tr>
+          <tr><td><strong>word2vec等</strong></td><td>低次元の<strong>意味ベクトル</strong></td><td><a href="../../exams/g-kentei/practice/q/g-343/">G-343</a>、G-344</td></tr>
+          <tr><td><strong><a href="../embedding/">埋め込み</a></strong></td><td>検索・RAG向けの密な表現</td><td>現代の<a href="../rag/">RAG</a></td></tr>
+        </tbody>
+      </table>
+      <p>
+        G-344では「BoW、TF-IDF、word2vecはNLPの特徴表現、MFCCは音声特徴量」——という<strong>分野の区別</strong>が問われます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 文書を単語の<strong>出現有無・回数</strong>で表す（G-332）</li>
+        <li><strong>略称</strong> — Bag-of-Words＝<strong>BoW</strong></li>
+        <li><strong>特徴</strong> — 語順より出現情報。順序は失われやすい</li>
+        <li><strong>位置づけ</strong> — 古典NLPの文書表現。<a href="../llm/">LLM</a>や<a href="../bpe/">BPE</a>とは別</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-332/">G-332</a>、<a href="../../exams/g-kentei/drill/q/tf-127/">TF-127</a>、<a href="../../exams/g-kentei/practice/q/g-344/">G-344</a>、<a href="../../exams/g-kentei/practice/q/g-343/">G-343</a>、<a href="../../exams/g-kentei/drill/q/tf-134/">TF-134</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>BoW＝Transformer</td><td>古典的特徴量 vs 深層モデル（G-332のB）</td></tr>
+          <tr><td>BoW＝MFCC</td><td>NLP vs 音声特徴量（G-344、G-355の誤答）</td></tr>
+          <tr><td>BoW＝HMM・DQN</td><td>文書表現 vs 系列モデル・強化学習（G-357、G-362）</td></tr>
+          <tr><td>BoW＝<a href="../bpe/">BPE</a></td><td>文書ベクトル vs サブワードトークン化</td></tr>
+          <tr><td>BoW＝語順を保持</td><td>語順より出現回数（TF-127）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Bag of Words（BoW）とは何ですか？</summary><p class="tool-faq-a">文書を単語の出現有無や出現回数で表す方法です。語順よりも単語が何回出たかに着目し、文書を数値ベクトルに変換します。Bag-of-Wordsの略でBoWとも呼ばれます（<a href="../../exams/g-kentei/practice/q/g-332/">G-332</a>、<a href="../../exams/g-kentei/drill/q/tf-127/">TF-127</a>）。</p></details>
+        <details><summary>BoWの弱点は何ですか？</summary><p class="tool-faq-a">単語の順序情報が失われやすい点です。「犬が猫を追う」と「猫が犬を追う」が同じベクトルになりうる。ただしシンプルで文書分類などの入門的タスクでは有効に使われてきました。</p></details>
+        <details><summary>BoWとLLMは同じですか？</summary><p class="tool-faq-a">いいえ。BoWは古典的な文書の特徴表現です。LLMは大規模なニューラルネットによる言語モデルであり、文脈や語順を扱えます。NLPの歴史の異なる章として整理します。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-332/">G-332 · BoWの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-127/">TF-127 · 出現回数への着目</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-344/">G-344 · NLPと音声の区別</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-343/">G-343 · ワンホットと分散表現</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../bm25/">BM25</a></li>
+          <li><a href="../bpe/">BPE</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CTCとは？整列なしで系列ラベルを学ぶConnectionist Temporal Classification。音声認識とMFCC・パディングとの違いをG検定向けに解説。">
+  <title>CTCとは？整列なしで系列を学ぶ——音声認識のラベル付けを解放する損失 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/ctc/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CTCとは？整列なしで系列を学ぶ——音声認識のラベル付けを解放する損失">
+  <meta property="og:description" content="Connectionist Temporal Classification。入力フレーム列と出力文字列の対応が不明でも学習できる損失関数。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/ctc/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "CTC",
+        "alternateName": ["CTC", "シーティーシー", "Connectionist Temporal Classification"],
+        "description": "入力系列と出力ラベル系列の明示的な位置対応がなくても系列変換を学習しやすくする損失関数。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "CTCは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Connectionist Temporal Classificationの略で、音声認識のように入力フレーム列と出力文字列の対応が明示されていない場合でも学習しやすくする損失関数です。系列の長さが異なるタスクで重要です（G-358、TF-144）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CTCとパディングは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。パディングは系列の長さを揃えるための前処理です。CTCは整列情報なしでも学習できる損失関数であり、G-358の誤答Bはパディングの説明です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CTCとMFCCは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。MFCCは音声波形から抽出する音響特徴量です。CTCは系列変換を学習するための損失関数です。音声認識パイプラインではMFCCで特徴を作り、CTCでラベルとの対応を学ぶ、というように役割が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">CTC</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>CTCとは？整列なしで系列を学ぶ——音声認識のラベル付けを解放する損失</h1>
+    <p class="tool-hero-sub">読み：しーてぃーしー ／ 英：CTC（Connectionist Temporal Classification）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>CTC</strong>（Connectionist Temporal Classification）は、<strong>入力系列と出力ラベル系列の1対1の位置対応が分からない</strong>ときでも学習できる<strong>損失関数</strong>です。音声認識では、短い文字列「こんにちは」に対して<strong>長いフレーム列</strong>が入力される——どのフレームがどの文字か、事前に整列ラベルがない——という状況で威力を発揮します。本記事は動的計画法の細部ではなく、<strong>「なぜ整列なしで学べるのか」</strong>という試験の要点に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#alignment">整列問題の壁</a></li>
+        <li><a href="#idea">CTCの発想</a></li>
+        <li><a href="#blank">ブランクと重複の圧縮</a></li>
+        <li><a href="#speech">音声認識パイプラインでの位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="alignment">
+      <h2>整列問題の壁</h2>
+      <p>
+        教師あり学習では、入力と正解ラベルの<strong>対応</strong>がはっきりしていると学習しやすいです。しかし音声認識では次のミスマッチが起きます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>側面</th><th>入力（音声）</th><th>出力（テキスト）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>系列の長さ</strong></td><td>フレーム列（長い）</td><td>文字列（短い）</td></tr>
+          <tr><td><strong>対応</strong></td><td>どのフレームがどの文字か<strong>不明</strong></td><td>正解文字列だけ分かる</td></tr>
+          <tr><td><strong>タスク</strong></td><td colspan="2"><strong>音声認識</strong>＝音声をテキストに変換（<a href="../../exams/g-kentei/practice/q/g-351/">G-351</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        フレームごとに「この瞬間は『こ』」とラベルを手作業で付ける<strong>整列（アライメント）</strong>はコストが高い。CTCはこの壁を、<strong>損失関数の設計</strong>で迂回します。
+      </p>
+    </section>
+
+    <section id="idea">
+      <h2>CTCの発想</h2>
+      <p>試験の定義は次の一文が骨格です（<a href="../../exams/g-kentei/practice/q/g-358/">G-358</a>、<a href="../../exams/g-kentei/drill/q/tf-144/">TF-144</a>）。</p>
+      <blockquote>
+        <p>入力系列と出力ラベル系列の<strong>明示的な対応付けがなくても</strong>系列変換を学習しやすくする損失である。</p>
+      </blockquote>
+      <p>CTCの要点を3点に圧縮します。</p>
+      <ul class="tool-steps">
+        <li><strong>損失関数</strong> — モデルそのものではなく、<a href="../loss-function/">損失</a>の一種</li>
+        <li><strong>系列変換</strong> — 長い入力系列→短い出力系列（音声→文字など）</li>
+        <li><strong>整列不要</strong> — フレームと文字の1対1対応を事前に与えなくてよい</li>
+      </ul>
+      <p>
+        <a href="../rnn/">RNN</a>や後の深層モデルがフレームごとの出力を出すとき、CTCが「どの整列でも正解文字列に結びつくか」を<strong>確率として周辺化</strong>して評価するイメージです（試験では計算の細部より定義が中心）。
+      </p>
+    </section>
+
+    <section id="blank">
+      <h2>ブランクと重複の圧縮</h2>
+      <p>CTCの仕組みを直感で捉える鍵は<strong>ブランク（空白）シンボル</strong>です。</p>
+      <ol class="tool-steps">
+        <li><strong>ブランク</strong> — 「今はどの文字にも対応しない」フレーム用の特別ラベルを追加</li>
+        <li><strong>重複の許容</strong> — 同じ文字が連続するフレーム出力を許す（「こ」が複数フレームにまたがる）</li>
+        <li><strong>圧縮</strong> — 連続する同一文字は1文字にまとめ、ブランクは除去して最終文字列を得る</li>
+        <li><strong>学習</strong> — 正解文字列に至る<strong>すべての整列パス</strong>の確率を合計して損失を計算</li>
+      </ol>
+      <p>
+        だから「10フレームで5文字」——長さが違う系列でも、<strong>どこで文字が始まるか分からなくても</strong>学習できる、と試験文脈で説明されます。
+      </p>
+    </section>
+
+    <section id="speech">
+      <h2>音声認識パイプラインでの位置</h2>
+      <p>CTCは音声処理の<strong>一ピース</strong>として整理します（<a href="../nlp/">NLP</a>のテキスト処理とは別分野）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>用語・役割</th><th>CTCとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>特徴抽出</strong></td><td><strong>MFCC</strong>など音響特徴量（<a href="../../exams/g-kentei/practice/q/g-023/">G-023</a>）</td><td>入力の前処理。CTCではない</td></tr>
+          <tr><td><strong>系列モデル</strong></td><td><a href="../rnn/">RNN</a>、<a href="../lstm/">LSTM</a>など</td><td>フレーム列を処理</td></tr>
+          <tr><td><strong>損失</strong></td><td><strong>CTC</strong></td><td>整列なしで文字列ラベルと学習</td></tr>
+          <tr><td><strong>タスク</strong></td><td>音声認識（G-351）</td><td>音声→テキスト変換</td></tr>
+        </tbody>
+      </table>
+      <p>
+        G-358の誤答では、CTCを<strong>パディング</strong>（B）、<strong>物体検出</strong>（C）、契約条項（D）とすり替えるパターンがあります——<strong>音声の損失</strong>として覚えるのが得点の近道です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>正式名</strong> — <strong>C</strong>onnectionist <strong>T</strong>emporal <strong>C</strong>lassification</li>
+        <li><strong>種類</strong> — <strong>損失関数</strong>（モデル名ではない）</li>
+        <li><strong>課題</strong> — 入力と出力の<strong>長さ・位置対応が異なる</strong>系列変換</li>
+        <li><strong>代表応用</strong> — <strong>音声認識</strong>（G-358、TF-144）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-358/">G-358</a>、<a href="../../exams/g-kentei/drill/q/tf-144/">TF-144</a>、<a href="../../exams/g-kentei/practice/q/g-351/">G-351</a>、<a href="../../exams/g-kentei/practice/q/g-023/">G-023</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CTC＝パディング</td><td>損失 vs 長さ揃えの前処理（G-358のB）</td></tr>
+          <tr><td>CTC＝物体検出モデル</td><td>音声損失 vs 画像のYOLO等（G-358のC）</td></tr>
+          <tr><td>CTC＝MFCC</td><td>損失 vs 音響特徴量（G-023）</td></tr>
+          <tr><td>CTC＝<a href="../cnn/">CNN</a></td><td>系列損失 vs 画像畳み込み</td></tr>
+          <tr><td>CTC＝整列ラベルが必須</td><td>明示的対応が<strong>なくても</strong>学習しやすくする（TF-144）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>CTCは何ですか？</summary><p class="tool-faq-a">Connectionist Temporal Classificationの略で、音声認識のように入力フレーム列と出力文字列の対応が明示されていない場合でも学習しやすくする損失関数です。系列の長さが異なるタスクで重要です（<a href="../../exams/g-kentei/practice/q/g-358/">G-358</a>、<a href="../../exams/g-kentei/drill/q/tf-144/">TF-144</a>）。</p></details>
+        <details><summary>CTCとパディングは同じですか？</summary><p class="tool-faq-a">いいえ。パディングは系列の長さを揃えるための前処理です。CTCは整列情報なしでも学習できる損失関数であり、G-358の誤答Bはパディングの説明です。</p></details>
+        <details><summary>CTCとMFCCは同じですか？</summary><p class="tool-faq-a">いいえ。MFCCは音声波形から抽出する音響特徴量です。CTCは系列変換を学習するための損失関数です。音声認識パイプラインではMFCCで特徴を作り、CTCでラベルとの対応を学ぶ、というように役割が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-358/">G-358 · CTCの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-144/">TF-144 · 整列なしの学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-351/">G-351 · 音声認識タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-023/">G-023 · MFCCとの区別</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

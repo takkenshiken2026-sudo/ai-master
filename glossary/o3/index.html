@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="o3とは？OpenAI推論モデルの意味、視覚推論・ツール自律利用、o3-proとの違いをG検定向けに解説。">
+  <title>o3とは？視覚推論とツール自律利用の推論モデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/o3/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="o3とは？視覚推論とツール自律利用の推論モデル">
+  <meta property="og:description" content="o1の後継。画像を含む視覚的思考と外部ツールの自律利用が特徴のOpenAI推論モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/o3/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "o3",
+        "alternateName": ["OpenAI o3", "o3-pro"],
+        "description": "o1の後継。科学・数学ベンチマークで高性能を示し、視覚推論とツール自律利用に対応したOpenAIの推論モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "o3とo3 miniの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "o3はフル版で視覚推論・高度なツール利用など難問向けの能力を重視し、o3 miniは軽量版でコスト効率とSTEM課題のバランスを重視します。試験ではサイズ階層と用途の違いを区別することが重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "o3のベンチマーク高得点は試験で暗記必須ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "数値の丸暗記より、推論特化のo系列の後継であり、視覚入力とツール利用が拡張された点を整理できれば十分なことが多いです。ベンチマークはあくまで評価文脈の参考です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "o3はAIエージェントそのものですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。o3は推論能力を持つモデルであり、エージェントは計画・ツール利用・自律実行を組み合わせたシステム構成です。モデルがツールを使えることと、エージェント全体の設計は別レイヤーです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">o3</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>o3とは？視覚推論とツール自律利用の推論モデル</h1>
+    <p class="tool-hero-sub">読み：おーすりー ／ 英：OpenAI o3</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>o3</strong>は、<a href="../o1-model/">OpenAI o1</a>に続く<strong>o推論系列のフル版モデル</strong>です。科学・数学のベンチマークで高得点が報じられる一方、<strong>画像を含む視覚推論</strong>と<strong>外部ツールの自律利用</strong>が拡張された点が特徴です。本記事は<a href="../o3-mini/">o3 mini</a>のコスト効率の話題とは別軸で、<strong>「推論＋見る＋使う」</strong>——思考だけでなく知覚と行動が増えた世代——を試験向けに整理します。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#visual">視覚推論（画像を含む思考）</a></li>
+        <li><a href="#tools">ツール自律利用</a></li>
+        <li><a href="#benchmark">ベンチマークの読み方</a></li>
+        <li><a href="#lineup">o3 / o3-pro / mini の整理</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        o3専用の一問一答は少ないですが、関連論点は豊富です。<strong>ベンチマーク最高＝常に正確</strong>は×（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）。<strong>ツールを使える＝エージェント全体</strong>とも限りません——モデル能力と<a href="../agent/">AIエージェント</a>のシステム設計は別です（<a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238</a>）。
+      </p>
+      <p>
+        画像入力を扱う点では<a href="../multimodal-ai/">マルチモーダルAI</a>の文脈（<a href="../../exams/g-kentei/drill/q/tf-169/">G検定 TF-169</a>）と接続しますが、o3は<strong>推論特化＋視覚</strong>の組み合わせとして覚えるとGPT-4oとの混同を防げます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>、<a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238（エージェント定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0270/">TF-0270（ログ記録）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-169/">TF-169（マルチモーダル）</a>、<a href="../../exams/g-kentei/drill/q/tf-204/">TF-204（インジェクション）</a></p>
+      </div>
+    </section>
+    <section id="visual">
+      <h2>視覚推論（画像を含む思考）</h2>
+      <p>
+        o1は主にテキスト中心の推論が話題でした。o3は<strong>画像を入力に含めた推論</strong>——図表の読み取り、視覚的パズル、スクリーンショットの分析——が強化された世代として紹介されます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>テキストのみの推論</strong> — o1系列で確立された「考えてから答える」設計の延長</li>
+        <li><strong>画像＋推論</strong> — 視覚情報を推論チェーンに組み込む。チャートや図形問題で差が出やすい</li>
+        <li><strong>試験の整理</strong> — マルチモーダル入力の拡張であり、画像<strong>生成</strong>モデル（GAN・拡散モデル）とは別系譜</li>
+      </ul>
+      <p>マルチモーダルでも学習データの偏りが自動的に消えるわけではありません（TF-169×）。視覚入力に写り込んだ機密にも注意が必要です。</p>
+    </section>
+    <section id="tools">
+      <h2>ツール自律利用</h2>
+      <p>
+        o3は、Web検索・コード実行・API呼び出しなどの<strong>外部ツールを自律的に選択・実行</strong>しながら問題を解く能力が強調されました。これは<a href="../agent/">AIエージェント</a>が目指す「計画→ツール→観察→再計画」ループに<strong>近い振る舞い</strong>ですが、製品全体のエージェント設計とは別レイヤーです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>レイヤー</th><th>例</th><th>試験での区別</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>モデル（o3）</strong></td><td>推論＋ツール呼び出し能力</td><td>頭脳の性能</td></tr>
+          <tr><td><strong>エージェントシステム</strong></td><td>目標・権限・ログ・ガードレール</td><td>運用設計（TF-0270、TF-204）</td></tr>
+          <tr><td><strong>ユーザー</strong></td><td>承認フロー・監視</td><td>自律の範囲を人が決める</td></tr>
+        </tbody>
+      </table>
+      <p>ツールを自律利用できるからといって、<strong>承認なしで本番変更してよい</strong>わけではありません。試験のケース問題では人間の監督が正解になることが多いです。</p>
+    </section>
+    <section id="benchmark">
+      <h2>ベンチマークの読み方</h2>
+      <p>
+        o3は科学・数学系のベンチマークで高得点が報じられ、メディアでは「人間の専門家を超えた」などの見出しも付きました。試験では次の整理が安全です。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>ベンチマーク</strong>
+          特定の評価セットでのスコア。実務の全タスクを代表しない（<a href="../../exams/g-kentei/drill/q/tf-137/">G検定 TF-137</a>はGLUEの文脈だが「複数タスクで評価」の考え方は同様）
+        </li>
+        <li>
+          <strong>推論強化</strong>
+          難問で改善しやすい設計。計算ミスは依然ありうる（<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459</a>）
+        </li>
+        <li>
+          <strong>暗記優先度</strong>
+          スコア数値より、o系列の<strong>能力の伸び（視覚・ツール）</strong>を系列表で答える
+        </li>
+      </ul>
+    </section>
+    <section id="lineup">
+      <h2>o3 / o3-pro / mini の整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>位置づけ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="../o3-mini/">o3 mini</a></td><td>軽量・低コスト。STEMの日常課題向け</td></tr>
+          <tr><td><strong>o3</strong></td><td>フル版。視覚推論・ツール利用の基準</td></tr>
+          <tr><td>o3-pro</td><td>さらに難問・長時間推論向けの上位版</td></tr>
+          <tr><td><a href="../o4-mini/">o4 mini</a></td><td>後続世代の軽量推論（ツール・コーディング強化）</td></tr>
+        </tbody>
+      </table>
+      <p>2026年6月時点では提供形態や廃止予定が変わり得ます。試験では「いま使えるか」より<strong>系列の能力の方向性</strong>を優先してください。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>o3＝o3 mini</td><td>フル版 vs 軽量版</td></tr>
+          <tr><td>o3＝GPT-4o</td><td>o推論系列 vs GPTオムニ系列</td></tr>
+          <tr><td>ベンチマーク1位＝実務で万能</td><td>評価セット限定。TF-0460</td></tr>
+          <tr><td>ツール利用＝完全自律OK</td><td>エージェント運用・監督は別論点</td></tr>
+          <tr><td>視覚推論＝画像生成</td><td>入力として見る ≠ 画像を新規生成</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>o3とo3 miniの違いは？</summary>
+          <p class="tool-faq-a">o3はフル版で視覚推論・高度なツール利用など難問向けの能力を重視し、o3 miniは軽量版でコスト効率とSTEM課題のバランスを重視します。試験ではサイズ階層と用途の違いを区別することが重要です。</p>
+        </details>
+        <details>
+          <summary>o3のベンチマーク高得点は試験で暗記必須ですか？</summary>
+          <p class="tool-faq-a">数値の丸暗記より、推論特化のo系列の後継であり、視覚入力とツール利用が拡張された点を整理できれば十分なことが多いです。ベンチマークはあくまで評価文脈の参考です。</p>
+        </details>
+        <details>
+          <summary>o3はAIエージェントそのものですか？</summary>
+          <p class="tool-faq-a">同じではありません。o3は推論能力を持つモデルであり、エージェントは計画・ツール利用・自律実行を組み合わせたシステム構成です。モデルがツールを使えることと、エージェント全体の設計は別レイヤーです。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238 · エージェント定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 説明≠正確</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-169/">TF-169 · マルチモーダル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../o1-model/">OpenAI o1</a></li>
+          <li><a href="../o3-mini/">o3 mini</a></li>
+          <li><a href="../agent/">AIエージェント</a></li>
+          <li><a href="../o4-mini/">o4 mini</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

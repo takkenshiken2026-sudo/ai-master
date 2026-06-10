@@ -192,7 +192,7 @@
     <section id="what-is">
       <h2>トークンとは</h2>
       <p>
-        人間が文章を「単語」で読むように、LLMは入力を<strong>トークン列</strong>に変換して処理します。トークンは、英語の単語全体だったり、日本語の数文字だったり、記号や改行の一部だったりします。分割の仕方は<strong>Tokenizer（トークナイザ）</strong>という仕組みに依存し、モデルごとに異なります。
+        人間が文章を「単語」で読むように、LLMは入力を<strong>トークン列</strong>に変換して処理します。トークンは、英語の単語全体だったり、日本語の数文字だったり、記号や改行の一部だったりします。分割の仕方は<strong>Tokenizer（トークナイザ）</strong>という仕組みに依存し、モデルごとに異なります。<a href="../bpe/">BPE</a>などのサブワード手法で語彙が構築されることが多く、1単語が複数トークンに分かれることもあります。
       </p>
       <p>
         <a href="../llm/">LLM</a>の出力も、1トークンずつ（内部的には確率計算の上で）追加されていきます。だからこそ、出力が長いほど時間とコストが増えるのです。
@@ -360,6 +360,7 @@
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../llm/">LLM（大規模言語モデル）</a></li>
+          <li><a href="../bpe/">BPE</a></li>
           <li><a href="../prompt/">プロンプト</a></li>
           <li><a href="../context-window/">コンテキストウィンドウ</a></li>
           <li><a href="../generative-ai/">生成AI</a></li>

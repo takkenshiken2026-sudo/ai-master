@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DeBERTaとは？分離注意と強化マスクでBERTを伸ばしたNLPモデル。ALBERTとの違いとG検定向けの整理。">
+  <title>DeBERTaとは？語と位置を分けて見る——分離注意でBERTの盲点を埋める — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/deberta/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DeBERTaとは？語と位置を分けて見る——分離注意でBERTの盲点を埋める">
+  <meta property="og:description" content="Disentangled AttentionとEnhanced Mask Decoderで自然言語理解を強化したBERT系エンコーダモデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/deberta/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "DeBERTa",
+        "alternateName": ["DeBERTa", "ディーバータ", "Decoding-enhanced BERT with Disentangled Attention"],
+        "description": "内容と位置の埋め込みを分離した注意機構と強化マスク学習でBERT系の自然言語理解性能を高めたエンコーダモデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "DeBERTaは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BERTと同様、Transformerエンコーダで文の前後文脈を理解する自然言語処理向けの事前学習モデルです。語の内容と位置情報を分離して注意計算する分離注意と、マスク言語モデルを強化する学習設計が特徴として知られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DeBERTaとBERTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。DeBERTaはBERTを改良した派生モデルで、双方向エンコーダという系譜は共通ですが、注意機構と事前学習の設計が異なります。試験ではBERTの定義（G-337）を継承しつつ、別モデル名として区別します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DeBERTaとALBERTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。ALBERTは層間パラメータ共有で軽量化したBERT派生、DeBERTaは分離注意と強化マスクで性能向上を狙ったBERT派生です。いずれもNLP向けエンコーダですが、設計の焦点が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">DeBERTa</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>DeBERTaとは？語と位置を分けて見る——分離注意でBERTの盲点を埋める</h1>
+    <p class="tool-hero-sub">読み：ディーバータ ／ 英：DeBERTa（Decoding-enhanced BERT with Disentangled Attention）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>DeBERTa</strong>は、Microsoftが提案した<strong><a href="../bert/">BERT</a>派生</strong>の言語モデルです。<a href="../albert/">ALBERT</a>が「層の重みを共有して軽くする」方向だったのに対し、DeBERTaは<strong>語の意味（内容）と位置を分離して注意を計算する</strong>——<strong>分離注意（Disentangled Attention）</strong>——と、マスク学習の強化で<strong>理解精度を上げる</strong>方向に振りました。本記事は数式の暗記ではなく、<strong>「BERTが混ぜていた2種類の情報を分ける」</strong>という設計思想に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#bert-blindspot">BERTが抱えていた見え方</a></li>
+        <li><a href="#disentangled">分離注意の直感</a></li>
+        <li><a href="#enhanced-mask">強化マスク学習</a></li>
+        <li><a href="#vs-derivatives">BERT派生との位置づけ</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="bert-blindspot">
+      <h2>BERTが抱えていた見え方</h2>
+      <p>
+        BERTは<a href="../transformer/">Transformer</a>の<strong>エンコーダ</strong>で、文の前後両方の文脈を見て理解するモデルです（<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>）。語の埋め込みには<strong>内容</strong>（何の語か）と<strong>位置</strong>（文のどこにあるか）の両方が混ざります。
+      </p>
+      <p>
+        多くの場合これで十分ですが、「隣の語との関係」と「文書内の絶対位置」は別の手がかりです。DeBERTaはこの2つを<strong>注意計算の段階で分けて扱う</strong>——語が<strong>何であるか</strong>と<strong>どこにあるか</strong>を混同しない——という発想から出発します。
+      </p>
+    </section>
+
+    <section id="disentangled">
+      <h2>分離注意の直感</h2>
+      <p>従来のBERT系とDeBERTaの違いを、試験向けに表で整理します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>BERT（典型）</th><th>DeBERTa</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>埋め込み</strong></td><td>内容＋位置を足し合わせたベクトル</td><td>内容用・位置用を<strong>分離</strong></td></tr>
+          <tr><td><strong>注意</strong></td><td>統合ベクトル同士で計算</td><td>内容同士・位置同士・内容×位置を<strong>別々に</strong>計算して合成</td></tr>
+          <tr><td><strong>狙い</strong></td><td>双方向文脈理解</td><td>位置依存の関係をより正確に捉える</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「分離＝双方向をやめる」ではありません。エンコーダ型の<strong>理解モデル</strong>である点はBERTと同じです。<a href="../gpt/">GPT</a>のような因果的マスクによる<strong>生成</strong>とは別系統です。
+      </p>
+    </section>
+
+    <section id="enhanced-mask">
+      <h2>強化マスク学習</h2>
+      <p>
+        DeBERTaのもう一つの柱は、BERTの<strong>MLM</strong>（Masked Language Model）——隠れた語を当てる事前学習——を強化する設計です。<strong>Enhanced Mask Decoder</strong>と呼ばれる改良により、マスクされた位置の予測精度を上げる——という整理で試験に十分なことが多いです。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>エンコーダ</strong> — 文全体の文脈表現を構築（BERTと同系）</li>
+        <li><strong>デコーダ層</strong> — マスク位置の予測を<strong>強化</strong>（名前の「Decoding-enhanced」の由来）</li>
+        <li><strong>下流タスク</strong> — <a href="../fine-tuning/">ファインチューニング</a>で分類・QA等に適応</li>
+      </ol>
+      <p>
+        現代の対話型<a href="../llm/">LLM</a>はデコーダ型生成が主役ですが、DeBERTaは<strong>理解ベンチマークを伸ばすBERT改良</strong>として歴史に残るモデル名です。
+      </p>
+    </section>
+
+    <section id="vs-derivatives">
+      <h2>BERT派生との位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>改良の焦点</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../bert/">BERT</a></strong></td><td>双方向エンコーダの事前学習</td><td>定義の基準（G-337）</td></tr>
+          <tr><td><strong><a href="../albert/">ALBERT</a></strong></td><td>層間パラメータ共有で<strong>軽量化</strong></td><td>同じ系譜・別設計</td></tr>
+          <tr><td><strong>DeBERTa</strong></td><td>分離注意＋強化マスクで<strong>性能向上</strong></td><td>同じ系譜・別設計</td></tr>
+          <tr><td><strong><a href="../electra/">ELECTRA</a></strong></td><td>RTDで<strong>学習効率</strong>向上</td><td>事前学習タスクの転換</td></tr>
+          <tr><td><strong><a href="../gpt/">GPT</a></strong></td><td>デコーダ型・自己回帰<strong>生成</strong></td><td>NLPだが目的が異なる</td></tr>
+          <tr><td><strong><a href="../detr/">DETR</a></strong></td><td>物体検出</td><td>画像認識。NLPではない（G-323）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>系譜</strong> — BERT派生の<strong>エンコーダ型NLPモデル</strong>（Microsoft）</li>
+        <li><strong>キーワード</strong> — <strong>分離注意</strong>（内容と位置）、<strong>強化マスク</strong></li>
+        <li><strong>対比</strong> — ALBERT＝軽量化、DeBERTa＝性能向上。いずれもBERT≠同一</li>
+        <li><strong>すり替え回避</strong> — 物体検出・GAN・ChatGPTではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>、<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426</a>、<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-338/">G-338（LLMとの整理）</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>DeBERTa＝BERT</td><td>派生モデル。注意・学習設計が異なる</td></tr>
+          <tr><td>DeBERTa＝ALBERT</td><td>性能向上 vs 軽量化</td></tr>
+          <tr><td>DeBERTa＝GPT</td><td>理解エンコーダ vs 生成デコーダ</td></tr>
+          <tr><td>DeBERTa＝<a href="../cnn/">CNN</a></td><td>NLP vs 画像畳み込み</td></tr>
+          <tr><td>DeBERTa＝<a href="../generative-ai/">生成AI</a>そのもの</td><td>理解向け事前学習モデル。対話サービス名ではない</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>DeBERTaは何をするモデルですか？</summary><p class="tool-faq-a">BERTと同様、Transformerエンコーダで文の前後文脈を理解する自然言語処理向けの事前学習モデルです。語の内容と位置情報を分離して注意計算する分離注意と、マスク言語モデルを強化する学習設計が特徴として知られます。</p></details>
+        <details><summary>DeBERTaとBERTは同じですか？</summary><p class="tool-faq-a">同じではありません。DeBERTaはBERTを改良した派生モデルで、双方向エンコーダという系譜は共通ですが、注意機構と事前学習の設計が異なります。試験ではBERTの定義（<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>）を継承しつつ、別モデル名として区別します。</p></details>
+        <details><summary>DeBERTaとALBERTは同じですか？</summary><p class="tool-faq-a">いいえ。ALBERTは層間パラメータ共有で軽量化したBERT派生、DeBERTaは分離注意と強化マスクで性能向上を狙ったBERT派生です。いずれもNLP向けエンコーダですが、設計の焦点が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERTの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-425/">TF-425 · 双方向エンコーダ</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-426/">TF-426 · GANすり替え</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · タスクとモデル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../albert/">ALBERT</a></li>
+          <li><a href="../electra/">ELECTRA</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

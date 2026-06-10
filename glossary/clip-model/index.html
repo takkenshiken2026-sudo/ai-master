@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CLIPとは？画像とテキストを共通空間に埋め込む対照学習モデル。Zero-shot分類とBLIP・Text-to-Imageとの違いをG検定向けに解説。">
+  <title>CLIPとは？画像と言葉を同じ座標に——対照学習の視覚言語モデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/clip-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CLIPとは？画像と言葉を同じ座標に——対照学習の視覚言語モデル">
+  <meta property="og:description" content="Contrastive Language-Image Pre-training。画像―テキストのペアを近づけ、共通の埋め込み空間でZero-shot分類などに応用。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/clip-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "CLIP",
+        "alternateName": ["CLIP", "クリップ", "Contrastive Language-Image Pre-training"],
+        "description": "画像とテキストの対応関係を対照学習で学び、両者を共通の表現空間に埋め込む視覚言語モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "CLIPは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像とテキストの対応関係を学習し、両者を共通の表現空間で扱えるようにするモデルです。Zero-shot画像分類や画像―テキスト検索などに応用できます（G-393、TF-168）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CLIPとBLIPは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。CLIPは画像とテキストを共通空間に埋め込む対照学習が中心です。BLIPは画像キャプション生成やVQAなど、言語出力を伴う視覚言語事前学習モデルとして位置づけられます。目的と得意タスクが異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CLIPのZero-shot分類とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "学習時にクラスごとの画像例を与えず、テキストで「a photo of a dog」のようにクラス名を記述し、画像埋め込みとの類似度で分類する手法です。CLIPの共通空間があれば、新しいラベルへ柔軟に拡張しやすい点が特徴です（G-395）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">CLIP</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>CLIPとは？画像と言葉を同じ座標に——対照学習の視覚言語モデル</h1>
+    <p class="tool-hero-sub">読み：くりっぷ ／ 英：CLIP（Contrastive Language-Image Pre-training）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>CLIP</strong>は、インターネット規模の<strong>画像―テキストのペア</strong>を使い、<strong>対応する組み合わせを近づけ・無関係な組み合わせを遠ざける</strong>対照学習で、両モダリティを<strong>同じ埋め込み空間</strong>に載せる視覚言語モデルです。<a href="../blip/">BLIP</a>がキャプションやVQAで「答える」方向に強いのに対し、CLIPは<strong>「同じ座標系で並べる」</strong>——本記事はアーキテクチャの細部ではなく、その座標の意味と試験での定義に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#contrastive">対照学習の直感</a></li>
+        <li><a href="#shared-space">共通空間の意味</a></li>
+        <li><a href="#zero-shot">Zero-shot分類への橋</a></li>
+        <li><a href="#applications">応用の地図</a></li>
+        <li><a href="#vs-others">BLIP・生成モデルとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="contrastive">
+      <h2>対照学習の直感</h2>
+      <p>
+        CLIPの学習データは「猫の写真」と「a photo of a cat」のような<strong>正しいペア</strong>、およびバッチ内の<strong>誤ったペア</strong>（別画像と別キャプション）です。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>エンコード</strong> — 画像エンコーダとテキストエンコーダが、それぞれ<strong>埋め込みベクトル</strong>を出力</li>
+        <li><strong>近づける</strong> — 正しいペアの画像ベクトルとテキストベクトルは<strong>類似度を高く</strong></li>
+        <li><strong>遠ざける</strong> — 無関係なペアは<strong>類似度を低く</strong></li>
+        <li><strong>反復</strong> — 大規模データで「言葉と見た目の対応」を統計的に学習</li>
+      </ol>
+      <p>
+        試験の定義文は次の骨格です（<a href="../../exams/g-kentei/practice/q/g-393/">G-393</a>、<a href="../../exams/g-kentei/drill/q/tf-168/">TF-168</a>）。
+      </p>
+      <blockquote>
+        <p>画像とテキストの対応関係を学習し、両者を共通の表現空間で扱えるようにするモデル。</p>
+      </blockquote>
+    </section>
+
+    <section id="shared-space">
+      <h2>共通空間の意味</h2>
+      <p>
+        「共通空間」とは、<strong>画像もテキストも同じ次元のベクトル</strong>として表現され、<strong>コサイン類似度などで距離を測れる</strong>状態のことです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>操作</th><th>CLIPの共通空間でできること</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>画像検索</strong></td><td>テキストクエリに近い画像を探す</td></tr>
+          <tr><td><strong>キャプション検索</strong></td><td>画像に近い説明文を探す</td></tr>
+          <tr><td><strong>類似度判定</strong></td><td>画像と文章が「言っていること」が合うかを数値化</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../embedding/">埋め込み</a>の思想——意味が近いほどベクトルも近い——を、<strong>画像と言語のあいだ</strong>に広げたモデル、と整理すると試験向けです。
+      </p>
+    </section>
+
+    <section id="zero-shot">
+      <h2>Zero-shot分類への橋</h2>
+      <p>
+        従来の画像分類は、学習時に「犬」「猫」など<strong>固定クラス</strong>のラベル画像が必要でした。CLIPでは、クラス名を<strong>テキストプロンプト</strong>に変換し、画像ベクトルとの類似度で判定できます。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>例</strong> — 「a photo of a dog」「a photo of a cat」をテキスト埋め込みにし、入力画像と最も近い方を選ぶ</li>
+        <li><strong>Zero-shot</strong> — そのクラスの<strong>学習用画像例を渡さない</strong>で分類（<a href="../../exams/g-kentei/practice/q/g-395/">G-395</a>）</li>
+        <li><strong>利点</strong> — 新しいラベルを<strong>テキストを足すだけ</strong>で試せる柔軟性</li>
+      </ul>
+      <p>
+        プロンプトの<a href="../zero-shot-prompting/">Zero-shot</a>とは文脈が異なりますが、「例を与えずに推論する」という発想は通じます。
+      </p>
+    </section>
+
+    <section id="applications">
+      <h2>応用の地図</h2>
+      <p>CLIPは単独の製品名というより、<strong>技術のハブ</strong>として後続モデルに影響しました。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>応用</th><th>CLIPの役割</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Zero-shot分類</strong></td><td>テキストラベルでクラスを定義</td><td>G-393、G-395</td></tr>
+          <tr><td><strong>画像―テキスト検索</strong></td><td>共通空間での近傍探索</td><td><a href="../multimodal-ai/">マルチモーダルAI</a></td></tr>
+          <tr><td><strong>生成モデルの条件付け</strong></td><td>プロンプト理解の土台（<a href="../text-to-image/">Text-to-Image</a>系）</td><td>G-394（DALL·Eは別モデル名）</td></tr>
+          <tr><td><strong>視覚言語タスク</strong></td><td>理解の基盤。キャプション生成は<a href="../blip/">BLIP</a>寄り</td><td>G-390、G-392</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="vs-others">
+      <h2>BLIP・生成モデルとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>主な出力・目的</th><th>CLIPとの違い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>CLIP</strong></td><td>画像・テキストの<strong>埋め込みベクトル</strong></td><td>——</td></tr>
+          <tr><td><strong><a href="../blip/">BLIP</a></strong></td><td>キャプション・VQAの<strong>言語出力</strong></td><td>対照埋め込み vs 文章生成・回答</td></tr>
+          <tr><td><strong><a href="../dalle-model/">DALL·E</a></strong></td><td>テキスト→<strong>画像生成</strong></td><td>埋め込み・検索 vs 生成（G-394）</td></tr>
+          <tr><td><strong><a href="../cnn/">CNN</a></strong></td><td>画像の局所特徴抽出</td><td>マルチモーダル対照学習 vs 単一モダリティの構造</td></tr>
+          <tr><td><strong><a href="../llm/">LLM</a></strong></td><td>テキスト生成</td><td>画像入力が前提ではない（マルチモーダルLLMは別世代）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 画像とテキストの<strong>対応</strong>を学習し、<strong>共通空間</strong>で扱う（G-393）</li>
+        <li><strong>応用</strong> — <strong>Zero-shot</strong>画像分類、検索（TF-168）</li>
+        <li><strong>分野</strong> — <a href="../multimodal-ai/">マルチモーダルAI</a>の代表モデルの一つ</li>
+        <li><strong>すり替え回避</strong> — FFT（音声）、Q学習、匿名加工情報ではない（G-393の誤答）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-393/">G-393</a>、<a href="../../exams/g-kentei/drill/q/tf-168/">TF-168</a>、<a href="../../exams/g-kentei/practice/q/g-395/">G-395</a>、<a href="../../exams/g-kentei/practice/q/g-389/">G-389</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CLIP＝画像生成モデル</td><td>埋め込み・対照学習。DALL·Eは別（G-394）</td></tr>
+          <tr><td>CLIP＝BLIP</td><td>共通空間 vs キャプション・VQA</td></tr>
+          <tr><td>CLIP＝FFT・MFCC</td><td>視覚言語 vs 音声信号処理（G-393のB）</td></tr>
+          <tr><td>CLIP＝強化学習</td><td>対照学習 vs Q学習（G-393のC）</td></tr>
+          <tr><td>CLIP＝テキスト専用LLM</td><td>画像とテキストの両方を扱うマルチモーダル</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>CLIPは何をするモデルですか？</summary><p class="tool-faq-a">画像とテキストの対応関係を学習し、両者を共通の表現空間で扱えるようにするモデルです。Zero-shot画像分類や画像―テキスト検索などに応用できます（<a href="../../exams/g-kentei/practice/q/g-393/">G-393</a>、<a href="../../exams/g-kentei/drill/q/tf-168/">TF-168</a>）。</p></details>
+        <details><summary>CLIPとBLIPは同じですか？</summary><p class="tool-faq-a">いいえ。CLIPは画像とテキストを共通空間に埋め込む対照学習が中心です。BLIPは画像キャプション生成やVQAなど、言語出力を伴う視覚言語事前学習モデルとして位置づけられます。目的と得意タスクが異なります。</p></details>
+        <details><summary>CLIPのZero-shot分類とは何ですか？</summary><p class="tool-faq-a">学習時にクラスごとの画像例を与えず、テキストで「a photo of a dog」のようにクラス名を記述し、画像埋め込みとの類似度で分類する手法です。CLIPの共通空間があれば、新しいラベルへ柔軟に拡張しやすい点が特徴です（<a href="../../exams/g-kentei/practice/q/g-395/">G-395</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-393/">G-393 · CLIPの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-168/">TF-168 · マルチモーダルとCLIP</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-395/">G-395 · Zero-shot</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-389/">G-389 · マルチモーダルAI</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../blip/">BLIP</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../zero-shot-prompting/">Zero-shot Prompting</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

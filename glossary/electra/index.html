@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ELECTRAとは？置換トークン検出で効率よく事前学習するBERT系モデル。MLM・GANとの違いをG検定向けに解説。">
+  <title>ELECTRAとは？当てるのではなく見抜く——判別的事前学習でBERTを効率化する — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/electra/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ELECTRAとは？当てるのではなく見抜く——判別的事前学習でBERTを効率化する">
+  <meta property="og:description" content="Efficiently Learning an Encoder that Classifies Token Replacements Accurately。生成器が置換したトークンを判別器が見抜く事前学習。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/electra/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ELECTRA",
+        "alternateName": ["ELECTRA", "エレクトラ", "Efficiently Learning an Encoder that Classifies Token Replacements Accurately"],
+        "description": "小さな生成器が置き換えたトークンを、判別器が本物か偽物か見抜く事前学習で効率的に学習するBERT系エンコーダモデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ELECTRAは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BERTと同様、Transformerエンコーダで自然言語の表現を学ぶ事前学習モデルです。マスクした語を当てるMLMではなく、生成器が置き換えたトークンを判別器が見抜く置換トークン検出（RTD）で学習する点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ELECTRAとBERTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。BERTはマスク言語モデル（MLM）で隠れた語を予測して事前学習します。ELECTRAは置換トークン検出で、どの語が元の文から置き換えられたかを判別して学習します。いずれもエンコーダ型NLPモデルですが、事前学習の設計が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ELECTRAはGANですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。ELECTRAは生成器と判別器の二部構成ですが、画像を新規生成するGANとは別物です。判別器が主役となり、テキストのトークン置換を見抜く事前学習手法として位置づけられます（TF-426のGANすり替えに注意）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ELECTRA</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ELECTRAとは？当てるのではなく見抜く——判別的事前学習でBERTを効率化する</h1>
+    <p class="tool-hero-sub">読み：エレクトラ ／ 英：ELECTRA</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ELECTRA</strong>は、Googleが提案した<strong><a href="../bert/">BERT</a>派生</strong>の言語モデルです。BERTのMLMが「マスクした語を<strong>当てる</strong>」事前学習だったのに対し、ELECTRAは「生成器が置き換えた語を<strong>見抜く</strong>」——<strong>置換トークン検出（RTD）</strong>——で学習します。本記事は生成器・判別器の詳細な損失式ではなく、<strong>「なぜ当てるより見抜く方が効率的か」</strong>という設計の転換に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#mlm-limit">MLMの学習効率</a></li>
+        <li><a href="#rtd">置換トークン検出の直感</a></li>
+        <li><a href="#two-models">生成器と判別器</a></li>
+        <li><a href="#vs-derivatives">BERT派生との位置づけ</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="mlm-limit">
+      <h2>MLMの学習効率</h2>
+      <p>
+        BERTの事前学習の中心は<strong>MLM</strong>（Masked Language Model）——文中の一部をマスクし、隠れた語を予測する——です（<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>）。
+      </p>
+      <p>
+        しかしマスクは通常<strong>語の一部だけ</strong>に適用されます。1文のほとんどのトークンは学習信号を生まない——「当てる対象が少ない」——という非効率がありました。ELECTRAはこのボトルネックに正面から応え、<strong>すべてのトークン</strong>に学習信号を与える設計を目指します。
+      </p>
+    </section>
+
+    <section id="rtd">
+      <h2>置換トークン検出の直感</h2>
+      <p>RTD（Replaced Token Detection）の流れは次のとおりです。</p>
+      <ol class="tool-steps">
+        <li><strong>元の文</strong> — 「猫が魚を食べた」のような入力</li>
+        <li><strong>生成器</strong> — いくつかの語を別の語に<strong>置き換え</strong>（例：「犬が魚を食べた」）</li>
+        <li><strong>判別器</strong> — 各トークンが「元の文のまま」か「置き換えられたか」を<strong>二値判定</strong></li>
+        <li><strong>学習</strong> — 判別器のエンコーダが、文脈から不自然な置換を見抜けるよう更新</li>
+      </ol>
+      <p>
+        「隠れた語を推測する」ではなく「改ざんされた語を発見する」——<strong>判別（discrimination）</strong>タスクに置き換えるのがELECTRAの核心です。試験では「判別的事前学習」がキーワードになります。
+      </p>
+    </section>
+
+    <section id="two-models">
+      <h2>生成器と判別器</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>役割</th><th>GANとの違い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>生成器</strong></td><td>小さなMLMで一部トークンを置換</td><td>画像生成ではない。語の置き換えのみ</td></tr>
+          <tr><td><strong>判別器</strong></td><td>置換の有無をトークンごとに判定</td><td><strong>主役は判別器のエンコーダ</strong>（下流タスクに使う）</td></tr>
+          <tr><td><strong><a href="../gan/">GAN</a></strong></td><td>生成器と識別器の対戦で画像等を生成</td><td>別枠組み（TF-426）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        二部構成なのでGANと混同されやすいですが、ELECTRAは<strong>テキスト表現の事前学習</strong>であり、新しい画像を生む<a href="../generative-ai/">生成AI</a>ではありません。判別器のエンコーダが、BERTと同様に分類・QAなどへ<a href="../fine-tuning/">ファインチューニング</a>されます。
+      </p>
+    </section>
+
+    <section id="vs-derivatives">
+      <h2>BERT派生との位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>事前学習の焦点</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../bert/">BERT</a></strong></td><td>MLM＋NSPで双方向理解</td><td>定義の基準（G-337）</td></tr>
+          <tr><td><strong><a href="../albert/">ALBERT</a></strong></td><td>パラメータ共有で<strong>軽量化</strong></td><td>構造の効率化</td></tr>
+          <tr><td><strong><a href="../deberta/">DeBERTa</a></strong></td><td>分離注意で<strong>性能向上</strong></td><td>注意機構の改良</td></tr>
+          <tr><td><strong>ELECTRA</strong></td><td>RTDで<strong>学習効率</strong>向上</td><td>事前学習タスクの転換</td></tr>
+          <tr><td><strong><a href="../gpt/">GPT</a></strong></td><td>次トークン予測で<strong>生成</strong></td><td>デコーダ型。別系譜</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>判別的事前学習</strong>で効率よく学習するBERT系モデル</li>
+        <li><strong>キーワード</strong> — 置換トークン検出（RTD）。MLMの「当てる」から「見抜く」へ</li>
+        <li><strong>系譜</strong> — Transformerエンコーダ型NLP。BERTの派生</li>
+        <li><strong>すり替え回避</strong> — GAN・物体検出・ChatGPTではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>、<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426</a>、<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-338/">G-338（LLMとの整理）</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ELECTRA＝BERT</td><td>RTD vs MLM。派生だが同一ではない</td></tr>
+          <tr><td>ELECTRA＝GAN</td><td>テキスト判別の事前学習 vs 画像生成の枠組み</td></tr>
+          <tr><td>ELECTRA＝GPT</td><td>エンコーダ理解 vs デコーダ生成</td></tr>
+          <tr><td>ELECTRA＝<a href="../cnn/">CNN</a></td><td>NLP vs 画像（G-323）</td></tr>
+          <tr><td>判別＝チューリングテスト</td><td>トークン置換の検出 vs 人間/機械の識別（TF-344）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ELECTRAは何をするモデルですか？</summary><p class="tool-faq-a">BERTと同様、Transformerエンコーダで自然言語の表現を学ぶ事前学習モデルです。マスクした語を当てるMLMではなく、生成器が置き換えたトークンを判別器が見抜く置換トークン検出（RTD）で学習する点が特徴です。</p></details>
+        <details><summary>ELECTRAとBERTは同じですか？</summary><p class="tool-faq-a">同じではありません。BERTはマスク言語モデル（MLM）で隠れた語を予測して事前学習します。ELECTRAは置換トークン検出で、どの語が元の文から置き換えられたかを判別して学習します。いずれもエンコーダ型NLPモデルですが、事前学習の設計が異なります。</p></details>
+        <details><summary>ELECTRAはGANですか？</summary><p class="tool-faq-a">いいえ。ELECTRAは生成器と判別器の二部構成ですが、画像を新規生成するGANとは別物です。判別器が主役となり、テキストのトークン置換を見抜く事前学習手法として位置づけられます（<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426</a>のGANすり替えに注意）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERTの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-425/">TF-425 · 双方向エンコーダ</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-426/">TF-426 · GANすり替え</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · タスクとモデル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../albert/">ALBERT</a></li>
+          <li><a href="../deberta/">DeBERTa</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../gan/">GAN</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OpenAI o1とは？推論特化モデルの意味、思考時間・連鎖思考、CoTプロンプトや推論（Inference）との違いをG検定向けに解説。">
+  <title>OpenAI o1とは？推論特化モデルと「考える時間」の設計 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/o1-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="OpenAI o1とは？推論特化モデルと「考える時間」の設計">
+  <meta property="og:description" content="回答前に段階的思考を行うOpenAIの推論特化シリーズ。GPT番号系列とは別のo系列として試験向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/o1-model/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "OpenAI o1",
+        "alternateName": ["o1", "o1-preview", "OpenAI o1シリーズ"],
+        "description": "回答前に段階的思考を行う推論特化のOpenAIモデル系列。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "o1はGPT-4の後継ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "番号系列（GPT-4など）とは別の「o」推論特化ラインとして整理するのが安全です。用途は数学・論理・コーディングなど難問向けで、通常のチャット応答より思考時間をかける設計が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "o1はChain-of-Thoughtと同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Chain-of-Thoughtはユーザーがプロンプトで段階推論を促す技法です。o1はモデル側で思考ステップを組み込んだ推論特化設計として理解します。技法とモデル系列は別概念です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "推論モデルは常に正確ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。思考過程や説明が丁寧でも、計算や事実の誤りは起こり得ます。推論特化は難問での改善を目指す設計であり、出力の検証は依然必要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">OpenAI o1</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>OpenAI o1とは？推論特化モデルと「考える時間」の設計</h1>
+    <p class="tool-hero-sub">読み：おーいち ／ 英：OpenAI o1</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>OpenAI o1</strong>（オーワン）は、回答の前に<strong>段階的な思考（連鎖推論）</strong>を行う<strong>推論特化モデル</strong>系列です。<a href="../gpt-4/">GPT-4</a>のような番号付きGPTとは別の<strong>「o」ライン</strong>として位置づけられます。本記事はベンチマークの細部より、<strong>「考える時間」を設計に組み込んだモデル</strong>と、<a href="../chain-of-thought/">CoTプロンプト</a>・<a href="../inference/">推論（Inference）</a>との<strong>三つ巴のすり替え</strong>を試験向けに整理します。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#o-line">「o」系列とは</a></li>
+        <li><a href="#thinking-time">「考える時間」の意味</a></li>
+        <li><a href="#vs-cot">モデル内思考 vs CoTプロンプト</a></li>
+        <li><a href="#homonym">「推論」の同音異義</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        o1専用の一問一答はまだ少ないですが、関連する論点は頻出です。<strong>「段階的に考えさせる＝必ず正確」</strong>は×です（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>、<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459</a>）。自然な説明や推論過程と、計算・事実の正確さは別問題として扱います。
+      </p>
+      <p>
+        複雑な依頼は段階に分けると確認しやすい（<a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476</a>）——これは<strong>ユーザーのプロンプト設計</strong>の話であり、o1の<strong>モデル内思考</strong>とは別レイヤーです。混同しないことが試験でも実務でも重要です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（説明できる≠正確）</a>、<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459（計算の誤り）</a>、<a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476（段階的依頼）</a></p>
+        <p>関連技法：<a href="../chain-of-thought/">Chain-of-Thought</a> · <a href="../self-consistency/">自己整合性</a></p>
+      </div>
+    </section>
+    <section id="o-line">
+      <h2>「o」系列とは</h2>
+      <p>
+        OpenAIのモデルには、<a href="../gpt/">GPT</a>番号系列（GPT-3、GPT-4、GPT-4o など）と、<strong>o系列</strong>（o1 → o3 など）があります。試験では「GPT-5の次はo1」のように<strong>番号を混ぜて並べない</strong>よう注意してください。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>系列</th><th>命名</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GPT系列</strong></td><td>GPT-3.5, GPT-4, GPT-4o …</td><td>汎用対話・マルチモーダル進化の主軸</td></tr>
+          <tr><td><strong>o系列</strong></td><td>o1, o3, o3-mini …</td><td><strong>推論特化</strong>。数学・論理・STEM向け</td></tr>
+        </tbody>
+      </table>
+      <p>o1は2024年頃に o1-preview / o1 として公開され、<strong>「人間のように考えてから答える」</strong>ナラティブで注目を集めました。2026年6月時点では後続のo3系列へと発展しています。</p>
+    </section>
+    <section id="thinking-time">
+      <h2>「考える時間」の意味</h2>
+      <p>
+        通常のチャットモデルは、入力を受けてすぐトークンを生成し始めます。o1系列は、回答前に<strong>内部的な思考ステップ</strong>（推論トークン）を多めに使い、難問での正答率向上を狙う設計です。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>入力</strong> — 数学問題・論理パズル・複雑なコード課題など</li>
+        <li><strong>内部思考</strong> — モデルが中間推論を生成（ユーザーに見える場合もある）</li>
+        <li><strong>最終回答</strong> — 思考を踏まえた出力</li>
+        <li><strong>トレードオフ</strong> — 精度向上の代わりに<strong>応答が遅く・コストが高い</strong>ことがある</li>
+      </ol>
+      <p>「考えたから正しい」ではなく、<strong>難問で改善しやすい</strong>という整理が試験・実務の両方で安全です。</p>
+    </section>
+    <section id="vs-cot">
+      <h2>モデル内思考 vs CoTプロンプト</h2>
+      <p>
+        <a href="../chain-of-thought/">Chain-of-Thought（CoT）</a>は、ユーザーがプロンプトで「段階的に考えて」と指示する<strong>技法</strong>です。o1はその技法を使わなくても、モデル側で推論を強化した<strong>製品系列</strong>です。
+      </p>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">Chain-of-Thought（技法）</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">o1（推論特化モデル）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>どのLLMにも適用可能なプロンプトの書き方</td>
+            <td>OpenAIの専用モデル系列。提供形態・コストが異なる</td>
+          </tr>
+          <tr>
+            <td>ユーザーが明示的に指示する</td>
+            <td>モデルが内部的に思考ステップを組み込む</td>
+          </tr>
+          <tr>
+            <td>試験ではプロンプトエンジニアリングの話題</td>
+            <td>試験では「推論特化モデル」としてGPT系列と区別</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="homonym">
+      <h2>「推論」の同音異義</h2>
+      <p>日本語の「推論」は試験で2つの意味に分かれます。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>推論（Inference）</strong>
+          学習済みモデルで予測・生成する処理（<a href="../inference/">推論の用語記事</a>）。o1を動かすこと自体はInferenceだが、<strong>「推論特化」という製品名</strong>とは別の話
+        </li>
+        <li>
+          <strong>推論（Reasoning）</strong>
+          論理的に結論を導く知的処理。記号AI時代の「探索・推論」文脈（<a href="../../exams/g-kentei/drill/q/tf-308/">G検定 TF-308</a>）とも語感が近いが、o1は<strong>ニューラルLLMの推論強化</strong>
+        </li>
+      </ul>
+      <p>「o1は推論モデル」＝「o1はInferenceだけのモデル」とは読み替えないでください。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>o1＝GPT-4のバージョンアップ</td><td>別系列（o vs GPT番号）</td></tr>
+          <tr><td>o1＝CoTプロンプト</td><td>モデル系列 vs プロンプト技法</td></tr>
+          <tr><td>推論モデル＝常に正確</td><td>TF-0460。思考過程と正確性は別</td></tr>
+          <tr><td>推論モデル＝推論（Inference）のみ</td><td>同音異義。学習も存在する</td></tr>
+          <tr><td>o1＝AGIの実現</td><td>難問向け強化。汎用知能の完成とは別（<a href="../agi/">AGI</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>o1はGPT-4の後継ですか？</summary>
+          <p class="tool-faq-a">番号系列（GPT-4など）とは別の「o」推論特化ラインとして整理するのが安全です。用途は数学・論理・コーディングなど難問向けで、通常のチャット応答より思考時間をかける設計が特徴です。</p>
+        </details>
+        <details>
+          <summary>o1はChain-of-Thoughtと同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。Chain-of-Thoughtはユーザーがプロンプトで段階推論を促す技法です。o1はモデル側で思考ステップを組み込んだ推論特化設計として理解します。技法とモデル系列は別概念です。</p>
+        </details>
+        <details>
+          <summary>推論モデルは常に正確ですか？</summary>
+          <p class="tool-faq-a">いいえ。思考過程や説明が丁寧でも、計算や事実の誤りは起こり得ます。推論特化は難問での改善を目指す設計であり、出力の検証は依然必要です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 説明できる≠正確</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459 · 計算の誤り</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476 · 段階的依頼</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../self-consistency/">自己整合性</a></li>
+          <li><a href="../gpt-4/">GPT-4</a></li>
+          <li><a href="../o3-mini/">o3 mini</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

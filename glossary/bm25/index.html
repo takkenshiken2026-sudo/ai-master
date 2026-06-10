@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BM25とは？キーワード検索で文書の関連度を順位づけするランキング関数。TF-IDF・ベクトル検索・RAGとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>BM25とは？語の出現で順位をつける——キーワード検索の定番ランキング — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/bm25/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BM25とは？語の出現で順位をつける——キーワード検索の定番ランキング">
+  <meta property="og:description" content="検索語と文書中の語句一致を手がかりに関連度スコアを計算する。RAGのキーワード検索層で広く使われる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/bm25/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "BM25",
+        "alternateName": ["BM25", "ビーエムにじゅうご", "Best Matching 25"],
+        "description": "キーワード検索で文書の関連度をスコア化して順位づけする代表的なランキング関数。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BM25は何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ユーザーの検索語と文書中の語句の一致を手がかりに、各文書への関連度スコアを計算して順位づけするキーワード検索のランキング関数です。語の出現頻度や文書長などを考慮し、関連しそうな文書を上位に並べます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BM25とベクトル検索の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BM25は語の一致に基づくキーワード検索の代表です。ベクトル検索は埋め込みの意味的類似度で探します。BM25は型番の完全一致に強く、言い換えには弱い一方、ベクトル検索は言い換えに強いが固有名詞で外すこともあります。RAGでは両方を併用するハイブリッド検索も多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BM25はRAGそのものですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BM25は検索段階で使うランキング手法の一つです。RAGは検索した結果をLLMの生成に渡す全体アーキテクチャであり、BM25はその検索レイヤーの選択肢の一つに過ぎません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">BM25</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>BM25とは？語の出現で順位をつける——キーワード検索の定番ランキング</h1>
+    <p class="tool-hero-sub">読み：びーえむにじゅうご ／ 英：BM25（Best Matching 25）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>BM25</strong>は、<strong>キーワード検索</strong>で文書の関連度をスコア化し、上位から順に並べる——<strong>ランキング関数</strong>の定番です。検索語と文書中の語句の<strong>一致</strong>を手がかりに探す基本方式（<a href="../../exams/genai-passport/drill/q/tf-0236/">TF-0236</a>）の中核を担います。本記事は数式の係数暗記ではなく、<strong>「なぜRAGでもまだキーワード検索が生きるか」</strong>——検索方式の地図——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#keyword">キーワード検索の基本</a></li>
+        <li><a href="#mechanism">BM25の考え方</a></li>
+        <li><a href="#spectrum">検索方式のスペクトル</a></li>
+        <li><a href="#rag">RAGでの使われ方</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="keyword">
+      <h2>キーワード検索の基本</h2>
+      <p>
+        キーワード検索は、ユーザーが入力した<strong>検索語</strong>と、文書中の<strong>語句の一致</strong>を手がかりに情報を探す方法です（TF-0236）。
+      </p>
+      <blockquote>
+        <p>キーワード検索は、検索語と文書中の語句の一致を手がかりに情報を探す方法である。</p>
+      </blockquote>
+      <p>
+        一致した文書をどう並べるか——<strong>ランキング</strong>——が検索品質の鍵です。BM25はその順位づけに広く使われる関数の一つで、古典的な<strong>TF-IDF</strong>を発展させた系譜に位置づけられます（<a href="../../exams/g-kentei/practice/q/g-333/">G-333</a>）。
+      </p>
+    </section>
+
+    <section id="mechanism">
+      <h2>BM25の考え方</h2>
+      <p>試験向けに、BM25が何をしているかを直感で押さえます。</p>
+      <ul class="tool-steps">
+        <li><strong>語の出現</strong> — 検索語が文書に<strong>何回出るか</strong>（ただし出すぎると効きが鈍る調整あり）</li>
+        <li><strong>希少性</strong> — コーパス全体で<strong>めずらしい語</strong>の一致ほど加点されやすい（TF-IDFと同型の発想）</li>
+        <li><strong>文書長</strong> — 異常に長い文書が有利になりすぎないよう<strong>長さを補正</strong></li>
+        <li><strong>出力</strong> — 文書ごとに<strong>関連度スコア</strong>。高い順に検索結果を返す</li>
+      </ul>
+      <p>
+        名前の <strong>Best Matching 25</strong> は、確率論的ランキング関数の系譜（Okapi BM25など）に由来します。試験では「BM25＝検索語を無視する」などの誤答に注意（<a href="../../exams/genai-passport/drill/q/tf-0237/">TF-0237</a>は×）。
+      </p>
+    </section>
+
+    <section id="spectrum">
+      <h2>検索方式のスペクトル</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>マッチの基準</th><th>得意・苦手</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>BM25</strong></td><td>語の一致・出現統計</td><td>型番・固有名詞に<strong>強い</strong>。言い換えに<strong>弱い</strong></td></tr>
+          <tr><td><strong>TF-IDF</strong></td><td>語頻度×逆文書頻度</td><td>BM25の祖先。特徴量・検索の基礎（G-333）</td></tr>
+          <tr><td><strong><a href="../vector-search/">ベクトル検索</a></strong></td><td>埋め込みの意味的類似</td><td>言い換えに<strong>強い</strong>。短いクエリで外しやすいことも</td></tr>
+          <tr><td><strong><a href="../semantic-search/">セマンティック検索</a></strong></td><td>意味的類似（概念）</td><td>実装はベクトル検索が多い</td></tr>
+        </tbody>
+      </table>
+      <p>
+        TF-0236の解説にあるように、埋め込み検索とは異なり、<strong>意味が近くても表現が違う</strong>場合に見つけにくい——がキーワード検索の典型的な弱点です。逆に、製品コードの完全一致ではBM25が依然として有効です。
+      </p>
+    </section>
+
+    <section id="rag">
+      <h2>RAGでの使われ方</h2>
+      <p>
+        <a href="../rag/">RAG</a>の検索段階では、<a href="../vector-search/">ベクトル検索</a>だけでなく<strong>BM25によるキーワード検索</strong>を併用する——<strong>ハイブリッド検索</strong>——が実務でよく採用されます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>BM25</strong> — 固有名詞・専門用語・型番を拾いやすい</li>
+        <li><strong>ベクトル検索</strong> — 言い換え質問・概念検索に強い</li>
+        <li><strong>統合</strong> — 両方の上位結果をマージして<a href="../llm/">LLM</a>に渡す</li>
+      </ul>
+      <p>
+        BM25は<strong>RAGそのものではありません</strong>。RAGは検索＋生成の全体設計であり、BM25は検索レイヤーの部品の一つです（<a href="../../exams/g-kentei/drill/q/tf-174/">TF-174</a>）。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — キーワード検索で使う<strong>ランキング関数</strong></li>
+        <li><strong>原理</strong> — 検索語と文書中の<strong>語句一致</strong>＋出現統計（TF-0236）</li>
+        <li><strong>対比</strong> — ベクトル／セマンティック検索＝意味的類似。BM25＝語の一致</li>
+        <li><strong>RAG</strong> — 検索部品の一つ。RAG全体ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0236/">TF-0236</a>、<a href="../../exams/genai-passport/drill/q/tf-0237/">TF-0237</a>　G検定：<a href="../../exams/g-kentei/practice/q/g-333/">G-333</a>、<a href="../../exams/g-kentei/drill/q/tf-174/">TF-174</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>BM25＝RAG</td><td>ランキング関数 vs 検索拡張生成全体</td></tr>
+          <tr><td>BM25＝ベクトルDB</td><td>スコア計算 vs 格納・検索基盤</td></tr>
+          <tr><td>BM25＝埋め込みモデル</td><td>語の一致 vs ベクトル化モデル</td></tr>
+          <tr><td>キーワード検索＝検索語を無視</td><td>一致を手がかりにする（TF-0237は×）</td></tr>
+          <tr><td>BM25＝LLM</td><td>検索の順位づけ vs 言語生成モデル</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>BM25は何をする手法ですか？</summary><p class="tool-faq-a">ユーザーの検索語と文書中の語句の一致を手がかりに、各文書への関連度スコアを計算して順位づけするキーワード検索のランキング関数です。語の出現頻度や文書長などを考慮し、関連しそうな文書を上位に並べます。</p></details>
+        <details><summary>BM25とベクトル検索の違いは？</summary><p class="tool-faq-a">BM25は語の一致に基づくキーワード検索の代表です。ベクトル検索は埋め込みの意味的類似度で探します。BM25は型番の完全一致に強く、言い換えには弱い一方、ベクトル検索は言い換えに強いが固有名詞で外すこともあります。RAGでは両方を併用するハイブリッド検索も多いです。</p></details>
+        <details><summary>BM25はRAGそのものですか？</summary><p class="tool-faq-a">いいえ。BM25は検索段階で使うランキング手法の一つです。RAGは検索した結果をLLMの生成に渡す全体アーキテクチャであり、BM25はその検索レイヤーの選択肢の一つに過ぎません。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0236/">TF-0236 · キーワード検索</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0237/">TF-0237 · キーワード検索（×）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-333/">G-333 · TF-IDF</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-174/">TF-174 · RAG</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../vector-search/">ベクトル検索</a></li>
+          <li><a href="../semantic-search/">セマンティック検索</a></li>
+          <li><a href="../embedding-model/">埋め込みモデル</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ALBERTとは？パラメータ共有で軽量化したBERT派生モデルの意味、BERT・GPTとの違いをG検定向けに解説。">
+  <title>ALBERTとは？同じ型を繰り返す——パラメータ共有の軽量BERT — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/albert/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ALBERTとは？同じ型を繰り返す——パラメータ共有の軽量BERT">
+  <meta property="og:description" content="BERTのエンコーダを軽くした派生。層間パラメータ共有と因数分解で効率化。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/albert/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ALBERT",
+        "alternateName": ["ALBERT", "アルバート", "A Lite BERT"],
+        "description": "パラメータ共有などで軽量化したBERT派生の自然言語処理モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ALBERTとBERTの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもTransformerエンコーダ型の双方向言語モデルですが、ALBERTは層間パラメータ共有や埋め込みの因数分解などでパラメータ数を抑え、より軽量に学習・推論しやすくしたBERT派生です。試験ではBERTの軽量版として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ALBERTは文章生成モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主にBERTと同様、理解・分類・質問応答などのNLPタスク向きのエンコーダ型モデルです。GPTのような自己回帰的な長文生成の典型ではありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "軽量化＝性能が必ず低いですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "パラメータ数を減らしても、設計工夫により同等付近の性能を狙える場合があります。ただし軽量だから誤りなし、とは答えません。タスクとモデルサイズのトレードオフとして理解します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ALBERT</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ALBERTとは？同じ型を繰り返す——パラメータ共有の軽量BERT</h1>
+    <p class="tool-hero-sub">読み：あるばーと ／ 英：ALBERT（A Lite BERT）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ALBERT</strong>（A Lite BERT）は、Googleが提案した<strong><a href="../bert/">BERT</a>派生</strong>の言語モデルです。BERTが巨大なパラメータで双方向理解を実現したのに対し、ALBERTは<strong>層間で同じ重みを共有する</strong>——同じ型のブロックを何度も繰り返す——という設計で<strong>軽量化</strong>を図りました。本記事は因数分解の数式暗記ではなく、<strong>「なぜパラメータ共有でBERTが軽くなるか」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ALBERTとは</a></li>
+        <li><a href="#parameter-sharing">パラメータ共有の意味</a></li>
+        <li><a href="#other-tricks">その他の軽量化工夫</a></li>
+        <li><a href="#vs-bert">BERTとの対比</a></li>
+        <li><a href="#tasks">得意なタスクと限界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        ALBERT専用の一問一答は少ないですが、<strong>BERTの派生・軽量化</strong>——パラメータ共有で軽くしたエンコーダ型NLPモデル——として整理します。開発元はGoogle（BERTと同系）です。
+      </p>
+      <p>
+        BERTの定義——Transformerエンコーダ・双方向文脈——（<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>）を継承しつつ、<strong>ALBERT＝別の軽量設計</strong>と差別化します。
+      </p>
+      <p>
+        ALBERT＝物体検出CNN、ALBERT＝GAN（<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426</a>）など、NLP以外のすり替えは×です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-337/">G-337（BERT）</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>、<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426（すり替え）</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-323/">G-323（タスクとモデル）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>ALBERTとは</h2>
+      <p>
+        2019年、Googleは<strong>ALBERT</strong>を発表しました。名前の <strong>A Lite BERT</strong> は「軽いBERT」の意味で、大規模BERTの学習・デプロイコストを下げる——<strong>同じ理解タスクを、より少ないパラメータで</strong>——という目的が明確です。
+      </p>
+      <p>
+        現代は<a href="../llm/">LLM</a>が主役ですが、試験ではBERT系列の<strong>効率化の一例</strong>としてALBERTが問われうる古典です。<a href="../foundation-model/">基盤モデル</a>以前の「エンコーダ理解モデルの設計競争」の延長上に位置づけます。
+      </p>
+    </section>
+    <section id="parameter-sharing">
+      <h2>パラメータ共有の意味</h2>
+      <p>BERTは層が深くなるほど<strong>層ごとに別の重み</strong>を持ち、パラメータが膨らみます。ALBERTの核心は<strong>層間パラメータ共有</strong>です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>設計</th><th>イメージ</th><th>効果</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>BERT</strong></td><td>12層なら12セットの重み</td><td>表現力は高いがパラメータ大</td></tr>
+          <tr><td><strong>ALBERT</strong></td><td>同じ変換ブロックを12回適用</td><td>パラメータ削減。深さは維持</td></tr>
+        </tbody>
+      </table>
+      <p>「共有＝学習しない」ではありません。共有されたブロックは<strong>繰り返し適用されながら更新</strong>されます。試験では<strong>パラメータ共有による軽量化</strong>がキーワードです。</p>
+    </section>
+    <section id="other-tricks">
+      <h2>その他の軽量化工夫</h2>
+      <p>パラメータ共有に加え、試験で名前が出ることがある工夫です。細部より<strong>役割</strong>で十分なことが多いです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>工夫</th><th>ざっくりした内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>因数分解された埋め込み</strong></td><td>巨大な語彙埋め込みを小さな行列の積で近似</td></tr>
+          <tr><td><strong>SOP</strong>（Sentence Order Prediction）</td><td>文の順序が入れ替わったかを予測（NSPの改良版）</td></tr>
+          <tr><td><strong>層を深く・隠れ次元を小さく</strong></td><td>パラメータ総量と表現力のトレードオフ</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="vs-bert">
+      <h2>BERTとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th></th><th>BERT</th><th>ALBERT</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>系列</strong></td><td>Transformerエンコーダ</td><td>同じ（派生）</td></tr>
+          <tr><td><strong>文脈</strong></td><td>双方向</td><td>双方向</td></tr>
+          <tr><td><strong>パラメータ</strong></td><td>層ごとに独立</td><td>層間共有で削減</td></tr>
+          <tr><td><strong>主な用途</strong></td><td>分類・QA・NER等</td><td>同系統。軽量デプロイ向き</td></tr>
+          <tr><td><strong>試験</strong></td><td>G-337 / TF-425</td><td>BERTの軽量派生</td></tr>
+        </tbody>
+      </table>
+      <p><a href="../gpt/">GPT</a>（デコーダ型・生成）との対比はBERT記事と同様です。ALBERTも<strong>理解系エンコーダ</strong>の一族です。</p>
+    </section>
+    <section id="tasks">
+      <h2>得意なタスクと限界</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>リソース制約のあるNLP</strong>
+          モバイル・エッジでの推論
+        </li>
+        <li>
+          <strong>大量デプロイ</strong>
+          APIコストを抑えたい分類・検索
+        </li>
+        <li>
+          <strong>研究・教育</strong>
+          BERTより軽く実験を回す
+        </li>
+      </ul>
+      <p>軽量化しても<a href="../hallucination/">ハルシネーション</a>や誤分類は起こり得ます。現代の対話生成は<a href="../llm/">LLM</a>が主役であり、ALBERTは<strong>BERT時代の効率化の教科書</strong>として押さえます。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ALBERT＝BERT</td><td>派生・軽量設計が異なる</td></tr>
+          <tr><td>ALBERT＝GPT</td><td>エンコーダ vs デコーダ</td></tr>
+          <tr><td>ALBERT＝CNN / 物体検出</td><td>G-323の誤答パターン</td></tr>
+          <tr><td>パラメータ共有＝層が1つだけ</td><td>深さは維持しつつ重みを共有</td></tr>
+          <tr><td>軽量＝常にBERTより高精度</td><td>トレードオフ。一概には言えない</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ALBERTとBERTの違いは？</summary>
+          <p class="tool-faq-a">どちらもTransformerエンコーダ型の双方向言語モデルですが、ALBERTは層間パラメータ共有や埋め込みの因数分解などでパラメータ数を抑え、より軽量に学習・推論しやすくしたBERT派生です。試験ではBERTの軽量版として整理します。</p>
+        </details>
+        <details>
+          <summary>ALBERTは文章生成モデルですか？</summary>
+          <p class="tool-faq-a">主にBERTと同様、理解・分類・質問応答などのNLPタスク向きのエンコーダ型モデルです。GPTのような自己回帰的な長文生成の典型ではありません。</p>
+        </details>
+        <details>
+          <summary>軽量化＝性能が必ず低いですか？</summary>
+          <p class="tool-faq-a">パラメータ数を減らしても、設計工夫により同等付近の性能を狙える場合があります。ただし軽量だから誤りなし、とは答えません。タスクとモデルサイズのトレードオフとして理解します。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERTの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-425/">TF-425 · エンコーダ型</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · タスクとモデル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../deberta/">DeBERTa</a></li>
+          <li><a href="../electra/">ELECTRA</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../3d-cnn/">3D CNN</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gemini 1.5 Flashとは？1.5 Proの高速・低コスト版。大量処理・APIスループットの選び方をG検定・生成AIパスポート向けに解説。">
+  <title>Gemini 1.5 Flashとは？大量処理のスループット経済 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gemini-1-5-flash/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gemini 1.5 Flashとは？大量処理のスループット経済">
+  <meta property="og:description" content="1.5世代の高速帯。1件の最高品質より、1万件を安く速く回す設計思想。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gemini-1-5-flash/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Gemini 1.5 Flash",
+        "alternateName": ["Gemini 1.5 Flash", "ジェミニ 1.5 フラッシュ"],
+        "description": "Gemini 1.5世代の高速・低コストモデル。1.5 Proの能力を保ちつつ大量処理ユースケース向けに最適化。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "FlashはProの劣化版ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "単なる切り捨て版ではなく、速度とコストを優先した別サイズの設計です。分類・要約・データ抽出など反復タスクではFlashの方が経済的で、複雑推論ではProを選ぶ場面が多いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Flashでも長コンテキストは使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1.5世代の設計思想として長コンテキスト対応が系列に広がり、Flashも長い入力を扱える設計です。ただし処理速度・コスト・精度のトレードオフはProと異なるため、用途で使い分けます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FlashとNanoの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FlashはクラウドAPI中心の高速帯、Nanoは端末上の最軽量帯です。実行場所とモデル規模が異なり、名称の「軽さ」は共通でもレイヤーが別です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../gemini-model/">Gemini</a></li>
+      <li aria-current="page">Gemini 1.5 Flash</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Gemini 1.5 Flashとは？大量処理のスループット経済</h1>
+    <p class="tool-hero-sub">読み：じぇみに いちてんご ふらっしゅ ／ 英：Gemini 1.5 Flash</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Gemini 1.5 Flash</strong>は、<a href="../gemini-1-5-pro/">1.5 Pro</a>と同世代の<strong>高速・低コスト帯</strong>モデルです。<a href="../gemini-1-5-pro/">1.5 Pro</a>が「100万トークンで一冊まるごと読む」長コンテキストの旗印だったのに対し、Flashは<strong>「1万件を安く速く回す」</strong>スループット経済を狙います。本記事はスペック表の暗記ではなく、<strong>API大量呼び出しでFlashを選ぶ判断基準</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">1.5 Flashとは</a></li>
+        <li><a href="#throughput">スループットという設計思想</a></li>
+        <li><a href="#decision">ProとFlashの選び方</a></li>
+        <li><a href="#api-economics">API経済と実務パターン</a></li>
+        <li><a href="#flash-lineage">Flash命名の系列史</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        試験ではFlashの個別ベンチマークより、<strong>Gemini系列の階層</strong>として整理します。1.5世代は Pro（標準）と Flash（高速・低コスト）の<strong>兄弟関係</strong>であり、Ultra/Pro/Nanoの1.0階層や、後続の2.0 Flash・2.5 Flashへと「Flash＝高速帯」という命名が継承されます。
+      </p>
+      <p>
+        Google提供の主要生成AIである点（<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141</a>）と、モデル選定では<strong>用途に応じた使い分け</strong>がある点が実務寄りの整理です。Flashは「無料版」や「旧モデル」ではなく、<strong>意図的な製品階層</strong>です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141（Geminiの位置づけ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170（コンテキストウィンドウ）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>1.5 Flashとは</h2>
+      <p>
+        2024年、Googleは1.5 Proに続き<strong>1.5 Flash</strong>を公開しました。1.5 Proが長コンテキストと高い汎用性を訴求する一方、Flashは<strong>レイテンシとトークン単価</strong>を優先し、チャットのデフォルトやAPIの大量バッチに適した帯域として位置づけられました。
+      </p>
+      <p>
+        OpenAIの「GPT-4」と「GPT-4o mini」、Anthropicの「Sonnet」と「Haiku」と同様、各社は<strong>Pro/Flash（またはそれに相当する名称）の二層</strong>で、品質最大化と処理量最大化の両方をカバーしています。
+      </p>
+    </section>
+    <section id="throughput">
+      <h2>スループットという設計思想</h2>
+      <p>「スループット」とは、単位時間あたりに処理できるリクエスト数やトークン量のことです。Flashが狙うのは次のような場面です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>指標</th><th>1.5 Pro寄り</th><th>1.5 Flash寄り</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1リクエストの品質</td><td>難問・複合推論で有利</td><td>単純タスクで十分なことが多い</td></tr>
+          <tr><td>応答速度</td><td>重い処理で遅くなりがち</td><td>短い待ち時間を重視</td></tr>
+          <tr><td>APIコスト</td><td>高め</td><td>低め。件数が増えるほど差が効く</td></tr>
+          <tr><td>典型ユースケース</td><td>長文書の深い分析</td><td>分類・タグ付け・短い要約の大量実行</td></tr>
+        </tbody>
+      </table>
+      <p>1件の回答を磨き上げるより、<strong>1万件を漏れなく処理する</strong>——カタログ整理、問い合わせの一次分類、ログの異常検知など——がFlashの主戦場です。</p>
+    </section>
+    <section id="decision">
+      <h2>ProとFlashの選び方</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>シナリオ</th><th>向くモデル</th><th>理由</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>数百ページの契約書を1回で精読・照合</td><td><strong>Pro</strong></td><td>複雑推論・長文の深い理解</td></tr>
+          <tr><td>1万件の商品説明をカテゴリ分類</td><td><strong>Flash</strong></td><td>反復タスクのコスト効率</td></tr>
+          <tr><td>ユーザー向けチャットのデフォルト</td><td><strong>Flash</strong></td><td>待ち時間と運用コスト</td></tr>
+          <tr><td>マルチステップのコーディング支援</td><td><strong>Pro</strong></td><td>推論の深さを優先</td></tr>
+          <tr><td>リアルタイム入力補助（短い草案）</td><td>Flash or <a href="../gemini-1-0-nano/">Nano</a></td><td>速度重視。端末ならNano</td></tr>
+        </tbody>
+      </table>
+      <p>「常にProが上、Flashは下」という単純序列ではなく、<strong>タスクの性質</strong>で選びます。試験でも「Flash＝常に劣化」と答えるのは誤りです。</p>
+    </section>
+    <section id="api-economics">
+      <h2>API経済と実務パターン</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>バッチパイプライン</strong>
+          夜間に数万件のテキストを要約・分類。Flashでトークン単価を抑える
+        </li>
+        <li>
+          <strong>二段構成</strong>
+          Flashで粗いフィルタ → 難件だけProへエスカレーション
+        </li>
+        <li>
+          <strong>レイテンシ敏感UI</strong>
+          入力中のリアルタイム補完。待ち時間がUXを左右するためFlashを選択
+        </li>
+      </ul>
+      <p>
+        <a href="../context-window/">コンテキストウィンドウ</a>が大きいモデルでも、<strong>毎トークン課金</strong>のAPIでは入力が長いほどコストが増えます（TF-0170の文脈）。Flashは「長く渡せる」だけでなく「短いタスクを大量に安く回す」設計として理解すると実務と試験の両方で混乱しにくくなります。
+      </p>
+    </section>
+    <section id="flash-lineage">
+      <h2>Flash命名の系列史</h2>
+      <p>Geminiにおける「Flash」は1.5で始まったわけではなく、以降も高速帯の<strong>共通ブランド</strong>として使われます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>世代</th><th>Flashの意味（整理）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1.5 Flash</strong></td><td>1.5</td><td>Proの高速・低コスト兄弟</td></tr>
+          <tr><td><a href="../gemini-2-0-flash/">Gemini 2.0 Flash</a></td><td>2.0</td><td>リアルタイム・マルチモーダル強化</td></tr>
+          <tr><td><a href="../gemini-2-5-flash/">Gemini 2.5 Flash</a></td><td>2.5</td><td>思考モード付き高速帯</td></tr>
+        </tbody>
+      </table>
+      <p>世代番号とFlashを組み合わせて答えることが重要です。「Flash」だけではどの世代か特定できません。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Flash＝無料プラン</td><td>モデル階層の名称。課金体系とは別軸</td></tr>
+          <tr><td>Flash＝1.5 Proと同一</td><td>同一世代の別サイズ</td></tr>
+          <tr><td>Flash＝1.0 Nano</td><td>Flashはクラウド帯、Nanoは端末帯</td></tr>
+          <tr><td>Flash＝品質が低いから使わない</td><td>大量処理では最適解になりうる</td></tr>
+          <tr><td>Flashならハルシネーションなし</td><td>軽量でも<a href="../hallucination/">ハルシネーション</a>は起こりうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>FlashはProの劣化版ですか？</summary>
+          <p class="tool-faq-a">単なる切り捨て版ではなく、速度とコストを優先した別サイズの設計です。分類・要約・データ抽出など反復タスクではFlashの方が経済的で、複雑推論ではProを選ぶ場面が多いです。</p>
+        </details>
+        <details>
+          <summary>Flashでも長コンテキストは使えますか？</summary>
+          <p class="tool-faq-a">1.5世代の設計思想として長コンテキスト対応が系列に広がり、Flashも長い入力を扱える設計です。ただし処理速度・コスト・精度のトレードオフはProと異なるため、用途で使い分けます。</p>
+        </details>
+        <details>
+          <summary>FlashとNanoの違いは？</summary>
+          <p class="tool-faq-a">FlashはクラウドAPI中心の高速帯、Nanoは端末上の最軽量帯です。実行場所とモデル規模が異なり、名称の「軽さ」は共通でもレイヤーが別です。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141 · Geminiの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · コンテキストウィンドウ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li><a href="../gemini-1-5-pro/">Gemini 1.5 Pro</a></li>
+          <li><a href="../gemini-1-0-nano/">Gemini 1.0 Nano</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../gemini-2-0-flash/">Gemini 2.0 Flash</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

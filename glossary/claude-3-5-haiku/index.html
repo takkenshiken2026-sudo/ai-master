@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude 3.5 Haikuとは？前世代Opus級性能を低コストで提供する軽量モデルの意味、3 Haikuとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Claude 3.5 Haikuとは？軽量帯の逆転——Opus級を安く — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-3-5-haiku/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude 3.5 Haikuとは？軽量帯の逆転——Opus級を安く">
+  <meta property="og:description" content="3.5世代のHaiku。最軽量のはずが前世代最上位に迫る——階層の常識を揺るがしたモデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-3-5-haiku/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude 3.5 Haiku",
+        "alternateName": ["Claude 3.5 Haiku", "クロード 3.5 ハイク"],
+        "description": "Claude 3.5世代の軽量モデル。前世代Opusに匹敵する性能を低コスト・高速で提供。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "3.5 Haikuと3 Haikuの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "名称のHaikuは共通ですが、3.5は中間世代アップデートで能力が大きく底上げされた別モデルです。3 Haikuが純粋な大量処理向けだったのに対し、3.5 Haikuは前世代最上位（Opus）級のタスクにも使えると訴求されました。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Opus級の性能ならHaikuで常に十分ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。ベンチマークや特定タスクでの比較であり、全用途で現行OpusやSonnetを置き換えるわけではありません。最難問では上位帯を選ぶ場面も残ります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "軽量＝ハルシネーションなしですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。性能が上がっても事実誤認は起こり得ます。軽量は主に速度とコストの話であり、正確性の完全保証ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude 3.5 Haiku</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude 3.5 Haikuとは？軽量帯の逆転——Opus級を安く</h1>
+    <p class="tool-hero-sub">読み：くろーど さんてんご はいく ／ 英：Claude 3.5 Haiku</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude 3.5 Haiku</strong>は、<a href="../claude-model/">Claude</a> 3.5世代の<strong>軽量モデル</strong>です。<a href="../claude-3-haiku/">3 Haiku</a>が「大量処理の入口」——速度とコスト最優先——だったのに対し、3.5 Haikuは<strong>前世代最上位（<a href="../claude-3-opus/">Opus</a>）に匹敵する性能を、Haikuの価格帯で</strong>——という逆転のナラティブで登場しました。本記事はベンチマーク数値の暗記ではなく、<strong>「軽量帯の意味が変わった」</strong>という製品史の転換点に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">3.5 Haikuとは</a></li>
+        <li><a href="#tier-inversion">階層の逆転とは</a></li>
+        <li><a href="#vs-3-haiku">3 Haikuとの世代差</a></li>
+        <li><a href="#when-haiku">いつ3.5 Haikuを選ぶか</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Haikuは<strong>最軽量階層の名称</strong>として系列共通ですが、<strong>3 Haikuと3.5 Haikuは別モデル</strong>です。試験では世代番号（3 / 3.5）と階層名（Haiku）をセットで整理し、開発元はAnthropic（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>）です。
+      </p>
+      <p>
+        「Opus級」はマーケティング上の比較表現であり、<strong>ベンチマーク最高＝常に正確</strong>ではありません（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）。軽量帯の性能向上と、事実の正確性の保証は別問題です。
+      </p>
+      <p>
+        API大量利用ではコスト意識が重要です（<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428</a>）。3.5 Haikuは「安いから単純タスク専用」とだけは言えず、<strong>性能が上がった分、使える場面が広がった</strong>軽量帯として理解します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claude）</a>、<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428（APIコスト）</a>、<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（正確性）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>3.5 Haikuとは</h2>
+      <p>
+        2024年後半、Anthropicは<a href="../claude-3-5-sonnet/">3.5 Sonnet</a>に続き<strong>3.5 Haiku</strong>を公開しました。3.5 Sonnetがコーディングで標準帯を強化したのに対し、Haikuは<strong>軽量のまま知性を持ち上げる</strong>——という対になるリリースでした。
+      </p>
+      <p>
+        公開時には、<a href="../claude-3-opus/">Claude 3 Opus</a>と比較したベンチマークや実務タスクで「以前の最上位に迫る」という訴求がなされ、業界では<strong>「小型モデルの性能インフレ」</strong>として議論されました。
+      </p>
+    </section>
+    <section id="tier-inversion">
+      <h2>階層の逆転とは</h2>
+      <p>従来の三層は「上ほど賢く、下ほど速い」という単純な梯子でした。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>時代</th><th>Haikuの意味</th><th>変化</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Claude 3 Haiku</td><td>単純分類・大量バッチ専用</td><td>「軽い＝簡単な仕事だけ」</td></tr>
+          <tr><td><strong>Claude 3.5 Haiku</strong></td><td>中程度の推論も軽量帯で</td><td>「軽い＝安く速いが、そこそこ難しい仕事も」</td></tr>
+        </tbody>
+      </table>
+      <p>
+        これは<a href="../gemini-2-5-flash/">Gemini 2.5 Flash</a>が思考モードを軽量帯に載せた動きとも響き合います。試験では<strong>階層名の役割は変わりうる</strong>が、Haiku＝Anthropic最軽量という<strong>相対位置</strong>は維持される、と整理します。
+      </p>
+    </section>
+    <section id="vs-3-haiku">
+      <h2>3 Haikuとの世代差</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>3 Haiku</th><th>3.5 Haiku</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>世代</td><td>Claude 3</td><td>Claude 3.5</td></tr>
+          <tr><td>主戦場</td><td>スループット・一次分類</td><td>性能底上げ＋コスト効率</td></tr>
+          <tr><td>兄弟</td><td>3 Sonnet / Opus</td><td><a href="../claude-3-5-sonnet/">3.5 Sonnet</a></td></tr>
+          <tr><td>訴求</td><td>速さ・安さ</td><td>速さ・安さ＋前世代Opus級</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="when-haiku">
+      <h2>いつ3.5 Haikuを選ぶか</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>中程度の推論を大量に</strong>
+          以前はSonnet必須だった分類・抽出をHaikuで回す
+        </li>
+        <li>
+          <strong>レイテンシ敏感なUI</strong>
+          チャット補完・リアルタイム要約
+        </li>
+        <li>
+          <strong>コスト上限が厳しいAPI</strong>
+          3.5 Sonnetより単価を抑えつつ品質を確保
+        </li>
+      </ul>
+      <p>
+        最難の研究分析や大規模コーディング設計は、依然<a href="../claude-3-5-sonnet/">3.5 Sonnet</a>や現行Opus向きです。<strong>二段エスカレーション</strong>——Haiku → Sonnet——の設計はTF-0428の精神と一致します。
+      </p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>3.5 Haiku＝3 Haiku</td><td>世代が異なる別モデル</td></tr>
+          <tr><td>Opus級＝Opusと同一</td><td>比較表現。製品名は別</td></tr>
+          <tr><td>Haiku＝無料</td><td>階層名。課金体系とは別</td></tr>
+          <tr><td>軽量強化＝誤りなし</td><td>TF-0460の論点</td></tr>
+          <tr><td>3.5 Haiku＝3.5 Sonnet</td><td>同一世代の別サイズ</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>3.5 Haikuと3 Haikuの違いは？</summary>
+          <p class="tool-faq-a">名称のHaikuは共通ですが、3.5は中間世代アップデートで能力が大きく底上げされた別モデルです。3 Haikuが純粋な大量処理向けだったのに対し、3.5 Haikuは前世代最上位（Opus）級のタスクにも使えると訴求されました。</p>
+        </details>
+        <details>
+          <summary>Opus級の性能ならHaikuで常に十分ですか？</summary>
+          <p class="tool-faq-a">いいえ。ベンチマークや特定タスクでの比較であり、全用途で現行OpusやSonnetを置き換えるわけではありません。最難問では上位帯を選ぶ場面も残ります。</p>
+        </details>
+        <details>
+          <summary>軽量＝ハルシネーションなしですか？</summary>
+          <p class="tool-faq-a">いいえ。性能が上がっても事実誤認は起こり得ます。軽量は主に速度とコストの話であり、正確性の完全保証ではありません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428 · APIコスト</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 正確性</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../claude-3-haiku/">Claude 3 Haiku</a></li>
+          <li><a href="../claude-3-5-sonnet/">Claude 3.5 Sonnet</a></li>
+          <li><a href="../claude-3-opus/">Claude 3 Opus</a></li>
+          <li><a href="../claude-3-7-sonnet/">Claude 3.7 Sonnet</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

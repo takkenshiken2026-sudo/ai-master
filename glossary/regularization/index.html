@@ -166,7 +166,7 @@
           <tr><td><strong>L1 / L2</strong></td><td>損失に重みのペナルティを追加</td><td>「重みを小さく／ゼロに」</td></tr>
           <tr><td><strong><a href="../dropout/">ドロップアウト</a></strong></td><td>学習時にニューロンをランダム無効化</td><td>「ユニットを落とす」。推論時は通常オフ</td></tr>
           <tr><td><strong><a href="../early-stopping/">早期終了</a></strong></td><td>検証性能悪化で学習を打ち切る</td><td>「学習の長さを制御」</td></tr>
-          <tr><td><strong>データ拡張</strong></td><td>反転・切り出しなどで多様性を増やす</td><td>画像などで有効。正則化効果もある</td></tr>
+          <tr><td><strong>データ拡張</strong></td><td>反転・<a href="../cutmix/">CutMix</a>などで多様性を増やす</td><td>画像などで有効。正則化効果もある</td></tr>
           <tr><td><strong>モデル簡素化</strong></td><td>層・パラメータ数を減らす</td><td>表現力と汎化のバランス</td></tr>
         </tbody>
       </table>
@@ -191,7 +191,7 @@
       <table class="tool-spec-table">
         <thead><tr><th>用語</th><th>目的</th><th>典型例</th></tr></thead>
         <tbody>
-          <tr><td><strong>正規化層</strong></td><td>中間表現の分布を整え<strong>学習を安定化</strong></td><td>バッチ正規化、レイヤー正規化</td></tr>
+          <tr><td><strong>正規化層</strong></td><td>中間表現の分布を整え<strong>学習を安定化</strong></td><td><a href="../batch-normalization/">バッチ正規化</a>、<a href="../layer-normalization/">レイヤー正規化</a></td></tr>
           <tr><td><strong>正則化</strong></td><td><strong>過学習を抑える</strong>制約・ペナルティ</td><td>L1/L2、ドロップアウト、早期終了</td></tr>
         </tbody>
       </table>
@@ -217,7 +217,7 @@
       <div class="tool-faq">
         <details><summary>正則化を強くしすぎると？</summary><p class="tool-faq-a">未学習（Underfitting）に近づき、訓練誤差も下がりにくくなります。検証性能の曲線を見ながら λ やドロップアウト率を調整します。</p></details>
         <details><summary>データ拡張は正則化？</summary><p class="tool-faq-a">広い意味では正則化効果があります。試験では L1/L2・ドロップアウト・早期終了と並べて覚え、過学習対策の選択肢として扱うのが安全です。</p></details>
-        <details><summary>LLMのファインチューニングでも正則化する？</summary><p class="tool-faq-a">はい。Weight decay（L2に近い）、ドロップアウト、早期終了、LoRAなどパラメータを絞る手法も過学習抑制に使われます。</p></details>
+        <details><summary>LLMのファインチューニングでも正則化する？</summary><p class="tool-faq-a">はい。Weight decay（L2に近い）、<a href="../adamw/">AdamW</a>での重み減衰、ドロップアウト、早期終了、LoRAなどパラメータを絞る手法も過学習抑制に使われます。</p></details>
         <details><summary>L1とL2は同時に使える？</summary><p class="tool-faq-a">Elastic Netのように併用する手法もあります。G検定では個別の定義と効果の違いが中心です。</p></details>
       </div>
     </section>
@@ -236,9 +236,13 @@
         <ul class="tool-related-list">
           <li><a href="../overfitting/">過学習</a></li>
           <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../cutmix/">CutMix</a></li>
           <li><a href="../early-stopping/">早期終了</a></li>
           <li><a href="../loss-function/">損失関数</a></li>
           <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../adamw/">AdamW</a></li>
+          <li><a href="../batch-normalization/">バッチ正規化</a></li>
+          <li><a href="../layer-normalization/">レイヤー正規化</a></li>
           <li><a href="../machine-learning/">機械学習</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>

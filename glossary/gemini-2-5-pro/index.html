@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gemini 2.5 Proとは？思考モード搭載のGemini最上位モデルの意味、CoTプロンプト・o1系列との違い、コーディング・推論をG検定向けに解説。">
+  <title>Gemini 2.5 Proとは？思考モードと推論・コーディングの最上位 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gemini-2-5-pro/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gemini 2.5 Proとは？思考モードと推論・コーディングの最上位">
+  <meta property="og:description" content="2.5世代のPro最上位。モデル内思考モードでSTEM・コーディングを強化。o1とは別系列。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gemini-2-5-pro/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Gemini 2.5 Pro",
+        "alternateName": ["Gemini 2.5 Pro", "ジェミニ 2.5 プロ"],
+        "description": "Gemini 2.5世代の最上位Proモデル。思考モードを搭載し、コーディング・推論で高い性能を示すGoogleのLLM。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "思考モードとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "回答前にモデルが内部的な推論ステップを多めに使う動作モードです。OpenAI o1系列の「考える時間」と同様の思想ですが、GeminiではPro名称のまま2.5世代に組み込まれた機能として提供されます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "2.5 ProとOpenAI o3は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。どちらも推論強化を訴求しますが、2.5 ProはGoogleのGemini Pro系列、o3はOpenAIのo系列です。開発元・命名体系・製品ラインが異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "思考モードなら必ず正確ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。推論過程が丁寧に見えても、計算や事実の誤りは起こり得ます。段階的に考えさせることと正確性の保証は別問題として整理します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../gemini-model/">Gemini</a></li>
+      <li aria-current="page">Gemini 2.5 Pro</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Gemini 2.5 Proとは？思考モードと推論・コーディングの最上位</h1>
+    <p class="tool-hero-sub">読み：じぇみに にてんご ぷろ ／ 英：Gemini 2.5 Pro</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Gemini 2.5 Pro</strong>は、<a href="../gemini-model/">Gemini</a> 2.5世代の<strong>最上位Proモデル</strong>です。<a href="../o1-model/">OpenAI o1</a>が「o」という別系列で<strong>考える時間</strong>を導入したのに対し、Googleは<strong>Pro名称のまま思考モード（Thinking）</strong>を組み込み、コーディング・数学・論理推論で高いベンチマークを示しました。本記事は数値の暗記ではなく、<strong>「Gemini版の推論強化」とCoT・o系列との三層整理</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">2.5 Proとは</a></li>
+        <li><a href="#thinking-mode">思考モードの意味</a></li>
+        <li><a href="#three-layers">モデル内思考・CoT・o系列の整理</a></li>
+        <li><a href="#coding-reasoning">コーディングと推論で効く場面</a></li>
+        <li><a href="#lineup">2.5世代の位置づけ</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        2.5 Pro専用の一問一答は少ないですが、関連論点は頻出です。<strong>「段階的に考えさせる＝必ず正確」</strong>は×（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>、<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459</a>）。推論過程が丁寧に見えても、計算や事実の誤りは起こり得ます。
+      </p>
+      <p>
+        複雑な依頼は段階に分けると確認しやすい（<a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476</a>）——これは<strong>ユーザーのプロンプト設計</strong>の話であり、2.5 Proの<strong>モデル内思考モード</strong>とは別レイヤーです。
+      </p>
+      <p>
+        Googleの主要生成AIとして開発元の区別（<a href="../../exams/genai-passport/drill/q/tf-0141/">TF-0141</a>）と、<strong>Pro＝Geminiの標準最上位帯</strong>という系列の整理が試験の骨格です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460（説明できる≠正確）</a>、<a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459（計算の誤り）</a>、<a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476（段階的依頼）</a></p>
+        <p>関連技法：<a href="../chain-of-thought/">Chain-of-Thought</a> · <a href="../o1-model/">OpenAI o1</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>2.5 Proとは</h2>
+      <p>
+        2025年に発表されたGemini 2.5は、2.0からの<strong>世代更新</strong>です。2.5 Proはその最上位で、従来の<a href="../gemini-1-5-pro/">1.5 Pro</a>が長コンテキストを旗印にしたのに対し、2.5 Proは<strong>思考モードによる推論深化</strong>と<strong>コーディング性能</strong>を前面に出しました。
+      </p>
+      <p>
+        公開時にはコード生成ベンチマークや数学・科学系タスクで高得点が報じられ、「推論モデル競争」におけるGoogleの回答と位置づけられました。試験ではベンチマーク数値より、<strong>思考モード付きPro＝Gemini系列の推論最上位</strong>として答えられることが重要です。
+      </p>
+    </section>
+    <section id="thinking-mode">
+      <h2>思考モードの意味</h2>
+      <p>
+        思考モード（Thinking）は、回答前にモデルが<strong>内部的な推論トークン</strong>を多めに消費し、難問での正答率向上を狙う動作です。<a href="../o1-model/">o1</a>や<a href="../o3/">o3</a>の「考える時間」と思想は共通ですが、Geminiでは<strong>別系列名（o）を切らずProに統合</strong>した点が製品戦略の違いです。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>通常モード</strong> — 速い応答を優先。日常の対話・軽いタスク</li>
+        <li><strong>思考モード</strong> — 内部推論を増やし、数学・論理・複雑コードに挑む</li>
+        <li><strong>トレードオフ</strong> — 精度向上の代わりに<strong>遅く・高コスト</strong>になりうる</li>
+        <li><strong>限界</strong> — 考えたから正しいわけではない（TF-0460）</li>
+      </ol>
+    </section>
+    <section id="three-layers">
+      <h2>モデル内思考・CoT・o系列の整理</h2>
+      <p>推論強化は一つの仕組みではありません。試験で混同しやすい3層を分けます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>誰が制御するか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>プロンプト技法</strong></td><td><a href="../chain-of-thought/">Chain-of-Thought</a></td><td>ユーザーが「段階的に考えて」と指示</td></tr>
+          <tr><td><strong>モデル内思考（Gemini）</strong></td><td>2.5 Pro 思考モード</td><td>モデルが内部推論を増やす設計</td></tr>
+          <tr><td><strong>別系列（OpenAI）</strong></td><td><a href="../o1-model/">o1</a> / <a href="../o3/">o3</a></td><td>GPT番号系列とは別の「o」ライン</td></tr>
+        </tbody>
+      </table>
+      <p>
+        2.5 Proは第2層。CoTを書かなくてもモデル側で推論を深められる一方、<strong>ユーザーが段階的に依頼する</strong>（TF-0476）ことと<strong>モデルが内部思考する</strong>ことは補完関係にありますが同一ではありません。
+      </p>
+    </section>
+    <section id="coding-reasoning">
+      <h2>コーディングと推論で効く場面</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>大規模リファクタリング</strong>
+          複数ファイルにまたがる設計判断と実装
+        </li>
+        <li>
+          <strong>バグの根本原因分析</strong>
+          ログとコードを横断して仮説を立てる
+        </li>
+        <li>
+          <strong>数学・科学の証明風問題</strong>
+          中間ステップが必要な論理展開
+        </li>
+        <li>
+          <strong>仕様の矛盾検出</strong>
+          長い要件定義書の整合性チェック
+        </li>
+      </ul>
+      <p>
+        単純なコード補完や定型要約は<a href="../gemini-2-5-flash/">2.5 Flash</a>や<a href="../gemini-2-0-flash/">2.0 Flash</a>で十分なことが多く、2.5 Proは<strong>難度の高い推論がボトルネック</strong>のときに選ばれます。
+      </p>
+    </section>
+    <section id="lineup">
+      <h2>2.5世代の位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>帯域</th><th>整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>2.5 Pro</strong></td><td>最上位</td><td>思考モード・コーディング・推論最大化</td></tr>
+          <tr><td><a href="../gemini-2-5-flash/">Gemini 2.5 Flash</a></td><td>高速</td><td>思考モードをコスト効率よく提供</td></tr>
+          <tr><td><a href="../gemini-2-0-flash/">2.0 Flash</a></td><td>前世代高速</td><td>ライブマルチモーダル寄り</td></tr>
+          <tr><td><a href="../gemini-1-5-pro/">1.5 Pro</a></td><td>前世代標準</td><td>長コンテキスト（100万トークン）の旗印</td></tr>
+        </tbody>
+      </table>
+      <p>「Pro」は1.0から2.5まで<strong>標準〜最上位の系列名</strong>として継承されていますが、各世代の<strong>主役機能は異なります</strong>——1.5は長さ、2.5は思考——と覚えると系列史が整理しやすくなります。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>2.5 Pro＝OpenAI o3</td><td>Google Gemini vs OpenAI o系列。開発元が異なる</td></tr>
+          <tr><td>思考モード＝CoT</td><td>モデル内設計 vs プロンプト技法</td></tr>
+          <tr><td>思考モード＝必ず正確</td><td>TF-0460・TF-0459の論点</td></tr>
+          <tr><td>2.5 Pro＝1.5 Pro</td><td>世代が異なる。主訴求もシフト</td></tr>
+          <tr><td>ベンチマーク1位＝全用途最適</td><td>タスク・時点で変わる。過信しない</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>思考モードとは何ですか？</summary>
+          <p class="tool-faq-a">回答前にモデルが内部的な推論ステップを多めに使う動作モードです。OpenAI o1系列の「考える時間」と同様の思想ですが、GeminiではPro名称のまま2.5世代に組み込まれた機能として提供されます。</p>
+        </details>
+        <details>
+          <summary>2.5 ProとOpenAI o3は同じですか？</summary>
+          <p class="tool-faq-a">いいえ。どちらも推論強化を訴求しますが、2.5 ProはGoogleのGemini Pro系列、o3はOpenAIのo系列です。開発元・命名体系・製品ラインが異なります。</p>
+        </details>
+        <details>
+          <summary>思考モードなら必ず正確ですか？</summary>
+          <p class="tool-faq-a">いいえ。推論過程が丁寧に見えても、計算や事実の誤りは起こり得ます。段階的に考えさせることと正確性の保証は別問題として整理します。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 説明できる≠正確</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0459/">TF-0459 · 計算の誤り</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0476/">TF-0476 · 段階的依頼</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li><a href="../chain-of-thought/">Chain-of-Thought</a></li>
+          <li><a href="../o1-model/">OpenAI o1</a></li>
+          <li><a href="../o3/">OpenAI o3</a></li>
+          <li><a href="../gemini-2-0-flash/">Gemini 2.0 Flash</a></li>
+          <li><a href="../gemini-2-5-flash/">Gemini 2.5 Flash</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

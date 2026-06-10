@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3D CNNとは？時間軸も含め畳み込む動画向けネットワークの意味、2D CNN・RNNとの違いをG検定向けに解説。">
+  <title>3D CNNとは？時間軸を加えた第三の畳み込み——動画の立体認識 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/3d-cnn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="3D CNNとは？時間軸を加えた第三の畳み込み——動画の立体認識">
+  <meta property="og:description" content="高さ・幅に加え時間方向も畳み込む。動画認識の古典的拡張。動画生成AIとは別物。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/3d-cnn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "3D CNN",
+        "alternateName": ["3D CNN", "3D畳み込みニューラルネットワーク", "3D Convolutional Network"],
+        "description": "時間軸も含めて畳み込みを行う畳み込みニューラルネットワーク。動画認識などに用いられる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "3D CNNと2D CNNの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2D CNNは画像の高さ・幅の2次元で畳み込み、3D CNNは時間（フレーム）方向を含む3次元で畳み込みます。静止画向きが2D、動画の時空パターン向きが3D、と整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "3D CNN＝動画生成AIですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。3D CNNは主に動画の認識・分類など理解系タスク向けのアーキテクチャです。テキストや画像から動画を生成する動画生成AIとは別概念です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "動画はRNNだけで処理しますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。動画はフレーム列としてRNNで扱う方法もありますが、3D CNNのように時空をまとめて畳み込む方法もあります。データの表現とモデル設計の選択肢の一つです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">3D CNN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>3D CNNとは？時間軸を加えた第三の畳み込み——動画の立体認識</h1>
+    <p class="tool-hero-sub">読み：すりーでぃー しーえぬえぬ ／ 英：3D CNN（3D Convolutional Network）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>3D CNN</strong>（3D畳み込みニューラルネットワーク）は、<a href="../cnn/">CNN</a>の畳み込みを<strong>時間軸まで広げた</strong>アーキテクチャです。<a href="../cnn/">2D CNN</a>が静止画の「高さ×幅」で局所パターンを捉えるのに対し、3D CNNは<strong>「高さ×幅×時間」</strong>——動きや変化を含む立体——で特徴を抽出します。本記事はカーネルサイズの暗記ではなく、<strong>「なぜ動画に第三の次元が要るか」</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">3D CNNとは</a></li>
+        <li><a href="#third-dimension">第三の次元＝時間</a></li>
+        <li><a href="#vs-2d">2D CNNとの対比</a></li>
+        <li><a href="#video-approaches">動画を扱う三つの道</a></li>
+        <li><a href="#use-cases">向いているタスク</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        3D CNN専用の一問一答は少ないですが、<strong>CNNの拡張</strong>——画像の局所特徴を畳み込みで捉える——という骨格（<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>、<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>）を<strong>時間方向にも適用</strong>した、と理解します。
+      </p>
+      <p>
+        データとモデルの対応——<strong>画像→CNN、系列→RNN</strong>（<a href="../../exams/g-kentei/practice/q/g-239/">G-239</a>）——に加え、<strong>動画→3D CNNや動画向け設計</strong>が選択肢の一つです。
+      </p>
+      <p>
+        <strong>動画生成AI</strong>——新しい映像を作る——（<a href="../../exams/genai-passport/drill/q/tf-0220/">TF-0220</a>）と、<strong>3D CNNによる動画認識</strong>——既存映像を理解する——は別概念です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401（CNN）</a>、<a href="../../exams/g-kentei/practice/q/g-239/">G-239（データとモデル）</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-389/">G-389（マルチモーダル・動画）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>3D CNNとは</h2>
+      <p>
+        3D CNNは、3次元のカーネル（例：高さ×幅×時間の小さな直方体）を入力ボリューム上でスライドさせ、<strong>時空の局所パターン</strong>を抽出するネットワークです。動画は「フレームの束」——各フレームは2D画像、束全体で時間軸を持つ——として扱われます。
+      </p>
+      <p>
+        医療画像のボリュームデータ（CT/MRIの3次元断層）にも3D畳み込みが使われます。試験では細部より<strong>「時間（または深さ）を含む3次元畳み込み」</strong>という一言が押さえ目標です。
+      </p>
+    </section>
+    <section id="third-dimension">
+      <h2>第三の次元＝時間</h2>
+      <p>静止画では「エッジがどこにあるか」が重要です。動画では<strong>「エッジがどう動くか」</strong>も重要になります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>次元</th><th>2D CNN</th><th>3D CNN</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>空間（高さ・幅）</td><td>◎ 畳み込み</td><td>◎ 畳み込み</td></tr>
+          <tr><td>時間（フレーム間）</td><td>フレームごとに別処理が多い</td><td>◎ 同じカーネルで同時に</td></tr>
+          <tr><td>捉えやすいもの</td><td>形・テクスチャ</td><td>動き・ジェスチャ・変化</td></tr>
+        </tbody>
+      </table>
+      <p>例：「手を振る」動作——単一フレームでは手の形だけ、複数フレームの変化で<strong>振る動作</strong>と識別——という直感が試験向けです。</p>
+    </section>
+    <section id="vs-2d">
+      <h2>2D CNNとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>考え方</th><th>長所・短所（ざっくり）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>2D CNN＋後処理</strong></td><td>各フレームを2D CNNし、結果を統合</td><td>実装は単純。時間の同時関係は弱い</td></tr>
+          <tr><td><strong>3D CNN</strong></td><td>時空をまとめて畳み込み</td><td>動きパターンを直接学習。計算・メモリは増えがち</td></tr>
+          <tr><td><strong>2D+1Dの折衷</strong></td><td>空間2Dのあと時間1D</td><td>試験範囲外のことも多い。存在は知っておく程度</td></tr>
+        </tbody>
+      </table>
+      <p>3D CNNは2D CNNの<strong>自然な拡張</strong>であり、別物の魔法ではありません。畳み込みの思想——局所性・重み共有・階層——は共通です（<a href="../../exams/g-kentei/practice/q/g-275/">G-275</a>）。</p>
+    </section>
+    <section id="video-approaches">
+      <h2>動画を扱う三つの道</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>アプローチ</th><th>代表</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>時空畳み込み</strong></td><td>3D CNN</td><td>動画認識の古典</td></tr>
+          <tr><td><strong>系列モデル</strong></td><td><a href="../rnn/">RNN</a> / <a href="../lstm/">LSTM</a></td><td>フレーム特徴の時系列（G-239）</td></tr>
+          <tr><td><strong>生成</strong></td><td>動画生成AI</td><td>認識とは別。TF-0220</td></tr>
+        </tbody>
+      </table>
+      <p><a href="../multimodal-ai/">マルチモーダルAI</a>が動画を統合処理する文脈（G-389）とも接続しますが、3D CNNは<strong>深層学習の要素技術</strong>としての位置づけです。</p>
+    </section>
+    <section id="use-cases">
+      <h2>向いているタスク</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>動作認識</strong>
+          歩行・拍手・スポーツプレイの分類
+        </li>
+        <li>
+          <strong>映像検索・要約の特徴抽出</strong>
+          クリップ単位のベクトル化
+        </li>
+        <li>
+          <strong>医療ボリューム</strong>
+          3次元断層からの病変検出
+        </li>
+      </ul>
+      <p>現代の動画生成は拡散モデルなど別系統が主役ですが、<strong>理解・認識</strong>の土台として3D CNNは試験で問われうる古典です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>3D CNN＝動画生成AI</td><td>認識 vs 生成（TF-0220）</td></tr>
+          <tr><td>3D CNN＝2D CNN</td><td>時間軸の有無が差分</td></tr>
+          <tr><td>動画＝RNNのみ</td><td>3D CNNも選択肢</td></tr>
+          <tr><td>3D CNN＝GAN</td><td>HQ-0322のすり替えパターン</td></tr>
+          <tr><td>3D CNN＝LLM</td><td>画像・動画の基盤 vs 言語モデル</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>3D CNNと2D CNNの違いは？</summary>
+          <p class="tool-faq-a">2D CNNは画像の高さ・幅の2次元で畳み込み、3D CNNは時間（フレーム）方向を含む3次元で畳み込みます。静止画向きが2D、動画の時空パターン向きが3D、と整理します。</p>
+        </details>
+        <details>
+          <summary>3D CNN＝動画生成AIですか？</summary>
+          <p class="tool-faq-a">いいえ。3D CNNは主に動画の認識・分類など理解系タスク向けのアーキテクチャです。テキストや画像から動画を生成する動画生成AIとは別概念です。</p>
+        </details>
+        <details>
+          <summary>動画はRNNだけで処理しますか？</summary>
+          <p class="tool-faq-a">いいえ。動画はフレーム列としてRNNで扱う方法もありますが、3D CNNのように時空をまとめて畳み込む方法もあります。データの表現とモデル設計の選択肢の一つです。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · CNNの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-239/">G-239 · データとモデル</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-389/">G-389 · マルチモーダル</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../albert/">ALBERT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Foundation Model（基盤モデル）とは？事前学習と下流タスクへの転移、LLM・BERTとの違いをG検定向けに解説。">
+  <title>Foundation Modelとは？事前学習の汎用基盤——下流への転移 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/foundation-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Foundation Modelとは？事前学習の汎用基盤——下流への転移">
+  <meta property="og:description" content="大規模データで一度学び、ファインチューニングやプロンプトで多様なタスクへ。GPT・BERTは代表例。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/foundation-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Foundation Model",
+        "alternateName": ["Foundation Model", "基盤モデル", "ファウンデーションモデル"],
+        "description": "大規模データで事前学習され、ファインチューニングやプロンプトなどを通じて多様な下流タスクに適用できる汎用的なAIモデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "基盤モデルの定義として正しいのは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "大規模データで事前学習され、多様な下流タスクに適用できる汎用的なモデル、と整理します。ファインチューニングやプロンプトで用途に適応させる点が試験の要点です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "基盤モデルとLLMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。LLMは言語に特化した大規模モデルのクラス名であり、基盤モデルはより広い概念で、マルチモーダルモデルも含み得ます。LLMは基盤モデルの代表例の一つです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "基盤モデル＝単一の製品名ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。GPTやBERTなど複数のモデルが基盤モデルに該当しうる、モデルのクラス・パラダイムを指す用語です。特定企業のサービス名そのものではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Foundation Model</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Foundation Modelとは？事前学習の汎用基盤——下流への転移</h1>
+    <p class="tool-hero-sub">読み：ふぁうんでーしょん もでる ／ 英：Foundation Model（基盤モデル）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Foundation Model</strong>（基盤モデル）は、<strong>大規模データで一度事前学習</strong>し、<a href="../fine-tuning/">ファインチューニング</a>や<a href="../prompt-engineering/">プロンプト</a>などで<strong>多様な下流タスク</strong>に転用する——というパラダイムを指す用語です。タスクごとに専用モデルを一から作る時代から、<strong>「汎用の土台＋適応」</strong>へ——本記事は個別製品の暗記ではなく、<strong>なぜ現代AIがこの設計になったか</strong>に焦点を当てます。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">基盤モデルとは</a></li>
+        <li><a href="#pretrain-adapt">事前学習と適応の二段構え</a></li>
+        <li><a href="#examples">代表例の整理</a></li>
+        <li><a href="#vs-llm">LLM・単一タスクモデルとの違い</a></li>
+        <li><a href="#multimodal">マルチモーダルへの拡張</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        定義の骨格は<strong>「大規模データで事前学習され、多様な下流タスクに適用できる汎用的なモデル」</strong>（<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>）。ファインチューニングやプロンプトで適応させる、という文脈もセットです。
+      </p>
+      <p>
+        基盤モデルは<strong>決定木</strong>や<strong>著作権法の条文名</strong>ではありません（G-396の誤答パターン）。モデルのクラスとして答えます。
+      </p>
+      <p>
+        <a href="../llm/">LLM</a>や<a href="../multimodal-ai/">マルチモーダル</a>モデルが<strong>例</strong>として挙げられますが、基盤モデル＝LLMだけ、とは限りません。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-396/">G-396（基盤モデルの定義）</a></p>
+        <p>関連：<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425（BERT）</a>、<a href="../../exams/g-kentei/drill/q/tf-427/">TF-427（GPT）</a></p>
+      </div>
+    </section>
+    <section id="what-is">
+      <h2>基盤モデルとは</h2>
+      <p>
+        「Foundation（基盤）」は、建物の土台の比喩です。一度大きなコーパス——テキスト、画像、音声など——で<strong>汎用的な能力</strong>を学び、その上に翻訳・要約・分類・生成など<strong>個別タスク用の適応</strong>を載せる——という設計思想を表します。
+      </p>
+      <p>
+        2020年代に Stanford などで体系化された概念として広まり、<a href="../gpt/">GPT</a>・<a href="../bert/">BERT</a>の成功体験を一般化した言葉として使われます。試験では学術の出自より<strong>定義と転移学習のパラダイム</strong>が問われます。
+      </p>
+    </section>
+    <section id="pretrain-adapt">
+      <h2>事前学習と適応の二段構え</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>内容</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>事前学習</strong></td><td>大規模データで汎用能力を獲得</td><td>コスト大・一度だけ</td></tr>
+          <tr><td><strong>適応</strong></td><td>下流タスクへ転用</td><td>FT・プロンプト・<a href="../lora/">LoRA</a>等</td></tr>
+          <tr><td><strong>下流タスク</strong></td><td>翻訳・QA・分類・対話など</td><td>タスクごとに設計が異なる</td></tr>
+        </tbody>
+      </table>
+      <p>
+        従来は「感情分析用モデル」「翻訳用モデル」を<strong>タスクごとに独立</strong>して作ることが多かった。基盤モデルは<strong>共通の土台</strong>から枝分かれする——転移学習の極致、と理解すると試験と実務の両方に効きます。
+      </p>
+    </section>
+    <section id="examples">
+      <h2>代表例の整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>例</th><th>モダリティ</th><th>基盤としての特徴</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="../gpt/">GPT</a>系列</td><td>主にテキスト</td><td>大規模事前学習→対話・生成へ</td></tr>
+          <tr><td><a href="../bert/">BERT</a></td><td>テキスト</td><td>事前学習→分類・理解タスクへ</td></tr>
+          <tr><td><a href="../bart-model/">BART</a></td><td>テキスト</td><td>破損復元→要約・翻訳など系列変換へ</td></tr>
+          <tr><td><a href="../llm/">LLM</a></td><td>テキスト</td><td>基盤モデルの言語版クラス名</td></tr>
+          <tr><td><a href="../beit/">BEiT</a></td><td>画像</td><td>マスク画像モデリングでViTを事前学習</td></tr>
+          <tr><td><a href="../multimodal-ai/">マルチモーダル</a>モデル</td><td>文＋画像など</td><td>複数モダリティの基盤</td></tr>
+        </tbody>
+      </table>
+      <p>基盤モデルは<strong>一つの製品名</strong>ではなく、上記のように複数モデルが該当しうる<strong>カテゴリ名</strong>です。</p>
+    </section>
+    <section id="vs-llm">
+      <h2>LLM・単一タスクモデルとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>指すもの</th><th>関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>基盤モデル</strong></td><td>事前学習＋転移のパラダイム</td><td>上位概念</td></tr>
+          <tr><td><strong>LLM</strong></td><td>大規模言語モデル</td><td>基盤モデルの代表例（言語）</td></tr>
+          <tr><td><strong>タスク特化モデル</strong></td><td>一用途に最適化</td><td>基盤の対極（一から学習）</td></tr>
+          <tr><td><strong><a href="../../tools/chatgpt/">ChatGPT</a></strong></td><td>対話サービス</td><td>基盤モデル＋調整＋UIの別層</td></tr>
+        </tbody>
+      </table>
+      <p><a href="../gpt-3/">GPT-3</a>が示した「ファインチューニングなしでも多タスク」は、基盤モデル思想の象徴的エピソードとして試験文脈に出ます。</p>
+    </section>
+    <section id="multimodal">
+      <h2>マルチモーダルへの拡張</h2>
+      <p>
+        基盤モデルは言語だけに限りません。<a href="../gpt-4o/">GPT-4o</a>や<a href="../gemini-model/">Gemini</a>のように、テキスト・画像・音声を統合した<strong>マルチモーダル基盤</strong>も基盤モデルの延長です（G-396の解説）。
+      </p>
+      <p>試験では「基盤＝テキストのみ」と狭く覚えず、<strong>大規模事前学習＋下流適応</strong>の骨格で答えるのが安全です。</p>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>基盤モデル＝LLM</td><td>LLMは代表例の一つ</td></tr>
+          <tr><td>基盤モデル＝ChatGPT</td><td>パラダイム vs サービス</td></tr>
+          <tr><td>基盤モデル＝決定木</td><td>G-396の誤答</td></tr>
+          <tr><td>事前学習＝ファインチューニング</td><td>二段構えの別フェーズ</td></tr>
+          <tr><td>基盤＝一社の単一製品</td><td>クラス・パラダイムの名称</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>基盤モデルの定義として正しいのは？</summary>
+          <p class="tool-faq-a">大規模データで事前学習され、多様な下流タスクに適用できる汎用的なモデル、と整理します。ファインチューニングやプロンプトで用途に適応させる点が試験の要点です。</p>
+        </details>
+        <details>
+          <summary>基盤モデルとLLMは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。LLMは言語に特化した大規模モデルのクラス名であり、基盤モデルはより広い概念で、マルチモーダルモデルも含み得ます。LLMは基盤モデルの代表例の一つです。</p>
+        </details>
+        <details>
+          <summary>基盤モデル＝単一の製品名ですか？</summary>
+          <p class="tool-faq-a">いいえ。GPTやBERTなど複数のモデルが基盤モデルに該当しうる、モデルのクラス・パラダイムを指す用語です。特定企業のサービス名そのものではありません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデルの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-425/">TF-425 · BERT</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-427/">TF-427 · GPT</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../falcon-llm/">Falcon</a></li>
+          <li><a href="../gemma/">Gemma</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

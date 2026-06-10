@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BLEUとは？機械翻訳の品質を参照訳とのn-gram一致で測る自動評価指標。損失関数やn-gramモデルとの違いをG検定向けに解説。">
+  <title>BLEUとは？参照訳との重なりを数える——機械翻訳の古典的評価指標 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/bleu/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BLEUとは？参照訳との重なりを数える——機械翻訳の古典的評価指標">
+  <meta property="og:description" content="機械翻訳出力と人手参照訳のn-gram一致度から品質を推定する評価指標。Bilingual Evaluation Understudyの略。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/bleu/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "BLEU",
+        "alternateName": ["BLEU", "ブルー", "Bilingual Evaluation Understudy"],
+        "description": "機械翻訳の出力と参照訳のn-gram一致に基づき翻訳品質を自動評価する指標。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BLEUは何を評価しますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主に機械翻訳の品質です。システムが出力した訳文（候補訳）と、人手で用意した正解訳（参照訳）の間で、連続する語の並び（n-gram）がどれだけ一致するかを見て、自動的にスコア化します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BLEUとn-gramモデルは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "違います。n-gramモデルは直前の語列から次の語の確率を予測する言語モデルです。BLEUは翻訳出力を評価する指標であり、モデルそのものではありません。BLEUの計算ではn-gramという概念を使いますが、目的が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BLEUはディープブルー（Deep Blue）ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BLEUは機械翻訳の評価指標です。ディープブルーはIBMのチェス対戦システムであり、発音が近いだけで意味は全く異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">BLEU</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>BLEUとは？参照訳との重なりを数える——機械翻訳の古典的評価指標</h1>
+    <p class="tool-hero-sub">読み：ブルー ／ 英：BLEU（Bilingual Evaluation Understudy）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>BLEU</strong>（Bilingual Evaluation Understudy）は、<strong>機械翻訳の出力</strong>が人手の<strong>参照訳</strong>とどれだけ語順・語句が重なるか——<strong>n-gramの一致</strong>——を見て品質を自動評価する指標です。本記事はスコア計算式の暗記ではなく、<strong>「なぜ翻訳研究でBLEUが標準になったか」</strong>——評価指標としての設計——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#context">機械翻訳と評価の文脈</a></li>
+        <li><a href="#mechanism">BLEUの考え方</a></li>
+        <li><a href="#ngram">n-gram一致の意味</a></li>
+        <li><a href="#vs-others">似た用語との区別</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="context">
+      <h2>機械翻訳と評価の文脈</h2>
+      <p>
+        <a href="../nlp/">自然言語処理</a>の代表タスクの一つが<strong>機械翻訳</strong>——ある言語の文を別の言語へ変換すること——です（<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>）。統計的機械翻訳からニューラル機械翻訳へと手法は進化しましたが、<strong>どの訳がより良いか</strong>を比較する必要は変わりません。
+      </p>
+      <p>
+        人手評価は信頼性が高い一方、コストと時間がかかります。BLEUは<strong>参照訳を正解として</strong>、機械の出力を素早く数値化する——自動評価指標の古典として広く使われてきました。
+      </p>
+    </section>
+
+    <section id="mechanism">
+      <h2>BLEUの考え方</h2>
+      <p>試験では次の骨格で整理すれば十分なことが多いです。</p>
+      <ul class="tool-steps">
+        <li><strong>比較対象</strong> — 機械翻訳の<strong>候補訳</strong> vs 人手の<strong>参照訳</strong>（正解訳）</li>
+        <li><strong>一致の見方</strong> — 連続する語の並び<strong>（n-gram）</strong>がどれだけ重なるか</li>
+        <li><strong>出力</strong> — 0〜1付近の<strong><a href="../bleu-score/">BLEUスコア</a></strong>（高いほど参照訳に近い一致）</li>
+        <li><strong>位置づけ</strong> — <strong>評価指標</strong>。学習の<a href="../loss-function/">損失関数</a>とは別物</li>
+      </ul>
+      <p>
+        複数の参照訳がある場合、いずれかとの一致を認める設計もあります。同じ意味でも語順や言い回しが違えばスコアは変わりうる——という性質は、スコアの読み方の記事でも触れます。
+      </p>
+    </section>
+
+    <section id="ngram">
+      <h2>n-gram一致の意味</h2>
+      <p>
+        <strong>n-gram</strong>は連続する n 個の語（や文字）の並びです（<a href="../../exams/g-kentei/practice/q/g-334/">G-334</a>）。BLEUでは、1-gram（単語）、2-gram（語のペア）……と複数の粒度で一致度を見ます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>粒度</th><th>例（英→日のイメージ）</th><th>評価への効き</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1-gram</td><td>「猫」「座る」など単語単位</td><td>語彙の当たり外れ</td></tr>
+          <tr><td>2-gram以上</td><td>「猫が」「が座る」など連続</td><td>語順・フレーズの一致</td></tr>
+        </tbody>
+      </table>
+      <p>
+        単語だけ揃っても語順が崩れていれば高得点にならない——というのが、n-gramベース評価の要点です。ただし、<strong>同義語の言い換え</strong>は一致とみなされないなど、限界もあります（<a href="../bleu-score/">BLEUスコア</a>の記事で詳述）。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>似た用語との区別</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>何か</th><th>BLEUとの違い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>n-gramモデル</strong></td><td>次の語を予測する<strong>言語モデル</strong></td><td>BLEUは<strong>評価指標</strong>。モデルではない</td></tr>
+          <tr><td><strong>損失関数</strong></td><td>学習時に最小化する目的</td><td>BLEUは通常<strong>評価時</strong>に使う指標</td></tr>
+          <tr><td><strong>正解率・F値</strong></td><td>分類タスクの指標</td><td>BLEUは<strong>翻訳・生成</strong>向け</td></tr>
+          <tr><td><strong>ディープブルー</strong></td><td>チェス対戦システム</td><td>発音が近いだけで<strong>無関係</strong>（TF-324）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>分野</strong> — 主に<strong>機械翻訳</strong>の自動評価（G-340の文脈）</li>
+        <li><strong>原理</strong> — 候補訳と参照訳の<strong>n-gram一致</strong></li>
+        <li><strong>種別</strong> — <strong>評価指標</strong>。損失関数・言語モデルではない</li>
+        <li><strong>限界の示唆</strong> — 自動指標だけでは品質・事実性を完全には測れない（G-350）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>、<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>、<a href="../../exams/g-kentei/practice/q/g-334/">G-334</a>、<a href="../../exams/g-kentei/practice/q/g-345/">G-345</a>、<a href="../../exams/g-kentei/drill/q/tf-324/">TF-324</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>BLEU＝n-gramモデル</td><td>評価指標 vs 言語モデル</td></tr>
+          <tr><td>BLEU＝損失関数</td><td>評価指標 vs 学習の目的関数</td></tr>
+          <tr><td>BLEU＝ディープブルー</td><td>翻訳評価 vs チェスシステム</td></tr>
+          <tr><td>BLEU＝機械翻訳そのもの</td><td>翻訳<strong>の評価</strong>をする指標</td></tr>
+          <tr><td>BLEUが高ければ事実性も保証</td><td>参照訳との一致であり、真偽の保証ではない（G-350）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>BLEUは何を評価しますか？</summary><p class="tool-faq-a">主に機械翻訳の品質です。システムが出力した訳文（候補訳）と、人手で用意した正解訳（参照訳）の間で、連続する語の並び（n-gram）がどれだけ一致するかを見て、自動的にスコア化します。</p></details>
+        <details><summary>BLEUとn-gramモデルは同じですか？</summary><p class="tool-faq-a">違います。n-gramモデルは直前の語列から次の語の確率を予測する言語モデルです。BLEUは翻訳出力を評価する指標であり、モデルそのものではありません。BLEUの計算ではn-gramという概念を使いますが、目的が異なります。</p></details>
+        <details><summary>BLEUはディープブルー（Deep Blue）ですか？</summary><p class="tool-faq-a">いいえ。BLEUは機械翻訳の評価指標です。ディープブルーはIBMのチェス対戦システムであり、発音が近いだけで意味は全く異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-340/">G-340 · 機械翻訳</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-350/">G-350 · NLP評価の注意</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-334/">G-334 · n-gram</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-324/">TF-324 · ディープブルー（混同注意）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bleu-score/">BLEUスコア</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../bart-model/">BART</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

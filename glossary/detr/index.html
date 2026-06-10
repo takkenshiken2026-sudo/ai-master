@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DETRとは？領域提案なしで物体検出するTransformerモデル。YOLO・Faster R-CNNとの違いとG検定向けの整理。">
+  <title>DETRとは？領域提案を捨てた端から端——Transformerが物体検出を一本化する — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/detr/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DETRとは？領域提案を捨てた端から端——Transformerが物体検出を一本化する">
+  <meta property="og:description" content="Detection Transformer。CNN＋Transformerで物体の位置とクラスを同時に予測する端から端の物体検出モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/detr/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "DETR",
+        "alternateName": ["DETR", "Detection Transformer", "ディートル"],
+        "description": "Transformerを用いて領域提案なしに物体の位置とクラスを同時に予測する端から端の物体検出モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "DETRは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像内の物体の位置（バウンディングボックス）とクラスを、領域提案ネットワークを使わずに一度に予測する物体検出モデルです。CNNで特徴を抽出し、Transformerで物体クエリと画像特徴を照合する端から端の設計が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DETRとYOLOは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。どちらも物体検出モデルですが、YOLOはCNN中心の単一ショット検出として広く知られ、DETRはTransformerを核にした端から端の検出として位置づけられます。試験では「物体検出モデル」という共通点と、構造・系譜の違いを分けて整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DETRはBERTですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BERTは自然言語処理向けのTransformer系モデルであり、物体検出専用モデルではありません。DETRは画像認識の物体検出タスク向けです。G-323のように、BERTとYOLO・Faster R-CNNを混同しないことが重要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">DETR</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>DETRとは？領域提案を捨てた端から端——Transformerが物体検出を一本化する</h1>
+    <p class="tool-hero-sub">読み：ディーイートル ／ 英：DETR（Detection Transformer）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>DETR</strong>（Detection Transformer）は、<strong>領域提案（Region Proposal）を挟まず</strong>、画像から物体の<strong>位置とクラスを一度に予測する</strong>物体検出モデルです。Faster R-CNNが「候補領域を出してから分類する」二段構成だったのに対し、DETRは<a href="../transformer/">Transformer</a>の注意機構で<strong>物体クエリと画像特徴を直接照合</strong>——本記事はアーキテクチャの細部より、<strong>「端から端（end-to-end）」への転換</strong>という試験で効く見方に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#detection-task">物体検出というタスク</a></li>
+        <li><a href="#pipeline-shift">パイプラインの転換</a></li>
+        <li><a href="#how-detr">DETRのざっくり構造</a></li>
+        <li><a href="#vs-others">YOLO・R-CNN・BERTとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="detection-task">
+      <h2>物体検出というタスク</h2>
+      <p>
+        物体検出は、画像の<strong>どこに何があるか</strong>を扱うタスクです。画像分類が「画像全体のラベル1つ」を当てるのに対し、物体検出は<strong>バウンディングボックス</strong>（矩形の位置）と<strong>クラス</strong>を同時に推定します（<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>）。
+      </p>
+      <p>
+        評価の共通言語として<a href="../coco-dataset/">COCO</a>データセットが広く使われ、検出・セグメンテーションのベンチマークとして参照されます。DETRはこの物体検出の文脈で語られるモデル名です。
+      </p>
+    </section>
+
+    <section id="pipeline-shift">
+      <h2>パイプラインの転換</h2>
+      <p>従来の代表例と、DETRが変えた点を対比します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>系譜</th><th>流れのイメージ</th><th>試験での位置づけ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Faster R-CNN</strong></td><td>領域提案 → 各候補を分類・位置補正</td><td>二段構成の代表（<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>）</td></tr>
+          <tr><td><strong>YOLO / SSD</strong></td><td>グリッドやアンカーから<strong>一発で</strong>検出</td><td>単一ショットのCNN系（<a href="../../exams/g-kentei/drill/q/tf-121/">TF-121</a>）</td></tr>
+          <tr><td><strong>DETR</strong></td><td>固定数の<strong>物体クエリ</strong>がTransformerで照合</td><td>領域提案なしの<strong>端から端</strong>＋Transformer</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「候補を出す専用モジュール（RPNなど）を設計しなくてよい」——この<strong>パイプライン簡素化</strong>がDETRの設計思想の核心です。畳み込みそのものではなく、<strong>検出の組み立て方</strong>が変わったモデルと覚えると、YOLOやR-CNNとのすり替えを防げます。
+      </p>
+    </section>
+
+    <section id="how-detr">
+      <h2>DETRのざっくり構造</h2>
+      <ol class="tool-steps">
+        <li><strong>CNNバックボーン</strong> — 画像から特徴マップを抽出（<a href="../cnn/">CNN</a>の役割はここ）</li>
+        <li><strong>Transformerエンコーダ</strong> — 画像特徴全体に注意を向け、文脈を集約</li>
+        <li><strong>Transformerデコーダ</strong> — 学習可能な<strong>物体クエリ</strong>（object queries）が特徴と照合</li>
+        <li><strong>予測ヘッド</strong> — 各クエリから<strong>クラス</strong>と<strong>ボックス座標</strong>を出力</li>
+      </ol>
+      <p>
+        クエリの数は事前に固定され、学習時には<strong>ハンガリアンアルゴリズム</strong>で予測と正解の対応づけを行う——試験ではアルゴリズム名より「<strong>クエリが物体スロットを担う</strong>」イメージで十分です。
+      </p>
+      <p>
+        NLPの<a href="../bert/">BERT</a>や<a href="../llm/">LLM</a>が扱うのはテキスト系列ですが、DETRは<strong>視覚特徴と空間的位置</strong>を対象にTransformerを適用した点で、ドメインが異なります。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>YOLO・R-CNN・BERTとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>タスク</th><th>DETRとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>DETR</strong></td><td>物体検出</td><td>——</td></tr>
+          <tr><td><strong>YOLO</strong></td><td>物体検出</td><td>同タスク・別アーキテクチャ（CNN単一ショット）</td></tr>
+          <tr><td><strong>Faster R-CNN</strong></td><td>物体検出</td><td>同タスク・領域提案ありの二段構成</td></tr>
+          <tr><td><strong>Mask R-CNN</strong></td><td>検出＋マスク</td><td>インスタンスセグメンテーション拡張（<a href="../../exams/g-kentei/drill/q/tf-124/">TF-124</a>）</td></tr>
+          <tr><td><strong>BERT</strong></td><td>自然言語処理</td><td><strong>物体検出ではない</strong>（G-323）</td></tr>
+          <tr><td><strong>U-Net</strong></td><td>セグメンテーション</td><td>ピクセル単位の領域推定（<a href="../../exams/g-kentei/practice/q/g-324/">G-324</a>）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Transformerで<strong>端から端の物体検出</strong>を行うモデル</li>
+        <li><strong>タスク</strong> — 「どこに何があるか」＝物体検出（G-316）</li>
+        <li><strong>対比</strong> — YOLO・Faster R-CNNは検出の別系譜。BERTはNLP（G-323）</li>
+        <li><strong>誤解回避</strong> — DETR≠画像分類、≠セグメンテーション専用、≠生成AI</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>、<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>、<a href="../../exams/g-kentei/practice/q/g-324/">G-324</a>、<a href="../../exams/g-kentei/drill/q/tf-121/">TF-121</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>DETR＝BERT</td><td>物体検出 vs NLP（G-323）</td></tr>
+          <tr><td>DETR＝YOLO</td><td>どちらも検出だが設計が異なる</td></tr>
+          <tr><td>DETR＝画像分類</td><td>位置推定が必要な検出タスク</td></tr>
+          <tr><td>DETR＝<a href="../cnn/">CNN</a>そのもの</td><td>CNNを含むがTransformer主体の検出モデル名</td></tr>
+          <tr><td>DETR＝<a href="../generative-ai/">生成AI</a></td><td>認識（検出）タスク。新規画像生成ではない</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>DETRは何をするモデルですか？</summary><p class="tool-faq-a">画像内の物体の位置（バウンディングボックス）とクラスを、領域提案ネットワークを使わずに一度に予測する物体検出モデルです。CNNで特徴を抽出し、Transformerで物体クエリと画像特徴を照合する端から端の設計が特徴です。</p></details>
+        <details><summary>DETRとYOLOは同じですか？</summary><p class="tool-faq-a">いいえ。どちらも物体検出モデルですが、YOLOはCNN中心の単一ショット検出として広く知られ、DETRはTransformerを核にした端から端の検出として位置づけられます。試験では「物体検出モデル」という共通点と、構造・系譜の違いを分けて整理します。</p></details>
+        <details><summary>DETRはBERTですか？</summary><p class="tool-faq-a">いいえ。BERTは自然言語処理向けのTransformer系モデルであり、物体検出専用モデルではありません。DETRは画像認識の物体検出タスク向けです。<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>のように、BERTとYOLO・Faster R-CNNを混同しないことが重要です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-316/">G-316 · 物体検出タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · BERTすり替え</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-324/">G-324 · YOLOとU-Net</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-121/">TF-121 · YOLO/SSD</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../fpn/">FPN</a></li>
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

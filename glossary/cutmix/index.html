@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CutMixとは？画像の一部を別画像で置換するデータ拡張。Mixup・Cutoutとの違いと過学習対策としての位置づけをG検定向けに解説。">
+  <title>CutMixとは？画像を裁ち貼りして混ぜる——局所と文脈を同時に学ぶデータ拡張 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/cutmix/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CutMixとは？画像を裁ち貼りして混ぜる——局所と文脈を同時に学ぶデータ拡張">
+  <meta property="og:description" content="矩形領域を別画像のパッチで置換し、ラベルも面積比で混合する画像認識向けデータ拡張手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/cutmix/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "CutMix",
+        "alternateName": ["CutMix", "カットミックス"],
+        "description": "画像の矩形領域を別画像のパッチで置換し、ラベルも面積比で混合するデータ拡張手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "CutMixは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1枚の画像から切り取った矩形領域を、別の画像のパッチで置き換えるデータ拡張です。置換した面積の割合に応じて、2枚のラベルも混合します。画像認識の汎化性能向上を狙います。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CutMixとMixupは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Mixupは画像全体を線形に混合します（G-270、TF-111）。CutMixは一部領域だけを別画像で置換し、局所の物体と背景文脈を同時に学ばせる発想です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CutMixは生成AIですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。CutMixは既存の学習画像に加工を加えて多様性を増やすデータ拡張です。テキストや画像を新規生成する生成AIとは別概念です（HQ-0356）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">CutMix</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>CutMixとは？画像を裁ち貼りして混ぜる——局所と文脈を同時に学ぶデータ拡張</h1>
+    <p class="tool-hero-sub">読み：カットミックス ／ 英：CutMix</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>CutMix</strong>は、画像の<strong>矩形の一部を別画像のパッチで置き換え</strong>、ラベルも<strong>置換面積の割合</strong>で混合する<a href="../cnn/">画像認識</a>向けの<strong>データ拡張</strong>です。反転や回転が「1枚を変形する」古典的手法なのに対し、CutMixは<strong>「2枚を裁ち貼りして新しい学習例を作る」</strong>——本記事はハイパーパラメータの暗記ではなく、Mixup・Cutoutとの違いと試験での位置づけに焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#purpose">データ拡張の目的</a></li>
+        <li><a href="#how">裁ち貼りの直感</a></li>
+        <li><a href="#family">Mixup・Cutoutとの三兄弟</a></li>
+        <li><a href="#labels">ラベル混合の注意</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="purpose">
+      <h2>データ拡張の目的</h2>
+      <p>
+        データ拡張は、<strong>既存データに加工を加えて学習データの多様性を増やす</strong>手法です（<a href="../../exams/g-kentei/practice/q/g-266/">G-266</a>、<a href="../../exams/genai-passport/drill/q/tf-0213/">TF-0213</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>狙い</strong> — <a href="../overfitting/">過学習</a>抑制・汎化性能の向上</li>
+        <li><strong>手段</strong> — 反転、回転、色調変更、CutMixなど</li>
+        <li><strong>位置づけ</strong> — <a href="../regularization/">正則化</a>の一族としても語られる</li>
+      </ul>
+      <p>
+        G-286の誤答「データ拡張をすれば<strong>検証が不要</strong>」は×。拡張は有効でも、テスト・検証での性能確認は必要です。
+      </p>
+    </section>
+
+    <section id="how">
+      <h2>裁ち貼りの直感</h2>
+      <p>CutMixの手順イメージは次のとおりです。</p>
+      <ol class="tool-steps">
+        <li><strong>2枚選ぶ</strong> — 学習セットから画像A・画像Bをサンプル</li>
+        <li><strong>矩形を決める</strong> — 画像A上のランダムな矩形領域を切り出し</li>
+        <li><strong>パッチを貼る</strong> — その領域を画像Bの対応パッチで<strong>置換</strong></li>
+        <li><strong>ラベル混合</strong> — 置換面積の割合 λ で、ラベルも λ·y_A ＋ (1−λ)·y_B</li>
+      </ol>
+      <p>
+        例えば「犬の写真」に「猫のパッチ」を貼ると、モデルは<strong>局所（猫）と文脈（犬の周囲）</strong>を同時に見る訓練例になります。物体の一部だけが写る現実的な場面に近づける効果が期待されます。
+      </p>
+    </section>
+
+    <section id="family">
+      <h2>Mixup・Cutoutとの三兄弟</h2>
+      <p>試験では近いデータ拡張を<strong>操作の違い</strong>で区別します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>操作</th><th>ラベル</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Mixup</strong></td><td>画像<strong>全体</strong>を線形混合</td><td>割合で混合</td><td><a href="../../exams/g-kentei/practice/q/g-270/">G-270</a>、<a href="../../exams/g-kentei/drill/q/tf-111/">TF-111</a></td></tr>
+          <tr><td><strong>Cutout</strong></td><td>画像の一部を<strong>隠す</strong>（ゼロ埋め等）</td><td>元ラベル維持</td><td><a href="../../exams/g-kentei/practice/q/g-272/">G-272</a></td></tr>
+          <tr><td><strong>CutMix</strong></td><td>一部を<strong>別画像で置換</strong></td><td>面積比で混合</td><td>CSV定義・Mixup派生</td></tr>
+          <tr><td><strong>古典</strong></td><td>反転・回転・クロップ</td><td>通常は維持</td><td>G-266</td></tr>
+        </tbody>
+      </table>
+      <p>
+        G-272は「（あ）入力とラベルを混合＝Mixup、（い）一部を隠す＝Cutout」の対比です。CutMixは<strong>Mixupの「混合」とCutoutの「局所操作」</strong>の中間——貼り付けで混合——と覚えると整理しやすいです。
+      </p>
+    </section>
+
+    <section id="labels">
+      <h2>ラベル混合の注意</h2>
+      <p>
+        データ拡張では、<strong>ラベルの意味が変わらない変換</strong>を選ぶことが重要です（<a href="../../exams/g-kentei/drill/q/tf-109/">TF-109</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>CutMixの扱い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>単一ラベル分類</strong></td><td>2クラスの<strong>ソフトラベル</strong>（面積比混合）になる</td></tr>
+          <tr><td><strong>誤変換の例</strong></td><td>左右反転で「数字の6と9」が入れ替わるなど、意味が壊れる変換（TF-110は×）</td></tr>
+          <tr><td><strong>CutMixの設計</strong></td><td>混合ラベルを<strong>意図的に</strong>使い、決定境界を滑らかにする（Mixupと同系）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Mixupが「画像全体をぼかして混ぜる」なら、CutMixは「はっきりしたパッチを貼る」——見た目は異なりますが、<strong>ラベルも一緒に混ぜる</strong>点は共通です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 画像の一部を<strong>別画像で置換</strong>するデータ拡張</li>
+        <li><strong>目的</strong> — 学習データの多様化・汎化・過学習抑制（G-266）</li>
+        <li><strong>近縁</strong> — Mixup（全体混合）、Cutout（一部隠す）</li>
+        <li><strong>すり替え回避</strong> — 生成AI、正規化層、最適化手法ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-266/">G-266</a>、<a href="../../exams/g-kentei/practice/q/g-270/">G-270</a>、<a href="../../exams/g-kentei/practice/q/g-272/">G-272</a>、<a href="../../exams/g-kentei/drill/q/tf-111/">TF-111</a>、<a href="../../exams/g-kentei/drill/q/tf-109/">TF-109</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0213/">TF-0213</a>、<a href="../../exams/genai-passport/practice/q/hq-0356/">HQ-0356</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CutMix＝Mixup</td><td>局所置換 vs 全体の線形混合（G-270）</td></tr>
+          <tr><td>CutMix＝Cutout</td><td>別画像で置換 vs 隠すだけ（G-272）</td></tr>
+          <tr><td>CutMix＝生成AI</td><td>学習データの加工 vs 新規コンテンツ生成（HQ-0356）</td></tr>
+          <tr><td>CutMix＝バッチ正規化</td><td>データ拡張 vs 分布の正規化（G-272のC）</td></tr>
+          <tr><td>拡張＝検証不要</td><td>G-286のDは×</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>CutMixは何をする手法ですか？</summary><p class="tool-faq-a">1枚の画像から切り取った矩形領域を、別の画像のパッチで置き換えるデータ拡張です。置換した面積の割合に応じて、2枚のラベルも混合します。画像認識の汎化性能向上を狙います。</p></details>
+        <details><summary>CutMixとMixupは同じですか？</summary><p class="tool-faq-a">いいえ。Mixupは画像全体を線形に混合します（<a href="../../exams/g-kentei/practice/q/g-270/">G-270</a>、<a href="../../exams/g-kentei/drill/q/tf-111/">TF-111</a>）。CutMixは一部領域だけを別画像で置換し、局所の物体と背景文脈を同時に学ばせる発想です。</p></details>
+        <details><summary>CutMixは生成AIですか？</summary><p class="tool-faq-a">いいえ。CutMixは既存の学習画像に加工を加えて多様性を増やすデータ拡張です。テキストや画像を新規生成する生成AIとは別概念です（<a href="../../exams/genai-passport/practice/q/hq-0356/">HQ-0356</a>）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-266/">G-266 · データ拡張の目的</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-270/">G-270 · Mixup</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-272/">G-272 · MixupとCutout</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-109/">TF-109 · ラベルの意味</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../regularization/">正則化</a></li>
+          <li><a href="../overfitting/">過学習</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../dropout/">ドロップアウト</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

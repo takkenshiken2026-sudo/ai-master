@@ -161,15 +161,15 @@
           </tr>
           <tr>
             <td><strong>位置エンコーディング</strong></td>
-            <td>語順・位置情報をモデルに与える（匿名加工ではない：TF-0112）</td>
+            <td>語順・位置情報をモデルに与える（匿名加工ではない：TF-0112）。<a href="../alibi/">ALiBi</a>はAttentionへの線形バイアスで代える設計</td>
           </tr>
           <tr>
             <td><strong>Feed-Forward Network（FFN）</strong></td>
             <td>各位置で非線形変換</td>
           </tr>
           <tr>
-            <td><strong>残差接続・層正規化</strong></td>
-            <td>学習の安定化</td>
+            <td><strong>残差接続・<a href="../layer-normalization/">層正規化</a></strong></td>
+            <td>学習の安定化（レイヤー正規化）</td>
           </tr>
         </tbody>
       </table>
@@ -284,6 +284,16 @@
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
           <li><a href="../attention/">Attention</a></li>
+          <li><a href="../flash-attention/">FlashAttention</a></li>
+          <li><a href="../graph-attention-network/">GAT</a></li>
+          <li><a href="../alibi/">ALiBi</a></li>
+          <li><a href="../gelu/">GELU</a></li>
+          <li><a href="../grouped-query-attention/">GQA</a></li>
+          <li><a href="../layer-normalization/">レイヤー正規化</a></li>
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../detr/">DETR</a></li>
           <li><a href="../gpt/">GPT</a></li>
           <li><a href="../llm/">LLM</a></li>
           <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>

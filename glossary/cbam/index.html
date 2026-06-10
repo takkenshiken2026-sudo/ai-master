@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CBAMとは？チャネル注意と空間注意を組み合わせたCNNモジュール。TransformerのAttentionとの違いをG検定向けに解説。">
+  <title>CBAMとは？チャネルと空間の二段注意——CNNに視線を与えるモジュール — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/cbam/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CBAMとは？チャネルと空間の二段注意——CNNに視線を与えるモジュール">
+  <meta property="og:description" content="Convolutional Block Attention Module。CNNの特徴マップに「どのチャネル」「どの位置」を重視するかを学習する注意モジュール。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/cbam/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "CBAM",
+        "alternateName": ["CBAM", "シーバム", "Convolutional Block Attention Module"],
+        "description": "チャネル注意と空間注意を組み合わせ、CNNの特徴マップで重要な特徴と位置を強調するモジュール。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "CBAMは何をするモジュールですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CNNの畳み込みブロックに挿入し、チャネル注意（どの特徴チャネルを重視するか）と空間注意（特徴マップのどの位置を重視するか）を順に適用して、重要な情報を強調するモジュールです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CBAMとTransformerのAttentionは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じ「注意」という語を使いますが、役割が異なります。CBAMはCNNの特徴マップに対するチャネル・空間の重み付けモジュールです。TransformerのSelf-Attentionは系列内の語同士の関係を計算する中核機構であり、別物として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CBAMは画像認識のどこに効きますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "背景ノイズが多い画像や、物体が占める領域が小さい場面などで、モデルが「どの特徴」「どの位置」に目を向けるべきかを学習しやすくする効果が期待されます。CNNの認識精度向上を目的とした付加モジュールです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">CBAM</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>CBAMとは？チャネルと空間の二段注意——CNNに視線を与えるモジュール</h1>
+    <p class="tool-hero-sub">読み：しーばむ ／ 英：CBAM（Convolutional Block Attention Module）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>CBAM</strong>は、<a href="../cnn/">CNN</a>の畳み込みブロックに差し込む<strong>注意（Attention）モジュール</strong>で、特徴マップに対して<strong>「どのチャネル（特徴の種類）を」「どの空間位置を」</strong>重視するかを学習します。<a href="../transformer/">Transformer</a>のSelf-Attentionが<strong>語と語の関係</strong>を扱うのに対し、CBAMは<strong>画像特徴の地図</strong>に視線を配る——本記事は数式の暗記ではなく、その<strong>二段の「どこを見るか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why">CNNに注意が要る理由</a></li>
+        <li><a href="#two-stage">二段注意の直感</a></li>
+        <li><a href="#channel">チャネル注意——「何を」</a></li>
+        <li><a href="#spatial">空間注意——「どこを」</a></li>
+        <li><a href="#vs-transformer">TransformerのAttentionとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why">
+      <h2>CNNに注意が要る理由</h2>
+      <p>
+        <a href="../cnn/">CNN</a>は畳み込みで局所特徴を抽出しますが、特徴マップの<strong>すべてのチャネル・すべての画素が等しく重要</strong>とは限りません。例えば猫の写真では「耳の形」「毛のテクスチャ」チャネルは重要でも、「空の色」チャネルはノイズになりやすい。物体が画面の一角にしか写っていないとき、<strong>位置</strong>の選択も効いてきます。
+      </p>
+      <p>
+        CBAMは、この<strong>特徴の取捨選択</strong>を、畳み込みブロックの出力に<strong>重みマスク</strong>として掛けるモジュールです。CNNそのものを置き換えるのではなく、<strong>ブロックに足す部品</strong>として設計されています。
+      </p>
+    </section>
+
+    <section id="two-stage">
+      <h2>二段注意の直感</h2>
+      <p>CBAMの流れは、試験向けに次の2段で覚えると整理しやすいです。</p>
+      <ol class="tool-steps">
+        <li><strong>チャネル注意</strong> — 特徴マップの<strong>チャネル方向</strong>に重みを掛ける。「どの種類の特徴を強調するか」</li>
+        <li><strong>空間注意</strong> — 続けて<strong>高さ・幅方向</strong>に重みを掛ける。「どの位置を強調するか」</li>
+      </ol>
+      <p>
+        名前の <strong>Convolutional Block</strong> は、ResNetなどの<strong>畳み込みブロック単位</strong>に挿入する想定を示します。全体アーキテクチャではなく、<strong>モジュール名</strong>として覚えるのが試験向けです。
+      </p>
+    </section>
+
+    <section id="channel">
+      <h2>チャネル注意——「何を」</h2>
+      <p>
+        畳み込みの出力は、高さ×幅×<strong>チャネル数</strong>の三次元テンソルです。チャネル注意は、この中の<strong>どのチャネル（特徴の種類）を残すか</strong>を学習します。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>イメージ</strong> — エッジ検出チャネルはON、背景色チャネルはOFF、といった<strong>特徴の取捨</strong></li>
+        <li><strong>効果</strong> — ノイズチャネルを抑え、物体に関係するチャネルを強調</li>
+        <li><strong>試験の接点</strong> — CNNの<strong>畳み込み層が特徴を抽出する</strong>（<a href="../../exams/g-kentei/practice/q/g-298/">G-298</a>）という土台の上に載る発想</li>
+      </ul>
+    </section>
+
+    <section id="spatial">
+      <h2>空間注意——「どこを」</h2>
+      <p>
+        チャネル注意のあと、同じ特徴マップに<strong>空間注意</strong>を適用します。高さ・幅の各位置に重みを掛け、<strong>物体が写っている領域</strong>を強調するイメージです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>問い</th><th>重みの向き</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>チャネル注意</strong></td><td>どの特徴を使うか</td><td>チャネル軸</td></tr>
+          <tr><td><strong>空間注意</strong></td><td>どの位置を見るか</td><td>高さ・幅の平面</td></tr>
+        </tbody>
+      </table>
+      <p>
+        画像認識タスク全般（分類・検出・セグメンテーション）の文脈で位置づけられます（<a href="../../exams/g-kentei/practice/q/g-318/">G-318</a>）。
+      </p>
+    </section>
+
+    <section id="vs-transformer">
+      <h2>TransformerのAttentionとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>CBAM</th><th>TransformerのSelf-Attention</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>対象</strong></td><td>CNNの<strong>特徴マップ</strong></td><td>テキストなどの<strong>系列</strong></td></tr>
+          <tr><td><strong>役割</strong></td><td>畳み込みブロックへの<strong>付加モジュール</strong></td><td>モデルの<strong>中核機構</strong>（<a href="../../exams/g-kentei/practice/q/g-251/">G-251</a>）</td></tr>
+          <tr><td><strong>注意の種類</strong></td><td>チャネル＋空間の<strong>二段</strong></td><td>系列内要素間の<strong>Q・K・V</strong>（<a href="../attention/">Attention</a>）</td></tr>
+          <tr><td><strong>分野</strong></td><td>画像認識のCNN改良</td><td>NLP・<a href="../llm/">LLM</a>の主流</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「Attention」という語が共通でも、<strong>CBAM＝Transformer</strong>とは答えません。試験では<strong>主語のモデル族</strong>（CNN vs Transformer）を確認します。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>正式名</strong> — Convolutional Block <strong>Attention</strong> Module</li>
+        <li><strong>構成</strong> — <strong>チャネル注意</strong>と<strong>空間注意</strong>の組み合わせ</li>
+        <li><strong>位置づけ</strong> — <a href="../cnn/">CNN</a>の畳み込みブロックに挿入するモジュール</li>
+        <li><strong>すり替え回避</strong> — Transformer、<a href="../llm/">LLM</a>、<a href="../clip-model/">CLIP</a>、音声処理ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-298/">G-298</a>、<a href="../../exams/g-kentei/practice/q/g-275/">G-275</a>、<a href="../../exams/g-kentei/practice/q/g-318/">G-318</a>、<a href="../../exams/g-kentei/practice/q/g-251/">G-251</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>CBAM＝Transformer</td><td>CNNモジュール vs 系列モデルの中核</td></tr>
+          <tr><td>CBAM＝Self-Attentionそのもの</td><td>チャネル・空間の重み付け。QKV系列注意とは別設計</td></tr>
+          <tr><td>CBAM＝CNN全体</td><td>畳み込みブロックに<strong>足す部品</strong></td></tr>
+          <tr><td>CBAM＝画像生成モデル</td><td>認識向けCNNの改良。拡散モデルとは別系統</td></tr>
+          <tr><td>CBAM＝チャネル注意だけ</td><td>チャネル<strong>と</strong>空間の二段構成</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>CBAMは何をするモジュールですか？</summary><p class="tool-faq-a">CNNの畳み込みブロックに挿入し、チャネル注意（どの特徴チャネルを重視するか）と空間注意（特徴マップのどの位置を重視するか）を順に適用して、重要な情報を強調するモジュールです。</p></details>
+        <details><summary>CBAMとTransformerのAttentionは同じですか？</summary><p class="tool-faq-a">同じ「注意」という語を使いますが、役割が異なります。CBAMはCNNの特徴マップに対するチャネル・空間の重み付けモジュールです。TransformerのSelf-Attentionは系列内の語同士の関係を計算する中核機構であり、別物として整理します。</p></details>
+        <details><summary>CBAMは画像認識のどこに効きますか？</summary><p class="tool-faq-a">背景ノイズが多い画像や、物体が占める領域が小さい場面などで、モデルが「どの特徴」「どの位置」に目を向けるべきかを学習しやすくする効果が期待されます。CNNの認識精度向上を目的とした付加モジュールです。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-298/">G-298 · 畳み込み層の役割</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-275/">G-275 · 畳み込みと重み共有</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-318/">G-318 · 画像認識タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-251/">G-251 · TransformerとAttention</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../beit/">BEiT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

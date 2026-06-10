@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="o4 miniとは？ツール利用・コーディングに強い軽量推論モデルの意味、o3 miniとの違い、エージェント実装向けの整理をG検定向けに解説。">
+  <title>o4 miniとは？ツール連携とコーディング向け軽量推論 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/o4-mini/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="o4 miniとは？ツール連携とコーディング向け軽量推論">
+  <meta property="og:description" content="推論系列の後続軽量版。ツール利用とコーディングに強みを持つモデルとして試験向けに整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/o4-mini/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "o4 mini",
+        "alternateName": ["o4-mini", "OpenAI o4 mini"],
+        "description": "ツール利用・コーディングに強い小型の推論モデル。o推論系列の軽量版。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "o4 miniはo3 miniの単純な後継ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "軽量推論という枠組みは共通ですが、o4 miniはツール利用とコーディングへの特化がより強調された後続世代として整理します。番号が一つ進んだからといってすべての能力が単調に向上するわけではない、という点も試験向けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "o4 miniのツール利用とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Web検索・コード実行・API呼び出しなど、モデルが外部機能を選択して使いながらタスクを進める能力を指します。AIエージェント全体の設計とは別ですが、エージェント実装の頭脳として使われることが多い文脈です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "o4 miniはコーディング専用モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "コーディングに強い一方、汎用の推論タスクにも使われます。GPT-4.1のようなAPI・コーディング特化ラインとは系列が異なり、o推論系列の軽量版として区別してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">o4 mini</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>o4 miniとは？ツール連携とコーディング向け軽量推論</h1>
+    <p class="tool-hero-sub">読み：おーふぉーみに ／ 英：o4 mini</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>o4 mini</strong>は、OpenAIの<strong>o推論系列における後続の軽量モデル</strong>です。<a href="../o3-mini/">o3 mini</a>がSTEM・コスト効率を前面に出したのに対し、o4 miniは<strong>ツール利用とコーディング</strong>——推論しながら外部機能を呼び出し、コード課題を解く——に軸を置いた設計として紹介されます。本記事はベンチマーク争いではなく、<strong>「エージェント的な実装に使える軽量頭脳」</strong>という実務・試験の切り口で整理します。
+    </p>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#tool-coding">ツール＋コーディングの二刀流</a></li>
+        <li><a href="#agent-brain">エージェント実装の「頭脳」として</a></li>
+        <li><a href="#vs-o3-mini">o3 miniとの世代差</a></li>
+        <li><a href="#gpt-lines">GPTコーディング系との境界</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        o4 mini単体の暗記より、<strong>o系列の軽量推論</strong>と<strong>コード支援・ツール連携</strong>の文脈が重要です。Codexはコード支援の歴史的項目として扱われます（<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150</a>）。o4 miniはその延長線上の<strong>推論＋ツール</strong>モデルとして位置づけられます。
+      </p>
+      <p>
+        ツールを使うモデルを<a href="../agent/">AIエージェント</a>と混同しない（<a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238</a>）。また、生成コードはレビュー必須——自然な説明と正確性は別（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150（Codex・コード支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238（エージェント）</a>、<a href="../../exams/genai-passport/drill/q/tf-0428/">TF-0428（APIコスト）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-204/">TF-204（ツール経由のインジェクション）</a></p>
+      </div>
+    </section>
+    <section id="tool-coding">
+      <h2>ツール＋コーディングの二刀流</h2>
+      <p>o4 miniの訴求点は、推論だけでなく<strong>行動</strong>——ツール呼び出し——と<strong>コード</strong>が一体化した点にあります。</p>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>ツール利用</h3>
+          <p>検索・計算・APIを状況に応じて選択。単発回答ではなく<strong>調べてから答える</strong>ループ</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>コーディング</h3>
+          <p>実装・デバッグ・リファクタリング。ベンチマーク（AIME等）でも話題に</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>軽量</h3>
+          <p>フル版o3/o4より低コスト。大量のAPIリクエストや並列エージェント向け</p>
+        </div>
+      </div>
+      <p>「ツールで調べたから正確」ではありません。検索結果の解釈ミスやコードの論理バグは起こり得ます。</p>
+    </section>
+    <section id="agent-brain">
+      <h2>エージェント実装の「頭脳」として</h2>
+      <p>
+        実務では、o4 miniのようなモデルを<a href="../agent/">AIエージェント</a>の<strong>推論エンジン</strong>として組み込む構成が増えています。試験では次の三層を分けます。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>モデル（o4 mini）</strong> — 計画・推論・ツール呼び出しの判断</li>
+        <li><strong>オーケストレーション</strong> — 目標設定、権限、ループ制御、停止条件</li>
+        <li><strong>ガバナンス</strong> — ログ（<a href="../../exams/genai-passport/drill/q/tf-0270/">TF-0270</a>）、インジェクション対策（TF-204）、人間の承認</li>
+      </ol>
+      <p>モデルが賢いほど、<strong>自律の範囲を狭く設計する</strong>必要がある——というのが試験・実務の共通メッセージです。</p>
+    </section>
+    <section id="vs-o3-mini">
+      <h2>o3 miniとの世代差</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>o3 mini</th><th>o4 mini</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>前面の訴求</strong></td><td>STEM・コスト効率</td><td><strong>ツール＋コーディング</strong></td></tr>
+          <tr><td><strong>想定タスク</strong></td><td>数学・科学の推論</td><td>コード課題・ツール連携ループ</td></tr>
+          <tr><td><strong>系列</strong></td><td>o3ファミリー入り口</td><td>o4世代の軽量版</td></tr>
+          <tr><td><strong>試験</strong></td><td>mini＝軽量の共通語</td><td>番号と系列を混同しない</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="gpt-lines">
+      <h2>GPTコーディング系との境界</h2>
+      <p>コーディングに強いOpenAIモデルは複数系列あります。</p>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">o4 mini（o推論・軽量）</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">混同しやすい別ライン</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>推論＋ツール呼び出しが前提</td>
+            <td><a href="../gpt-4-1/">GPT-4.1</a> — API・コーディング特化のGPT番号系列</td>
+          </tr>
+          <tr>
+            <td>エージェント頭脳としての文脈</td>
+            <td>Codex系 — コード生成の歴史（TF-0150）</td>
+          </tr>
+          <tr>
+            <td>軽量で並列呼び出し向き</td>
+            <td>GPT-4o mini — 汎用チャットの低コスト版</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>o4 mini＝o3 miniの名前変更</td><td>別世代。訴求点がツール・コーディングへシフト</td></tr>
+          <tr><td>ツール連携＝人間不要</td><td>監督・ログ・権限設計は依然必要</td></tr>
+          <tr><td>コーディング強化＝バグなし</td><td>レビュー・テストは必須</td></tr>
+          <tr><td>o4 mini＝GPT-4.1</td><td>o系列 vs GPT系列</td></tr>
+          <tr><td>軽量＝能力が常にo3 mini以下</td><td>タスク次第。ツール・コードでは逆転の文脈も</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>o4 miniはo3 miniの単純な後継ですか？</summary>
+          <p class="tool-faq-a">軽量推論という枠組みは共通ですが、o4 miniはツール利用とコーディングへの特化がより強調された後続世代として整理します。番号が一つ進んだからといってすべての能力が単調に向上するわけではない、という点も試験向けです。</p>
+        </details>
+        <details>
+          <summary>o4 miniのツール利用とは何ですか？</summary>
+          <p class="tool-faq-a">Web検索・コード実行・API呼び出しなど、モデルが外部機能を選択して使いながらタスクを進める能力を指します。AIエージェント全体の設計とは別ですが、エージェント実装の頭脳として使われることが多い文脈です。</p>
+        </details>
+        <details>
+          <summary>o4 miniはコーディング専用モデルですか？</summary>
+          <p class="tool-faq-a">コーディングに強い一方、汎用の推論タスクにも使われます。GPT-4.1のようなAPI・コーディング特化ラインとは系列が異なり、o推論系列の軽量版として区別してください。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150 · Codex</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0238/">TF-0238 · エージェント</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-204/">TF-204 · インジェクション</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../o3-mini/">o3 mini</a></li>
+          <li><a href="../o3/">o3</a></li>
+          <li><a href="../agent/">AIエージェント</a></li>
+          <li><a href="../gpt-4-1/">GPT-4.1</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BARTとは？ノイズ破損したテキストを復元するエンコーダ・デコーダ事前学習モデル。BERT・GPTとの違いをG検定向けに解説。">
+  <title>BARTとは？ノイズを直して覚える——エンコーダ・デコーダの破損復元事前学習 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/bart-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BARTとは？ノイズを直して覚える——エンコーダ・デコーダの破損復元事前学習">
+  <meta property="og:description" content="テキストにノイズを加えて復元させる事前学習。系列変換タスク向きのTransformerエンコーダ・デコーダモデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/bart-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "BART",
+        "alternateName": ["BART", "バート", "Bidirectional and Auto-Regressive Transformers"],
+        "description": "ノイズ破損したテキストを復元する事前学習を行う、Transformerベースのエンコーダ・デコーダ言語モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BARTの事前学習は何をしますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "元のテキストにノイズ（語のマスク、並べ替え、文の削除など）を加え、エンコーダ・デコーダで元の文を復元させる破損復元型の事前学習を行います。双方向の文脈理解と系列生成の両方を学ぶ設計です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BARTとBERTの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BERTはTransformerエンコーダのみで双方向理解が中心です。BARTはエンコーダとデコーダを持ち、破損した入力から出力系列を生成する系列変換型の事前学習です。要約や翻訳など生成寄りのタスクと相性がよいと整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "BARTは画像認識モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。BARTは自然言語処理向けのテキストモデルです。CNNや物体検出モデルとは別系統であり、BERTを画像認識専用とする誤答パターンと同様にすり替えに注意します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">BART</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>BARTとは？ノイズを直して覚える——エンコーダ・デコーダの破損復元事前学習</h1>
+    <p class="tool-hero-sub">読み：バート ／ 英：BART（Bidirectional and Auto-Regressive Transformers）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>BART</strong>は、テキストに<strong>意図的なノイズ（破損）</strong>を加え、<a href="../transformer/">Transformer</a>の<strong>エンコーダ・デコーダ</strong>で元の文を復元させる——という事前学習を行う言語モデルです。<a href="../bert/">BERT</a>が「隠れた語を当てて<strong>理解</strong>」するのに対し、BARTは「壊れた文を<strong>直して出力</strong>」する。本記事は層数の暗記ではなく、<strong>「破損復元がなぜ系列変換タスクの土台になるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#corruption">破損復元という学習の型</a></li>
+        <li><a href="#architecture">エンコーダ・デコーダの役割</a></li>
+        <li><a href="#vs-bert-gpt">BERT・GPTとの三角関係</a></li>
+        <li><a href="#tasks">得意なタスク</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="corruption">
+      <h2>破損復元という学習の型</h2>
+      <p>
+        BARTの事前学習の核心は<strong>テキストコラプション（text corruption）</strong>です。元の文に対して、例えば次のような操作でノイズを加えます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>トークンのマスク</strong> — 語を隠す（BERTのMLMに近い操作）</li>
+        <li><strong>語順の入れ替え</strong> — 文の構造を崩す</li>
+        <li><strong>文の削除・挿入</strong> — 段落レベルで欠落を作る</li>
+      </ul>
+      <p>
+        エンコーダは<strong>壊れた入力</strong>を読み、デコーダは<strong>元の文を系列として生成</strong>します。人間が誤字だらけの草稿を読んで清書する——という比喩で、試験向けの直感を掴みやすいです。
+      </p>
+      <p>
+        名前の <strong>Bidirectional</strong> はエンコーダ側の双方向文脈、<strong>Auto-Regressive</strong> はデコーダ側が左から右へ語を生成する——という<strong>ハイブリッド</strong>を示します。
+      </p>
+    </section>
+
+    <section id="architecture">
+      <h2>エンコーダ・デコーダの役割</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>役割</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>エンコーダ</strong></td><td>破損入力を読み、内部表現に変換</td><td>入力系列の<strong>理解</strong></td></tr>
+          <tr><td><strong>デコーダ</strong></td><td>表現をもとに出力系列を生成</td><td>出力系列の<strong>生成</strong></td></tr>
+          <tr><td><strong>Attention</strong></td><td>入出力の対応を重み付け</td><td>翻訳で「どの入力語を参照するか」（<a href="../../exams/g-kentei/practice/q/g-282/">G-282</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        この構成は<strong>Seq2Seq</strong>（Sequence to Sequence）——入力系列を別の出力系列へ変換する枠組み——の延長です（<a href="../../exams/g-kentei/practice/q/g-255/">G-255</a>）。機械翻訳の文脈でエンコーダ・デコーダが語られることも多く、BARTはその思想を<strong>事前学習</strong>に取り込んだモデルと整理します。
+      </p>
+    </section>
+
+    <section id="vs-bert-gpt">
+      <h2>BERT・GPTとの三角関係</h2>
+      <p>2018〜2020年の事前学習モデルは、試験では「何を学習するか」で区別されます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>構造</th><th>事前学習の型</th><th>強み</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../bert/">BERT</a></strong></td><td>エンコーダのみ</td><td>マスク語予測（MLM）</td><td>分類・理解</td></tr>
+          <tr><td><strong><a href="../gpt/">GPT</a></strong></td><td>デコーダのみ</td><td>次トークン予測（因果的）</td><td>続き書き・生成</td></tr>
+          <tr><td><strong>BART</strong></td><td>エンコーダ＋デコーダ</td><td><strong>破損復元</strong></td><td>要約・翻訳など<strong>系列変換</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        BERTとGPTを「足した」というより、<strong>理解（エンコーダ）と生成（デコーダ）を一つの事前学習課題に統合した</strong>——と捉えるとすり替えに強くなります。現代の<a href="../llm/">LLM</a>は主にデコーダ型ですが、BARTは<strong>系列変換タスクの基盤モデル</strong>として試験文脈に残ります。
+      </p>
+    </section>
+
+    <section id="tasks">
+      <h2>得意なタスク</h2>
+      <p>BARTは事前学習後、<a href="../fine-tuning/">ファインチューニング</a>で次のような<a href="../nlp/">NLP</a>タスクに転用されます。</p>
+      <ul class="tool-steps">
+        <li><strong>文書要約</strong> — 長文を短い文へ変換</li>
+        <li><strong>機械翻訳</strong> — 言語Aの系列を言語Bへ（<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>）</li>
+        <li><strong>質問応答・対話</strong> — 入力文脈から応答文を生成</li>
+      </ul>
+      <p>
+        いずれも「入力系列→出力系列」という<strong>Seq2Seq</strong>の形です。BERT単体が得意な「ラベル付き分類」と、GPT単体が得意な「続きの生成」と、タスクの形で棲み分けを意識すると整理しやすいです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — ノイズ破損から復元する<strong>エンコーダ・デコーダ</strong>事前学習モデル</li>
+        <li><strong>構造</strong> — <a href="../transformer/">Transformer</a>ベース。エンコーダ（双方向）＋デコーダ（自己回帰）</li>
+        <li><strong>タスク</strong> — 要約・翻訳など<strong>系列変換</strong>（Seq2Seq）と関連</li>
+        <li><strong>位置づけ</strong> — <a href="../foundation-model/">基盤モデル</a>の一種。事前学習→下流タスクへ転移</li>
+        <li><strong>すり替え回避</strong> — BERT（エンコーダのみ）、GPT（デコーダのみ）、CNN、GANとは別</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-255/">G-255</a>、<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>、<a href="../../exams/g-kentei/practice/q/g-282/">G-282</a>、<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>、<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>BART＝BERTと同じ</td><td>BERTはエンコーダのみ。BARTは<strong>エンコーダ・デコーダ</strong>＋破損復元</td></tr>
+          <tr><td>BART＝GPTと同じ</td><td>GPTはデコーダのみの因果的生成。BARTは<strong>破損入力の復元</strong></td></tr>
+          <tr><td>BART＝画像認識CNN</td><td>テキスト向けNLPモデル（BERTのすり替えパターンと同型）</td></tr>
+          <tr><td>BART＝GAN</td><td>GANは生成器・識別器の対戦。BARTは<strong>教師あり的な復元</strong>事前学習</td></tr>
+          <tr><td>破損復元＝データ拡張</td><td>学習課題の設計。画像反転などの拡張とは別</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>BARTの事前学習は何をしますか？</summary><p class="tool-faq-a">元のテキストにノイズ（語のマスク、並べ替え、文の削除など）を加え、エンコーダ・デコーダで元の文を復元させる破損復元型の事前学習を行います。双方向の文脈理解と系列生成の両方を学ぶ設計です。</p></details>
+        <details><summary>BARTとBERTの違いは？</summary><p class="tool-faq-a">BERTはTransformerエンコーダのみで双方向理解が中心です。BARTはエンコーダとデコーダを持ち、破損した入力から出力系列を生成する系列変換型の事前学習です。要約や翻訳など生成寄りのタスクと相性がよいと整理します。</p></details>
+        <details><summary>BARTは画像認識モデルですか？</summary><p class="tool-faq-a">いいえ。BARTは自然言語処理向けのテキストモデルです。CNNや物体検出モデルとは別系統であり、BERTを画像認識専用とする誤答パターンと同様にすり替えに注意します。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-255/">G-255 · Seq2Seq</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-340/">G-340 · 機械翻訳</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-282/">G-282 · Source-Target Attention</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERT</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

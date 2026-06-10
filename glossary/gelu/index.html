@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GELUとは？Transformer系で使われる滑らかな活性化関数。ReLU・ソフトマックスとの違いをG検定向けに解説。">
+  <title>GELUとは？折れ目ではなく曲線——TransformerのFFNがReLUの代わりに選ぶ活性化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/gelu/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GELUとは？折れ目ではなく曲線——TransformerのFFNがReLUの代わりに選ぶ活性化">
+  <meta property="og:description" content="Gaussian Error Linear UnitはBERT・GPTのフィードフォワード層などで使われる滑らかな活性化関数。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/gelu/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "GELU",
+        "alternateName": ["GELU", "Gaussian Error Linear Unit", "ガウシアンエラーリニアユニット", "ジェル"],
+        "description": "入力に対して滑らかな非線形変換を行う活性化関数。Transformer系モデルのフィードフォワード層などでReLUの代替として広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "GELUは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Gaussian Error Linear Unitの略で、ニューラルネットワークの隠れ層などに挿入する活性化関数の一種です。ReLUのように0付近で折れ目があるのではなく滑らかな曲線で非線形性を与え、BERTやGPTなどTransformer系モデルのフィードフォワード層でよく使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GELUとReLUは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも隠れ層に非線形性を与える活性化関数ですが、ReLUは入力が0以下なら0・正ならその値を返す折れ目のある関数、GELUは滑らかな曲線で負の領域にも小さな値を通します。用途の世代（CNNのReLU vs TransformerのGELU）も異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GELUとソフトマックスは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。GELUは隠れ層の各ユニットに適用する活性化関数です。ソフトマックスは多クラス分類の出力層で確率分布（合計1）に正規化する関数であり、役割と適用位置が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">GELU</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>GELUとは？折れ目ではなく曲線——TransformerのFFNがReLUの代わりに選ぶ活性化</h1>
+    <p class="tool-hero-sub">読み：ジェル ／ 英：GELU（Gaussian Error Linear Unit）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>GELU</strong>（Gaussian Error Linear Unit）は、<strong>滑らかな曲線</strong>で非線形性を与える<a href="../neural-network/">ニューラルネットワーク</a>の<strong>活性化関数</strong>です。AlexNet世代の<strong>ReLU</strong>が「0で折れる直線」だったのに対し、<a href="../transformer/">Transformer</a>世代の<a href="../bert/">BERT</a>や<a href="../gpt/">GPT</a>はFFN（フィードフォワード層）にGELUを採用する——本記事は厳密な数式より、<strong>「なぜ折れ目のない活性化が選ばれたか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-activation">活性化関数の役割</a></li>
+        <li><a href="#relu-era">ReLU時代の常識</a></li>
+        <li><a href="#gelu-shape">GELUの形と直感</a></li>
+        <li><a href="#transformer-ffn">TransformerのFFNでの位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-activation">
+      <h2>活性化関数の役割</h2>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-160/">G-160</a>が示すように、活性化関数は<strong>非線形性</strong>を導入するために使われます。重み付き和だけを層で重ねると、全体として線形変換に近くなり、複雑なパターンを表現できません。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-203/">G-203</a>のように、隠れ層から活性化を外すと表現力が落ちます。試験ではReLU、シグモイド、tanh、ソフトマックスなど<strong>名前と用途の対応</strong>が問われます——GELUはその仲間入りをした<strong>比較的新しい選択肢</strong>です。
+      </p>
+    </section>
+
+    <section id="relu-era">
+      <h2>ReLU時代の常識</h2>
+      <p><a href="../alexnet/">AlexNet</a>以降、CNNでは<strong>ReLU</strong>が標準になりました（<a href="../../exams/g-kentei/drill/q/tf-384/">TF-384</a>）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>関数</th><th>形</th><th>長所・短所（試験向け）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ReLU</strong></td><td>0で折れる</td><td>計算が単純、勾配消失を緩和しやすい。負の入力は完全に0（<a href="../../exams/g-kentei/practice/q/g-196/">G-196</a>）</td></tr>
+          <tr><td><strong>シグモイド/tanh</strong></td><td>なだらかだが飽和</td><td>深い層で勾配消失しやすい（<a href="../../exams/g-kentei/practice/q/g-122/">G-122</a>）</td></tr>
+          <tr><td><strong>ソフトマックス</strong></td><td>出力を確率分布に</td><td><strong>出力層</strong>の多クラス分類用。隠れ層の活性化ではない</td></tr>
+        </tbody>
+      </table>
+      <p>
+        ReLUは強力ですが、負の領域で出力がゼロに「切り落とされる」——この<strong>折れ目</strong>が、深いTransformerのFFNでは別の選択が検討される一因になりました。
+      </p>
+    </section>
+
+    <section id="gelu-shape">
+      <h2>GELUの形と直感</h2>
+      <p>GELUの特徴は<strong>滑らかさ</strong>です。</p>
+      <ul class="tool-steps">
+        <li><strong>正の入力</strong> — ほぼそのまま通す（ReLUに近い）</li>
+        <li><strong>負の入力</strong> — 完全に0にせず、小さな値を残す<strong>曲線</strong></li>
+        <li><strong>名前の由来</strong> — ガウス誤差関数（正規分布の累積）に関連する形。試験では式より「滑らかな非線形」で十分なことが多い</li>
+      </ul>
+      <p>
+        直感的には「入力を<strong>確率的に通す</strong>」ような振る舞い——小さな負の値も少し残す——と説明されることがあります。実務では<a href="../bert/">BERT</a>、<a href="../gpt-architecture/">GPTアーキテクチャ</a>のFFNでGELU（または近い変種）が使われ、<strong>Transformer系＝GELU</strong>と覚えると整理しやすいです。
+      </p>
+    </section>
+
+    <section id="transformer-ffn">
+      <h2>TransformerのFFNでの位置</h2>
+      <p>Transformerブロックはおおむね<strong>Attention＋FFN</strong>の繰り返しです（<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>役割</th><th>活性化の有無</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Self-Attention</strong></td><td>系列内の重み付き集約</td><td>ソフトマックスは<strong>注意重み</strong>用（G-304）</td></tr>
+          <tr><td><strong>FFN（2層MLP）</strong></td><td>各位置の特徴を非線形変換</td><td><strong>GELU</strong>がここに入る</td></tr>
+          <tr><td><strong>出力層</strong></td><td>次トークン・クラスの予測</td><td>ソフトマックス等（タスク依存）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        GELUは<strong>Transformer全体の名前</strong>ではなく、FFNの中の<strong>部品の一つ</strong>です。<a href="../layer-normalization/">レイヤー正規化</a>や<a href="../attention/">Attention</a>と同じく、ブロックを構成する要素として位置づけます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>滑らかな活性化関数</strong>。Transformer系でよく使われる</li>
+        <li><strong>役割</strong> — 隠れ層への非線形性（G-160）。なければ表現力が落ちる（G-203）</li>
+        <li><strong>対比</strong> — ReLU＝折れ目、GELU＝曲線。ソフトマックス＝出力層の確率化</li>
+        <li><strong>すり替え回避</strong> — 損失関数・正則化・Transformerそのものではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-160/">G-160</a>、<a href="../../exams/g-kentei/practice/q/g-203/">G-203</a>、<a href="../../exams/g-kentei/practice/q/g-122/">G-122</a>、<a href="../../exams/g-kentei/drill/q/tf-380/">TF-380</a>、<a href="../../exams/g-kentei/drill/q/tf-384/">TF-384</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>（Transformer構成）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>GELU＝ReLU</td><td>曲線 vs 折れ目。世代も用途も異なる</td></tr>
+          <tr><td>GELU＝ソフトマックス</td><td>隠れ層活性化 vs 出力層の確率化（G-122）</td></tr>
+          <tr><td>GELU＝<a href="../transformer/">Transformer</a></td><td>FFNの部品 vs 全体アーキテクチャ</td></tr>
+          <tr><td>GELU＝<a href="../loss-function/">損失関数</a></td><td>順伝播の非線形 vs 学習の誤差（G-204）</td></tr>
+          <tr><td>GELU＝正則化</td><td>活性化 vs L1/L2など（G-169）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>GELUは何ですか？</summary><p class="tool-faq-a">Gaussian Error Linear Unitの略で、ニューラルネットワークの隠れ層などに挿入する活性化関数の一種です。ReLUのように0付近で折れ目があるのではなく滑らかな曲線で非線形性を与え、BERTやGPTなどTransformer系モデルのフィードフォワード層でよく使われます。</p></details>
+        <details><summary>GELUとReLUは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらも隠れ層に非線形性を与える活性化関数ですが、ReLUは入力が0以下なら0・正ならその値を返す折れ目のある関数、GELUは滑らかな曲線で負の領域にも小さな値を通します。用途の世代（CNNのReLU vs TransformerのGELU）も異なります。</p></details>
+        <details><summary>GELUとソフトマックスは同じですか？</summary><p class="tool-faq-a">同じではありません。GELUは隠れ層の各ユニットに適用する活性化関数です。ソフトマックスは多クラス分類の出力層で確率分布（合計1）に正規化する関数であり、役割と適用位置が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-160/">G-160 · 活性化関数の定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-203/">G-203 · 非活性化の問題</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-384/">TF-384 · ReLU（対比）</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformer</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../he-initialization/">He初期化</a></li>
+          <li><a href="../layer-normalization/">レイヤー正規化</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

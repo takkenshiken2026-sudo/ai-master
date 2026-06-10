@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FCNとは？全結合層を畳み込みに置き換え画素単位の予測を可能にしたCNN。セグメンテーションとの関係をG検定向けに解説。">
+  <title>FCNとは？全結合を畳み込みに置き換える——画素単位の地図を出力する転換 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/fcn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="FCNとは？全結合を畳み込みに置き換える——画素単位の地図を出力する転換">
+  <meta property="og:description" content="Fully Convolutional Network。画像分類CNNの出口を変え、セマンティックセグメンテーションの基礎となった設計。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/fcn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "FCN",
+        "alternateName": ["FCN", "Fully Convolutional Network", "フルコン"],
+        "description": "全結合層を畳み込み層に置き換え、入力画像サイズに対応した画素単位の予測を可能にした畳み込みニューラルネットワーク。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "FCNは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像分類用CNNの全結合層を畳み込みに置き換え、入力画像の各画素にクラスを割り当てるセマンティックセグメンテーションを可能にしたモデルです。画素単位の予測マップを出力する点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FCNとU-Netは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもセグメンテーション向けですが、FCNは全結合の畳み込み化という設計転換の代表、U-Netはエンコーダ・デコーダとスキップ接続を持つ別アーキテクチャです。いずれも画素単位の領域推定を行います。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FCNは物体検出モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。FCNは画素ごとにクラスを割り当てるセマンティックセグメンテーション向けです。物体検出はバウンディングボックスで位置とクラスを推定する別タスクであり、YOLOやFaster R-CNNなどが代表例です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">FCN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>FCNとは？全結合を畳み込みに置き換える——画素単位の地図を出力する転換</h1>
+    <p class="tool-hero-sub">読み：エフシーエヌ ／ 英：FCN（Fully Convolutional Network）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>FCN</strong>（Fully Convolutional Network）は、<strong>全結合層を畳み込みに置き換えた</strong><a href="../cnn/">CNN</a>です。画像分類が「画像全体にラベル1つ」を出力するのに対し、FCNは<strong>各画素にクラスを割り当てる地図</strong>を出力——<a href="../../exams/g-kentei/practice/q/g-317/">G-317</a>のセマンティックセグメンテーションの基礎を切り開きました。本記事はアップサンプリングの細部より、<strong>「出口の設計変更がタスクを変えた」</strong>という転換に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#task-gap">分類とセグメンテーションの溝</a></li>
+        <li><a href="#fc-trick">全結合を畳み込みにする意味</a></li>
+        <li><a href="#output-map">画素マップの出力</a></li>
+        <li><a href="#vs-others">U-Net・物体検出との違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="task-gap">
+      <h2>分類とセグメンテーションの溝</h2>
+      <p>画像認識のタスクは段階的に「細かく」なります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>出力</th><th>試験</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>画像分類</strong></td><td>画像全体のラベル1つ</td><td>G-318</td></tr>
+          <tr><td><strong>物体検出</strong></td><td>バウンディングボックス＋クラス</td><td>G-316</td></tr>
+          <tr><td><strong>セマンティックセグメンテーション</strong></td><td><strong>画素ごと</strong>のクラス</td><td>G-317</td></tr>
+        </tbody>
+      </table>
+      <p>
+        2010年代前半、<a href="../alexnet/">AlexNet</a>系の分類CNNは最終層に<strong>全結合（FC）</strong>があり、固定サイズのベクトルからクラスを出していました。このままでは「どの画素が何か」は分かりません。FCNはこの<strong>出口の制約</strong>を取り除く設計です。
+      </p>
+    </section>
+
+    <section id="fc-trick">
+      <h2>全結合を畳み込みにする意味</h2>
+      <p>FCNの核心は次の置き換えです。</p>
+      <blockquote>
+        <p>全結合層 → <strong>1×1（または同等の）畳み込み層</strong>に置き換える。</p>
+      </blockquote>
+      <p>なぜこれで画素予測が可能になるか——試験向けの直感は次のとおりです。</p>
+      <ul class="tool-steps">
+        <li><strong>全結合</strong> — 空間情報を潰し、画像全体のラベル1つに集約</li>
+        <li><strong>畳み込み</strong> — 空間サイズを保ったまま、各位置で同じ変換を適用</li>
+        <li><strong>結果</strong> — 特徴マップの各画素からクラススコアを出せる</li>
+      </ul>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-325/">G-325</a>の正解文——「全結合層を畳み込みに置き換え、画素単位の予測に利用できる」——がそのまま定義になります。
+      </p>
+    </section>
+
+    <section id="output-map">
+      <h2>画素マップの出力</h2>
+      <p>
+        FCNは畳み込みだけでは特徴マップが入力より小さくなるため、<strong>アップサンプリング</strong>（逆畳み込み・プーリングの逆操作など）で元の解像度に戻します。試験では手法名より<strong>「画素単位の予測マップを出す」</strong>ことが要点です。
+      </p>
+      <p>
+        学習では<a href="../dice-loss/">Dice Loss</a>や交差エントロピーなど、セグメンテーション向けの<a href="../loss-function/">損失関数</a>が使われます。FCN以降、U-Net（<a href="../../exams/g-kentei/drill/q/tf-122/">TF-122</a>）やDeepLabなど、より精緻なセグメンテーションアーキテクチャが続きましたが、FCNは<strong>「分類CNNをセグメンテーションに転用する」</strong>転換点として教科書に残ります。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>U-Net・物体検出との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名前</th><th>タスク</th><th>FCNとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>FCN</strong></td><td>セマンティックセグメンテーション</td><td>——</td></tr>
+          <tr><td><strong>U-Net</strong></td><td>セグメンテーション</td><td>別設計。スキップ接続で精緻化（G-324）</td></tr>
+          <tr><td><strong>YOLO</strong></td><td>物体検出</td><td>矩形の位置推定。画素マスクではない</td></tr>
+          <tr><td><strong>Mask R-CNN</strong></td><td>インスタンスセグメンテーション</td><td>個体ごとのマスク（TF-124）</td></tr>
+          <tr><td><strong><a href="../detr/">DETR</a></strong></td><td>物体検出</td><td>Transformer系。FCNとは別系譜</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 全結合を畳み込みに置換し、<strong>画素単位の予測</strong>を可能にしたネット</li>
+        <li><strong>タスク</strong> — セマンティックセグメンテーションの<strong>基礎的モデル</strong>（G-325）</li>
+        <li><strong>対比</strong> — 画像分類＝ラベル1つ、FCN＝画素マップ</li>
+        <li><strong>すり替え回避</strong> — 物体検出・GAN・NLPモデルではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-325/">G-325</a>、<a href="../../exams/g-kentei/practice/q/g-317/">G-317</a>、<a href="../../exams/g-kentei/drill/q/tf-122/">TF-122</a>、<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-324/">G-324</a>、<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>FCN＝U-Net</td><td>全結合の畳み込み化 vs エンコーダ・デコーダ設計</td></tr>
+          <tr><td>FCN＝物体検出</td><td>画素分類 vs バウンディングボックス</td></tr>
+          <tr><td>FCN＝画像分類そのもの</td><td>出口を変えて<strong>別タスク</strong>に拡張</td></tr>
+          <tr><td>FCN＝<a href="../cnn/">CNN</a>の別名</td><td>CNNの一設計・歴史的モデル名</td></tr>
+          <tr><td>画素予測＝画像拡大</td><td>クラス割当のセグメンテーション</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>FCNは何をするモデルですか？</summary><p class="tool-faq-a">画像分類用CNNの全結合層を畳み込みに置き換え、入力画像の各画素にクラスを割り当てるセマンティックセグメンテーションを可能にしたモデルです。画素単位の予測マップを出力する点が特徴です。</p></details>
+        <details><summary>FCNとU-Netは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもセグメンテーション向けですが、FCNは全結合の畳み込み化という設計転換の代表、U-Netはエンコーダ・デコーダとスキップ接続を持つ別アーキテクチャです。いずれも画素単位の領域推定を行います。</p></details>
+        <details><summary>FCNは物体検出モデルですか？</summary><p class="tool-faq-a">いいえ。FCNは画素ごとにクラスを割り当てるセマンティックセグメンテーション向けです。物体検出はバウンディングボックスで位置とクラスを推定する別タスクであり、YOLOやFaster R-CNNなどが代表例です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-325/">G-325 · FCNの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-317/">G-317 · セグメンテーション</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-122/">TF-122 · U-Net/DeepLab</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-116/">TF-116 · セマンティック vs インスタンス</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../dice-loss/">Dice Loss</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../fpn/">FPN</a></li>
+          <li><a href="../detr/">DETR</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
