@@ -1656,6 +1656,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ai-master.jp/tools/nolang/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-master.jp/tools/manus/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

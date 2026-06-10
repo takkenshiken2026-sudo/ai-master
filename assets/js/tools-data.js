@@ -617,6 +617,7 @@ const TOOLS = [
     logo: "nolang.png",
     cat: "audio",
     catLabel: "音声・動画・音楽",
+    article: true,
     tagline: "日本発の動画生成AI",
     url: "https://nolang.ai",
   },

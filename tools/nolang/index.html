@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NoLangの機能・料金・使い方を解説。日本発の資料→解説動画AI、PDF/PPTX入力、生成後編集、18言語以上。Runway・Pika・HeyGenとの違い。生成AIパスポート対策にも。">
+  <title>NoLangとは？日本発・編集できる資料→解説動画AIを解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/nolang/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="NoLangとは？日本発・編集できる資料→解説動画AIを解説">
+  <meta property="og:description" content="PDF/PPTX・Web・テキストから数十秒で解説動画。生成後に台本・BGM・アバターを編集できる日本発NoLang。Runway/Pikaとの棲み分け、料金・API・倫理を2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/nolang/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/nolang/og-hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/nolang/og-hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/nolang/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "NoLang", "item": "https://ai-master.jp/tools/nolang/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/nolang/#article",
+        "headline": "NoLangとは？日本発・編集できる資料→解説動画AIを解説",
+        "description": "PDF/PPTX・Web・テキストから数十秒で解説動画。生成後に台本・BGM・アバターを編集できる日本発NoLang。Runway/Pikaとの棲み分け、料金・API・倫理を2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/nolang/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/nolang/og-hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/nolang/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "NoLang" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/nolang/#webpage",
+        "url": "https://ai-master.jp/tools/nolang/",
+        "name": "NoLangとは？日本発・編集できる資料→解説動画AIを解説",
+        "description": "PDF/PPTX・Web・テキストから数十秒で解説動画。生成後に台本・BGM・アバターを編集できる日本発NoLang。Runway/Pikaとの棲み分け、料金・API・倫理を2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/nolang/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "NoLang",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web Browser",
+        "description": "株式会社Mavericksが提供する日本発の動画生成AI。PDF/PPTX・Web・テキストから台本・テロップ・BGM・ナレーション付き解説動画を生成し、生成後も編集可能。100体以上のアバター、300種以上の音声、多言語対応。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "JPY",
+          "description": "Free 0円（機能制限あり）。Standard 2,980円/月、Premium 7,980円/月、Business 要問合せ（2026年6月時点・公式Pricingで最新確認）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "株式会社Mavericks",
+          "url": "https://no-lang.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "NoLangは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Freeプラン（0円）で基本機能を試せます。ただしウォーターマークや縦型動画・月間クレジットなどに制限があり、継続的な本番利用はStandard（2,980円/月）以上が現実的です。無料枠の上限は公式Pricingで最新を確認してください（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NoLangとRunway・Pikaの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RunwayやPikaはプロンプトから映像クリップを生成するText-to-Video（シネマティック表現）が中心です。NoLangはPDF/PPTX・Web・テキストなど既存資料から「ナレーション＋テロップ＋アバター」の説明動画を数十秒で組み立て、生成後に台本やBGMを編集できる点が異なります。試験では「動画生成AI＝すべて同じ用途」とは捉えないでください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NoLangの公式サイトはno-lang.comとnolang.aiのどちらですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "プロダクトの公式サイトは no-lang.com です（キャッチコピー「日本発、編集できる動画生成 AI」）。nolang.ai は別ドメインで、検索や一覧データと混同しやすいため、登録・料金・API利用は no-lang.com および api.no-lang.com を確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PDFやPowerPointから動画を作れますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。作成画面で［資料］を選びPDFまたはPPTXをアップロードすると、ページ構成をもとにシーンが生成されます。生成後にスクリプト・アバター・ボイス・BGMを編集して、研修や営業向けの説明動画に仕上げられます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NoLangを業務で使う際の注意点は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "クローンボイスやPersonal Avatarは本人同意が前提です。Chrome拡張でWebページ要約から作った動画は、要約元ページの権利がない限り商用利用できない場合があります。AIが生成した台本のファクトチェック、著作権クリアな素材利用、商用時のクレジット表記（利用規約・CC-BY-SA条件）も公開前に確認してください。生成AIパスポートではディープフェイク・偽情報の論点と接続します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">NoLang</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/nolang/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">NoLang · 音声・動画</p>
+          <h1>NoLangとは？日本発・編集できる資料→解説動画AIを解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">PDF/PPTX・Web・テキストから数十秒で説明動画——生成後も台本・BGM・アバターを直せる</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">日本発（Mavericks）</span>
+        <span class="tool-category">資料→動画</span>
+        <span class="tool-category">18+言語</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（no-lang.com）</li>
+          <li>Chrome拡張</li>
+          <li>API（Standard以上）</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/nolang/og-hero.jpg" alt="NoLang公式の動画生成AIサービスイメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：株式会社Mavericks公式（PR TIMES）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>NoLang</strong>（ノーラン）は、<strong>株式会社Mavericks</strong>が提供する<strong>日本発の動画生成AI</strong>です。公式キャッチは「<strong>日本発、編集できる動画生成 AI</strong>」——<strong>PDF/PPTX・Web URL・テキスト</strong>を入力すると、AIが台本・テロップ・BGM・ナレーション（＋アバター）付きの<strong>説明動画</strong>を数十秒で組み立て、<strong>生成後も編集</strong>できます。本記事は機能の網羅ではなく、<strong>Runway/Pika（シネマT2V）との棲み分け</strong>、<strong>資料内製化</strong>、<strong>多言語研修</strong>、<strong>no-lang.com と nolang.ai の混同</strong>、試験で問われる<strong>ディープフェイク・同意</strong>に絞って整理します。料金・上限は<strong>2026年6月時点</strong>の情報です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">NoLangとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Pika・Runway・HeyGenとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、<strong>動画生成AI</strong>は生成AI活用の具体例になり得ます。ただし NoLang のような<strong>説明動画プラットフォーム</strong>と、Runway のような<strong>汎用Text-to-Video</strong>は出力物・用途が異なります。「動画生成AI＝プロンプト1本で映画のような映像」だけを想起すると、試験でも実務でも選び方を誤ります。
+      </p>
+      <p>
+        同時に、<strong>アバター・クローンボイス</strong>は<strong>ディープフェイク・肖像権・同意</strong>の論点と接続します。本人許可なく第三者の顔や声を使う選択肢は倫理・法務リスクです。AIが自動生成した台本の<strong>ファクトチェック</strong>も、公開前確認の定石として問われます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0336/">実践演習 HQ-0336（ディープフェイク）</a>、<a href="../../exams/genai-passport/drill/q/tf-0409/">一問一答 TF-0409（社外資料の公開前確認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0255/">TF-0255（もっともらしい出力の確認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0221/">TF-0221（ディープフェイクの定義）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/deepfake/">ディープフェイク</a>、<a href="../../glossary/generative-ai/">生成AI</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>NoLangとは</h2>
+      <p>
+        NoLang（no-lang.com）は、2024年から本格提供されている<strong>日本発の動画生成AI SaaS</strong>です。開発・提供元は<strong>株式会社Mavericks</strong>（代表：奥野将太）。2026年3月時点の公式発表では、法人向けプラン導入が<strong>80社突破</strong>、登録ユーザーは<strong>15万人超</strong>（2025年12月時点の公式PR）とされています。ISMS認証取得を訴求し、製造・金融・教育・自治体などへの導入事例が公表されています。
+      </p>
+      <p>
+        最大の特徴は「<strong>資料から説明動画へ</strong>」のショートカットです。従来は外注で<strong>数十万円・数週間</strong>かかる研修動画やIR説明を、担当者がブラウザ上で<strong>数分〜数十分</strong>に短縮できる——という価値提案が公式PRの中心です。100体以上のストックアバター、300種類以上の音声、クローンボイス、Live2D・PSD形式の自社キャラクター（IP）連携も公式に言及されています。
+      </p>
+      <p>
+        海外の<a href="../heygen/">HeyGen</a>や<a href="../synthesia/">Synthesia</a>と並ぶ「AIアバターが話す動画」系ですが、NoLangは<strong>日本語UI・国内料金（円）</strong>、<strong>資料入力→即編集</strong>、<strong>縦型ショート（TikTok/YouTube Shorts）</strong>など、国内ビジネス文脈に寄せた設計が目立ちます。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>4つの入力モード</h3>
+          <p><strong>テキスト</strong>、<strong>資料（PDF/PPTX）</strong>、<strong>Web URL</strong>、<strong>音声・動画</strong>から開始。資料はページ構成をもとにシーン自動生成。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>生成後編集</h3>
+          <p>台本・テロップ・BGM・ナレーション・アバターを生成後に修正。「生成して終わり」ではなく<strong>編集できる</strong>のが公式の差別化ポイント。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>アバター・音声</h3>
+          <p>100体以上のストックアバター、300種以上の音声。対話型（2人アバター）やクローンボイス、オリジナルアバター作成（プランによる）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>多言語展開</h3>
+          <p>日本語を含む<strong>18言語以上</strong>で動画生成（英語・韓国語・中国語・東南アジア言語など）。作成済み動画の言語変換・字幕展開も可能（公式FAQ・ヘルプ）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Chrome拡張</h3>
+          <p>閲覧中のWeb記事を要約し、解説動画の下書きを生成。社内ナレッジのダイジェスト化に使える一方、<strong>商用利用には権利確認</strong>が必要（後述）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>API・法人プラン</h3>
+          <p>REST API（<strong>Standardプラン以上</strong>、従量の前払いクレジット）。Business向け使い放題プラン、ログ管理・チーム運用など法人機能（公式PR）。</p>
+        </div>
+      </div>
+
+      <h3>出力イメージ（何が「生成」されるか）</h3>
+      <p>
+        NoLangが自動で組み立てるのは、主に<strong>説明・解説向けの横型/縦型動画</strong>です。各シーンに<strong>AI生成または指定画像</strong>、<strong>テロップ</strong>、<strong>ナレーション</strong>が載り、アバターをオンにすると<strong>話者が解説する体裁</strong>になります。シネマティックなカメラワークや実写風の長尺ドラマ——<a href="../runway/">Runway</a>や<a href="../pika/">Pika</a>が得意とする領域——とは別物と理解してください。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        「<strong>NoLang＝Runway/Pikaと同じText-to-Video</strong>」は×です。後者はプロンプトから<strong>映像クリップ</strong>を生成するツールが中心。NoLangは<strong>既存資料の内容を動画化</strong>し、ナレーション付き<strong>説明動画</strong>を素早く作るサービスです。試験では「動画生成AI」の中に<strong>説明動画型</strong>と<strong>汎用映像生成型</strong>がある、と分けて覚えると混乱しません。
+      </p>
+      <p>
+        「<strong>NoLang＝CapCutのような編集ソフト</strong>」も半分だけ正しいです。CapCutは<strong>撮影済み素材の編集</strong>が主。NoLangは<strong>台本・構成・音声までAIが下書き</strong>し、その後編集できる——<strong>生成＋編集</strong>のハイブリッドです。
+      </p>
+      <p>
+        「<strong>公式URLは nolang.ai</strong>」も注意。プロダクト本体は<strong>no-lang.com</strong>です。一覧データや検索結果に nolang.ai が出ることがありますが、登録・料金・APIは<strong>no-lang.com / api.no-lang.com</strong>を確認してください。
+      </p>
+      <p>
+        「<strong>生成したらそのまま商用OK</strong>」も単純化しすぎです。通常のプロンプト/資料入力動画は、<strong>クレジット表記など条件付きで商用利用可</strong>とされる説明があります（CC-BY-SA系の条件——<strong>最新の利用規約で必ず確認</strong>）。Chrome拡張で<strong>他人のWebページ</strong>から作った動画は、<strong>要約元の権利がない限り商用利用不可</strong>と公式ガイドで注意されています。
+      </p>
+      <p>
+        「<strong>クローンボイス＝誰の声でも使える</strong>」は重大な誤りです。本人同意なく第三者の声を複製する利用は、<strong>ディープフェイク</strong>倫理の対象になり得ます。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>
+        公式Pricingページは随時更新されます。以下は<strong>2026年6月時点</strong>の公開情報・二次資料を整理した目安です。<strong>クレジット数・無料枠・Plusプランの有無</strong>は公式で最新を確認してください。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">0円</p>
+          <p class="tool-plan-note">お試し向け · ウォーターマーク · 機能制限あり</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Standard</p>
+          <p class="tool-plan-price">2,980円/月</p>
+          <p class="tool-plan-note">2,000 credits/月 · 透かし除去 · 縦型 · API利用可</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Premium</p>
+          <p class="tool-plan-price">7,980円/月</p>
+          <p class="tool-plan-note">7,000 credits/月 · 大量生成向け</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額（税込目安）</th>
+            <th>月間クレジット</th>
+            <th>生成目安</th>
+            <th>主な差分</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free</strong></td>
+            <td>0円</td>
+            <td>限定（プランにより異なる）</td>
+            <td>お試し数本</td>
+            <td>ウォーターマーク、縦型制限など</td>
+          </tr>
+          <tr>
+            <td><strong>Standard</strong></td>
+            <td>2,980円</td>
+            <td>2,000</td>
+            <td>約50本/月（1分動画換算）</td>
+            <td>透かしなしDL、縦型、API</td>
+          </tr>
+          <tr>
+            <td><strong>Premium</strong></td>
+            <td>7,980円</td>
+            <td>7,000</td>
+            <td>約175本/月（1分動画換算）</td>
+            <td>Standard機能＋大容量</td>
+          </tr>
+          <tr>
+            <td><strong>Business</strong></td>
+            <td>要問合せ</td>
+            <td>カスタム</td>
+            <td>使い放題プランあり</td>
+            <td>ログ管理、チーム、専任支援</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        クレジット消費の目安として、<strong>1分程度の動画≈10 credits</strong>という説明がメディア・ヘルプに見られます（長さ・設定で変動）。APIは<strong>Standardプラン以上</strong>で、<strong>前払いクレジット</strong>をチャージして利用する方式です（公式APIドキュメント）。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>no-lang.com からアカウント作成</strong>
+            Freeプランで手触り確認。法人はBusiness問合せも可。
+          </li>
+          <li>
+            <strong>入力モードを選択</strong>
+            テキスト／資料（PDF/PPTX）／Web URL／音声・動画から開始。
+          </li>
+          <li>
+            <strong>スタイル・尺・アバターを設定</strong>
+            横型/縦型、対話型アバター、画像生成のオン/オフなどを指定。
+          </li>
+          <li>
+            <strong>生成してプレビュー</strong>
+            数十秒〜数分で下書き完成。台本・BGM・テロップを編集。
+          </li>
+          <li>
+            <strong>言語変換・書き出し</strong>
+            必要なら他言語版を生成。MP4等でダウンロードまたは共有。
+          </li>
+        </ol>
+        <figure>
+          <img src="../../assets/images/tools/nolang/og-hero.jpg" alt="NoLangの資料から動画生成イメージ" width="600" height="338" loading="lazy">
+          <figcaption>出典：株式会社Mavericks公式（PR TIMES）</figcaption>
+        </figure>
+      </div>
+      <p>
+        法人利用では、<strong>台本の技術・法務レビュー</strong>、<strong>クローンボイス同意書</strong>、<strong>Web要約動画の権利確認</strong>を公開前チェックリストに入れると安全です。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>社内研修・操作マニュアル</h3>
+          <p>既存PPTX/PDFを動画化。更新時は台本差し替えで再生成——撮影し直し不要。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>外国人材向け多言語研修</h3>
+          <p>日本語資料から英語・ベトナム語などへ展開。現場説明の内製化を加速。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>営業・IR説明動画</h3>
+          <p>決算資料や提案書の要点を短尺動画に。外注コスト・リードタイムを圧縮。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>SNSショート</h3>
+          <p>縦型出力でTikTok・YouTube Shorts向け。テキスト記事のリパurposeにも。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>自治体・広報</h3>
+          <p>複雑な行政情報を平易な動画で。公式導入事例（PR）あり。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>API連携・バッチ生成</h3>
+          <p>LMSや社内ポータルから資料を送り、説明動画を自動生成（Standard以上）。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PDF/PPTXから即説明動画——外注比で圧倒的に速い</td>
+            <td>シネマティック映像（Runway系）には向かない</td>
+          </tr>
+          <tr>
+            <td>生成後編集で台本・BGM・アバターを調整可能</td>
+            <td>クレジット制——長尺大量生成はPremium/Business向け</td>
+          </tr>
+          <tr>
+            <td>日本語・円建て・国内サポートで導入しやすい</td>
+            <td>無料版はウォーターマーク等の制限</td>
+          </tr>
+          <tr>
+            <td>18言語以上・縦型ショート対応</td>
+            <td>AI台本の事実誤り——公開前ファクトチェック必須</td>
+          </tr>
+          <tr>
+            <td>法人80社超・ISMS等の信頼訴求（公式PR）</td>
+            <td>クローンボイス・Web要約動画は権利・同意の確認が必要</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Pika・Runway・HeyGenとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>NoLang</th>
+            <th>Pika / Runway</th>
+            <th>HeyGen / Synthesia</th>
+            <th>CapCut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>中核</strong></td>
+            <td>資料→説明動画（生成＋編集）</td>
+            <td>プロンプト→映像クリップ（T2V）</td>
+            <td>台本→AIアバター説明動画</td>
+            <td>既存素材の編集</td>
+          </tr>
+          <tr>
+            <td><strong>入力</strong></td>
+            <td>PDF/PPTX/Web/テキスト/音声</td>
+            <td>テキスト・画像・動画</td>
+            <td>台本・PPT・URL</td>
+            <td>撮影済みクリップ</td>
+          </tr>
+          <tr>
+            <td><strong>強み</strong></td>
+            <td>日本発・円建て・資料内製・縦型</td>
+            <td>映像表現・エフェクト</td>
+            <td>グローバルL&amp;D・翻訳</td>
+            <td>無料編集・SNSテンプレ</td>
+          </tr>
+          <tr>
+            <td><strong>料金目安</strong></td>
+            <td>Standard 2,980円/月〜</td>
+            <td>ドル建てCredits</td>
+            <td>ドル建て（$29/月〜等）</td>
+            <td>基本無料</td>
+          </tr>
+          <tr>
+            <td><strong>試験での整理</strong></td>
+            <td>説明動画の内製化（日本）</td>
+            <td>Text-to-Video一般</td>
+            <td>法人アバター動画</td>
+            <td>動画編集ツール</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>3層</strong>に分けると選びやすいです。<strong>映像表現・Bロール</strong>→Runway/Pika、<strong>説明者が話す研修・資料動画</strong>→NoLang/HeyGen/Synthesia、<strong>撮影素材の仕上げ</strong>→CapCut。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>PDF/PPTXの研修・営業資料を動画化したい国内チーム</strong></li>
+        <li><strong>外注せず説明動画を内製し、生成後に台本を直したい担当者</strong></li>
+        <li><strong>外国人材向けに多言語版を素早く増やしたい人事・現場教育</strong></li>
+        <li><strong>円建て・日本語UIで試験と実務を並行して学びたい受験生</strong></li>
+      </ul>
+      <p>
+        向いていないのは、<strong>映画風の映像表現だけ欲しい</strong>（Runway/Pika向け）、<strong>グローバルLMSのSCORM統合が最優先</strong>（Synthesia向け）、<strong>既存撮影素材の細かいカット編集 alone</strong>（CapCut/Descript向け）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>NoLangは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。Freeプラン（0円）で基本機能を試せます。ただしウォーターマークや縦型動画・月間クレジットなどに制限があり、継続的な本番利用はStandard（2,980円/月）以上が現実的です。無料枠の上限は公式Pricingで最新を確認してください（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>NoLangとRunway・Pikaの違いは？</summary>
+          <p class="tool-faq-a">RunwayやPikaはプロンプトから映像クリップを生成するText-to-Video（シネマティック表現）が中心です。NoLangはPDF/PPTX・Web・テキストなど既存資料から「ナレーション＋テロップ＋アバター」の説明動画を数十秒で組み立て、生成後に台本やBGMを編集できる点が異なります。試験では「動画生成AI＝すべて同じ用途」とは捉えないでください。</p>
+        </details>
+        <details>
+          <summary>NoLangの公式サイトはno-lang.comとnolang.aiのどちらですか？</summary>
+          <p class="tool-faq-a">プロダクトの公式サイトは no-lang.com です（キャッチコピー「日本発、編集できる動画生成 AI」）。nolang.ai は別ドメインで、検索や一覧データと混同しやすいため、登録・料金・API利用は no-lang.com および api.no-lang.com を確認してください。</p>
+        </details>
+        <details>
+          <summary>PDFやPowerPointから動画を作れますか？</summary>
+          <p class="tool-faq-a">はい。作成画面で［資料］を選びPDFまたはPPTXをアップロードすると、ページ構成をもとにシーンが生成されます。生成後にスクリプト・アバター・ボイス・BGMを編集して、研修や営業向けの説明動画に仕上げられます。</p>
+        </details>
+        <details>
+          <summary>NoLangを業務で使う際の注意点は？</summary>
+          <p class="tool-faq-a">クローンボイスやPersonal Avatarは本人同意が前提です。Chrome拡張でWebページ要約から作った動画は、要約元ページの権利がない限り商用利用できない場合があります。AIが生成した台本のファクトチェック、著作権クリアな素材利用、商用時のクレジット表記（利用規約・CC-BY-SA条件）も公開前に確認してください。生成AIパスポートではディープフェイク・偽情報の論点と接続します。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://no-lang.com" target="_blank" rel="noopener noreferrer">NoLang</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://no-lang.com/pricing" target="_blank" rel="noopener noreferrer">料金（Pricing）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://api-docs.no-lang.com" target="_blank" rel="noopener noreferrer">APIドキュメント</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../pika/"><img src="../../assets/images/tools/pika/app-icon.png" alt="" width="16" height="16"> Pika</a></li>
+          <li><a href="../runway/"><img src="../../assets/images/tools/runway/app-icon.png" alt="" width="16" height="16"> Runway</a></li>
+          <li><a href="../capcut/"><img src="../../assets/images/tools/capcut/app-icon.png" alt="" width="16" height="16"> CapCut</a></li>
+          <li><a href="../heygen/"><img src="../../assets/images/tools/heygen/app-icon.png" alt="" width="16" height="16"> HeyGen</a></li>
+          <li><a href="../synthesia/"><img src="../../assets/images/tools/synthesia/app-icon.png" alt="" width="16" height="16"> Synthesia</a></li>
+          <li><a href="../descript/"><img src="../../assets/images/tools/descript/app-icon.png" alt="" width="16" height="16"> Descript</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/deepfake/">ディープフェイク</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">Text-to-Video（動画生成） <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
