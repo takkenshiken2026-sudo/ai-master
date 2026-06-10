@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zapierの機能・料金・使い方を解説。Zap（タスク自動化）とZapier Agents（AIエージェント）、9000+アプリ連携、MCP、Activities課金。Make・Power Automate・Manusとの違い、試験で押さえる点も整理。">
+  <title>Zapierとは？業務自動化とAIエージェントの機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/zapier/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Zapierとは？業務自動化とAIエージェントの機能・料金・使い方を解説">
+  <meta property="og:description" content="ZapとAgentsの二層構成、Activities課金、AI Guardrails、MCP。iPaaS定番のZapierを2026年6月時点で解説。">
+  <meta property="og:url" content="https://ai-master.jp/tools/zapier/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/zapier/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/zapier/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/zapier/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Zapier", "item": "https://ai-master.jp/tools/zapier/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/zapier/#article",
+        "headline": "Zapierとは？業務自動化とAIエージェントの機能・料金・使い方を解説",
+        "description": "Zapierの機能・料金・使い方を解説。Zap（タスク自動化）とZapier Agents（AIエージェント）、9000+アプリ連携、MCP、Activities課金。Make・Power Automate・Manusとの違い、試験で押さえる点も整理。",
+        "url": "https://ai-master.jp/tools/zapier/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/zapier/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/zapier/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Zapier" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/zapier/#webpage",
+        "url": "https://ai-master.jp/tools/zapier/",
+        "name": "Zapierとは？業務自動化とAIエージェントの機能・料金・使い方を解説",
+        "description": "Zapierの機能・料金・使い方を解説。Zap（タスク自動化）とZapier Agents（AIエージェント）、9000+アプリ連携、MCP、Activities課金。Make・Power Automate・Manusとの違い、試験で押さえる点も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/zapier/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Zapier",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Zapier Inc.のiPaaS。9000以上のアプリ連携、Zapによる決定論的自動化、Zapier AgentsによるAIエージェント、MCP連携。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Freeプランあり（Zapはタスク数、AgentsはActivities数で上限）。Proは2026年6月時点でZap約$19.99/月〜、Agents Pro $33.33/月〜"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Zapier",
+          "url": "https://zapier.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Zapierは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。FreeプランでZap（タスク）とZapier Agents（Activities）の両方に無料枠があります（2026年6月時点）。ただし本番の業務自動化ではタスク/Activities上限に達しやすく、Pro以上が現実的です。最新上限は公式Pricingで確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ZapとZapier Agentsの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Zapは「トリガー→アクション」の決定論的ワークフローで、同じ条件なら同じ結果になりやすいです。Zapier Agentsは自然言語指示・Web閲覧・分岐判断を含むAIエージェントで、Activities単位の別課金枠があります。定型的な連携はZap、曖昧な判断を含むタスクはAgents——という棲み分けが公式の整理です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ZapierとMake（Integromat）の違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもiPaaSですが、Zapierは連携アプリ数・テンプレート・エコシステムの厚さが強み、Makeはビジュアルなシナリオ設計とコスト効率で選ばれることが多いです。Microsoft 365中心ならPower Automateも選択肢になります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Zapier AgentsとManusは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Zapier Agentsは9000+ SaaS API連携が中心の業務自動化エージェント、Manusはクラウドサンドボックスでブラウザ操作込みの汎用タスク完遂エージェントです。CRM更新ならZapier、Web上の複雑操作ならManus——用途で選びます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MCPとは？（Zapierとの関係）",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Model Context Protocol（MCP）はAIが外部ツールと連携するオープン標準です。Zapier MCPはChatGPTやClaudeなどからZapierの9000+アプリ操作を呼び出す橋渡しになります。試験では画像フィルター名ではなく外部連携の仕組みとして覚えてください（TF-0243）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Zapier</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/zapier/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Zapier · 業務自動化</p>
+          <h1>Zapierとは？業務自動化とAIエージェントの機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">9000+アプリをつなぐiPaaS——定型的なZapと、判断を含むZapier Agentsの二層構成</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Zap（タスク）</span>
+        <span class="tool-category">Agents（Activities）</span>
+        <span class="tool-category">MCP · AI Guardrails</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（zapier.com）</li>
+          <li>Tables · Forms</li>
+          <li>Chrome拡張 · Slack承認</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/zapier/og-hero.png" alt="Zapierの公式イメージ。AIオーケストレーションと業務自動化" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Zapier公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Zapier</strong>は、<strong>Zapier Inc.</strong>が提供する<strong>iPaaS</strong>（Integration Platform as a Service）——SaaS同士をノーコードでつなぐ業務自動化の定番です。2010年代から「<strong>Zap</strong>」（トリガー→アクション）で知られ、2020年代後半からは<strong>Zapier Agents</strong>と<strong>AIオーケストレーション</strong>を前面に出しています。本記事は連携アプリ一覧の暗記ではなく、<strong>「決定論的Zap」と「AI Agents」の使い分け</strong>、<strong>TasksとActivitiesの二重課金</strong>、<strong>Manus・ChatGPT workspace agentsとの境界</strong>、<strong>試験で問われるガバナンス</strong>に絞って書いています。料金は<strong>2026年6月時点</strong>の公式情報に基づき、契約前に必ず再確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Zapierとは</a></li>
+        <li><a href="#zap-vs-agents">ZapとZapier Agents</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Make・Power Automate・Manusとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Zapierのような<strong>業務自動化＋AIエージェント</strong>は、第5章「ビジネス活用」と第3章「AIエージェント」の交差点に位置します。「自動化すれば確認不要（×）」——TF-0493は、Zapier導入後も<strong>出力確認・ルール整備・教育</strong>が必要だと問います。
+      </p>
+      <p>
+        Zapier Agentsは9000+アプリに<strong>書き込み権限</strong>を持ち得るため、TF-0240「外部ツールの実行権限設計（○）」、TF-0271「影響の大きい操作への承認（○）」が実務と直結します。公式の<strong>Human-in-the-loop</strong>（Slack承認ステップ）、<strong>AI Guardrails</strong>（PII・プロンプトインジェクション検知）、<strong>監査ログ</strong>（SOC 2 Type II）は、試験の抽象論を具体製品に結びつける材料です。また<strong>Zapier MCP</strong>はTF-0243のMCP（外部連携プロトコル）の代表例の一つです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0493/">一問一答 TF-0493（自動化と確認作業）</a>、<a href="../../exams/genai-passport/drill/q/tf-0240/">TF-0240（外部ツールと権限）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（承認ステップ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0243/">TF-0243（MCP）</a>、<a href="../../exams/genai-passport/drill/q/tf-0321/">TF-0321（許可されていないサービスへの入力）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/agent/">AIエージェント</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Zapierとは</h2>
+      <p>
+        Zapierは、非エンジニアでも<strong>「Aアプリでイベントが起きたらBアプリで処理する」</strong>フローを組めるクラウドサービスです。公式は2026年時点で<strong>9000以上のアプリ連携</strong>を掲げ、累計で数十億タスク規模の自動化が実行されてきたと説明しています（公式ブログ）。
+      </p>
+      <p>
+        従来の中核は<strong>Zap</strong>——例えば「Googleフォーム送信→Slack通知→スプレッドシート追記」のような<strong>決定論的</strong>な連鎖です。条件が固定なら結果も再現しやすく、監査・障害調査にも向きます。2024年以降、自然言語で役割を定義する<strong>Zapier Agents</strong>、ワークフロー内の<strong>Agentステップ</strong>、<strong>Tables/Forms</strong>、<strong>Zapier MCP</strong>が加わり、「AIオーケストレーションプラットフォーム」へ拡張されています（公式）。
+      </p>
+      <p>
+        試験ではZapierを「RPAロボットそのもの」や「ChatGPTの別名」と混同しないでください。Zapierは<strong>API連携型のiPaaS</strong>であり、画面操作RPA（UiPath等）やブラウザ自律エージェント（<a href="../manus/">Manus</a>）とは技術スタックが異なります。
+      </p>
+    </section>
+
+    <section id="zap-vs-agents">
+      <h2>ZapとZapier Agents</h2>
+      <p>
+        2026年時点のZapier理解で最も重要なのは、<strong>2つの実行モデル</strong>の違いです。料金も<strong>Tasks（Zap）</strong>と<strong>Activities（Agents）</strong>で別枠です（公式Pricing）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Zap（従来ワークフロー）</th>
+            <th>Zapier Agents</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>動き方</strong></td>
+            <td>トリガー→フィルタ→アクションの固定フロー</td>
+            <td>自然言語指示・分岐・Web閲覧・他Agent呼び出し</td>
+          </tr>
+          <tr>
+            <td><strong>向くタスク</strong></td>
+            <td>毎回同じCRM更新、通知、データ同期</td>
+            <td>リード判定、調査要約、条件が変わるオペレーション</td>
+          </tr>
+          <tr>
+            <td><strong>課金単位</strong></td>
+            <td><strong>Task</strong>（成功したアクション1回）</td>
+            <td><strong>Activity</strong>（行動・ツール呼び出し・ナレッジ参照等）</td>
+          </tr>
+          <tr>
+            <td><strong>試験での整理</strong></td>
+            <td>ノーコード自動化・iPaaS</td>
+            <td>AIエージェント＋ガバナンス</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        公式ブログは「<strong>分岐が少ない大量処理はZap、判断を含むワークフローはAgents</strong>」という棲み分けを示しています。Zap内に<strong>Agentステップ</strong>を埋め込むハイブリッドも可能——「骨格は決定論、判断箇所だけAI」という設計が試験・実務の両方で理解しやすいパターンです。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>9000+ アプリ連携</h3>
+          <p>Slack、Google Workspace、HubSpot、Notion、Shopify等。トリガー/アクションがメンテナンスされたコネクタ（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Zapier Agents</h3>
+          <p>プロンプトで役割定義。Live data（Drive/Notion等）、Web browsing、Agent-to-agent calling（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>AI Guardrails</h3>
+          <p>PII・プロンプトインジェクション・有害出力のスキャン。下流アプリへ渡す前に検知（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Human-in-the-loop</h3>
+          <p>Slack等で承認ステップを挟む。AI生成コンテンツの確認を自動化と両立（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Zapier MCP · SDK</h3>
+          <p>ChatGPT/Claude等からZapier経由でCRM更新・通知。既存AIチャットに「手」を足す（TF-0243）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Tables · Forms · Copilot</h3>
+          <p>データ保管・入力フォーム・自然言語でZap生成。2026年時点はFree/Pro/Teamに統合（公式Pricing）。</p>
+        </div>
+      </div>
+
+      <h3>エンタープライズ向けガバナンス</h3>
+      <p>
+        EnterpriseではSSO、詳細なアプリ/アクション制限、監査ログ、SIEM連携、BYOM（AWS Bedrock経由の推論）などが提供されます（公式）。Agents Enterpriseは2026年6月時点「Coming Soon」とされ、組織共有・カスタムActivities上限が追加予定です。試験では「便利だから全社員に全アプリ権限」ではなく、<strong>最小権限</strong>が正解側です。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        「<strong>Zapier＝AIを入れれば全部自動</strong>」はTF-0493で×です。Agentsは下書きや一次処理を速くしますが、<strong>契約・送金・個人情報の外部送信</strong>は人間承認とポリシーが必須です。
+      </p>
+      <p>
+        「<strong>Zapier Agents＝Manus / Operator</strong>」も混同されがちです。Zapierは<strong>公開APIのあるSaaS連携</strong>が得意、Manus/Operatorは<strong>ブラウザGUI操作</strong>が中心です。APIのない社内レガシー画面の自動化はRPAやブラウザエージェントの領域に残ります。
+      </p>
+      <p>
+        「<strong>FreeプランでAgentsもZapも無制限</strong>」も誤りです。Freeは<strong>タスク数・Activities数に上限</strong>があり、ヘビーユースはPro以上が現実的です。またActivitiesはツール呼び出し1回ごとに消費され、想定より早く枯渇します。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>
+        2026年時点、Zapierは<strong>Zap（タスク）用プラン</strong>と<strong>Agents用プラン</strong>を分けて表示しています。Tables・Forms・Zapier MCPはZap側の統合プランに含まれる旨が公式Pricingに記載されています。以下は<strong>2026年6月時点</strong>の目安です。
+      </p>
+
+      <h3>Zap（ワークフロー）側</h3>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">100 Tasks/月（公式・目安）</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Professional</p>
+          <p class="tool-plan-price">約$19.99/月〜</p>
+          <p class="tool-plan-note">年払い・多段Zap・Premium apps（公式）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Team / Enterprise</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">共有・SSO・管理機能</p>
+        </div>
+      </div>
+
+      <h3>Zapier Agents 側</h3>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Agents Free</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">400 Activities/月（公式）</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Agents Pro</p>
+          <p class="tool-plan-price">$33.33/月</p>
+          <p class="tool-plan-note">1,500 Activities/月・Live data（公式）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Agents Enterprise</p>
+          <p class="tool-plan-price">Coming Soon</p>
+          <p class="tool-plan-note">組織共有・監査・カスタム上限（公式）</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>課金単位</th>
+            <th>カウントされる例</th>
+            <th>試験・運用の注意</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Task</strong></td>
+            <td>Zap内の成功アクション1回</td>
+            <td>多段ZapはTask消費が増える</td>
+          </tr>
+          <tr>
+            <td><strong>Activity</strong></td>
+            <td>Agentの行動、Web閲覧、ナレッジ参照、他モデル呼び出し</td>
+            <td>1会話でActivitiesが連続消費</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        ドル表示・Task上限はプラン改定で変わります。契約前に<a href="https://zapier.com/pricing" target="_blank" rel="noopener noreferrer">公式Pricing</a>で再確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>アカウント作成</strong>
+            zapier.com からサインアップ。連携したいアプリをOAuthで接続します。
+          </li>
+          <li>
+            <strong>定型的ならZapから</strong>
+            テンプレートを選び、トリガー（例：新規リード）→アクション（例：CRM登録）を設定。テスト実行でTask消費を確認。
+          </li>
+          <li>
+            <strong>判断が要るならAgents</strong>
+            自然言語で役割を定義。Live dataソースと使えるアプリを最小限に絞る（TF-0240）。
+          </li>
+          <li>
+            <strong>承認ステップを挿入</strong>
+            外部送信・契約・高額処理の前にSlack human-in-the-loopを設定（TF-0271）。
+          </li>
+          <li>
+            <strong>MCPで既存AIと接続（任意）</strong>
+            社内で許可されたChatGPT/ClaudeからZapier操作を呼ぶ。未許可サービスへの業務データ入力は禁止（TF-0321）。
+          </li>
+          <li>
+            <strong>Activity/Taskダッシュボードを監視</strong>
+            上限接近時はZapへ処理を戻すかプランを見直します。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/zapier/og-hero.png" alt="ZapierのワークフローとAIオーケストレーションイメージ" width="600" height="315" loading="lazy">
+            <figcaption>出典：Zapier公式</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>セールス・マーケ（Zap）</h3>
+          <ul>
+            <li>フォーム送信→CRMリード作成→Slack通知</li>
+            <li>広告CV→スプレッドシート集計→メール配信</li>
+            <li>HubSpotステージ変更→タスク自動作成</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>オペレーション（Agents）</h3>
+          <ul>
+            <li>問い合わせ内容の分類と返信下書き</li>
+            <li>Notion/Driveの最新資料要約</li>
+            <li>複数Agent連携での調査→記録</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>IT・ガバナンス</h3>
+          <ul>
+            <li>AI Guardrails付きワークフロー</li>
+            <li>監査ログ付き自動化（Enterprise）</li>
+            <li>MCP経由で社内AIチャットに操作権限</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        個人情報・機密契約書をAgentsのナレッジに載せる前に、<strong>DPA・データ所在地・学習利用可否</strong>を法務と確認してください。
+      </p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>9000+連携とテンプレで導入が速い</td>
+            <td>Task/Activity課金でコスト予測が難しい</td>
+          </tr>
+          <tr>
+            <td>ZapとAgentsのハイブリッド設計</td>
+            <td>AgentsとZapの料金体系が別で混乱しやすい</td>
+          </tr>
+          <tr>
+            <td>Guardrails・監査・承認など企業向け機能</td>
+            <td>APIのないアプリ・画面操作には不向き</td>
+          </tr>
+          <tr>
+            <td>試験の「iPaaS＋AIエージェント＋MCP」の具体例</td>
+            <td>Make等と比べ単価が高いと感じるケースも</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Make・Power Automate・Manusとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Zapier</th>
+            <th>Make</th>
+            <th>Power Automate</th>
+            <th>Manus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>カテゴリ</td>
+            <td>iPaaS＋AI Agents</td>
+            <td>iPaaS（ビジュアル重視）</td>
+            <td>Microsoft 365連携自動化</td>
+            <td>汎用ブラウザエージェント</td>
+          </tr>
+          <tr>
+            <td>強み</td>
+            <td>連携数・テンプレ・MCP</td>
+            <td>シナリオ設計・コスト</td>
+            <td>Teams/SharePoint/Outlook</td>
+            <td>GUI操作・タスク完遂</td>
+          </tr>
+          <tr>
+            <td>AIの位置</td>
+            <td>Agents・Agentステップ</td>
+            <td>AIモジュール（製品進化中）</td>
+            <td>Copilot/AI Builder連携</td>
+            <td>自律調査・資料化</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>SaaS連携自動化の代表</td>
+            <td>同カテゴリの競合例</td>
+            <td>M365環境の自動化例</td>
+            <td>エージェント（ブラウザ型）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Microsoft 365中心ならPower Automate、コスト重視の複雑フローならMake、SaaS API連携の定番＋AI AgentsならZapier、<strong>Webブラウザ上の自律タスク</strong>なら<a href="../manus/">Manus</a>——という整理が試験・実務で使いやすいです。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>Slack・Google・CRMをノーコードでつなぎたい非エンジニア</strong></li>
+        <li><strong>既存ZapにAI判断ステップを足したいチーム</strong></li>
+        <li><strong>生成AIパスポートでiPaaS・MCP・エージェントガバナンスを具体例で学びたい受験生</strong></li>
+        <li><strong>ChatGPT/Claudeから社内SaaS操作したい（MCP経由）</strong></li>
+      </ul>
+      <p>
+        向いていないのは、<strong>APIのない社内システムだけ</strong>を自動化したい場合、<strong>月間タスクが非常に多くMakeの方が安い</strong>場合、<strong>ブラウザ操作中心の調査完遂</strong>（Manus向き）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Zapierは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。FreeプランでZap（タスク）とZapier Agents（Activities）の両方に無料枠があります（2026年6月時点）。ただし本番の業務自動化では上限に達しやすく、Pro以上が現実的です。最新上限は公式Pricingで確認してください。</p>
+        </details>
+        <details>
+          <summary>ZapとZapier Agentsの違いは？</summary>
+          <p class="tool-faq-a">Zapは「トリガー→アクション」の決定論的ワークフローです。Zapier Agentsは自然言語指示・Web閲覧・分岐判断を含むAIエージェントで、Activities単位の別課金枠があります。定型的な連携はZap、曖昧な判断を含むタスクはAgents——という棲み分けが公式の整理です。</p>
+        </details>
+        <details>
+          <summary>ZapierとMakeの違いは？</summary>
+          <p class="tool-faq-a">どちらもiPaaSですが、Zapierは連携アプリ数・テンプレート・エコシステムの厚さが強み、Makeはビジュアルなシナリオ設計とコスト効率で選ばれることが多いです。Microsoft 365中心ならPower Automateも選択肢になります。</p>
+        </details>
+        <details>
+          <summary>Zapier AgentsとManusは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。Zapier Agentsは9000+ SaaS API連携が中心の業務自動化エージェント、Manusはクラウドサンドボックスでブラウザ操作込みの汎用タスク完遂エージェントです。CRM更新ならZapier、Web上の複雑操作ならManus——用途で選びます。</p>
+        </details>
+        <details>
+          <summary>MCPとは？（Zapierとの関係）</summary>
+          <p class="tool-faq-a">Model Context Protocol（MCP）はAIが外部ツールと連携するオープン標準です。Zapier MCPはChatGPTやClaudeなどからZapierの9000+アプリ操作を呼び出す橋渡しになります。試験では画像フィルター名ではなく外部連携の仕組みとして覚えてください（TF-0243）。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://zapier.com" target="_blank" rel="noopener noreferrer">Zapier</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://zapier.com/pricing" target="_blank" rel="noopener noreferrer">料金（Pricing）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://zapier.com/blog/zapier-agents-guide/" target="_blank" rel="noopener noreferrer">Zapier Agents ガイド</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://zapier.com/mcp" target="_blank" rel="noopener noreferrer">Zapier MCP</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../manus/"><img src="../../assets/images/tools/manus/app-icon.png" alt="" width="16" height="16"> Manus</a></li>
+          <li><a href="../chatgpt-operator/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT Operator</a></li>
+          <li><a href="../notion-ai/"><img src="../../assets/images/tools/notion.svg" alt="" width="16" height="16"> Notion AI</a></li>
+          <li><a href="../copilot/"><img src="../../assets/images/tools/copilot/app-icon.png" alt="" width="16" height="16"> Microsoft Copilot</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

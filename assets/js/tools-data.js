@@ -993,6 +993,7 @@ const TOOLS = [
     logo: "zapier.ico",
     cat: "automation",
     catLabel: "業務自動化",
+    article: true,
     tagline: "6000以上のアプリを連携できるワークフロー自動化の定番",
     url: "https://zapier.com",
   },
