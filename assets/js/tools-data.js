@@ -194,6 +194,7 @@ const TOOLS = [
     logo: "adobe.svg",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "Canvaの対抗ポジション",
     url: "https://www.adobe.com/express/",
   },
