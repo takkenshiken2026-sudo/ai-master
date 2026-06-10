@@ -1007,6 +1007,7 @@ const TOOLS = [
     logo: "microsoft.svg",
     cat: "automation",
     catLabel: "業務自動化",
+    article: true,
     tagline: "Microsoft 365環境での業務自動化ツール",
     url: "https://www.microsoft.com/power-platform/products/power-automate",
   },

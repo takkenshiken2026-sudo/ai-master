@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Power Automateの機能・料金・使い方を解説。DPAクラウドフローとRPAデスクトップフロー、Premiumコネクタ、Copilot連携。Zapier・Make・n8nとの違い。生成AIパスポート対策にも。">
+  <title>Power Automateとは？DPA/RPAとMicrosoft 365連携自動化を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/microsoft-power-automate/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Power Automateとは？DPA/RPAとMicrosoft 365連携自動化を解説">
+  <meta property="og:description" content="クラウドフロー（API）とデスクトップフロー（UI操作）の二層、Premium $15/月、Process $150/bot。M365標準コネクタとPremiumの罠を2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/microsoft-power-automate/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/microsoft-power-automate/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/microsoft-power-automate/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/microsoft-power-automate/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Microsoft Power Automate", "item": "https://ai-master.jp/tools/microsoft-power-automate/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/microsoft-power-automate/#article",
+        "headline": "Power Automateとは？DPA/RPAとMicrosoft 365連携自動化を解説",
+        "description": "クラウドフロー（API）とデスクトップフロー（UI操作）の二層、Premium $15/月、Process $150/bot。M365標準コネクタとPremiumの罠を2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/microsoft-power-automate/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/microsoft-power-automate/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/microsoft-power-automate/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Microsoft Power Automate" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/microsoft-power-automate/#webpage",
+        "url": "https://ai-master.jp/tools/microsoft-power-automate/",
+        "name": "Power Automateとは？DPA/RPAとMicrosoft 365連携自動化を解説",
+        "description": "クラウドフロー（API）とデスクトップフロー（UI操作）の二層、Premium $15/月、Process $150/bot。M365標準コネクタとPremiumの罠を2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/microsoft-power-automate/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Microsoft Power Automate",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser, Windows",
+        "description": "Microsoft Power Platformの業務自動化サービス。DPA（クラウドフロー）とRPA（デスクトップフロー）、1,000+コネクタ、Copilotによる自然言語フロー生成、AI Builder、Process Mining。",
+        "offers": {
+          "@type": "Offer",
+          "price": "15",
+          "priceCurrency": "USD",
+          "description": "Premium $15/ユーザー/月（年払い）。Process $150/bot/月（無人RPA）。30日無料トライアルあり（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Microsoft",
+          "url": "https://www.microsoft.com/power-platform/products/power-automate"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Power Automateは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "30日無料トライアルがあります。Microsoft 365の一部プランには標準コネクタ限定のPower Automate利用権が含まれますが、Premiumコネクタ・無人RPA・AI Builder本格利用にはPower Automate Premium（$15/ユーザー/月・年払い）またはProcessライセンスが必要です（2026年6月時点・公式Pricing）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Power AutomateとMicrosoft 365 Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft 365 CopilotはWord/Excel/Teams等の対話型AIアシスタントです。Power Automateはトリガー→アクションのワークフロー自動化（iPaaS/RPA）プラットフォームです。Copilot in Power Automateはフロー設計を支援する機能の一つであり、製品全体を指しません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "クラウドフローとデスクトップフローの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "クラウドフロー（DPA）はAPI/コネクタ経由のクラウド自動化。デスクトップフロー（RPA）はWindows上でキーボード・マウス操作を記録・再生するUI自動化です。Premiumは有人（attended）RPA、Processライセンスは無人（unattended）RPA向けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Power AutomateとZapierの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもiPaaSですが、Power AutomateはTeams/SharePoint/Dataverse/Outlook等MicrosoftエコシステムとRPA（デスクトップフロー）・Process Miningが一体です。Zapierは9,000+ SaaS連携とZapier Agentsが強み。M365中心ならPower Automate、多SaaS API連携ならZapier——という棲み分けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Premiumコネクタには別ライセンスが必要ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Microsoft 365に含まれる利用権は標準コネクタ（Outlook、SharePoint等）が中心です。Salesforce、SQL、HTTP、カスタムコネクタ等のPremiumコネクタを使うクラウドフローは、所有者にPower Automate Premiumが必要か、フローにProcessライセンスを割り当てます（2026年6月時点・Microsoft Learn）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Microsoft Power Automate</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/microsoft.svg" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Microsoft Power Automate · 業務自動化</p>
+          <h1>Power Automateとは？DPA/RPAとMicrosoft 365連携自動化を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">APIクラウドフロー（DPA）とUI操作RPA（デスクトップフロー）——M365・Dataverseに最適化されたiPaaS</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">DPA · RPA</span>
+        <span class="tool-category">1,000+コネクタ</span>
+        <span class="tool-category">Copilot設計</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（Power Platform）</li>
+          <li>Windows（RPA）</li>
+          <li>Teams / SharePoint</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/microsoft-power-automate/og-hero.png" alt="Microsoft Power Automate公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Microsoft公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Microsoft Power Automate</strong>（旧 Microsoft Flow）は、<strong>Microsoft Power Platform</strong>の<strong>業務自動化（iPaaS＋RPA）</strong>サービスです。APIでSaaSをつなぐ<strong>クラウドフロー（DPA）</strong>と、レガシーアプリをマウス・キーボードで操作する<strong>デスクトップフロー（RPA）</strong>を<strong>1製品</strong>で扱える点が最大の独自性です。本記事はコネクタ数の暗記ではなく、<strong>標準 vs Premiumコネクタのライセンス罠</strong>、<strong>Premium（ユーザー） vs Process（ボット）課金</strong>、<strong>Copilot in Power Automate ≠ M365 Copilot</strong>、<a href="../zapier/">Zapier</a>/<a href="../make/">Make</a>との棲み分け、試験の<strong>自動化ガバナンス</strong>に絞って整理します（<strong>2026年6月時点</strong>）。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Power Automateとは</a></li>
+        <li><a href="#dpa-rpa">DPA（クラウド）とRPA（デスクトップ）</a></li>
+        <li><a href="#flow-types">フローの種類</a></li>
+        <li><a href="#connectors">標準 vs Premiumコネクタ</a></li>
+        <li><a href="#ai-copilot">Copilot・AI Builder</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Zapier・Make・n8nとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Power Automateのような<strong>業務自動化</strong>は「効率化（○）」と「確認不要（×）」がセットで問われます。フローが外部SaaSに<strong>書き込み</strong>する場合、TF-0240（権限設計）、TF-0271（承認ステップ）、TF-0493（自動化後も確認）が実務と直結します。
+      </p>
+      <p>
+        試験用の整理：<strong>①DPA＝API連携、RPA＝UI操作</strong>——用語の混同に注意。<strong>②iPaaS（Zapier/Make）≠ AIエージェント（Manus）</strong>——Power Automateは前者に近いがCopilot/AI BuilderでAI要素あり。<strong>③M365に含まれる＝Premiumコネクタも使える（×）</strong>——ライセンス設計の典型陷阱。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0493/">一問一答 TF-0493（自動化と確認作業）</a>、<a href="../../exams/genai-passport/drill/q/tf-0240/">TF-0240（外部ツールと権限）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（承認ステップ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0280/">TF-0280（AIエージェントとガバナンス）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/agent/">AIエージェント</a>、<a href="../../glossary/generative-ai/">生成AI</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Power Automateとは</h2>
+      <p>
+        Power Automateは、非エンジニアでも<strong>「トリガー→条件→アクション」</strong>のワークフローを組めるMicrosoftの自動化基盤です。1,000以上の<strong>コネクタ</strong>（2026年時点・Microsoft Learn）でOutlook、Teams、SharePoint、Salesforce、SQL Server等と連携し、<strong>Dataverse</strong>（Power Platform共通DB）上のデータも扱えます。
+      </p>
+      <p>
+        かつては「Microsoft Flow」という名称でした。現在は<strong>Power Platform</strong>（Power Apps / Power BI / Power Pages / Copilot Studio）と一体で、エンタープライズ向けには<strong>Managed Environments</strong>（DLP、監査、ソリューション管理）が提供されます。
+      </p>
+      <p>
+        <a href="../zapier/">Zapier</a>が「SaaS横断の連携数」で選ばれるのに対し、Power Automateは<strong>Microsoft 365テナント内の統治</strong>——Entra ID、コンプライアンス境界、Teams承認、Process Mining——で選ばれることが多いです。
+      </p>
+    </section>
+
+    <section id="dpa-rpa">
+      <h2>DPA（クラウド）とRPA（デスクトップ）</h2>
+      <p>
+        Power Automate最大の試験・調達ポイントは、<strong>2種類の自動化エンジン</strong>を持つことです（Microsoft公式Pricing・Learn）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>方式</th>
+            <th>別名</th>
+            <th>仕組み</th>
+            <th>向くシステム</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>クラウドフロー</strong></td>
+            <td>DPA（Digital Process Automation）</td>
+            <td>API・コネクタ経由。クラウド上で実行</td>
+            <td>M365、SaaS、Dataverse</td>
+          </tr>
+          <tr>
+            <td><strong>デスクトップフロー</strong></td>
+            <td>RPA（Robotic Process Automation）</td>
+            <td>Windows UI操作の記録・再生</td>
+            <td>APIのない社内アプリ、Citrix、レガシー</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>有人 vs 無人RPA</h3>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>モード</th>
+            <th>必要ライセンス</th>
+            <th>実行イメージ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Attended（有人）</strong></td>
+            <td>Power Automate Premium（ユーザー）</td>
+            <td>担当者PC上でボットが支援しながら実行</td>
+          </tr>
+          <tr>
+            <td><strong>Unattended（無人）</strong></td>
+            <td>Process または Hosted Process（ボット/台）</td>
+            <td>サーバー/VM上で24時間自動実行</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>Hosted Process</strong>（$215/bot/月・年払い）はMicrosoft管理のAzure VM上で無人RPAを実行——インフラ運用を減らしたいEnterprise向けです（公式Pricing）。
+      </p>
+    </section>
+
+    <section id="flow-types">
+      <h2>フローの種類</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Automated（自動）</h3>
+          <p>イベントトリガー（メール受信、リスト更新等）で起動。所有者コンテキストで実行。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Instant（即時）</h3>
+          <p>Teams/モバイルのボタンから手動起動。実行者コンテキストで実行——Premium要件に注意。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Scheduled（スケジュール）</h3>
+          <p>日次・週次など定期実行。バッチ処理・レポート配信向け。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Business process（BPF）</h3>
+          <p>Dataverse上の段階的業務プロセス（承認ステージ等）。CRM/案件管理と連動。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Desktop flow</h3>
+          <p>Power Automate for desktopで作成するRPA。クラウドフローから呼び出し可能。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Process Mining</h3>
+          <p>Premiumに含まれるプロセス可視化・ボトルネック分析（50MB/ユーザー、テナント最大100GB）。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="connectors">
+      <h2>標準 vs Premiumコネクタ</h2>
+      <p>
+        ライセンス設計で最も混乱するのが<strong>コネクタの種類</strong>です（Microsoft Learn FAQ）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>コネクタ</th>
+            <th>例</th>
+            <th>M365付属利用権</th>
+            <th>Premium単体</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Standard</strong></td>
+            <td>Outlook、SharePoint、Teams、OneDrive</td>
+            <td>○（プランによる）</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Premium</strong></td>
+            <td>Salesforce、SQL、HTTP、Oracle、SAP等</td>
+            <td>×（別途Premium必要）</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Custom</strong></td>
+            <td>自社APIをOpenAPIで登録</td>
+            <td>×</td>
+            <td>○（Premium権限）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>Automated/Scheduledフロー</strong>でPremiumコネクタを使う場合、<strong>フロー所有者</strong>にPremiumライセンスが必要です。<strong>Instantフロー</strong>では<strong>実行する全ユーザー</strong>にPremiumが必要——人数が多い場合はフローに<strong>Processライセンス</strong>を割り当てる方が経済的なこともあります（Microsoft Learn）。
+      </p>
+    </section>
+
+    <section id="ai-copilot">
+      <h2>Copilot・AI Builder</h2>
+      <p>
+        Power AutomateのAI要素は2系統です。<strong>混同しない</strong>ことが試験・実務で重要です。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>Copilot in Power Automate</strong>：デザイナー内で自然言語からフロー骨格を生成。「フォーム送信→Teams通知」のような指示からトリガー/アクションを提案（Microsoft公式）。</li>
+        <li><strong>AI Builder</strong>：フォーム処理、オブジェクト検出、テキスト分類等のAIモデル。Premiumに<strong>AI Builder credits</strong>が含まれ、フロー内アクションで消費。</li>
+        <li><strong>Copilot Studio</strong>：別製品の対話型エージェント。エージェント内クラウドフローはCopilot Studioのメッセージ容量に含まれる場合あり（公式Community）——Power Automate Premium不要のケースあり。</li>
+      </ul>
+      <p>
+        <a href="../microsoft-365-copilot/">Microsoft 365 Copilot</a>（Word/Excel/TeamsのチャットAI）とは<strong>製品ラインが別</strong>です。試験では「Copilot＝すべて同じ」と一括りにしないでください。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        「<strong>Power Automate＝Microsoft 365 Copilot</strong>」は×です。前者はワークフロー自動化、後者は生産性アプリ内の対話AI——名称に「Copilot」が付く機能はPower Automate内にもありますが、別物です。
+      </p>
+      <p>
+        「<strong>M365 E3/E5に含まれるからPremiumコネクタも無料</strong>」は×です。多くのM365プランは<strong>標準コネクタ限定</strong>のPower Automate利用権です。Salesforce連携等には<strong>Premiumライセンス</strong>が別途必要です。
+      </p>
+      <p>
+        「<strong>Power Automate＝ZapierのMicrosoft版だけ</strong>」も半分だけ正しいです。Zapierにない<strong>RPA・Process Mining・Dataverse BPF</strong>がPower Automateの差別化です。逆にZapierの<strong>9,000+連携・Zapier Agents・MCP</strong>はPower Automateより厚い領域もあります。
+      </p>
+      <p>
+        「<strong>自動化すれば人間確認不要</strong>」は×です。特にInstantフローで全社員がPremiumフローを実行できる設計は、TF-0493・TF-0271の「承認・確認」の反面教師になります。
+      </p>
+      <p>
+        「<strong>Processライセンス1つで同時に無限並列</strong>」——×です。1ボットは<strong>同時1実行</strong>。並列無人RPAには複数Process/Hosted Processが必要（公式Pricing注記）。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>
+        以下はMicrosoft公式Pricing（2026年6月）の整理です。API実行には<strong>サービス制限</strong>（リクエスト上限）もあり、詳細はPower Platform licensing guideで確認してください。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Premium</p>
+          <p class="tool-plan-price">$15/月</p>
+          <p class="tool-plan-note">ユーザー/年払い · クラウドフロー無制限 · 有人RPA · Process Mining</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Process</p>
+          <p class="tool-plan-price">$150/月</p>
+          <p class="tool-plan-note">bot/年払い · 無人RPA · フロー単位ライセンス</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Hosted Process</p>
+          <p class="tool-plan-price">$215/月</p>
+          <p class="tool-plan-note">bot/年払い · 無人RPA · MicrosoftホストVM</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>課金単位</th>
+            <th>主な entitlements</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>無料トライアル</strong></td>
+            <td>30日</td>
+            <td>UIクラウドフロー・標準コネクタで試用</td>
+          </tr>
+          <tr>
+            <td><strong>Premium</strong></td>
+            <td>ユーザー</td>
+            <td>Premium/Customコネクタ、有人RPA、AI Builder credits、Dataverse 250MB DB</td>
+          </tr>
+          <tr>
+            <td><strong>Process</strong></td>
+            <td>ボット（フロー割当）</td>
+            <td>無人RPA、Premiumコネクタ（フロー経由）、所有者Premium不要</td>
+          </tr>
+          <tr>
+            <td><strong>Hosted Process</strong></td>
+            <td>ボット</td>
+            <td>Process＋AzureホストVM</td>
+          </tr>
+          <tr>
+            <td><strong>M365付属</strong></td>
+            <td>ユーザー（プランによる）</td>
+            <td>標準コネクタ中心——Premiumは別途</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <ol class="tool-steps">
+        <li>
+          <strong>make.powerautomate.com にサインイン</strong>
+          Microsoft 365アカウントまたは30日トライアル。
+        </li>
+        <li>
+          <strong>テンプレートまたはCopilotでフロー作成</strong>
+          「Recurrence→SharePoint取得→Teams投稿」等から開始。
+        </li>
+        <li>
+          <strong>コネクタ種別を確認</strong>
+          Premiumアイコン付きコネクタはライセンス要件をチェック。
+        </li>
+        <li>
+          <strong>テスト→ソリューションエクスポート</strong>
+          Dev/Test/Prod環境はManaged Environments推奨。
+        </li>
+        <li>
+          <strong>RPAが必要ならDesktop flow追加</strong>
+          クラウドフローから「デスクトップフローを実行」アクションで連携。
+        </li>
+        <li>
+          <strong>監視・Process Mining</strong>
+          失敗通知、Center of Excellence（CoE）キットでガバナンス。
+        </li>
+      </ol>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>Teams承認ワークフロー</h3>
+          <p>Forms/SharePoint申請→Adaptive Card承認→Dataverse記録。TF-0271の具体例。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>メール→CRM同期</h3>
+          <p>Outlookトリガー→Salesforce更新（Premium）。Processライセンスで全社Instant化も。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>レガシーRPA</h3>
+          <p>APIのない会計ソフト操作をデスクトップフロー化→夜間無人実行（Process）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>AI Builder請求書処理</h3>
+          <p>PDFスキャン→フィールド抽出→ERP登録。PremiumのAI credits消費。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>Process Mining</h3>
+          <p>実際の業務ログからボトルネック可視化→自動化候補を特定。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>Copilot Studio連携</h3>
+          <p>Teamsボット→Power Automateクラウドフロー→社内API。エージェント×自動化。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>M365/Teams/SharePoint/Dataverseとネイティブ統合</td>
+            <td>Premiumコネクタのライセンス設計が複雑</td>
+          </tr>
+          <tr>
+            <td>DPA＋RPAを1基盤で設計可能</td>
+            <td>UIはZapier/Makeより学習コスト高め</td>
+          </tr>
+          <tr>
+            <td>Process Mining・Managed Environments</td>
+            <td>無人RPAはProcess $150/bot〜と高額</td>
+          </tr>
+          <tr>
+            <td>Copilotによるフロー下書き</td>
+            <td>マルチSaaS中心組織ではZapierの方が連携数で優位</td>
+          </tr>
+          <tr>
+            <td>Enterpriseコンプライアンス（Entra、DLP）</td>
+            <td>セルフホスト志向なら<a href="../n8n/">n8n</a>も選択肢</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Zapier・Make・n8nとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>Power Automate</th>
+            <th>Zapier</th>
+            <th>Make</th>
+            <th>n8n</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>強み</strong></td>
+            <td>M365・RPA・Process Mining</td>
+            <td>9,000+連携・Agents・MCP</td>
+            <td>ビジュアルシナリオ・コスパ</td>
+            <td>セルフホスト・Execution課金</td>
+          </tr>
+          <tr>
+            <td><strong>RPA</strong></td>
+            <td>◎ ネイティブ</td>
+            <td>△ 限定的</td>
+            <td>△</td>
+            <td>△</td>
+          </tr>
+          <tr>
+            <td><strong>課金</strong></td>
+            <td>ユーザー/ボット</td>
+            <td>タスク/Activities</td>
+            <td>Credits</td>
+            <td>Execution/自前インフラ</td>
+          </tr>
+          <tr>
+            <td><strong>AI</strong></td>
+            <td>Copilot設計・AI Builder</td>
+            <td>Zapier Agents</td>
+            <td>AIモジュール</td>
+            <td>LangChainノード等</td>
+          </tr>
+          <tr>
+            <td><strong>試験での整理</strong></td>
+            <td>M365自動化・DPA/RPA</td>
+            <td>iPaaS代表</td>
+            <td>iPaaS競合</td>
+            <td>オープンソースiPaaS</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>M365中心＋RPA</strong>ならPower Automate、<strong>多SaaS API</strong>ならZapier、<strong>複雑フローのコスト</strong>ならMake、<strong>オンプレ/データ主権</strong>ならn8n——4象限で選ぶと試験・調達が整理しやすいです。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>Teams/SharePoint/Outlook中心のMicrosoft 365組織</strong></li>
+        <li><strong>APIのないレガシーアプリをRPAでつなぎたいIT部門</strong></li>
+        <li><strong>Process Miningで自動化候補をデータドリブンに選びたいBPRチーム</strong></li>
+        <li><strong>試験でiPaaS・RPA・ライセンス罠・自動化ガバナンスを学びたい受験生</strong></li>
+      </ul>
+      <p>
+        向いていないのは、<strong>Google Workspace中心でM365がない</strong>場合、<strong>単純SaaS連携だけでRPA不要</strong>（Zapier/Makeで十分）、<strong>完全セルフホスト</strong>（n8n向け）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Power Automateは無料で使えますか？</summary>
+          <p class="tool-faq-a">30日無料トライアルがあります。Microsoft 365の一部プランには標準コネクタ限定のPower Automate利用権が含まれますが、Premiumコネクタ・無人RPA・AI Builder本格利用にはPower Automate Premium（$15/ユーザー/月・年払い）またはProcessライセンスが必要です（2026年6月時点・公式Pricing）。</p>
+        </details>
+        <details>
+          <summary>Power AutomateとMicrosoft 365 Copilotの違いは？</summary>
+          <p class="tool-faq-a">Microsoft 365 CopilotはWord/Excel/Teams等の対話型AIアシスタントです。Power Automateはトリガー→アクションのワークフロー自動化（iPaaS/RPA）プラットフォームです。Copilot in Power Automateはフロー設計を支援する機能の一つであり、製品全体を指しません。</p>
+        </details>
+        <details>
+          <summary>クラウドフローとデスクトップフローの違いは？</summary>
+          <p class="tool-faq-a">クラウドフロー（DPA）はAPI/コネクタ経由のクラウド自動化。デスクトップフロー（RPA）はWindows上でキーボード・マウス操作を記録・再生するUI自動化です。Premiumは有人（attended）RPA、Processライセンスは無人（unattended）RPA向けです。</p>
+        </details>
+        <details>
+          <summary>Power AutomateとZapierの違いは？</summary>
+          <p class="tool-faq-a">どちらもiPaaSですが、Power AutomateはTeams/SharePoint/Dataverse/Outlook等MicrosoftエコシステムとRPA（デスクトップフロー）・Process Miningが一体です。Zapierは9,000+ SaaS連携とZapier Agentsが強み。M365中心ならPower Automate、多SaaS API連携ならZapier——という棲み分けです。</p>
+        </details>
+        <details>
+          <summary>Premiumコネクタには別ライセンスが必要ですか？</summary>
+          <p class="tool-faq-a">はい。Microsoft 365に含まれる利用権は標準コネクタ（Outlook、SharePoint等）が中心です。Salesforce、SQL、HTTP、カスタムコネクタ等のPremiumコネクタを使うクラウドフローは、所有者にPower Automate Premiumが必要か、フローにProcessライセンスを割り当てます（2026年6月時点・Microsoft Learn）。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://www.microsoft.com/power-platform/products/power-automate" target="_blank" rel="noopener noreferrer">Power Automate</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.microsoft.com/en-us/power-platform/products/power-automate/pricing" target="_blank" rel="noopener noreferrer">料金（Pricing）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://learn.microsoft.com/en-us/power-automate/" target="_blank" rel="noopener noreferrer">Microsoft Learn</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://make.powerautomate.com" target="_blank" rel="noopener noreferrer">make.powerautomate.com</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../zapier/"><img src="../../assets/images/tools/zapier/app-icon.png" alt="" width="16" height="16"> Zapier</a></li>
+          <li><a href="../make/"><img src="../../assets/images/tools/make/app-icon.png" alt="" width="16" height="16"> Make</a></li>
+          <li><a href="../n8n/"><img src="../../assets/images/tools/n8n/app-icon.png" alt="" width="16" height="16"> n8n</a></li>
+          <li><a href="../microsoft-365-copilot/"><img src="../../assets/images/tools/microsoft-365-copilot/app-icon.png" alt="" width="16" height="16"> Microsoft 365 Copilot</a></li>
+          <li><a href="../dify/"><img src="../../assets/images/tools/dify/app-icon.png" alt="" width="16" height="16"> Dify</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
