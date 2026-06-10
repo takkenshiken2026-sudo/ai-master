@@ -75,6 +75,7 @@ const TOOLS = [
     logo: "jasper.png",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "マーケティングコンテンツ特化のAIライティングツール",
     url: "https://www.jasper.ai",
   },
