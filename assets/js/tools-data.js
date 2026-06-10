@@ -903,6 +903,7 @@ const TOOLS = [
     logo: "irushiru.png",
     cat: "productivity",
     catLabel: "仕事効率化・資料・翻訳",
+    article: true,
     tagline: "日本語特化のAIスライド作成ツール",
     url: "https://irusiru.jp/",
   },

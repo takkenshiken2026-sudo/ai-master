@@ -981,6 +981,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ai-master.jp/glossary/peft/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/glossary/palm-model/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/glossary/phi-model/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/glossary/pointnet/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-master.jp/glossary/rnn/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1507,6 +1527,11 @@
   </url>
   <url>
     <loc>https://ai-master.jp/tools/google-workspace-ai/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-master.jp/tools/irushiru/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
