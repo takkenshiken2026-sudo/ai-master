@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude Code（Anthropic）の機能・料金・使い方を解説。CLIコーディングエージェント、MCP・CLAUDE.md、2026年6月の対話/Agent SDK二層課金。Cursor・Copilot・Devinとの違い、試験で押さえる権限設計も整理。">
+  <title>Claude Codeとは？CLIコーディングエージェントの機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/claude-code/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Claude Codeとは？CLIコーディングエージェントの機能・料金・使い方を解説">
+  <meta property="og:description" content="Anthropicのagentic coding system。ターミナル・IDE・Desktop・Web、MCP連携、Pro/Max料金、Cursor/Copilotとの棲み分けを2026年6月時点で解説。">
+  <meta property="og:url" content="https://ai-master.jp/tools/claude-code/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/claude-code/og-hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/claude-code/og-hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/claude-code/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Claude Code", "item": "https://ai-master.jp/tools/claude-code/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/claude-code/#article",
+        "headline": "Claude Codeとは？CLIコーディングエージェントの機能・料金・使い方を解説",
+        "description": "Claude Code（Anthropic）の機能・料金・使い方を解説。CLIコーディングエージェント、MCP・CLAUDE.md、2026年6月の対話/Agent SDK二層課金。Cursor・Copilot・Devinとの違い、試験で押さえる権限設計も整理。",
+        "url": "https://ai-master.jp/tools/claude-code/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/claude-code/og-hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/claude-code/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Claude Code" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/claude-code/#webpage",
+        "url": "https://ai-master.jp/tools/claude-code/",
+        "name": "Claude Codeとは？CLIコーディングエージェントの機能・料金・使い方を解説",
+        "description": "Claude Code（Anthropic）の機能・料金・使い方を解説。CLIコーディングエージェント、MCP・CLAUDE.md、2026年6月の対話/Agent SDK二層課金。Cursor・Copilot・Devinとの違い、試験で押さえる権限設計も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/claude-code/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Claude Code",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Windows, Linux, Web",
+        "description": "Anthropicのagentic coding system。コードベースを読み、複数ファイルを編集し、テスト・Git・PRまで実行。ターミナル・IDE拡張・Desktop・Webで利用。",
+        "offers": {
+          "@type": "Offer",
+          "price": "20",
+          "priceCurrency": "USD",
+          "description": "Claude Pro $20/月〜に含まれる（2026年6月時点）。Max 5x $100/月、Max 20x $200/月"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Anthropic",
+          "url": "https://www.anthropic.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claude Codeは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude Codeの本格利用にはClaude Pro以上の有料サブスクリプションが必要です（2026年6月時点・公式）。無料のClaude.aiチャットとは別枠で、ターミナル・IDE・Desktopからエージェント機能を使うには有料プランを確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude CodeとCursorの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CursorはAnysphere製のAIネイティブエディタ（VS Codeフォーク）です。Claude CodeはAnthropicのコーディングエージェントで、ターミナルCLIが中心に、VS Code/JetBrains拡張・Desktop・Webでも同じエンジンが動きます。エディタ一体型か、CLIエージェントか——という整理が試験・実務で有効です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude CodeとGitHub Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Copilotは主に行単位・関数単位の補完とエディタ内チャットです。Claude Codeはリポジトリ全体を読み、複数ファイル変更・テスト実行・Git操作・PR作成まで自律的に進めるagentic systemです。補完特化か、プロジェクト単位のエージェントか——が本質的な違いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MCPとは何ですか？（Claude Codeとの関係）",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MCP（Model Context Protocol）は、AIが外部ツールやデータソースと連携するためのオープン標準です。Claude CodeはMCPでJira・Slack・Google Driveなどを接続できます。試験では画像フィルター名ではなく外部連携の仕組みとして覚えてください（TF-0243）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "2026年6月の課金変更とは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2026年6月15日から、Anthropicは対話型利用（ターミナル/IDEでの対話セッション）と自律型利用（Agent SDK、claude -p、GitHub Actions）を別枠で管理する二層課金に移行しました。Proは月$20のAgent SDKクレジットが付与されるなど、プランごとに上限が異なります。最新は公式Pricingで確認してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Claude Code</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/claude-code/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Anthropic · コーディング</p>
+          <h1>Claude Codeとは？CLIコーディングエージェントの機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">ターミナルからリポジトリ全体を読み、テスト・Git・PRまで回す agentic coding system</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">CLI / IDE / Desktop / Web</span>
+        <span class="tool-category">MCP連携</span>
+        <span class="tool-category">権限確認デフォルト</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Terminal（claude CLI）</li>
+          <li>VS Code / Cursor / JetBrains</li>
+          <li>Desktop app · claude.ai/code</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/claude-code/og-hero.jpg" alt="Anthropic Claude Codeの公式イメージ。ターミナルで動くコーディングエージェント" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Anthropic（Claude）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude Code</strong>は、<strong>Anthropic</strong>が提供する<strong>agentic coding system</strong>（エージェント型コーディング基盤）です。コード補完ツールが「次の1行」を提案するのに対し、Claude Codeは<strong>リポジトリ全体を読み、複数ファイルを編集し、テストを実行し、Gitでコミット・PRまで進める</strong>ことを目的に設計されています。ターミナルCLIが原点ですが、2026年時点では<strong>VS Code/Cursor拡張・JetBrains・Desktopアプリ・Web（claude.ai/code）</strong>と同一エンジンで動きます。本記事はAPIリファレンスの代替ではなく、<strong>Cursor/Copilotとの「エディタ vs エージェント」の境界</strong>、<strong>MCPと権限設計（試験連動）</strong>、<strong>2026年6月の二層課金</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Claude Codeとは</a></li>
+        <li><a href="#surfaces">ターミナル・IDE・Desktop・Web</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金・利用上限（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Cursor・Copilot・Devinとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Claude Codeのような<strong>外部ツール（Git・テストランナー・MCPサーバー）を使うコーディングエージェント</strong>が、第3章「AIエージェント」の具体例として理解できます。重要なのは「自動で書いてくれる＝レビュー不要」ではない点です。
+      </p>
+      <p>
+        Anthropic公式は、Claude Codeが<strong>ファイル変更・コマンド実行の前に明示的な許可を求める</strong>（デフォルトは慎重）と説明しています——これはTF-0271「影響の大きい操作には人間の承認（○）」、TF-0240「外部ツールの実行権限設計（○）」と直結します。また<strong>MCP</strong>はClaude Codeの拡張の要ですが、試験では画像フィルター名ではなく<strong>外部データ連携のプロトコル</strong>として問われます（TF-0243：×）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0240/">TF-0240（外部ツールと権限）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（承認ステップ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0243/">TF-0243（MCP）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/agent/">AIエージェント</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Claude Codeとは</h2>
+      <p>
+        Claude Codeは、Anthropicが「<strong>agentic coding system</strong>」と呼ぶ製品群です。開発者が自然言語で目標を述べると、Claude Codeは<strong>コードベースを探索（agentic search）</strong>し、方針を立て、複数ファイルに変更を加え、テストスイートを走らせ、失敗時はエラーを読んで修正を繰り返します（公式ドキュメント・製品ページ）。
+      </p>
+      <p>
+        従来の<strong>コード補完</strong>（GitHub Copilotなど）との違いはスコープです。補完は「今書いている行・関数」を支援しますが、Claude Codeは<strong>プロジェクト単位</strong>で動きます。公式は「開発者はゴールを定義し結果をレビューする。各ステップを誘導する必要はない」と説明しており、試験の「AIエージェント＝目標達成のため計画とツールを使う構成」と対応します。
+      </p>
+      <p>
+        実行環境は<strong>開発者のローカル（またはDesktop/Webセッション）</strong>で、既存のGit・npm・DockerなどCLIツールをそのまま使います。これはクラウド上の独立VMで動く<a href="../devin/">Devin</a>や、ブラウザ操作の<a href="../manus/">Manus</a>とは設計思想が異なります。機密リポジトリを社内マシンに閉じたまま使える一方、<strong>シェル権限＝開発者本人の権限</strong>になるため、運用設計が重要です。
+      </p>
+    </section>
+
+    <section id="surfaces">
+      <h2>ターミナル・IDE・Desktop・Web</h2>
+      <p>
+        Claude Codeは単一のCLIツールではなく、<strong>同じエンジン</strong>が複数の表面（surface）で動きます。CLAUDE.mdやMCP設定は表面間で共有されます（公式ドキュメント）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>表面</th>
+            <th>向く用途</th>
+            <th>試験・実務での覚え方</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Terminal CLI</strong></td>
+            <td>フル機能、パイプ・CI連携、<code>claude -p</code></td>
+            <td>Unix哲学・スクリプト自動化の中心</td>
+          </tr>
+          <tr>
+            <td><strong>VS Code / Cursor 拡張</strong></td>
+            <td>インライン diff、@-mention、履歴</td>
+            <td>Cursorエディタ内でもClaude Codeエンジンが動く</td>
+          </tr>
+          <tr>
+            <td><strong>JetBrains プラグイン</strong></td>
+            <td>IntelliJ / PyCharm 等</td>
+            <td>IDE派向け。エディタはJetBrains、頭脳はClaude Code</td>
+          </tr>
+          <tr>
+            <td><strong>Desktop app</strong></td>
+            <td>複数セッション、視覚 diff、スケジュール</td>
+            <td>ターミナルから <code>/desktop</code> でハンドオフ可能</td>
+          </tr>
+          <tr>
+            <td><strong>Web（claude.ai/code）</strong></td>
+            <td>ローカルにないリポジトリ、長時間タスク</td>
+            <td><code>claude --teleport</code> でCLIへ引き継ぎ（要サブスク）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        「Claude Code＝ターミナルだけ」と覚えると、IDE利用者が試験・実務で混乱しやすいです。<strong>製品の核はエージェントエンジン</strong>、CLIはその最も機能豊富なフロントエンド——と整理してください。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Agentic codebase search</h3>
+          <p>プロジェクト構造・依存関係を自動把握。手動で@ファイルを選ばなくても文脈を集める（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Multi-file edit &amp; test loop</h3>
+          <p>機能追加・バグ修正を複数ファイルで実装。テスト失敗→ログ読解→再修正まで反復（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Git / PR / CI</h3>
+          <p>コミット・ブランチ・PR作成。GitHub/GitLab CI失敗の修正。GitHub Actions連携（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>MCP（外部ツール連携）</h3>
+          <p>Jira・Slack・Google Drive等をMCPサーバー経由で接続。試験のMCPはここ（TF-0243）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>CLAUDE.md・Skills・Hooks</h3>
+          <p>プロジェクト規約をCLAUDE.mdに記述。Skillsで<code>/review-pr</code>等の定型ワークフロー。Hooksで編集後自動lint（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Agent SDK・<code>claude -p</code></h3>
+          <p>非対話モードでCI・スクリプトから呼び出し。カスタムエージェント構築（Agent SDK）。2026年6月以降は別枠課金（後述）。</p>
+        </div>
+      </div>
+
+      <h3>権限モデル（Auto mode）</h3>
+      <p>
+        公式は、安全な操作とリスクの高い操作を分類し、<strong>デフォルトではファイル変更・コマンド実行前に承認</strong>を求めると説明しています。長時間の無人実行には<strong>Auto mode</strong>（<code>--dangerously-skip-permissions</code>のより安全な代替として位置づけ）や、実験的な<strong>Agent Teams</strong>（並列エージェント協調）があります。試験・本番運用では、無承認モードは<strong>サンドボックス環境に限定</strong>するのが鉄則です。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        最大の誤解は「<strong>Claude Code＝Claude.aiのWebチャット</strong>」です。同じAnthropicアカウントでも、Claude Codeは<strong>ローカルリポジトリに直接触るエージェント</strong>です。Webチャットでコード片を相談するのと、<code>claude</code> CLIでテストまで回すのは別ワークフローです。
+      </p>
+      <p>
+        「<strong>Claude Code＝Cursor</strong>」も頻出です。Cursorは<strong>Anysphere製のAIエディタ</strong>（VS Codeフォーク）であり、Claude Codeは<strong>Anthropic製のコーディングエージェント</strong>です。Cursorの中でClaude Code拡張を使うことはできますが、製品は別物です。Copilot vs Cursor の整理に、<strong>Copilot vs Claude Code（補完 vs エージェント）</strong>を足すと試験で迷いにくくなります。
+      </p>
+      <p>
+        「<strong>SWE-bench最高スコア＝本番コードを無レビューでマージしてよい</strong>」も危険です。ベンチマークは特定タスク集合での性能指標であり、社内規約・セキュリティ・ライセンスは人間が確認する必要があります（TF-0150・TF-0348）。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金・利用上限（2026年6月時点）</h2>
+      <p>
+        Claude Codeは<strong>Claude Pro / Max</strong>サブスクリプションに含まれます（公式製品ページ）。2026年6月15日から、Anthropicは利用を<strong>対話型（Interactive）</strong>と<strong>自律型（Agent SDK / <code>claude -p</code> / GitHub Actions）</strong>の二層に分け、後者用に<strong>月次Agent SDKクレジット</strong>を付与する方式に更新しました（Anthropic公式発表・2026年6月時点）。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">$20/月</p>
+          <p class="tool-plan-note">小規模コードベースの短いスプリント向け（公式）</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Max 5x</p>
+          <p class="tool-plan-price">$100/月</p>
+          <p class="tool-plan-note">日常利用・大規模リポジトリ向け（公式）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Max 20x</p>
+          <p class="tool-plan-price">$200/月</p>
+          <p class="tool-plan-note">ヘビーユース・最高モデルアクセス（公式）</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>利用の種類</th>
+            <th>例</th>
+            <th>2026年6月以降の枠（公式）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>対話型（Interactive）</strong></td>
+            <td>ターミナル/IDEで対話、Claude Cowork</td>
+            <td>従来どおりサブスクの利用上限（プラン依存）</td>
+          </tr>
+          <tr>
+            <td><strong>自律型（Agent SDK）</strong></td>
+            <td><code>claude -p</code>、Agent SDK、GitHub Actions</td>
+            <td>別枠の月次クレジット（Pro <strong>$20</strong> / Max 5x <strong>$100</strong> / Max 20x <strong>$200</strong>）</td>
+          </tr>
+          <tr>
+            <td><strong>超過時</strong></td>
+            <td>CIで大量の <code>claude -p</code> を回す等</td>
+            <td>クレジット枯渇後は停止、または明示的オプトインでAPI従量課金</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        ターミナルで普通に対話するだけなら<strong>Interactive枠</strong>、夜間CIに<code>claude -p "review changed files"</code>を回すなら<strong>Agent SDK枠</strong>——と使い分けを意識してください。Team / Enterpriseは席課金・カスタム契約があり、詳細は公式Pricingで確認が必要です。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>インストール</strong>
+            公式推奨はネイティブインストール（<code>curl -fsSL https://claude.ai/install.sh | bash</code> 等）。Homebrew・WinGetも可（公式ドキュメント）。
+          </li>
+          <li>
+            <strong>Claude Pro以上でログイン</strong>
+            初回起動時にAnthropicアカウントで認証。有料プランを確認します。
+          </li>
+          <li>
+            <strong>CLAUDE.md を置く</strong>
+            リポジトリルートにコーディング規約・テストコマンド・禁止事項を記述。エージェントの「制約指定」に相当します。
+          </li>
+          <li>
+            <strong>対話セッションを開始</strong>
+            <code>cd your-project && claude</code>。バグ説明や機能要求を自然文で。ファイル変更・コマンド実行の承認ダイアログを確認します。
+          </li>
+          <li>
+            <strong>MCPを必要に応じて接続</strong>
+            チケット・ドキュメント参照が必要ならMCPサーバーを設定（公式MCP quickstart）。
+          </li>
+          <li>
+            <strong>PR前に人がレビュー</strong>
+            生成diff・テスト結果・セキュリティ影響を確認してからマージ。CIに載せる場合はAgent SDK枠に注意。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/claude-code/og-hero.jpg" alt="Claude Codeのターミナル・IDE連携イメージ" width="600" height="338" loading="lazy">
+            <figcaption>出典：Anthropic（Claude）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>保守・品質</h3>
+          <ul>
+            <li>未テストモジュールへのテスト追加と実行</li>
+            <li>Lintエラー一括修正</li>
+            <li>依存関係アップデートとビルド確認</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>機能開発</h3>
+          <ul>
+            <li>APIエンドポイント追加（複数ファイル）</li>
+            <li>バグトレースから root cause 修正</li>
+            <li>リファクタリング＋回帰テスト</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>DevOps・自動化</h3>
+          <ul>
+            <li>GitHub ActionsでのPRレビュー・Issue triage</li>
+            <li><code>claude -p</code> による変更ファイルのセキュリティチェック</li>
+            <li>Routinesによる定期依存監査（Desktop/Web）</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        いずれも<strong>本番ブランチへの直接無人マージは避け</strong>、PR＋人間レビュー＋CIを通してください。Agent SDK利用は2026年6月以降<strong>別クレジット枠</strong>である点も運用設計に含めます。
+      </p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>プロジェクト単位でテスト・Gitまで一気通貫</td>
+            <td>トークン消費が大きく、長タスクは上限に達しやすい</td>
+          </tr>
+          <tr>
+            <td>CLI・IDE・Webで同じエンジン、MCP拡張が豊富</td>
+            <td>2026年6月以降、CI自動化はAgent SDK枠の管理が必要</td>
+          </tr>
+          <tr>
+            <td>デフォルトでファイル変更・コマンドに承認要求</td>
+            <td>シェル権限＝本人権限のため、誤設定リスクがある</td>
+          </tr>
+          <tr>
+            <td>試験の「コーディングエージェント・MCP」の具体例</td>
+            <td>Cursor/Copilotと名前が似て混同されやすい</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Cursor・Copilot・Devinとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Claude Code</th>
+            <th>Cursor</th>
+            <th>GitHub Copilot</th>
+            <th>Devin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>Anthropic</td>
+            <td>Anysphere</td>
+            <td>GitHub / Microsoft</td>
+            <td>Cognition</td>
+          </tr>
+          <tr>
+            <td>形態</td>
+            <td>CLIエージェント＋拡張</td>
+            <td>AIネイティブエディタ</td>
+            <td>エディタ内補完・チャット</td>
+            <td>クラウド自律SWE</td>
+          </tr>
+          <tr>
+            <td>主な操作単位</td>
+            <td>リポジトリ・タスク</td>
+            <td>プロジェクト・Composer</td>
+            <td>行・関数・選択範囲</td>
+            <td>Issue〜PR完遂</td>
+          </tr>
+          <tr>
+            <td>実行環境</td>
+            <td>開発者のローカル/CLI</td>
+            <td>ローカルエディタ</td>
+            <td>ローカルエディタ</td>
+            <td>Devin Cloud</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>CLIコーディングエージェント</td>
+            <td>AIエディタの代表</td>
+            <td>補完型AI支援</td>
+            <td>開発特化エージェント</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        エディタ内でサクッと書きたいなら<a href="../cursor/">Cursor</a>や<a href="../github-copilot/">GitHub Copilot</a>、ターミナル文化・CI連携・MCP重視ならClaude Code、Issueを丸ごと外注したいなら<a href="../devin/">Devin</a>——という3分岐が実務的です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>ターミナル中心で、テスト・Git・PRまでAIに任せたいバックエンドエンジニア</strong></li>
+        <li><strong>MCPでJira/Slackと開発フローをつなぎたいチーム</strong></li>
+        <li><strong>生成AIパスポートで「コーディングエージェント」「MCP」を具体例で学びたい受験生</strong></li>
+        <li><strong>Cursorは使うが、AnthropicモデルでCLIエージェントも併用したい人</strong></li>
+      </ul>
+      <p>
+        向いていないのは、<strong>コード補完だけ欲しい</strong>場合（Copilotで十分）、<strong>GUIエディタのみでCLIを避けたい</strong>場合（Cursor単体の方が楽）、<strong>クラウド完結でリポジトリを預けたい</strong>場合（Devin向き）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Claude Codeは無料で使えますか？</summary>
+          <p class="tool-faq-a">Claude Codeの本格利用にはClaude Pro以上の有料サブスクリプションが必要です（2026年6月時点・公式）。無料のClaude.aiチャットとは別枠で、ターミナル・IDE・Desktopからエージェント機能を使うには有料プランを確認してください。</p>
+        </details>
+        <details>
+          <summary>Claude CodeとCursorの違いは何ですか？</summary>
+          <p class="tool-faq-a">CursorはAnysphere製のAIネイティブエディタ（VS Codeフォーク）です。Claude CodeはAnthropicのコーディングエージェントで、ターミナルCLIが中心に、VS Code/Cursor拡張・Desktop・Webでも同じエンジンが動きます。エディタ一体型か、CLIエージェントか——という整理が試験・実務で有効です。</p>
+        </details>
+        <details>
+          <summary>Claude CodeとGitHub Copilotの違いは？</summary>
+          <p class="tool-faq-a">Copilotは主に行単位・関数単位の補完とエディタ内チャットです。Claude Codeはリポジトリ全体を読み、複数ファイル変更・テスト実行・Git操作・PR作成まで自律的に進めるagentic systemです。補完特化か、プロジェクト単位のエージェントか——が本質的な違いです。</p>
+        </details>
+        <details>
+          <summary>MCPとは何ですか？（Claude Codeとの関係）</summary>
+          <p class="tool-faq-a">MCP（Model Context Protocol）は、AIが外部ツールやデータソースと連携するためのオープン標準です。Claude CodeはMCPでJira・Slack・Google Driveなどを接続できます。試験では画像フィルター名ではなく外部連携の仕組みとして覚えてください（TF-0243）。</p>
+        </details>
+        <details>
+          <summary>2026年6月の課金変更とは？</summary>
+          <p class="tool-faq-a">2026年6月15日から、Anthropicは対話型利用（ターミナル/IDEでの対話セッション）と自律型利用（Agent SDK、claude -p、GitHub Actions）を別枠で管理する二層課金に移行しました。Proは月$20のAgent SDKクレジットが付与されるなど、プランごとに上限が異なります。最新は公式Pricingで確認してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer">Claude Code ドキュメント</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://claude.com/product/claude-code" target="_blank" rel="noopener noreferrer">製品ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener noreferrer">code.claude.com</a>
+      <span aria-hidden="true">·</span>
+      <a href="../claude/">Claude（チャットAI）記事</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/app-icon.png" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../devin/"><img src="../../assets/images/tools/devin/app-icon.png" alt="" width="16" height="16"> Devin</a></li>
+          <li><a href="../claude/"><img src="../../assets/images/tools/claude/app-icon.png" alt="" width="16" height="16"> Claude</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/llm/">大規模言語モデル（LLM）</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

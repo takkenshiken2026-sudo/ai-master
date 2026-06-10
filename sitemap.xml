@@ -1416,6 +1416,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ai-master.jp/tools/claude-code/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-master.jp/tools/whisper/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -356,6 +356,7 @@ const TOOLS = [
     logo: "anthropic.svg",
     cat: "code",
     catLabel: "コーディング",
+    article: true,
     tagline: "SWE-benchで業界最高峰スコアを叩き出したAnthropicのCLIコーディングエージェント",
     url: "https://docs.anthropic.com/en/docs/claude-code/overview",
   },
