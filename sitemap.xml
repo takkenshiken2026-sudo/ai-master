@@ -1446,6 +1446,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ai-master.jp/tools/microsoft-designer/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-master.jp/tools/whisper/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

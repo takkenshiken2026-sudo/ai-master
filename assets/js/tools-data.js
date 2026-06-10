@@ -292,6 +292,7 @@ const TOOLS = [
     logo: "microsoft.svg",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "CopilotとBing Image Creatorの中間に位置するデザインツール",
     url: "https://designer.microsoft.com",
   },
