@@ -367,6 +367,7 @@ const TOOLS = [
     logo: "cline.png",
     cat: "code",
     catLabel: "コーディング",
+    article: true,
     tagline: "完全無料で使えるオープンソースのVS Codeエージェント",
     url: "https://cline.bot",
   },

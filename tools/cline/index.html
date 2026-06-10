@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cline（旧Claude Dev）の機能・料金・使い方を解説。Apache 2.0オープンソース、BYOK・Ollama対応、Plan/Actと人間承認、MCP。Cursor・Claude Code・Copilotとの違い、試験で押さえる点も整理。">
+  <title>Clineとは？オープンソースVS Codeエージェントの機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/cline/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Clineとは？オープンソースVS Codeエージェントの機能・料金・使い方を解説">
+  <meta property="og:description" content="ClineのPlan/Act、BYOK、MCP、.clinerulesを解説。拡張機能は無料・APIは別途。Cursor/Claude Codeとの棲み分けを2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/cline/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/cline/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/cline/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/cline/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Cline", "item": "https://ai-master.jp/tools/cline/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/cline/#article",
+        "headline": "Clineとは？オープンソースVS Codeエージェントの機能・料金・使い方を解説",
+        "description": "Cline（旧Claude Dev）の機能・料金・使い方を解説。Apache 2.0オープンソース、BYOK・Ollama対応、Plan/Actと人間承認、MCP。Cursor・Claude Code・Copilotとの違い、試験で押さえる点も整理。",
+        "url": "https://ai-master.jp/tools/cline/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/cline/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/cline/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Cline" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/cline/#webpage",
+        "url": "https://ai-master.jp/tools/cline/",
+        "name": "Clineとは？オープンソースVS Codeエージェントの機能・料金・使い方を解説",
+        "description": "Cline（旧Claude Dev）の機能・料金・使い方を解説。Apache 2.0オープンソース、BYOK・Ollama対応、Plan/Actと人間承認、MCP。Cursor・Claude Code・Copilotとの違い、試験で押さえる点も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/cline/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Cline",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Windows, Linux",
+        "description": "Cline Bot Inc.のApache 2.0オープンソース・コーディングエージェント。VS Code拡張・CLI・SDK。BYOKで任意のLLM、Plan/Actとステップごとの承認。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "拡張・CLI本体は無料（OSS）。LLM API利用料は別途（BYOK）。Team/Enterpriseは有料（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Cline Bot Inc.",
+          "url": "https://cline.bot"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Clineは本当に無料ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cline拡張機能・CLI・SDK本体はApache 2.0で無料です。ただしLLMを動かすAPIキー（Anthropic・OpenAI等）やローカルGPUの電気代は別途かかります。「拡張は無料、推論コストは自分持ち（BYOK）」と理解してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ClineとClaude Codeの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude CodeはAnthropicの有料サブスク型agentic coding systemです。Clineはオープンソースのエージェントランタイムで、VS Code/JetBrains/CLIから動き、Claude以外のモデルも選択できます。名前にClaudeが入りやすいですが別製品です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ClineとCursorの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CursorはAnysphere製のAIネイティブエディタ（VS Codeフォーク）で月額サブスクです。Clineは既存のVS Codeに入れる拡張機能で、APIキーを自分で持ち込むBYOKモデルです。エディタごと替えるか、拡張1本足すか——が整理の軸です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Plan modeとAct modeとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Plan modeでは方針・手順を先にすり合わせ、Act modeでファイル編集・ターミナル実行に移ります。各ステップはデフォルトで人間の承認が必要です。試験の「制約・承認設計」と対応するUIです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ローカルLLMだけで使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。OllamaやLM Studio経由でローカルモデルを指定できます。機密コードを外部APIに送らない構成が可能ですが、モデル性能・速度は自前環境に依存します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Cline</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/cline/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Cline Bot Inc. · コーディング</p>
+          <h1>Clineとは？オープンソースVS Codeエージェントの機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">Apache 2.0 · BYOK · Plan/Act — 既存IDEに載せる透明性重視のコーディングエージェント</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">拡張本体 $0</span>
+        <span class="tool-category">任意モデル（Ollama可）</span>
+        <span class="tool-category">ステップ承認</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>VS Code / Open VSX</li>
+          <li>JetBrains プラグイン</li>
+          <li>CLI（npm i -g cline）· SDK</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/cline/og-hero.png" alt="Clineの公式イメージ。オープンソースのコーディングエージェント" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Cline公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Cline</strong>（旧称 <strong>Claude Dev</strong>）は、<strong>Cline Bot Inc.</strong>が提供する<strong>Apache 2.0オープンソース</strong>のコーディングエージェントです。VS Code拡張として始まり、2026年時点では<strong>CLI・SDK・JetBrains</strong>まで同一ランタイムで展開されています。CursorやClaude Codeがサブスク一体型なのに対し、Clineは<strong>拡張機能本体は無料・LLMはBYOK（Bring Your Own Key）</strong>——APIキーやローカルモデルを自分で選ぶ設計が核心です。本記事は機能一覧の暗記ではなく、<strong>「無料」の意味（拡張 vs API料金）</strong>、<strong>Plan/Actと承認UI（試験連動）</strong>、<strong>Cursor・Claude Code・Copilotとの棲み分け</strong>に絞って書いています。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Clineとは</a></li>
+        <li><a href="#byok">BYOKとローカルモデル</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金の考え方（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Cursor・Claude Code・Copilotとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Clineのような<strong>ファイル編集・シェル実行・ブラウザ操作を行うコーディングエージェント</strong>が、第3章「AIエージェント」の具体例になります。Clineは公式に<strong>各ファイル変更・各ターミナルコマンド・各ブラウザ操作を人間が承認</strong>するGUIを掲げており、TF-0271「影響の大きい操作には承認ステップ（○）」、TF-0240「外部ツールの実行権限設計（○）」と対応しやすい製品です。
+      </p>
+      <p>
+        試験でハマりやすいのは「<strong>オープンソース＝無料で高性能LLMが使い放題</strong>」という誤解です。Cline本体は無料でも、<strong>クラウドAPIは従量課金</strong>、ローカルモデルは<strong>GPU・電気代</strong>がかかります。また<strong>MCP</strong>で外部ツールを足せますが、画像フィルター名ではありません（TF-0243：×）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0240/">TF-0240（外部ツールと権限）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（承認ステップ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0243/">TF-0243（MCP）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/agent/">AIエージェント</a> · <a href="../ollama/">Ollama</a>（ローカルLLM）
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Clineとは</h2>
+      <p>
+        Clineは2024年頃から急成長した<strong>エージェント型VS Code拡張</strong>の代表格です。GitHub上の<code>cline/cline</code>リポジトリは<strong>Apache 2.0</strong>ライセンスで、TypeScript主体のオープンソースとして開発されています（2026年6月時点）。公式キャッチは「<strong>The Open Coding Agent</strong>」——エディタ・ターミナル・SDKに埋め込める<strong>共通エージェントランタイム</strong>です。
+      </p>
+      <p>
+        名前の由来は「<strong>CLI</strong> a<strong>N</strong>d <strong>E</strong>ditor」を連想させる語呂合わせで、ターミナルとエディタの両方で動く思想を表しています（公式README）。当初はClaude Sonnetのエージェント能力を活かす<strong>Claude Dev</strong>として知られ、のちにClineに改称。試験では「Claude Code（Anthropic製）≠ Cline（OSSエージェント）」を必ず分けてください。
+      </p>
+      <p>
+        エコシステムでは、Clineをフォークした<strong>Roo Code</strong>など派生プロジェクトも存在します。試験の超過学習用ではなく、「<strong>OSSエージェントはフォーク・拡張されやすい</strong>」という動向の例として押さえる程度で十分です。
+      </p>
+    </section>
+
+    <section id="byok">
+      <h2>BYOKとローカルモデル</h2>
+      <p>
+        Clineの経済モデルは<strong>Bring Your Own Key（BYOK）</strong>です。拡張・CLIに<strong>月額のCline利用料は不要</strong>（OSSコア）で、Anthropic・OpenAI・Google・OpenRouter・AWS Bedrock・Azure等の<strong>APIキーを自分で設定</strong>し、トークン従量課金を各プロバイダーに直接支払います（公式）。ClineはAPIにマージンを載せない——と公式・コミュニティで説明されています。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>モデル供給</th>
+            <th>向くケース</th>
+            <th>コストのイメージ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>クラウドAPI</strong>（Claude/GPT/Gemini等）</td>
+            <td>最高性能・長コンテキスト</td>
+            <td>利用量に比例（軽い利用はCursor Proより安いことも）</td>
+          </tr>
+          <tr>
+            <td><strong>OpenRouter</strong>等のプロキシ</td>
+            <td>モデルを都度切替</td>
+            <td>プロバイダー料金＋OpenRouter手数料</td>
+          </tr>
+          <tr>
+            <td><strong>Ollama / LM Studio</strong></td>
+            <td>機密コードを外に出さない</td>
+            <td>GPU・電気代（API $0）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        ヘビーユースではAPI代が<strong>月$100超</strong>になる例もあり、Cursor Pro（$20/月）より高くつくこともあります。逆に週数回のエージェントタスクなら<strong>数ドル/月</strong>で収まることも——「無料 OSS＝安い」とは限りません。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Plan mode / Act mode</h3>
+          <p>Planで方針を合意してからActで実行。各ステップ承認がデフォルト（公式）。auto-approveは自己責任。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Multi-file edit &amp; checkpoints</h3>
+          <p>リポジトリ横断の coordinated changes。Lint/型エラーをエージェントが自己修正。チェックポイントで一括Undo（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Terminal &amp; browser</h3>
+          <p>VS Code統合ターミナルでnpm test等を実行。ブラウザ起動・クリック・スクショでUIデバッグ（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>MCP marketplace</h3>
+          <p>Postgres・GitHub・Figma等をMCPサーバーで接続。カスタムツール拡張（TF-0243の具体例）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>.clinerules &amp; Skills</h3>
+          <p>リポジトリにコーディング規約を置く。Skillsで<code>/review-pr</code>等の定型フロー（Claude CodeのCLAUDE.mdに相当）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>CLI · SDK · CI</h3>
+          <p><code>npm i -g cline</code>でパイプ・cron・GitHub Actions連携。Agent SDKで独自製品に埋め込み（公式）。</p>
+        </div>
+      </div>
+
+      <h3>Diffプレビューと監査性</h3>
+      <p>
+        Clineの差別化は「速さ」より<strong>透明性</strong>です。変更はdiffとして提示され、承認前に編集・却下できます。規制業種や監査ログが必要なチーム向けに、EnterpriseでSSO・監査機能が提供されます（公式・2026年6月時点）。承認ステップが多い分、Copilotのインライン補完より<strong>操作感は重い</strong>——というトレードオフがあります。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        一覧の「<strong>完全無料</strong>」は<strong>拡張機能本体</strong>の意味に近く、<strong>LLM利用までは無料ではない</strong>のが正確です。クラウドAPIを使えば従量課金、ローカルならインフラコスト——試験では「無料 OSS」と「推論コスト」を分けて答えてください。
+      </p>
+      <p>
+        「<strong>Cline＝Claude Code</strong>」も頻出です。Claude Codeは<strong>Anthropicの有料agentic system</strong>、Clineは<strong>任意モデルを載せるOSSランタイム</strong>です。Claude APIをClineから使うことはできますが、製品は別です。
+      </p>
+      <p>
+        「<strong>Cline＝Cursor</strong>」も混同されます。Cursorは<strong>エディタごとAI化した別アプリ</strong>、Clineは<strong>今のVS Codeにサイドパネルで足す拡張</strong>です。両方入れる開発者もいますが、試験では提供元・課金モデル・製品形態がすべて異なります。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金の考え方（2026年6月時点）</h2>
+      <p>
+        Clineの料金は<strong>2層</strong>で理解します。（1）<strong>OSSコア</strong>——拡張・CLI・Plan/Actループ・MCPは無料。（2）<strong>推論コスト</strong>——BYOKのAPI従量、またはローカルGPU。（3）<strong>Team / Enterprise</strong>——組織向けの請求一本化・SSO等（任意）。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Open Source（個人）</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">拡張・CLI本体。API/Ollamaは別途</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">API利用（目安）</p>
+          <p class="tool-plan-price">従量</p>
+          <p class="tool-plan-note">軽利用 数$/月〜 ヘビー $100+/月も</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Team / Enterprise</p>
+          <p class="tool-plan-price">要確認</p>
+          <p class="tool-plan-note">集中請求・監査・SSO（公式Pricing）</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較対象</th>
+            <th>課金の軸</th>
+            <th>Clineとの関係</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cursor Pro</strong></td>
+            <td>月額 $20前後</td>
+            <td>定額で楽・API代込み。Clineは使うほどAPI代増</td>
+          </tr>
+          <tr>
+            <td><strong>GitHub Copilot Pro</strong></td>
+            <td>月額 $10前後</td>
+            <td>補完中心。Clineは多段エージェント向き</td>
+          </tr>
+          <tr>
+            <td><strong>Claude Code</strong></td>
+            <td>Claude Pro/Max $20〜</td>
+            <td>Anthropic一体。Clineはモデル非ロックイン</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Teamプランのドル表示は時期により変わります。契約前に<a href="https://cline.bot" target="_blank" rel="noopener noreferrer">公式サイト</a>で確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>VS Codeに拡張をインストール</strong>
+            MarketplaceまたはOpen VSXから「Cline」を導入。JetBrains派は公式プラグインを使用。
+          </li>
+          <li>
+            <strong>APIプロバイダーを設定</strong>
+            Anthropic/OpenAI/OpenRouter/Ollama等を選択し、APIキーまたはローカルURLを入力。
+          </li>
+          <li>
+            <strong>.clinerules を置く（推奨）</strong>
+            テストコマンド・禁止操作・コーディング規約をリポジトリに記述。
+          </li>
+          <li>
+            <strong>Plan modeでタスクを説明</strong>
+            「authモジュールにテストを追加」のように目的を述べ、計画を確認してからActへ。
+          </li>
+          <li>
+            <strong>各diff・コマンドを承認</strong>
+            不明なシェルコマンドは却下。本番DB操作は特に慎重に。
+          </li>
+          <li>
+            <strong>チェックポイントでロールバック</strong>
+            意図と違う変更はUndo。PR前に人が最終レビュー。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/cline/og-hero.png" alt="ClineのVS Code・CLI連携イメージ" width="600" height="315" loading="lazy">
+            <figcaption>出典：Cline公式</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>機密リポジトリ（ローカルLLM）</h3>
+          <ul>
+            <li>Ollama + Clineで社内コードを外に出さない</li>
+            <li>オフライン環境でのリファクタ支援</li>
+            <li>規制上クラウドAPI不可な案件</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>日常開発（BYOK）</h3>
+          <ul>
+            <li>Copilotで補完、Clineで大きなリファクタ</li>
+            <li>テスト追加・Lint一括修正</li>
+            <li>MCPで社内Wiki・Jira参照</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>自動化（CLI / CI）</h3>
+          <ul>
+            <li><code>cline</code> CLIで変更ファイルのセキュリティレビュー</li>
+            <li>定期依存監査のスクリプト化</li>
+            <li>Slack/Liner連携タスク（公式）</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        いずれも<strong>auto-approveはサンドボックスやCI専用ブランチに限定</strong>し、本番権限のターミナルではPlan/Act＋手動承認を維持してください。
+      </p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Apache 2.0で監査・フォーク可能</td>
+            <td>承認ステップが多く、小さな修正は重い</td>
+          </tr>
+          <tr>
+            <td>任意モデル・Ollamaでベンダーロックイン回避</td>
+            <td>API代が読みにくく、ヘビー利用は高額化</td>
+          </tr>
+          <tr>
+            <td>diff・checkpointで変更が追跡しやすい</td>
+            <td>Claude Code/Cursorより統合体験は分断されがち</td>
+          </tr>
+          <tr>
+            <td>試験の「承認つきエージェント」の代表例</td>
+            <td>「完全無料」と誤解されやすい（API別）</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Cursor・Claude Code・Copilotとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Cline</th>
+            <th>Cursor</th>
+            <th>Claude Code</th>
+            <th>GitHub Copilot</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>形態</td>
+            <td>VS Code/JetBrains拡張・CLI</td>
+            <td>AIネイティブエディタ</td>
+            <td>CLI＋拡張（Anthropic）</td>
+            <td>エディタ内拡張</td>
+          </tr>
+          <tr>
+            <td>ライセンス</td>
+            <td>Apache 2.0 OSS</td>
+            <td>プロプライエタリ</td>
+            <td>プロプライエタリ</td>
+            <td>プロプライエタリ</td>
+          </tr>
+          <tr>
+            <td>課金</td>
+            <td>拡張 $0 ＋ BYOK</td>
+            <td>月額サブスク</td>
+            <td>Claude Pro/Max</td>
+            <td>月額サブスク</td>
+          </tr>
+          <tr>
+            <td>モデル</td>
+            <td>任意（Ollama可）</td>
+            <td>複数（Cursor管理）</td>
+            <td>Claude中心</td>
+            <td>GitHub/OpenAI系</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>OSS・BYOKエージェント</td>
+            <td>AIエディタ</td>
+            <td>CLI agentic system</td>
+            <td>補完型支援</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        定額でシンプルに使いたいなら<a href="../cursor/">Cursor</a>、Anthropicエコシステム一体なら<a href="../claude-code/">Claude Code</a>、行補完だけなら<a href="../github-copilot/">GitHub Copilot</a>、<strong>OSS・モデル選択・承認UI</strong>ならCline——という4分岐が試験・実務で使いやすいです。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>VS Codeを変えずにエージェントだけ足したい開発者</strong></li>
+        <li><strong>Ollamaで機密コードをローカル処理したいチーム</strong></li>
+        <li><strong>生成AIパスポートで「承認つきエージェント」「MCP」を具体例で学びたい受験生</strong></li>
+        <li><strong>APIコストを使った分だけに抑えたいライトユーザー</strong></li>
+      </ul>
+      <p>
+        向いていないのは、<strong>月額定額で考えたくないヘビーユース</strong>（Cursorの方が安いことが多い）、<strong>承認ダイアログなしで全自動</strong>を求める場合、<strong>エディタ一体の磨き込みUI</strong>だけ欲しい場合です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Clineは本当に無料ですか？</summary>
+          <p class="tool-faq-a">Cline拡張機能・CLI・SDK本体はApache 2.0で無料です。ただしLLMを動かすAPIキー（Anthropic・OpenAI等）やローカルGPUの電気代は別途かかります。「拡張は無料、推論コストは自分持ち（BYOK）」と理解してください。</p>
+        </details>
+        <details>
+          <summary>ClineとClaude Codeの違いは？</summary>
+          <p class="tool-faq-a">Claude CodeはAnthropicの有料サブスク型agentic coding systemです。Clineはオープンソースのエージェントランタイムで、VS Code/JetBrains/CLIから動き、Claude以外のモデルも選択できます。名前にClaudeが入りやすいですが別製品です。</p>
+        </details>
+        <details>
+          <summary>ClineとCursorの違いは？</summary>
+          <p class="tool-faq-a">CursorはAnysphere製のAIネイティブエディタ（VS Codeフォーク）で月額サブスクです。Clineは既存のVS Codeに入れる拡張機能で、APIキーを自分で持ち込むBYOKモデルです。エディタごと替えるか、拡張1本足すか——が整理の軸です。</p>
+        </details>
+        <details>
+          <summary>Plan modeとAct modeとは？</summary>
+          <p class="tool-faq-a">Plan modeでは方針・手順を先にすり合わせ、Act modeでファイル編集・ターミナル実行に移ります。各ステップはデフォルトで人間の承認が必要です。試験の「制約・承認設計」と対応するUIです。</p>
+        </details>
+        <details>
+          <summary>ローカルLLMだけで使えますか？</summary>
+          <p class="tool-faq-a">はい。OllamaやLM Studio経由でローカルモデルを指定できます。機密コードを外部APIに送らない構成が可能ですが、モデル性能・速度は自前環境に依存します。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://cline.bot" target="_blank" rel="noopener noreferrer">Cline</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/cline/cline" target="_blank" rel="noopener noreferrer">GitHub（cline/cline）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev" target="_blank" rel="noopener noreferrer">VS Code Marketplace</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cursor/"><img src="../../assets/images/tools/cursor/app-icon.png" alt="" width="16" height="16"> Cursor</a></li>
+          <li><a href="../claude-code/"><img src="../../assets/images/tools/claude-code/app-icon.png" alt="" width="16" height="16"> Claude Code</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/app-icon.png" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../ollama/"><img src="../../assets/images/tools/ollama/app-icon.png" alt="" width="16" height="16"> Ollama</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/llm/">大規模言語モデル（LLM）</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
