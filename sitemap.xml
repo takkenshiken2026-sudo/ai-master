@@ -1766,6 +1766,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ai-master.jp/tools/magnific/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-master.jp/tools/make/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

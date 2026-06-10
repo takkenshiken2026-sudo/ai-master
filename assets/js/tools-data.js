@@ -287,6 +287,7 @@ const TOOLS = [
     logo: "magnific.ico",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "Recraft V4を組み込む画像生成・高解像度化ツール",
     url: "https://magnific.ai",
   },
