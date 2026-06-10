@@ -13,6 +13,7 @@ import argparse
 import html
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -440,6 +441,11 @@ def main() -> None:
     write_index_json(data)
     GLOSSARY_INDEX.write_text(build_index_html(data), encoding="utf-8")
     print(f"wrote {GLOSSARY_INDEX.relative_to(ROOT)}")
+    subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "build_hub_static_lists.py")],
+        check=True,
+        cwd=str(ROOT),
+    )
     update_sitemap(data)
 
 
