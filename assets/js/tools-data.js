@@ -846,6 +846,7 @@ const TOOLS = [
     logo: "napkin-ai.png",
     cat: "productivity",
     catLabel: "仕事効率化・資料・翻訳",
+    article: true,
     tagline: "テキストから図解・インフォグラフィックを自動生成",
     url: "https://www.napkin.ai",
   },

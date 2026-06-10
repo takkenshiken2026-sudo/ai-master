@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Napkin AIの機能・料金・使い方を解説。プロンプト不要のテキスト→図解生成、Spark操作、500クレジット/週の無料枠、Gamma・Canvaとの違い。生成AIパスポート対策にも。">
+  <title>Napkin AIとは？プロンプト不要のテキスト図解AIを解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/napkin-ai/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Napkin AIとは？プロンプト不要のテキスト図解AIを解説">
+  <meta property="og:description" content="The visual AI for business storytelling。テキストを選んでSpark、図解・フロー・インフォグラフィックを生成。Free 500クレジット/週、Plus $9/月を2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/napkin-ai/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/napkin-ai/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/napkin-ai/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/napkin-ai/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Napkin AI", "item": "https://ai-master.jp/tools/napkin-ai/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/napkin-ai/#article",
+        "headline": "Napkin AIとは？プロンプト不要のテキスト図解AIを解説",
+        "description": "The visual AI for business storytelling。テキストを選んでSpark、図解・フロー・インフォグラフィックを生成。Free 500クレジット/週、Plus $9/月を2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/napkin-ai/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/napkin-ai/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/napkin-ai/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Napkin AI" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/napkin-ai/#webpage",
+        "url": "https://ai-master.jp/tools/napkin-ai/",
+        "name": "Napkin AIとは？プロンプト不要のテキスト図解AIを解説",
+        "description": "The visual AI for business storytelling。テキストを選んでSpark、図解・フロー・インフォグラフィックを生成。Free 500クレジット/週、Plus $9/月を2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/napkin-ai/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Napkin AI",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser（作成・編集はデスクトップ）",
+        "description": "既存テキストから図解・インフォグラフィック・フローチャートをプロンプトなしで生成するビジュアルAI。PPT/PNG/PDF/SVGエクスポート。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free $0（500 AI credits/週）。Plus $9/席/月、Pro $22/席/月（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Napkin AI",
+          "url": "https://www.napkin.ai"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Napkin AIはプロンプトを書く必要がありますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "不要です。公式FAQでは「You do not need to write prompts」と明記されています。テキストを書く・貼り付ける・インポートし、生成したい範囲を選んでSpark（✨）アイコンをクリックするだけで、文脈に合った図解候補が提示されます（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Napkin AIは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Freeプランは$0で永続利用でき、500 AI credits/週が付与されます。PNG・PDFエクスポート、ファイルインポート（PPT/DOC/PDF/HTML/MD）は無制限ですが、生成ビジュアルにNapkinブランド表示があり、PPT/SVGエクスポートはPlus以上が必要です（2026年6月時点・公式Pricing）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Napkin AIとGammaの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Gammaはプロンプトからプレゼン・ドキュメント全体をカード形式で生成する資料作成AIです。Napkin AIは既に書いたテキストの一部を選び、図解・フロー・チャートなどビジュアル要素だけを生成して既存資料に差し込むツールです。資料の骨子をゼロから作るならGamma、文章はあるが図が弱いならNapkin——という補完関係です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AI creditsはどう消費されますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "公式Pricingによると、ビジュアル生成にAI creditsが使われ、おおよそ「生成対象として選んだ1語あたり1 credit」が目安です。Freeは500 credits/週、Plusは10,000 credits/月、Proは30,000 credits/月。ビジュアルの手動編集は無制限（Unlimited visuals editing）です（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "スマホでも図解を作れますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "既存のNapkin（資料）の閲覧はモバイル可能ですが、作成・編集はデスクトップのみです。公式は「best generation and editing experience is on desktop」と説明しています。サインアップもデスクトップが必要で、モバイルからは招待リクエスト後にPCで登録完了する流れです（2026年6月時点）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Napkin AI</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/napkin-ai/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Napkin · 仕事効率化・資料・翻訳</p>
+          <h1>Napkin AIとは？プロンプト不要のテキスト図解AIを解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">書いた文章を選んでSpark——ビジネスストーリーテリング向けのビジュアルAI</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Free 500 credits/週</span>
+        <span class="tool-category">プロンプト不要</span>
+        <span class="tool-category">PPT/SVG書き出し</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（デスクトップで作成）</li>
+          <li>PPT / PNG / PDF / SVG</li>
+          <li>60+言語の図解生成</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/napkin-ai/og-hero.png" alt="Napkin AI公式のテキストからビジュアル生成イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Napkin AI公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Napkin AI</strong>は、公式に<strong>「The visual AI for business storytelling」</strong>と名乗る、<strong>テキストから図解・インフォグラフィックを生成するWebツール</strong>です。Gammaのようにプロンプトで資料全体を作るのではなく、<strong>すでに書いた文章の一部を選び、Spark（✨）をクリックするだけ</strong>でフローチャート・マインドマップ・データチャートなどの候補が並びます。本記事は機能一覧ではなく、<strong>「プロンプト不要」の設計思想</strong>と、<strong>Gamma・Canva・PowerPointとの補完関係</strong>、試験で問われる<strong>社外資料の確認</strong>に絞って整理します。料金・上限は<strong>2026年6月時点</strong>の情報です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Napkin AIとは</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Gamma・Canva・Beautiful.aiとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、企画書・提案資料の<strong>たたき台作成</strong>と、社外公開前の<strong>事実確認</strong>がセットで問われます。Napkin AIは「文章は書けるが図解が苦手」という典型的なボトルネックをAIで埋める具体例として押さえると理解しやすいです。
+      </p>
+      <p>
+        試験で混同しやすいのは次の2点です。<strong>①プロンプト不要＝AIを使っていない、ではない</strong>——裏側では選択テキストから図解候補を推論しています。<strong>②図解がきれい＝内容が正確、ではない</strong>——数値・因果関係は人が検証してから社外に出す必要があります（TF-0409・TF-0255）。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0451/">一問一答 TF-0451（企画資料のたたき台）</a>、<a href="../../exams/genai-passport/drill/q/tf-0409/">TF-0409（社外資料の公開前確認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0255/">TF-0255（もっともらしい出力の確認）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/generative-ai/">生成AI</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Napkin AIとは</h2>
+      <p>
+        Napkin AI（napkin.ai）は、<strong>既存テキストをビジュアルに変換する</strong>ことに特化したSaaSです。公式のキャッチコピー「Get visuals from your text」が示すとおり、入力は<strong>完成に近い文章</strong>が前提で、出力は<strong>スライド1枚分ではなく図解・チャート・シーンイラスト</strong>などの要素です。
+      </p>
+      <p>
+        他の資料AIとの決定的な違いは<strong>プロンプトエンジニアリングを要求しない</strong>点です。公式FAQは「You do not need to write prompts」と明言し、<strong>テキストを書く・貼る・インポート → 範囲を選ぶ → Spark</strong>という3ステップを推しています。AI creditsは生成時に消費されますが、選んだ語数に連動するシンプルなモデル（おおよそ1語1 credit）です。
+      </p>
+      <p>
+        エクスポートは<strong>PPT・PNG・PDF・SVG</strong>（Plus以上でPPT/SVG無制限）。FreeでもPNG/PDFは無制限ですが、<strong>生成物にNapkinブランド表示</strong>が付きます。Teamspaceでの共同編集・コメント・リアルタイム編集も公式機能として提供されています。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Spark生成（プロンプト不要）</h3>
+          <p>テキストの一部を選択しSpark（✨）をクリック。文脈に合った図解候補が複数提示され、好みの1つを選んで採用（公式How it works）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>多様なビジュアル種別</h3>
+          <p>インフォグラフィック、ダイアグラム、マインドマップ、フローチャート、データチャート、シーンイラスト等（公式Use cases）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ファイルインポート</h3>
+          <p>PPT、DOC、PDF、HTML、Markdownを無制限インポート（Free含む）。既存資料の文章をそのまま図解化の素材に。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>自由編集・ブランド適用</h3>
+          <p>要素の分解・再配置・色変更。Plus以上でBrand Studio（最大3 Styles）、Proで無制限Custom Branding・フォントアップロード。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>チーム協業</h3>
+          <p>Teamspace、リアルタイム共同編集、テキストとビジュアルへのハイライトコメント（公式FAQ）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>60+言語対応</h3>
+          <p>テキストの言語に合わせてビジュアルを生成。UIは2026年6月時点で英語のみ（公式FAQ）。</p>
+        </div>
+      </div>
+
+      <h3>編集は無制限・生成だけがクレジット消費</h3>
+      <p>
+        公式Pricingでは<strong>Unlimited visuals editing</strong>が全プラン共通です。つまりSparkで生成した後の手直しに追加クレジットは不要で、<strong>「生成のたびに課金・編集はタダ」</strong>という使い方が公式想定に沿います。試験では「AI利用＝すべて従量課金」と決めつけない練習にもなります。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        最大の誤解は「<strong>Napkin AI＝Gammaのようなスライド生成AI</strong>」です。Gammaはプロンプトから<strong>資料全体の構成と本文</strong>を作ります。Napkinは<strong>既存テキストにビジュアルを足す</strong>レイヤーです。PowerPointのSmartArtをAI版に置き換えるイメージに近いです。
+      </p>
+      <p>
+        「<strong>プロンプト不要＝LLMを使っていない</strong>」も×です。Sparkは選択テキストから図解タイプと内容を推論しており、公式はAI subprocessorsとの契約で<strong>顧客データをモデル学習に使わない</strong>旨をPricing FAQで説明しています（オプトアウト可能）。
+      </p>
+      <p>
+        「<strong>Napkin＝画像生成AI（Midjourney等）</strong>」とも異なります。出力は<strong>ビジネス図解・チャート・フロー</strong>が中心で、写真風アート生成ツールとは用途が分かれます。
+      </p>
+      <p>
+        「<strong>無料＝商用利用もブランドなし</strong>」も誤りです。Freeプランは<strong>Napkin branding on visuals</strong>が付き、ロゴ除去はPlus以上です。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>
+        Napkin AIは<strong>永続Free</strong>があり、有料は席課金（per person）です。年払いは<strong>25%割引</strong>（公式Pricing）。Enterpriseはsales問合せ。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">500 AI credits/週。PNG・PDF無制限。Napkinブランド表示あり</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Plus</p>
+          <p class="tool-plan-price">$9/席/月</p>
+          <p class="tool-plan-note">10,000 credits/月。PPT・SVG無制限、Brand Styles 3、ロゴ除去</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">$22/席/月</p>
+          <p class="tool-plan-note">30,000 credits/月。Exclusive designs、無制限Custom Branding、credit top-up可</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Free</th>
+            <th>Plus / Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>AI credits</strong></td>
+            <td>500/週</td>
+            <td>10,000〜30,000/月</td>
+          </tr>
+          <tr>
+            <td><strong>ビジュアル編集</strong></td>
+            <td>無制限</td>
+            <td>無制限</td>
+          </tr>
+          <tr>
+            <td><strong>ファイルインポート</strong></td>
+            <td>無制限</td>
+            <td>無制限</td>
+          </tr>
+          <tr>
+            <td><strong>PNG / PDF</strong></td>
+            <td>無制限</td>
+            <td>無制限</td>
+          </tr>
+          <tr>
+            <td><strong>PPT / SVG</strong></td>
+            <td>—</td>
+            <td>無制限</td>
+          </tr>
+          <tr>
+            <td><strong>ブランド</strong></td>
+            <td>Built-in styles</td>
+            <td>Brand Studio（Plus 3 / Pro 無制限）</td>
+          </tr>
+          <tr>
+            <td><strong>クレジット枯渇時</strong></td>
+            <td>翌週まで待つかアップグレード</td>
+            <td>プラン変更または追加購入（Pro）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        creditsの目安は公式の<strong>「選択した1語あたり約1 credit」</strong>です。長文を丸ごとSparkすると週500 creditsをすぐ消費するため、<strong>図解化したい段落だけを選ぶ</strong>のがコスト効率のよい使い方です。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>2026年6月時点では、<strong>作成・編集はデスクトップブラウザ</strong>が前提です（公式FAQ）。</p>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>napkin.ai から Get Napkin</strong>
+            Google SSOまたはメール/passwordで登録（デスクトップのみ）。
+          </li>
+          <li>
+            <strong>テキストを用意</strong>
+            直接入力、貼り付け、またはPPT/DOC/PDF/HTML/MDをインポート。
+          </li>
+          <li>
+            <strong>図解化したい範囲を選択 → Spark</strong>
+            候補から最も意図に合うビジュアルを選択。プロンプト入力は不要。
+          </li>
+          <li>
+            <strong>色・要素を調整</strong>
+            ブランドカラー適用、要素の分解・再配置。編集に追加creditsは不要。
+          </li>
+          <li>
+            <strong>エクスポートまたは共有</strong>
+            PPT/PNG/PDF/SVGで書き出し、またはリンク共有（テキストと図を一体表示）。
+          </li>
+        </ol>
+        <figure>
+          <img src="../../assets/images/tools/napkin-ai/og-hero.png" alt="Napkin AIでテキストからビジュアルを生成する公式イメージ" width="600" height="338" loading="lazy">
+          <figcaption>出典：Napkin AI公式</figcaption>
+        </figure>
+      </div>
+      <p>
+        典型的なワークフローは、<strong>Word/Notion/ChatGPTで本文を書く → Napkinで図解 → PowerPoint/Google Slidesに貼る</strong>です。<a href="../gamma/">Gamma</a>で骨子を作り、重要スライドだけNapkinで図解を強化する——という併用も現実的です。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>プレゼン資料</h3>
+          <p>箇条書きスライドをフローチャートやプロセス図に変換し、説得力を高める（公式Presentations）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>社内ドキュメント</h3>
+          <p>手順書・ポリシー文書に図解を差し込み、読みやすさを改善（公式Docs）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>LinkedIn・ブログ</h3>
+          <p>長文記事の要点をインフォグラフィック化。教授・PM向けの公式 testimonial でも言及（公式）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>SNS投稿</h3>
+          <p>テキスト投稿を視覚コンテンツに変換し、エンゲージメント向上（公式Social Media）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>教育・研修</h3>
+          <p>教材テキストから概念図・マインドマップを生成。学校管理者の声も公式サイトに掲載。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>提案書のたたき台</h3>
+          <p>試験対策の文脈では、AI生成図解も<strong>公開前に人がファクトチェック</strong>する前提で使う。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>プロンプト不要で図解の初稿が速い</td>
+            <td>資料全体は作れない（図解レイヤー特化）</td>
+          </tr>
+          <tr>
+            <td>永続Free＋週500 creditsで試しやすい</td>
+            <td>FreeはNapkinブランド表示・PPT/SVG不可</td>
+          </tr>
+          <tr>
+            <td>編集無制限・多形式エクスポート</td>
+            <td>作成・編集はデスクトップのみ</td>
+          </tr>
+          <tr>
+            <td>60+言語の図解生成</td>
+            <td>UIは英語のみ（2026年6月時点）</td>
+          </tr>
+          <tr>
+            <td>Gamma/Canva/PPTと併用しやすい</td>
+            <td>数値・因果の正確性は人手確認必須</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Gamma・Canva・Beautiful.aiとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>Napkin AI</th>
+            <th>Gamma</th>
+            <th>Canva</th>
+            <th>Beautiful.ai</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>主な役割</strong></td>
+            <td>テキスト→図解要素</td>
+            <td>プロンプト→資料全体</td>
+            <td>テンプレ手動デザイン</td>
+            <td>Smart Slides自動レイアウト</td>
+          </tr>
+          <tr>
+            <td><strong>入力</strong></td>
+            <td>既存テキスト（プロンプト不要）</td>
+            <td>プロンプト・テーマ</td>
+            <td>テンプレ＋手編集</td>
+            <td>スライド内容入力</td>
+          </tr>
+          <tr>
+            <td><strong>出力</strong></td>
+            <td>図解・チャート・インフォグラフィック</td>
+            <td>カード型プレゼン/Web</td>
+            <td>各種デザイン資産</td>
+            <td>整ったスライド</td>
+          </tr>
+          <tr>
+            <td><strong>無料枠</strong></td>
+            <td>500 credits/週（永続）</td>
+            <td>400 credits初回</td>
+            <td>Freeプランあり</td>
+            <td>14日トライアルのみ</td>
+          </tr>
+          <tr>
+            <td><strong>有料目安</strong></td>
+            <td>Plus $9/席/月〜</td>
+            <td>Plus $9/席/月〜</td>
+            <td>Pro $120/年〜等</td>
+            <td>Pro $12/月〜等</td>
+          </tr>
+          <tr>
+            <td><strong>試験での整理</strong></td>
+            <td>図解生成AIの例</td>
+            <td>資料生成AIの例</td>
+            <td>デザインツール</td>
+            <td>レイアウト自動化</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        一文で整理すると：<strong>骨子から作るならGamma、ブランドデザインならCanva、スライド整列ならBeautiful.ai、文章はあるが図が弱いならNapkin AI</strong>——4つは競合というより<strong>資料制作パイプラインの不同工程</strong>です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>文章は書けるが、フロー図・概念図を作るのが苦手なビジネスパーソン</strong></li>
+        <li><strong>既存PPT/Word資料に図解だけ足したい営業・企画チーム</strong></li>
+        <li><strong>プロンプト設計に時間をかけず図解の初稿を得たい人</strong></li>
+        <li><strong>試験対策で「資料作成AI」の具体例を増やしたい受験生</strong></li>
+      </ul>
+      <p>
+        あえて向いていないのは、<strong>プロンプト1発でスライド20枚</strong>（<a href="../gamma/">Gamma</a>向け）、<strong>SNSバナーのピクセル単位デザイン</strong>（<a href="../canva/">Canva</a>向け）、<strong>登録PDFへのQ&A</strong>（<a href="../notebooklm/">NotebookLM</a>向け）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Napkin AIはプロンプトを書く必要がありますか？</summary>
+          <p class="tool-faq-a">不要です。公式FAQでは「You do not need to write prompts」と明記されています。テキストを書く・貼り付ける・インポートし、生成したい範囲を選んでSpark（✨）アイコンをクリックするだけで、文脈に合った図解候補が提示されます（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>Napkin AIは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。Freeプランは$0で永続利用でき、500 AI credits/週が付与されます。PNG・PDFエクスポート、ファイルインポート（PPT/DOC/PDF/HTML/MD）は無制限ですが、生成ビジュアルにNapkinブランド表示があり、PPT/SVGエクスポートはPlus以上が必要です（2026年6月時点・公式Pricing）。</p>
+        </details>
+        <details>
+          <summary>Napkin AIとGammaの違いは？</summary>
+          <p class="tool-faq-a">Gammaはプロンプトからプレゼン・ドキュメント全体をカード形式で生成する資料作成AIです。Napkin AIは既に書いたテキストの一部を選び、図解・フロー・チャートなどビジュアル要素だけを生成して既存資料に差し込むツールです。資料の骨子をゼロから作るならGamma、文章はあるが図が弱いならNapkin——という補完関係です。</p>
+        </details>
+        <details>
+          <summary>AI creditsはどう消費されますか？</summary>
+          <p class="tool-faq-a">公式Pricingによると、ビジュアル生成にAI creditsが使われ、おおよそ「生成対象として選んだ1語あたり1 credit」が目安です。Freeは500 credits/週、Plusは10,000 credits/月、Proは30,000 credits/月。ビジュアルの手動編集は無制限（Unlimited visuals editing）です（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>スマホでも図解を作れますか？</summary>
+          <p class="tool-faq-a">既存のNapkin（資料）の閲覧はモバイル可能ですが、作成・編集はデスクトップのみです。公式は「best generation and editing experience is on desktop」と説明しています。サインアップもデスクトップが必要で、モバイルからは招待リクエスト後にPCで登録完了する流れです（2026年6月時点）。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://www.napkin.ai" target="_blank" rel="noopener noreferrer">Napkin AI</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.napkin.ai/pricing" target="_blank" rel="noopener noreferrer">料金（Pricing）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.napkin.ai" target="_blank" rel="noopener noreferrer">公式FAQ（サイト内）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gamma/"><img src="../../assets/images/tools/gamma/app-icon.png" alt="" width="16" height="16"> Gamma</a></li>
+          <li><a href="../canva/"><img src="../../assets/images/tools/canva.svg" alt="" width="16" height="16"> Canva</a></li>
+          <li><a href="../beautiful-ai/"><img src="../../assets/images/tools/beautiful-ai/app-icon.png" alt="" width="16" height="16"> Beautiful.ai</a></li>
+          <li><a href="../irushiru/"><img src="../../assets/images/tools/irushiru/app-icon.png" alt="" width="16" height="16"> イルシル</a></li>
+          <li><a href="../notion-ai/"><img src="../../assets/images/tools/notion-ai/app-icon.png" alt="" width="16" height="16"> Notion AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__soon">プロンプト <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">ハルシネーション <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
