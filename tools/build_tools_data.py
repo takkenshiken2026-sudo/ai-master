@@ -143,6 +143,7 @@ DIRECT_ICON_URL = {
     "descript": "https://static-cdn.descript.com/web/icons/apple-touch-icon.png",
     "capcut": "https://play-lh.googleusercontent.com/M78HyakHaxKrjoeqYx41E9DXfVYYtx67nvc7Ks4G4zFQeaAJdGCi8gzzGSrHIwlrmnJS6zD9S4fAXqdEwfuHQAQ=w512",
     "opus-clip": "https://cdn.prod.website-files.com/6388604483b03a9ecb34d695/6435197bfb1d6e486e04c37b_webclip.png",
+    "manus": "https://manus.im/apple-icon.png",
 }
 
 
