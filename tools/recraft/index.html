@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Recraftの機能・料金・使い方を解説。ネイティブSVGベクター生成、Recraft V4、Style Lock、商用利用とクレジット制、Ideogram・Midjourneyとの違いまで。生成AIパスポート・G検定対策にも。">
+  <title>Recraftとは？SVGベクター生成・機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/recraft/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Recraftとは？SVGベクター生成・機能・料金・使い方を解説">
+  <meta property="og:description" content="RecraftのネイティブSVG出力、Recraft V4、デザイナー向けワークフロー、料金・商用権の整理、他画像AIとの違いを解説。">
+  <meta property="og:url" content="https://ai-master.jp/tools/recraft/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/recraft/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/recraft/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/recraft/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Recraft", "item": "https://ai-master.jp/tools/recraft/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/recraft/#article",
+        "headline": "Recraftとは？SVGベクター生成・機能・料金・使い方を解説",
+        "description": "RecraftのネイティブSVG出力、Recraft V4、デザイナー向けワークフロー、料金・商用権の整理、他画像AIとの違いを解説。",
+        "url": "https://ai-master.jp/tools/recraft/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/recraft/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/recraft/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Recraft" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/recraft/#webpage",
+        "url": "https://ai-master.jp/tools/recraft/",
+        "name": "Recraftとは？SVGベクター生成・機能・料金・使い方を解説",
+        "description": "RecraftのネイティブSVG出力、Recraft V4、デザイナー向けワークフロー、料金・商用権の整理、他画像AIとの違いを解説。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/recraft/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Recraft",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "description": "ネイティブSVGベクター出力に強い、デザイナー向けの画像・ベクター生成AI。Recraft StudioとAPIを提供。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料枠あり（日次30クレジット）。有料プランで非公開生成・商用権（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Recraft",
+          "url": "https://www.recraft.ai/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Recraftは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Freeプランでは日次30クレジットでRecraft V4を含む主要モデルを試せます。ただし生成物は公開（コミュニティギャラリー）となり、著作権はRecraft側に帰属します。非公開生成と商用利用の完全な権利は有料プランが必要です（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Recraftの最大の特徴は何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "プロンプトから編集可能なSVGベクターをネイティブ生成できる点です。ラスター画像を後からトレースするのではなく、Bezierパスを持つ本物のベクターファイルとして出力され、FigmaやIllustratorで色・形状を直接編集できます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RecraftとIdeogramの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ideogramは画像内テキストを含むラスター（PNG等）生成に強い一方、Recraftはアイコン・イラスト・ブランド素材向けのネイティブSVGベクター生成が強みです。文字入りバナーのたたき台ならIdeogram、編集可能なベクターアセットならRecraft、という棲み分けが現実的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Recraft V4とは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2026年2月公開のRecraft独自モデル群です。ラスター（V4 / V4 Pro）とベクター（V4 Vector / V4 Pro Vector）の4系統があり、デザインの「味」——構図・配色・意図的なディテール——を重視した出力が特徴とされています。Freeユーザーでも全V4モデルを選択できます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Recraftは商用利用できますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "有料プラン契約中は生成物の完全な所有権と商用利用権が付与されます。Freeプランの画像はRecraftが所有し公開されるため、クライアント納品やストック販売には不向きです。契約前に公式のOwnership and commercial usageを必ず確認してください。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Recraft</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/recraft/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Recraft · 画像生成</p>
+          <h1>Recraftとは？SVGベクター生成・機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">プロンプトから編集可能なSVGを直接出力——デザイナーの制作パイプラインに載せる画像AI</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">ネイティブSVG</span>
+        <span class="tool-category">Recraft V4</span>
+        <span class="tool-category">Style Lock</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（Recraft Studio）</li>
+          <li>API</li>
+          <li>Teams（SSO）</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/recraft/og-hero.png" alt="Recraftの公式ビジュアル" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Recraft公式（recraft.ai）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Recraft</strong>は、<strong>Recraft</strong>社が提供する<strong>デザイナー向けの<a href="../../glossary/generative-ai/">生成AI</a>画像サービス</strong>です。<a href="../midjourney/">Midjourney</a>や<a href="../dalle/">DALL·E</a>が主にラスター（PNG/JPEG）を返すのに対し、Recraftの差別化は<strong>プロンプトから編集可能なSVGベクターをネイティブ生成できる</strong>点にあります。アイコンセット、ブランドイラスト、ロゴの方向性探索など、<strong>Figma・Illustratorで仕上げる前提の素材</strong>を狙うツールです。2026年2月公開の<strong>Recraft V4</strong>はラスターとベクターの4モデル構成で、Freeユーザーでも全モデルを選べます。本記事は機能の網羅リストではなく、<strong>「ラスター生成AI」と「ベクター生成AI」の境界</strong>、<strong>クレジット制と商用権</strong>、<strong><a href="../ideogram/">Ideogram</a>・Adobe Fireflyとの棲み分け</strong>に絞って書いています。料金・権利は<strong>2026年6月時点</strong>の公式情報に基づき、利用前に必ず再確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Recraftとは</a></li>
+        <li><a href="#raster-vs-vector">ラスターAIとベクターAIの違い</a></li>
+        <li><a href="#v4-models">Recraft V4モデル群</a></li>
+        <li><a href="#features">Recraft Studioでできること</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金・クレジット・商用権</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Ideogram・Midjourney・Fireflyとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートやG検定では、Recraftの名前そのものより<strong><a href="../../glossary/text-to-image/">Text-to-Image</a>（テキストから画像）</strong>と<strong>生成物の確認・権利</strong>が問われます。Recraftは拡散モデル系の画像生成に、<strong>ベクター出力という製品設計</strong>を載せた例として整理すると試験と実務の両方に効きます。
+      </p>
+      <p>
+        TF-0496「生成結果のレビュー」、TF-0497「出力の権利・利用範囲」、TF-0348「商用利用と利用規約」は、Recraft利用時に特に直結します。Freeプランでは生成物が<strong>公開</strong>され<strong>Recraftが所有</strong>する——有料プランでは<strong>非公開＋商用権</strong>——という二層構造は、試験の「規約を読まずに納品（×）」パターンの具体例になります。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0184/">一問一答 TF-0184（拡散モデル）</a>、<a href="../../exams/genai-passport/drill/q/tf-0348/">TF-0348（商用利用と利用規約）</a>、<a href="../../exams/genai-passport/drill/q/tf-0496/">TF-0496（生成結果のレビュー）</a>、<a href="../../exams/genai-passport/drill/q/tf-0497/">TF-0497（出力の権利・利用範囲）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/practice/q/g-391/">実践演習 G-391（Text-To-Image）</a>、<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：<a href="../ideogram/">Ideogram</a> · <a href="../adobe-firefly/">Adobe Firefly</a> · <a href="../canva/">Canva</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Recraftとは</h2>
+      <p>
+        Recraftは2023年頃に公開された、<strong>プロのデザインワークフローを想定した画像生成プラットフォーム</strong>です。Webの<strong>Recraft Studio</strong>と<strong>API</strong>を提供し、ラスター画像だけでなく<strong>SVG・PDF・Lottie</strong>など、制作現場で使う形式でのエクスポートを前面に出しています（公式ドキュメント）。
+      </p>
+      <p>
+        一般的な画像AIは「きれいな1枚のPNG」を返すことがゴールになりがちです。Recraftは<strong>生成後も編集できる幾何学（パス・レイヤー）</strong>を返すことで、<strong>アイコンセットの統一</strong>や<strong>ブランドイラストの量産</strong>といった、デザインシステム寄りの課題を狙っています。2026年2月の<strong>Recraft V4</strong>公開以降、モデル選択はV4ファミリーが中心になりつつあります（公式）。
+      </p>
+      <p>
+        試験では、Recraftを<strong>「Text-to-Imageの一サービス」</strong>と<strong>「ベクター形式を直接返せる特例」</strong>の両方として覚えると、他ツールとの比較問題で混乱しにくくなります。
+      </p>
+    </section>
+
+    <section id="raster-vs-vector">
+      <h2>ラスターAIとベクターAIの違い</h2>
+      <p>
+        画像生成AIを選ぶとき、出力形式の違いは実務で最も効きます。Recraft理解の核心はここにあります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>ラスター出力（PNG/JPEG等）</th>
+            <th>Recraftのベクター出力（SVG）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>中身</strong></td>
+            <td>ピクセルの格子データ</td>
+            <td>Bezierパス・色領域・レイヤー構造</td>
+          </tr>
+          <tr>
+            <td><strong>拡大</strong></td>
+            <td>大きくするとボケやジャギー</td>
+            <td>理論上は無限拡大可能</td>
+          </tr>
+          <tr>
+            <td><strong>編集</strong></td>
+            <td>Photoshop等でピクセル編集</td>
+            <td>Figma/Illustratorでパス・色を直接変更</td>
+          </tr>
+          <tr>
+            <td><strong>典型ツール</strong></td>
+            <td>Midjourney、DALL·E、Ideogram</td>
+            <td><strong>Recraft（ネイティブ生成）</strong></td>
+          </tr>
+          <tr>
+            <td><strong>よくある落とし穴</strong></td>
+            <td>「PNGをIllustratorで自動トレース」</td>
+            <td>トレース不要だが、複雑な写真風はラスター向き</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        重要なのは、RecraftのSVGが<strong>ラスター画像をSVGコンテナに包んだだけ</strong>ではない点です（公式・第三者レビュー共通の説明）。パスデータとして開けるため、<strong>アイコンの線幅統一</strong>や<strong>ブランドカラーの一括差し替え</strong>が、トレース工程なしで始められます。逆に、写真リアルな人物ポートレートのような用途はラスター系モデル（V4 / V4 Pro）や他ツールの方が向くことが多いです。
+      </p>
+    </section>
+
+    <section id="v4-models">
+      <h2>Recraft V4モデル群</h2>
+      <p>
+        2026年2月公開の<strong>Recraft V4</strong>は、同じ「デザインの味」を保ちながら<strong>解像度と出力形式</strong>で4系統に分かれます（公式ドキュメント）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>モデル</th>
+            <th>出力</th>
+            <th>解像度・速度（目安）</th>
+            <th>向く用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Recraft V4</strong></td>
+            <td>ラスター</td>
+            <td>約1024px・約10秒</td>
+            <td>Web/SNS素材の素早い反復</td>
+          </tr>
+          <tr>
+            <td><strong>Recraft V4 Pro</strong></td>
+            <td>ラスター</td>
+            <td>約2048px・約30秒</td>
+            <td>印刷・大型ディスプレイ向け</td>
+          </tr>
+          <tr>
+            <td><strong>Recraft V4 Vector</strong></td>
+            <td>SVGベクター</td>
+            <td>標準・約15秒</td>
+            <td>アイコン・イラスト・UI素材</td>
+          </tr>
+          <tr>
+            <td><strong>Recraft V4 Pro Vector</strong></td>
+            <td>SVGベクター</td>
+            <td>高解像度・約45秒</td>
+            <td>詳細なベクターイラスト・大型印刷</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        公式は「<strong>Freeユーザーも含め全ユーザーが4モデルを選択可能</strong>」と明記しています。クレジット消費は操作種別に加え<strong>選択モデルの価格倍率</strong>が掛かるため、ベクター系はラスターより多めに消費される想定で計画してください（公式Creditsページ）。
+      </p>
+      <p>
+        なお2026年6月時点、公式ドキュメントはV4で<strong>Style creation（スタイル作成）・プロンプトベース編集・Image sets</strong>などが未対応と記載しています。Studio全体の機能とV4単体の対応範囲は一致しない場合があるため、利用前に公式のRecraft V4ページで最新状態を確認してください。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Recraft Studioでできること</h2>
+      <p>Recraft Studioは「生成だけ」ではなく、デザイン素材の前処理・後処理まで含むワークベンチです（機能名は変更あり）。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>プロンプトから画像・ベクター生成</h3>
+          <p>Text-to-Imageの基本。V4モデル選択でラスター/ベクターを切り替え。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Style Lock / カスタムスタイル</h3>
+          <p>参照画像からブランドの色・線幅・タッチを固定し、量産時の統一感を保つ（Teamsでは共有）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Mockup / Mockupize</h3>
+          <p>生成物を製品モックアップに載せる。プレゼン・クライアント確認向け（2クレジット程度）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Creative Upscale</h3>
+          <p>AIによる高品質アップスケール。20クレジットと高め（公式Credits表）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>領域編集・背景置換</h3>
+          <p>Inpaint/Erase/Replace background等。生成後の微修正をStudio内で完結。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>多形式エクスポート</h3>
+          <p>SVG、PNG、JPG、PDF、TIFF、Lottie等。制作ツールへの持ち込みを想定（公式）。</p>
+        </div>
+      </div>
+
+      <h3>API（サブスクとは別課金）</h3>
+      <p>
+        Recraftは<strong>API</strong>でもV4モデル群にアクセスできます。Studioの月次クレジットとは<strong>別の従量課金</strong>が一般的で、例えばReplicate経由ではV4ラスター約$0.04/枚、V4 SVG約$0.08/枚といった公開価格が参照できます（2026年6月時点・外部ホストの料金表）。自社プロダクトにアイコン生成を組み込む場合は、Studio契約とAPI契約を混同しないことが重要です。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        「<strong>SVGが出る＝ベクター化ツール</strong>」——Recraftは生成段階からベクター幾何を作るサービスであり、Adobe Illustratorの「画像トレース」と同じカテゴリではありません。既存PNGの後処理なら別ツール、<strong>新規素材をパスとして生む</strong>ならRecraft、と分けてください。
+      </p>
+      <p>
+        「<strong>Recraft＝Ideogramの上位互換</strong>」も誤りです。<a href="../ideogram/">Ideogram</a>は<strong>画像内テキストを含むラスター</strong>に強く、Recraftは<strong>編集可能ベクターとデザインシステム</strong>に強い。キャッチコピー入りバナーのたたき台はIdeogram、統一線幅のアイコン12個はRecraft——用途で選びます。
+      </p>
+      <p>
+        「<strong>Freeで作ったSVGは自由に商用利用できる</strong>」も×です。公式Pricingは、Freeプランの画像は<strong>Recraftが所有</strong>し<strong>公開</strong>されると説明しています。クライアント納品・ストック販売・非公開案件には<strong>有料プラン</strong>が前提です（TF-0348）。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金・クレジット・商用権</h2>
+      <p>Recraftは<strong>クレジット制</strong>です。操作ごとに消費量が異なり、モデル選択で倍率が変わります（2026年6月時点・公式Credits / Paid plans）。</p>
+
+      <h3>プラン概要</h3>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">日次30クレジット・V4全モデル利用可</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Basic</p>
+          <p class="tool-plan-price">$10〜12/月</p>
+          <p class="tool-plan-note">月1,000クレジット・非公開・商用権</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">$16〜160/月</p>
+          <p class="tool-plan-note">2,000〜16,000クレジット（段階制）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Teams</p>
+          <p class="tool-plan-price">$18〜176/月</p>
+          <p class="tool-plan-note">共有スタイル・SSO・管理機能</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Free</th>
+            <th>有料（Basic / Pro / Teams）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>クレジット</strong></td>
+            <td>30/日（繰越なし）</td>
+            <td>月次付与（繰越なし）＋Top-up購入可</td>
+          </tr>
+          <tr>
+            <td><strong>公開設定</strong></td>
+            <td>生成物は公開（ギャラリー）</td>
+            <td>非公開生成が可能</td>
+          </tr>
+          <tr>
+            <td><strong>著作権・商用</strong></td>
+            <td>Recraft所有（商用は制限あり）</td>
+            <td>ユーザーに完全所有権・商用権（契約中）</td>
+          </tr>
+          <tr>
+            <td><strong>Top-up</strong></td>
+            <td>不可</td>
+            <td>200/800/1000/1600単位・失効なし</td>
+          </tr>
+          <tr>
+            <td><strong>年払い</strong></td>
+            <td>—</td>
+            <td>最大約20%割引（公式）</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>主なクレジット消費（目安）</h3>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>操作</th>
+            <th>クレジット</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>プロンプトから生成</td>
+            <td>モデル価格×1</td>
+            <td>ベクター系はラスターより多め</td>
+          </tr>
+          <tr>
+            <td>Creative Upscale</td>
+            <td>20</td>
+            <td>高品質化は計画的に</td>
+          </tr>
+          <tr>
+            <td>Mockup / Mockupize</td>
+            <td>2</td>
+            <td>プレゼン確認向け</td>
+          </tr>
+          <tr>
+            <td>背景除去・Crisp Upscale</td>
+            <td>1</td>
+            <td>軽い後処理</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        有料解約後も、<strong>有料期間中に生成した非公開画像は非公開のまま</strong>残ると公式FAQが説明しています。ただし新規生成の非公開・商用権は契約状態に依存するため、案件のタイミングでプランを確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>ベクター品質とクレジット効率を両立するには、最初から「編集前提」で指示を書くのがコツです。</p>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>アカウント作成</strong>
+            recraft.ai からサインアップ。FreeでもV4全モデルが選べます（公式）。
+          </li>
+          <li>
+            <strong>出力形式を決める</strong>
+            写真風ならV4/V4 Pro、編集可能アイコンならV4 Vector/V4 Pro Vectorを選択します。
+          </li>
+          <li>
+            <strong>スタイルを固定する</strong>
+            ブランド案件ではStyle Lockやカスタムスタイル（Teams）で線幅・配色を揃えます。アイコンセットはプロンプトの骨格を固定し、主語だけ変えると統一しやすいです。
+          </li>
+          <li>
+            <strong>生成→SVGをエクスポート</strong>
+            Figma/Illustratorで開き、パス・色を手直しします。ここがRecraftの本番です。
+          </li>
+          <li>
+            <strong>商用前にプランと規約を確認</strong>
+            クライアント納品・ストック販売は有料プランとOwnership条項を必ず確認します（TF-0497）。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/recraft/og-hero.png" alt="Recraft Studioの公式ビジュアル" width="600" height="338" loading="lazy">
+            <figcaption>出典：Recraft公式（recraft.ai）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <p>社内ガイドライン・クライアント契約・Recraft利用規約の確認が前提です。</p>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>プロダクト・UI</h3>
+          <ul>
+            <li>アプリアイコンセットのたたき台</li>
+            <li>空状態イラスト（SVG）</li>
+            <li>オンボーディング用ピクトグラム</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>ブランド・マーケ</h3>
+          <ul>
+            <li>Style Lockで統一したイラスト群</li>
+            <li>Mockupでの製品ビジュアル確認</li>
+            <li>LP用フラットイラストの素案</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>開発・API連携</h3>
+          <ul>
+            <li>管理画面の動的アイコン生成</li>
+            <li>テンプレート＋style_idでの量産</li>
+            <li>CDN配信用SVGのバッチ生成</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>試験・学習</h3>
+          <ul>
+            <li>ラスターとベクター出力の違い</li>
+            <li>商用権・公開設定の整理</li>
+            <li>画像AIの棲み分け表の作成</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        いずれも<strong>最終稿は人間デザイナーのレビュー</strong>が前提です。特にロゴや商標に近い生成物は、類似商標・クライアントガイドラインとの抵触を必ず確認してください（TF-0496）。
+      </p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ネイティブSVGでFigma/Illustratorに直結</td>
+            <td>写真リアル・複雑なシーンはラスター系AIに劣ることも</td>
+          </tr>
+          <tr>
+            <td>Recraft V4でFreeから全モデルを試せる</td>
+            <td>Freeは公開生成・Recraft所有で商用に不向き</td>
+          </tr>
+          <tr>
+            <td>Style Lockでブランド統一の量産向き</td>
+            <td>ベクター生成はクレジット消費がやや多め</td>
+          </tr>
+          <tr>
+            <td>Mockup・Upscale等、Studio内で前後工程を完結</td>
+            <td>V4時点では一部Studio機能が未対応（公式）</td>
+          </tr>
+          <tr>
+            <td>APIでプロダクト組み込みも可能</td>
+            <td>API課金はサブスククレジットと別管理</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Ideogram・Midjourney・Fireflyとの比較</h2>
+      <p>「どの画像AIを選ぶか」は出力形式と制作工程で決まります。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>Recraft</th>
+            <th>Ideogram</th>
+            <th>Midjourney</th>
+            <th>Adobe Firefly</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>主な出力</td>
+            <td>SVGベクター＋ラスター</td>
+            <td>ラスター（文字入り強）</td>
+            <td>ラスター（芸術探索）</td>
+            <td>ラスター（Adobe連携）</td>
+          </tr>
+          <tr>
+            <td>編集前提</td>
+            <td>◎（パス編集）</td>
+            <td>○（PNG編集）</td>
+            <td>△（探索・選別）</td>
+            <td>○（Photoshop等）</td>
+          </tr>
+          <tr>
+            <td>アイコン・UI素材</td>
+            <td>◎</td>
+            <td>○</td>
+            <td>△</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td>画像内テキスト</td>
+            <td>○</td>
+            <td>◎</td>
+            <td>△</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td>無料で試す</td>
+            <td>○（30cr/日）</td>
+            <td>○</td>
+            <td>×</td>
+            <td>○（Adobe枠）</td>
+          </tr>
+          <tr>
+            <td>向いている用途</td>
+            <td>ベクター資産・デザインシステム</td>
+            <td>文字入りバナー・ポスター</td>
+            <td>コンセプトアート</td>
+            <td>Adobeユーザー向け</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        編集可能なSVGアイコンならRecraft、キャッチコピー入りサムネイルなら<a href="../ideogram/">Ideogram</a>、画質探索なら<a href="../midjourney/">Midjourney</a>、Photoshop/InDesign中心なら<a href="../adobe-firefly/">Adobe Firefly</a>——という整理が実務的です。<a href="../canva/">Canva</a>はテンプレート型デザインツールであり、Recraft単体とは「素材生成」と「レイアウト編集」で役割が補完関係になります。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>Figma/Illustratorで仕上げるUI・ブランドデザイナー</strong></li>
+        <li><strong>統一感のあるアイコンセットを短時間で量産したいプロダクトチーム</strong></li>
+        <li><strong>APIで動的SVGを生成したい開発者</strong></li>
+        <li><strong>「ラスターとベクターAIの違い」を試験・実務両方で整理したい学習者</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>文字入りラスターバナーだけ</strong>が目的の場合（<a href="../ideogram/">Ideogram</a>の方が先に試す価値あり）、<strong>Freeのままクライアント納品</strong>する場合（商用権・非公開が不足）、<strong>1枚の芸術写真だけ</strong>を最優先する場合（<a href="../midjourney/">Midjourney</a>等との比較が先）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Recraftは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。Freeプランでは日次30クレジットでRecraft V4を含む主要モデルを試せます。ただし生成物は公開（コミュニティギャラリー）となり、著作権はRecraft側に帰属します。非公開生成と商用利用の完全な権利は有料プランが必要です（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>Recraftの最大の特徴は何ですか？</summary>
+          <p class="tool-faq-a">プロンプトから編集可能なSVGベクターをネイティブ生成できる点です。ラスター画像を後からトレースするのではなく、Bezierパスを持つ本物のベクターファイルとして出力され、FigmaやIllustratorで色・形状を直接編集できます。</p>
+        </details>
+        <details>
+          <summary>RecraftとIdeogramの違いは？</summary>
+          <p class="tool-faq-a">Ideogramは画像内テキストを含むラスター（PNG等）生成に強い一方、Recraftはアイコン・イラスト・ブランド素材向けのネイティブSVGベクター生成が強みです。文字入りバナーのたたき台ならIdeogram、編集可能なベクターアセットならRecraft、という棲み分けが現実的です。</p>
+        </details>
+        <details>
+          <summary>Recraft V4とは？</summary>
+          <p class="tool-faq-a">2026年2月公開のRecraft独自モデル群です。ラスター（V4 / V4 Pro）とベクター（V4 Vector / V4 Pro Vector）の4系統があり、デザインの「味」——構図・配色・意図的なディテール——を重視した出力が特徴とされています。Freeユーザーでも全V4モデルを選択できます。</p>
+        </details>
+        <details>
+          <summary>Recraftは商用利用できますか？</summary>
+          <p class="tool-faq-a">有料プラン契約中は生成物の完全な所有権と商用利用権が付与されます。Freeプランの画像はRecraftが所有し公開されるため、クライアント納品やストック販売には不向きです。契約前に公式のOwnership and commercial usageを必ず確認してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://www.recraft.ai/" target="_blank" rel="noopener noreferrer">Recraft（recraft.ai）</a>
+      ·
+      <a href="https://www.recraft.ai/docs/recraft-models/recraft-V4" target="_blank" rel="noopener noreferrer">Recraft V4 ドキュメント</a>
+      ·
+      <a href="https://www.recraft.ai/pricing" target="_blank" rel="noopener noreferrer">Pricing</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../ideogram/"><img src="../../assets/images/tools/ideogram/app-icon.png" alt="" width="16" height="16"> Ideogram</a></li>
+          <li><a href="../midjourney/"><img src="../../assets/images/tools/midjourney/app-icon.png" alt="" width="16" height="16"> Midjourney</a></li>
+          <li><a href="../adobe-firefly/"><img src="../../assets/images/tools/adobe.svg" alt="" width="16" height="16"> Adobe Firefly</a></li>
+          <li><a href="../canva/"><img src="../../assets/images/tools/canva.svg" alt="" width="16" height="16"> Canva</a></li>
+          <li><a href="../dalle/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> DALL·E</a></li>
+          <li><a href="../leonardo-ai/"><img src="../../assets/images/tools/leonardo-ai.png" alt="" width="16" height="16"> Leonardo.ai</a></li>
+          <li><a href="../flux/"><img src="../../assets/images/tools/flux.ico" alt="" width="16" height="16"> Flux</a></li>
+          <li><a href="../bing-image-creator/"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Bing Image Creator</a></li>
+          <li><a href="../stable-diffusion/"><img src="../../assets/images/tools/stable-diffusion.ico" alt="" width="16" height="16"> Stable Diffusion</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../../glossary/denoising-diffusion/">拡散モデル</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

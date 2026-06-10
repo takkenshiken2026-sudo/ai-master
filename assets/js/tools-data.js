@@ -312,6 +312,7 @@ const TOOLS = [
     logo: "recraft.png",
     cat: "image",
     catLabel: "画像生成",
+    article: true,
     tagline: "SVGネイティブ出力・ロゴ・アイコン生成に特化",
     url: "https://www.recraft.ai",
   },
