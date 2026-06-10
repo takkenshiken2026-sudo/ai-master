@@ -984,6 +984,7 @@ const TOOLS = [
     logo: "make.ico",
     cat: "automation",
     catLabel: "業務自動化",
+    article: true,
     tagline: "Zapierより安価でビジュアルフロー設計に強いワークフロー自動化ツール",
     url: "https://www.make.com",
   },

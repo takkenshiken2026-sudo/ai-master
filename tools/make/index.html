@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Make（旧Integromat）の機能・料金・使い方を解説。Credits課金、シナリオビジュアル設計、Make AI Agents・MCP Server、Zapier・n8nとの比較まで。生成AIパスポート対策にも。">
+  <title>Make（旧Integromat）とは？業務自動化の機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/make/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Make（旧Integromat）とは？業務自動化の機能・料金・使い方を解説">
+  <meta property="og:description" content="1モジュール=1 Credit、ルーター・イテレーター可視化、Make AI Agents・MCP Server。Zapier Tasksとのコスト差を2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/make/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/make/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/make/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/make/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Make", "item": "https://ai-master.jp/tools/make/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/make/#article",
+        "headline": "Make（旧Integromat）とは？業務自動化の機能・料金・使い方を解説",
+        "description": "1モジュール=1 Credit、ルーター・イテレーター可視化、Make AI Agents・MCP Server。Zapier Tasksとのコスト差を2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/make/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/make/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/make/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Make" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/make/#webpage",
+        "url": "https://ai-master.jp/tools/make/",
+        "name": "Make（旧Integromat）とは？業務自動化の機能・料金・使い方を解説",
+        "description": "1モジュール=1 Credit、ルーター・イテレーター可視化、Make AI Agents・MCP Server。Zapier Tasksとのコスト差を2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/make/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Make",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "旧Integromat。ビジュアルシナリオビルダーで3,000+アプリを連携するiPaaS。Credits（モジュール実行）課金。Make AI Agents・MCP Server対応。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free 1,000 credits/月。Core $9/月（年払い・10k credits）〜。Pro $16、Teams $29（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Make",
+          "url": "https://www.make.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "MakeとZapierの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらもiPaaSですが、Zapierは9,000+アプリ連携とZap/Agentsの二層課金が強み、Makeはビジュアルなシナリオ設計（ルーター・フィルター・イテレーター）とCredits単価で複雑フローに向きます。Makeは1モジュール=1 Credit、Zapierは成功Task単位——課金の数え方が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MakeのCredit（クレジット）とは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "シナリオ内の各モジュール実行（トリガー、アクション、フィルター、ルーター等）が通常1 Creditを消費します。10モジュールのシナリオを1回実行すると約10 Creditsです。Make組み込みAIはトークン量に応じた動的消費、ポーリング（Watch）モジュールはデータがなくても1 Credit消費する点に注意（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Makeは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Freeプラン（$0）で月1,000 Credits、ビジュアルビルダー、3,000+アプリ、ルーター・フィルターが利用できます。実行間隔は最低15分、同時アクティブシナリオ数に上限があります。本番の頻繁実行はCore（$9/月〜）以上が現実的です（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "IntegromatとMakeの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Makeは2022年にIntegromatからリブランドした同一サービスです。試験では「旧Integromat＝Make」と覚えると、Zapierとの比較問題で混乱しにくくなります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Makeとn8nの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MakeはクラウドSaaSでCredits課金、ビジュアル重視のノーコード設計が中心です。n8nはセルフホスト可能でワークフローをJSONで管理し、技術者向けの自由度が高いことが多いです。完全クラウドで手早く始めるならMake、インフラ内完結ならn8n——という棲み分けです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Make（旧Integromat）</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/make/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Make · 旧Integromat · 業務自動化</p>
+          <h1>Make（旧Integromat）とは？業務自動化の機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">ビジュアルシナリオで3,000+アプリを連携——Credits課金のiPaaS、AI Agents・MCP Server対応</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Credits課金</span>
+        <span class="tool-category">シナリオ設計</span>
+        <span class="tool-category">Make AI · MCP</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（make.com）</li>
+          <li>Make API</li>
+          <li>On-prem agent（Enterprise）</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/make/og-hero.png" alt="Make公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Make公式（make.com）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Make</strong>（メイク、旧<strong>Integromat</strong>）は、ドラッグ＆ドロップの<strong>ビジュアルシナリオ</strong>でSaaSアプリを連携する<strong>iPaaS</strong>です。課金の核は<strong>Credits</strong>——モジュール1実行＝通常1 Credit——であり、<a href="../zapier/">Zapier</a>のTask課金とは数え方が異なります。本記事では<a href="#credit-model">Creditsモデル</a>、<a href="#scenario-canvas">シナリオキャンバス</a>、<a href="#make-ai">Make AI・MCP Server</a>、<a href="#comparison">Zapierとのコスト比較</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Makeとは</a></li>
+        <li><a href="#credit-model">Credits課金モデル</a></li>
+        <li><a href="#scenario-canvas">シナリオキャンバス設計</a></li>
+        <li><a href="#make-ai">Make AI・MCP Server</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">主要ツールとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>生成AIパスポートでは、業務自動化（iPaaS）とAIエージェント、外部ツールへの権限・承認の論点が問われます。Makeは<a href="../zapier/">Zapier</a>と並ぶ「ノーコード自動化の具体例」として、<strong>RPAやChatGPTそのものではない</strong>点を押さえると整理しやすいです。</p>
+      <p>「Make＝画面操作ロボット」「Credits＝ZapierのTaskと同じ数え方」という誤解に注意してください。Makeは<strong>API連携型</strong>で、課金は<strong>モジュール実行単位</strong>です。</p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0493/">一問一答 TF-0493（自動化と確認作業）</a>、<a href="../../exams/genai-passport/drill/q/tf-0240/">TF-0240（外部ツールと権限）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（承認ステップ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0321/">TF-0321（許可されていないサービスへの入力）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/agent/">AIエージェント</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Makeとは</h2>
+      <p>Make（make.com）は、2022年に<strong>Integromat</strong>からリブランドしたチェコ発のiPaaSです。「Scenario（シナリオ）」と呼ぶワークフローをキャンバス上に配置し、3,000以上のアプリをAPI経由で連携します。</p>
+      <p><a href="../zapier/">Zapier</a>が「Zap」という線形フロー中心なのに対し、Makeは<strong>ルーター（分岐）・フィルター・イテレーター（繰り返し）</strong>を最初から可視化できるのが特徴です。複数条件・大量レコード処理を1シナリオにまとめやすく、<strong>Credits単価</strong>で見ると多段フローが相対的に安くなるケースがあります。</p>
+      <p>2026年時点、Makeは<strong>Make AI Agents（beta）</strong>、<strong>Make MCP Server</strong>、350+ AIアプリ連携など、AI機能をシナリオ内に統合する方向へ拡張しています（公式Pricing）。</p>
+    </section>
+
+    <section id="credit-model">
+      <h2>Credits課金モデル</h2>
+      <p>Makeの課金の核は<strong>Credits</strong>です。公式FAQの整理では、Google Sheets行追加やGmail取得など、<strong>シナリオ内の各モジュール実行が通常1 Credit</strong>です（2026年6月時点）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>実行内容</th><th>Credits目安</th><th>試験・実務の注意</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>標準モジュール</strong>（トリガー・アクション・フィルター・ルーター）</td><td><strong>1 Credit / 実行</strong></td><td>10モジュール＝1回で約10 Credits</td></tr>
+          <tr><td><strong>Watch（ポーリング）モジュール</strong></td><td><strong>1 Credit / チェック</strong></td><td>データなしでも消費——放置コストに注意</td></tr>
+          <tr><td><strong>Make組み込みAI</strong></td><td>トークン量に応じ<strong>動的</strong></td><td>見積もりが読みにくい</td></tr>
+          <tr><td><strong>HTTPで外部AI API</strong></td><td>Make側<strong>1 Credit</strong>＋API料金</td><td>OpenAI等は別途従量</td></tr>
+          <tr><td><strong>Make Code（JS/Python）</strong></td><td><strong>2 Credits / 1秒</strong></td><td>長時間実行は高コスト</td></tr>
+        </tbody>
+      </table>
+      <p>Creditsが75%・90%で通知され、枯渇するとシナリオは停止します。Webhookはキューに蓄積され、Credits追加後に処理されます（公式Pricing）。追加購入（1,000 / 10,000単位）や自動購入（Core以上）も用意されています。</p>
+      <h3>Zapier Taskとの決定的差</h3>
+      <p>Zapierは<strong>成功したアクション</strong>をTaskとしてカウントする一方、Makeは<strong>通過したモジュール</strong>をCreditsとしてカウントします。フィルターで弾かれる前のモジュールも消費するため、「設計次第でMakeの方が安い／高い」が逆転します——<strong>トリガー直後にフィルターを置く</strong>のがMake設計の基本です。</p>
+    </section>
+
+    <section id="scenario-canvas">
+      <h2>シナリオキャンバス設計</h2>
+      <p>MakeのUIは「Scenario builder」と呼ばれる<strong>ノーコードのフローチャート</strong>です。Zapierの線形Zapより、次のパターンを明示的に描けるのが強みです。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Router（分岐）</h3>
+          <p>条件ごとに別ルートへ。例：リードスコアが高い→Slack、低い→メールのみ。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Filter（フィルター）</h3>
+          <p>不要データを早期除外。Credits節約の要——トリガー直後に配置。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Iterator（繰り返し）</h3>
+          <p>配列の各要素を順処理。100件なら下流モジュール×100回分のCredits。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Subscenario</h3>
+          <p>シナリオを別シナリオから呼び出し。共通処理の再利用。</p>
+        </div>
+      </div>
+      <p>試験では「複雑な分岐はMake、連携数・テンプレ厚みはZapier」という定番比較を、そのまま実務の選定軸に使えます。</p>
+    </section>
+
+    <section id="make-ai">
+      <h2>Make AI・MCP Server</h2>
+      <p>2026年時点、MakeはAIを<strong>別プロダクト課金</strong>（Zapier AgentsのActivities）ではなく、<strong>シナリオ内モジュール＋Credits</strong>として統合しつつあります（公式Pricing）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>機能</th><th>概要</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Make AI Agents（beta）</strong></td><td>Make AI Providerまたは自前LLMキーでエージェント構築</td><td>判断を含むステップをシナリオ内に配置</td></tr>
+          <tr><td><strong>Make MCP Server</strong></td><td>外部AI（ChatGPT等）からMakeシナリオを呼び出し</td><td>Zapier MCPと同系統の「AIに手を渡す」</td></tr>
+          <tr><td><strong>AI Content Extractor</strong></td><td>ファイルから構造化テキスト抽出</td><td>ドキュメント→後続API連携</td></tr>
+          <tr><td><strong>AI Web Search（beta）</strong></td><td>シナリオ内でWeb検索結果を取得</td><td>最新情報が必要な自動化</td></tr>
+          <tr><td><strong>350+ AI apps</strong></td><td>OpenAI・Anthropic等をモジュール連携</td><td>HTTP自作より運用が楽</td></tr>
+        </tbody>
+      </table>
+      <p>組み込みAIは<strong>動的Credits消費</strong>のため、定型的なAPI連携だけならHTTPモジュール＋外部APIの方が予測しやすい場合があります。</p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>3,000+ アプリ連携</h3>
+          <p>Google Workspace、Slack、Notion、HubSpot、Shopify等。Custom appsで社内APIも接続。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Make API</h3>
+          <p>Core以上で300+ APIエンドポイント。外部からシナリオ実行・管理（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Make Code</h3>
+          <p>JavaScript/Pythonをシナリオ内実行。高度なデータ変換・AI前処理。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Data Store</h3>
+          <p>シナリオ間でデータを保持。APIレスポンスのキャッシュでCredits節約。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>On-prem agent</h3>
+          <p>Enterprise向け。SAP等ローカルネットワーク内アプリに接続。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Teams・テンプレート</h3>
+          <p>Teamsプランでロール管理・シナリオテンプレート共有。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>「<strong>Make＝Zapierより常に安い</strong>」は半分正しく半分誤りです。多モジュール・高頻度実行ではMakeの方が有利になりやすい一方、<strong>Watchポーリング</strong>や<strong>イテレーター大量処理</strong>でCreditsが急増します。</p>
+      <p>「<strong>AIを入れれば確認不要</strong>」もTF-0493で×です。CRM更新・請求・個人情報送信は人間承認またはポリシー必須——Make AI Agentsも例外ではありません。</p>
+      <p>「<strong>Integromatは別サービス</strong>」——2022年以降はMakeに統一。古い教材ではIntegromat表記が残るため、試験では同一とみなしてください。</p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>以下は公式Pricing（make.com/en/pricing）に基づく<strong>年払い・10,000 Credits/月</strong>基準の整理です。Credits量は10k〜8Mまでスライダーで増やせます。</p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card"><p class="tool-plan-name">Free</p><p class="tool-plan-price">$0</p><p class="tool-plan-note">1,000 Credits/月</p></div>
+        <div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Core</p><p class="tool-plan-price">$9/月</p><p class="tool-plan-note">10k Credits・API</p></div>
+        <div class="tool-plan-card"><p class="tool-plan-name">Pro</p><p class="tool-plan-price">$16/月</p><p class="tool-plan-note">優先実行・変数</p></div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額（2026年6月時点）</th>
+            <th>Credits/月</th>
+            <th>主な特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Free</strong></td><td><strong>$0</strong></td><td><strong>1,000</strong></td><td>15分間隔・同時アクティブシナリオ上限・512MB転送</td></tr>
+          <tr><td><strong>Core</strong></td><td><strong>$9/月</strong>（年払い）</td><td><strong>10,000</strong>〜</td><td>無制限アクティブシナリオ・1分間隔スケジュール・Make API</td></tr>
+          <tr><td><strong>Pro</strong></td><td><strong>$16/月</strong>（年払い）</td><td><strong>10,000</strong>〜</td><td>優先実行・カスタム変数・全文ログ検索</td></tr>
+          <tr><td><strong>Teams</strong></td><td><strong>$29/月</strong>（年払い）</td><td><strong>10,000</strong>〜</td><td>チームロール・テンプレート共有</td></tr>
+          <tr><td><strong>Enterprise</strong></td><td>カスタム</td><td>スケーラブル</td><td>SSO・Overage protection・24/7サポート</td></tr>
+        </tbody>
+      </table>
+      <p>データ転送は10,000 Creditsあたり5GB（Freeは512MB）。追加Creditsは25%上乗せ、月次契約では1ヶ月で失効（公式）。年払いPro/Teamsは年間枠として扱われます。</p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li><strong>無料登録</strong>make.comでアカウント作成。Freeの1,000 Credits/月を確認。</li>
+          <li><strong>シナリオ新規作成</strong>テンプレートまたは空キャンバスから開始。</li>
+          <li><strong>トリガー設定</strong>Webhook・スケジュール・Watch等。ポーリングはCreditsコストに注意。</li>
+          <li><strong>フィルター→処理→分岐</strong>早期フィルター、Router/Iteratorで分岐・繰り返しを設計。</li>
+          <li><strong>テスト実行・有効化</strong>実行ログでモジュール別Credits消費を確認してから本番化。</li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/make/og-hero.png" alt="Make公式イメージ" width="600" height="314" loading="lazy">
+            <figcaption>出典：Make公式（make.com）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>リード連携パイプライン</h3>
+          <p>フォーム→スコアリング→CRM分岐→Slack通知。Routerで1シナリオ完結。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>EC在庫・受注同期</h3>
+          <p>Shopify・在庫DB・メールをIteratorで一括更新。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>AI要約→Slack投稿</h3>
+          <p>AI Content Extractor＋OpenAIモジュール→要約をチャンネルへ。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>社内SAP連携</h3>
+          <p>Enterprise＋On-prem agentでクラウドと基幹系を接続。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+        <tbody>
+          <tr><td>ルーター・イテレーターの可視設計</td><td>Credits見積もりが複雑（Watch・Iterator）</td></tr>
+          <tr><td>多段フローのコスト効率（Zapier比）</td><td>連携アプリ数はZapier（9,000+）より少ない</td></tr>
+          <tr><td>Core $9/月から本番運用可能</td><td>組み込みAIは動的Creditsで予測困難</td></tr>
+          <tr><td>Make AI Agents・MCP Server統合</td><td>APIのないレガシーUIは非対応</td></tr>
+          <tr><td>実行ログでモジュール別消費を可視化</td><td>Credits枯渇で全シナリオ停止</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>主要ツールとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>Make</th><th>Zapier</th><th>n8n</th><th>Power Automate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>課金単位</td><td><strong>Credits</strong>（モジュール実行）</td><td><strong>Tasks</strong>＋Activities</td><td>実行回数・セルフホスト</td><td>フロー実行・Premium</td></tr>
+          <tr><td>設計UI</td><td>シナリオキャンバス</td><td>線形Zap＋Paths</td><td>ノードワークフロー</td><td>フローデザイナー</td></tr>
+          <tr><td>連携数</td><td>3,000+</td><td>9,000+</td><td>400+（拡張可）</td><td>Microsoft中心＋コネクタ</td></tr>
+          <tr><td>AI統合</td><td>AI Agents・MCP Server</td><td>Zapier Agents・MCP</td><td>LangChain等と組合</td><td>Copilot・AI Builder</td></tr>
+          <tr><td>向くケース</td><td>複雑分岐・コスト重視</td><td>連携厚み・MCP・Agents</td><td>セルフホスト・技術者</td><td>M365・Teams中心</td></tr>
+        </tbody>
+      </table>
+      <p>複雑シナリオ・Credits効率ならMake、エコシステムとAI Agents二層なら<a href="../zapier/">Zapier</a>、インフラ内完結ならn8n、Microsoft 365中心ならPower Automate——という棲み分けが試験・実務で使いやすいです。</p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>分岐・繰り返しの多い業務フローを1本のシナリオにまとめたい担当者</strong></li>
+        <li><strong>ZapierよりCredits単価を抑えたい中小チーム</strong></li>
+        <li><strong>ノーコードでAPI連携を視覚的に設計・デバッグしたい人</strong></li>
+        <li><strong>試験対策でIntegromat/MakeとZapierの違いを押さえたい受験生</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>9,000+アプリのテンプレ厚み</strong>だけが欲しいケース（Zapier向け）、<strong>完全オンプレ必須</strong>（n8n向け）、<strong>ブラウザGUI操作の自動化</strong>（<a href="../manus/">Manus</a>・RPA向け）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Zapierとの違いは？</summary><p class="tool-faq-a">どちらもiPaaSですが、Zapierは9,000+アプリ連携とZap/Agentsの二層課金が強み、Makeはビジュアルなシナリオ設計（ルーター・フィルター・イテレーター）とCredits単価で複雑フローに向きます。Makeは1モジュール=1 Credit、Zapierは成功Task単位——課金の数え方が異なります。</p></details>
+        <details><summary>Credit（クレジット）とは？</summary><p class="tool-faq-a">シナリオ内の各モジュール実行（トリガー、アクション、フィルター、ルーター等）が通常1 Creditを消費します。10モジュールのシナリオを1回実行すると約10 Creditsです。Make組み込みAIはトークン量に応じた動的消費、Watchモジュールはデータがなくても1 Credit消費する点に注意（2026年6月時点）。</p></details>
+        <details><summary>無料で使えますか？</summary><p class="tool-faq-a">Freeプラン（$0）で月1,000 Credits、ビジュアルビルダー、3,000+アプリ、ルーター・フィルターが利用できます。実行間隔は最低15分、同時アクティブシナリオ数に上限があります。本番の頻繁実行はCore（$9/月〜）以上が現実的です（2026年6月時点）。</p></details>
+        <details><summary>Integromatとの関係は？</summary><p class="tool-faq-a">Makeは2022年にIntegromatからリブランドした同一サービスです。試験では「旧Integromat＝Make」と覚えると、Zapierとの比較問題で混乱しにくくなります。</p></details>
+        <details><summary>n8nとの違いは？</summary><p class="tool-faq-a">MakeはクラウドSaaSでCredits課金、ビジュアル重視のノーコード設計が中心です。n8nはセルフホスト可能でワークフローをJSONで管理し、技術者向けの自由度が高いことが多いです。完全クラウドで手早く始めるならMake、インフラ内完結ならn8n——という棲み分けです。</p></details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://www.make.com" target="_blank" rel="noopener noreferrer">Make（make.com）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.make.com/en/pricing" target="_blank" rel="noopener noreferrer">料金ページ</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.make.com/en/help" target="_blank" rel="noopener noreferrer">ヘルプセンター</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../zapier/"><img src="../../assets/images/tools/zapier/app-icon.png" alt="" width="16" height="16"> Zapier</a></li>
+          <li><a href="../manus/"><img src="../../assets/images/tools/manus/app-icon.png" alt="" width="16" height="16"> Manus</a></li>
+          <li><a href="../notion-ai/"><img src="../../assets/images/tools/notion.svg" alt="" width="16" height="16"> Notion AI</a></li>
+          <li><a href="../microsoft-365-copilot/"><img src="../../assets/images/tools/microsoft-365-copilot/app-icon.png" alt="" width="16" height="16"> Microsoft 365 Copilot</a></li>
+          <li class="tool-related-list__soon">n8n <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
