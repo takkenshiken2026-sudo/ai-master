@@ -20,15 +20,14 @@ MARKER_END = "  <!-- hub-crawl-links:end -->"
 
 def parse_tools() -> list[tuple[str, str]]:
     text = TOOLS_JS.read_text(encoding="utf-8")
+    tools_block = text.split("const CATEGORIES")[0]
     tools: list[tuple[str, str]] = []
-    for m in re.finditer(r'id:\s*"([^"]+)"', text):
-        chunk = text[m.start() : m.start() + 700]
-        if "article: true" not in chunk:
+    for block in re.findall(r"\{[^{}]+\}", tools_block):
+        id_m = re.search(r'id:\s*"([^"]+)"', block)
+        name_m = re.search(r'name:\s*"([^"]+)"', block)
+        if not id_m or not name_m or "article: true" not in block:
             continue
-        name_m = re.search(r'name:\s*"([^"]+)"', chunk)
-        if not name_m:
-            continue
-        tools.append((m.group(1), name_m.group(1)))
+        tools.append((id_m.group(1), name_m.group(1)))
     tools.sort(key=lambda x: x[1])
     return tools
 
