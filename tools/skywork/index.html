@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Skywork（Skywork AI）の機能・料金・使い方を解説。Super AgentsのOffice Trio、Deep Research、出典トレース、Clarification Card。Perplexity・Genspark・Gammaとの違い、試験で押さえるRAGの限界も整理。">
+  <title>Skyworkとは？AIオフィスエージェントの機能・料金・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/skywork/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Skyworkとは？AIオフィスエージェントの機能・料金・使い方を解説">
+  <meta property="og:description" content="Skywork Super AgentsのDocs/Slides/Sheets、Deep Research、出典トレース、Perplexity・Gensparkとの棲み分けを2026年6月時点で解説。">
+  <meta property="og:url" content="https://ai-master.jp/tools/skywork/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/skywork/og-hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/skywork/og-hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/skywork/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Skywork", "item": "https://ai-master.jp/tools/skywork/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/skywork/#article",
+        "headline": "Skyworkとは？AIオフィスエージェントの機能・料金・使い方を解説",
+        "description": "Skywork（Skywork AI）の機能・料金・使い方を解説。Super AgentsのOffice Trio、Deep Research、出典トレース、Clarification Card。Perplexity・Genspark・Gammaとの違い、試験で押さえるRAGの限界も整理。",
+        "url": "https://ai-master.jp/tools/skywork/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/skywork/og-hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/skywork/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Skywork" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/skywork/#webpage",
+        "url": "https://ai-master.jp/tools/skywork/",
+        "name": "Skyworkとは？AIオフィスエージェントの機能・料金・使い方を解説",
+        "description": "Skywork（Skywork AI）の機能・料金・使い方を解説。Super AgentsのOffice Trio、Deep Research、出典トレース、Clarification Card。Perplexity・Genspark・Gammaとの違い、試験で押さえるRAGの限界も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/skywork/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Skywork",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Skywork AIが提供するAIオフィスエージェント基盤。Deep ResearchとSuper Agentsで資料・スライド・表計算・Webページ・ポッドキャストを生成。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "無料枠あり（クレジット制）。Proは月額・年額プラン（2026年6月時点・公式Pricing要確認）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Skywork AI",
+          "url": "https://skywork.ai"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Skyworkは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。無料枠（クレジット制）で試せます（2026年6月時点）。ただしDeep Research付きの資料・スライド生成はクレジット消費が大きく、継続利用はProプランが現実的です。最新の無料上限は公式Pricingで確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SkyworkとPerplexityの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Perplexityは出典付きのWeb調査・Q&Aが中心です。Skyworkは調査結果をDocs/Slides/SheetsなどOffice形式の成果物に仕上げる「AIオフィスエージェント」です。調査だけならPerplexity、レポートやPPTXまで届けたいならSkyworkという棲み分けが一般的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SkyworkとGensparkは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもAIワークスペースですが、SkyworkはOffice Trio（資料・スライド・表）とDeep Research・出典トレースを前面に、GensparkはSparkpages由来の検索＋動画・画像など幅広い生成を訴求しています。試験では別サービスとして整理してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "出典付きだから検証不要、という理解でよいですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SkyworkはSource Tracing（出典トレース）を提供しますが、参照元の誤り・古さ・抜けは起こり得ます。生成AIパスポートでもRAG導入だけでは必ず正確になるわけではない（×）と問われます。重要な数値・引用は人が一次情報で確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ManusとSkyworkはどちらを選べばよいですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Manusはクラウドサンドボックスでブラウザ操作込みの自律タスク完遂、SkyworkはOffice形式の調査資料を高速に仕上げることに特化、という整理が分かりやすいです。Webサイト操作の自動化ならManus、コンサル品質のレポート・PPTXならSkywork——用途で選びます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Skywork</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/skywork/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Skywork AI · 検索・リサーチ</p>
+          <h1>Skyworkとは？AIオフィスエージェントの機能・料金・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">Deep Researchで調べ、Docs・Slides・Sheetsに仕上げる「AI版Office」ワークスペース</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Super Agents 5種</span>
+        <span class="tool-category">出典トレース</span>
+        <span class="tool-category">クレジット制</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（skywork.ai）</li>
+          <li>PPTX / XLS / PDF 出力</li>
+          <li>ナレッジベース（PDF等）</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/skywork/og-hero.jpg" alt="Skywork Super Agentsの公式イメージ。AIオフィスエージェントによる資料生成" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Skywork公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Skywork</strong>は、シンガポールの<strong>Skywork AI</strong>（昆仑万维/Kunlun Techグループ関連）が2025年5月にグローバル公開した<strong>AIオフィスエージェント</strong>基盤です。ChatGPTのようにチャット欄に長文を返すだけでなく、<strong>資料（Docs）・スライド（Slides）・表計算（Sheets）</strong>——いわゆる<strong>Office Trio</strong>——を起点に、Deep Researchで調べた内容を<strong>編集可能な成果物</strong>として届けます。本記事は機能の羅列ではなく、<strong>「調査AI」と「資料化AI」の境界</strong>、<strong>出典付きでも検証が必要な理由（試験のRAG問題）</strong>、<strong>Perplexity・Genspark・Manusとの棲み分け</strong>に絞って書いています。料金・クレジットは<strong>2026年6月時点</strong>の目安です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Skyworkとは</a></li>
+        <li><a href="#super-agents">Super AgentsとOffice Trio</a></li>
+        <li><a href="#features">Deep Research・Clarification Cardほか</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Perplexity・Genspark・Gamma・Manusとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Skyworkは<strong>Deep Research（深い調査）＋RAG的な情報参照</strong>を前面に出すサービスです。生成AIパスポートでは「RAGを入れれば必ず最新で正確（×）」「自然な文章＝事実に基づく（×）」といった問題と直結します。Skyworkの<strong>Source Tracing（出典トレース）</strong>は検証を<strong>しやすくする</strong>機能であり、検証を<strong>不要にする</strong>機能ではありません。
+      </p>
+      <p>
+        また<strong>Clarification Card</strong>——実行前に目的・制約を穴埋め・選択式で確認するUI——は、試験の「エージェントには目的・制約・停止条件を与える（TF-0281）」を製品実装で示した例として覚えるとよいです。Skyworkは「Super Agents」と名乗りますが、試験では<strong>サービス名と概念（AIエージェント・RAG）</strong>を混同しないことが重要です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0227/">一問一答 TF-0227（RAGと正確性）</a>、<a href="../../exams/genai-passport/drill/q/tf-0202/">TF-0202（生成文の事実確認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0256/">TF-0256（断定的表現と誤り）</a>、<a href="../../exams/genai-passport/drill/q/tf-0281/">TF-0281（自律性と制約指定）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/rag/">RAG</a> · <a href="../../glossary/agent/">AIエージェント</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Skyworkとは</h2>
+      <p>
+        Skyworkは、公式プレスリリース（2025年5月22日）で<strong>「AI-Powered Office Suite built on Deep Research」</strong>と位置づけられています。昆仑万维（Kunlun Tech）傘下のSkywork AIが、<strong>調査からOffice成果物まで</strong>を一気通貫で扱うワークスペースとして展開しています。
+      </p>
+      <p>
+        他の生成AIとの決定的な違いは<strong>出力フォーマットファースト</strong>である点です。チャットの中にMarkdownを流すのではなく、<strong>レポート本体・PPTX・XLS</strong>としてエクスポート可能な状態を目指します。2025年5月時点の公式発表では、Deep Researchエージェントが<strong>GAIAベンチマークで82.42点</strong>を記録したと報じられています（2025年5月10日時点のリーダーボード参照・第三者ベンチマークのため、最新順位は変動し得ます）。
+      </p>
+      <p>
+        開発者向けには、Deep Researchエージェントフレームワークを<strong>Hugging Face上でオープンソース公開</strong>（DeepResearchAgent）しており、MCP連携も提供されています。試験ではSkyworkを「調査だけの検索AI」ではなく、<strong>調査＋Office成果物＋（限定的な）エージェント設計</strong>の複合サービスとして整理するとよいです。
+      </p>
+    </section>
+
+    <section id="super-agents">
+      <h2>Super AgentsとOffice Trio</h2>
+      <p>
+        Skywork Super Agentsは、公式には<strong>5つのExpert Agent</strong>と<strong>1つのGeneral Agent</strong>で構成されます。試験・実務の両方で押さえるべきは、次の<strong>Office Trio</strong>です。
+      </p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Documents（資料）</h3>
+          <p>業界調査・競合分析・論文調・事業計画など。Deep Research＋グラフ・表の可視化。出典トレース付き（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Slides（スライド）</h3>
+          <p>調査結果からPPTX/PDF出力。オンライン編集対応。各スライドのファクトにソース紐づけ（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Sheets（表計算）</h3>
+          <p>アップロードCSVの統計分析・相関・可視化。テンプレ表・サマリー表の生成。XLSエクスポート（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Webpages（Webページ）</h3>
+          <p>LP・ブログ・情報サイトなどをコード不要で生成。デジタル施策向け（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Podcasts（音声）</h3>
+          <p>短い指示から脚本→音声合成。2025年時点は英語中心、他言語は順次（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>General Agent</h3>
+          <p>画像・動画・音楽などマルチモーダル生成。MCP（Multimodal Creative Processors）統合（公式）。</p>
+        </div>
+      </div>
+      <p>
+        公式キャッチコピーは「<strong>8時間の仕事を8分で</strong>」——資料・スライド・表の<strong>たたき台</strong>を一気に作る用途を想定しています。完成品としてそのまま提出するのではなく、<strong>編集可能なドラフト</strong>として人が仕上げる前提で理解してください。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Deep Research・Clarification Cardほか</h2>
+
+      <h3>Deep Researchエンジン</h3>
+      <p>
+        Skyworkは自社開発のDeep Researchモデルで、広範なWebソースから情報を集め、推論・可視化まで行います（公式）。OpenAI Deep Researchと同等級の調査性能を<strong>約40%のコスト</strong>で、と公式プレスで訴求されています。SimpleQAでも高スコアが報告されていますが、ベンチマークはタスク設計により変動するため、<strong>実案件では必ず出典を人が確認</strong>してください。
+      </p>
+
+      <h3>Clarification Card（要件確認）</h3>
+      <p>
+        業界の「曖昧プロンプトをそのまま実行して外れる」問題に対し、Skyworkは実行前に<strong>Clarification Card</strong>で目的・文脈・制約を質問し、<strong>To-do list</strong>をユーザーとすり合わせてから生成を開始します（公式）。ManusやOperatorが自律実行に寄せるのに対し、Skyworkは<strong>Office成果物の精度を要件定義で担保</strong>する設計思想が強いです。
+      </p>
+
+      <h3>Source Tracing（出典トレース）</h3>
+      <p>
+        Docs・Slides・Sheetsの各要素に参照元を紐づけ、クリックで原文コンテキストを確認できます（公式）。APA/MLA形式の引用を意識した学術・コンサル用途を想定しています。ただしこれはTF-0227が問うとおり、<strong>参照元そのものが誤っていれば出力も誤る</strong>——検索品質管理は利用者側の責任です。
+      </p>
+
+      <h3>Personal Knowledge Base</h3>
+      <p>
+        PDF・DOC・PPT・XLS・音声・URLなどを<strong>ナレッジベース</strong>（1ベース最大50ファイル、複数ベース可）に登録し、Docs/Slides/Sheets生成の入力に使えます（公式）。NotebookLMに近い「自分の資料を起点にする」ワークフローです。社内機密をアップロードする前に、利用規約とデータ保持ポリシーを確認してください。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        最大の誤解は「<strong>Skywork＝Perplexityの上位版</strong>」です。Perplexityは<strong>出典付きQ&A・調査回答</strong>が中心、Skyworkは<strong>Officeファイルとして仕上げる</strong>ことが中心です。調査だけならPerplexity、PPTX/XLSまで欲しいならSkywork——という使い分けが試験・実務ともに有効です。
+      </p>
+      <p>
+        「<strong>GAIA 1位＝実務でも常に最正</strong>」も危険です。ベンチマークは特定タスク集合でのスコアであり、社内固有データ・最新ニュース・ニッチ業界では別結果になり得ます。数値は<strong>2025年5月時点の公式発表</strong>として覚え、最新順位はHugging Face GAIAリーダーボード等で確認してください。
+      </p>
+      <p>
+        「<strong>Skywork＝Manus</strong>」も混同されがちです。Manusは<strong>ブラウザ操作込みの自律タスク完遂</strong>、Skyworkは<strong>調査資料のOffice化</strong>が主戦場です。ECサイトでの購入操作自動化を期待するならManus、市場調査レポート＋スライドを8分でたたくならSkywork——と整理すると誤解が減ります。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>
+        Skyworkは<strong>クレジット制</strong>です。タスクの種類（Deep Research・スライド枚数・動画生成など）で消費量が変わります。以下は<strong>2026年6月時点</strong>の第三者解説・公式Pricing画面の公表例に基づく<strong>目安</strong>です。契約前に必ず<a href="https://skywork.ai/pricing" target="_blank" rel="noopener noreferrer">公式Pricing</a>で再確認してください。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">クレジット付与（上限は時期により変動）</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Pro（月払い）</p>
+          <p class="tool-plan-price">約$17〜$20/月</p>
+          <p class="tool-plan-note">月7,000クレジット前後（公表例）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro（年払い）</p>
+          <p class="tool-plan-price">約$150/年</p>
+          <p class="tool-plan-note">月払い比で割安（公表例）</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>目安（2026年6月時点）</th>
+            <th>向く用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free</strong></td>
+            <td><strong>$0</strong>・初期は日次クレジット、以降は週次付与など（変動あり）</td>
+            <td>Super Agentsのお試し・短い資料1本</td>
+          </tr>
+          <tr>
+            <td><strong>Pro Monthly</strong></td>
+            <td>約<strong>$16.99〜$19.99/月</strong>・月<strong>7,000クレジット</strong>前後</td>
+            <td>フリーランス・月数本の調査レポート</td>
+          </tr>
+          <tr>
+            <td><strong>Pro Annual</strong></td>
+            <td>約<strong>$149.99/年</strong>（月あたり約$12.50）</td>
+            <td>継続的なSlides/Sheets利用</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td><strong>要問合せ</strong>・SOC 2・学習不使用ポリシー等</td>
+            <td>規制業種・チーム利用</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Deep Research付きの長い業界レポートは<strong>1本で数百クレジット</strong>級になる例も報告されています。Free枠だけでは「週1本の本格調査」が上限に達しやすい点に注意してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>2025年5月以降、招待コードなしで skywork.ai から登録可能です（公式）。精度を上げる基本フローは次のとおりです。</p>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>アカウント作成</strong>
+            skywork.ai からサインアップ。Workspaceにプロジェクトを作成します。
+          </li>
+          <li>
+            <strong>Super Agentを選択</strong>
+            成果物の型（Documents / Slides / Sheets 等）を選びます。Office Trioから始めると迷いにくいです。
+          </li>
+          <li>
+            <strong>Clarification Cardで要件確定</strong>
+            目的・対象市場・期間・除外条件・引用形式などを回答し、To-do listを確認します。
+          </li>
+          <li>
+            <strong>ナレッジベースを追加（任意）</strong>
+            社内PDFやCSVをアップロードする場合は、機密区分を確認したうえで登録します。
+          </li>
+          <li>
+            <strong>生成・Source Tracingで検証</strong>
+            出典リンクから原文を確認。グラフの数値は特にダブルチェックします。
+          </li>
+          <li>
+            <strong>エクスポート・仕上げ</strong>
+            PPTX/XLS/PDFでダウンロードし、社内テンプレ・ブランドガイドに合わせて編集します。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/skywork/og-hero.jpg" alt="Skywork Super Agentsのワークスペースイメージ" width="600" height="338" loading="lazy">
+            <figcaption>出典：Skywork公式</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>市場・競合調査</h3>
+          <ul>
+            <li>業界レポート（Documents）＋エグゼクティブサマリー</li>
+            <li>競合Pricingの表形式整理（Sheets）</li>
+            <li>投資家向けスライドの初稿（Slides）</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>営業・マーケ</h3>
+          <ul>
+            <li>地域別観光・製品の提案デッキ</li>
+            <li>キャンペーンLPのWebpages生成</li>
+            <li>ポッドキャスト脚本＋音声の試作</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>分析・企画</h3>
+          <ul>
+            <li>CSV売上データの四半期分析</li>
+            <li>割引と販売量の相関可視化</li>
+            <li>社内ナレッジベースからのFAQ資料</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        いずれも<strong>社外提出前に人がファクトチェック</strong>してください。特に金融・医療・法務領域では、Skyworkの出典トレースは出発点に過ぎません。
+      </p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>調査からPPTX/XLSまでOffice形式で一気通貫</td>
+            <td>クレジット消費が読みにくく、重い調査はすぐ上限</td>
+          </tr>
+          <tr>
+            <td>Source Tracingで引用確認がしやすい</td>
+            <td>参照元の誤り・古さは自動では防げない</td>
+          </tr>
+          <tr>
+            <td>Clarification Cardで要件すり合わせから開始</td>
+            <td>ブラウザ操作型タスク（予約完遂等）には向かない</td>
+          </tr>
+          <tr>
+            <td>Deep ResearchフレームワークがOSS公開</td>
+            <td>Enterprise以外はデータ所在・学習利用を要確認</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Perplexity・Genspark・Gamma・Manusとの比較</h2>
+      <p>「調べる」「資料化する」「動く」を分けると、ツール選定が試験でも実務でも整理しやすくなります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Skywork</th>
+            <th>Perplexity</th>
+            <th>Genspark</th>
+            <th>Gamma</th>
+            <th>Manus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>主戦場</td>
+            <td>Deep Research＋Office Trio</td>
+            <td>出典付きWeb調査</td>
+            <td>検索＋多機能ワークスペース</td>
+            <td>スライド・資料特化</td>
+            <td>自律ブラウザエージェント</td>
+          </tr>
+          <tr>
+            <td>成果物</td>
+            <td>Docs/Slides/Sheets/PPTX/XLS</td>
+            <td>回答・レポート風テキスト</td>
+            <td>スライド・動画・サイト等</td>
+            <td>プレゼン・Webページ</td>
+            <td>調査・資料・Webアプリ試作</td>
+          </tr>
+          <tr>
+            <td>出典</td>
+            <td>Source Tracing（要素単位）</td>
+            <td>脚注・リンク中心</td>
+            <td>ファクトチェックツールあり</td>
+            <td>限定的</td>
+            <td>スクリーンショット・引用混在</td>
+          </tr>
+          <tr>
+            <td>実行前確認</td>
+            <td>Clarification Card</td>
+            <td>プロンプト中心</td>
+            <td>エージェント依存</td>
+            <td>テンプレ・プロンプト</td>
+            <td>タスクブリーフ・Take Over</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>調査＋Office成果物の例</td>
+            <td>RAG・検索AIの代表</td>
+            <td>複合ワークスペースの例</td>
+            <td>資料生成特化の例</td>
+            <td>汎用エージェントの例</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        深い調査だけなら<a href="../perplexity/">Perplexity</a>、スライドだけ美しく作るなら<a href="../gamma/">Gamma</a>、検索から動画まで幅広く試すなら<a href="../genspark/">Genspark</a>、Web操作で完遂させるなら<a href="../manus/">Manus</a>——<strong>Skyworkは「調査レポートをOfficeファイルで渡す」中間</strong>に位置づけると迷いにくいです。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>市場調査からPPTX・XLSまで一気にたたき台が欲しいコンサル・企画職</strong></li>
+        <li><strong>生成AIパスポートで「RAG＋成果物化」を具体例で学びたい受験生</strong></li>
+        <li><strong>引用・出典が必要なレポート・スライドを量産したい研究者・学生</strong></li>
+        <li><strong>Perplexityで調べた内容をOffice形式に仕上げたい人</strong></li>
+      </ul>
+      <p>
+        向いていないのは、<strong>ECサイトでの購入操作を自動完遂したい</strong>場合（Manus・Operator向き）、<strong>社内機密を外部クラウドに載せられない</strong>場合、<strong>チャットだけサクッと答えが欲しい</strong>場合です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Skyworkは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。無料枠（クレジット制）で試せます（2026年6月時点）。ただしDeep Research付きの資料・スライド生成はクレジット消費が大きく、継続利用はProプランが現実的です。最新の無料上限は公式Pricingで確認してください。</p>
+        </details>
+        <details>
+          <summary>SkyworkとPerplexityの違いは何ですか？</summary>
+          <p class="tool-faq-a">Perplexityは出典付きのWeb調査・Q&Aが中心です。Skyworkは調査結果をDocs/Slides/SheetsなどOffice形式の成果物に仕上げる「AIオフィスエージェント」です。調査だけならPerplexity、レポートやPPTXまで届けたいならSkyworkという棲み分けが一般的です。</p>
+        </details>
+        <details>
+          <summary>SkyworkとGensparkは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。どちらもAIワークスペースですが、SkyworkはOffice TrioとDeep Research・出典トレースを前面に、GensparkはSparkpages由来の検索＋動画・画像など幅広い生成を訴求しています。試験では別サービスとして整理してください。</p>
+        </details>
+        <details>
+          <summary>出典付きだから検証不要、という理解でよいですか？</summary>
+          <p class="tool-faq-a">いいえ。SkyworkはSource Tracing（出典トレース）を提供しますが、参照元の誤り・古さ・抜けは起こり得ます。生成AIパスポートでもRAG導入だけでは必ず正確になるわけではない（×）と問われます。重要な数値・引用は人が一次情報で確認してください。</p>
+        </details>
+        <details>
+          <summary>ManusとSkyworkはどちらを選べばよいですか？</summary>
+          <p class="tool-faq-a">Manusはクラウドサンドボックスでブラウザ操作込みの自律タスク完遂、SkyworkはOffice形式の調査資料を高速に仕上げることに特化、という整理が分かりやすいです。Webサイト操作の自動化ならManus、コンサル品質のレポート・PPTXならSkywork——用途で選びます。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://skywork.ai" target="_blank" rel="noopener noreferrer">Skywork</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://skywork.ai/pricing" target="_blank" rel="noopener noreferrer">料金（Pricing）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/SkyworkAI/DeepResearchAgent" target="_blank" rel="noopener noreferrer">DeepResearchAgent（OSS）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://openai.com/index/introducing-deep-research/" target="_blank" rel="noopener noreferrer">OpenAI Deep Research（比較参照）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../perplexity/"><img src="../../assets/images/tools/perplexity/app-icon.png" alt="" width="16" height="16"> Perplexity</a></li>
+          <li><a href="../genspark/"><img src="../../assets/images/tools/genspark/app-icon.png" alt="" width="16" height="16"> Genspark</a></li>
+          <li><a href="../gamma/"><img src="../../assets/images/tools/gamma/app-icon.png" alt="" width="16" height="16"> Gamma</a></li>
+          <li><a href="../manus/"><img src="../../assets/images/tools/manus/app-icon.png" alt="" width="16" height="16"> Manus</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/rag/">RAG</a></li>
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/semantic-search/">セマンティック検索</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

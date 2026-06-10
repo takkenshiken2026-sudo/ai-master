@@ -959,6 +959,7 @@ const TOOLS = [
     logo: "skywork.png",
     cat: "research",
     catLabel: "検索・リサーチ",
+    article: true,
     tagline: "単一指示から資料・スライド・表計算・Webページ・音声原稿の5種類を同時生成",
     url: "https://skywork.ai",
   },
