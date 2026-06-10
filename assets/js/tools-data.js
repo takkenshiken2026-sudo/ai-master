@@ -805,6 +805,7 @@ const TOOLS = [
     logo: "google.svg",
     cat: "productivity",
     catLabel: "仕事効率化・資料・翻訳",
+    article: true,
     tagline: "GoogleドキュメントやGmailに統合されたAI",
     url: "https://workspace.google.com/solutions/ai/",
   },

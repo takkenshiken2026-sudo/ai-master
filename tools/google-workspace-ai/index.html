@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Google Workspace AIの機能・料金・使い方を解説。StarterとStandardのAI断層、サイドパネル・NotebookLM・Studio、Gemini個人版との違い、M365 Copilotとの比較まで。生成AIパスポート対策にも。">
+  <title>Google Workspace AIとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/google-workspace-ai/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Google Workspace AIとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Starter/StandardのAI断層、五層スタック（Gemini・Side panel・NotebookLM・Studio）、Workspace IntelligenceとGemini Enterpriseを2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/google-workspace-ai/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/google-workspace-ai/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/google-workspace-ai/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/google-workspace-ai/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Google Workspace AI", "item": "https://ai-master.jp/tools/google-workspace-ai/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/google-workspace-ai/#article",
+        "headline": "Google Workspace AIとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Starter/StandardのAI断層、五層スタック（Gemini・Side panel・NotebookLM・Studio）、Workspace IntelligenceとGemini Enterpriseを2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/google-workspace-ai/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/google-workspace-ai/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/google-workspace-ai/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Google Workspace AI" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/google-workspace-ai/#webpage",
+        "url": "https://ai-master.jp/tools/google-workspace-ai/",
+        "name": "Google Workspace AIとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Starter/StandardのAI断層、五層スタック（Gemini・Side panel・NotebookLM・Studio）、Workspace IntelligenceとGemini Enterpriseを2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/google-workspace-ai/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Google Workspace AI",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, Windows, macOS, iOS, Android",
+        "description": "Google Workspace（Gmail・Docs・Sheets・Meet等）に統合されたGeminiベースの法人向けAI機能群。",
+        "offers": {
+          "@type": "Offer",
+          "price": "7",
+          "priceCurrency": "USD",
+          "description": "Business Starter $7/ユーザー/月〜（Gmail+Gemini app）。全アプリAIはBusiness Standard $14/ユーザー/月〜（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Google",
+          "url": "https://www.google.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Google Workspace AIと無料のGeminiの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "無料Geminiは個人Googleアカウント向けのチャットAIです。Google Workspace AIは法人ドメインメール・Drive・管理者制御の下で、Gmail/Docs/Meet等のサイドパネルにGeminiが埋め込まれる業務向け機能群です。データ取り扱いと利用上限もプランごとに異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Business StarterでもDocsやSheetsでGeminiは使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2026年6月時点の公式Pricingでは、StarterはGmail内のGemini AI assistantとGemini appが中心で、Docs・Meet等へのPremium built-in AI（サイドパネル）はBusiness Standard以上に含まれます。契約前にプラン表を必ず確認してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Google Workspace AIは社内データを学習に使いますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Google公式は、Workspace with Gemini利用時、会社データをGeminiモデルの学習や広告ターゲティングに使用しないと明記しています。Geminiはユーザーがアクセス権を持つコンテンツのみ参照します（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Google Workspace AIとMicrosoft 365 Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "M365 CopilotはWord/Excel/TeamsとMicrosoft Graph上のメール・SharePointを前提にします。Google Workspace AIはGmail/Docs/Drive/Meet中心でGoogleエコシステムに接地します。組織の基盤SaaSがMicrosoftかGoogleかで選び分けるのが現実的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Duet AIとGoogle Workspace AIの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Duet AIは2023〜2024年にGoogle Workspace向けAIとして案内されていた旧ブランド名です。2024年以降Geminiブランドに統合され、2026年時点ではWorkspace Intelligence・Gemini in Workspaceとして提供されています。試験では「Google Workspace内蔵AI＝Gemini系」と理解すれば足ります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Google Workspace AI</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/google-workspace-ai/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Google · 仕事効率化</p>
+          <h1>Google Workspace AIとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">Gmail・Docs・Meetのサイドパネルで動く、Google版「業務データ接地型AI」</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Side panel</span>
+        <span class="tool-category">NotebookLM</span>
+        <span class="tool-category">Workspace Intelligence</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Gmail · Docs · Sheets · Slides</li>
+          <li>Drive · Meet · Chat · Vids</li>
+          <li>Google Admin console</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/google-workspace-ai/og-hero.png" alt="Google Workspace AIの公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Google公式（workspace.google.com/solutions/ai）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Google Workspace AI</strong>（グーグル・ワークスペース・エーアイ）は、<strong>Google</strong>が<strong>Google Workspace</strong>（Gmail・Docs・Sheets・Meet等）に統合した<strong>Geminiベースの法人向けAI</strong>機能群です。旧称<strong>Duet AI</strong>（デュエット・エーアイ）から改称・統合され、2026年時点では<strong>Workspace Intelligence</strong>ブランドで展開されています。本記事は機能名の暗記ではなく、<strong>Business StarterとStandardの「AI断層」</strong>、<strong>五層スタック</strong>（Gemini app / Side panel / NotebookLM / Studio / Meet+Vids）、<a href="../gemini/">Gemini</a>個人版との違い、<a href="../microsoft-365-copilot/">Microsoft 365 Copilot</a>とのプラットフォーム対比に絞って書いています。料金・機能は<strong>2026年6月時点</strong>のGoogle公式に基づき、契約前に必ず再確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Google Workspace AIとは</a></li>
+        <li><a href="#starter-gap">StarterとStandardのAI断層</a></li>
+        <li><a href="#five-pillars">五層スタックの整理</a></li>
+        <li><a href="#side-panel">サイドパネルでできること</a></li>
+        <li><a href="#workspace-intelligence">Workspace IntelligenceとGemini Enterprise</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン</a></li>
+        <li><a href="#how-to">使い方・有効化</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">M365 Copilot・Notion AI・Geminiとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、Google製AIは<strong>TF-0143</strong>（主要生成AI支援）の文脈で登場します。押さえるべきは次の3点です。
+      </p>
+      <ul>
+        <li><strong>Gemini（個人）≠ Google Workspace AI（法人）</strong> — 同じGeminiモデル系でも、契約・管理者制御・データ境界が異なる</li>
+        <li><strong>Duet AIは旧名称</strong> — 2024年以降Gemini in Workspaceへ。試験では「Google Workspace内蔵AI」と理解</li>
+        <li><strong>業務データは組織ルール下で</strong> — 個人無料Geminiに社内資料を入れない（TF-0289・TF-0350）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0143/">一問一答 TF-0143（Googleと生成AI）</a>、<a href="../../exams/genai-passport/drill/q/tf-0201/">TF-0201（テキスト生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0350/">TF-0350（公開前の確認事項）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：<a href="../gemini/">Gemini</a> · <a href="../notebooklm/">NotebookLM</a> · <a href="../microsoft-365-copilot/">Microsoft 365 Copilot</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Google Workspace AIとは</h2>
+      <p>
+        Google Workspace AIは、法人向けGoogle Workspace契約の中で提供されるAI機能の総称です。2023年に<strong>Duet AI for Google Workspace</strong>として発表され、2024年に<strong>Gemini</strong>ブランドへ統合。2026年公式サイトでは<strong>Workspace Intelligence</strong>——「仕事の文脈に根ざしたパーソナライズAI」——として位置づけられています（workspace.google.com/solutions/ai）。
+      </p>
+      <p>
+        技術的には、ユーザーがアクセス権を持つ<strong>Gmail・Drive・Docs等のコンテンツ</strong>を文脈としてGeminiモデルが回答・生成する<strong>業務データ接地型AI</strong>です。Microsoft 365 CopilotのGraph接地と対照的に、Googleは<strong>Workspaceアプリ内サイドパネル</strong>からタブを切り替えずにAIを呼び出すUXが強みです。
+      </p>
+      <p>
+        Google公式は、Workspace with Gemini利用時<strong>会社データをGeminiモデル学習や広告に使用しない</strong>と明記。ISO 42001・SOC等の認証、HIPAA対応支援も案内されています（Privacy Hub）。
+      </p>
+    </section>
+
+    <section id="starter-gap">
+      <h2>StarterとStandardのAI断層</h2>
+      <p>
+        本記事のオリジナリティは、この<strong>プラン断層表</strong>です。Google Workspace AIを検討する組織で最も起きやすいミスは、「Workspaceを契約したからDocsでもGeminiが使えるはず」と思い込むことです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>AI機能</th>
+            <th>Business Starter<br><small>$7/ユーザー/月（年払い）</small></th>
+            <th>Business Standard<br><small>$14/ユーザー/月（年払い）</small></th>
+            <th>Business Plus / Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Gemini app（チャット）</strong></td>
+            <td>○</td>
+            <td>○（拡張モデル・アクセス）</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Gemini in Gmail</strong></td>
+            <td>○</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Side panel（Docs/Sheets/Slides/Drive）</strong></td>
+            <td>—</td>
+            <td>○ Premium built-in AI</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Gemini in Meet</strong>（AI notetaking等）</td>
+            <td>—</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>NotebookLM</strong>（拡張機能）</td>
+            <td>—</td>
+            <td>○ expanded access</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Google Vids</strong></td>
+            <td>○</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Studio</strong>（AIワークフロー）</td>
+            <td>—</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Gemini Enterprise</strong>（エージェント）</td>
+            <td>—</td>
+            <td>—</td>
+            <td>EnterpriseでContact sales</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        試験より調達ですが、<strong>Starterは「Gmail＋Gemini app＋Vids」</strong>、<strong>Standard以上で初めて「Docs/Meet/NotebookLM/Studioの本格AI」</strong>——この差を見落とすと、導入後に「DocsにGeminiアイコンがない」と情シスに問い合わせが殺到します。
+      </p>
+    </section>
+
+    <section id="five-pillars">
+      <h2>五層スタックの整理</h2>
+      <p>Google Workspace AIは単一のチャットボットではなく、次の五層で構成されます（2026年6月時点）。</p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>① Gemini app</h3>
+          <p>gemini.google.com相当の法人向けチャット。Deep Research、Web検索、業務ファイル参照（プラン依存）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>② Side panel</h3>
+          <p>Gmail/Docs/Sheets/Slides/Drive/Chat右側の「Ask Gemini」。編集中ドキュメント文脈で生成・要約。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>③ NotebookLM</h3>
+          <p>社内ファイルをソースにした研究・Audio Overview。Workspace Standard以上で拡張アクセス（<a href="../notebooklm/">NotebookLM記事</a>参照）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>④ Studio</h3>
+          <p>Workspaceアプリ横断のAIワークフロー自動化。定例ブリーフィング、会議準備ルーティン等。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>⑤ Meet + Vids</h3>
+          <p>Meet：AI notetaking、翻訳字幕、ノイズキャンセル。Vids：AI動画作成・編集。</p>
+        </div>
+      </div>
+
+      <p>
+        <a href="../gemini/">Gemini個人版</a>記事が「チャットAI本体」、本記事が「Workspaceに埋め込まれたAI群」、<a href="../notebooklm/">NotebookLM</a>記事が「ソース研究特化」——三記事でGoogle AIの地図が完成します。
+      </p>
+    </section>
+
+    <section id="side-panel">
+      <h2>サイドパネルでできること</h2>
+      <p>Google Workspace Learning Centerに基づく、Side panel（Ask Gemini）の代表機能です（Business Standard以上）。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>アプリ</th>
+            <th>代表機能</th>
+            <th>プロンプト例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Gmail</strong></td>
+            <td>スレッド要約、返信下書き、Help me write（地域によりUI変更）</td>
+            <td>「このスレッドの要点と返信案を」</td>
+          </tr>
+          <tr>
+            <td><strong>Docs</strong></td>
+            <td>Help me write、要約、画像生成、パーソナライズ文書</td>
+            <td>「キャンペーンBriefのたたき台を」</td>
+          </tr>
+          <tr>
+            <td><strong>Sheets</strong></td>
+            <td>表要約、数式・表生成、Sheet builder</td>
+            <td>「この売上データを四半期別に集計して」</td>
+          </tr>
+          <tr>
+            <td><strong>Slides</strong></td>
+            <td>スライド生成、画像生成、プレゼン要約</td>
+            <td>「Docの内容から5枚のスライドを」</td>
+          </tr>
+          <tr>
+            <td><strong>Drive</strong></td>
+            <td>ファイル内容へのQ&amp;A、AI Overview</td>
+            <td>「このフォルダの契約書から更新日を一覧」</td>
+          </tr>
+          <tr>
+            <td><strong>Meet</strong></td>
+            <td>会議中・会議後の要約、ノート、翻訳字幕</td>
+            <td>（UIからTake notes for me等）</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Side panelの強みは<strong>「今開いているファイルがプロンプトの文脈」</strong>になる点です。汎用ChatGPTにDoc全文をコピペするより、権限境界内で済むため、Enterprise導入説明で説得しやすいです。
+      </p>
+    </section>
+
+    <section id="workspace-intelligence">
+      <h2>Workspace IntelligenceとGemini Enterprise</h2>
+      <p>
+        2026年公式は、Workspace AIを<strong>Workspace Intelligence</strong>として再定義し、Standardプラン以上で「Premium built-in AI」「Data confidentiality（学習・広告不使用）」を強調しています。
+      </p>
+      <p>
+        大規模組織向けは<strong>Gemini Enterprise</strong>（Enterpriseプラン／Contact sales）——Google製・パートナー製・カスタムエージェントの構築・デプロイ、M365/Salesforce/SAP/Jira等への<strong>クロスプラットフォーム連携</strong>、エージェントガバナンス、データレジデンシー——が追加されます。これはStandard同梱AIの延長ではなく、<strong>エージェント基盤レイヤー</strong>として位置づけられます。
+      </p>
+      <p>
+        またEnterpriseでは<strong>AI Classification for Google Drive</strong>——組織独自モデルで機密ファイルにラベル付け——など、セキュリティ側AIも拡充されています（Google Admin Help）。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        「<strong>Workspace AI＝無料Gemini</strong>」——個人アカウントのGeminiはGoogle One / Google AIプランの枠組み。Workspaceは法人ドメイン・Admin制御・DLPが別系統です。
+      </p>
+      <p>
+        「<strong>StarterでDocsにもGemini</strong>」——2026年6月公式PricingではStandard以上。StarterはGmail中心（上表参照）。
+      </p>
+      <p>
+        「<strong>NotebookLM＝Workspace AIそのもの</strong>」——NotebookLMは五層の一つ。全社Docs AIとは別機能として<a href="../notebooklm/">NotebookLM記事</a>で整理済みです。
+      </p>
+      <p>
+        「<strong>Duet AIは別製品</strong>」——旧ブランド名。現在はGemini in Workspace / Workspace Intelligenceへ統合済み。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン</h2>
+      <p>以下はworkspace.google.com/pricingの<strong>2026年6月時点</strong>USD目安（年払い・1ユーザーあたり）。プロモーション価格は除外し、標準値を記載します。</p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Business Starter</p>
+          <p class="tool-plan-price">$7/月</p>
+          <p class="tool-plan-note">Gmail Gemini + Gemini app</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Business Standard</p>
+          <p class="tool-plan-price">$14/月</p>
+          <p class="tool-plan-note">全アプリAI・NotebookLM</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Business Plus</p>
+          <p class="tool-plan-price">$22/月</p>
+          <p class="tool-plan-note">Vault・500人Meet等</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise</p>
+          <p class="tool-plan-price">要問合せ</p>
+          <p class="tool-plan-note">Gemini Enterprise</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額（年払い）</th>
+            <th>ストレージ</th>
+            <th>AIの位置づけ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Starter</strong></td>
+            <td>$7</td>
+            <td>30 GB/ユーザー</td>
+            <td>Gmail + Gemini app + Vids。Docs Side panelは×</td>
+          </tr>
+          <tr>
+            <td><strong>Standard</strong></td>
+            <td>$14</td>
+            <td>2 TB/ユーザー</td>
+            <td>Premium built-in AI、NotebookLM、Studio、Meet AI</td>
+          </tr>
+          <tr>
+            <td><strong>Plus</strong></td>
+            <td>$22</td>
+            <td>5 TB/ユーザー</td>
+            <td>Standard AI + Vault/eDiscovery等</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>要問合せ</td>
+            <td>5 TB〜</td>
+            <td>Gemini Enterpriseエージェント、DLP、データレジデンシー</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        月払い（Flexible Plan）ではStarter $8.40、Standard $16.80、Plus $26.40が目安です。日本円表示・Education/Nonprofitは別途。AI Expanded Access等のアドオンはpricingページのAdd-onsを確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>使い方・有効化</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>プランを確認する</strong>
+            Side panelが必要ならBusiness Standard以上か確認。Starterのみの組織はアップグレード検討。
+          </li>
+          <li>
+            <strong>管理者がGeminiを有効化</strong>
+            Google Admin console → Apps → Google Workspace → Gemini（またはAccount settings）で機能トグルをON。
+          </li>
+          <li>
+            <strong>ユーザーがSide panelを開く</strong>
+            Gmail/Docs等右上の「Ask Gemini」または✨アイコンからSide panelを起動。
+          </li>
+          <li>
+            <strong>文脈付きプロンプトを入力</strong>
+            開いているDocやスレッドを踏まえた指示を入力。出力は必ず人が確認。
+          </li>
+          <li>
+            <strong>NotebookLM / Meet AIを必要に応じて</strong>
+            研究用途はNotebookLM、会議はMeetのTake notes for me等を併用。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/google-workspace-ai/og-hero.png" alt="Google Workspace AIの公式プロモーション" width="600" height="338" loading="lazy">
+            <figcaption>出典：Google公式（workspace.google.com/solutions/ai）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>営業・CS</h3>
+          <ul>
+            <li>Gmail Side panelで顧客スレッド要約・返信下書き</li>
+            <li>Meet AI notetakingで商談メモ→Docs共有</li>
+            <li>NotebookLMで提案資料・過去案件を横断研究</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>マーケ・企画</h3>
+          <ul>
+            <li>Docs Help me writeでキャンペーンBrief</li>
+            <li>Slides AIでプレゼン初稿</li>
+            <li>Vidsで製品紹介動画のたたき台</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>バックオフィス</h3>
+          <ul>
+            <li>Sheets AIで経費・売上データ分析</li>
+            <li>Drive Q&amp;Aで規程・契約書検索</li>
+            <li>Studioで週次レポート自動化</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>情シス・管理</h3>
+          <ul>
+            <li>Admin consoleでGemini機能のグループ別ON/OFF</li>
+            <li>DLP + AI Classificationで機密ラベル</li>
+            <li>Gemini Enterpriseで部門別エージェントPilot</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gmail/Docs/Meet内Side panel——タブ切替不要</td>
+            <td>StarterはGmail中心でDocs AIなし</td>
+          </tr>
+          <tr>
+            <td>Standard以上はNotebookLM・Studio同梱</td>
+            <td>Microsoft中心組織には効きにくい</td>
+          </tr>
+          <tr>
+            <td>会社データを学習・広告に不使用（公式）</td>
+            <td>機能・UIは地域・プランで差（Gmail inline AI等）</td>
+          </tr>
+          <tr>
+            <td>既存Workspace契約の延長で導入しやすい</td>
+            <td>Gemini EnterpriseはEnterpriseのみ</td>
+          </tr>
+          <tr>
+            <td>ISO 42001等のAIセキュリティ認証</td>
+            <td>出力の正確性は保証されず人間確認必須</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>M365 Copilot・Notion AI・Geminiとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>Google Workspace AI</th>
+            <th><a href="../microsoft-365-copilot/">M365 Copilot</a></th>
+            <th><a href="../notion-ai/">Notion AI</a></th>
+            <th><a href="../gemini/">Gemini（個人）</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>前提環境</td>
+            <td>Google Workspace</td>
+            <td>Microsoft 365</td>
+            <td>Notion</td>
+            <td>Google個人アカウント</td>
+          </tr>
+          <tr>
+            <td>UIの中心</td>
+            <td>Side panel（Docs/Gmail等）</td>
+            <td>Word/Excel/Teams内</td>
+            <td>Notionページ内</td>
+            <td>gemini.google.com</td>
+          </tr>
+          <tr>
+            <td>データ接地</td>
+            <td>Drive/Gmail/Meet</td>
+            <td>Microsoft Graph</td>
+            <td>Notion＋連携アプリ</td>
+            <td>個人データ（限定）</td>
+          </tr>
+          <tr>
+            <td>料金目安</td>
+            <td>Standard $14/人〜</td>
+            <td>M365＋$21〜$30/人</td>
+            <td>Business $20/人〜</td>
+            <td>無料〜Google AI Pro</td>
+          </tr>
+          <tr>
+            <td>研究特化</td>
+            <td>NotebookLM（同梱）</td>
+            <td>Copilot Notebooks等</td>
+            <td>Enterprise Search</td>
+            <td>Deep Research（個人）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        プラットフォーム追随型の選び方——Google組織なら本記事、Microsoft組織なら<a href="../microsoft-365-copilot/">M365 Copilot</a>、Notion中心なら<a href="../notion-ai/">Notion AI</a>——が2026年6月時点の現実解です。個人学習は<a href="../gemini/">Gemini</a>、社内本番はWorkspace AI、と役割分担すると混乱しにくいです。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>すでにGoogle Workspace（Standard以上）を全社利用している組織</strong></li>
+        <li><strong>Gmail/Docs/Meet内で完結するAI支援を求めるチーム</strong></li>
+        <li><strong>NotebookLMで社内資料研究もセットで使いたいEnterprise</strong></li>
+        <li><strong>試験で「Google Workspace内蔵AI」「Duet AI旧称」を整理したい学習者</strong></li>
+      </ul>
+      <p>
+        あえて向いていないのは、<strong>StarterだけでDocs AIを期待</strong>するケース、<strong>Microsoft 365/Teamsが主戦場</strong>の組織、<strong>個人無料Geminiで業務データを処理</strong>したい場合（ガバナンス不足）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Google Workspace AIと無料のGeminiの違いは？</summary>
+          <p class="tool-faq-a">無料Geminiは個人Googleアカウント向けのチャットAIです。Google Workspace AIは法人ドメインメール・Drive・管理者制御の下で、Gmail/Docs/Meet等のサイドパネルにGeminiが埋め込まれる業務向け機能群です。データ取り扱いと利用上限もプランごとに異なります。</p>
+        </details>
+        <details>
+          <summary>Business StarterでもDocsやSheetsでGeminiは使えますか？</summary>
+          <p class="tool-faq-a">2026年6月時点の公式Pricingでは、StarterはGmail内のGemini AI assistantとGemini appが中心で、Docs・Meet等へのPremium built-in AI（サイドパネル）はBusiness Standard以上に含まれます。契約前にプラン表を必ず確認してください。</p>
+        </details>
+        <details>
+          <summary>Google Workspace AIは社内データを学習に使いますか？</summary>
+          <p class="tool-faq-a">Google公式は、Workspace with Gemini利用時、会社データをGeminiモデルの学習や広告ターゲティングに使用しないと明記しています。Geminiはユーザーがアクセス権を持つコンテンツのみ参照します（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>Google Workspace AIとMicrosoft 365 Copilotの違いは？</summary>
+          <p class="tool-faq-a">M365 CopilotはWord/Excel/TeamsとMicrosoft Graph上のメール・SharePointを前提にします。Google Workspace AIはGmail/Docs/Drive/Meet中心でGoogleエコシステムに接地します。組織の基盤SaaSがMicrosoftかGoogleかで選び分けるのが現実的です。</p>
+        </details>
+        <details>
+          <summary>Duet AIとGoogle Workspace AIの関係は？</summary>
+          <p class="tool-faq-a">Duet AIは2023〜2024年にGoogle Workspace向けAIとして案内されていた旧ブランド名です。2024年以降Geminiブランドに統合され、2026年時点ではWorkspace Intelligence・Gemini in Workspaceとして提供されています。試験では「Google Workspace内蔵AI＝Gemini系」と理解すれば足ります。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://workspace.google.com/solutions/ai/" target="_blank" rel="noopener noreferrer">Google Workspace AI</a>
+      ·
+      <a href="https://workspace.google.com/pricing" target="_blank" rel="noopener noreferrer">Pricing</a>
+      ·
+      <a href="https://support.google.com/a/users/answer/15146419" target="_blank" rel="noopener noreferrer">Side panel（Learning Center）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini/"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> Gemini</a></li>
+          <li><a href="../notebooklm/"><img src="../../assets/images/tools/google.svg" alt="" width="16" height="16"> NotebookLM</a></li>
+          <li><a href="../microsoft-365-copilot/"><img src="../../assets/images/tools/microsoft-365-copilot/app-icon.png" alt="" width="16" height="16"> Microsoft 365 Copilot</a></li>
+          <li><a href="../notion-ai/"><img src="../../assets/images/tools/notion-ai/app-icon.png" alt="" width="16" height="16"> Notion AI</a></li>
+          <li><a href="../slack-ai/"><img src="../../assets/images/tools/slack-ai/app-icon.png" alt="" width="16" height="16"> Slack AI</a></li>
+          <li><a href="../zoom-ai-companion/"><img src="../../assets/images/tools/zoom-ai-companion/app-icon.png" alt="" width="16" height="16"> Zoom AI Companion</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/llm/">大規模言語モデル（LLM）</a></li>
+          <li><a href="../../glossary/rag/">RAG</a></li>
+          <li><a href="../../glossary/gemini-model/">Gemini</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
