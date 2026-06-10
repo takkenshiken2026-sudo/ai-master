@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ChatGPT Operator（OpenAI）の機能・料金・使い方を解説。CUAによるWebブラウザ操作、2025年7月のChatGPT agent mode統合、Manus・Devinとの違い、試験で押さえる安全設計も整理。">
+  <title>ChatGPT Operatorとは？Web操作エージェント（CUA）の機能・使い方を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/chatgpt-operator/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="ChatGPT Operatorとは？Web操作エージェント（CUA）の機能・使い方を解説">
+  <meta property="og:description" content="OpenAIのComputer-Using Agent（CUA）とOperatorの変遷、agent modeでの使い方、人間承認の設計、Manusとの比較を解説。">
+  <meta property="og:url" content="https://ai-master.jp/tools/chatgpt-operator/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/chatgpt-operator/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/chatgpt-operator/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/chatgpt-operator/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "ChatGPT Operator", "item": "https://ai-master.jp/tools/chatgpt-operator/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/chatgpt-operator/#article",
+        "headline": "ChatGPT Operatorとは？Web操作エージェント（CUA）の機能・使い方を解説",
+        "description": "ChatGPT Operator（OpenAI）の機能・料金・使い方を解説。CUAによるWebブラウザ操作、2025年7月のChatGPT agent mode統合、Manus・Devinとの違い、試験で押さえる安全設計も整理。",
+        "url": "https://ai-master.jp/tools/chatgpt-operator/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/chatgpt-operator/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/chatgpt-operator/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "ChatGPT Operator" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/chatgpt-operator/#webpage",
+        "url": "https://ai-master.jp/tools/chatgpt-operator/",
+        "name": "ChatGPT Operatorとは？Web操作エージェント（CUA）の機能・使い方を解説",
+        "description": "ChatGPT Operator（OpenAI）の機能・料金・使い方を解説。CUAによるWebブラウザ操作、2025年7月のChatGPT agent mode統合、Manus・Devinとの違い、試験で押さえる安全設計も整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/chatgpt-operator/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "ChatGPT Operator",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "OpenAIが2025年1月に公開したWebブラウザ操作エージェント。Computer-Using Agent（CUA）モデルでGUIを操作し、2025年7月以降はChatGPTのagent modeとして統合。",
+        "offers": {
+          "@type": "Offer",
+          "price": "20",
+          "priceCurrency": "USD",
+          "description": "ChatGPT Plus $20/月〜。agent modeはPlusで月40回、Proで月400回（2025年7月時点の公式）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "OpenAI",
+          "url": "https://openai.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ChatGPT Operatorは今も単体で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2025年7月以降、Operatorの能力はChatGPT内の「agent mode」に統合され、単体サイト operator.chatgpt.com は段階的に終了（sunset）されています（2026年6月時点）。新規利用はChatGPTのツールメニューからagent modeを選ぶ形が公式の案内です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Operatorと通常のChatGPTチャットの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "通常チャットは主にテキストで回答・下書きを生成します。Operator（agent mode）はクラウド上の仮想ブラウザや端末を使い、Webサイトのクリック・入力・ファイル操作まで含めてタスクを実行します。回答するだけでなく、ブラウザ上で行動する点が本質的な違いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CUAとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Computer-Using Agent（CUA）の略で、OpenAIがOperator向けに開発したモデルです。スクリーンショットでGUIを「見て」、マウス・キーボード相当の操作でWebページと対話します。GPT-4oの視覚能力と強化学習を組み合わせた構成が公式ブログで説明されています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "日本から使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2025年1月のOperator単体プレビューは米国のProユーザー限定でした。2025年7月のagent mode統合後はPlus・Pro・Team等の有料ユーザー向けに展開されていますが、欧州経済領域・スイス向けは公式に「準備中」とされていました。日本からの利用可否・上限はChatGPTのアカウント設定と公式ヘルプで最新を確認してください（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ManusとChatGPT Operatorはどちらを選べばよいですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChatGPT契約内でWeb操作エージェントを試すならOperator（agent mode）、独立したサンドボックスで調査・資料・Webアプリ試作まで横断したいならManus、という棲み分けが分かりやすいです。どちらもブラウザ自動化を含むため、機密データの取り扱いと人間承認の設計は必須です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">ChatGPT Operator</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/chatgpt-operator/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">OpenAI · AIエージェント</p>
+          <h1>ChatGPT Operatorとは？Web操作エージェント（CUA）の機能・使い方を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">スクリーンショットでWebを「見て」、クリック・入力まで代行するOpenAIのブラウザエージェント</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">CUAモデル</span>
+        <span class="tool-category">agent mode統合（2025年7月〜）</span>
+        <span class="tool-category">人間承認つき実行</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>ChatGPT Web / アプリ</li>
+          <li>agent mode（有料プラン）</li>
+          <li>（旧）operator.chatgpt.com</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/chatgpt-operator/og-hero.png" alt="OpenAI ChatGPTの公式イメージ。Operatorは2025年7月以降agent modeとして統合" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：OpenAI（ChatGPT）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ChatGPT Operator</strong>は、<strong>OpenAI</strong>が2025年1月に公開した<strong>Webブラウザ操作エージェント</strong>です。中核は<strong>Computer-Using Agent（CUA）</strong>——スクリーンショットで画面を認識し、クリック・スクロール・入力で人間と同じGUIを操作します。2025年7月、Operatorの能力は<strong>ChatGPT内の「agent mode」</strong>に統合され、単体サイトは段階的に終了方向となりました。本記事は機能一覧の暗記ではなく、<strong>「回答するChatGPT」と「動くOperator」の境界</strong>、<strong>試験で問われる安全設計（承認・権限制御）</strong>、<strong>Manus・Devinとの棲み分け</strong>に焦点を当てます。料金・提供地域は<strong>2026年6月時点</strong>の公式情報に基づき、利用前に必ず再確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">ChatGPT Operatorとは</a></li>
+        <li><a href="#timeline">Operatorからagent modeへ</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金・利用上限（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Manus・Devin・通常ChatGPTとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポート第3章「AIエージェント」では、Operatorのような<strong>外部ツール（ブラウザ）を使うエージェント</strong>が具体例として扱われます。重要なのは「便利だから任せっきり」ではなく、<strong>実行権限・データ範囲・人間の承認</strong>を設計すること——という整理です。
+      </p>
+      <p>
+        Operator公式が強調する<strong>Takeover mode（ログイン・決済は人が操作）</strong>、<strong>User confirmations（注文確定前の承認）</strong>、<strong>Watch mode（メール等の監視下実行）</strong>は、試験の「影響の大きい操作には承認ステップを組み込む（○）」とそのまま対応します。また「自律性が高いから制約不要（×）」という引っかけ問題（TF-0281）に対して、Operator利用時こそ<strong>禁止サイト・予算上限・完了条件</strong>をプロンプトで明示する——という実務例として覚えると定着しやすいです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0240/">一問一答 TF-0240（外部ツールと権限設計）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（影響の大きい操作と承認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0281/">TF-0281（自律性と制約指定）</a>、<a href="../../exams/genai-passport/drill/q/tf-0239/">TF-0239（AIエージェントの定義）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/agent/">AIエージェント</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>ChatGPT Operatorとは</h2>
+      <p>
+        Operatorは、OpenAIが「<strong>自分専用のブラウザを持ち、Web上でタスクを実行するエージェント</strong>」として位置づけた研究プレビューです。API連携のないサイトでも、人間と同じボタン・フォーム・メニューを操作できる点が特徴です。
+      </p>
+      <p>
+        技術的な心臓部は<strong>CUA（Computer-Using Agent）</strong>モデル。GPT-4o系の<strong>視覚理解</strong>と<strong>強化学習</strong>を組み合わせ、スクリーンショットからGUI要素を読み取り、マウス・キーボード操作に変換します。WebArenaやWebVoyagerといったブラウザ操作ベンチマークで高いスコアが報告されています（OpenAI公式ブログ）。
+      </p>
+      <p>
+        典型タスクは、フォーム入力、商品検索、レストラン予約、旅行の下書き、競合調査からスライド作成まで幅広いです。ただし2025年1月時点では<strong>米国のChatGPT Proユーザー限定</strong>の研究プレビューであり、スライドやカレンダー操作など<strong>複雑UIでは失敗も報告</strong>されていました。試験では「エージェント＝万能」ではなく、<strong>得意・不得意とリスク</strong>をセットで理解することが求められます。
+      </p>
+    </section>
+
+    <section id="timeline">
+      <h2>Operatorからagent modeへ</h2>
+      <p>
+        Operatorの製品史を時系列で押さえると、2026年時点の「どこから使うか」が混乱しにくくなります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>時期</th>
+            <th>公式の位置づけ</th>
+            <th>利用者が知っておくこと</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>2025年1月</strong></td>
+            <td>Operator研究プレビュー公開</td>
+            <td>operator.chatgpt.com・米国Pro限定。CUAモデルを初公開。</td>
+          </tr>
+          <tr>
+            <td><strong>2025年7月</strong></td>
+            <td>ChatGPT agent（agent mode）として統合</td>
+            <td>Composerのツールから「agent mode」を選択。deep researchの分析力とOperatorのWeb操作を統合（公式ブログ）。</td>
+          </tr>
+          <tr>
+            <td><strong>2025年7月以降</strong></td>
+            <td>単体Operatorサイトのsunset</td>
+            <td>operator.chatgpt.comは数週間の猶予後に終了方向。新規利用はChatGPT内が公式導線。</td>
+          </tr>
+          <tr>
+            <td><strong>2026年6月時点</strong></td>
+            <td>agent modeが標準的なアクセス方法</td>
+            <td>本記事の「Operator」は<strong>能力名称＋製品史</strong>として理解し、実際の操作はChatGPTのagent modeを指すことが多い。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        統合後のagent modeは、<strong>仮想ブラウザ・テキストブラウザ・ターミナル・API</strong>を状況に応じて切り替える「統合エージェント」へ進化しています。Operator単体時代より、調査（deep research系）と実行（CUA系）が<strong>同一チャット内</strong>で続けられるのが大きな変化です。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>GUIブラウザ操作（CUA）</h3>
+          <p>スクリーンショットベースでクリック・入力・スクロール。カスタムAPIのないWebサイトも操作対象にできる（公式説明）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Takeover mode</h3>
+          <p>ログイン・決済・CAPTCHAなど敏感な操作はユーザーがブラウザを引き継ぎ。Takeover中の入力はOperator側が収集しない設計（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>User confirmations</h3>
+          <p>注文確定・メール送信など<strong>影響の大きい操作の前に承認を要求</strong>。試験の「人間の承認ステップ」と直結する機能。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Watch mode</h3>
+          <p>メールや金融系など敏感サイトでは、ユーザーの監視下で動作。エージェント単独の暴走を抑える公式の安全策。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>カスタム指示・保存プロンプト</h3>
+          <p>サイト別の好み（例：航空会社の指定）や、繰り返しタスク用の保存プロンプト（Operator単体時代の公式機能）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>agent mode統合後の拡張</h3>
+          <p>Connectors（Gmail等）、ターミナル、スライド・表計算の生成、定期実行タスクなど。Operator単体ではできなかった分析→成果物の一気通貫が可能に。</p>
+        </div>
+      </div>
+
+      <h3>安全設計の3層（Operator研究プレビュー時点）</h3>
+      <p>OpenAI公式は、Operatorの安全を次の3層で説明しています。agent mode統合後も思想は継承されています。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>層</th>
+            <th>内容</th>
+            <th>試験・実務での覚え方</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ユーザー制御</strong></td>
+            <td>Takeover・承認・Watch mode・高リスクタスクの拒否</td>
+            <td>「自動化＝無承認」ではない具体例</td>
+          </tr>
+          <tr>
+            <td><strong>プライバシー</strong></td>
+            <td>ブラウジングデータ削除、学習オプトアウト</td>
+            <td>業務利用前のデータ取り扱い確認</td>
+          </tr>
+          <tr>
+            <td><strong>敵対的サイト対策</strong></td>
+            <td>プロンプトインジェクション検知、監視モデル</td>
+            <td>外部Webは信頼できない入力源——エージェント設計の前提</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        最大の誤解は「<strong>Operator＝ChatGPTそのもの</strong>」です。通常のChatGPTは対話と生成が中心ですが、Operator（agent mode）は<strong>ブラウザ上で行動するエージェント層</strong>です。試験では「生成AIアプリ」と「エージェント機能」を分けて整理してください。
+      </p>
+      <p>
+        もう1つは「<strong>Operator＝Manus</strong>」という混同です。どちらもWeb操作を含みますが、Operatorは<strong>OpenAI ChatGPT契約内の統合エージェント</strong>、Manusは<strong>Monica.im発の独立サンドボックス</strong>です。実行環境・料金体系・データ所在地が異なるため、社内規程の観点では別ツールとして扱うべきです。
+      </p>
+      <p>
+        「<strong>2025年1月のデモ動画＝2026年も同じUI</strong>」も注意点です。単体Operator UIはsunset方向であり、現在はagent modeが正規ルートです。古い記事・SNS投稿のスクリーンショットは製品名・導線が古い可能性があります。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金・利用上限（2026年6月時点）</h2>
+      <p>
+        Operator単体時代（2025年1月）は<strong>ChatGPT Pro（$200/月）＋米国限定</strong>でした。2025年7月のagent mode統合以降、公式ブログでは次の上限が示されています（<strong>2026年6月時点でもこの枠組みが基本</strong>。最新はChatGPTの設定画面で確認してください）。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Plus / Team</p>
+          <p class="tool-plan-price">$20/月〜</p>
+          <p class="tool-plan-note">agent mode 月40メッセージ（公式・2025年7月）</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">$200/月</p>
+          <p class="tool-plan-note">agent mode 月400メッセージ（公式・2025年7月）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise / Education</p>
+          <p class="tool-plan-price">要問合せ</p>
+          <p class="tool-plan-note">2025年7月以降順次提供。管理機能は組織契約依存</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Operator単体（2025年1月）</th>
+            <th>agent mode統合後（2025年7月〜）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>アクセス</strong></td>
+            <td>operator.chatgpt.com</td>
+            <td>ChatGPT Composer → agent mode</td>
+          </tr>
+          <tr>
+            <td><strong>対象プラン</strong></td>
+            <td>Pro（米国）</td>
+            <td>Pro / Plus / Team（Enterprise等は順次）</td>
+          </tr>
+          <tr>
+            <td><strong>月間上限</strong></td>
+            <td>公式はメッセージ数より研究プレビュー枠</td>
+            <td>Pro 400 / Plus・Team 40（追加はクレジット制オプション）</td>
+          </tr>
+          <tr>
+            <td><strong>地域</strong></td>
+            <td>米国から開始</td>
+            <td>EEA・スイスは2025年7月時点「準備中」（公式）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        無料プランではagent modeは使えません。1タスクが長時間になるとメッセージ上限に達しやすいため、<strong>目的・完了条件を短く区切る</strong>運用が現実的です。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>2026年6月時点の推奨フローは、ChatGPT内のagent modeです（単体Operatorサイトは終了方向）。</p>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>有料プランを確認</strong>
+            ChatGPT Plus以上でagent modeが利用可能か、アカウントの地域・上限を確認します。
+          </li>
+          <li>
+            <strong>agent modeを選択</strong>
+            Composerのツールドロップダウンから「agent mode」を選び、タスクを自然文で指示します（例：「公開情報のみで競合3社のPricingを表にまとめて」）。
+          </li>
+          <li>
+            <strong>実行ナレーションを監視</strong>
+            画面上でエージェントの操作内容が表示されます。範囲外のサイト遷移があれば早めに停止・修正します。
+          </li>
+          <li>
+            <strong>Takeoverでログイン</strong>
+            認証が必要なサイトはTakeover modeで自分が入力。パスワードをプロンプトに書かない運用が安全です。
+          </li>
+          <li>
+            <strong>承認プロンプトを確認</strong>
+            購入・送信などは承認ダイアログが出ます。試験どおり、影響の大きい操作は必ず人が判断します。
+          </li>
+          <li>
+            <strong>成果物を検証</strong>
+            生成スライド・表・引用はファクトチェック後に社内利用。エージェント出力の無検証公開は避けてください。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/chatgpt-operator/og-hero.png" alt="ChatGPTのagent mode統合後もOpenAIエコシステム内で動作するイメージ" width="600" height="338" loading="lazy">
+            <figcaption>出典：OpenAI（ChatGPT）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>調査→資料化</h3>
+          <ul>
+            <li>公開Webから競合Pricingを収集</li>
+            <li>deep research系の分析とスライド下書き</li>
+            <li>出典URL付きレポートのたたき台</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>事務・調整の代行下書き</h3>
+          <ul>
+            <li>カレンダー連携後の会議準備メモ</li>
+            <li>旅行・会食の候補リスト作成（予約確定は人が承認）</li>
+            <li>経費・フォーム入力の下準備</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>データ更新・レポート</h3>
+          <ul>
+            <li>スプレッドシートへの数値追記（書式維持）</li>
+            <li>ダッシュボード截图からプレゼン素材へ</li>
+            <li>定期レポートのスケジュール実行（agent mode）</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        いずれも<strong>業務アカウントへのログイン・顧客データの入力</strong>は情報セキュリティレビューが前提です。Operatorは便利さとリスクがセット——TF-0240の「実行権限設計」を実務に落とす典型例として扱ってください。
+      </p>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>APIのないWebサイトもGUI操作で扱える</td>
+            <td>ブラウザ自動化はサイト変更・CAPTCHAで失敗しやすい</td>
+          </tr>
+          <tr>
+            <td>ChatGPT契約内で調査と実行が一体化（agent mode）</td>
+            <td>月間メッセージ上限があり、長タスクはすぐ枯渇</td>
+          </tr>
+          <tr>
+            <td>Takeover・承認・Watch modeなど安全設計が明示的</td>
+            <td>プロンプトインジェクション等、Web連携固有リスクがある</td>
+          </tr>
+          <tr>
+            <td>試験の「エージェント＋人間承認」の具体例として学びやすい</td>
+            <td>製品名・UIが統合で変わり、古い情報との混同が起きやすい</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Manus・Devin・通常ChatGPTとの比較</h2>
+      <p>「Operatorを使うべきか」は、既にChatGPT契約があるか、独立サンドボックスが必要かで決まります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>ChatGPT Operator（agent mode）</th>
+            <th>Manus</th>
+            <th>Devin</th>
+            <th>通常ChatGPT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提供元</td>
+            <td>OpenAI</td>
+            <td>Monica.im / Meta</td>
+            <td>Cognition</td>
+            <td>OpenAI</td>
+          </tr>
+          <tr>
+            <td>主な形態</td>
+            <td>ChatGPT統合のWeb操作エージェント</td>
+            <td>独立サンドボックスの汎用エージェント</td>
+            <td>開発特化エージェント</td>
+            <td>対話型生成AI</td>
+          </tr>
+          <tr>
+            <td>実行環境</td>
+            <td>ChatGPTの仮想PC・ブラウザ</td>
+            <td>Manus Sandbox＋Cloud Browser</td>
+            <td>Devin Cloud / CLI</td>
+            <td>チャット＋限定的ツール</td>
+          </tr>
+          <tr>
+            <td>技術の核</td>
+            <td>CUA（GUI操作モデル）</td>
+            <td>自律計画＋VM/browser</td>
+            <td>コード実装・テスト</td>
+            <td>大規模言語モデル</td>
+          </tr>
+          <tr>
+            <td>試験での覚え方</td>
+            <td>OpenAIのブラウザエージェント例</td>
+            <td>汎用エージェントの例</td>
+            <td>コーディングエージェントの例</td>
+            <td>生成AIアプリの代表</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        すでに<a href="../chatgpt/">ChatGPT</a>を業務利用しているならagent modeが導入しやすく、<strong>サンドボックスを別契約で持ちたい</strong>なら<a href="../manus/">Manus</a>、<strong>リポジトリ実装</strong>なら<a href="../devin/">Devin</a>——という3分岐が整理しやすいです。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>ChatGPT有料契約があり、Web操作まで任せたい人</strong></li>
+        <li><strong>生成AIパスポートで「CUA」「人間承認」の具体例が欲しい受験生</strong></li>
+        <li><strong>APIのない社内Web・外部サービスの操作自動化を試したい担当者</strong>（権限レビュー後）</li>
+        <li><strong>Operator→agent modeの変遷を試験の時事問題として押さえたい人</strong></li>
+      </ul>
+      <p>
+        向いていないのは、<strong>無料だけで使いたい</strong>場合、<strong>ブラウザ操作を社外クラウドに載せられない</strong>場合、<strong>IDE内のコード補完だけ欲しい</strong>場合です。後者は<a href="../github-copilot/">GitHub Copilot</a>や<a href="../cursor/">Cursor</a>が適しています。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>ChatGPT Operatorは今も単体で使えますか？</summary>
+          <p class="tool-faq-a">2025年7月以降、Operatorの能力はChatGPT内の「agent mode」に統合され、単体サイト operator.chatgpt.com は段階的に終了（sunset）されています（2026年6月時点）。新規利用はChatGPTのツールメニューからagent modeを選ぶ形が公式の案内です。</p>
+        </details>
+        <details>
+          <summary>Operatorと通常のChatGPTチャットの違いは？</summary>
+          <p class="tool-faq-a">通常チャットは主にテキストで回答・下書きを生成します。Operator（agent mode）はクラウド上の仮想ブラウザや端末を使い、Webサイトのクリック・入力・ファイル操作まで含めてタスクを実行します。回答するだけでなく、ブラウザ上で行動する点が本質的な違いです。</p>
+        </details>
+        <details>
+          <summary>CUAとは何ですか？</summary>
+          <p class="tool-faq-a">Computer-Using Agent（CUA）の略で、OpenAIがOperator向けに開発したモデルです。スクリーンショットでGUIを「見て」、マウス・キーボード相当の操作でWebページと対話します。GPT-4oの視覚能力と強化学習を組み合わせた構成が公式ブログで説明されています。</p>
+        </details>
+        <details>
+          <summary>日本から使えますか？</summary>
+          <p class="tool-faq-a">2025年1月のOperator単体プレビューは米国のProユーザー限定でした。2025年7月のagent mode統合後はPlus・Pro・Team等の有料ユーザー向けに展開されていますが、欧州経済領域・スイス向けは公式に「準備中」とされていました。日本からの利用可否・上限はChatGPTのアカウント設定と公式ヘルプで最新を確認してください（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>ManusとChatGPT Operatorはどちらを選べばよいですか？</summary>
+          <p class="tool-faq-a">ChatGPT契約内でWeb操作エージェントを試すならOperator（agent mode）、独立したサンドボックスで調査・資料・Webアプリ試作まで横断したいならManus、という棲み分けが分かりやすいです。どちらもブラウザ自動化を含むため、機密データの取り扱いと人間承認の設計は必須です。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://openai.com/index/introducing-operator/" target="_blank" rel="noopener noreferrer">Introducing Operator</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://openai.com/index/introducing-chatgpt-agent/" target="_blank" rel="noopener noreferrer">ChatGPT agent（agent mode）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://openai.com/index/computer-using-agent/" target="_blank" rel="noopener noreferrer">Computer-Using Agent（CUA）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../chatgpt/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT</a></li>
+          <li><a href="../manus/"><img src="../../assets/images/tools/manus/app-icon.png" alt="" width="16" height="16"> Manus</a></li>
+          <li><a href="../devin/"><img src="../../assets/images/tools/devin/app-icon.png" alt="" width="16" height="16"> Devin</a></li>
+          <li><a href="../perplexity/"><img src="../../assets/images/tools/perplexity/app-icon.png" alt="" width="16" height="16"> Perplexity</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
