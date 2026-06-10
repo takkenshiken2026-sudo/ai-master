@@ -703,6 +703,7 @@ const TOOLS = [
     logo: "synthesia.png",
     cat: "audio",
     catLabel: "音声・動画・音楽",
+    article: true,
     tagline: "HeyGenと並ぶAIアバター動画ツール",
     url: "https://www.synthesia.io",
   },
