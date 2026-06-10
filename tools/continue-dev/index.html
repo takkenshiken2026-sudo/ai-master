@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Continue.devの機能・料金・使い方を解説。Continuous AI・.continue/checks/のPR品質管理、CLI（cn）、OSS IDE拡張・BYOK、Cline・Copilot・Codex CLIとの比較まで。生成AIパスポート対策にも。">
+  <title>Continue.devとは？Continuous AIとOSSコーディング支援を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/continue-dev/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Continue.devとは？Continuous AIとOSSコーディング支援を解説">
+  <meta property="og:description" content="Software Factory向けPR Checks（.continue/checks/）、GitHub status checks、OSS CLI・IDE拡張。Starter $3/M tokensを2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/continue-dev/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/continue-dev/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/continue-dev/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/continue-dev/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Continue.dev", "item": "https://ai-master.jp/tools/continue-dev/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/continue-dev/#article",
+        "headline": "Continue.devとは？Continuous AIとOSSコーディング支援を解説",
+        "description": "Software Factory向けPR Checks（.continue/checks/）、GitHub status checks、OSS CLI・IDE拡張。Starter $3/M tokensを2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/continue-dev/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/continue-dev/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/continue-dev/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Continue.dev" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/continue-dev/#webpage",
+        "url": "https://ai-master.jp/tools/continue-dev/",
+        "name": "Continue.devとは？Continuous AIとOSSコーディング支援を解説",
+        "description": "Software Factory向けPR Checks（.continue/checks/）、GitHub status checks、OSS CLI・IDE拡張。Starter $3/M tokensを2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/continue-dev/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Continue.dev",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Windows, Linux, Web",
+        "description": "Continuous AI。ソース管理されたPR Checks（.continue/checks/）、OSS Continue CLI（cn）、VS Code/JetBrains拡張。Apache 2.0。",
+        "offers": {
+          "@type": "Offer",
+          "price": "3",
+          "priceCurrency": "USD",
+          "description": "Starter $3/百万tokens（従量）。Team $20/席/月（$10 credits同梱）。IDE/CLI OSS無料（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Continue",
+          "url": "https://www.continue.dev"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Continue.devのChecksとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "リポジトリの.continue/checks/（または.agents/checks/）に置いたMarkdownファイルで定義するPRレビュールールです。PRごとにAIがdiffを検査し、GitHub status checkとしてPass/Failを返します。Fail時は修正diffを提案し、人間がAccept/Rejectします（2026年6月時点・公式Docs）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Continue.devは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Continue CLI（cn）とVS Code/JetBrains拡張はApache 2.0 OSSで無料です。Checks・Agentsのクラウド実行はStarter $3/百万tokens（従量）またはTeam $20/席/月（$10 credits/席同梱）から。IDE拡張でBYOK（自前APIキー）なら推論料金のみ別途（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Continue.devとGitHub Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CopilotはMicrosoft/OpenAIがモデル・インデックスを管理するIDE補完・チャットです。Continue.devはOSSでconfig.yamlから任意LLM（Ollama等）を接続でき、2026年時点ではPR Checksで「自分で書いた基準だけ」をGitHub status checkとして強制するContinuous AIが差別化です。補完特化か、ソース管理QCか——が棲み分けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Continue.devとClineの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ClineはVS Code内のPlan/Actエージェントでファイル編集・ターミナル実行を対話的に進めます。Continue.devはPR単位のChecks（マークダウン定義）とGitHub CI連携が中心で、IDE拡張はチャット・編集・補完のBYOK基盤です。エディタ内エージェント作業か、PR品質ゲートか——という整理が試験・実務で有効です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Continuous AIとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Continue.devの2026年時点のポジショニングで、ソフトウェアファクトリー（高速なPR量産）に対し、ソース管理されたAI Checksで品質管理を自動化する考え方です。汎用AIレビューの「余計な意見」ではなく、定義した基準だけを一貫して適用します（公式ホーム）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Continue.dev</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/continue-dev/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Continue · Continuous AI · コーディング</p>
+          <h1>Continue.devとは？Continuous AIとOSSコーディング支援を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">Software Factoryの品質管理——.continue/checks/に書いた基準だけをPRごとにGitHub status checkで強制</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">PR Checks</span>
+        <span class="tool-category">Apache 2.0 OSS</span>
+        <span class="tool-category">BYOK · マルチLLM</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>GitHub PR Checks</li>
+          <li>CLI（cn）</li>
+          <li>VS Code / JetBrains</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/continue-dev/og-hero.png" alt="Continue.dev公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Continue公式（continue.dev）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Continue.dev</strong>（コンティニュー）は、2026年時点では<strong>Continuous AI</strong>——ソフトウェアファクトリー向けの<strong>ソース管理されたPR品質管理</strong>——を前面に出すプラットフォームです。同時に、<strong>Apache 2.0</strong>のVS Code/JetBrains拡張とCLI（<code>cn</code>）で、任意LLMを<strong>BYOK</strong>接続するOSS基盤でもあります。本記事では<a href="#checks">Checks（.continue/checks/）</a>、<a href="#continuous-ai">Continuous AIの思想</a>、<a href="#oss-ide">OSS IDE拡張</a>、<a href="#comparison">Cline・Copilot・Codex CLIとの違い</a>を整理します。料金と機能は<strong>2026年6月時点</strong>の情報です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Continue.devとは</a></li>
+        <li><a href="#checks">Checks（PR品質ゲート）</a></li>
+        <li><a href="#continuous-ai">Continuous AIの思想</a></li>
+        <li><a href="#cli">Continue CLI（cn）</a></li>
+        <li><a href="#oss-ide">OSS IDE拡張</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">主要ツールとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>生成AIパスポートでは、AIコーディング支援と<strong>自動化の確認・承認</strong>がセットで問われます。ContinueのChecksはPRでPass/Failを返しますが、<strong>最終マージ判断は人間</strong>——Fail時の修正diffもAccept/Reject可能——という設計はTF-0271（承認）と整合します。</p>
+      <p>「Continue＝Copilotの無料クローン」ではありません。2026年時点の公式訴求は<strong>自分で定義した基準だけを機械的に適用するQC</strong>です。試験ではツール分類（補完 vs PRゲート vs ターミナルエージェント）を混同しないでください。</p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">一問一答 TF-0150（AIコーディング支援）</a>、<a href="../../exams/genai-passport/drill/q/tf-0271/">TF-0271（承認ステップ）</a>、<a href="../../exams/genai-passport/drill/q/tf-0496/">TF-0496（出力の確認）</a></p>
+        <p>用語：<a href="../../glossary/agent/">AIエージェント</a> · <a href="../../glossary/generative-ai/">生成AI</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Continue.devとは</h2>
+      <p>Continue.dev（continue.dev）は、2023年創業の<strong>オープンソースAIコーディング</strong>プロジェクトです。GitHub上の<strong>continuedev/continue</strong>（Apache 2.0・33k+ stars、2026年6月時点）が中核で、2026年時点の公式ポジショニングは<strong>「Quality control for your software factory」</strong>——PR量産が加速するほど、<strong>Checksが品質を追いつかせる</strong>——です（公式ホーム）。</p>
+      <p>プロダクトは大きく<strong>Checks（PR品質ゲート）</strong>、<strong>CLI（cn）</strong>、<strong>IDE Extensions</strong>の三層（公式Docs）。かつて「IDE拡張だけ」と知られていたContinueが、<strong>CI/CDに載るソース管理QC</strong>へ拡張した——という変遷を試験・実務で押さえると整理しやすいです。</p>
+    </section>
+
+    <section id="checks">
+      <h2>Checks（PR品質ゲート）</h2>
+      <p>Checksは、リポジトリルートの<strong><code>.continue/checks/</code></strong>（または<strong><code>.agents/checks/</code></strong>）に置くMarkdownファイルです（2026年6月時点・公式Docs）。YAML frontmatterに<code>name</code>・<code>description</code>、本文がPRレビュー用プロンプトになります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>概要</th><th>試験・実務の注意</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>配置</strong></td><td><code>.continue/checks/*.md</code> または <code>.agents/checks/*.md</code></td><td>サブディレクトリはスキャン対象外</td></tr>
+          <tr><td><strong>実行タイミング</strong></td><td>PR open/update時に自動</td><td>イベント駆動Agentsは別機能</td></tr>
+          <tr><td><strong>結果</strong></td><td>GitHub <strong>status check</strong>（緑/赤）</td><td>CIゲートに組み込み可能</td></tr>
+          <tr><td><strong>Fail時</strong></td><td>理由＋<strong>修正diff提案</strong></td><td>人間がAccept/Reject（TF-0271）</td></tr>
+          <tr><td><strong>model</strong></td><td>frontmatterで指定可（省略時Sonnet等）</td><td>BYOK/Frontier credits</td></tr>
+        </tbody>
+      </table>
+      <p>公式テンプレ例：<strong>Anti-Slop</strong>（低品質生成コード検知）、<strong>Code Security Review</strong>、<strong>Reinventing the Wheel</strong>（既存実装の再発明）。セキュリティCheckの例では、ハードコード秘密情報・入力検証欠如・SQL連結等をFail条件に列挙します（公式Docs）。</p>
+      <p><code>.agents/</code>はクロスツール標準として emerging、同名Checkは<code>.continue/checks/</code>が優先（公式Check Reference）。</p>
+    </section>
+
+    <section id="continuous-ai">
+      <h2>Continuous AIの思想</h2>
+      <p>Continueが提唱する<strong>Continuous AI</strong>は、汎用AIコードレビューの「何でも言う」傾向を避け、<strong>Consistency over breadth</strong>——定義した基準だけを毎回漏れなく——を徹底する考え方です（公式ホーム）。</p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Scales with your factory</h3>
+          <p>PR速度が上がってもChecksが追従。レビューキューがボトルネックになりにくい。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Source-controlled standards</h3>
+          <p>基準がGit履歴に残る。チームでレビュー・差分可能。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Decided by humans</h3>
+          <p>AIはenforce、最終判断は人間。自動マージではない。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Design, not review queue</h3>
+          <p>機械的enforceに任せ、アーキテクチャ設計に集中。</p>
+        </div>
+      </div>
+      <p>試験では「AIレビュー＝人間不要」と短絡化しないでください——Continue自身が<strong>enforced by AI, decided by humans</strong>と明記しています。</p>
+    </section>
+
+    <section id="cli">
+      <h2>Continue CLI（cn）</h2>
+      <p>ChecksはOSSの<strong>Continue CLI</strong>（コマンド<code>cn</code>）が実行エンジンです（GitHub README・2026年6月時点）。</p>
+      <ul class="tool-example-list">
+        <li><strong>インストール</strong>：公式install script、または<code>npm i -g @continuedev/cli</code>（Node.js 20+）</li>
+        <li><strong>対話</strong>：<code>cn</code>でCLIセッション</li>
+        <li><strong>CI</strong>：Checksをパイプラインに載せ可能（ソース管理QC）</li>
+      </ul>
+      <p><a href="../codex-cli/">Codex CLI</a>がOpenAIサブスク一体のターミナルエージェントなのに対し、Continue CLIは<strong>Checks定義をリポジトリから読むOSS実行基盤</strong>——という棲み分けです。</p>
+    </section>
+
+    <section id="oss-ide">
+      <h2>OSS IDE拡張</h2>
+      <p>Continueは創業以来、<strong>VS Code・JetBrains</strong>向けOSS拡張を提供しています（GitHub topics・Apache 2.0）。<code>config.yaml</code>でモデル・プロンプト・コンテキストを一元設定し、<strong>BYOK</strong>でAnthropic・OpenAI・<a href="../ollama/">Ollama</a>・vLLM等を接続できます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>機能</th><th>概要</th><th>Copilot/Cursorとの差</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Chat / Edit</strong></td><td>選択範囲・ファイル単位の編集</td><td>モデル選択自由度</td></tr>
+          <tr><td><strong>Autocomplete</strong></td><td>インライン補完</td><td>自前エンドポイント可</td></tr>
+          <tr><td><strong>Embeddings / Index</strong></td><td>コードベース索引</td><td>セルフホスト可能</td></tr>
+          <tr><td><strong>Telemetry off</strong></td><td>設定で送信停止</td><td>規制業界向け</td></tr>
+        </tbody>
+      </table>
+      <p>2026年時点、公式ホームの主役はChecksですが、IDE拡張は<strong>エディタ内開発</strong>、Checksは<strong>PRマージ前QC</strong>——と二層で使うのが実務的です。</p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>continue.dev/check</h3>
+          <p>Web UIで既存PRにChecksを試実行（GitHub auth）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Agents</h3>
+          <p>Starter以上。Slack・Sentry・Snyk等連携（公式Pricing）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Team agent sharing</h3>
+          <p>Teamプランで私有Agentsをチーム共有・利用制御。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Enterprise SSO</h3>
+          <p>Company：SAML/OIDC・BYOK・SLA（公式Pricing）。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>「<strong>Continue＝Copilotの無料版</strong>」——IDE拡張は似た体験ですが、2026年の差別化は<strong>PR Checksのソース管理QC</strong>です。Copilotには<code>.continue/checks/</code>相当の「リポジトリ内Markdownゲート」がありません。</p>
+      <p>「<strong>Checksが赤＝自動で修正がマージされる</strong>」——提案diffのAccept/Rejectは人間操作です（TF-0271）。</p>
+      <p>「<strong>OSS＝Checksも完全無料</strong>」——CLI/拡張本体は無料ですが、Checks/Agentsのクラウド推論は<strong>$3/M tokens</strong>等の従量またはTeam席課金です（公式Pricing）。</p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>以下は公式Pricing（continue.dev/pricing）の整理です。IDE/CLI OSS本体は無料、クラウドAgents/Checks推論が課金対象です。</p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight"><p class="tool-plan-name">Starter</p><p class="tool-plan-price">$3/M tokens</p><p class="tool-plan-note">従量・Agents</p></div>
+        <div class="tool-plan-card"><p class="tool-plan-name">Team</p><p class="tool-plan-price">$20/席</p><p class="tool-plan-note">$10 credits/席</p></div>
+        <div class="tool-plan-card"><p class="tool-plan-name">Company</p><p class="tool-plan-price">Custom</p><p class="tool-plan-note">SAML・BYOK・SLA</p></div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>プラン</th><th>月額（2026年6月時点）</th><th>主な含まれる機能</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Starter</strong></td><td><strong>$3/百万tokens</strong>（入出力）</td><td>Agents作成・実行、Slack/Sentry/Snyk連携、Frontier model credits購入</td></tr>
+          <tr><td><strong>Team</strong></td><td><strong>$20/席/月</strong>（$10 credits/席同梱）</td><td>Team Agents共有・利用制御、Gmail/GitHub SSO</td></tr>
+          <tr><td><strong>Company</strong></td><td>カスタム</td><td>Custom SSO（SAML/OIDC）、BYOK、請求書・SLA</td></tr>
+          <tr><td><strong>OSS IDE/CLI</strong></td><td><strong>無料</strong></td><td>拡張・cn本体。LLM APIはBYOK別途</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li><strong>Checksを試す</strong>continue.dev/checkで既存PRにテンプレCheckを実行。</li>
+          <li><strong>.continue/checks/に追加</strong>Security Review等をMarkdownで定義しPR。</li>
+          <li><strong>GitHub App連携</strong>PR open時にstatus checkが付与されることを確認。</li>
+          <li><strong>CLI導入（任意）</strong><code>cn</code>でローカル検証・CI組み込み。</li>
+          <li><strong>IDE拡張（任意）</strong>config.yamlでBYOK。開発はIDE、QCはChecks——二層運用。</li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/continue-dev/og-hero.png" alt="Continue.dev公式イメージ" width="600" height="314" loading="lazy">
+            <figcaption>出典：Continue公式（continue.dev）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>AI生成コードのAnti-Slop</h3>
+          <p>Copilot/Cursor量産PRにAnti-Slop Check。低品質パターンを赤で止める。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>セキュリティゲート</h3>
+          <p>秘密情報・SQL連結をCheck定義。merge前に必ずstatus check。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>規制業界のBYOK開発</h3>
+          <p>IDE拡張をOllama/on-premのみ。Checksは社内基準Markdownで統一。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>高速ファクトリー運用</h3>
+          <p>PR数増加にChecksを追加するだけ。人間レビューは設計判断に集中。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead><tr><th>メリット</th><th>デメリット</th></tr></thead>
+        <tbody>
+          <tr><td>ChecksがGit管理され、基準が透明・再現可能</td><td>Checks設計の手間（Markdownメンテ）</td></tr>
+          <tr><td>汎用AIレビューより「余計な指摘」が少ない設計思想</td><td>2026年ポジショニング理解に学習コスト</td></tr>
+          <tr><td>OSS IDE/CLI＋任意LLM・セルフホスト</td><td>Checksクラウド推論は従量/席課金</td></tr>
+          <tr><td>GitHub status checkネイティブ</td><td>GitHub中心（他VCSは要確認）</td></tr>
+          <tr><td>Apache 2.0で改変・監査可能</td><td>Autocomplete品質はCopilotに劣る場合も</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>主要ツールとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>Continue.dev</th><th><a href="../cline/">Cline</a></th><th><a href="../github-copilot/">Copilot</a></th><th><a href="../codex-cli/">Codex CLI</a></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>主眼（2026）</td><td><strong>PR Checks QC</strong></td><td>IDE Plan/Actエージェント</td><td>IDE補完・チャット</td><td>ターミナルエージェント</td></tr>
+          <tr><td>ライセンス</td><td>Apache 2.0 OSS</td><td>Apache 2.0 OSS</td><td>プロプライエタリ</td><td>Rust OSS（OpenAIモデル）</td></tr>
+          <tr><td>モデル</td><td>BYOK・Frontier credits</td><td>BYOK</td><td>OpenAI固定</td><td>ChatGPT/API</td></tr>
+          <tr><td>CI連携</td><td>GitHub status checks</td><td>限定的</td><td>Copilot code review（別製品）</td><td>GitHub Code Review</td></tr>
+          <tr><td>向くケース</td><td>ソース管理QC・OSS BYOK</td><td>VS Code内自律編集</td><td>手軽な補完</td><td>OpenAI CLI agent</td></tr>
+        </tbody>
+      </table>
+      <p>PR品質ゲートをMarkdownでGit管理するならContinue.dev、エディタ内エージェント作業なら<a href="../cline/">Cline</a>、手軽な補完なら<a href="../github-copilot/">Copilot</a>、OpenAIターミナルエージェントなら<a href="../codex-cli/">Codex CLI</a>——という棲み分けが試験・実務で使いやすいです。</p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>AI生成PRが増え、レビューが追いつかないエンジニアリングチーム</strong></li>
+        <li><strong>セキュリティ・Anti-Slop等を「書いた通りだけ」CIで強制したいTech Lead</strong></li>
+        <li><strong>BYOK・セルフホストでIDE AIを使いつつPR QCも統一したい組織</strong></li>
+        <li><strong>試験対策で「Continuous AI＝ソース管理Checks」と整理したい受験生</strong></li>
+      </ul>
+      <p>あえて向いていないのは、<strong>ターミナルで自律的にリポジトリ改変</strong>（<a href="../codex-cli/">Codex CLI</a>・<a href="../claude-code/">Claude Code</a>向け）、<strong>設定なしで今すぐ補完</strong>（Copilot向け）、<strong>非GitHub中心のVCS</strong>（要別調査）です。</p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Checksとは？</summary><p class="tool-faq-a">リポジトリの.continue/checks/（または.agents/checks/）に置いたMarkdownファイルで定義するPRレビュールールです。PRごとにAIがdiffを検査し、GitHub status checkとしてPass/Failを返します。Fail時は修正diffを提案し、人間がAccept/Rejectします（2026年6月時点・公式Docs）。</p></details>
+        <details><summary>無料で使えますか？</summary><p class="tool-faq-a">Continue CLI（cn）とVS Code/JetBrains拡張はApache 2.0 OSSで無料です。Checks・Agentsのクラウド実行はStarter $3/百万tokens（従量）またはTeam $20/席/月（$10 credits/席同梱）から。IDE拡張でBYOK（自前APIキー）なら推論料金のみ別途（2026年6月時点）。</p></details>
+        <details><summary>Copilotとの違いは？</summary><p class="tool-faq-a">CopilotはMicrosoft/OpenAIがモデル・インデックスを管理するIDE補完・チャットです。Continue.devはOSSでconfig.yamlから任意LLM（Ollama等）を接続でき、2026年時点ではPR Checksで「自分で書いた基準だけ」をGitHub status checkとして強制するContinuous AIが差別化です。補完特化か、ソース管理QCか——が棲み分けです。</p></details>
+        <details><summary>Clineとの違いは？</summary><p class="tool-faq-a">ClineはVS Code内のPlan/Actエージェントでファイル編集・ターミナル実行を対話的に進めます。Continue.devはPR単位のChecks（マークダウン定義）とGitHub CI連携が中心で、IDE拡張はチャット・編集・補完のBYOK基盤です。エディタ内エージェント作業か、PR品質ゲートか——という整理が試験・実務で有効です。</p></details>
+        <details><summary>Continuous AIとは？</summary><p class="tool-faq-a">Continue.devの2026年時点のポジショニングで、ソフトウェアファクトリー（高速なPR量産）に対し、ソース管理されたAI Checksで品質管理を自動化する考え方です。汎用AIレビューの「余計な意見」ではなく、定義した基準だけを一貫して適用します（公式ホーム）。</p></details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://www.continue.dev" target="_blank" rel="noopener noreferrer">Continue.dev</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://docs.continue.dev/" target="_blank" rel="noopener noreferrer">ドキュメント</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/continuedev/continue" target="_blank" rel="noopener noreferrer">GitHub（OSS）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cline/"><img src="../../assets/images/tools/cline/app-icon.png" alt="" width="16" height="16"> Cline</a></li>
+          <li><a href="../github-copilot/"><img src="../../assets/images/tools/github-copilot/app-icon.png" alt="" width="16" height="16"> GitHub Copilot</a></li>
+          <li><a href="../codex-cli/"><img src="../../assets/images/tools/codex-cli/app-icon.png" alt="" width="16" height="16"> Codex CLI</a></li>
+          <li><a href="../tabnine/"><img src="../../assets/images/tools/tabnine/app-icon.png" alt="" width="16" height="16"> Tabnine</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -395,6 +395,7 @@ const TOOLS = [
     logo: "continue-dev.png",
     cat: "code",
     catLabel: "コーディング",
+    article: true,
     tagline: "オープンソースのIDE拡張型AIコーディングアシスタント",
     url: "https://www.continue.dev",
   },
