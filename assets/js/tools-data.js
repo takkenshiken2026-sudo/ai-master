@@ -142,6 +142,7 @@ const TOOLS = [
     logo: "surfer-ai.png",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "SEOに最適化された記事を生成するライティング特化ツール",
     url: "https://surferseo.com/surfer-ai/",
   },
