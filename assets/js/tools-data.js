@@ -563,6 +563,7 @@ const TOOLS = [
     logo: "openai.svg",
     cat: "audio",
     catLabel: "音声・動画・音楽",
+    article: true,
     tagline: "テキストから高品質な動画を生成",
     url: "https://haiper.ai",
   },
