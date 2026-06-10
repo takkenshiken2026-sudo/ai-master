@@ -164,6 +164,7 @@ const TOOLS = [
     logo: "autogpt.png",
     cat: "agent",
     catLabel: "AIエージェント",
+    article: true,
     tagline: "Manusとの比較で検索されるオープンソース系エージェントの代名詞",
     url: "https://agpt.co",
   },

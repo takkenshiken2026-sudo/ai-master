@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AutoGPTの機能・料金・使い方を解説。2023年GitHub版から2026年のエージェントプラットフォームへ。AutoPilot・Visual Builder・クレジット課金、Manus・n8nとの違い。生成AIパスポート対策にも。">
+  <title>AutoGPTとは？OSSエージェントの系譜とAutoPilotプラットフォームを解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/autogpt/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="AutoGPTとは？OSSエージェントの系譜とAutoPilotプラットフォームを解説">
+  <meta property="og:description" content="Significant GravitasのAutoGPT。AutoPilotで会話からエージェント生成、Visual Builder・200+ブロック、Pro $50/月＋従量クレジット。2026年6月時点。">
+  <meta property="og:url" content="https://ai-master.jp/tools/autogpt/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/autogpt/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/autogpt/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/autogpt/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "AutoGPT", "item": "https://ai-master.jp/tools/autogpt/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/autogpt/#article",
+        "headline": "AutoGPTとは？OSSエージェントの系譜とAutoPilotプラットフォームを解説",
+        "description": "Significant GravitasのAutoGPT。AutoPilotで会話からエージェント生成、Visual Builder・200+ブロック、Pro $50/月＋従量クレジット。2026年6月時点。",
+        "url": "https://ai-master.jp/tools/autogpt/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/autogpt/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/autogpt/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "AutoGPT" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/autogpt/#webpage",
+        "url": "https://ai-master.jp/tools/autogpt/",
+        "name": "AutoGPTとは？OSSエージェントの系譜とAutoPilotプラットフォームを解説",
+        "description": "Significant GravitasのAutoGPT。AutoPilotで会話からエージェント生成、Visual Builder・200+ブロック、Pro $50/月＋従量クレジット。2026年6月時点。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/autogpt/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "AutoGPT",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, Docker（セルフホスト）",
+        "description": "Significant GravitasのAIエージェントプラットフォーム。AutoPilotチャット、Visual Agent Builder、200+統合ブロック、Cron/Webhookトリガー。MIT OSSセルフホスト可。",
+        "offers": {
+          "@type": "Offer",
+          "price": "50",
+          "priceCurrency": "USD",
+          "description": "Pro $50/月（年払い$42.50/月）。エージェント実行はクレジットウォレット従量。セルフホスト無料（BYOK）（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Significant Gravitas",
+          "url": "https://agpt.co"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "2023年のGitHub版AutoGPTと今のagpt.coは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じSignificant Gravitas（Toran Bruce Richards）の系譜ですが、製品像は大きく進化しています。2023年3月のGitHub版はPython＋Dockerで目標を再帰実行する実験的OSSでした。2026年時点のagpt.coはAutoPilot・Visual Agent Builder・200+統合ブロック・Marketplaceを備えたマネージドプラットフォームです。試験では「AutoGPT＝自律エージェントの概念例」と「AutoGPT＝特定のプラットフォーム名」を分けて整理してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AutoGPTは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "技術者向けにはGitHubからDocker Composeでセルフホストすればプラットフォーム本体は無料（MIT）です。ただしLLM・サンドボックス等のAPIキーは自前（BYOK）が必要です。agpt.coのマネージドクラウドには無料ティアはなく、Pro $50/月またはMax $320/月のサブスクリプションに加え、エージェント実行はクレジットウォレットの従量課金です（2026年6月時点・公式Pricing）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AutoGPTとManusの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Manusはクラウド上のサンドボックス（仮想PC）で調査・資料・Webアプリなど汎用タスクをチャット1本で完遂させる自律エージェントです。AutoGPTは「自分で設計したエージェント」をVisual BuilderまたはAutoPilotで作り、Cron・Webhook・200+アプリ連携で繰り返し実行するプラットフォームです。都度の汎用タスク完遂か、再利用可能な自動化資産の構築か——が棲み分けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AutoGPTとn8n・Make・Zapierの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "n8n/Make/ZapierはiPaaS（アプリ連携ワークフロー）が中心で、AIはノードやAgents機能として追加されています。AutoGPTは最初からLLM推論・タスク計画・ブラウザ操作をエージェントの中核に置き、AutoPilotが会話からフローを生成します。固定フロー自動化ならiPaaS、AIが状況判断しながら繰り返す業務ならAutoGPT——という整理が試験・実務で有効です。AutoGPTはn8n/Make/Zapierからのインポートも公式サポートしています（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "サブスクリプションとクレジットウォレットの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "公式Pricingによると、Pro/Maxサブスクリプションは主にAutoPilot Chatの利用枠とサポートレベルを決めます（MaxはProの8.5倍のChat allowance）。エージェント・ワークフローの実行（automations）は全プラン共通でクレジットウォレットの従量課金です。Chatで設計し、Runでクレジットが消える——という二層課金を押さえておくと料金表の読み方が混乱しにくくなります（2026年6月時点）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">AutoGPT</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/autogpt/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Significant Gravitas · AIエージェント</p>
+          <h1>AutoGPTとは？OSSエージェントの系譜とAutoPilotプラットフォームを解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">2023年の自律エージェントブームの原点が、会話でエージェントを雇うプラットフォームへ</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Pro $50/月〜</span>
+        <span class="tool-category">実行はクレジット従量</span>
+        <span class="tool-category">MIT OSSセルフホスト可</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（agpt.co）</li>
+          <li>Docker Compose（セルフホスト）</li>
+          <li>REST API / SDK</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/autogpt/og-hero.png" alt="AutoGPT公式のエージェントプラットフォームイメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：AutoGPT（Significant Gravitas）公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>AutoGPT</strong>は、<strong>Significant Gravitas</strong>（Toran Bruce Richards）が2023年3月にGitHub公開した<strong>自律型AIエージェント</strong>の名称であり、2026年時点では<strong>agpt.co</strong>上の<strong>エージェント構築・実行プラットフォーム</strong>そのものを指します。試験でよく問われる「目標を分解しツールを使いながら自律実行するAI」の代表例として名前が残りつつ、製品は<strong>AutoPilot（会話からエージェント生成）</strong>・<strong>Visual Agent Builder</strong>・<strong>200+統合ブロック</strong>を備えた業務自動化基盤へ進化しています。本記事は機能の網羅ではなく、<strong>「2023年のOSS実験」と「2026年のクラウド」の差</strong>と、<strong>Manus・iPaaSとの棲み分け</strong>に絞って整理します。料金・上限は<strong>2026年6月時点</strong>の情報です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">AutoGPTとは</a></li>
+        <li><a href="#evolution">2023年GitHub版から2026年プラットフォームへ</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Manus・n8n・ChatGPT Operatorとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポート第3章「AIエージェント」では、AutoGPTは<strong>「目標に応じて計画し、必要に応じてツールを使いながらタスクを進めるAI」</strong>の具体例として教材に登場します。ただし<strong>AutoGPTという名前＝すべての自律エージェント</strong>ではありません。Manus、Devin、ChatGPT agent modeなど別製品も同じカテゴリに属します。
+      </p>
+      <p>
+        試験で特に押さえるのは次の3点です。<strong>①自律性が高いほど、目的・制約・停止条件の設計が重要</strong>（制約なしで意図どおり動くわけではない）。<strong>②AutoGPTは2023年時点では「概念の実装例」、2026年は「SaaSプラットフォーム名」</strong>——時代で意味が変わる典型例。<strong>③ワークフロー自動化（iPaaS）とAIエージェントは技術スタックが異なる</strong>——ZapierのTasksとAutoGPTのAgent Runは別物です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0238/">一問一答 TF-0238（AIエージェントの定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0239/">TF-0239</a>、<a href="../../exams/genai-passport/drill/q/tf-0244/">TF-0244（自律性と制約指定）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/agent/">AIエージェント</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>AutoGPTとは</h2>
+      <p>
+        公式サイト（agpt.co）では、AutoGPTを<strong>「エージェントを構築・実行するためのプラットフォーム」</strong>と定義しています。AIエージェントとは<strong>目標を渡すと自ら計画し、AIモデルとアプリを使いながらステップを実行するソフトウェア</strong>であり、AutoGPTはそれを<strong>自然言語またはビジュアルビルダー</strong>で作り、スケジュールやWebhookで動かし続ける環境を提供します。
+      </p>
+      <p>
+        2026年時点の3本柱は次のとおりです。<strong>AutoPilot</strong>——チャットで業務を説明すると、フローチャートやAPI設定なしにエージェントを生成する対話型ビルダー。<strong>Visual Agent Builder</strong>——200以上のIntegration Blockをドラッグ＆ドロップで配線するGUI。<strong>Agent Library / Marketplace</strong>——作成したエージェントの保存・共有・フォーク。公式は「Stop building workflows. Start hiring agents.（フローを組むのをやめ、エージェントを雇おう）」というメッセージで、<strong>固定パイプラインではなく再利用可能な“デジタル社員”</strong>を売りにしています。
+      </p>
+      <p>
+        技術スタックは<strong>Python＋TypeScript</strong>（Wikipedia・GitHub）。クラウド版では<strong>Managed Credentials</strong>により45以上のプラットフォームにAPIキーなしで接続できる一方、セルフホスト版は<strong>BYOK（自前APIキー）</strong>が前提です。
+      </p>
+    </section>
+
+    <section id="evolution">
+      <h2>2023年GitHub版から2026年プラットフォームへ</h2>
+      <p>
+        AutoGPTを理解するうえで欠かせないのが、<strong>同名でも製品像が2段階ある</strong>という事実です。試験テキストや古いブログ記事は2023年版を指し、最新の公式サイトは2026年版を指します。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>時期</th>
+            <th>形態</th>
+            <th>特徴</th>
+            <th>試験・実務での整理</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>2023年3月</strong></td>
+            <td>GitHub OSS（Significant-Gravitas/AutoGPT）</td>
+            <td>目標・役割・サブゴールを入力するとGPT-4 APIを再帰呼び出しして自律実行。Docker＋OpenAI APIキー必須。</td>
+            <td>「AutoGPT＝自律エージェントの概念実装」として教材に登場</td>
+          </tr>
+          <tr>
+            <td><strong>2023〜2024年</strong></td>
+            <td>コミュニティ拡散・AgentGPT等の派生</td>
+            <td>APIコストの高さ、ループ暴走、品質不安定が話題に。Karpathyらが「AutoGPTs」を言及。</td>
+            <td>エージェント＝万能ではない反面教師にも</td>
+          </tr>
+          <tr>
+            <td><strong>2025〜2026年</strong></td>
+            <td>agpt.co マネージドプラットフォーム</td>
+            <td>AutoPilot、Visual Builder、Marketplace、Pro/Max課金、クレジットウォレット、n8n/Make/Zapierインポート。</td>
+            <td>「AutoGPT＝SaaSプラットフォーム名」として利用者向けに再定義</td>
+          </tr>
+          <tr>
+            <td><strong>並行提供</strong></td>
+            <td>セルフホスト（Docker Compose）</td>
+            <td>MITライセンス、Linux/WSL/Podman/Raspberry Pi対応。BYOK。</td>
+            <td>データ主権・カスタムブロック開発向け</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        この変遷は試験の「<strong>生成AI ≠ 特定サービス名</strong>」と直結します。2023年のAutoGPTは<strong>ChatGPTに似た対話ではなく、ループするエージェント実装</strong>として話題になりました。2026年のAutoGPTは<strong>MakeやZapierに近い“自動化基盤”にAI推論を内蔵</strong>した位置づけにも見えます——ただし中核は依然<strong>LLMが計画・判断するエージェント</strong>です。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>AutoPilot（会話型エージェント生成）</h3>
+          <p>「競合を監視して」「朝のブリーフを書いて」と自然文で指示。フローチャート・プロンプトエンジニアリング・API設定なしにエージェントを生成（公式）。Dry-Run Self-Repair Loopで失敗時に自己修正。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Visual Agent Builder</h3>
+          <p>200+ Integration Block（Google Workspace、CRM、SNS、Webスクレイピング、HTTP、SQL等）をGUI配線。Sub-Agents as Blocks、Undo/Redo、Builderから直接Run。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>スケジュール・Webhookトリガー</h3>
+          <p>Cronスケジュール、GitHub Webhook、汎用Webhookで「人が触らなくても動く」エージェント。Late/Stuck Execution Alertsで停止検知。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>マルチLLM・予算上限</h3>
+          <p>Claude、GPT、Gemini、Llama、DeepSeek、Perplexity Sonar等。Per-Task LLM Budget Caps、Token &amp; Cost Tracking（公式Pricing）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>ブラウザ自動化・MCP</h3>
+          <p>Cloud Sandbox、Browser Automation、MCP Tool Support。Web検索・SQL Analytics・画像/動画生成ブロックも統合。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Marketplace・インポート</h3>
+          <p>Agent Marketplaceで公開エージェントをフォーク。<strong>n8n・Make.com・Zapierからのインポート</strong>を公式サポート——既存ワークフロー資産の移行導線。</p>
+        </div>
+      </div>
+
+      <h3>Human-in-the-Loop（試験と直結する安全設計）</h3>
+      <p>公式Pricingでは<strong>Human-in-the-Loop Approvals</strong>が認証・セキュリティ機能として明記されています。エージェントがメール送信・外部API呼び出しなど影響の大きい操作を行う前に人間の承認を挟める設計は、生成AIパスポートの「自律性と人間の関与」を説明する具体例になります。</p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        最大の誤解は「<strong>AutoGPT＝2023年にターミナルで動かしたPythonスクリプトのまま</strong>」です。GitHub版は依然MITで公開されていますが、agpt.coのクラウド体験は<strong>AutoPilot・Builder・Managed Credentials</strong>を含む別レイヤーです。古いチュートリアル（<code>python -m autogpt</code>系）と公式サイトのUIは一致しません。
+      </p>
+      <p>
+        もう1つは「<strong>AutoGPT＝すべてのAIエージェントの総称</strong>」です。試験用語としての「AutoGPT」はSignificant Gravitasの製品・プロジェクト名であり、<a href="../manus/">Manus</a>や<a href="../devin/">Devin</a>も別のエージェント製品です。カテゴリは同じでも<strong>実行環境・課金・得意領域</strong>は異なります。
+      </p>
+      <p>
+        「<strong>AutoGPT＝ChatGPT</strong>」も×です。ChatGPTは対話型生成AIアプリ、AutoGPTは<strong>エージェントを設計・スケジュール実行するプラットフォーム</strong>です。AutoPilot ChatはChatGPTに似たUIですが、成果物は<strong>動き続けるエージェント</strong>です。
+      </p>
+      <p>
+        最後に「<strong>サブスクを払えば実行も無制限</strong>」という誤解。公式は<strong>サブスクリプション＝AutoPilot Chat枠</strong>、<strong>エージェント実行＝クレジットウォレット従量</strong>の二層課金を明示しています。Runが増えるほどクレジットが必要です。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>
+        agpt.coのマネージドクラウドは<strong>無料ティアなし</strong>（公式FAQ）。代わりにPro/Maxサブスクリプション＋クレジットウォレットのハイブリッドです。セルフホストはプラットフォーム本体無料・BYOK。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Pro（Cloud）</p>
+          <p class="tool-plan-price">$50/月</p>
+          <p class="tool-plan-note">年払い $42.50/月。AutoPilot Chat標準枠・Emailサポート（公式Pricing）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Max（Cloud）</p>
+          <p class="tool-plan-price">$320/月</p>
+          <p class="tool-plan-note">年払い $272/月。Chat allowanceはProの8.5×・Priorityサポート（公式Pricing）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Self-Host</p>
+          <p class="tool-plan-price">無料（OSS）</p>
+          <p class="tool-plan-note">Docker Compose・MIT。LLM/インフラはBYOK。Community/GitHubサポート</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>課金の種類</th>
+            <th>対象</th>
+            <th>内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>サブスクリプション</strong></td>
+            <td>Pro / Max</td>
+            <td>AutoPilot Chat利用枠、サポートレベル、一部クラウド機能（Managed Credentials等）</td>
+          </tr>
+          <tr>
+            <td><strong>クレジットウォレット</strong></td>
+            <td>全Cloudプラン共通</td>
+            <td>エージェント・ワークフロー実行（automations）の従量課金。Top-Up・Auto-Refill可（公式）</td>
+          </tr>
+          <tr>
+            <td><strong>実行単価</strong></td>
+            <td>プラン間で同一</td>
+            <td>公式：「the rate is the same on every plan」——MaxでもRun単価はProと同じ</td>
+          </tr>
+          <tr>
+            <td><strong>セルフホスト</strong></td>
+            <td>インフラ＋API</td>
+            <td>プラットフォーム無料。LLM・サンドボックス・メール等は自前APIキー・サーバー費用</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        2023年GitHub版のように<strong>GPT-4 APIをループ呼び出し</strong>するとコストが膨らむ問題は、2026年プラットフォームでは<strong>Per-Task Budget Caps</strong>と<strong>Execution Cost Visibility</strong>で可視化・制御する方向に進んでいます。ただし複雑なエージェントほどクレジット消費は増えるため、本番運用前にDry-Runで試すのが現実的です。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <p>2026年6月時点では、非エンジニアはCloudのAutoPilot、エンジニアはセルフホストまたはBuilder＋APIの2導線が中心です。</p>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>Cloud：agpt.co からサインアップ</strong>
+            ProまたはMaxプランを選択。オンボーディングでSubscriptionStepが案内される（GitHubリリースノート・2026年）。
+          </li>
+          <li>
+            <strong>AutoPilotに業務を自然文で説明</strong>
+            例：「毎朝、競合3社のPricingページをチェックし、変更があればSlackに要約」。生成されたエージェントを確認・修正。
+          </li>
+          <li>
+            <strong>必要ならBuilderでブロックを調整</strong>
+            トリガー（Cron/Webhook）、LLMモデル、Human-in-the-Loop承認ステップを追加。
+          </li>
+          <li>
+            <strong>Runしてクレジット消費を確認</strong>
+            Task Cost Displayで実行コストを確認。予算上限を設定。
+          </li>
+          <li>
+            <strong>セルフホスト：GitHubからDocker Compose</strong>
+            <code>Significant-Gravitas/AutoGPT</code>リポジトリの手順に従い、BYOKで起動。Marketplace等のマネージド専用機能は自前構築が必要な場合あり。
+          </li>
+        </ol>
+        <figure>
+          <img src="../../assets/images/tools/autogpt/og-hero.png" alt="AutoGPTプラットフォームの公式イメージ。AutoPilot・Builder・Dashboard" width="600" height="338" loading="lazy">
+          <figcaption>出典：AutoGPT（Significant Gravitas）公式</figcaption>
+        </figure>
+      </div>
+      <p>
+        既存の<a href="../n8n/">n8n</a>・<a href="../make/">Make</a>・<a href="../zapier/">Zapier</a>フローがある場合は、公式のインポート機能でAutoGPTエージェントへ移行してからLLM推論ブロックを足す——という段階的移行も公式が想定しています。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>エグゼクティブオペレーション</h3>
+          <p>決算・ヘッドライン・社内KPIを毎朝ブリーフ。ダッシュボード監視の代わりにエージェントがランク付けして届ける（公式ユースケース）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>セールス事前調査</h3>
+          <p>明日の商談相手のアカウント履歴・ニュース・前回タッチを自動収集し、聞くべき3問を草案（公式）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>マーケティングキャンペーン</h3>
+          <p>ポジショニング・チャネル案・件名・ローンチチェックリストを一晩で草案。人間が編集して公開（公式）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>エンジニアリングインシデント</h3>
+          <p>ログと直近デプロイを突合し、Slackを開く前に仮説を提示。オンコールの初動を短縮（公式）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>カスタマーサポート</h3>
+          <p>チケットごとに返信草案・注文履歴・エスカレーション判定。人間はレビューして送信（公式）。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>定期Web監視・競合分析</h3>
+          <p>Cron＋Web Scraping＋LLM要約で「変化があったときだけ通知」——2023年版AutoGPTが目指した自律調査の実務版。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AutoPilotで非エンジニアもエージェント構築可能</td>
+            <td>Cloudに無料ティアなし——試すだけならセルフホストかコスト覚悟</td>
+          </tr>
+          <tr>
+            <td>200+ブロック・n8n/Make/Zapierインポートで既存資産活用</td>
+            <td>二層課金（サブスク＋クレジット）の理解が必要</td>
+          </tr>
+          <tr>
+            <td>MITセルフホストでデータ主権・カスタムブロック開発</td>
+            <td>セルフホストはBYOK・運用負荷（Docker・監視）が伴う</td>
+          </tr>
+          <tr>
+            <td>マルチLLM・予算上限・Human-in-the-Loopで運用設計しやすい</td>
+            <td>2023年版の「ループ暴走」系リスクは設計次第で再発しうる</td>
+          </tr>
+          <tr>
+            <td>AIエージェントカテゴリの「教科書的名前」を実務プラットフォームに接続</td>
+            <td>Manusのような「チャット1本で完遂」より初期設定の手間は増えがち</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Manus・n8n・ChatGPT Operatorとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>AutoGPT</th>
+            <th>Manus</th>
+            <th>n8n</th>
+            <th>ChatGPT Operator</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>中核</strong></td>
+            <td>設計したエージェントの反復実行</td>
+            <td>チャット1本の汎用タスク完遂</td>
+            <td>ワークフロー（ノード配線）</td>
+            <td>ChatGPT内のWeb操作エージェント</td>
+          </tr>
+          <tr>
+            <td><strong>構築</strong></td>
+            <td>AutoPilot / Visual Builder</td>
+            <td>自然文タスク指示のみ</td>
+            <td>GUI＋コードノード</td>
+            <td>agent modeで自然文</td>
+          </tr>
+          <tr>
+            <td><strong>実行環境</strong></td>
+            <td>Cloud Sandbox / セルフホスト</td>
+            <td>Manus Sandbox（仮想PC）</td>
+            <td>自社サーバー or n8n Cloud</td>
+            <td>OpenAI仮想ブラウザ</td>
+          </tr>
+          <tr>
+            <td><strong>課金</strong></td>
+            <td>Pro $50/月＋クレジット従量</td>
+            <td>日次300クレジット無料〜</td>
+            <td>Execution課金（セルフホスト無料）</td>
+            <td>ChatGPT Plus/Pro内のagent枠</td>
+          </tr>
+          <tr>
+            <td><strong>OSS</strong></td>
+            <td>MIT（セルフホスト可）</td>
+            <td>クローズド</td>
+            <td>Fair-code</td>
+            <td>クローズド</td>
+          </tr>
+          <tr>
+            <td><strong>向く用途</strong></td>
+            <td>繰り返し業務のエージェント資産化</td>
+            <td>都度の調査・資料・Webアプリ</td>
+            <td>API連携パイプライン</td>
+            <td>ChatGPT契約内のWebタスク</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        整理の一文：<strong>都度完遂ならManus、固定連携ならn8n/Zapier、再利用エージェント資産ならAutoGPT、ChatGPT内Web操作ならOperator（agent mode）</strong>——試験では「エージェント」という共通ラベルの下で、こう切り分けると得点しやすくなります。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>試験で「AutoGPT」の名前を実務イメージに結びつけたい受験生</strong></li>
+        <li><strong>マーケ・CS・Opsの繰り返し業務をエージェント化したいチーム</strong></li>
+        <li><strong>n8n/Make/Zapier資産にLLM推論を足したい自動化担当</strong></li>
+        <li><strong>MITセルフホストでエージェント基盤を社内に置きたいエンジニア</strong></li>
+      </ul>
+      <p>
+        あえて向いていないのは、<strong>チャット1発で資料まで届けてほしいだけ</strong>（<a href="../manus/">Manus</a>向け）、<strong>純粋なAPI連携だけ・AI判断不要</strong>（<a href="../zapier/">Zapier</a>/<a href="../make/">Make</a>向け）、<strong>リポジトリ実装の外注</strong>（<a href="../devin/">Devin</a>向け）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>2023年のGitHub版AutoGPTと今のagpt.coは同じですか？</summary>
+          <p class="tool-faq-a">同じSignificant Gravitas（Toran Bruce Richards）の系譜ですが、製品像は大きく進化しています。2023年3月のGitHub版はPython＋Dockerで目標を再帰実行する実験的OSSでした。2026年時点のagpt.coはAutoPilot・Visual Agent Builder・200+統合ブロック・Marketplaceを備えたマネージドプラットフォームです。試験では「AutoGPT＝自律エージェントの概念例」と「AutoGPT＝特定のプラットフォーム名」を分けて整理してください。</p>
+        </details>
+        <details>
+          <summary>AutoGPTは無料で使えますか？</summary>
+          <p class="tool-faq-a">技術者向けにはGitHubからDocker Composeでセルフホストすればプラットフォーム本体は無料（MIT）です。ただしLLM・サンドボックス等のAPIキーは自前（BYOK）が必要です。agpt.coのマネージドクラウドには無料ティアはなく、Pro $50/月またはMax $320/月のサブスクリプションに加え、エージェント実行はクレジットウォレットの従量課金です（2026年6月時点・公式Pricing）。</p>
+        </details>
+        <details>
+          <summary>AutoGPTとManusの違いは？</summary>
+          <p class="tool-faq-a">Manusはクラウド上のサンドボックス（仮想PC）で調査・資料・Webアプリなど汎用タスクをチャット1本で完遂させる自律エージェントです。AutoGPTは「自分で設計したエージェント」をVisual BuilderまたはAutoPilotで作り、Cron・Webhook・200+アプリ連携で繰り返し実行するプラットフォームです。都度の汎用タスク完遂か、再利用可能な自動化資産の構築か——が棲み分けです。</p>
+        </details>
+        <details>
+          <summary>AutoGPTとn8n・Make・Zapierの違いは？</summary>
+          <p class="tool-faq-a">n8n/Make/ZapierはiPaaS（アプリ連携ワークフロー）が中心で、AIはノードやAgents機能として追加されています。AutoGPTは最初からLLM推論・タスク計画・ブラウザ操作をエージェントの中核に置き、AutoPilotが会話からフローを生成します。固定フロー自動化ならiPaaS、AIが状況判断しながら繰り返す業務ならAutoGPT——という整理が試験・実務で有効です。AutoGPTはn8n/Make/Zapierからのインポートも公式サポートしています（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>サブスクリプションとクレジットウォレットの違いは？</summary>
+          <p class="tool-faq-a">公式Pricingによると、Pro/Maxサブスクリプションは主にAutoPilot Chatの利用枠とサポートレベルを決めます（MaxはProの8.5倍のChat allowance）。エージェント・ワークフローの実行（automations）は全プラン共通でクレジットウォレットの従量課金です。Chatで設計し、Runでクレジットが消える——という二層課金を押さえておくと料金表の読み方が混乱しにくくなります（2026年6月時点）。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://agpt.co" target="_blank" rel="noopener noreferrer">AutoGPT（agpt.co）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://agpt.co/pricing" target="_blank" rel="noopener noreferrer">料金（Pricing）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener noreferrer">GitHub（OSS）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../manus/"><img src="../../assets/images/tools/manus/app-icon.png" alt="" width="16" height="16"> Manus</a></li>
+          <li><a href="../devin/"><img src="../../assets/images/tools/devin/app-icon.png" alt="" width="16" height="16"> Devin</a></li>
+          <li><a href="../chatgpt-operator/"><img src="../../assets/images/tools/openai.svg" alt="" width="16" height="16"> ChatGPT Operator</a></li>
+          <li><a href="../n8n/"><img src="../../assets/images/tools/n8n/app-icon.png" alt="" width="16" height="16"> n8n</a></li>
+          <li><a href="../zapier/"><img src="../../assets/images/tools/zapier/app-icon.png" alt="" width="16" height="16"> Zapier</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li><a href="../../glossary/prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
