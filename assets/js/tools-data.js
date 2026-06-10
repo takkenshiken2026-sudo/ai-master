@@ -738,6 +738,7 @@ const TOOLS = [
     logo: "zoom-ai-companion.png",
     cat: "audio",
     catLabel: "音声・動画・音楽",
+    article: true,
     tagline: "会議AIとしてNotta・Otter.aiと並んで比較されることが多い",
     url: "https://www.zoom.com/en/products/ai-assistant/",
   },
