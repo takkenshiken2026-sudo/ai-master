@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Slack AIの機能・料金・使い方を解説。2025年のアドオン廃止とプラン同梱、Slackbot・Enterprise Search、Notion AI・M365 Copilot・Fireflies.aiとの違いまで。生成AIパスポート対策にも。">
+  <title>Slack AIとは？機能・料金・使い方をわかりやすく解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/slack-ai/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Slack AIとは？機能・料金・使い方をわかりやすく解説">
+  <meta property="og:description" content="Slack AIのアドオン廃止とプラン同梱、Slackbot・Recaps・Enterprise Search、管理者によるAI制御を2026年6月時点で整理。">
+  <meta property="og:url" content="https://ai-master.jp/tools/slack-ai/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/slack-ai/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/slack-ai/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/slack-ai/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Slack AI", "item": "https://ai-master.jp/tools/slack-ai/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/slack-ai/#article",
+        "headline": "Slack AIとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Slack AIのアドオン廃止とプラン同梱、Slackbot・Recaps・Enterprise Search、管理者によるAI制御を2026年6月時点で整理。",
+        "url": "https://ai-master.jp/tools/slack-ai/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/slack-ai/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/slack-ai/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Slack AI" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/slack-ai/#webpage",
+        "url": "https://ai-master.jp/tools/slack-ai/",
+        "name": "Slack AIとは？機能・料金・使い方をわかりやすく解説",
+        "description": "Slack AIのアドオン廃止とプラン同梱、Slackbot・Recaps・Enterprise Search、管理者によるAI制御を2026年6月時点で整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/slack-ai/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Slack AI",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, Windows, macOS, iOS, Android",
+        "description": "Slackワークスペース内の会話・ファイル・連携アプリをAIで要約・検索・自動化する機能群。Salesforce傘下。",
+        "offers": {
+          "@type": "Offer",
+          "price": "7.25",
+          "priceCurrency": "USD",
+          "description": "Basic AIはFree/Proから。Advanced AIはBusiness+ $15/席/月（年払い）〜。Enterprise SearchはEnterprise+（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Salesforce",
+          "url": "https://www.salesforce.com/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Slack AIは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Freeプランでも会話・スレッド要約とハドルノートなどBasic AIが利用できます。Recaps・翻訳・Slackbot・Search answers等のAdvanced AIはBusiness+以上、Enterprise SearchはEnterprise+が必要です（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Slack AIアドオンはまだ買えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。2025年6月の発表以降、Slack AIアドオンの新規購入は終了し、AI機能は各Slackプランに同梱されました。既存アドオン契約者は2025年8月17日以降の初回更新時に新プランへ移行します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Slack AIは社内データをLLM学習に使いますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Slack公式は、顧客データをLLMの学習に使用せず、LLMプロバイダーも顧客データにアクセスしないと明記しています。LLMはSlackのAWS VPC内でホストされ、Slackの信頼境界内で処理されます（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Slack AIとFireflies.aiの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Slack AIはSlack内のチャンネル・ハドル・ファイルを要約・検索するネイティブ機能です。Fireflies.aiはZoom/Meet等に参加する外部ボット型の会議文字起こしサービス。Slack連携は可能ですが、主戦場と録音の仕組みが異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Slack AIとMicrosoft 365 Copilotの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "M365 CopilotはWord/Excel/TeamsとMicrosoft Graph上のメール・SharePointを前提にします。Slack AIはSlackの会話履歴と連携アプリ（Google Drive、GitHub、Salesforce等）が中心で、チャットワークフロー内にAIが埋め込まれる点が強みです。組織のコミュニケーション基盤で選び分けます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Slack AI</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/slack-ai/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">Salesforce · 仕事効率化</p>
+          <h1>Slack AIとは？機能・料金・使い方をわかりやすく解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">チャンネル要約・Slackbot・Enterprise Search——Slackの会話そのものをAIの入力にする</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">プラン同梱</span>
+        <span class="tool-category">会話要約</span>
+        <span class="tool-category">Agentforce</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web · Desktop · Mobile</li>
+          <li>Slack huddles</li>
+          <li>Google Drive · GitHub · Salesforce 等</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/slack-ai/og-hero.png" alt="Slack AIの公式イメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Slack公式（slack.com/features/ai）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約9分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Slack AI</strong>（スラック・エーアイ）は、<strong>Salesforce</strong>傘下の<strong>Slack</strong>に組み込まれた<strong>AI機能群</strong>です。別アプリを開かず、チャンネル・スレッド・ハドル（音声ミーティング）・Canvas上で要約・検索・翻訳・ワークフロー生成が動きます。本記事は機能名の羅列ではなく、<strong>2025年6月の「AIアドオン廃止→プラン同梱」</strong>という業界動向、<strong>Basic / Advanced / Enterprise Searchの三段階</strong>、<strong>Slackbot・Today</strong>と<strong>Agentforce</strong>連携、<strong>管理者によるAI機能の個別制御</strong>に絞って書いています。<a href="../notion-ai/">Notion AI</a>・<a href="../microsoft-365-copilot/">Microsoft 365 Copilot</a>・<a href="../fireflies-ai/">Fireflies.ai</a>との棲み分けも整理します。料金・機能は<strong>2026年6月時点</strong>のSlack公式Helpに基づき、契約前に必ず再確認してください。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Slack AIとは</a></li>
+        <li><a href="#addon-to-bundle">アドオン廃止とプラン同梱</a></li>
+        <li><a href="#ai-by-plan">プラン別AI機能マトリクス</a></li>
+        <li><a href="#slackbot-today">SlackbotとToday</a></li>
+        <li><a href="#enterprise-search">Enterprise SearchとAgentforce</a></li>
+        <li><a href="#admin-controls">管理者によるAI制御</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン</a></li>
+        <li><a href="#how-to">使い方・はじめ方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">Notion AI・M365 Copilot・Firefliesとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、業務チャットの要約、会議メモ、社内情報の取り扱いが論点になります。Slack AIは<strong>「既存のコミュニケーションツールにAIが統合された例」</strong>として、ChatGPTのような汎用チャットと区別して覚えると整理しやすいです。
+      </p>
+      <p>
+        試験で効くポイントは次の3つです。
+      </p>
+      <ul>
+        <li><strong>Slack AI＝Slack本体の機能</strong> — 別製品ではなく、プランに含まれる（旧アドオンは2025年に廃止）</li>
+        <li><strong>要約≠確定議事録</strong> — AI要約は下書き。公開前に人間が確認（TF-0350）</li>
+        <li><strong>データ学習なし（公式）</strong> — 顧客データをLLM学習に使わないとSlack公式が明記。機密入力の判断は社内ルールと併用（TF-0289）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0201/">一問一答 TF-0201（テキスト生成AIの活用）</a>、<a href="../../exams/genai-passport/drill/q/tf-0447/">TF-0447（文字起こしから議事録下書き）</a>、<a href="../../exams/genai-passport/drill/q/tf-0350/">TF-0350（公開前の確認事項）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a>
+        </p>
+        <p>
+          関連ツール比較：<a href="../notion-ai/">Notion AI</a> · <a href="../microsoft-365-copilot/">Microsoft 365 Copilot</a> · <a href="../fireflies-ai/">Fireflies.ai</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Slack AIとは</h2>
+      <p>
+        Slack AIは、組織がSlackに蓄積した<strong>会話履歴・ファイル・連携アプリのデータ</strong>をAIが参照し、要約・検索・翻訳・ワークフロー自動化を提供する機能群です。2023〜2024年にPilotを経て展開され、当初は<strong>Slack AIアドオン</strong>（有料オプション）として提供されていました。
+      </p>
+      <p>
+        Slack公式の差別化ポイントは「<strong>ブラウザの別タブではなく、すでに使っているSlackの中</strong>」にAIがあることです。チャンネル要約、スレッド要約、ハドルノート、Recaps（日次ダイジェスト）、Search answers（自然言語検索）、Slackbot（個人AIエージェント）などが、サイドバーやメッセージ上から呼び出せます。
+      </p>
+      <p>
+        2024年7月、SalesforceはSlack AI for Enterprise Gridに<strong>Enterprise Search</strong>を追加。2025年6月にはAI機能の提供方法を大きく変更し、<strong>アドオン廃止・プラン同梱</strong>へ移行しました（Slack Help Center）。
+      </p>
+    </section>
+
+    <section id="addon-to-bundle">
+      <h2>アドオン廃止とプラン同梱</h2>
+      <p>
+        2025年6月、Slackはプラン変更を発表しました（Help: Updates to feature availability and pricing）。本記事の独自切り口は、この<strong>パッケージ転換</strong>です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>時期</th>
+            <th>提供形態</th>
+            <th>ユーザーへの意味</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>〜2025年6月</strong></td>
+            <td>Slack AI<strong>アドオン</strong>（別途購入）</td>
+            <td>Pro等＋AIアドオンでAdvanced AIを追加課金</td>
+          </tr>
+          <tr>
+            <td><strong>2025年6月発表</strong></td>
+            <td>アドオン<strong>新規販売終了</strong></td>
+            <td>Webサイトからのアドオン購入不可</td>
+          </tr>
+          <tr>
+            <td><strong>2025年8月17日以降の更新</strong></td>
+            <td>既存アドオン契約も<strong>新プランへ移行</strong></td>
+            <td>ProはBasic AIのみ維持。Recaps等はBusiness+へ</td>
+          </tr>
+          <tr>
+            <td><strong>2026年6月時点</strong></td>
+            <td>AI機能は<strong>Free/Pro/Business+/Enterprise+</strong>に段階同梱</td>
+            <td>「AI Tax」——コアプランへのAIバンドル化</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        これは<a href="../microsoft-365-copilot/">Microsoft 365 Copilot</a>のように「本体＋高額アドオン」型とは異なり、Slackは<strong>Business+の値上げ（Advanced AI同梱）</strong>と<strong>Enterprise+新設（Enterprise Search同梱）</strong>でAIを取り込みました。契約更新時に「アドオン料金が消えた＝実質値下げ」と勘違いせず、<strong>新Business+の単価上昇</strong>を確認することが重要です。
+      </p>
+    </section>
+
+    <section id="ai-by-plan">
+      <h2>プラン別AI機能マトリクス</h2>
+      <p>Slack Help「Slack plans and features」「Manage access to AI features」に基づく<strong>2026年6月時点</strong>の整理です。</p>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>AI機能</th>
+            <th>Free</th>
+            <th>Pro</th>
+            <th>Business+</th>
+            <th>Enterprise+</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Conversation / thread summaries</strong></td>
+            <td>○</td>
+            <td>○</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Huddle notes</strong></td>
+            <td>○</td>
+            <td>○</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Search answers</strong></td>
+            <td>—</td>
+            <td>○</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Recaps</strong>（日次ダイジェスト）</td>
+            <td>—</td>
+            <td>—</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>File summaries / Translations</strong></td>
+            <td>—</td>
+            <td>—</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Workflow generation / AI workflow steps</strong></td>
+            <td>—</td>
+            <td>—</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Slackbot</strong>（個人AIエージェント）</td>
+            <td>—</td>
+            <td>—</td>
+            <td>○</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise search</strong>（外部アプリ横断）</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>○</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        ざっくり言うと、<strong>Basic AI</strong>（要約・ハドルノート）はFree/Proから、<strong>Advanced AI</strong>（Recaps・翻訳・Slackbot等）はBusiness+から、<strong>Enterprise Search</strong>はEnterprise+限定——という三層です。試験では「Slack AI＝全部無料」も「全部Enterprise+必須」も×です。
+      </p>
+    </section>
+
+    <section id="slackbot-today">
+      <h2>SlackbotとToday</h2>
+      <p>
+        Slack AIには、チャンネル横断の要約機能とは別軸の<strong>パーソナルAI</strong>があります。
+      </p>
+
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Slackbot</h3>
+          <p>ワークスペースとユーザーを理解する個人AIエージェント。会議準備、レポート分析、プロジェクトブリーフ作成。トーンを学習（Business+以上）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Today</h3>
+          <p>未読メッセージの壁から「今日やるべきこと」を抽出するインテリジェント・ブリーフィング（Early Access、Slack公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Recaps</h3>
+          <p>チャンネル活動の日次ダイジェスト。Slack公式Pilotでは週<strong>97分</strong>の時間節約（社内分析）を公表。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Message explanations</h3>
+          <p>専門用語や社内略語の説明。グローバルチームのオンボーディングに有効（Business+以上）。</p>
+        </div>
+      </div>
+
+      <p>
+        「要約ボタン」と「Slackbot/Today」は用途が異なります。前者は<strong>特定チャンネルの情報圧縮</strong>、後者は<strong>個人の優先度に基づくブリーフィング</strong>——試験より実務ですが、導入説明では分けて伝えると現場の納得感が上がります。
+      </p>
+    </section>
+
+    <section id="enterprise-search">
+      <h2>Enterprise SearchとAgentforce</h2>
+      <p>
+        <strong>Enterprise Search</strong>（Enterprise+）は、Slack内の会話・ファイルに加え、接続した外部アプリを横断検索する機能です。2026年6月時点でSlack公式は<strong>Google Drive</strong>と<strong>GitHub</strong>をサポートし、SharePoint・OneDrive・Jira等は「coming soon」と案内しています（Slack Blog）。
+      </p>
+      <p>
+        技術的には<strong>RAG</strong>で、各システムの<strong>権限設定を尊重</strong>しながら結果を返します。これは<a href="../microsoft-365-copilot/">Microsoft 365 Copilot</a>のGraph接地と対照的に、<strong>Slack中心組織の federated search</strong>という位置づけです。
+      </p>
+      <p>
+        さらにSlackは<strong>Agentforce</strong>（Salesforceのエージェント基盤）の会話UIとして機能します。AgentforceエージェントがSlackチャンネル・スレッド・DM上で動作し、Enterprise Search経由でリアルタイムメッセージ・ファイル・アプリデータを参照できます。Adobe Express、Asana、Box、Cohere、Workday、Writer等の<strong>Marketplaceエージェント</strong>も利用可能です（Slack公式FAQ）。
+      </p>
+    </section>
+
+    <section id="admin-controls">
+      <h2>管理者によるAI制御</h2>
+      <p>
+        Slack AIは便利な反面、要約・検索の<strong>情報漏えいリスク</strong>をIT部門が懸念しがちです。Slack公式は、オーナー/管理者が<strong>AI機能ごとに利用者を制限</strong>できると明記しています（Help: Manage access to AI features）。
+      </p>
+      <ul>
+        <li><strong>Everyone / No one</strong> — 機能単位で全員許可または全員禁止</li>
+        <li><strong>Huddle notes</strong> — チャンネルでの自動ノート設定可否</li>
+        <li><strong>Search / Slackbot</strong> — ファイルを回答生成に使うか、回答共有可否</li>
+        <li><strong>Slackbot</strong> — Canvasの自動作成・編集可否</li>
+      </ul>
+      <p>
+        Search answersのファイル設定はSlackbotにも適用されます（公式Note）。<strong>「AIを入れたが規制業界で使えない」</strong>ケースでは、機能単位OFFが可能かどうかを事前に確認してください。
+      </p>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        「<strong>Slack AI＝Fireflies.ai</strong>」——Firefliesは外部会議ボットがZoom等に参加して文字起こしします。Slack AIは<strong>Slack内のハドル・チャンネル</strong>が対象で、録音インフラが異なります。
+      </p>
+      <p>
+        「<strong>Slack AIアドオンを買えばAdvanced AI</strong>」——2025年6月以降、新規アドオン販売は終了。Advanced AIは<strong>Business+以上</strong>へのプランアップグレードが必要です。
+      </p>
+      <p>
+        「<strong>要約したから議事録確定</strong>」——AI要約は下書き。決定事項・アクションアイテムは人間が確認してから共有（TF-0350）。
+      </p>
+      <p>
+        「<strong>Enterprise Search＝Business+でも使える</strong>」——Enterprise Searchは<strong>Enterprise+限定</strong>。Business+はSlack内Advanced AIまでです。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン</h2>
+      <p>
+        AI機能はプランに同梱されるため、<strong>Slack本体の席単価</strong>が実質的なAI料金です。以下はSlack公式Pricingの<strong>2026年6月時点</strong>のUSD目安（年払い）。日本円・地域差は公式で確認してください。
+      </p>
+
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Free</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">Basic AI（要約・ハドルノート）</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Pro</p>
+          <p class="tool-plan-price">$7.25/席</p>
+          <p class="tool-plan-note">年払い・Search answers等</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Business+</p>
+          <p class="tool-plan-price">$15/席</p>
+          <p class="tool-plan-note">年払い・Advanced AI同梱</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Enterprise+</p>
+          <p class="tool-plan-price">要問合せ</p>
+          <p class="tool-plan-note">Enterprise Search・Grid</p>
+        </div>
+      </div>
+
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>プラン</th>
+            <th>月額目安（年払い）</th>
+            <th>AI tier</th>
+            <th>主な追加価値</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free</strong></td>
+            <td>$0</td>
+            <td>Basic AI</td>
+            <td>要約・ハドルノート（90日履歴等の制限あり）</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>$7.25/席</td>
+            <td>Basic AI＋Search</td>
+            <td>無制限履歴・Search answers</td>
+          </tr>
+          <tr>
+            <td><strong>Business+</strong></td>
+            <td>$15/席</td>
+            <td>Advanced AI</td>
+            <td>Recaps・翻訳・Slackbot・Workflow AI</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise+</strong></td>
+            <td>要問合せ</td>
+            <td>Advanced＋Enterprise Search</td>
+            <td>外部アプリ横断検索・Agentforce</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Business+は2025年のAI同梱に伴い<strong>値上げ</strong>されています。旧アドオン契約からの移行時は、機能維持に必要なプランをRenewal前に確認してください。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>使い方・はじめ方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>プランを確認する</strong>
+            利用したいAI機能（Recaps、Slackbot、Enterprise Search等）がプランに含まれるか確認します。
+          </li>
+          <li>
+            <strong>管理者設定を確認する</strong>
+            IT部門がAI機能を制限していないか、Settings → AI featuresを確認します。
+          </li>
+          <li>
+            <strong>チャンネル要約を試す</strong>
+            チャンネル名横の「✨」または要約メニューから、未読チャンネルのダイジェストを生成します。
+          </li>
+          <li>
+            <strong>ハドルノートを有効化</strong>
+            ハドル開始時にAIノートをON。終了後に要約・アクションアイテムを確認します。
+          </li>
+          <li>
+            <strong>Slackbot / Search answersを活用</strong>
+            Business+以上では自然言語で社内情報を検索。回答は必ず人が検証します。
+          </li>
+        </ol>
+        <div class="tool-split__media">
+          <figure class="tool-figure">
+            <img src="../../assets/images/tools/slack-ai/og-hero.png" alt="Slack AIの公式プロモーション" width="600" height="314" loading="lazy">
+            <figcaption>出典：Slack公式（slack.com/features/ai）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>営業（Sales）</h3>
+          <ul>
+            <li>アカウントチャンネルのRecapsで案件状況を朝一把握</li>
+            <li>Slackbotで顧客ミーティング準備</li>
+            <li>Salesforce連携AgentforceでCRM参照</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>エンジニアリング</h3>
+          <ul>
+            <li>インシデントチャンネルのスレッド要約</li>
+            <li>Enterprise SearchでGitHubの過去Issue検索</li>
+            <li>ハドルノートで障害対応の記録</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>カスタマーサポート</h3>
+          <ul>
+            <li>長いエスカレーションチャンネルの要約</li>
+            <li>翻訳機能でグローバルサポート</li>
+            <li>Workflow AIでチケット連携自動化</li>
+          </ul>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>マーケティング</h3>
+          <ul>
+            <li>キャンペーンチャンネルのファイル要約</li>
+            <li>多言語チーム向けインライン翻訳</li>
+            <li>Canvas AIでブリーフ生成</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-spec-table tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th class="tool-pros-cons-th tool-pros-cons-th--pro">メリット</th>
+            <th class="tool-pros-cons-th tool-pros-cons-th--con">デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Slack内完結——別タブのAI不要</td>
+            <td>Advanced AIはBusiness+以上（コスト増）</td>
+          </tr>
+          <tr>
+            <td>会話履歴という組織資産を直接活用</td>
+            <td>M365/Notion中心組織には効きにくい</td>
+          </tr>
+          <tr>
+            <td>顧客データをLLM学習に使わない（公式）</td>
+            <td>Enterprise SearchはEnterprise+限定</td>
+          </tr>
+          <tr>
+            <td>管理者がAI機能を機能単位で制御可能</td>
+            <td>要約精度・ハルシネーションは人間確認必須</td>
+          </tr>
+          <tr>
+            <td>Agentforce/Salesforceエコシステム連携</td>
+            <td>2025年アドオン廃止で契約整理が必要</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>Notion AI・M365 Copilot・Firefliesとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>Slack AI</th>
+            <th><a href="../notion-ai/">Notion AI</a></th>
+            <th><a href="../microsoft-365-copilot/">M365 Copilot</a></th>
+            <th><a href="../fireflies-ai/">Fireflies.ai</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>主戦場</td>
+            <td>Slackチャンネル/DM</td>
+            <td>Notionページ/DB</td>
+            <td>Word/Excel/Teams</td>
+            <td>Zoom/Meet/Teams会議</td>
+          </tr>
+          <tr>
+            <td>入力データ</td>
+            <td>Slack会話・ファイル</td>
+            <td>Notion＋連携アプリ</td>
+            <td>Microsoft Graph</td>
+            <td>会議音声</td>
+          </tr>
+          <tr>
+            <td>課金形態</td>
+            <td>プラン同梱（2025年〜）</td>
+            <td>Business $20/人〜</td>
+            <td>M365＋$21〜$30/人</td>
+            <td>Free〜$39/席</td>
+          </tr>
+          <tr>
+            <td>会議文字起こし</td>
+            <td>ハドルノート（Slack内）</td>
+            <td>AI Meeting Notes</td>
+            <td>Teams要約</td>
+            <td>外部ボット型（Fred）</td>
+          </tr>
+          <tr>
+            <td>向く組織</td>
+            <td>Slack中心のチーム</td>
+            <td>Notion中心のチーム</td>
+            <td>Microsoft 365中心</td>
+            <td>多ツール会議録</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Slack AIは「<strong>チャットが主データ</strong>」の組織向け、Firefliesは「<strong>外部会議が主データ</strong>」向け——併用も多いです。SlackにFireflies通知を流す構成はある一方、機能の重複部分（要約）はどちらを正とするか社内ルール化が必要です。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>すでにSlackを全社コミュニケーション基盤にしているチーム</strong></li>
+        <li><strong>チャンネル未読・長スレッドの消化に時間を取られている現場リーダー</strong></li>
+        <li><strong>Salesforce/AgentforceをSlackから触りたい営業・CS組織</strong></li>
+        <li><strong>試験で「業務ツール統合型AI」のSlack例を押さえたい学習者</strong></li>
+      </ul>
+      <p>
+        あえて向いていないのは、<strong>Microsoft Teams/365が主戦場</strong>の組織（M365 Copilot優先）、<strong>FreeプランだけでAdvanced AIを期待</strong>するケース、<strong>Zoom会議の文字起こしだけ</strong>が目的の場合（Fireflies等の方が直球）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Slack AIは無料で使えますか？</summary>
+          <p class="tool-faq-a">Freeプランでも会話・スレッド要約とハドルノートなどBasic AIが利用できます。Recaps・翻訳・Slackbot・Search answers等のAdvanced AIはBusiness+以上、Enterprise SearchはEnterprise+が必要です（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>Slack AIアドオンはまだ買えますか？</summary>
+          <p class="tool-faq-a">いいえ。2025年6月の発表以降、Slack AIアドオンの新規購入は終了し、AI機能は各Slackプランに同梱されました。既存アドオン契約者は2025年8月17日以降の初回更新時に新プランへ移行します。</p>
+        </details>
+        <details>
+          <summary>Slack AIは社内データをLLM学習に使いますか？</summary>
+          <p class="tool-faq-a">Slack公式は、顧客データをLLMの学習に使用せず、LLMプロバイダーも顧客データにアクセスしないと明記しています。LLMはSlackのAWS VPC内でホストされ、Slackの信頼境界内で処理されます（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>Slack AIとFireflies.aiの違いは？</summary>
+          <p class="tool-faq-a">Slack AIはSlack内のチャンネル・ハドル・ファイルを要約・検索するネイティブ機能です。Fireflies.aiはZoom/Meet等に参加する外部ボット型の会議文字起こしサービス。Slack連携は可能ですが、主戦場と録音の仕組みが異なります。</p>
+        </details>
+        <details>
+          <summary>Slack AIとMicrosoft 365 Copilotの違いは？</summary>
+          <p class="tool-faq-a">M365 CopilotはWord/Excel/TeamsとMicrosoft Graph上のメール・SharePointを前提にします。Slack AIはSlackの会話履歴と連携アプリ（Google Drive、GitHub、Salesforce等）が中心で、チャットワークフロー内にAIが埋め込まれる点が強みです。組織のコミュニケーション基盤で選び分けます。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://slack.com/features/ai" target="_blank" rel="noopener noreferrer">Slack AI</a>
+      ·
+      <a href="https://slack.com/help/articles/115003205446-Slack-plans-and-features" target="_blank" rel="noopener noreferrer">Slack plans and features</a>
+      ·
+      <a href="https://slack.com/help/articles/39264531104275-Updates-to-feature-availability-and-pricing-for-Slack-plans" target="_blank" rel="noopener noreferrer">AI pricing updates（2025）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../notion-ai/"><img src="../../assets/images/tools/notion-ai/app-icon.png" alt="" width="16" height="16"> Notion AI</a></li>
+          <li><a href="../microsoft-365-copilot/"><img src="../../assets/images/tools/microsoft-365-copilot/app-icon.png" alt="" width="16" height="16"> Microsoft 365 Copilot</a></li>
+          <li><a href="../fireflies-ai/"><img src="../../assets/images/tools/fireflies-ai/app-icon.png" alt="" width="16" height="16"> Fireflies.ai</a></li>
+          <li><a href="../copilot/"><img src="../../assets/images/tools/microsoft.svg" alt="" width="16" height="16"> Microsoft Copilot</a></li>
+          <li><a href="../zapier/"><img src="../../assets/images/tools/zapier/app-icon.png" alt="" width="16" height="16"> Zapier</a></li>
+          <li><a href="../make/"><img src="../../assets/images/tools/make/app-icon.png" alt="" width="16" height="16"> Make</a></li>
+          <li class="tool-related-list__soon">Zoom AI Companion <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__soon">Google Workspace AI <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/rag/">RAG</a></li>
+          <li><a href="../../glossary/llm/">大規模言語モデル（LLM）</a></li>
+          <li><a href="../../glossary/semantic-search/">セマンティック検索</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>

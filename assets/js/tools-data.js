@@ -879,6 +879,7 @@ const TOOLS = [
     logo: "slack-ai.ico",
     cat: "productivity",
     catLabel: "仕事効率化・資料・翻訳",
+    article: true,
     tagline: "国内法人利用が多いSlackのAI機能",
     url: "https://slack.com/features/ai",
   },
