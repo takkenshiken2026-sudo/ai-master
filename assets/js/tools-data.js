@@ -150,6 +150,7 @@ const TOOLS = [
     logo: "writesonic.png",
     cat: "chat",
     catLabel: "チャットAI",
+    article: true,
     tagline: "SEO記事・広告文のAI生成に特化",
     url: "https://writesonic.com",
   },
