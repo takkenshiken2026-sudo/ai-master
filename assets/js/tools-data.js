@@ -1036,6 +1036,7 @@ const TOOLS = [
     logo: "dify.png",
     cat: "local",
     catLabel: "ローカル・上級者向け",
+    article: true,
     tagline: "国内でのLLMアプリ構築プラットフォームとして認知度が上昇中",
     url: "https://dify.ai",
   },

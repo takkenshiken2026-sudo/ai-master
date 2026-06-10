@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Difyの機能・料金・使い方を解説。RAG・Agent・Workflowを一体構築するLLMアプリ基盤、MCP連携、セルフホスト、message credits。n8n・Ollamaとの違い。生成AIパスポート対策にも。">
+  <title>Difyとは？RAGとAgentic Workflowを一体構築するLLM基盤を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/tools/dify/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="Difyとは？RAGとAgentic Workflowを一体構築するLLM基盤を解説">
+  <meta property="og:description" content="LangGeniusのDify。チャットボット・Agent・Workflow・RAGをGUIで構築。Sandbox無料200 credits、Professional $59/月。Dockerセルフホスト可（2026年6月時点）。">
+  <meta property="og:url" content="https://ai-master.jp/tools/dify/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/tools/dify/og-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/tools/dify/og-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/tools/dify/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "AIツール", "item": "https://ai-master.jp/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Dify", "item": "https://ai-master.jp/tools/dify/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/tools/dify/#article",
+        "headline": "Difyとは？RAGとAgentic Workflowを一体構築するLLM基盤を解説",
+        "description": "LangGeniusのDify。チャットボット・Agent・Workflow・RAGをGUIで構築。Sandbox無料200 credits、Professional $59/月。Dockerセルフホスト可（2026年6月時点）。",
+        "url": "https://ai-master.jp/tools/dify/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/tools/dify/og-hero.png",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@type": "Organization", "name": "AI Master", "url": "https://ai-master.jp/" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/tools/dify/#webpage" },
+        "about": { "@type": "SoftwareApplication", "name": "Dify" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/tools/dify/#webpage",
+        "url": "https://ai-master.jp/tools/dify/",
+        "name": "Difyとは？RAGとAgentic Workflowを一体構築するLLM基盤を解説",
+        "description": "LangGeniusのDify。チャットボット・Agent・Workflow・RAGをGUIで構築。Sandbox無料200 credits、Professional $59/月。Dockerセルフホスト可（2026年6月時点）。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/tools/dify/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Dify",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web, Docker（セルフホスト）",
+        "description": "オープンソースのLLMアプリ開発基盤。RAG、Agentic Workflow、MCP、モデル管理、ObservabilityをGUIで統合。",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Sandbox $0（200 message credits/月）。Professional $59/ワークスペース/月。セルフホストCommunity無料（2026年6月時点）"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "LangGenius",
+          "url": "https://dify.ai"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Difyとn8nの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "n8nはSaaS/API連携をノードでつなぐiPaaS（ワークフロー自動化）が中心で、AIはノードの一つです。Difyは最初からLLMアプリ（RAG・Agent・チャットボット）の設計・公開・監視を一体化したLLMOps基盤です。Slack通知の自動化ならn8n、社内FAQボットやRAGエージェントのプロトタイプ〜本番ならDify——という棲み分けが試験・実務で有効です（2026年6月時点）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Difyは無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。CloudのSandboxプランは$0で200 message credits/月、5アプリ、50ナレッジドキュメントが使えます。セルフホストはGitHubからDocker ComposeでCommunity Editionを無料デプロイ可能です（CPU 2コア・RAM 4GB以上推奨）。本番向けはProfessional $59/ワークスペース/月から（2026年6月時点・公式Pricing）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "DifyとOllamaの関係は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OllamaはローカルLLMランタイム、Difyはその上に載るアプリ構築プラットフォームです。DifyはOpenAI/Anthropicに加えOllamaやOpenAI互換APIをモデルプロバイダとして接続でき、RAGやAgentをGUIで組み立ててWeb/APIとして公開します。LLMを動かすのがOllama、LLMアプリを作るのがDify——と整理すると混乱しにくくなります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "message creditsとは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Dify Cloudでは、LLM推論やアプリ実行にmessage creditsが消費されます。Sandboxは200 credits/月、Professionalは5,000 credits/月、Teamは10,000 credits/月（2026年6月時点・公式Pricing）。WorkflowのTrigger Events（Sandbox 3,000/月等）は別枠で管理されます。セルフホストCommunityはDify側のcredits制限なく、接続先LLMのAPI料金のみが発生します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "セルフホストのライセンスに注意点は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Difyは改変Apache License 2.0です。商用利用は可能ですが、書面許可なくマルチテナント（複数Workspaceを外部に提供）運用は不可、フロントエンド利用時はDifyのロゴ・著作表示を削除・改変不可——という追加条件があります（GitHub LICENSE）。同一Dockerイメージにライセンスで機能差を付けるPremium/Enterpriseも公式に存在します（2026年6月時点）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../index.html" class="active">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">AIツール</a></li>
+      <li aria-current="page">Dify</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split">
+    <div class="tool-hero-body">
+      <div class="tool-hero-brand">
+        <img src="../../assets/images/tools/dify/app-icon.png" alt="" width="52" height="52" class="tool-hero-app-icon">
+        <div>
+          <p class="tool-hero-eyebrow">LangGenius · ローカル・上級者向け</p>
+          <h1>Difyとは？RAGとAgentic Workflowを一体構築するLLM基盤を解説</h1>
+        </div>
+      </div>
+      <p class="tool-hero-maker">プロトタイプから本番まで——RAG・Agent・Workflow・Observabilityを1つのWorkspaceに</p>
+      <div class="tool-hero-meta">
+        <span class="tool-category">Sandbox 無料</span>
+        <span class="tool-category">Dockerセルフホスト</span>
+        <span class="tool-category">MCP対応</span>
+      </div>
+      <div class="tool-platform-bar">
+        <span class="tool-platform-label">対応環境</span>
+        <ul class="tool-platform-chips">
+          <li>Web（dify.ai Cloud）</li>
+          <li>Docker Compose</li>
+          <li>Webapp / API公開</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/tools/dify/og-hero.png" alt="Dify公式のAgentic Workflowプラットフォームイメージ" width="800" height="450" fetchpriority="high">
+      <figcaption>出典：Dify（LangGenius）公式</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約10分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Dify</strong>（ディファイ）は、<strong>LangGenius</strong>が提供する<strong>オープンソースのLLMアプリ開発基盤</strong>です。チャットボット・<strong>RAG</strong>・<strong>Agent</strong>・<strong>Workflow</strong>をGUIで設計し、WebアプリやAPIとして公開、Langfuse等で<strong>Observability</strong>まで一気通貫できます。GitHubで<strong>14万+スター</strong>（2026年6月時点）を超え、国内でも「LLMアプリを素早く作る基盤」として認知が広がっています。本記事は機能網羅ではなく、<strong>n8n（iPaaS）やOllama（ランタイム）との層の違い</strong>、<strong>4種のアプリタイプ</strong>、<strong>改変Apacheライセンス</strong>に絞って整理します。料金・上限は<strong>2026年6月時点</strong>です。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Difyとは</a></li>
+        <li><a href="#app-types">4種のアプリタイプ</a></li>
+        <li><a href="#rag-mcp">RAG・MCP・Observability</a></li>
+        <li><a href="#self-host">セルフホストとライセンス</a></li>
+        <li><a href="#features">できること（主な機能）</a></li>
+        <li><a href="#misconception">よくある誤解</a></li>
+        <li><a href="#pricing">料金プラン（2026年6月時点）</a></li>
+        <li><a href="#how-to">はじめ方・基本的な使い方</a></li>
+        <li><a href="#use-cases">ビジネスでの活用例</a></li>
+        <li><a href="#pros-cons">メリット・デメリット</a></li>
+        <li><a href="#comparison">n8n・Ollama・Zapierとの比較</a></li>
+        <li><a href="#recommend">こんな人におすすめ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートでは、<strong>RAG</strong>、<strong>AIエージェント</strong>、<strong>業務データの取り扱い</strong>がセットで問われます。Difyは「RAGパイプライン＋公開UI＋ログ」をまとめて提供する具体例として押さえると、抽象概念が実務に結びつきやすくなります。
+      </p>
+      <p>
+        試験で混同しやすいのは次の2点です。<strong>①Dify＝LLMそのもの、ではない</strong>——OpenAI・<a href="../ollama/">Ollama</a>等を<strong>接続する側</strong>です。<strong>②Dify＝Zapier/n8nの別名、でもない</strong>——SaaS連携自動化（iPaaS）ではなく、<strong>生成AIアプリの設計・運用基盤（LLMOps）</strong>です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>このサイトの演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0321/">一問一答 TF-0321（許可されていないサービスへの入力）</a>、<a href="../../exams/genai-passport/drill/q/tf-0409/">TF-0409（社外資料の公開前確認）</a>、<a href="../../exams/genai-passport/drill/q/tf-0240/">TF-0240（外部ツールと権限）</a>
+        </p>
+        <p>
+          G検定：<a href="../../exams/g-kentei/drill/q/tf-170/">一問一答 TF-170（生成AI）</a> · 用語：<a href="../../glossary/rag/">RAG</a>、<a href="../../glossary/agent/">AIエージェント</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Difyとは</h2>
+      <p>
+        Dify（dify.ai）は、2023年にLangGeniusが公開した<strong>Production-Ready Agentic Workflow</strong>プラットフォームです。公式スローガンは「Build Production-Ready AI Agent」——プロトタイプで終わらず、<strong>スケール・安定性・セキュリティ</strong>を前提にした本番運用を想定しています。
+      </p>
+      <p>
+        技術スタックはGitHub上で<strong>TypeScript + Python</strong>が中心。Docker ComposeでPostgreSQL・Redis・ベクトルDB等を含む一式を起動し、ブラウザのWorkspaceからアプリを管理します。Cloud版（Sandbox / Professional / Team）とセルフホスト版（Community / Premium / Enterprise）の二系統があり、<strong>同一Dockerイメージ＋ライセンス</strong>で機能差を付ける公式説明もあります（GitHub Discussions）。
+      </p>
+      <p>
+        公式は100万+アプリが稼働、50,000+チーム、130+国で利用と統計を掲げ、Volvo Cars・リコー等の導入事例を公開しています。国内でもエンタープライズQA Bot（19,000+従業員向け）のような大規模事例が公式サイトに紹介されています。
+      </p>
+    </section>
+
+    <section id="app-types">
+      <h2>4種のアプリタイプ</h2>
+      <p>
+        Difyの独自性の一つは、用途に応じて<strong>4種のビルダー</strong>を使い分けられる点です。試験では「AIアプリ＝チャットだけ」と決めつけず、<strong>Workflow型</strong>と<strong>Agent型</strong>の違いを押さえると得点しやすくなります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>タイプ</th>
+            <th>概要</th>
+            <th>向く用途</th>
+            <th>試験での整理</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Chatbot</strong></td>
+            <td>プロンプト＋モデル＋（任意）ナレッジの対話アプリ</td>
+            <td>社内FAQ、カスタマーサポートの第一線</td>
+            <td>単発〜複数ターンのチャット。ツール呼び出しは限定的</td>
+          </tr>
+          <tr>
+            <td><strong>Agent</strong></td>
+            <td>LLMがツール（検索・API・MCP）を自律選択</td>
+            <td>調査・多段タスク・外部システム操作</td>
+            <td><a href="../../glossary/agent/">AIエージェント</a>の実装例</td>
+          </tr>
+          <tr>
+            <td><strong>Workflow</strong></td>
+            <td>ノードを配線した決定的／分岐フロー</td>
+            <td>定型的なLLMパイプライン、承認付き処理</td>
+            <td>再現性重視。Human-in-the-loopと相性良い</td>
+          </tr>
+          <tr>
+            <td><strong>Chatflow</strong></td>
+            <td>チャットUI＋Workflowのハイブリッド</td>
+            <td>対話しながら複雑フローを進めるアプリ</td>
+            <td>UXと制御の中間</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        いずれも<strong>Webappとして公開</strong>するか、<strong>API</strong>として外部システムから呼び出せます（Starter以上でロゴ除去等）。SandboxでもWebapp公開は可能ですが、リソース上限が厳しめです。
+      </p>
+    </section>
+
+    <section id="rag-mcp">
+      <h2>RAG・MCP・Observability</h2>
+      <p>
+        n8nにRAGノードを足すのではなく、Difyは<strong>ナレッジベースがプラットフォームの中核</strong>です。PDF・Web・Notion等を取り込み、チャンク分割・ベクトル化・検索をGUIで設定し、アプリに紐づけます（公式：Get Your Data LLM Ready with RAG）。
+      </p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>Knowledge Pipeline</h3>
+          <p>ドキュメント取込・チャンク・インデックス。External Knowledge API、Hybrid Search（プラン依存）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>MCP Client / Server</h3>
+          <p>Native MCP Integrationで外部ツール接続。Difyアプリ自体をUniversal MCP Serverとして公開も可能（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Observability</h3>
+          <p>LangSmith・Langfuse・Arize Phoenix等と連携。アプリログ・ランタイム分析（Professional以上で高度化）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Marketplace</h3>
+          <p>モデル・ツールプラグインをコード変更なしで拡張。コミュニティ投稿も可能（公式Ecosystem）。</p>
+        </div>
+      </div>
+      <p>
+        試験の<a href="../../glossary/rag/">RAG</a>は「検索で根拠を足してから生成する」構成です。Difyでは<strong>ナレッジ品質（チャンク・更新頻度）</strong>と<strong>公開前の回答検証</strong>が利用者側の責任——TF-0409の「そのまま社外配布×」と直結します。
+      </p>
+    </section>
+
+    <section id="self-host">
+      <h2>セルフホストとライセンス</h2>
+      <p>
+        Difyのセルフホストは<code>langgenius/dify</code>リポジトリの<code>docker/</code>から<code>docker compose up -d</code>が公式導線です。最小要件は<strong>CPU 2コア・RAM 4GB</strong>（GitHub README）。Community Editionは<strong>無料</strong>ですが、ライセンスは<strong>改変Apache License 2.0</strong>であり、Apache純粋版と同一視しないでください。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>条件（GitHub LICENSE）</th>
+            <th>内容</th>
+            <th>試験・調達での意味</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>商用利用</strong></td>
+            <td>原則可能（社内アプリ基盤として）</td>
+            <td>「OSS＝商用不可」とは限らない</td>
+          </tr>
+          <tr>
+            <td><strong>マルチテナント禁止</strong></td>
+            <td>書面許可なく複数Workspaceを外部提供するSaaS運用不可</td>
+            <td>自社1Workspaceなら通常OK</td>
+          </tr>
+          <tr>
+            <td><strong>ロゴ・著作表示</strong></td>
+            <td>フロントエンド利用時はDify表示を削除・改変不可</td>
+            <td>白ラベル要件はPremium/EnterpriseまたはAPI-only利用を検討</td>
+          </tr>
+          <tr>
+            <td><strong>Premium / Enterprise</strong></td>
+            <td>同一イメージ＋ライセンスで機能解放（公式Discussions）</td>
+            <td>SSO・複数Workspace等は有料セルフホスト</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        データ主権が必要な場合、<strong>Ollamaを社内サーバー</strong>に置き、DifyセルフホストからOpenAI互換APIで接続——という構成で、プロンプト・ナレッジを社内に閉じやすくなります（モデル推論は自社GPU/CPU依存）。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>できること（主な機能）</h2>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>マルチモデル</h3>
+          <p>OpenAI、Anthropic、Azure OpenAI、Llama、Hugging Face、Replicate、Ollama等（公式Pricing）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Webapp / API公開</h3>
+          <p>ブランドカスタム（Professional+）。埋め込み・APIキー管理。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Trigger Events</h3>
+          <p>Workflowのスケジュール・Webhookトリガー。Sandbox 3,000/月〜（公式）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Annotation</h3>
+          <p>回答への人間フィードバック収集。改善ループに利用（Quotaはプラン依存）。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Interactive動画相当</h3>
+          <p>CTA・分岐・クイズ（Creator Cloud / 上位プラン）。研修・Lead獲得に。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>Enterprise</h3>
+          <p>SOC 2 Type II、SAML/SSO、Dedicated CSM、Implementation services（公式）。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="misconception">
+      <h2>よくある誤解</h2>
+      <p>
+        「<strong>Dify＝n8nの日本語版</strong>」は×です。n8nはSlack×Salesforce×HTTPの<strong>汎用ワークフロー</strong>、Difyは<strong>LLM推論・RAG・Agent</strong>が本体のプラットフォームです。連携は可能（Dify API＋n8n HTTP node）ですが、役割は異なります。
+      </p>
+      <p>
+        「<strong>セルフホスト＝完全無制限・白ラベル自由</strong>」も誤りです。Communityは無料でも<strong>フロントのDify表示削除不可</strong>、<strong>マルチテナントSaaS不可</strong>等の制約があります（LICENSE）。
+      </p>
+      <p>
+        「<strong>RAGを載せれば幻覚ゼロ</strong>」も×です。検索ミス・古いドキュメント・不適切なチャンク分割で誤回答は起きます。試験のTF-0255・TF-0409と同様、<strong>人の確認</strong>が必要です。
+      </p>
+      <p>
+        「<strong>Dify＝Ollama</strong>」——Ollamaはモデル実行、Difyはアプリ構築。セットで使うのが一般的です。
+      </p>
+    </section>
+
+    <section id="pricing">
+      <h2>料金プラン（2026年6月時点）</h2>
+      <p>
+        以下は公式Pricing（Cloud Service・月払い）です。年払いは<strong>17%割引</strong>。Self-hostedはCloud Marketplace経由の表記もあり、CommunityはGitHubから無料デプロイが基本です。
+      </p>
+      <div class="tool-plan-grid">
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Sandbox</p>
+          <p class="tool-plan-price">$0</p>
+          <p class="tool-plan-note">200 message credits/月 · 5 Apps · 50 Knowledge Docs</p>
+        </div>
+        <div class="tool-plan-card tool-plan-card--highlight">
+          <p class="tool-plan-name">Professional</p>
+          <p class="tool-plan-price">$59/月</p>
+          <p class="tool-plan-note">5,000 credits · 50 Apps · 5GB KB · ロゴ除去</p>
+        </div>
+        <div class="tool-plan-card">
+          <p class="tool-plan-name">Team</p>
+          <p class="tool-plan-price">$159/月</p>
+          <p class="tool-plan-note">10,000 credits · 200 Apps · 50メンバー · Trigger無制限</p>
+        </div>
+      </div>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>Sandbox</th>
+            <th>Professional</th>
+            <th>Team</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>message credits</strong></td>
+            <td>200/月</td>
+            <td>5,000/月</td>
+            <td>10,000/月</td>
+          </tr>
+          <tr>
+            <td><strong>メンバー</strong></td>
+            <td>1</td>
+            <td>3</td>
+            <td>50</td>
+          </tr>
+          <tr>
+            <td><strong>アプリ数</strong></td>
+            <td>5</td>
+            <td>50</td>
+            <td>200</td>
+          </tr>
+          <tr>
+            <td><strong>ナレッジ</strong></td>
+            <td>50 docs / 50MB</td>
+            <td>500 docs / 5GB</td>
+            <td>1,000 docs / 20GB</td>
+          </tr>
+          <tr>
+            <td><strong>Trigger Events</strong></td>
+            <td>3,000/月</td>
+            <td>20,000/月</td>
+            <td>無制限</td>
+          </tr>
+          <tr>
+            <td><strong>ログ保持</strong></td>
+            <td>30日</td>
+            <td>無制限</td>
+            <td>無制限</td>
+          </tr>
+          <tr>
+            <td><strong>API Rate Limit</strong></td>
+            <td>5,000/月</td>
+            <td>なし</td>
+            <td>なし</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        message creditsは<strong>LLM推論・アプリ実行の共通プール</strong>です。接続先OpenAI等の<strong>API料金は別途</strong>（セルフホストではDify creditsなし・プロバイダ課金のみ）。学生・教育者向け無料プログラムも公式にあります。
+      </p>
+    </section>
+
+    <section id="how-to">
+      <h2>はじめ方・基本的な使い方</h2>
+      <div class="tool-split">
+        <ol class="tool-steps">
+          <li>
+            <strong>Cloud or セルフホストを選択</strong>
+            試すだけならSandbox登録。データ閉域ならDocker Compose。
+          </li>
+          <li>
+            <strong>モデルプロバイダを設定</strong>
+            OpenAI APIキー、またはOllama/OpenAI互換エンドポイントをWorkspaceに登録。
+          </li>
+          <li>
+            <strong>Knowledgeを作成（RAGする場合）</strong>
+            PDF/Web等をアップロード。チャンク設定を確認。
+          </li>
+          <li>
+            <strong>アプリタイプを選びビルド</strong>
+            Chatbot / Agent / Workflow / Chatflow。テスト実行で回答品質を確認。
+          </li>
+          <li>
+            <strong>WebappまたはAPIで公開</strong>
+            社内PoC→Annotationで改善→本番。Observabilityを接続。
+          </li>
+        </ol>
+        <figure>
+          <img src="../../assets/images/tools/dify/og-hero.png" alt="DifyのAgentic Workflow構築イメージ" width="600" height="338" loading="lazy">
+          <figcaption>出典：Dify（LangGenius）公式</figcaption>
+        </figure>
+      </div>
+      <p>
+        最小PoCは「<strong>社内規程PDF 1本＋Chatbot 1体</strong>」から始め、幻覚・権限漏れがないか検証してからAgentやWorkflowへ拡張する——という段階的導入が安全です。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>ビジネスでの活用例</h2>
+      <div class="tool-usecase-grid">
+        <div class="tool-usecase-card">
+          <h3>エンタープライズQA Bot</h3>
+          <p>19,000+従業員・20+部門向け社内FAQ（公式事例）。RAG＋権限設計が鍵。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>カスタマーサポートAgent</h3>
+          <p>ナレッジベース＋ツール呼び出しで一次対応。Annotationで継続改善。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>営業・マーケWorkflow</h3>
+          <p>複数LLMステップ（要約→分類→メール草案）をGUI配線。n8nよりLLM特化。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>ローカルLLM＋Dify</h3>
+          <p>Ollama/LM Studioをプロバイダ接続。機密文書を外に出さないPoC。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>MCP連携</h3>
+          <p>社内DB・GitHub・SlackをMCP経由でAgentに接続。2026年の拡張軸。</p>
+        </div>
+        <div class="tool-usecase-card">
+          <h3>スタートアップMVP</h3>
+          <p>Sandbox→Professionalでアイデア検証。API公開でプロダクト組込み。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons">
+      <h2>メリット・デメリット</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>メリット</th>
+            <th>デメリット</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RAG・Agent・Workflowが1 Workspaceに統合</td>
+            <td>純粋なSaaS連携自動化にはn8n/Zapierの方が厚い</td>
+          </tr>
+          <tr>
+            <td>セルフホスト＋Ollamaでデータ閉域しやすい</td>
+            <td>セルフホスト運用（DB・ベクトル・更新）の負荷</td>
+          </tr>
+          <tr>
+            <td>Sandbox無料でPoC可能</td>
+            <td>Cloudはmessage credits上限が厳しめ</td>
+          </tr>
+          <tr>
+            <td>MCP・Observabilityで本番志向</td>
+            <td>改変Apacheのマルチテナント・ロゴ制約</td>
+          </tr>
+          <tr>
+            <td>国内含めエンタープライズ事例が豊富</td>
+            <td>RAG品質・権限設計は利用者側の責任</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparison">
+      <h2>n8n・Ollama・Zapierとの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>Dify</th>
+            <th>n8n</th>
+            <th>Ollama</th>
+            <th>Zapier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>レイヤー</strong></td>
+            <td>LLMアプリ基盤（LLMOps）</td>
+            <td>iPaaS（API自動化）</td>
+            <td>LLMランタイム</td>
+            <td>iPaaS（ノーコード連携）</td>
+          </tr>
+          <tr>
+            <td><strong>RAG</strong></td>
+            <td>第一級機能</td>
+            <td>ノード/外部連携</td>
+            <td>なし（実行のみ）</td>
+            <td>限定的（AI Actions）</td>
+          </tr>
+          <tr>
+            <td><strong>Agent</strong></td>
+            <td>GUIビルダー</td>
+            <td>LangChainノード等</td>
+            <td>tool calling（モデル依存）</td>
+            <td>AI Agents（別枠課金）</td>
+          </tr>
+          <tr>
+            <td><strong>セルフホスト</strong></td>
+            <td>Docker（改変Apache）</td>
+            <td>Docker（Fair-code）</td>
+            <td>ローカルインストール</td>
+            <td>クラウドのみ</td>
+          </tr>
+          <tr>
+            <td><strong>課金目安</strong></td>
+            <td>Sandbox $0 / Pro $59/月</td>
+            <td>CE無料 / Cloud €20/月〜</td>
+            <td>ローカル無料</td>
+            <td>Free〜 / Team $20/月〜</td>
+          </tr>
+          <tr>
+            <td><strong>試験での整理</strong></td>
+            <td>LLMアプリ＋RAG基盤</td>
+            <td>Execution課金iPaaS</td>
+            <td>ローカルLLM実行</td>
+            <td>9,000+アプリ連携</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        一文で整理：<strong>モデルを動かす＝Ollama、SaaSをつなぐ＝n8n/Zapier、LLMアプリを作って公開＝Dify</strong>——3層を分けて覚えると試験もPoC設計も迷いにくくなります。
+      </p>
+    </section>
+
+    <section id="recommend">
+      <h2>こんな人におすすめ</h2>
+      <ul>
+        <li><strong>社内FAQ・RAGチャットボットを短期間でPoCしたいチーム</strong></li>
+        <li><strong>Agent＋Workflowをコード少なめで本番公開したい開発者</strong></li>
+        <li><strong>Ollama/LM Studioと組み合わせてデータを閉じたい情シス</strong></li>
+        <li><strong>試験でRAG・エージェント・iPaaSの違いを具体例で押さえたい受験生</strong></li>
+      </ul>
+      <p>
+        あえて向いていないのは、<strong>9,000アプリ連携の定番自動化だけ</strong>（<a href="../zapier/">Zapier</a>/<a href="../n8n/">n8n</a>向け）、<strong>LLM実行環境そのものだけ欲しい</strong>（<a href="../ollama/">Ollama</a>向け）、<strong>汎用Text-to-Video</strong>（Runway向け）です。
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Difyとn8nの違いは？</summary>
+          <p class="tool-faq-a">n8nはSaaS/API連携をノードでつなぐiPaaS（ワークフロー自動化）が中心で、AIはノードの一つです。Difyは最初からLLMアプリ（RAG・Agent・チャットボット）の設計・公開・監視を一体化したLLMOps基盤です。Slack通知の自動化ならn8n、社内FAQボットやRAGエージェントのプロトタイプ〜本番ならDify——という棲み分けが試験・実務で有効です（2026年6月時点）。</p>
+        </details>
+        <details>
+          <summary>Difyは無料で使えますか？</summary>
+          <p class="tool-faq-a">はい。CloudのSandboxプランは$0で200 message credits/月、5アプリ、50ナレッジドキュメントが使えます。セルフホストはGitHubからDocker ComposeでCommunity Editionを無料デプロイ可能です（CPU 2コア・RAM 4GB以上推奨）。本番向けはProfessional $59/ワークスペース/月から（2026年6月時点・公式Pricing）。</p>
+        </details>
+        <details>
+          <summary>DifyとOllamaの関係は？</summary>
+          <p class="tool-faq-a">OllamaはローカルLLMランタイム、Difyはその上に載るアプリ構築プラットフォームです。DifyはOpenAI/Anthropicに加えOllamaやOpenAI互換APIをモデルプロバイダとして接続でき、RAGやAgentをGUIで組み立ててWeb/APIとして公開します。LLMを動かすのがOllama、LLMアプリを作るのがDify——と整理すると混乱しにくくなります。</p>
+        </details>
+        <details>
+          <summary>message creditsとは？</summary>
+          <p class="tool-faq-a">Dify Cloudでは、LLM推論やアプリ実行にmessage creditsが消費されます。Sandboxは200 credits/月、Professionalは5,000 credits/月、Teamは10,000 credits/月（2026年6月時点・公式Pricing）。WorkflowのTrigger Events（Sandbox 3,000/月等）は別枠で管理されます。セルフホストCommunityはDify側のcredits制限なく、接続先LLMのAPI料金のみが発生します。</p>
+        </details>
+        <details>
+          <summary>セルフホストのライセンスに注意点は？</summary>
+          <p class="tool-faq-a">Difyは改変Apache License 2.0です。商用利用は可能ですが、書面許可なくマルチテナント（複数Workspaceを外部に提供）運用は不可、フロントエンド利用時はDifyのロゴ・著作表示を削除・改変不可——という追加条件があります（GitHub LICENSE）。同一Dockerイメージにライセンスで機能差を付けるPremium/Enterpriseも公式に存在します（2026年6月時点）。</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="tool-product-links tool-product-links--footer">
+      公式リンク：
+      <a href="https://dify.ai" target="_blank" rel="noopener noreferrer">Dify</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://dify.ai/pricing" target="_blank" rel="noopener noreferrer">料金（Pricing）</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/langgenius/dify" target="_blank" rel="noopener noreferrer">GitHub（OSS）</a>
+    </p>
+
+    <aside class="tool-related-wrap">
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連するAIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../n8n/"><img src="../../assets/images/tools/n8n/app-icon.png" alt="" width="16" height="16"> n8n</a></li>
+          <li><a href="../ollama/"><img src="../../assets/images/tools/ollama/app-icon.png" alt="" width="16" height="16"> Ollama</a></li>
+          <li><a href="../lm-studio/"><img src="../../assets/images/tools/lm-studio/app-icon.png" alt="" width="16" height="16"> LM Studio</a></li>
+          <li><a href="../zapier/"><img src="../../assets/images/tools/zapier/app-icon.png" alt="" width="16" height="16"> Zapier</a></li>
+          <li><a href="../make/"><img src="../../assets/images/tools/make/app-icon.png" alt="" width="16" height="16"> Make</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../glossary/rag/">RAG</a></li>
+          <li><a href="../../glossary/agent/">AIエージェント</a></li>
+          <li><a href="../../glossary/generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../../glossary/">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
