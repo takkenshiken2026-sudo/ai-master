@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IoU（Intersection over Union）とは？予測と正解の重なりで物体検出・セグメンテーションを評価する指標。Dice係数との違いをG検定向けに解説。">
+  <title>IoUとは？重なり面積で採点する——検出とセグの共通物差し — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/iou/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="IoUとは？重なり面積で採点する——検出とセグの共通物差し">
+  <meta property="og:description" content="予測領域と正解領域の共通部分を和集合で割る。物体検出のマッチングやセグメンテーション評価の基本指標。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/iou/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "IoU",
+        "alternateName": ["IoU", "Intersection over Union", "Jaccard index", "アイオーユー"],
+        "description": "予測領域と正解領域の共通部分（交差）の面積を、両者の合計範囲（和集合）の面積で割った重なり度合いの評価指標。物体検出やセグメンテーションで広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "IoUは何を測る指標ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "予測した領域（バウンディングボックスやマスク）と正解領域がどれだけ重なるかを0〜1付近の数値で表す指標です。交差部分の面積を和集合の面積で割り、完全に一致すれば1、全く重ならなければ0に近づきます。物体検出では予測ボックスと正解ボックスのマッチング判定にも使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "IoUとDice係数は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも領域の重なりを測りますが、IoUは交差÷和集合、Dice係数は2×交差÷（領域A＋領域B）と定義が異なります。セグメンテーションでは両方が評価・損失（Dice Loss）に使われますが、数式と値のスケールは一致しません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "IoUは分類の正解率と同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。正解率は画像全体や画素のクラス当てが合った割合です。IoUは位置付きの領域（ボックスやマスク）の重なりを測る指標で、物体検出やセグメンテーションの評価に使われます。タスクと測る対象が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">IoU</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>IoUとは？重なり面積で採点する——検出とセグの共通物差し</h1>
+    <p class="tool-hero-sub">読み：アイオーユー ／ 英：Intersection over Union（Jaccard index）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>IoU</strong>（Intersection over Union、和集合に対する交差）は、<strong>予測領域と正解領域がどれだけ重なるか</strong>を測る評価指標です。物体検出の<strong>バウンディングボックス</strong>（<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>）も、セグメンテーションの<strong>マスク</strong>も、同じ「重なり÷全体」で採点できる——本記事は式の暗記より、<strong>「なぜ位置のずれを面積比で測るのか」</strong>と、<strong>正解率・Diceとのすり替え回避</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#overlap-idea">重なりで測る理由</a></li>
+        <li><a href="#formula">IoUの直感</a></li>
+        <li><a href="#detection">物体検出での使い方</a></li>
+        <li><a href="#segmentation">セグメンテーションとの関係</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="overlap-idea">
+      <h2>重なりで測る理由</h2>
+      <p>
+        画像分類は「何が写っているか」だけを当てます。物体検出は<strong>どこに何があるか</strong>——位置をバウンディングボックスで示します（<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>、<a href="../../exams/g-kentei/drill/q/tf-115/">TF-115</a>）。
+      </p>
+      <p>
+        クラス名が合っていても、箱の位置がズレていれば実用には不十分——IoUは<strong>位置の精度</strong>を数値化します。評価指標はタスクに応じて選ぶ必要があり（<a href="../../exams/g-kentei/practice/q/g-474/">G-474</a>）、検出・セグではIoUが定番の物差しの一つです。
+      </p>
+    </section>
+
+    <section id="formula">
+      <h2>IoUの直感</h2>
+      <p>予測領域を <strong>B</strong>、正解領域を <strong>G</strong>（Ground truth）とすると：</p>
+      <blockquote>
+        <p>IoU ＝（BとGの<strong>交差</strong>面積）÷（BとGの<strong>和集合</strong>面積）</p>
+      </blockquote>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>状況</th><th>IoUの目安</th><th>意味</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>完全重なり</strong></td><td>1.0</td><td>予測と正解が一致</td></tr>
+          <tr><td><strong>少しズレ</strong></td><td>0.5〜0.7付近</td><td>実務では「当たり」とみなす閾値の候補</td></tr>
+          <tr><td><strong>かすっている</strong></td><td>0に近い</td><td>別物体の誤検出の可能性</td></tr>
+          <tr><td><strong>重なりなし</strong></td><td>0</td><td>マッチしない</td></tr>
+        </tbody>
+      </table>
+      <p>
+        別名<strong>Jaccard index</strong>（ジャッカード指数）として統計・集合論でも登場します——集合の類似度を測る発想が、画像の領域評価にそのまま移植されています。
+      </p>
+    </section>
+
+    <section id="detection">
+      <h2>物体検出での使い方</h2>
+      <p>
+        <a href="../faster-rcnn/">Faster R-CNN</a>やYOLOは、画像内の複数物体それぞれにボックスを出力します（<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>）。評価では、予測ボックスと正解ボックスを<strong>IoUでペアリング</strong>し、閾値（例：0.5）以上なら「正しく検出した」と数えます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>マッチング</strong> — 予測と正解をIoUで対応づけ</li>
+        <li><strong>閾値判定</strong> — IoU ≥ 0.5 などで True Positive か決める</li>
+        <li><strong>精度・再現率</strong> — マッチ結果から<a href="../recall/">適合率・再現率</a>を計算（G-090）</li>
+        <li><strong>重複除去</strong> — NMSで同じ物体への複数ボックスを整理</li>
+      </ul>
+      <p>
+        IoUは<strong>損失関数そのものではなく評価指標</strong>が主な役割です（学習では滑らかな近似損失を使うこともあります）。<a href="../../exams/g-kentei/practice/q/g-274/">G-274</a>の誤答「適合率を計算する指標」——IoUは<strong>重なり</strong>を測り、適合率はマッチング<strong>後</strong>に別途計算します。
+      </p>
+    </section>
+
+    <section id="segmentation">
+      <h2>セグメンテーションとの関係</h2>
+      <p>
+        画素単位のマスクでも、IoUは<strong>前景領域同士の重なり</strong>として定義できます。<a href="../fcn/">FCN</a>やMask R-CNN（<a href="../../exams/g-kentei/practice/q/g-326/">G-326</a>）のマスク品質評価に使われます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>指標</th><th>式のイメージ</th><th>主な用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>IoU</strong></td><td>交差 ÷ 和集合</td><td>検出・セグの<strong>評価</strong></td></tr>
+          <tr><td><strong>Dice係数</strong></td><td>2×交差 ÷（A＋B）</td><td>セグ評価・<a href="../dice-loss/">Dice Loss</a></td></tr>
+          <tr><td><strong>正解率</strong></td><td>正解画素 ÷ 全画素</td><td>分類・セグの画素精度</td></tr>
+        </tbody>
+      </table>
+      <p>
+        DiceとIoUは<strong>親戚</strong>ですが同義ではありません——小さな領域では値の差が目立ちます。試験では「重なりを測る指標」としてIoUを、学習損失としてDice Lossを、と役割で分けます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 交差面積 ÷ 和集合面積（重なり度合い）</li>
+        <li><strong>対象</strong> — バウンディングボックス・マスクなど<strong>位置付き領域</strong></li>
+        <li><strong>用途</strong> — 物体検出のマッチング、セグメンテーション評価</li>
+        <li><strong>対比</strong> — 正解率＝クラス当て、IoU＝領域の位置精度</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>、<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>、<a href="../../exams/g-kentei/drill/q/tf-115/">TF-115</a>、<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>、<a href="../../exams/g-kentei/practice/q/g-474/">G-474</a>、<a href="../../exams/g-kentei/practice/q/g-274/">G-274</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>IoU＝正解率</td><td>領域の重なり vs クラス当ての割合</td></tr>
+          <tr><td>IoU＝適合率</td><td>重なり指標 vs 検出結果の精度（別計算）</td></tr>
+          <tr><td>IoU＝<a href="../dice-loss/">Dice Loss</a></td><td>評価指標 vs 学習損失（Dice係数は近いが別定義）</td></tr>
+          <tr><td>IoU＝バウンディングボックス</td><td>評価の物差し vs 位置の表現形式</td></tr>
+          <tr><td>IoU＝1×1畳み込み</td><td>重なり評価 vs CNNの層操作（G-274）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>IoUは何を測る指標ですか？</summary><p class="tool-faq-a">予測した領域（バウンディングボックスやマスク）と正解領域がどれだけ重なるかを0〜1付近の数値で表す指標です。交差部分の面積を和集合の面積で割り、完全に一致すれば1、全く重ならなければ0に近づきます。物体検出では予測ボックスと正解ボックスのマッチング判定にも使われます。</p></details>
+        <details><summary>IoUとDice係数は同じですか？</summary><p class="tool-faq-a">同じではありません。どちらも領域の重なりを測りますが、IoUは交差÷和集合、Dice係数は2×交差÷（領域A＋領域B）と定義が異なります。セグメンテーションでは両方が評価・損失（Dice Loss）に使われますが、数式と値のスケールは一致しません。</p></details>
+        <details><summary>IoUは分類の正解率と同じですか？</summary><p class="tool-faq-a">同じではありません。正解率は画像全体や画素のクラス当てが合った割合です。IoUは位置付きの領域（ボックスやマスク）の重なりを測る指標で、物体検出やセグメンテーションの評価に使われます。タスクと測る対象が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-316/">G-316 · 物体検出タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-021/">G-021 · 検出と分類の違い</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · 検出モデルの代表例</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-326/">G-326 · Mask R-CNN</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../dice-loss/">Dice Loss</a></li>
+          <li><a href="../fcn/">FCN</a></li>
+          <li><a href="../mask-rcnn/">Mask R-CNN</a></li>
+          <li><a href="../recall/">再現率</a></li>
+          <li><a href="../focal-loss/">Focal Loss</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

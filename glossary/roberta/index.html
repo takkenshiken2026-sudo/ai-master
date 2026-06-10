@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RoBERTaとは？BERTと同じ骨格で学習レシピだけを煮詰め直した事前学習モデル。NSP削除・動的マスク・大規模データの意味をG検定向けに解説。">
+  <title>RoBERTaとは？骨格はBERTのまま、調理法だけ変えた——学習手順の最適化 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/roberta/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RoBERTaとは？骨格はBERTのまま、調理法だけ変えた——学習手順の最適化">
+  <meta property="og:description" content="Robustly optimized BERT approach。アーキテクチャはBERTと同型で、マスク・データ・バッチ設計を改良したエンコーダ型NLPモデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/roberta/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "RoBERTa",
+        "alternateName": ["RoBERTa", "ロバータ", "Robustly optimized BERT approach"],
+        "description": "BERTと同じTransformerエンコーダ骨格を用い、事前学習の手順（マスク・データ・バッチ設計など）を改良して性能を高めた自然言語処理モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "RoBERTaはBERTと何が違いますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ネットワークの基本構造はBERTと同型のTransformerエンコーダです。違いは主に事前学習のレシピ——動的マスキング、NSP（次文予測）の廃止、より大きなバッチとデータ、長い学習——にあります。新しいアーキテクチャというより、学習手順の最適化として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RoBERTaは文章生成用のGPT型モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。RoBERTaはBERT系のエンコーダ型で、マスク言語モデル（MLM）による双方向の文脈理解が中心です。次トークン予測で長文を生成するGPT型デコーダとは設計思想が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RoBERTaの名前の意味は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Robustly optimized BERT approach（頑健に最適化されたBERTアプローチ）の略です。BERTの学習設定を系統的に見直し、同じ骨格でもより強い表現が得られることを示した研究として知られます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">RoBERTa</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>RoBERTaとは？骨格はBERTのまま、調理法だけ変えた——学習手順の最適化</h1>
+    <p class="tool-hero-sub">読み：ロバータ ／ 英：RoBERTa（Robustly optimized BERT approach）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>RoBERTa</strong>は、Meta（当時Facebook AI）が2019年に発表した<strong>自然言語処理の事前学習モデル</strong>です。<a href="../bert/">BERT</a>と<strong>同じTransformerエンコーダの骨格</strong>を使いながら、マスクの付け方・学習データ・バッチサイズなど<strong>事前学習のレシピだけを煮詰め直した</strong>——本記事は層数の暗記ではなく、<strong>「なぜアーキテクチャを変えずに性能が伸びたのか」</strong>という実験の教訓に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">RoBERTaとは</a></li>
+        <li><a href="#recipe">変えたのは「レシピ」——4つの改良</a></li>
+        <li><a href="#vs-bert">BERTとの対比</a></li>
+        <li><a href="#family">BERT系モデル族の中での位置</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        RoBERTa単独の過去問は少ない一方、<strong>「BERTの学習手順を改良したモデル」</strong>という整理が辞典の定義です。試験では<strong>BERTの理解</strong>（<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>）を土台に、<strong>エンコーダ型・双方向・MLM</strong>の系譜として押さえます。
+      </p>
+      <p>
+        誤答では、<strong>RoBERTa＝GPT型の生成モデル</strong>、<strong>RoBERTa＝CNN</strong>（<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>）、<strong>RoBERTa＝全く新しいアーキテクチャ</strong>などのすり替えに注意します。骨格はBERTと同型で、違いは主に<strong>事前学習の設計</strong>です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-337/">G-337（BERT定義）</a>、<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425（エンコーダ型）</a>、<a href="../../exams/g-kentei/drill/q/tf-426/">TF-426（GANすり替え）</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-338/">G-338（LLMとの整理）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>RoBERTaとは</h2>
+      <p>
+        RoBERTaは、大量テキストで<strong>事前学習（Pre-training）</strong>された言語表現モデルです。<a href="../transformer/">Transformer</a>の<strong>エンコーダ</strong>を積み重ね、<strong>マスク言語モデル（MLM）</strong>で文中の隠れた語を当てることで、左右の文脈を統合した表現を学びます——ここまでの骨格は<a href="../bert/">BERT</a>と同じです。
+      </p>
+      <p>
+        論文の主張は明快です。<strong>「BERTはもっと強くなれるのに、学習設定が足を引っ張っていた」</strong>。同じネットワークでも、マスクの付け方やデータ量を変えるだけでベンチマークが上がる——という結果が、RoBERTaの代名詞になっています。
+      </p>
+    </section>
+
+    <section id="recipe">
+      <h2>変えたのは「レシピ」——4つの改良</h2>
+      <p>試験では数式より<strong>何を変えたかの意味</strong>が重要です。料理に例えると、鍋（アーキテクチャ）は同じで、火加減・下準備・調味料（学習手順）を変えたイメージです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>改良点</th><th>ざっくりした内容</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>動的マスキング</strong></td><td>エポックごとにマスク位置を変える</td><td>同じ文でも学習信号が増える</td></tr>
+          <tr><td><strong>NSPの廃止</strong></td><td>次文予測タスクを外す</td><td>文書理解への寄与が小さいと判断</td></tr>
+          <tr><td><strong>より大きなバッチ</strong></td><td>学習の安定化・効率化</td><td>計算資源を活かす設計</td></tr>
+          <tr><td><strong>より多くのデータ・長い学習</strong></td><td>学習コーパスとステップを拡大</td><td>表現力の底上げ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        BERTが併用していた<strong>NSP</strong>（Next Sentence Prediction）は、二文が連続かどうかを当てる補助タスクです。RoBERTaでは<strong>MLMに集中した方がよい</strong>——という実験結果が示され、BERT以降の研究でも「補助タスクは本当に要るか」が問い直されるきっかけになりました。
+      </p>
+      <p>
+        学習後は<a href="../fine-tuning/">ファインチューニング</a>で感情分類・固有表現抽出などに転用します。RoBERTa自体は<strong>事前学習済みの重み＋学習手順の知見</strong>のパッケージとして語られることが多いです。
+      </p>
+    </section>
+
+    <section id="vs-bert">
+      <h2>BERTとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>BERT</th><th>RoBERTa</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>骨格</strong></td><td>Transformerエンコーダ</td><td><strong>同型</strong></td></tr>
+          <tr><td><strong>主な事前学習</strong></td><td>MLM＋NSP</td><td><strong>MLM中心</strong>（NSPなし）</td></tr>
+          <tr><td><strong>マスク</strong></td><td>固定マスクが典型</td><td><strong>動的マスク</strong></td></tr>
+          <tr><td><strong>学習規模</strong></td><td>当初の設定</td><td>データ・バッチ・ステップを<strong>拡大</strong></td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>双方向エンコーダの代表</td><td>BERTの<strong>学習改良版</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        「RoBERTaだからデコーダ」「RoBERTaだから双方向ではない」——といった説明は誤りです。<strong>双方向エンコーダ＋MLM</strong>という系譜はBERTと共通です。違いは<strong>どう焼き上げたか</strong>にあります。
+      </p>
+    </section>
+
+    <section id="family">
+      <h2>BERT系モデル族の中での位置</h2>
+      <p>BERT公開後、同じエンコーダ骨格を土台にさまざまな改良が続きました。RoBERTaはその<strong>初期の成功例</strong>の一つです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>改良の方向</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>RoBERTa</strong></td><td>学習レシピの最適化</td><td>本記事の主役</td></tr>
+          <tr><td><a href="../albert/">ALBERT</a></td><td>パラメータ共有で軽量化</td><td>構造の効率化</td></tr>
+          <tr><td><a href="../electra/">ELECTRA</a></td><td>判別式の事前学習</td><td>MLM以外の学習タスク</td></tr>
+          <tr><td><a href="../deberta/">DeBERTa</a></td><td>注意機構・位置の改良</td><td>アーキテクチャ側の工夫も</td></tr>
+        </tbody>
+      </table>
+      <p>
+        現代の対話型<a href="../llm/">LLM</a>（<a href="../gpt-4/">GPT-4</a>、<a href="../llama/">LLaMA</a>など）は<strong>デコーダ型の自己回帰生成</strong>が主役です。RoBERTaは<strong>理解・分類の時代</strong>——エンコーダ事前学習の延長線上——に位置づけます。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>RoBERTa＝<a href="../gpt/">GPT</a></td><td>エンコーダ型 vs デコーダ型。生成の主役はGPT系</td></tr>
+          <tr><td>RoBERTa＝全く新しいネット構造</td><td>BERTと<strong>同型骨格</strong>。違いは学習手順</td></tr>
+          <tr><td>RoBERTa＝<a href="../cnn/">CNN</a></td><td>NLPのTransformer vs 画像の畳み込み（G-323）</td></tr>
+          <tr><td>RoBERTa＝<a href="../transformer/">Transformer</a>全体</td><td>Transformerの派生モデルの一つ</td></tr>
+          <tr><td>NSPを廃止＝双方向ではない</td><td>MLMで双方向文脈を学ぶ。NSPは補助タスク</td></tr>
+          <tr><td>RoBERTa＝対話型ChatGPT</td><td>理解系事前学習 vs 生成型サービス</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>RoBERTaはBERTと何が違いますか？</summary>
+          <p class="tool-faq-a">ネットワークの基本構造はBERTと同型のTransformerエンコーダです。違いは主に事前学習のレシピ——動的マスキング、NSP（次文予測）の廃止、より大きなバッチとデータ、長い学習——にあります。新しいアーキテクチャというより、学習手順の最適化として整理します。</p>
+        </details>
+        <details>
+          <summary>RoBERTaは文章生成用のGPT型モデルですか？</summary>
+          <p class="tool-faq-a">いいえ。RoBERTaはBERT系のエンコーダ型で、マスク言語モデル（MLM）による双方向の文脈理解が中心です。次トークン予測で長文を生成するGPT型デコーダとは設計思想が異なります。</p>
+        </details>
+        <details>
+          <summary>RoBERTaの名前の意味は？</summary>
+          <p class="tool-faq-a">Robustly optimized BERT approach（頑健に最適化されたBERTアプローチ）の略です。BERTの学習設定を系統的に見直し、同じ骨格でもより強い表現が得られることを示した研究として知られます。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERTの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-425/">TF-425 · エンコーダ型</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-426/">TF-426 · GANすり替え</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-338/">G-338 · LLMとの整理</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../albert/">ALBERT</a></li>
+          <li><a href="../electra/">ELECTRA</a></li>
+          <li><a href="../deberta/">DeBERTa</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

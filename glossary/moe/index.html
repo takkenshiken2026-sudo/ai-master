@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MoEとは？Mixture of Experts。ルータが一部の専門家だけを起動するスパース設計。Mixtral・密モデルとの違いをG検定向けに解説。">
+  <title>MoEとは？容量は大きいが起動は一部——ルータが選ぶスパースな専門家集合 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/moe/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MoEとは？容量は大きいが起動は一部——ルータが選ぶスパースな専門家集合">
+  <meta property="og:description" content="Mixture of Experts。多数のExpertのうちルータが少数だけを活性化し、大規模パラメータと推論効率を両立するアーキテクチャ設計。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/moe/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "MoE",
+        "alternateName": ["MoE", "エムオーイー", "Mixture of Experts", "混合エキスパート"],
+        "description": "複数の専門家ネットワーク（Expert）を用意し、ルータが入力ごとに少数だけを選択して活性化するニューラルネットワークの設計。総パラメータ数は大きくても推論時の計算はスパースに抑えられる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "MoEは何をする設計ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "複数の専門家（Expert）サブネットワークを並べ、ルータ（ゲート）が入力に応じてそのうち少数だけを選んで計算するアーキテクチャです。全パラメータを毎回使う密モデルより、容量を増やしつつ推論コストを抑えやすい点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MoEとMixtralは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MoEはMixture of Expertsというアーキテクチャ設計の名称です。MixtralはMistral AIが公開したMoE型の具体的なLLMモデル系列です。設計思想と製品名の関係として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MoEとエキスパートシステムは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MoEのExpertはニューラルネットの部分ネットワークを指します。エキスパートシステムはルールベースの知識と推論を用いる古典的AIの枠組みです。どちらもExpertという語を含みますが、深層学習の部品設計 vs シンボリックAIの別物です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">MoE</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>MoEとは？容量は大きいが起動は一部——ルータが選ぶスパースな専門家集合</h1>
+    <p class="tool-hero-sub">読み：エムオーイー ／ 英：MoE（Mixture of Experts）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>MoE</strong>（Mixture of Experts）は、<strong>多数の専門家（Expert）のうちルータが一部だけを起動</strong>する<a href="../neural-network/">ニューラルネット</a>の設計です。パラメータ総数は巨大でも、推論時に動くのは<strong>選ばれたExpertだけ</strong>——<a href="../mixtral/">Mixtral</a>記事が具体モデルなのに対し、MoEは<strong>「大きい箱の中で誰を呼ぶか」</strong>というアーキテクチャ思想そのもの——本記事は専門家の人数暗記より、<strong>密モデルとの決定的な違い</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#sparse-idea">スパース活性化の発想</a></li>
+        <li><a href="#components">Expertとルータ</a></li>
+        <li><a href="#dense-contrast">密モデルとの対比</a></li>
+        <li><a href="#llm-era">大規模LLMでの再注目</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="sparse-idea">
+      <h2>スパース活性化の発想</h2>
+      <p>
+        密（Dense）モデルは、入力のたびに<strong>全層・全パラメータ</strong>が計算に使われます。賢くなるほどモデルを太くする——コストも太くなる、というトレードオフがありました。
+      </p>
+      <p>
+        MoEの答えは<strong>条件付き計算</strong>です。「この入力にはExpert 3と7」「次のトークンにはExpert 1と5」——必要な専門家だけを呼ぶ。総容量（パラメータの蓄え）は大きいのに、<strong>実効コストはスパース</strong>——これがMixture of Expertsの核心です。
+      </p>
+    </section>
+
+    <section id="components">
+      <h2>Expertとルータ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Expert</strong></td><td>並列な部分ネットワーク（多くはFFN）。それぞれ異なるパターンを学習しうる</td></tr>
+          <tr><td><strong>Router（Gate）</strong></td><td>入力ごとにExpertへの<strong>スコア</strong>を付け、上位k個を選択</td></tr>
+          <tr><td><strong>合成</strong></td><td>選ばれたExpertの出力を重み付きで足し合わせる</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../transformer/">Transformer</a>のFFN層をMoE化するのが<a href="../llm/">LLM</a>での典型——Attentionは共有し、<strong>フィードフォワードだけを専門家集合</strong>に置き換える設計が多いです（<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>のブロック構造）。
+      </p>
+    </section>
+
+    <section id="dense-contrast">
+      <h2>密モデルとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>密モデル</th><th>MoE</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>活性化</strong></td><td>全パラメータ</td><td><strong>一部のExpert</strong></td></tr>
+          <tr><td><strong>総パラメータ</strong></td><td>＝実効サイズに近い</td><td>総数＞＞実効計算量</td></tr>
+          <tr><td><strong>メモリ</strong></td><td>モデルサイズに比例</td><td>全Expertを<strong>保持</strong>する必要あり（<a href="../../exams/g-kentei/practice/q/g-180/">G-180</a>）</td></tr>
+          <tr><td><strong>例</strong></td><td><a href="../mistral/">Mistral 7B</a>、<a href="../llama/">LLaMA</a></td><td><a href="../mixtral/">Mixtral</a>、超大規模LLMの一部</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「パラメータ数が多い＝遅い」はMoEでは成り立ちにくい——<strong>総容量と1トークンあたりのFLOPs</strong>を分けて答えるのが試験の要点です。
+      </p>
+    </section>
+
+    <section id="llm-era">
+      <h2>大規模LLMでの再注目</h2>
+      <p>
+        MoEの概念は以前から存在しますが、<a href="../foundation-model/">基盤モデル</a>時代に<strong>推論効率</strong>の課題と再び強く結びつきました（<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>学習</strong> — ルータとExpertが協調して「誰が何を得意とするか」を学ぶ</li>
+        <li><strong>推論</strong> — ルータが少数Expertを選び、計算を節約</li>
+        <li><strong>課題</strong> — 負荷分散（特定Expertばかり使われる）、メモリ帯域、実装の複雑さ</li>
+        <li><strong>関連効率化</strong> — <a href="../kv-cache/">KVキャッシュ</a>、<a href="../grouped-query-attention/">GQA</a>などと併用されることも</li>
+      </ul>
+      <p>
+        MoEは<strong>モデル名ではなく設計パターン</strong>——<a href="../mixtral/">Mixtral</a>はその実装例の一つです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Mixture of Experts＝ルータが選ぶ<strong>専門家集合</strong>のスパース設計</li>
+        <li><strong>目的</strong> — 大規模パラメータと<strong>推論効率</strong>の両立</li>
+        <li><strong>仕組み</strong> — 入力ごとに<strong>少数のExpert</strong>だけ活性化</li>
+        <li><strong>対比</strong> — 密モデル、Mixtral（具体モデル）、エキスパートシステム（古典AI）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>、<a href="../../exams/g-kentei/practice/q/g-180/">G-180</a>、<a href="../../exams/g-kentei/drill/q/tf-308/">TF-308</a>（エキスパートシステムとの混同回避）</p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>MoE＝<a href="../mixtral/">Mixtral</a></td><td>設計パターン vs 具体モデル</td></tr>
+          <tr><td>MoE＝エキスパートシステム</td><td>ニューラルExpert vs ルールベースAI（TF-308）</td></tr>
+          <tr><td>MoE＝アンサンブル学習</td><td>層内の条件付きExpert vs 複数モデルの投票</td></tr>
+          <tr><td>MoE＝<a href="../lora/">LoRA</a></td><td>アーキテクチャ設計 vs 軽量ファインチューニング</td></tr>
+          <tr><td>総パラメータ＝毎回の計算量</td><td>スパース活性化で実効コストは小さくなりうる</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>MoEは何をする設計ですか？</summary><p class="tool-faq-a">複数の専門家（Expert）サブネットワークを並べ、ルータ（ゲート）が入力に応じてそのうち少数だけを選んで計算するアーキテクチャです。全パラメータを毎回使う密モデルより、容量を増やしつつ推論コストを抑えやすい点が特徴です。</p></details>
+        <details><summary>MoEとMixtralは同じですか？</summary><p class="tool-faq-a">同じではありません。MoEはMixture of Expertsというアーキテクチャ設計の名称です。MixtralはMistral AIが公開したMoE型の具体的なLLMモデル系列です。設計思想と製品名の関係として整理します。</p></details>
+        <details><summary>MoEとエキスパートシステムは同じですか？</summary><p class="tool-faq-a">同じではありません。MoEのExpertはニューラルネットの部分ネットワークを指します。エキスパートシステムはルールベースの知識と推論を用いる古典的AIの枠組みです。どちらもExpertという語を含みますが、深層学習の部品設計 vs シンボリックAIの別物です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-180/">G-180 · メモリ制約</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-308/">TF-308 · エキスパートシステム（対比）</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformer</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../mixtral/">Mixtral</a></li>
+          <li><a href="../mistral/">Mistral</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../kv-cache/">KVキャッシュ</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

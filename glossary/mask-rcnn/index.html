@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mask R-CNNとは？物体検出に加え各インスタンスのマスクを推定するモデル。Faster R-CNN・FCNとの違いをG検定向けに解説。">
+  <title>Mask R-CNNとは？箱の上に形を重ねる——検出からインスタンスマスクへ枝分かれ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/mask-rcnn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mask R-CNNとは？箱の上に形を重ねる——検出からインスタンスマスクへ枝分かれ">
+  <meta property="og:description" content="Faster R-CNNを拡張し、バウンディングボックスに加えて各物体のピクセルマスクを推定するインスタンスセグメンテーションモデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/mask-rcnn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Mask R-CNN",
+        "alternateName": ["Mask R-CNN", "マスク アール CNN", "Mask Region-based CNN"],
+        "description": "Faster R-CNNを拡張し、物体のバウンディングボックスとクラスに加えて、各インスタンスのピクセル単位マスクを推定する画像認識モデル。インスタンスセグメンテーションの代表例。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Mask R-CNNは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像中の各物体について、バウンディングボックスでの位置・クラス分類に加え、物体ごとのピクセルマスク（輪郭）も推定するモデルです。物体検出とインスタンスセグメンテーションを一度に行う代表例として知られます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Mask R-CNNとFaster R-CNNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Faster R-CNNは物体検出（位置とクラス）が主目的です。Mask R-CNNはその上にマスク推定用の枝を追加し、各インスタンスの形状まで出力します。基盤は共通ですが、出力とタスクの範囲が広がります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Mask R-CNNとFCNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。FCNは画素ごとにクラスを割り当てるセマンティックセグメンテーション向けです。Mask R-CNNは物体ごとに個別のマスクを出すインスタンスセグメンテーション向けで、検出パイプライン（R-CNN系）を土台にしています。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Mask R-CNN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Mask R-CNNとは？箱の上に形を重ねる——検出からインスタンスマスクへ枝分かれ</h1>
+    <p class="tool-hero-sub">読み：マスク アールシーエヌエヌ ／ 英：Mask R-CNN</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Mask R-CNN</strong>は、<strong>物体の箱（バウンディングボックス）に加え、物体ごとの輪郭（マスク）</strong>まで推定する<a href="../cnn/">CNN</a>ベースのモデルです。<a href="../faster-rcnn/">Faster R-CNN</a>が「どこに何があるか」まで届くのに対し、Mask R-CNNは<strong>同じ候補領域からマスク用の枝が伸びる</strong>——本記事はRoIAlignの細部より、<strong>「検出とインスタンスセグを一本化した理由」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#task-ladder">画像認識タスクの階段</a></li>
+        <li><a href="#branch">マスク枝の設計</a></li>
+        <li><a href="#instance-vs-semantic">インスタンス vs セマンティック</a></li>
+        <li><a href="#evaluation">評価の物差し</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="task-ladder">
+      <h2>画像認識タスクの階段</h2>
+      <p>
+        試験では画像認識タスクの<strong>段階差</strong>が繰り返し問われます（<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>出力</th><th>代表モデル</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>画像分類</strong></td><td>画像全体のクラス</td><td>ResNetなど</td></tr>
+          <tr><td><strong>物体検出</strong></td><td>クラス＋<strong>バウンディングボックス</strong></td><td><a href="../faster-rcnn/">Faster R-CNN</a>、YOLO</td></tr>
+          <tr><td><strong>インスタンスセグ</strong></td><td>クラス＋箱＋<strong>物体ごとのマスク</strong></td><td><strong>Mask R-CNN</strong></td></tr>
+          <tr><td><strong>セマンティックセグ</strong></td><td>画素ごとのクラス（個体は区別しない）</td><td><a href="../fcn/">FCN</a>、U-Net</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Mask R-CNNは階段の<strong>「検出の一つ上」</strong>——箱で囲むだけでは足りない「形まで欲しい」場面（ロボット掴み、画像編集の切り抜きなど）向けです。
+      </p>
+    </section>
+
+    <section id="branch">
+      <h2>マスク枝の設計</h2>
+      <p><a href="../../exams/g-kentei/practice/q/g-326/">G-326</a>の定義を、パイプラインで整理します。</p>
+      <ul class="tool-steps">
+        <li><strong>特徴抽出</strong> — <a href="../cnn/">CNN</a>バックボーン＋<a href="../fpn/">FPN</a>などで多段特徴を得る</li>
+        <li><strong>候補生成・分類</strong> — <a href="../faster-rcnn/">Faster R-CNN</a>と同様、物体候補を検出しクラスを当てる</li>
+        <li><strong>RoIAlign</strong> — 各候補領域から固定サイズの特徴を<strong>位置ずれを抑えて</strong>切り出す</li>
+        <li><strong>マスク枝</strong> — 小さな畳み込みネットで<strong>低解像度マスク</strong>を予測（物体ごとに1枚）</li>
+      </ul>
+      <p>
+        ポイントは<strong>枝分かれ（multi-task）</strong>——検出用ヘッドとマスク用ヘッドが同じ候補領域を共有し、別々のモデルを二回走らせない設計です。試験では「Faster R-CNNの<strong>拡張</strong>」と答えるのが安全です。
+      </p>
+    </section>
+
+    <section id="instance-vs-semantic">
+      <h2>インスタンス vs セマンティック</h2>
+      <p>
+        セグメンテーションには2系統あります（<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>種類</th><th>同じクラスの複数物体</th><th>Mask R-CNNとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>セマンティック</strong></td><td>同じ色・ラベルにまとまる</td><td><a href="../fcn/">FCN</a>系の主戦場</td></tr>
+          <tr><td><strong>インスタンス</strong></td><td><strong>個体ごとに別マスク</strong></td><td>Mask R-CNNの主戦場</td></tr>
+        </tbody>
+      </table>
+      <p>
+        例：写真に犬が2匹いる——セマンティックなら「犬」領域が1色に溶け合うこともある。インスタンスなら<strong>犬A・犬Bでマスクが分かれる</strong>——Mask R-CNNは後者を狙います。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-330/">G-330</a>のパノプティックセグはさらに背景と個体を統合——Mask R-CNNはその<strong>インスタンス側の部品</strong>として位置づけられます。
+      </p>
+    </section>
+
+    <section id="evaluation">
+      <h2>評価の物差し</h2>
+      <p>
+        検出では<a href="../iou/">IoU</a>でボックスの重なりを測り（<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>）、マスクでも<strong>領域のIoU</strong>で品質を評価します。クラス名が合っても輪郭がズレればスコアは下がる——箱だけの検出より厳しい物差しです。
+      </p>
+      <p>
+        学習データには<a href="../coco-dataset/">COCO</a>のように、ボックスとマスクの両方が付いたアノテーションが使われます。損失は分類・ボックス回帰・マスク予測を<strong>同時に</strong>最適化——マスクだけのモデル（<a href="../../exams/g-kentei/practice/q/g-327/">G-327</a>のU-Net等）とは入口が違います。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 物体検出＋<strong>各インスタンスのマスク</strong>推定</li>
+        <li><strong>系譜</strong> — <a href="../faster-rcnn/">Faster R-CNN</a>の拡張。R-CNNファミリー</li>
+        <li><strong>タスク</strong> — <strong>インスタンスセグメンテーション</strong>（個体ごとのマスク）</li>
+        <li><strong>対比</strong> — FCN＝セマンティック、YOLO＝検出中心、word2vec＝NLP</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-326/">G-326</a>、<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>、<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a>、<a href="../../exams/g-kentei/drill/q/tf-124/">TF-124</a>、<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Mask R-CNN＝<a href="../fcn/">FCN</a></td><td>インスタンスセグ vs セマンティックセグ</td></tr>
+          <tr><td>Mask R-CNN＝<a href="../faster-rcnn/">Faster R-CNN</a></td><td>マスク出力あり vs 検出のみ</td></tr>
+          <tr><td>Mask R-CNN＝<a href="../gan/">GAN</a></td><td>認識モデル vs 生成器・識別器の枠組み</td></tr>
+          <tr><td>Mask R-CNN＝word2vec</td><td>画像認識 vs 単語埋め込み（G-327の誤答パターン）</td></tr>
+          <tr><td>Mask R-CNN＝画像分類</td><td>位置・形状まで vs 画像全体のラベル</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Mask R-CNNは何をするモデルですか？</summary><p class="tool-faq-a">画像中の各物体について、バウンディングボックスでの位置・クラス分類に加え、物体ごとのピクセルマスク（輪郭）も推定するモデルです。物体検出とインスタンスセグメンテーションを一度に行う代表例として知られます。</p></details>
+        <details><summary>Mask R-CNNとFaster R-CNNは同じですか？</summary><p class="tool-faq-a">同じではありません。Faster R-CNNは物体検出（位置とクラス）が主目的です。Mask R-CNNはその上にマスク推定用の枝を追加し、各インスタンスの形状まで出力します。基盤は共通ですが、出力とタスクの範囲が広がります。</p></details>
+        <details><summary>Mask R-CNNとFCNは同じですか？</summary><p class="tool-faq-a">同じではありません。FCNは画素ごとにクラスを割り当てるセマンティックセグメンテーション向けです。Mask R-CNNは物体ごとに個別のマスクを出すインスタンスセグメンテーション向けで、検出パイプライン（R-CNN系）を土台にしています。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-326/">G-326 · Mask R-CNNの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-124/">TF-124 · Mask R-CNN</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-021/">G-021 · 物体検出</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-116/">TF-116 · セグの種類</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../fcn/">FCN</a></li>
+          <li><a href="../iou/">IoU</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../fpn/">FPN</a></li>
+          <li><a href="../ssd/">SSD</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../segment-anything/">Segment Anything</a></li>
+          <li><a href="../sam2/">SAM 2</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

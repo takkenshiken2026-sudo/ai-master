@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SAM 2とは？Segment Anything Model 2。点・枠・マスクのプロンプトで任意物体を切り出す汎用セグメンテーションを動画へ拡張したMetaの基盤モデル。Mask R-CNNとの違いをG検定向けに解説。">
+  <title>SAM 2とは？点を置けば輪郭が返る——クラス名なしの汎用セグを動画へ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/sam2/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SAM 2とは？点を置けば輪郭が返る——クラス名なしの汎用セグを動画へ">
+  <meta property="og:description" content="Segment Anything Model 2。プロンプト駆動の汎用セグメンテーションを画像から動画系列へ拡張したMetaの基盤モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/sam2/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SAM 2",
+        "alternateName": ["SAM 2", "サムツー", "Segment Anything Model 2"],
+        "description": "点・枠・マスクなどのプロンプトで任意物体の領域を切り出す汎用セグメンテーションを、画像から動画フレーム系列へ拡張したMetaの基盤モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SAM 2は何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Segment Anything Model 2の略で、画像や動画の中からユーザーが指定した物体の輪郭（マスク）を切り出す汎用セグメンテーションモデルです。点・矩形・既存マスクなどをプロンプトとして与え、事前に決めたクラス名に縛られず対象を分離できます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SAM 2とMask R-CNNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Mask R-CNNは学習済みクラス（人・車など）を前提に、検出とインスタンスマスクを同時に出す教師あり型の代表例です。SAM 2はプロンプトで任意対象を切り出す汎用セグメンテーションの基盤モデルで、固定クラス一覧に依存しない設計が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SAM 2は画像生成AIですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SAM 2は既存の画像・動画から領域を切り出すセグメンテーション向けモデルです。テキストから新しい画像を生成する拡散モデル（Stable Diffusionなど）やText-to-Imageとは役割が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SAM 2</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SAM 2とは？点を置けば輪郭が返る——クラス名なしの汎用セグを動画へ</h1>
+    <p class="tool-hero-sub">読み：サムツー ／ 英：SAM 2（Segment Anything Model 2）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SAM 2</strong>（Segment Anything Model 2）は、Metaが公開した<strong>画像・動画の汎用セグメンテーションモデル</strong>です。<a href="../mask-rcnn/">Mask R-CNN</a>が「人・車など<strong>学習済みクラス</strong>の箱と輪郭を出す」のに対し、SAM 2は<strong>点や枠をプロンプトとして投げれば、クラス名を聞かずに輪郭を返す</strong>——本記事はTransformer内部の細部より、<strong>「教師あり検出からプロンプト駆動セグへ」</strong>という設計思想の転換に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">SAM 2とは</a></li>
+        <li><a href="#prompt">プロンプト駆動の意味</a></li>
+        <li><a href="#video">画像から動画へ</a></li>
+        <li><a href="#vs-classic">従来のセグモデルとの対比</a></li>
+        <li><a href="#use">実務での使われ方</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SAM 2単独の過去問はまだ少ない一方、辞典の定義は<strong>「画像・動画の汎用セグメンテーションモデル」</strong>です。試験では<strong>セグメンテーションの種類</strong>（<a href="../../exams/g-kentei/practice/q/g-317/">G-317</a>、<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a>）と<strong>代表モデルとの違い</strong>（<a href="../../exams/g-kentei/practice/q/g-326/">G-326</a>）を土台に整理します。
+      </p>
+      <p>
+        誤答では、<strong>SAM 2＝物体検出だけ</strong>（<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>）、<strong>SAM 2＝画像生成</strong>（<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>）、<strong>SAM 2＝形態素解析</strong>（<a href="../../exams/g-kentei/practice/q/g-022/">G-022</a>）など、別タスクとのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-317/">G-317（セマンティック vs インスタンス）</a>、<a href="../../exams/g-kentei/practice/q/g-326/">G-326（Mask R-CNN）</a>、<a href="../../exams/g-kentei/drill/q/tf-117/">TF-117（インスタンスセグ）</a>、<a href="../../exams/g-kentei/practice/q/g-330/">G-330（パノプティック）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>SAM 2とは</h2>
+      <p>
+        SAM 2は、2023年の<strong><a href="../segment-anything/">Segment Anything（SAM）</a></strong>を発展させ、<strong>動画フレーム間で対象を追跡しながらマスクを更新</strong>できるようにした後継モデルです（2024年公開）。大量の画像・動画で学習された<strong><a href="../foundation-model/">基盤モデル</a></strong>として位置づけられ、下流タスク向けの<strong>共通の「切り出しエンジン」</strong>として使われることが多いです。
+      </p>
+      <p>
+        出力は画素単位の<strong>マスク（領域の輪郭）</strong>です。物体検出のバウンディングボックスだけでは足りない編集・計測・追跡では、<strong>形まで知りたい</strong>——SAM 2はその要求に応えるモデルとして注目を集めました。
+      </p>
+    </section>
+
+    <section id="prompt">
+      <h2>プロンプト駆動の意味</h2>
+      <p>
+        従来の<a href="../mask-rcnn/">Mask R-CNN</a>は、学習時に決めたクラス（COCOの80類など）を前提に推論します。SAM 2は<strong>ユーザーの指示（プロンプト）</strong>で対象を指定します。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>プロンプト例</th><th>ユーザーの意図</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>点（クリック）</strong></td><td>「ここにある物体を切り出して」</td><td>最小限の指示でマスク取得</td></tr>
+          <tr><td><strong>矩形（ボックス）</strong></td><td>「この範囲の主対象を」</td><td>検出框に近いが<strong>マスク出力</strong></td></tr>
+          <tr><td><strong>既存マスク</strong></td><td>「この形を修正・拡張して」</td><td>インタラクティブ編集向け</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「犬」「車」といった<strong>クラス名をモデルに伝える必要がない</strong>——これが「Segment <strong>Anything</strong>（何でも切り出す）」の意味です。試験では、固定クラス教師あり型との対比が得点源になります。
+      </p>
+    </section>
+
+    <section id="video">
+      <h2>画像から動画へ</h2>
+      <p>
+        SAM 2の「2」の価値は、<strong>時間軸</strong>にあります。動画ではフレームごとに独立して切り出すと、対象の形がちらつきます。SAM 2は<strong>フレーム間でメモリを共有</strong>し、一度指定した対象を<strong>連続フレームで追跡</strong>しながらマスクを更新します。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>入力</strong> — 画像1枚、または動画系列</li>
+        <li><strong>指定</strong> — 最初のフレームで点・枠などをプロンプト</li>
+        <li><strong>追跡</strong> — 以降のフレームで同一対象のマスクを維持・更新</li>
+        <li><strong>用途</strong> — 動画編集の被写体切り抜き、モニタリング、データアノテーション支援など</li>
+      </ul>
+      <p>
+        静止画セグメンテーションの延長ではなく、<strong>「対象の一貫した領域追跡」</strong>——という動画理解の入口として整理すると、他モデルとの違いが明確になります。
+      </p>
+    </section>
+
+    <section id="vs-classic">
+      <h2>従来のセグモデルとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Mask R-CNN 等</th><th>SAM 2</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>対象の指定</strong></td><td>学習済みクラスを自動検出</td><td><strong>プロンプト</strong>で任意対象</td></tr>
+          <tr><td><strong>出力</strong></td><td>箱＋クラス＋マスク</td><td><strong>マスク中心</strong>（検出パイプライン不要）</td></tr>
+          <tr><td><strong>学習の前提</strong></td><td>クラス付きアノテーションが典型</td><td>大規模データで<strong>汎用化</strong></td></tr>
+          <tr><td><strong>動画</strong></td><td>フレーム独立が多い</td><td><strong>時系列追跡</strong>を意識</td></tr>
+          <tr><td><strong>試験</strong></td><td>G-326</td><td>汎用セグ・基盤モデルとして整理</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../fcn/">FCN</a>が<strong>セマンティックセグメンテーション</strong>（画素ごとのクラス、個体は区別しない——<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a>）の代表であるのに対し、SAM 2は<strong>プロンプトで個体レベルのマスク</strong>を得る——インスタンスセグに近い出力を、クラス一覧なしで実現する、と理解すると整理しやすいです。
+      </p>
+    </section>
+
+    <section id="use">
+      <h2>実務での使われ方</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>画像編集</strong>
+          背景ぼかし・物体消去・切り抜き合成（<a href="../../tools/microsoft-designer/">Microsoft Designer</a>等でSAMが言及されることも）
+        </li>
+        <li>
+          <strong>アノテーション支援</strong>
+          点1つでマスク草案を出し、人間が修正——ラベリングコスト削減
+        </li>
+        <li>
+          <strong>動画制作</strong>
+          被写体のマスク追跡によるエフェクト適用
+        </li>
+        <li>
+          <strong>下流モデルの前処理</strong>
+          関心領域の切り出しを他の認識・生成パイプラインへ渡す
+        </li>
+      </ul>
+      <p>
+        SAM 2は<strong>画像を新しく描く</strong>モデルではありません。<a href="../text-to-image/">Text-to-Image</a>や<a href="../stable-diffusion/">Stable Diffusion</a>と組み合わせて「切り出した領域だけ編集する」——といった<strong>パイプラインの部品</strong>として使われることはあります。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SAM 2＝<a href="../stable-diffusion/">Stable Diffusion</a></td><td>領域切り出し vs 画像生成（TF-0184）</td></tr>
+          <tr><td>SAM 2＝物体検出のみ</td><td>マスク（輪郭）まで出すセグメンテーション</td></tr>
+          <tr><td>SAM 2＝<a href="../mask-rcnn/">Mask R-CNN</a></td><td>プロンプト駆動の汎用セグ vs 固定クラス教師あり</td></tr>
+          <tr><td>SAM 2＝<a href="../fcn/">FCN</a>の別名</td><td>セマンティック一括分類 vs プロンプト指定の個体マスク</td></tr>
+          <tr><td>SAM 2＝形態素解析</td><td>画像の領域分割 vs 文章の分割（G-022）</td></tr>
+          <tr><td>プロンプト＝テキスト生成の指示だけ</td><td>点・枠・マスクも「プロンプト」になり得る</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SAM 2は何をするモデルですか？</summary>
+          <p class="tool-faq-a">Segment Anything Model 2の略で、画像や動画の中からユーザーが指定した物体の輪郭（マスク）を切り出す汎用セグメンテーションモデルです。点・矩形・既存マスクなどをプロンプトとして与え、事前に決めたクラス名に縛られず対象を分離できます。</p>
+        </details>
+        <details>
+          <summary>SAM 2とMask R-CNNは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。Mask R-CNNは学習済みクラス（人・車など）を前提に、検出とインスタンスマスクを同時に出す教師あり型の代表例です。SAM 2はプロンプトで任意対象を切り出す汎用セグメンテーションの基盤モデルで、固定クラス一覧に依存しない設計が特徴です。</p>
+        </details>
+        <details>
+          <summary>SAM 2は画像生成AIですか？</summary>
+          <p class="tool-faq-a">いいえ。SAM 2は既存の画像・動画から領域を切り出すセグメンテーション向けモデルです。テキストから新しい画像を生成する拡散モデル（Stable Diffusionなど）やText-to-Imageとは役割が異なります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-317/">G-317 · セグの種類</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-326/">G-326 · Mask R-CNN</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-117/">TF-117 · インスタンスセグ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-330/">G-330 · パノプティック</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../mask-rcnn/">Mask R-CNN</a></li>
+          <li><a href="../fcn/">FCN</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../segment-anything/">Segment Anything</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

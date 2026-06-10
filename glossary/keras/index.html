@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kerasとは？層を積み上げてニューラルネットを組み立てる高水準DL API。TensorFlow・PyTorch・JAXとの違いをG検定向けに解説。">
+  <title>Kerasとは？層を宣言するだけ——ニューラルネットを組み立てる高水準API — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/keras/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Kerasとは？層を宣言するだけ——ニューラルネットを組み立てる高水準API">
+  <meta property="og:description" content="Dense・Conv2Dなどの層を積み、compile/fitで学習するPython向け高水準インターフェース。TensorFlowに統合。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/keras/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Keras",
+        "alternateName": ["Keras", "ケラス", "tf.keras"],
+        "description": "ニューラルネットワークを層の積み上げで宣言し、損失関数・最適化・学習ループを高水準APIで記述する深層学習ライブラリ。TensorFlowの公式高水準APIとして広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Kerasは何をするライブラリですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "畳み込み層や全結合層などを積み上げてモデルを定義し、損失関数と最適化手法を指定して学習（fit）を回すための高水準APIです。行列演算の細部を一から書かず、ニューラルネットの設計と学習に集中できるようにするのが目的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "KerasとTensorFlowは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。TensorFlowはテンソル演算・自動微分・分散学習などを含む深層学習フレームワーク全体です。Kerasはその上に載る高水準APIで、現在はTensorFlowに統合されtf.kerasとして提供されます。フレームワーク本体と書きやすいAPIの層が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "KerasとPyTorchは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもモデル定義と学習のためのフレームワーク系ですが、設計思想・APIスタイル・エコシステムが異なる別製品です。Kerasは層を積む宣言的スタイルが特徴的で、PyTorchは動的計算グラフとPythonicな記述で人気があります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Keras</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Kerasとは？層を宣言するだけ——ニューラルネットを組み立てる高水準API</h1>
+    <p class="tool-hero-sub">読み：ケラス ／ 英：Keras</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Keras</strong>は、<a href="../neural-network/">ニューラルネットワーク</a>を<strong>層（Layer）の積み上げ</strong>で組み立てる高水準APIです。<code>Conv2D</code>を足し、<code>Dense</code>を足し、<code>compile</code>して<code>fit</code>——学習ループの骨格を短いコードで書ける——本記事はメソッド名の暗記より、<strong>「フレームワークスタックのどこにいるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#layer-stack">層を積む発想</a></li>
+        <li><a href="#workflow">典型的なワークフロー</a></li>
+        <li><a href="#stack">TensorFlowとの関係</a></li>
+        <li><a href="#vs-others">PyTorch・JAXとの対比</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="layer-stack">
+      <h2>層を積む発想</h2>
+      <p>
+        <a href="../deep-learning/">ディープラーニング</a>のモデルは、入力から出力へ<strong>層を通過するパイプライン</strong>として設計します。Kerasはこの直感をそのままコードに落とします。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層の例</th><th>役割</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Conv2D</strong></td><td>画像の畳み込み</td><td><a href="../cnn/">CNN</a>（<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>）</td></tr>
+          <tr><td><strong>Dense</strong></td><td>全結合</td><td>分類の最終層など</td></tr>
+          <tr><td><strong>Dropout</strong></td><td>正則化</td><td><a href="../dropout/">ドロップアウト</a></td></tr>
+          <tr><td><strong>BatchNormalization</strong></td><td>学習安定化</td><td><a href="../../exams/g-kentei/practice/q/g-017/">G-017</a></td></tr>
+        </tbody>
+      </table>
+      <p>
+        Kerasは<strong>モデル名（AlexNet等）ではなく</strong>、それらを組み立てる<strong>道具</strong>——試験では「高水準APIでモデルを組み立てるライブラリ」とラベル付けするのが安全です。
+      </p>
+    </section>
+
+    <section id="workflow">
+      <h2>典型的なワークフロー</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <code>Sequential</code>やFunctional APIで層を積む</li>
+        <li><strong>compile</strong> — <a href="../loss-function/">損失関数</a>・最適化手法・評価指標を指定</li>
+        <li><strong>fit</strong> — データで学習。<a href="../backpropagation/">誤差逆伝播</a>と<a href="../gradient-descent/">勾配降下</a>が内部で実行（<a href="../../exams/g-kentei/practice/q/g-171/">G-171</a>）</li>
+        <li><strong>predict</strong> — 学習済みモデルで推論</li>
+      </ul>
+      <p>
+        試験ではAPIの細部より、<strong>「モデル定義→損失指定→学習」</strong>の流れが<a href="../neural-network/">ニューラルネット</a>の基本サイクルである、と結びつけて覚えます（<a href="../../exams/g-kentei/practice/q/g-117/">G-117</a>）。
+      </p>
+    </section>
+
+    <section id="stack">
+      <h2>TensorFlowとの関係</h2>
+      <p>
+        Kerasはもともと独立した高水準APIでしたが、現在は<strong>TensorFlowに統合</strong>され、<code>tf.keras</code>として提供されます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ハードウェア</strong></td><td><a href="../gpu/">GPU</a>、TPU</td><td>計算チップ（<a href="../../exams/g-kentei/practice/q/g-202/">G-202</a>）</td></tr>
+          <tr><td><strong>実行基盤</strong></td><td><a href="../cuda/">CUDA</a></td><td>GPU上の並列実行</td></tr>
+          <tr><td><strong>フレームワーク</strong></td><td>TensorFlow</td><td>テンソル演算・自動微分・分散</td></tr>
+          <tr><td><strong>高水準API</strong></td><td><strong>Keras</strong></td><td>層の積み上げ・fit</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../jax/">JAX</a>記事と同じ<strong>スタック思考</strong>——Kerasは「書きやすさ」の層、TensorFlowは「実行エンジン」の層です。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>PyTorch・JAXとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名称</th><th>位置づけ</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Keras</strong></td><td>TensorFlow上の<strong>高水準API</strong></td><td>層を積んでfit</td></tr>
+          <tr><td><strong><a href="../pytorch/">PyTorch</a></strong></td><td>フレームワーク本体</td><td>別エコシステム。ONNXへエクスポート可</td></tr>
+          <tr><td><strong><a href="../onnx/">ONNX</a></strong></td><td>モデル交換フォーマット</td><td>学習後の持ち運び用。フレームワークではない</td></tr>
+          <tr><td><strong>JAX</strong></td><td>数値計算＋自動微分</td><td>Flax等を載せて使う下位層</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どれも<a href="../cnn/">CNN</a>や<a href="../transformer/">Transformer</a>を<strong>実装するための道具</strong>——AlexNetやBERTそのものではありません。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 高水準APIで<strong>層を組み立てて</strong>DLモデルを作るライブラリ</li>
+        <li><strong>関係</strong> — TensorFlowに統合（tf.keras）</li>
+        <li><strong>役割</strong> — モデル定義・compile・fitによる学習</li>
+        <li><strong>対比</strong> — モデル名・GPU・数値計算ライブラリ（JAX）ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-117/">G-117</a>、<a href="../../exams/g-kentei/practice/q/g-171/">G-171</a>、<a href="../../exams/g-kentei/practice/q/g-017/">G-017</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>、<a href="../../exams/g-kentei/practice/q/g-202/">G-202</a>、<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Keras＝TensorFlow全体</td><td>高水準API vs フレームワーク本体</td></tr>
+          <tr><td>Keras＝<a href="../alexnet/">AlexNet</a></td><td>組み立て道具 vs 特定モデル</td></tr>
+          <tr><td>Keras＝<a href="../cuda/">CUDA</a></td><td>モデル記述API vs GPU実行基盤</td></tr>
+          <tr><td>Keras＝<a href="../llm/">LLM</a></td><td>学習ライブラリ vs 言語モデル</td></tr>
+          <tr><td>Keras＝データセット</td><td>コードライブラリ vs 教師データ</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Kerasは何をするライブラリですか？</summary><p class="tool-faq-a">畳み込み層や全結合層などを積み上げてモデルを定義し、損失関数と最適化手法を指定して学習（fit）を回すための高水準APIです。行列演算の細部を一から書かず、ニューラルネットの設計と学習に集中できるようにするのが目的です。</p></details>
+        <details><summary>KerasとTensorFlowは同じですか？</summary><p class="tool-faq-a">同じではありません。TensorFlowはテンソル演算・自動微分・分散学習などを含む深層学習フレームワーク全体です。Kerasはその上に載る高水準APIで、現在はTensorFlowに統合されtf.kerasとして提供されます。フレームワーク本体と書きやすいAPIの層が異なります。</p></details>
+        <details><summary>KerasとPyTorchは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもモデル定義と学習のためのフレームワーク系ですが、設計思想・APIスタイル・エコシステムが異なる別製品です。Kerasは層を積む宣言的スタイルが特徴的で、PyTorchは動的計算グラフとPythonicな記述で人気があります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-117/">G-117 · 順伝播と学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-171/">G-171 · 誤差逆伝播と勾配</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-416/">TF-416 · NNはデータから学習</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · CNNの局所特徴</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../cuda/">CUDA</a></li>
+          <li><a href="../onnx/">ONNX</a></li>
+          <li><a href="../pytorch/">PyTorch</a></li>
+          <li><a href="../jax/">JAX</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../tensorflow/">TensorFlow</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

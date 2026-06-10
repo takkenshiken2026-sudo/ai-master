@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HumanEvalとは？コード生成LLMの実装力をユニットテストで採点するベンチマーク。GLUE・BLEUとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>HumanEvalとは？正解は実行結果——コード生成LLMの実装試験 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/human-eval/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="HumanEvalとは？正解は実行結果——コード生成LLMの実装試験">
+  <meta property="og:description" content="関数仕様からコードを書き、テスト実行で正誤を判定するコード生成ベンチマーク。pass@kで報告される。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/human-eval/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "HumanEval",
+        "alternateName": ["HumanEval", "ヒューマンイーバル", "HumanEval benchmark"],
+        "description": "プログラミング問題の仕様からコードを生成し、ユニットテストの実行結果で正誤を判定するコード生成能力のベンチマーク。pass@k指標でモデル性能が報告される。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "HumanEvalは何を測るベンチマークですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "LLMが関数の説明やシグネチャから正しいプログラムを書けるかを測るベンチマークです。生成したコードを実際に実行し、用意されたユニットテストを通過したかで採点します。文章の流暢さではなく、実装が動くかが合格ラインです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "HumanEvalと人間による評価は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。名前にHumanが付きますが、HumanEvalは自動実行のユニットテストで採点するベンチマークの名称です。人間が主観的に良し悪しを付ける評価手法そのものを指す用語ではありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "HumanEvalとGLUEは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。GLUEは複数の自然言語理解タスクで言語モデルを比較するベンチマークです。HumanEvalはコード生成の実装正しさを測るベンチマークです。タスク（言語理解 vs コード生成）と採点方法が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">HumanEval</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>HumanEvalとは？正解は実行結果——コード生成LLMの実装試験</h1>
+    <p class="tool-hero-sub">読み：ヒューマンイーバル ／ 英：HumanEval</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>HumanEval</strong>は、<a href="../llm/">LLM</a>の<strong>コード生成能力</strong>を測るベンチマークです。関数の仕様を読んでプログラムを書き、<strong>ユニットテストを実行して通過したか</strong>で採点する——文章がそれらしく見えるかではなく、<strong>動く実装か</strong>が合格ライン——本記事はpass@kの式より、<strong>「なぜコード評価は実行ベースなのか」</strong>と、<strong>名前のHumanが人間評価を意味しない</strong>点に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-run">なぜ実行で採点するか</a></li>
+        <li><a href="#how-works">HumanEvalの流れ</a></li>
+        <li><a href="#pass-at-k">pass@kという報告の仕方</a></li>
+        <li><a href="#vs-other-bench">他ベンチマークとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-run">
+      <h2>なぜ実行で採点するか</h2>
+      <p>
+        コード支援では、<strong>もっともらしいコードが動かない</strong>ことが日常茶飯事です（<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a>）。変数名やインデントが整っていても、境界条件の漏れでテストが落ちる——だからHumanEvalは<strong>自動テストの合否</strong>を正解とします。
+      </p>
+      <p>
+        これは<a href="../bleu/">BLEU</a>のような<strong>文字列の類似度</strong>や、GLUEのような<strong>分類精度</strong>とは思想が違います。コードの正しさは、多くの場合<strong>実行可能か・仕様を満たすか</strong>でしか判断できません。
+      </p>
+    </section>
+
+    <section id="how-works">
+      <h2>HumanEvalの流れ</h2>
+      <ul class="tool-steps">
+        <li><strong>問題</strong> — 関数の説明・シグネチャ・入出力例が与えられる</li>
+        <li><strong>生成</strong> — <a href="../codex-model/">Codex</a>などのコード生成モデルが実装を出力</li>
+        <li><strong>実行</strong> — サンドボックスでコードを動かし、隠しユニットテストを実行</li>
+        <li><strong>判定</strong> — 全テスト通過なら正解、一つでも失敗なら不正解</li>
+      </ul>
+      <p>
+        OpenAIが<a href="../codex-model/">Codex</a>公開時に提示したベンチマークとして広く引用され、以降のコード特化LLMの性能比較の<strong>共通言語</strong>になりました（<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>HumanEvalでの役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>問題セット</strong></td><td>手書きのプログラミング課題（訓練データとは別設計）</td></tr>
+          <tr><td><strong>ユニットテスト</strong></td><td>採点の唯一の基準。人間の目視は標準フローではない</td></tr>
+          <tr><td><strong>モデル</strong></td><td>Codex、GPT系、他社コードLLMなど</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="pass-at-k">
+      <h2>pass@kという報告の仕方</h2>
+      <p>
+        コード生成は確率的——同じ問題でも複数候補を出し、<strong>どれか一つでもテストを通れば成功</strong>と数える指標が<strong>pass@k</strong>です。kは生成する候補数、k個のうち少なくとも1つが正解だった問題の割合を報告します。
+      </p>
+      <p>
+        試験では数式の暗記より、<strong>「複数案を出して当てにいく評価」</strong>と覚えれば十分です。エディタの補完（Top-1）と、ベンチマーク（Top-k）で見る世界が違う——という対比が実務理解にもつながります。
+      </p>
+    </section>
+
+    <section id="vs-other-bench">
+      <h2>他ベンチマークとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ベンチマーク</th><th>測るもの</th><th>採点の軸</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GLUE</strong></td><td>自然言語理解（複数タスク）</td><td>分類・類推などの精度（<a href="../../exams/g-kentei/practice/q/g-348/">G-348</a>）</td></tr>
+          <tr><td><strong>BLEU</strong></td><td>機械翻訳・生成文</td><td>参照文とのn-gram一致</td></tr>
+          <tr><td><strong>HumanEval</strong></td><td><strong>コード生成</strong></td><td><strong>ユニットテストの合否</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        生成AIの応用には要約・画像・<strong>コード生成</strong>が含まれます（<a href="../../exams/g-kentei/drill/q/tf-170/">TF-170</a>、<a href="../../exams/g-kentei/drill/q/tf-336/">TF-336</a>）。HumanEvalはそのうち<strong>実装力</strong>だけを切り出して数値化した道具——モデル名（Codex）やサービス名（Copilot）とは別レイヤーです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — コード生成LLMの能力を測る<strong>ベンチマーク</strong></li>
+        <li><strong>採点</strong> — ユニットテストの実行結果で正誤判定</li>
+        <li><strong>指標</strong> — pass@k（k個の候補のうち成功した割合）</li>
+        <li><strong>対比</strong> — GLUE＝言語理解、HumanEval＝コード実装。Human≠人間採点</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150</a>、<a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-348/">G-348</a>、<a href="../../exams/g-kentei/drill/q/tf-137/">TF-137</a>、<a href="../../exams/g-kentei/drill/q/tf-170/">TF-170</a>、<a href="../../exams/g-kentei/drill/q/tf-336/">TF-336</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>HumanEval＝人間が採点する評価</td><td>名称はHumanEvalだが、標準は<strong>自動ユニットテスト</strong></td></tr>
+          <tr><td>HumanEval＝<a href="../codex-model/">Codex</a></td><td>ベンチマーク vs モデル</td></tr>
+          <tr><td>HumanEval＝学習用データセット</td><td>性能<strong>評価</strong>用の問題集合</td></tr>
+          <tr><td>HumanEval＝GLUE</td><td>コード生成 vs 自然言語理解</td></tr>
+          <tr><td>HumanEval＝<a href="../bleu/">BLEU</a></td><td>テスト合否 vs 文字列類似度</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>HumanEvalは何を測るベンチマークですか？</summary><p class="tool-faq-a">LLMが関数の説明やシグネチャから正しいプログラムを書けるかを測るベンチマークです。生成したコードを実際に実行し、用意されたユニットテストを通過したかで採点します。文章の流暢さではなく、実装が動くかが合格ラインです。</p></details>
+        <details><summary>HumanEvalと人間による評価は同じですか？</summary><p class="tool-faq-a">同じではありません。名前にHumanが付きますが、HumanEvalは自動実行のユニットテストで採点するベンチマークの名称です。人間が主観的に良し悪しを付ける評価手法そのものを指す用語ではありません。</p></details>
+        <details><summary>HumanEvalとGLUEは同じですか？</summary><p class="tool-faq-a">同じではありません。GLUEは複数の自然言語理解タスクで言語モデルを比較するベンチマークです。HumanEvalはコード生成の実装正しさを測るベンチマークです。タスク（言語理解 vs コード生成）と採点方法が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0150/">TF-0150 · Codex・コード支援</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0460/">TF-0460 · 生成コードの正確性</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-348/">G-348 · GLUE（対比）</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-336/">TF-336 · コード生成の応用</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../codex-model/">Codex</a></li>
+          <li><a href="../gpt-3/">GPT-3</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../bleu/">BLEU</a></li>
+          <li><a href="../rouge/">ROUGE</a></li>
+          <li><a href="../foundation-model/">基盤モデル</a></li>
+          <li><a href="../benchmark-mmlu/">MMLU</a></li>
+          <li class="tool-related-list__soon">GLUE（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

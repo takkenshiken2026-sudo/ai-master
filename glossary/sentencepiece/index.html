@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SentencePieceとは？言語非依存のサブワードトークナイザ実装。BPE・MeCab・トークンとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>SentencePieceとは？空白がなくても切れる——言語非依存のサブワードトークナイザ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/sentencepiece/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SentencePieceとは？空白がなくても切れる——言語非依存のサブワードトークナイザ">
+  <meta property="og:description" content="Googleが公開した言語非依存のサブワードトークナイザ実装。日本語など空白のない言語でも同じ仕組みで語彙を学習する。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/sentencepiece/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SentencePiece",
+        "alternateName": ["SentencePiece", "センテンスピース", "サブワードトークナイザ"],
+        "description": "言語非依存でサブワード語彙を学習・適用するトークナイザの実装。空白で区切られない言語でも、前処理を言語ごとに変えずにテキストをトークン列へ変換できる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SentencePieceは何をするツールですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "テキストをLLMが扱えるトークン列に分割するための、言語非依存のサブワードトークナイザ実装です。コーパスから語彙を学習し、未知語や複合語をサブワードの組み合わせで表現します。T5やLLaMAなど多くのモデルで採用されています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SentencePieceとBPEは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。BPEは頻出ペアを統合して語彙を構築するトークン化の手法です。SentencePieceはトークナイザの実装・ライブラリで、内部にBPEやユニグラム言語モデルなどの方式を選べます。手法と実装を分けて整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SentencePieceと形態素解析は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。形態素解析は文章を意味を持つ形態素へ分割し品詞などを推定するNLPの前処理です。SentencePieceはLLM向けにサブワード単位で語彙を学習するトークナイザであり、品詞推定や文法情報は目的に含みません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SentencePiece</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SentencePieceとは？空白がなくても切れる——言語非依存のサブワードトークナイザ</h1>
+    <p class="tool-hero-sub">読み：せんてんすぴーす ／ 英：SentencePiece</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SentencePiece</strong>は、Googleが公開した<strong>言語非依存のサブワード・トークナイザ実装</strong>です。英語は空白で単語が見える一方、日本語は<strong>単語境界が空白に現れない</strong>——SentencePieceはテキストを<strong>生の文字列として扱い</strong>、言語ごとの前処理ルールに頼らず<strong>同じ仕組みで語彙を学習</strong>します。本記事はアルゴリズムの数式より、<strong>「なぜLLMは形態素解析の前にトークナイザを通すのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#language-agnostic">言語非依存の意味</a></li>
+        <li><a href="#subword">サブワード語彙を学ぶ</a></li>
+        <li><a href="#vs-bpe">BPEとの関係</a></li>
+        <li><a href="#vs-mecab">形態素解析との違い</a></li>
+        <li><a href="#llm-pipeline">LLMパイプラインでの位置</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SentencePiece単独の過去問は少ない一方、辞典の定義は<strong>「言語非依存のサブワードトークナイザ実装」</strong>です。試験では<strong><a href="../token/">トークン</a></strong>の意味（<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156</a>）、<strong>形態素解析との区別</strong>（<a href="../../exams/g-kentei/practice/q/g-022/">G-022</a>）、<strong>サブワード思想</strong>（<a href="../../exams/g-kentei/practice/q/g-347/">G-347</a>）を土台に整理します。
+      </p>
+      <p>
+        誤答では、<strong>SentencePiece＝形態素解析</strong>（G-022）、<strong>SentencePiece＝<a href="../bpe/">BPE</a>そのもの</strong>、<strong>SentencePiece＝<a href="../bert/">BERT</a>モデル</strong>などのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156（トークンの定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0153/">TF-0153（Attentionとトークン）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-022/">G-022（形態素解析との区別）</a>、<a href="../../exams/g-kentei/practice/q/g-244/">G-244（教師強制とトークン）</a>、<a href="../../exams/g-kentei/practice/q/g-347/">G-347（サブワード・fastText）</a></p>
+      </div>
+    </section>
+
+    <section id="language-agnostic">
+      <h2>言語非依存の意味</h2>
+      <p>
+        多くの英語向けトークナイザは、<strong>空白で単語を分けてから</strong>語彙を学習します。しかし日本語・中国語・タイ語などは、<strong>単語間に空白がない</strong>ため、言語ごとに別の前処理（形態素解析など）が必要になりがちでした。
+      </p>
+      <p>
+        SentencePieceは、入力を<strong>Unicodeの生テキスト</strong>として扱い、空白の有無に依存しない設計です。「言語非依存」とは、<strong>日本語用・英語用で別ツールを用意しなくてよい</strong>——という実務上のメリットを指します。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>従来の課題</strong> — 言語ごとに分かち書き・形態素解析が前提</li>
+        <li><strong>SentencePiece</strong> — 生テキストから直接サブワード語彙を学習</li>
+        <li><strong>試験向け</strong> — 形態素解析（G-022）とは<strong>別の段階・別の目的</strong></li>
+      </ul>
+    </section>
+
+    <section id="subword">
+      <h2>サブワード語彙を学ぶ</h2>
+      <p>
+        SentencePieceの出力は<strong><a href="../token/">トークン</a>列</strong>——<a href="../llm/">LLM</a>が実際に処理する単位です。語彙は「単語の丸ごと一覧」ではなく、<strong>サブワード</strong>（語の一部・文字のまとまり）の組み合わせで構成されます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>性質</th><th>説明</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>未知語への強さ</strong></td><td>未登録語もサブワードで表現</td><td>語彙爆発を抑える</td></tr>
+          <tr><td><strong>語彙サイズ</strong></td><td>学習時に上限を設定（例: 32k）</td><td>モデル規模とトレードオフ</td></tr>
+          <tr><td><strong>特殊記号</strong></td><td>文頭・文末などの境界記号を付与</td><td>系列の区切りを明示</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-347/">G-347</a>のfastTextが「文字n-gramで部分語情報を使う」と説明されるのと同様、<strong>語の内部構造を活かす</strong>思想の一族です。fastTextは単語埋め込み、SentencePieceは<strong>トークン化</strong>——役割は異なります。
+      </p>
+    </section>
+
+    <section id="vs-bpe">
+      <h2>BPEとの関係</h2>
+      <p>
+        混同しやすいのが、<a href="../bpe/">BPE</a>（Byte Pair Encoding）との関係です。整理は次のとおりです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>何か</th><th>例え</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>BPE</strong></td><td>頻出ペアを統合する<strong>手法</strong></td><td>「レシピ」</td></tr>
+          <tr><td><strong>SentencePiece</strong></td><td>語彙学習・トークン化の<strong>実装</strong></td><td>「キッチン器具」</td></tr>
+          <tr><td><strong>ユニグラム LM</strong></td><td>別の語彙学習方式（SentencePieceでも選択可）</td><td>別レシピを同じ器具で</td></tr>
+        </tbody>
+      </table>
+      <p>
+        SentencePieceは内部で<strong>BPE方式</strong>や<strong>ユニグラム言語モデル方式</strong>を選べます。「BPE＝SentencePiece」と答えるのは不正確——<strong>手法と実装を分ける</strong>のが試験の得点ポイントです。
+      </p>
+      <p>
+        <a href="../gpt/">GPT</a>系列のTokenizerもBPE系が多いですが、実装ライブラリはモデルごとに異なります。SentencePieceは<strong>T5</strong>や<strong><a href="../llama/">LLaMA</a></strong>などで広く使われた代表例として名前が出ます。
+      </p>
+    </section>
+
+    <section id="vs-mecab">
+      <h2>形態素解析との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>形態素解析（MeCab等）</th><th>SentencePiece</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>目的</strong></td><td>意味単位への分割＋品詞推定</td><td><strong>LLM向けトークン列</strong>の生成</td></tr>
+          <tr><td><strong>出力</strong></td><td>形態素＋品詞タグ</td><td>整数IDのトークン列</td></tr>
+          <tr><td><strong>言語</strong></td><td>日本語向け辞書・ルールが典型</td><td><strong>言語非依存</strong></td></tr>
+          <tr><td><strong>試験</strong></td><td>G-022（NLP前処理）</td><td>LLMのTokenizer段階</td></tr>
+        </tbody>
+      </table>
+      <p>
+        G-022では、形態素解析は<strong>「文章を意味を持つ最小単位に近い形態素へ分割する処理」</strong>と定義されます。SentencePieceは品詞を推定せず、<strong>モデル学習に最適なサブワード単位</strong>をデータから学ぶ——NLP前処理の「古典」とLLM前処理の「現代」は、別レイヤーとして押さえます。
+      </p>
+    </section>
+
+    <section id="llm-pipeline">
+      <h2>LLMパイプラインでの位置</h2>
+      <p>テキストが<a href="../transformer/">Transformer</a>に入るまでの流れを、試験向けに簡略化すると次のとおりです。</p>
+      <ol class="tool-steps">
+        <li><strong>生テキスト</strong> — ユーザー入力・コーパス</li>
+        <li><strong>トークナイズ</strong> — SentencePieceなどで<strong>トークン列</strong>へ変換</li>
+        <li><strong>埋め込み</strong> — 各トークンをベクトル化</li>
+        <li><strong>Transformer</strong> — <a href="../attention/">Attention</a>でトークン間の関係を学習（TF-0153）</li>
+        <li><strong>出力</strong> — 次トークン予測（<a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178</a>）</li>
+      </ol>
+      <p>
+        学習時の<strong>教師強制</strong>（<a href="../../exams/g-kentei/practice/q/g-244/">G-244</a>）も、<strong>正解トークン</strong>を次の入力として渡す——つまり、すべての系列処理はトークン単位で進みます。SentencePieceは、その入口で<strong>「どう切るか」</strong>を決める部品です。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SentencePiece＝形態素解析</td><td>サブワードトークナイザ vs 品詞付き分割（G-022）</td></tr>
+          <tr><td>SentencePiece＝<a href="../bpe/">BPE</a></td><td>実装・ライブラリ vs ペア統合の手法</td></tr>
+          <tr><td>SentencePiece＝<a href="../token/">トークン</a></td><td>分割器 vs 分割後の単位</td></tr>
+          <tr><td>SentencePiece＝<a href="../bert/">BERT</a></td><td>前処理ツール vs 言語モデル</td></tr>
+          <tr><td>SentencePiece＝<a href="../bag-of-words/">BoW</a></td><td>系列トークン化 vs 文書ベクトル表現</td></tr>
+          <tr><td>日本語は必ずMeCabが先</td><td>LLMでは<strong>トークナイザ単独</strong>で十分なことも</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SentencePieceは何をするツールですか？</summary>
+          <p class="tool-faq-a">テキストをLLMが扱えるトークン列に分割するための、言語非依存のサブワードトークナイザ実装です。コーパスから語彙を学習し、未知語や複合語をサブワードの組み合わせで表現します。T5やLLaMAなど多くのモデルで採用されています。</p>
+        </details>
+        <details>
+          <summary>SentencePieceとBPEは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。BPEは頻出ペアを統合して語彙を構築するトークン化の手法です。SentencePieceはトークナイザの実装・ライブラリで、内部にBPEやユニグラム言語モデルなどの方式を選べます。手法と実装を分けて整理します。</p>
+        </details>
+        <details>
+          <summary>SentencePieceと形態素解析は同じですか？</summary>
+          <p class="tool-faq-a">いいえ。形態素解析は文章を意味を持つ形態素へ分割し品詞などを推定するNLPの前処理です。SentencePieceはLLM向けにサブワード単位で語彙を学習するトークナイザであり、品詞推定や文法情報は目的に含みません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0156/">TF-0156 · トークンの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-022/">G-022 · 形態素解析との区別</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-244/">G-244 · 教師強制とトークン</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-347/">G-347 · サブワード（fastText）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../bpe/">BPE</a></li>
+          <li><a href="../mecab/">MeCab</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../t5-model/">T5</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

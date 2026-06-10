@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="R-CNNとは？領域提案とCNN分類を組み合わせた物体検出の先駆手法。Faster R-CNN・YOLOとの違いをG検定向けに解説。">
+  <title>R-CNNとは？候補を切り出してから見る——二段検出の萌芽 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/rcnn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="R-CNNとは？候補を切り出してから見る——二段検出の萌芽">
+  <meta property="og:description" content="Region-based CNN。候補領域ごとにCNNで分類した物体検出の原点。Fast・Faster R-CNNへ続く系譜の出発点。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/rcnn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "R-CNN",
+        "alternateName": ["R-CNN", "アールシーエヌエヌ", "Region-based CNN", "Regions with CNN features"],
+        "description": "画像から候補領域を提案し、各領域を切り出してCNNで分類・位置補正する二段構成の物体検出手法。深層学習を物体検出に適用した先駆的アプローチ。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "R-CNNは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像内の物体の位置とクラスを推定する物体検出の手法です。まず候補領域（リージョン）を多数生成し、各領域を切り出してCNNで特徴を抽出・分類する二段構成が特徴として知られます。深層学習を物体検出に成功裏に適用した先駆例です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "R-CNNとFaster R-CNNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。R-CNNは2014年の原点で、候補ごとにCNNを別々に回すなど非効率な部分がありました。Faster R-CNNは領域提案ネットワーク（RPN）をCNNに統合した後継で、同じ二段検出の系譜に属しますが設計が大きく進化しています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "R-CNNとYOLOは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。R-CNNは候補領域を出してから分類する二段構成の系譜です。YOLOはグリッドから一発で検出する一段（単一ショット）方式です。いずれも物体検出の代表例として並びますが、アプローチが異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">R-CNN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>R-CNNとは？候補を切り出してから見る——二段検出の萌芽</h1>
+    <p class="tool-hero-sub">読み：アールシーエヌエヌ ／ 英：R-CNN（Region-based CNN）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>R-CNN</strong>（Region-based CNN）は、<strong>「候補の矩形を切り出し、<a href="../cnn/">CNN</a>で中身を見る」</strong>——二段検出の原型——です。2012年の<a href="../alexnet/">AlexNet</a>が画像分類を席巻した直後、<strong>「物体はどこにあるか」</strong>へ<a href="../deep-learning/">深層学習</a>を持ち込んだ先駆——本記事はアンカーやRPNの細部より、<strong>なぜ二段構成が生まれ、何がボトルネックだったか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#detection-gap">分類から検出へ</a></li>
+        <li><a href="#two-stage-proto">二段の原型</a></li>
+        <li><a href="#bottleneck">何が遅かったか</a></li>
+        <li><a href="#evolution">Fast・Fasterへの系譜</a></li>
+        <li><a href="#vs-others">YOLO・DETRとの位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="detection-gap">
+      <h2>分類から検出へ</h2>
+      <p>
+        画像分類は「この画像全体は何か」——ラベル1つ——を当てます。物体検出は<strong>どこに何があるか</strong>——バウンディングボックスとクラス——を同時に推定します（<a href="../../exams/g-kentei/drill/q/tf-115/">TF-115</a>、<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>）。
+      </p>
+      <p>
+        2014年のR-CNNは、<strong>CNNの表現力を検出タスクに初めて大きく結びつけた</strong>手法として歴史的に語られます。試験では細部の論文名より、<strong>「領域提案＋CNN分類の二段構成」</strong>という整理が押さえ目標です。
+      </p>
+    </section>
+
+    <section id="two-stage-proto">
+      <h2>二段の原型</h2>
+      <p>R-CNNの流れは、現代の二段検出と同じ骨格を持ちます。</p>
+      <ol class="tool-steps">
+        <li><strong>領域提案</strong> — Selective Searchなどで「物体がありそうな矩形」を約2,000個生成</li>
+        <li><strong>切り出し</strong> — 各候補を画像からクロップし、CNN入力サイズに整形</li>
+        <li><strong>CNN特徴</strong> — 各クロップをCNN（当時はAlexNet等）へ通して特徴ベクトルを得る</li>
+        <li><strong>分類・補正</strong> — SVMでクラス判定、回帰でボックス位置を微調整</li>
+      </ol>
+      <p>
+        キーワードは<strong>Region（領域）</strong>——画像全体を一度に分類するのではなく、<strong>候補ごとにCNNを適用する</strong>発想です。<a href="../hog/">HOG</a>＋SVMの古典的検出から、<strong>学習済みCNN特徴</strong>へ置き換えた点が革命でした。
+      </p>
+    </section>
+
+    <section id="bottleneck">
+      <h2>何が遅かったか</h2>
+      <p>
+        R-CNNは精度で注目を集めましたが、<strong>候補ごとにCNNを別々に実行</strong>するため遅く、学習も多段階（CNN特徴抽出→SVM→回帰）と複雑でした。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>課題</th><th>R-CNNの状態</th><th>後継がどう直したか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>重複計算</strong></td><td>候補ごとにCNN forward</td><td>Fast R-CNNで特徴マップ共有</td></tr>
+          <tr><td><strong>領域提案の分離</strong></td><td>外部アルゴリズム（Selective Search）</td><td>Faster R-CNNで<strong>RPN</strong>をCNN内に統合</td></tr>
+          <tr><td><strong>学習の分断</strong></td><td>CNN・SVM・回帰が別学習</td><td>エンドツーエンド学習へ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では「R-CNN＝今もそのまま使う最新手法」とは答えません。<strong>系譜の出発点</strong>——なぜFast・Fasterが生まれたか——を理解するのが目的です。
+      </p>
+    </section>
+
+    <section id="evolution">
+      <h2>Fast・Fasterへの系譜</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>世代</th><th>進化の焦点</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>R-CNN</strong></td><td>領域＋CNNで検出を実証</td><td><strong>二段の萌芽</strong>（本記事）</td></tr>
+          <tr><td><strong>Fast R-CNN</strong></td><td>特徴共有・ROIプーリング</td><td>中間段階。名前だけ知れば可</td></tr>
+          <tr><td><strong><a href="../faster-rcnn/">Faster R-CNN</a></strong></td><td><strong>RPN</strong>で提案もCNN内に</td><td>二段検出の完成形に近い</td></tr>
+          <tr><td><strong><a href="../mask-rcnn/">Mask R-CNN</a></strong></td><td>マスク推定を追加</td><td>Fasterの拡張（<a href="../../exams/g-kentei/practice/q/g-326/">G-326</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>では<strong>YOLO、SSD、Faster R-CNN</strong>が物体検出の代表例として並びます。R-CNNはその<strong>祖先</strong>——名前が選択肢に無い場合も、<strong>二段検出の思想</strong>はFaster R-CNNの説明に通じます。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>YOLO・DETRとの位置</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>流れ</th><th>代表</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>二段（R-CNN系）</strong></td><td>候補領域 → 分類・位置補正</td><td>R-CNN → <a href="../faster-rcnn/">Faster R-CNN</a></td></tr>
+          <tr><td><strong>一段</strong></td><td>グリッド等から一発で検出</td><td>YOLO、SSD（<a href="../../exams/g-kentei/drill/q/tf-121/">TF-121</a>）</td></tr>
+          <tr><td><strong>Transformer</strong></td><td>領域提案なしの集合予測</td><td><a href="../detr/">DETR</a></td></tr>
+        </tbody>
+      </table>
+      <p>
+        R-CNNは<strong>候補を切り出す</strong>発想の原点、YOLOは<strong>切り出さず一発</strong>、DETRは<strong>Attentionで直接集合予測</strong>——三つの時代の整理です。いずれも<a href="../bert/">BERT</a>やword2vecではありません（G-323、<a href="../../exams/g-kentei/practice/q/g-335/">G-335</a>）。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>領域提案＋CNN分類</strong>の二段物体検出の先駆</li>
+        <li><strong>タスク</strong> — バウンディングボックス＋クラス（TF-115、G-021）</li>
+        <li><strong>系譜</strong> — Fast R-CNN → Faster R-CNN → Mask R-CNN</li>
+        <li><strong>対比</strong> — YOLO（一段）、DETR（Transformer）、画像分類（位置なし）</li>
+        <li><strong>評価</strong> — ボックス重なりは<a href="../iou/">IoU</a>（検出の定番指標）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>、<a href="../../exams/g-kentei/practice/q/g-326/">G-326</a>、<a href="../../exams/g-kentei/drill/q/tf-115/">TF-115</a>、<a href="../../exams/g-kentei/drill/q/tf-121/">TF-121</a>、<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a></p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>、<a href="../../exams/g-kentei/practice/q/g-335/">G-335</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>R-CNN＝<a href="../faster-rcnn/">Faster R-CNN</a></td><td>原点 vs RPN統合の後継</td></tr>
+          <tr><td>R-CNN＝YOLO</td><td>二段 vs 一段。どちらも検出</td></tr>
+          <tr><td>R-CNN＝<a href="../fcn/">FCN</a></td><td>物体検出 vs セグメンテーション</td></tr>
+          <tr><td>R-CNN＝<a href="../bert/">BERT</a></td><td>画像CNN vs NLP（G-323）</td></tr>
+          <tr><td>R-CNN＝画像分類</td><td>位置＋クラス vs ラベル1つ</td></tr>
+          <tr><td>R-CNN＝<a href="../detr/">DETR</a></td><td>候補切り出し系譜 vs Transformer検出</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>R-CNNは何をする手法ですか？</summary><p class="tool-faq-a">画像内の物体の位置とクラスを推定する物体検出の手法です。まず候補領域（リージョン）を多数生成し、各領域を切り出してCNNで特徴を抽出・分類する二段構成が特徴として知られます。深層学習を物体検出に成功裏に適用した先駆例です。</p></details>
+        <details><summary>R-CNNとFaster R-CNNは同じですか？</summary><p class="tool-faq-a">同じではありません。R-CNNは2014年の原点で、候補ごとにCNNを別々に回すなど非効率な部分がありました。Faster R-CNNは領域提案ネットワーク（RPN）をCNNに統合した後継で、同じ二段検出の系譜に属しますが設計が大きく進化しています。</p></details>
+        <details><summary>R-CNNとYOLOは同じですか？</summary><p class="tool-faq-a">同じではありません。R-CNNは候補領域を出してから分類する二段構成の系譜です。YOLOはグリッドから一発で検出する一段（単一ショット）方式です。いずれも物体検出の代表例として並びますが、アプローチが異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · 物体検出の代表例</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-115/">TF-115 · 物体検出の定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-326/">G-326 · Mask R-CNN</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-121/">TF-121 · YOLO/SSD</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../ssd/">SSD</a></li>
+          <li><a href="../mask-rcnn/">Mask R-CNN</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../hog/">HOG</a></li>
+          <li><a href="../detr/">DETR</a></li>
+          <li><a href="../iou/">IoU</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

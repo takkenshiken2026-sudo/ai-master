@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LiDARとは？レーザーの往復時間で3D点群を取得するセンサー。カメラ・レーダーとの違いをG検定向けに解説。">
+  <title>LiDARとは？光の往復時間で座標を刻む——カメラと違う3D点群センサー — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/lidar/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="LiDARとは？光の往復時間で座標を刻む——カメラと違う3D点群センサー">
+  <meta property="og:description" content="Light Detection and Ranging。レーザーで距離を測り3D点群として周囲を捉えるセンサー技術。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/lidar/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "LiDAR",
+        "alternateName": ["LiDAR", "ライダー", "Light Detection and Ranging"],
+        "description": "レーザー光の往復時間から距離を測定し、3D空間の点群データとして周囲環境を捉えるセンサー技術。自動運転や測量などで利用される。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "LiDARは何をするセンサーですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "レーザー光を照射し、反射が戻るまでの時間から距離を計測して3Dの点群データを得るセンサーです。各点に座標情報が付くため、カメラの2D画像とは異なり、直接3D空間の形状を捉えやすい点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LiDARとカメラは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。カメラは光の強度を2次元の画素として記録します。LiDARはレーザーの往復時間から距離を測り、3D点群として出力します。カメラは色情報に強く、LiDARは距離・形状の取得に強い、と整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LiDARとレーダーは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも電磁波で距離を測りますが、LiDARは可視光〜近赤外のレーザー、レーダーは電波を使います。レーダーは速度測定や悪天候耐性に強い一方、LiDARは細かい3D形状の取得に向く、と対比します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">LiDAR</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>LiDARとは？光の往復時間で座標を刻む——カメラと違う3D点群センサー</h1>
+    <p class="tool-hero-sub">読み：ライダー ／ 英：LiDAR（Light Detection and Ranging）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>LiDAR</strong>は、<strong>レーザー光の往復時間</strong>から距離を測り、周囲を<strong>3D点群</strong>として記録するセンサーです。カメラが「色のある2D写真」を撮るのに対し、LiDARは<strong>座標付きの点の集合</strong>で世界を捉える——本記事はハードウェアの型番比較ではなく、<strong>「AIが何を入力として受け取るか」</strong>というデータの観点に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#measure">距離の測り方</a></li>
+        <li><a href="#point-cloud">点群という出力</a></li>
+        <li><a href="#vs-sensors">カメラ・レーダーとの違い</a></li>
+        <li><a href="#use-cases">どこで使われるか</a></li>
+        <li><a href="#ml-pipeline">機械学習との接点</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="measure">
+      <h2>距離の測り方</h2>
+      <p>
+        LiDARの原理は<strong>飛行時間（Time of Flight）</strong>です。レーザーパルスを照射し、物体で反射して戻るまでの時間 Δt から距離 d を求めます（光速 c を用い、d ≈ c·Δt/2）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>照射</strong> — レーザー光をパルス状に送る</li>
+        <li><strong>反射</strong> — 物体表面で光が跳ね返る</li>
+        <li><strong>受光</strong> — 戻り光を検出し、往復時間を計測</li>
+        <li><strong>走査</strong> — ビームを回転・振り向け、複数方向の距離を集める</li>
+      </ul>
+      <p>
+        名前の <strong>Li</strong>ght <strong>D</strong>etection <strong>a</strong>nd <strong>R</strong>anging は「光で探知し距離を測る」——レーダー（Ra<strong>d</strong>io Detection and Ranging）の光版、と覚えると試験で混同しにくくなります。
+      </p>
+    </section>
+
+    <section id="point-cloud">
+      <h2>点群という出力</h2>
+      <p>
+        LiDARの出力は<strong>点群（Point Cloud）</strong>——3D空間上の点 (x, y, z) の集合です。1点ごとに距離・反射強度などの属性が付くこともあります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>データ形式</th><th>単位</th><th>強み</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>カメラ画像</strong></td><td>画素（2D）</td><td>色・テクスチャ。深度は別途推定が必要なことが多い</td></tr>
+          <tr><td><strong>LiDAR点群</strong></td><td>点（3D）</td><td><strong>距離・形状を直接</strong>取得。色は弱い（別センサー併用も）</td></tr>
+          <tr><td><strong>時系列センサー</strong></td><td>値の列</td><td>加速度計など。RNN/LSTMの典型入力（<a href="../../exams/g-kentei/drill/q/tf-411/">TF-411</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        機械学習では、<a href="../pointnet/">PointNet</a>のように点群をそのままネットワークへ入れる、<a href="../cnn/">CNN</a>で処理しやすい<strong>鳥瞰図（BEV）</strong>に投影する、など前処理の設計が性能に効きます。
+      </p>
+    </section>
+
+    <section id="vs-sensors">
+      <h2>カメラ・レーダーとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>センサー</th><th>使う波</th><th>主な出力</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>カメラ</strong></td><td>可視光</td><td>2D画像</td><td><a href="../../exams/g-kentei/practice/q/g-021/">画像認識</a>の典型入力</td></tr>
+          <tr><td><strong>LiDAR</strong></td><td>レーザー</td><td>3D点群</td><td>距離・形状の直接取得</td></tr>
+          <tr><td><strong>レーダー</strong></td><td>電波</td><td>距離・速度</td><td>悪天候に強い。解像度はLiDARより粗いことが多い</td></tr>
+        </tbody>
+      </table>
+      <p>
+        自動運転では<strong>複数センサーを融合</strong>する設計が一般的——カメラで標識を読み、LiDARで障害物の位置を3Dで捉え、レーダーで速度を補う、といった役割分担です。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>どこで使われるか</h2>
+      <ul class="tool-steps">
+        <li><strong>自動運転・ロボティクス</strong> — 周囲障害物の3D検知。深層強化学習ではロボットのセンサー入力としても扱われる（<a href="../../exams/g-kentei/practice/q/g-361/">G-361</a>）</li>
+        <li><strong>測量・地図作成</strong> — 地形や建物の3Dモデル化</li>
+        <li><strong>エッジAI</strong> — センサー機器上で推論する構成（<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>）</li>
+      </ul>
+      <p>
+        センサーから得たデータは、季節・環境で分布が変わり<strong>ドリフト</strong>の監視が必要——運用面でもセンサー種別の理解が効きます（<a href="../../exams/g-kentei/drill/q/tf-195/">TF-195</a>）。
+      </p>
+    </section>
+
+    <section id="ml-pipeline">
+      <h2>機械学習との接点</h2>
+      <p>LiDAR自体は<strong>センサー（ハードウェア＋信号処理）</strong>であり、ニューラルネットの名前ではありません。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>取得</strong></td><td>LiDARが点群を出力</td></tr>
+          <tr><td><strong>前処理</strong></td><td>ノイズ除去、座標変換、グリッド化など</td></tr>
+          <tr><td><strong>推論</strong></td><td>物体検出・セグメンテーション等のモデルへ入力（<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>）</td></tr>
+          <tr><td><strong>学習データ</strong></td><td>センサー・インターネット普及でデータ蓄積が進む（<a href="../../exams/g-kentei/drill/q/tf-332/">TF-332</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では「LiDAR＝学習アルゴリズム」と答えない——<strong>入力データの源泉</strong>として位置づけるのが安全です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — レーザーで距離を測り<strong>3D点群</strong>を得るセンサー（Light Detection and Ranging）</li>
+        <li><strong>原理</strong> — 光の<strong>往復時間</strong>から距離を計算</li>
+        <li><strong>対比</strong> — カメラ＝2D画像、LiDAR＝3D点群、レーダー＝電波</li>
+        <li><strong>位置づけ</strong> — センサー／データ取得。CNNやTransformerそのものではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>、<a href="../../exams/g-kentei/drill/q/tf-332/">TF-332</a>、<a href="../../exams/g-kentei/practice/q/g-361/">G-361</a>、<a href="../../exams/g-kentei/drill/q/tf-195/">TF-195</a>、<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>、<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>LiDAR＝カメラ</td><td>3D点群 vs 2D画像</td></tr>
+          <tr><td>LiDAR＝レーダー</td><td>レーザー vs 電波。用途は重なるが別技術</td></tr>
+          <tr><td>LiDAR＝<a href="../cnn/">CNN</a></td><td>センサー vs ニューラルネット構造</td></tr>
+          <tr><td>LiDAR＝<a href="../reinforcement-learning/">強化学習</a></td><td>データ取得 vs 報酬で学ぶ枠組み</td></tr>
+          <tr><td>LiDAR＝GPS</td><td>周囲形状の計測 vs 衛星による自己位置</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>LiDARは何をするセンサーですか？</summary><p class="tool-faq-a">レーザー光を照射し、反射が戻るまでの時間から距離を計測して3Dの点群データを得るセンサーです。各点に座標情報が付くため、カメラの2D画像とは異なり、直接3D空間の形状を捉えやすい点が特徴です。</p></details>
+        <details><summary>LiDARとカメラは同じですか？</summary><p class="tool-faq-a">同じではありません。カメラは光の強度を2次元の画素として記録します。LiDARはレーザーの往復時間から距離を測り、3D点群として出力します。カメラは色情報に強く、LiDARは距離・形状の取得に強い、と整理します。</p></details>
+        <details><summary>LiDARとレーダーは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらも電磁波で距離を測りますが、LiDARは可視光〜近赤外のレーザー、レーダーは電波を使います。レーダーは速度測定や悪天候耐性に強い一方、LiDARは細かい3D形状の取得に向く、と対比します。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · エッジAIとセンサー</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-332/">TF-332 · センサーデータとAI</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-361/">G-361 · 深層強化学習とセンサー</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-021/">G-021 · 画像認識（対比）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../slam/">SLAM</a></li>
+          <li><a href="../pointnet/">PointNet</a></li>
+          <li><a href="../structure-from-motion/">Structure from Motion</a></li>
+          <li><a href="../nerf/">NeRF</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../reinforcement-learning/">強化学習</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li class="tool-related-list__soon">自動運転（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

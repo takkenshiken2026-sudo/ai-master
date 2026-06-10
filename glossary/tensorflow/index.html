@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TensorFlowとは？Google製の深層学習フレームワーク。テンソル演算・自動微分・Keras統合・TPU連携をG検定向けに解説。">
+  <title>TensorFlowとは？名前の通りテンソルで回す——Google製の学習からデプロイまでのDL基盤 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/tensorflow/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TensorFlowとは？名前の通りテンソルで回す——Google製の学習からデプロイまでのDL基盤">
+  <meta property="og:description" content="テンソル演算・自動微分・計算グラフを基盤に、Keras APIとTPU連携で学習から本番推論までを担う深層学習フレームワーク。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/tensorflow/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "TensorFlow",
+        "alternateName": ["TensorFlow", "テンソルフロー", "TF", "tf"],
+        "description": "Googleが開発する深層学習フレームワーク。テンソル演算・自動微分・計算グラフを基盤に、モデル定義・学習・推論・デプロイまでを担う。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "TensorFlowは何をするフレームワークですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "多次元配列であるテンソル上でニューラルネットワークの演算を定義し、自動微分で勾配を求め、データを使ってパラメータを学習し、学習済みモデルを推論・デプロイするための深層学習基盤です。Keras API（tf.keras）を通じて層を積み上げてモデルを組み立てるのが一般的な使い方のひとつです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TensorFlowとKerasは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。TensorFlowはテンソル演算・自動微分・分散学習などを含むフレームワーク全体です。Kerasはその上に載る高水準APIで、現在はTensorFlowに統合されtf.kerasとして提供されます。エンジン（TensorFlow）とハンドル（Keras）の関係に近いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TensorFlowはGPUやTPUですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。TensorFlowはソフトウェアの深層学習フレームワークです。GPUやTPUはハードウェアであり、TensorFlowはそれら上でテンソル演算を実行して学習や推論を高速化できます。TPUはGoogleがTensorFlowエコシステム向けに設計した専用プロセッサとして語られることがあります（G-119）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">TensorFlow</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>TensorFlowとは？名前の通りテンソルで回す——Google製の学習からデプロイまでのDL基盤</h1>
+    <p class="tool-hero-sub">読み：テンソルフロー ／ 英：TensorFlow</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>TensorFlow</strong>は、Googleが開発する<strong><a href="../deep-learning/">深層学習</a>フレームワーク</strong>です。名前の <em>Tensor</em>（テンソル）の通り、<strong>多次元配列の演算</strong>を中心に<a href="../neural-network/">ニューラルネットワーク</a>を組み立て、<a href="../backpropagation/">誤差逆伝播</a>で学習し、本番で<a href="../inference/">推論</a>まで回す——<a href="../keras/">Keras</a>の「層を積むAPI」はその上に載る層です。本記事はバージョン履歴より、<strong>「フレームワークが何を肩代わりするか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#tensor-core">テンソルが中心</a></li>
+        <li><a href="#stack-layers">フレームワークが担う仕事</a></li>
+        <li><a href="#keras-layer">Kerasとの二層構造</a></li>
+        <li><a href="#hardware">GPU・TPUとの関係</a></li>
+        <li><a href="#ecosystem">PyTorch・ONNXとの整理</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        TensorFlow単独の定義問題はまだ少ないですが、<strong>深層学習の実装基盤</strong>として押さえます。テンソル演算が大量に発生し、<a href="../gpu/">GPU</a>やTPUで高速化される（<a href="../../exams/g-kentei/practice/q/g-010/">G-010</a>、<a href="../../exams/g-kentei/practice/q/g-118/">G-118</a>）——フレームワークはその演算を書きやすくする<strong>ソフトウェア層</strong>です。
+      </p>
+      <p>
+        誤答では、TensorFlow＝<a href="../gpu/">GPU</a>、TensorFlow＝<a href="../keras/">Keras</a>そのもの、TensorFlow＝学習済みモデル——などのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-117/">G-117（順伝播と学習）</a>、<a href="../../exams/g-kentei/practice/q/g-171/">G-171（誤差逆伝播）</a>、<a href="../../exams/g-kentei/practice/q/g-010/">G-010（GPUとテンソル演算）</a>、<a href="../../exams/g-kentei/practice/q/g-119/">G-119（TPU）</a></p>
+      </div>
+    </section>
+
+    <section id="tensor-core">
+      <h2>テンソルが中心</h2>
+      <p>
+        <a href="../deep-learning/">ディープラーニング</a>の計算は、行列・3次元以上の配列——<strong>テンソル</strong>——の掛け算、足し算、活性化関数の適用の繰り返しです。画像は <code>[高さ, 幅, チャネル]</code>、ミニバッチなら先頭にバッチ次元が付きます。
+      </p>
+      <p>
+        TensorFlowは、このテンソル演算を<strong>宣言的に記述</strong>し、<strong>計算グラフ</strong>として組み立て、<strong>自動微分</strong>で勾配を求める基盤です。手書きで偏微分を全部書く代わりに、フレームワークが<a href="../backpropagation/">誤差逆伝播</a>の連鎖を担います（G-171）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>順伝播</strong> — 入力テンソルから出力・損失を計算（G-117）</li>
+        <li><strong>逆伝播</strong> — 損失から各パラメータの勾配を自動計算</li>
+        <li><strong>更新</strong> — <a href="../gradient-descent/">勾配降下法</a>などで重みを更新</li>
+      </ul>
+    </section>
+
+    <section id="stack-layers">
+      <h2>フレームワークが担う仕事</h2>
+      <p>TensorFlowのようなフレームワークが肩代わりするのは、だいたい次の領域です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>領域</th><th>内容</th><th>開発者が書かなくてよくなること</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>モデル定義</strong></td><td>層の積み上げ・関数型API</td><td>個々の行列演算の実装</td></tr>
+          <tr><td><strong>学習ループ</strong></td><td>データ読み込み・エポック管理</td><td>勾配計算の連鎖律</td></tr>
+          <tr><td><strong>デバイス配置</strong></td><td>CPU/GPU/TPUへの演算割り当て</td><td>低レベル並列化の細部</td></tr>
+          <tr><td><strong>デプロイ</strong></td><td>SavedModel・サーバ推論</td><td>本番向けグラフ最適化の一部</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では製品名の暗記より、<strong>「フレームワーク＝学習の実装環境」</strong>という位置づけが再利用しやすいです。
+      </p>
+    </section>
+
+    <section id="keras-layer">
+      <h2>Kerasとの二層構造</h2>
+      <p>
+        初学者が触るのはしばしば <strong>tf.keras</strong>——<a href="../keras/">Keras</a>がTensorFlowに統合された高水準API——です。<code>Sequential</code>に層を足し、<code>compile</code>で損失と最適化を指定し、<code>fit</code>で学習——宣言的にモデルを組み立てるスタイルです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>役割</th><th>比喩</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>TensorFlow</strong></td><td>テンソル演算・自動微分・実行エンジン</td><td>エンジン本体</td></tr>
+          <tr><td><strong>Keras（tf.keras）</strong></td><td>層を積む・fitするAPI</td><td>ハンドルとダッシュボード</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Keras記事でも述べた通り、<strong>同じではない</strong>——試験のすり替えで「Keras＝TensorFlow全体」と答えないことが重要です。
+      </p>
+    </section>
+
+    <section id="hardware">
+      <h2>GPU・TPUとの関係</h2>
+      <p>
+        TensorFlowは<strong>ソフトウェア</strong>です。実際の高速化は<a href="../gpu/">GPU</a>や<a href="../cuda/">CUDA</a>、Googleの<strong>TPU</strong>（Tensor Processing Unit）といった<strong>ハードウェア</strong>上で起きます（G-119、<a href="../../exams/g-kentei/drill/q/tf-056/">TF-056</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>GPU</strong> — 汎用並列演算。テンソル演算の並列化に広く使われる（G-010）</li>
+        <li><strong>TPU</strong> — Google製のML向けASIC。TensorFlowとの親和性が高いと語られる</li>
+        <li><strong>フレームワーク</strong> — 同じPythonコードを、利用可能なデバイスに演算を振り分ける</li>
+      </ul>
+      <p>
+        「TensorFlowを使えばTPUが付いてくる」わけではありません。クラウドやオンプレの<strong>計算資源</strong>とフレームワークは別軸です。
+      </p>
+    </section>
+
+    <section id="ecosystem">
+      <h2>PyTorch・ONNXとの整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>製品</th><th>種類</th><th>TensorFlowとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../pytorch/">PyTorch</a></strong></td><td>競合フレームワーク</td><td>どちらも学習用。動的グラフ・研究寄りはPyTorch、Google系・本番寄りはTFと語られることも</td></tr>
+          <tr><td><strong><a href="../jax/">JAX</a></strong></td><td>別系統の数値計算＋自動微分</td><td>Google系だがTensorFlowそのものではない</td></tr>
+          <tr><td><strong><a href="../onnx/">ONNX</a></strong></td><td>モデル交換フォーマット</td><td>TFで学習したモデルをONNXへ書き出し、別環境へ運ぶ</td></tr>
+          <tr><td><strong><a href="../tensorrt/">TensorRT</a></strong></td><td>推論最適化ランタイム</td><td>学習はTF、本番推論の高速化はTensorRT——役割分担</td></tr>
+        </tbody>
+      </table>
+      <p>
+        フレームワーク（学習）・交換規格（ONNX）・推論エンジン（TensorRT、<a href="../onnx-runtime/">ONNX Runtime</a>）は<strong>パイプラインの別ステージ</strong>。一枚の名前で全部を指すと混乱します。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>TensorFlow＝<a href="../keras/">Keras</a></td><td>フレームワーク全体 vs 高水準API層</td></tr>
+          <tr><td>TensorFlow＝<a href="../gpu/">GPU</a> / TPU</td><td>ソフトウェア vs ハードウェア（G-119）</td></tr>
+          <tr><td>TensorFlow＝学習済みモデル</td><td>モデルを作る・学習する環境 vs 成果物</td></tr>
+          <tr><td>TensorFlow＝<a href="../cnn/">CNN</a></td><td>実装基盤 vs ネットワークアーキテクチャ</td></tr>
+          <tr><td>TensorFlow＝<a href="../tensorrt/">TensorRT</a></td><td>学習フレームワーク vs 推論最適化ランタイム</td></tr>
+          <tr><td>GPUを使えば精度が必ず上がる</td><td>高速化の話。精度はデータ・モデル・学習法に依存（G-010）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>TensorFlowは何をするフレームワークですか？</summary>
+          <p class="tool-faq-a">多次元配列であるテンソル上でニューラルネットワークの演算を定義し、自動微分で勾配を求め、データを使ってパラメータを学習し、学習済みモデルを推論・デプロイするための深層学習基盤です。Keras API（tf.keras）を通じて層を積み上げてモデルを組み立てるのが一般的な使い方のひとつです。</p>
+        </details>
+        <details>
+          <summary>TensorFlowとKerasは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。TensorFlowはテンソル演算・自動微分・分散学習などを含むフレームワーク全体です。Kerasはその上に載る高水準APIで、現在はTensorFlowに統合されtf.kerasとして提供されます。エンジン（TensorFlow）とハンドル（Keras）の関係に近いです。</p>
+        </details>
+        <details>
+          <summary>TensorFlowはGPUやTPUですか？</summary>
+          <p class="tool-faq-a">いいえ。TensorFlowはソフトウェアの深層学習フレームワークです。GPUやTPUはハードウェアであり、TensorFlowはそれら上でテンソル演算を実行して学習や推論を高速化できます。TPUはGoogleがTensorFlowエコシステム向けに設計した専用プロセッサとして語られることがあります（G-119）。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-117/">G-117 · 順伝播と学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-171/">G-171 · 誤差逆伝播</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-010/">G-010 · GPUとテンソル演算</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-119/">G-119 · TPU</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../keras/">Keras</a></li>
+          <li><a href="../pytorch/">PyTorch</a></li>
+          <li><a href="../jax/">JAX</a></li>
+          <li><a href="../onnx/">ONNX</a></li>
+          <li><a href="../tensorrt/">TensorRT</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../cuda/">CUDA</a></li>
+          <li><a href="../inference/">推論</a></li>
+          <li><a href="../training/">学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TF-IDFとは？Term Frequency–Inverse Document Frequency。文書内の頻出語を重視し、コーパス全体でありふれた語の重みを下げる古典NLP手法。G検定向けに解説。">
+  <title>TF-IDFとは？珍しい語に目がいく——全体ではありふれた語の重みを落とす — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/tf-idf/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TF-IDFとは？珍しい語に目がいく——全体ではありふれた語の重みを落とす">
+  <meta property="og:description" content="TF（文書内頻度）とIDF（逆文書頻度）の積。BoWの素朴なカウントに、コーパス全体の「ありふれ度」で目を通す重み付け。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/tf-idf/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "TF-IDF",
+        "alternateName": ["TF-IDF", "ティーエフアイディーエフ", "Term Frequency–Inverse Document Frequency", "逆文書頻度"],
+        "description": "文書内での語の出現頻度と、文書集合全体での希少性を組み合わせて語の重要度を重み付けする自然言語処理の特徴量手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "TF-IDFのTFとIDFは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "TF（Term Frequency）は、その文書の中で語がどれだけ頻繁に出るかを表します。IDF（Inverse Document Frequency）は、文書集合全体でその語がどれだけ珍しいか——多くの文書に出る語ほどIDFは小さくなる——を表します。TF-IDFはこの2つを掛け合わせ、文書内では目立つが全体では珍しい語を高く評価します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TF-IDFとBoWの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BoWは文書内の出現回数（または有無）をそのまま特徴量にします。TF-IDFはBoWの発展形で、コーパス全体にありふれた語（例：「です」「こと」）の重みを下げ、文書を識別しやすい語を相対的に強調します。どちらも語順は基本的に捨てる古典的な文書表現です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TF-IDFは畳み込みフィルタですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。TF-IDFは自然言語処理の文書特徴量・重み付け手法です。画像の局所特徴を抽出する畳み込みフィルタ（G-333の誤答C）とは無関係です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">TF-IDF</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>TF-IDFとは？珍しい語に目がいく——全体ではありふれた語の重みを落とす</h1>
+    <p class="tool-hero-sub">読み：ティーエフ・アイディーエフ ／ 英：TF-IDF（Term Frequency–Inverse Document Frequency）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>TF-IDF</strong>は、文書を数値化する古典的な<a href="../nlp/">NLP</a>手法で、<strong>文書内でよく出る語</strong>（TF）と<strong>コーパス全体では珍しい語</strong>（IDF）を掛け合わせて重みをつけます。<a href="../bag-of-words/">BoW</a>が「とにかく数える」だけなら、TF-IDFは<strong>「どの語がこの文書らしさを語るか」</strong>に目を通す——本記事は対数の細部より、この<strong>二段の目</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#two-eyes">TFとIDF——二つの目</a></li>
+        <li><a href="#stopword-trap">ありふれた語の罠</a></li>
+        <li><a href="#vector">文書ベクトルとして使う</a></li>
+        <li><a href="#search-classify">検索と分類</a></li>
+        <li><a href="#lineage">BoW・BM25・埋め込みへの流れ</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        TF-IDFの定義は次の一文が骨格です（<a href="../../exams/g-kentei/practice/q/g-333/">G-333</a>）。
+      </p>
+      <blockquote>
+        <p>文書内で頻出し、文書集合全体では珍しい語を重視する重み付けである。</p>
+      </blockquote>
+      <p>
+        <a href="../../exams/g-kentei/drill/q/tf-128/">TF-128</a>の×問題は逆を問います——「全体でありふれた語ほど<strong>高く</strong>重み付けする」は<strong>誤り</strong>。ありふれた語は<strong>下げる</strong>のがTF-IDFです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-333/">G-333（定義）</a>、<a href="../../exams/g-kentei/drill/q/tf-128/">TF-128（ありふれた語の重み）</a>、<a href="../../exams/g-kentei/practice/q/g-344/">G-344（NLP特徴量の区別）</a>、<a href="../../exams/g-kentei/practice/q/g-355/">G-355（BoWとの対比）</a></p>
+      </div>
+    </section>
+
+    <section id="two-eyes">
+      <h2>TFとIDF——二つの目</h2>
+      <p>TF-IDFは名前の通り、<strong>2つの係数の積</strong>です。試験では記号の計算式より、<strong>それぞれが何を見ているか</strong>を押さえれば足ります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>英名</th><th>見ているもの</th><th>直感</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>TF</strong></td><td>Term Frequency</td><td>この文書の中での出現の多さ</td><td>「この文書では何度も出てくる語」</td></tr>
+          <tr><td><strong>IDF</strong></td><td>Inverse Document Frequency</td><td>コーパス全体での希少性</td><td>「どの文書にもいる語は信用しない」</td></tr>
+          <tr><td><strong>TF-IDF</strong></td><td>—</td><td>TF × IDF</td><td>文書内では目立つが、全体では珍しい語が高得点</td></tr>
+        </tbody>
+      </table>
+      <p>
+        例えば技術文書コーパスで、「Transformer」が1文書に5回出て、かつ全1000文書のうち10文書にしか出ない——TFもIDFも相対的に高く、<strong>その文書のトピックを示す手がかり</strong>になりやすいです。逆に「の」「する」はTFは高くても、ほぼ全文献に出るためIDFが低く、総合スコアは抑えられます。
+      </p>
+    </section>
+
+    <section id="stopword-trap">
+      <h2>ありふれた語の罠</h2>
+      <p>
+        <a href="../bag-of-words/">BoW</a>だけだと、日本語・英語ともに<strong>機能語</strong>——「です」「the」「a」——がカウントを支配し、文書の違いが埋もれます。これは検索でも分類でも困ります。「どの文書にもある語」は<strong>識別に役立たない</strong>（G-333の解説）からです。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>BoWの限界</strong> — 素の出現回数。ありふれた語がベクトルを占有</li>
+        <li><strong>TF-IDFの修正</strong> — IDFで全体頻度の高い語を<strong>割り引く</strong></li>
+        <li><strong>残る課題</strong> — 語順は依然として捨てる。同義語は別語として扱う</li>
+      </ul>
+      <p>
+        TF-IDFは「賢い重み付け」ですが、<strong>意味理解</strong>までは担いません——そこから<a href="../glove/">GloVe</a>や<a href="../embedding/">埋め込み</a>へ進化します（G-344）。
+      </p>
+    </section>
+
+    <section id="vector">
+      <h2>文書ベクトルとして使う</h2>
+      <p>
+        語彙を決め、各語のTF-IDF値を並べれば<strong>文書ベクトル</strong>ができます。BoWと手順は似ていますが、各次元の値が「生の回数」ではなく<strong>重み付きスコア</strong>になる点が違います。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>前処理</strong> — 形態素解析（<a href="../mecab/">MeCab</a>など）で語に分割</li>
+        <li><strong>TF計算</strong> — 文書内の各語の頻度</li>
+        <li><strong>IDF計算</strong> — コーパス全体の文書数と、その語を含む文書数から希少性を算出</li>
+        <li><strong>ベクトル化</strong> — 語彙次元のTF-IDF値を並べ、分類器や検索に渡す</li>
+      </ol>
+      <p>
+        2文書のベクトル間のコサイン類似度などで<strong>似ている文書</strong>を探す——キーワード検索の古典的な土台です。
+      </p>
+    </section>
+
+    <section id="search-classify">
+      <h2>検索と分類</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>文書検索</strong>
+          クエリ語のTF-IDFベクトルと文書ベクトルの類似度でランキング——<a href="../bm25/">BM25</a>の祖先（G-333）
+        </li>
+        <li>
+          <strong>文書分類</strong>
+          スパム判定・トピック分類の特徴量としてロジスティック回帰やSVMに入力
+        </li>
+        <li>
+          <strong>キーワード抽出</strong>
+          文書内TF-IDFが高い語を「この文書のキーワード」候補に
+        </li>
+      </ul>
+      <p>
+        現代の<a href="../semantic-search/">セマンティック検索</a>や<a href="../rag/">RAG</a>は<a href="../embedding-model/">埋め込みモデル</a>が主流ですが、TF-IDFは<strong>軽量・解釈しやすい</strong>——小規模コーパスやベースラインとして今も現場に残ります。
+      </p>
+    </section>
+
+    <section id="lineage">
+      <h2>BoW・BM25・埋め込みへの流れ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>文書の見方</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../bag-of-words/">BoW</a></strong></td><td>出現回数をそのまま数える</td><td>G-332</td></tr>
+          <tr><td><strong>TF-IDF</strong></td><td>ありふれた語を<strong>割り引く</strong></td><td>G-333、TF-128</td></tr>
+          <tr><td><strong><a href="../bm25/">BM25</a></strong></td><td>TF-IDF系を検索ランキング向けに洗練</td><td>TF-0236</td></tr>
+          <tr><td><strong>word2vec / <a href="../glove/">GloVe</a></strong></td><td>語の<strong>意味ベクトル</strong>を学習</td><td>G-343、G-344</td></tr>
+          <tr><td><strong><a href="../embedding/">埋め込み</a></strong></td><td>密なベクトルで意味的類似を扱う</td><td>RAG・現代検索</td></tr>
+        </tbody>
+      </table>
+      <p>
+        G-344では「BoW、TF-IDF、word2vecはNLPの特徴表現、MFCCは音声」——<strong>分野の線引き</strong>が問われます。TF-IDFは深層学習の前の章として確実に押さえておきましょう。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ありふれた語ほど重くする</td><td><strong>下げる</strong>（TF-128は×、G-333）</td></tr>
+          <tr><td>TF-IDF＝畳み込みフィルタ</td><td>NLPの重み付け vs 画像の局所演算（G-333のC）</td></tr>
+          <tr><td>TF-IDF＝強化学習の割引率</td><td>文書特徴量 vs RLのγ（G-333のD）</td></tr>
+          <tr><td>TF-IDF＝<a href="../glove/">GloVe</a></td><td>文書スコア vs 語ベクトル学習（G-344）</td></tr>
+          <tr><td>TF-IDF＝MFCC</td><td>NLP vs 音声特徴量（G-344、G-355）</td></tr>
+          <tr><td>TF-IDF＝語順を保持</td><td>BoW同様、基本的に<strong>語順は捨てる</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>TF-IDFのTFとIDFは何ですか？</summary>
+          <p class="tool-faq-a">TF（Term Frequency）は、その文書の中で語がどれだけ頻繁に出るかを表します。IDF（Inverse Document Frequency）は、文書集合全体でその語がどれだけ珍しいか——多くの文書に出る語ほどIDFは小さくなる——を表します。TF-IDFはこの2つを掛け合わせ、文書内では目立つが全体では珍しい語を高く評価します。</p>
+        </details>
+        <details>
+          <summary>TF-IDFとBoWの違いは？</summary>
+          <p class="tool-faq-a">BoWは文書内の出現回数（または有無）をそのまま特徴量にします。TF-IDFはBoWの発展形で、コーパス全体にありふれた語（例：「です」「こと」）の重みを下げ、文書を識別しやすい語を相対的に強調します。どちらも語順は基本的に捨てる古典的な文書表現です。</p>
+        </details>
+        <details>
+          <summary>TF-IDFは畳み込みフィルタですか？</summary>
+          <p class="tool-faq-a">いいえ。TF-IDFは自然言語処理の文書特徴量・重み付け手法です。画像の局所特徴を抽出する畳み込みフィルタ（G-333の誤答C）とは無関係です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-333/">G-333 · TF-IDFの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-128/">TF-128 · ありふれた語の重み</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-344/">G-344 · NLP特徴量の区別</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-355/">G-355 · BoWとの対比</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bag-of-words/">Bag of Words</a></li>
+          <li><a href="../bm25/">BM25</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../glove/">GloVe</a></li>
+          <li><a href="../mecab/">MeCab</a></li>
+          <li><a href="../n-gram/">N-gram</a></li>
+          <li><a href="../semantic-search/">セマンティック検索</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

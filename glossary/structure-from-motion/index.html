@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Structure from Motionとは？SfM。複数画像から3D構造とカメラ姿勢を復元する手法。NeRF・SLAM・SIFTとの違いをG検定向けに解説。">
+  <title>Structure from Motionとは？写真の束から形を逆算する——動きと3Dを同時に復元する — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/structure-from-motion/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Structure from Motionとは？写真の束から形を逆算する——動きと3Dを同時に復元する">
+  <meta property="og:description" content="Structure from Motion（SfM）。複数の2D画像から3D構造とカメラの位置・向きを推定するコンピュータビジョン手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/structure-from-motion/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Structure from Motion",
+        "alternateName": ["Structure from Motion", "ストラクチャフロモーション", "SfM", "エスエフエム", "モーションからの構造復元"],
+        "description": "複数の2D画像から、被写体の3D構造と各画像を撮影したカメラの位置・姿勢を同時に推定するコンピュータビジョン手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Structure from Motionは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じシーンを異なる視点から撮影した複数の画像から、3Dの点群構造とカメラの軌跡（位置・向き）を復元する手法です。フォトグラメトリ（写真測量）の中核技術の一つで、AR・3Dモデリング・新規視点合成の前処理として使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Structure from MotionとNeRFは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。SfMは幾何学的にカメラ姿勢と3D点群を推定する古典的〜現代的な復元パイプラインです。NeRFはニューラルネットで3D場を表現し新規視点画像を合成する手法です。多視点画像という入力は共通し得ますが、表現と目的が異なります（G-379）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Structure from MotionとSLAMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。SfMはオフラインで複数画像から3Dとカメラを復元する手法として整理されます。SLAMはロボットが移動しながらリアルタイムに自己位置と地図を同時に推定する技術です。3D復元という点では近いですが、オンライン性と用途が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Structure from Motion</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Structure from Motionとは？写真の束から形を逆算する——動きと3Dを同時に復元する</h1>
+    <p class="tool-hero-sub">読み：すとらくちゃ・ふろむ・もーしょん ／ 英：Structure from Motion（SfM）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Structure from Motion</strong>（通称 <strong>SfM</strong>）は、<strong>同じ場所を違う角度から撮った写真の束</strong>から、<strong>3Dの形（Structure）</strong>と<strong>カメラがどこから撮ったか（Motion）</strong>を同時に逆算する手法です。<a href="../nerf/">NeRF</a>がニューラルネットで新規視点を「描く」のに対し、SfMは<strong>幾何学と特徴マッチングで点群とカメラ軌跡を復元</strong>する——本記事はバンドル調整の数式より、<strong>「なぜ動きの情報から形が分かるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#motion-structure">MotionとStructure</a></li>
+        <li><a href="#pipeline">復元の流れ</a></li>
+        <li><a href="#features">特徴点マッチングの役割</a></li>
+        <li><a href="#vs-others">NeRF・SLAMとの違い</a></li>
+        <li><a href="#use">実務での使われ方</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SfM単独の過去問は少ない一方、辞典の定義は<strong>「複数画像から3D構造とカメラ姿勢を復元する」</strong>です。試験では<strong>3D再構成・新規視点合成</strong>（<a href="../../exams/g-kentei/practice/q/g-379/">G-379</a>の<a href="../nerf/">NeRF</a>）や<strong>画像認識タスクの区別</strong>（<a href="../../exams/g-kentei/practice/q/g-315/">G-315</a>）を土台に整理します。
+      </p>
+      <p>
+        誤答では、<strong>SfM＝画像生成</strong>、<strong>SfM＝<a href="../slam/">SLAM</a></strong>（リアルタイム位置推定）、<strong>SfM＝物体検出</strong>（<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>）など、別タスクとのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-379/">G-379（NeRF・3D再構成）</a>、<a href="../../exams/g-kentei/practice/q/g-315/">G-315（画像認識タスク）</a>、<a href="../../exams/g-kentei/practice/q/g-408/">G-408（センサー・3D）</a></p>
+      </div>
+    </section>
+
+    <section id="motion-structure">
+      <h2>MotionとStructure</h2>
+      <p>
+        名前の <strong>Motion</strong> は「カメラがどう動いたか」、<strong>Structure</strong> は「被写体の3Dの形」——この二つは<strong>同時に</strong>推定されます。
+      </p>
+      <p>
+        同じ建物の角を、左から・右から・上から撮った写真があるとします。各写真では角の見え方は違いますが、<strong>同じ物理的な点</strong>であることは対応づけできます。対応が十分あれば、「カメラはここにいて、こう向いていた」——と<strong>三角測量</strong>の思想で3D座標が定まります。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>入力</strong> — 同じシーンの複数視点画像（順序は不定でも可）</li>
+        <li><strong>出力</strong> — 3D点群 ＋ 各画像のカメラ姿勢</li>
+        <li><strong>試験向け</strong> — 「複数画像→3D＋カメラ」が定義の核</li>
+      </ul>
+    </section>
+
+    <section id="pipeline">
+      <h2>復元の流れ</h2>
+      <p>試験向けのパイプラインは、次の段階に分けて覚えると整理しやすいです。</p>
+      <ol class="tool-steps">
+        <li><strong>特徴抽出</strong> — 各画像から安定したキーポイントを検出</li>
+        <li><strong>マッチング</strong> — 画像間で同じ点の対応を見つける</li>
+        <li><strong>幾何推定</strong> — 基本行列・本質行列などでカメラの相対姿勢を推定</li>
+        <li><strong>三角測量</strong> — 対応点から3D座標を計算</li>
+        <li><strong>バンドル調整</strong> — 3D点とカメラ姿勢を全体最適化（誤差を最小化）</li>
+      </ol>
+      <p>
+        深層学習が主流の試験範囲でも、SfMは<strong>幾何と最適化</strong>——「ニューラルネットで端到端」ではない——点が他手法との区別になります。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>特徴点マッチングの役割</h2>
+      <p>
+        SfMの土台は、<strong>画像間の対応点</strong>です。CNN以前は<a href="../sift/">SIFT</a>や<a href="../orb/">ORB</a>などの<strong>局所特徴</strong>が広く使われました——スケールや回転が変わっても同じ場所を見つけやすい記述子が、SfMの入力になります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>役割</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>SIFT / ORB</strong></td><td>キーポイントと記述子</td><td>マッチングの前処理</td></tr>
+          <tr><td><strong>対応付け</strong></td><td>別画像の同一点を結ぶ</td><td>3D復元の前提</td></tr>
+          <tr><td><strong><a href="../cnn/">CNN</a></strong></td><td>深層特徴でのマッチングも</td><td>現代パイプラインの選択肢</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../pointnet/">PointNet</a>が<strong>点群そのもの</strong>を分類するのに対し、SfMは<strong>2D画像から点群を作る</strong>——入力が画像か点群かで整理を分けます。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>NeRF・SLAMとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>SfM</th><th><a href="../nerf/">NeRF</a></th><th><a href="../slam/">SLAM</a></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>主な入力</strong></td><td>複数の静止画</td><td>多視点画像（カメラ姿勢も利用）</td><td>センサー系列（カメラ・LiDAR等）</td></tr>
+          <tr><td><strong>主な出力</strong></td><td>3D点群＋カメラ軌跡</td><td>新規視点の画像合成</td><td>地図＋自己位置</td></tr>
+          <tr><td><strong>処理の型</strong></td><td>オフライン復元</td><td>ニューラル場の学習</td><td>オンライン推定</td></tr>
+          <tr><td><strong>試験</strong></td><td>3D復元パイプライン</td><td>G-379</td><td>ロボティクス・センサー</td></tr>
+        </tbody>
+      </table>
+      <p>
+        実務では、SfMでカメラ姿勢と粗い点群を得てから<a href="../nerf/">NeRF</a>学習に渡す——といった<strong>パイプライン連携</strong>もあります。試験では個別定義のすり替えが先です。
+      </p>
+    </section>
+
+    <section id="use">
+      <h2>実務での使われ方</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>3Dモデリング</strong>
+          建物・遺跡・製品の写真から点群メッシュを作成
+        </li>
+        <li>
+          <strong>AR・VFX</strong>
+          実写とCGを合成するためのカメラ軌跡の取得
+        </li>
+        <li>
+          <strong>地図・測量</strong>
+          ドローン写真からの地形復元（フォトグラメトリ）
+        </li>
+        <li>
+          <strong>下流への入力</strong>
+          復元点群を<a href="../pointnet/">PointNet</a>やメッシュ処理へ渡す
+        </li>
+      </ul>
+      <p>
+        SfMは<strong>画像を新しく生成する</strong>技術ではありません。<a href="../stable-diffusion/">Stable Diffusion</a>や<a href="../gan/">GAN</a>との混同は避け、<strong>「観測から3Dを復元する」</strong>——認識・再構成の系譜——として押さえます。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SfM＝<a href="../nerf/">NeRF</a></td><td>幾何復元 vs ニューラル新規視点合成（G-379）</td></tr>
+          <tr><td>SfM＝<a href="../slam/">SLAM</a></td><td>オフライン3D復元 vs オンライン位置推定</td></tr>
+          <tr><td>SfM＝物体検出</td><td>3D・カメラ復元 vs 2Dの箱とクラス（G-021）</td></tr>
+          <tr><td>SfM＝<a href="../lidar/">LiDAR</a></td><td>画像から復元 vs 距離センサの直接点群</td></tr>
+          <tr><td>SfM＝画像生成AI</td><td>観測の復元 vs 新規コンテンツの生成</td></tr>
+          <tr><td>1枚の写真だけで十分</td><td><strong>複数視点</strong>が前提</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Structure from Motionは何をする手法ですか？</summary>
+          <p class="tool-faq-a">同じシーンを異なる視点から撮影した複数の画像から、3Dの点群構造とカメラの軌跡（位置・向き）を復元する手法です。フォトグラメトリ（写真測量）の中核技術の一つで、AR・3Dモデリング・新規視点合成の前処理として使われます。</p>
+        </details>
+        <details>
+          <summary>Structure from MotionとNeRFは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。SfMは幾何学的にカメラ姿勢と3D点群を推定する古典的〜現代的な復元パイプラインです。NeRFはニューラルネットで3D場を表現し新規視点画像を合成する手法です。多視点画像という入力は共通し得ますが、表現と目的が異なります（G-379）。</p>
+        </details>
+        <details>
+          <summary>Structure from MotionとSLAMは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。SfMはオフラインで複数画像から3Dとカメラを復元する手法として整理されます。SLAMはロボットが移動しながらリアルタイムに自己位置と地図を同時に推定する技術です。3D復元という点では近いですが、オンライン性と用途が異なります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-379/">G-379 · NeRF・3D再構成</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-315/">G-315 · 画像認識タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · センサーと3D</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../nerf/">NeRF</a></li>
+          <li><a href="../slam/">SLAM</a></li>
+          <li><a href="../sift/">SIFT</a></li>
+          <li><a href="../orb/">ORB</a></li>
+          <li><a href="../pointnet/">PointNet</a></li>
+          <li><a href="../lidar/">LiDAR</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

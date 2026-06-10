@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PEFTとは？Parameter-Efficient Fine-Tuning。一部パラメータだけ更新する効率的微調整の総称。LoRA・Full FTとの違いをG検定向けに解説。">
+  <title>PEFTとは？凍った基底に差分だけ学ぶ——パラメータ効率ファインチューニングの総称 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/peft/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PEFTとは？凍った基底に差分だけ学ぶ——パラメータ効率ファインチューニングの総称">
+  <meta property="og:description" content="Parameter-Efficient Fine-Tuning。巨大な事前学習済みモデルの全重みを更新せず、一部の追加パラメータだけを学習する微調整手法の傘。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/peft/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "PEFT",
+        "alternateName": ["PEFT", "ペフト", "Parameter-Efficient Fine-Tuning", "パラメータ効率的ファインチューニング"],
+        "description": "巨大な事前学習済みモデルの全パラメータを更新せず、一部の追加パラメータや小さな更新だけを学習するファインチューニング手法の総称。LoRAなどが代表例。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "PEFTは何を指す用語ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Parameter-Efficient Fine-Tuningの略で、事前学習済みモデルの全重みを動かさず、一部のパラメータだけを更新して用途に適応させるファインチューニング手法の総称です。LoRAやアダプタなどが含まれ、計算コストと保存容量を抑えやすい点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PEFTとLoRAは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。PEFTはパラメータ効率的な微調整手法の総称（傘）です。LoRAはその中の一手法で、低ランク行列を追加して学習する技法です。LoRAはPEFTの一例、という関係で整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PEFTとファインチューニングは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ファインチューニングは事前学習済みモデルを特定用途に追加学習する手法全般を指します。PEFTはそのうち全パラメータ更新ではなく一部だけを更新する効率化アプローチの総称です。Full Fine-tuningはPEFTに含まれません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">PEFT</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>PEFTとは？凍った基底に差分だけ学ぶ——パラメータ効率ファインチューニングの総称</h1>
+    <p class="tool-hero-sub">読み：ペフト ／ 英：PEFT（Parameter-Efficient Fine-Tuning）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>PEFT</strong>（Parameter-Efficient Fine-Tuning）は、巨大な<a href="../llm/">LLM</a>の<strong>全重みを更新せず、一部の差分だけを学習</strong>する<a href="../fine-tuning/">ファインチューニング</a>の総称です。<a href="../lora/">LoRA</a>が低ランク行列を足す具体手法なのに対し、PEFTは<strong>「効率よく微調整する手法の傘」</strong>——本記事は手法の暗記より、<strong>Full FT・プロンプト・RLHFとの地図</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-partial">なぜ一部だけ更新するか</a></li>
+        <li><a href="#umbrella">傘の中身</a></li>
+        <li><a href="#pipeline">事前学習から用途適応へ</a></li>
+        <li><a href="#vs-others">他の調整手法との違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-partial">
+      <h2>なぜ一部だけ更新するか</h2>
+      <p>
+        <a href="../foundation-model/">基盤モデル</a>は大規模データで<strong>事前学習</strong>され、汎用の言語能力を持ちます（<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>）。社内用語や特定フォーマットへ合わせるには<strong>ファインチューニング</strong>——追加学習——が有効ですが、70B・100B級のモデルで<strong>全パラメータを更新</strong>するFull Fine-tuningはGPUメモリと時間が膨大です。
+      </p>
+      <p>
+        PEFTの発想は<strong>「巨大な基底は凍結し、小さな差分だけ学ぶ」</strong>。学習するパラメータが少ないほど、コストと保存サイズを抑えやすい——<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177</a>が示す<a href="../lora/">LoRA</a>の「全パラメータを必ず更新するわけではない」は、まさにPEFTの典型です。
+      </p>
+    </section>
+
+    <section id="umbrella">
+      <h2>傘の中身</h2>
+      <p>PEFTは単一アルゴリズムではなく、<strong>効率的微調整の手法群</strong>の名称です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法の例</th><th>更新の仕方</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../lora/">LoRA</a></strong></td><td>低ランク行列を追加し、その部分だけ学習</td><td>PEFTの代表例（TF-177）</td></tr>
+          <tr><td><strong><a href="../qlora/">QLoRA</a></strong></td><td>量子化した基底の上でLoRAだけ学習</td><td>LoRA＋量子化の省メモリ版</td></tr>
+          <tr><td><strong>Adapter</strong></td><td>層の間に小さなボトルネックモジュールを挿入</td><td>追加パラメータ型PEFT</td></tr>
+          <tr><td><strong>Prefix / Prompt Tuning</strong></td><td>入力に学習可能な前置トークンを付与</td><td>重み本体は固定のことも</td></tr>
+          <tr><td><strong>Full Fine-tuning</strong></td><td>モデル重み<strong>全体</strong>を更新</td><td>PEFT<strong>に含まれない</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では個別手法の数式より、<strong>「一部パラメータだけ更新する効率的FTの総称」</strong>と覚えれば十分です。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>事前学習から用途適応へ</h2>
+      <ul class="tool-steps">
+        <li><strong>1. 事前学習</strong> — 大規模コーパスで汎用能力を獲得（G-383の「あ」）</li>
+        <li><strong>2. PEFT</strong> — 凍結した基底に差分だけ学習し用途へ適応（G-383の「い」の効率版）</li>
+        <li><strong>3. 推論</strong> — 基底＋差分（アダプタ）を載せて<a href="../inference/">推論</a></li>
+        <li><strong>4. 切り替え</strong> — 同一基底に複数のPEFTアダプタを用途ごとに差し替え可能</li>
+      </ul>
+      <p>
+        1つの<a href="../llm/">LLM</a>に、営業用・法務用・英語用のアダプタを載せ替える——<strong>ベースは共通、差分だけ差し替え</strong>——がPEFTの実務的な魅力です。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他の調整手法との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>重みを変えるか</th><th>PEFTとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>プロンプト設計</strong></td><td>変えない</td><td>FTではない（<a href="../prompt-engineering/">プロンプトエンジニアリング</a>）</td></tr>
+          <tr><td><strong>PEFT</strong></td><td><strong>一部だけ</strong>更新</td><td>本記事の主題</td></tr>
+          <tr><td><strong>Full Fine-tuning</strong></td><td>全体を更新</td><td>FTだがPEFTではない</td></tr>
+          <tr><td><strong><a href="../rlhf/">RLHF</a></strong></td><td>振る舞い調整が目的</td><td>ドメイン適応PEFTとは文脈が異なることも</td></tr>
+          <tr><td><strong><a href="../rag/">RAG</a></strong></td><td>重みを変えない</td><td>外部知識を渡す。学習手法ではない</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/genai-passport/practice/q/hq-0193/">HQ-0193</a>のファインチューニング定義——事前学習済みモデルの追加学習——はPEFTの上位概念です。PEFTはその<strong>効率化された実装群</strong>と位置づけます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Parameter-Efficient Fine-Tuning＝<strong>一部パラメータだけ</strong>更新するFTの総称</li>
+        <li><strong>目的</strong> — 計算・メモリ・保存コストを抑えつつ用途適応</li>
+        <li><strong>代表例</strong> — <a href="../lora/">LoRA</a>（全パラメータ更新ではない：TF-177）</li>
+        <li><strong>対比</strong> — Full FT、プロンプトのみ、RAG、RLHF</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177</a>、<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>、<a href="../../exams/g-kentei/drill/q/tf-434/">TF-434</a>、<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127</a>、<a href="../../exams/genai-passport/practice/q/hq-0193/">HQ-0193</a>、<a href="../../exams/genai-passport/drill/q/tf-0128/">TF-0128</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>PEFT＝<a href="../lora/">LoRA</a></td><td>総称 vs 一手法</td></tr>
+          <tr><td>PEFT＝Full Fine-tuning</td><td>一部更新 vs 全パラメータ更新</td></tr>
+          <tr><td>PEFT＝<a href="../fine-tuning/">ファインチューニング</a>全体</td><td>効率化アプローチの傘 vs FT全般</td></tr>
+          <tr><td>PEFT＝人が出力を手直し</td><td>モデル学習 vs 人手修正（TF-434、TF-0128）</td></tr>
+          <tr><td>PEFT＝<a href="../rag/">RAG</a></td><td>重み更新 vs 外部検索で知識を渡す</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>PEFTは何を指す用語ですか？</summary><p class="tool-faq-a">Parameter-Efficient Fine-Tuningの略で、事前学習済みモデルの全重みを動かさず、一部のパラメータだけを更新して用途に適応させるファインチューニング手法の総称です。LoRAやアダプタなどが含まれ、計算コストと保存容量を抑えやすい点が特徴です。</p></details>
+        <details><summary>PEFTとLoRAは同じですか？</summary><p class="tool-faq-a">同じではありません。PEFTはパラメータ効率的な微調整手法の総称（傘）です。LoRAはその中の一手法で、低ランク行列を追加して学習する技法です。LoRAはPEFTの一例、という関係で整理します。</p></details>
+        <details><summary>PEFTとファインチューニングは同じですか？</summary><p class="tool-faq-a">同じではありません。ファインチューニングは事前学習済みモデルを特定用途に追加学習する手法全般を指します。PEFTはそのうち全パラメータ更新ではなく一部だけを更新する効率化アプローチの総称です。Full Fine-tuningはPEFTに含まれません。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-177/">TF-177 · LoRAの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-383/">G-383 · 事前学習とFT</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-434/">TF-434 · FTの誤解</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0193/">HQ-0193 · FTとChatGPT</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../qlora/">QLoRA</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../training/">学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

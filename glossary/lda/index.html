@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LDA（潜在ディリクレ配分法）とは？文書をトピックの混合としてモデル化する教師なしの確率的手法。BoW・クラスタリングとの違いをG検定向けに解説。">
+  <title>LDAとは？文書の裏にある話題を数える——確率でトピックを分解するモデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/lda/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="LDAとは？文書の裏にある話題を数える——確率でトピックを分解するモデル">
+  <meta property="og:description" content="Latent Dirichlet Allocation。文書・単語・トピックの生成過程を確率モデルで記述し、教師なしで話題構造を推定。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/lda/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "LDA",
+        "alternateName": ["LDA", "Latent Dirichlet Allocation", "潜在ディリクレ配分法", "エルディーエー"],
+        "description": "文書が複数の潜在トピックの混合として生成されると仮定し、文書ごとのトピック分布とトピックごとの単語分布を教師なしで推定する確率トピックモデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "LDAは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "多数の文書から、各文書がどの話題（トピック）をどれだけ含むか、各トピックがどの単語を好みやすいかを、正解ラベルなしで推定する教師なしの確率モデルです。文書分類のためのラベル付き学習ではなく、隠れた話題構造を発見する手法として整理されます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LDAとBag of Wordsは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Bag of Wordsは文書を単語の出現回数ベクトルに変換する表現手法です。LDAはBoWなどで得た文書・単語の統計を土台に、潜在トピックの混合として文書を説明する確率モデルです。表現と生成モデルは別の層です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LDAとLLMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。LDAは古典的な教師なしのトピックモデルであり、大規模なニューラル言語モデルではありません。LLMは深層学習で文脈を扱い文章を生成しますが、LDAは文書集合の話題構造を推定する統計モデルとして位置づけられます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">LDA</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>LDAとは？文書の裏にある話題を数える——確率でトピックを分解するモデル</h1>
+    <p class="tool-hero-sub">読み：エルディーエー ／ 英：Latent Dirichlet Allocation</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>LDA</strong>（Latent Dirichlet Allocation、潜在ディリクレ配分法）は、文書が<strong>複数の潜在トピックの混合</strong>から「書かれた」ように見える——と仮定する<a href="../unsupervised-learning/">教師なし</a>の確率モデルです。正解ラベルなしで「この記事は経済70％・技術30％」のような<strong>話題の割合</strong>を推定する——本記事はディリクレ分布の式より、<strong>「BoWの先に来たトピック発見」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#story">生成のたとえ話</a></li>
+        <li><a href="#three-way">文書・単語・トピックの三層</a></li>
+        <li><a href="#unsupervised">教師なしの位置づけ</a></li>
+        <li><a href="#vs-others">BoW・クラスタリングとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="story">
+      <h2>生成のたとえ話</h2>
+      <p>LDAの直感は「文書がどう書かれるか」の逆問題です。</p>
+      <ul class="tool-steps">
+        <li><strong>1</strong> — 文書ごとに「トピックの配合比率」を引く（例：スポーツ0.6、政治0.4）</li>
+        <li><strong>2</strong> — 各単語を書くたび、配合に応じてトピックを選ぶ</li>
+        <li><strong>3</strong> — 選んだトピックが好む単語を引く（スポーツトピックなら「ゴール」「選手」など）</li>
+        <li><strong>4</strong> — 観測できるのは完成した文書だけ。LDAは<strong>逆算</strong>してトピック構造を推定</li>
+      </ul>
+      <p>
+        「潜在（Latent）」は<strong>直接は見えないトピック</strong>のこと。ディリクレ分布は配合比率のばらつきを表す事前分布——試験では分布の名前より、<strong>文書＝トピックの混合</strong>という発想が要点です。
+      </p>
+    </section>
+
+    <section id="three-way">
+      <h2>文書・単語・トピックの三層</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>対象</th><th>LDAが推定するもの</th><th>出力のイメージ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>文書</strong></td><td>トピック分布</td><td>「文書Aはトピック1が40％…」</td></tr>
+          <tr><td><strong>トピック</strong></td><td>単語分布</td><td>「トピック1は『市場』『株』が多い…」</td></tr>
+          <tr><td><strong>単語</strong></td><td>どのトピックから来たか（推定）</td><td>各語のトピック帰属の確率</td></tr>
+        </tbody>
+      </table>
+      <p>
+        入力はたいてい<a href="../bag-of-words/">Bag of Words</a>や語彙上のカウント（<a href="../../exams/g-kentei/drill/q/tf-127/">TF-127</a>）——LDAはその上に載る<strong>話題構造のモデル</strong>です。
+      </p>
+    </section>
+
+    <section id="unsupervised">
+      <h2>教師なしの位置づけ</h2>
+      <p>
+        LDAは<strong>正解ラベル（この文書は経済類）</strong>を使いません。<a href="../unsupervised-learning/">教師なし学習</a>の<strong>トピックモデル</strong>として整理されます（教師なし学習記事の代表タスク表）。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-061/">G-061</a>が問うように、分類は教師あり、クラスタリングはラベルなしでグループを<strong>発見</strong>——LDAも「発見」だが、<strong>連続的なトピック混合</strong>を仮定する点がk-means等と異なります（<a href="../../exams/g-kentei/practice/q/g-361/">G-361</a>）。
+      </p>
+      <p>
+        次元削減が教師なし文脈で扱われる（<a href="../../exams/genai-passport/drill/q/tf-0024/">TF-0024</a>）のと同様、LDAは<strong>ラベルなしで構造を読む</strong>系譜の一員です。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>BoW・クラスタリングとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>何をするか</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../bag-of-words/">BoW</a></strong></td><td>語の出現をベクトル化</td><td>表現手法（G-332）</td></tr>
+          <tr><td><strong>LDA</strong></td><td>潜在トピックの混合を推定</td><td><strong>確率トピックモデル</strong></td></tr>
+          <tr><td><strong><a href="../k-means/">k-means</a></strong></td><td>文書をk個のクラスタに分割</td><td>ハードクラスタリング</td></tr>
+          <tr><td><strong><a href="../bert/">BERT</a></strong></td><td>文脈付きの深層表現</td><td>教師あり事前学習＋ファインチューニング</td></tr>
+          <tr><td><strong><a href="../llm/">LLM</a></strong></td><td>大規模言語生成</td><td>別世代の<a href="../nlp/">NLP</a></td></tr>
+        </tbody>
+      </table>
+      <p>
+        VAEの潜在空間（<a href="../../exams/genai-passport/drill/q/tf-0097/">TF-0097</a>）も「潜在」という語を共有しますが、LDAは<strong>文書・トピックの混合確率</strong>、VAEは<strong>ニューラルネットの連続潜在表現</strong>——別系統です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 文書・単語・<strong>潜在トピック</strong>の確率モデル（教師なし）</li>
+        <li><strong>出力</strong> — 文書ごとのトピック分布、トピックごとの単語分布</li>
+        <li><strong>用途</strong> — 大量文書の話題構造の発見・要約の手がかり</li>
+        <li><strong>対比</strong> — BoW＝表現、分類＝教師あり、LLM＝深層生成モデル</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-061/">G-061</a>、<a href="../../exams/g-kentei/practice/q/g-332/">G-332</a>、<a href="../../exams/g-kentei/drill/q/tf-127/">TF-127</a>、<a href="../../exams/g-kentei/practice/q/g-361/">G-361</a>、<a href="../../exams/g-kentei/practice/q/g-073/">G-073</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0024/">TF-0024</a>（教師なしの文脈）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>LDA＝<a href="../bag-of-words/">BoW</a></td><td>トピックモデル vs 語カウント表現</td></tr>
+          <tr><td>LDA＝教師あり分類</td><td>ラベルなしのトピック推定 vs 正解ラベルで学習</td></tr>
+          <tr><td>LDA＝<a href="../llm/">LLM</a></td><td>古典的確率モデル vs 大規模ニューラルモデル</td></tr>
+          <tr><td>LDA＝<a href="../embedding/">埋め込み</a></td><td>トピック・単語分布 vs 密なベクトル表現</td></tr>
+          <tr><td>LDA＝オートエンコーダ</td><td>トピック混合 vs 再構成の潜在圧縮（TF-104）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>LDAは何をする手法ですか？</summary><p class="tool-faq-a">多数の文書から、各文書がどの話題（トピック）をどれだけ含むか、各トピックがどの単語を好みやすいかを、正解ラベルなしで推定する教師なしの確率モデルです。文書分類のためのラベル付き学習ではなく、隠れた話題構造を発見する手法として整理されます。</p></details>
+        <details><summary>LDAとBag of Wordsは同じですか？</summary><p class="tool-faq-a">同じではありません。Bag of Wordsは文書を単語の出現回数ベクトルに変換する表現手法です。LDAはBoWなどで得た文書・単語の統計を土台に、潜在トピックの混合として文書を説明する確率モデルです。表現と生成モデルは別の層です。</p></details>
+        <details><summary>LDAとLLMは同じですか？</summary><p class="tool-faq-a">同じではありません。LDAは古典的な教師なしのトピックモデルであり、大規模なニューラル言語モデルではありません。LLMは深層学習で文脈を扱い文章を生成しますが、LDAは文書集合の話題構造を推定する統計モデルとして位置づけられます。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-061/">G-061 · 教師ありとクラスタリング</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-332/">G-332 · BoWの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-127/">TF-127 · BoWの要点</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-361/">G-361 · 教師なし学習</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../bag-of-words/">Bag of Words</a></li>
+          <li><a href="../unsupervised-learning/">教師なし学習</a></li>
+          <li><a href="../k-means/">k-means法</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

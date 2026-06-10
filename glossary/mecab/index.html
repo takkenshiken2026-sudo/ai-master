@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MeCabとは？日本語形態素解析の定番ツール。BPE・BERTとの違いをG検定向けに解説。">
+  <title>MeCabとは？空白のない日本語を切る——辞書と確率で形態素に分解する前処理 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/mecab/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MeCabとは？空白のない日本語を切る——辞書と確率で形態素に分解する前処理">
+  <meta property="og:description" content="日本語形態素解析エンジン。文章を形態素に分割し品詞などを付与するNLP前処理ツール。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/mecab/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "MeCab",
+        "alternateName": ["MeCab", "メキャブ", "MeCab morphological analyzer"],
+        "description": "日本語の形態素解析を行うオープンソースツール。文章を形態素に分割し、品詞・読みなどの情報を付与する。自然言語処理の前処理として広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "MeCabは何をするツールですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "日本語の文章を形態素（意味を持つ最小単位に近い語の断片）に分割し、品詞や読みなどの情報を付与する形態素解析エンジンです。空白で単語が区切られない日本語の自然言語処理における前処理として使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MeCabと形態素解析は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。形態素解析は文章を形態素に分け品詞を推定する処理全般を指します。MeCabはその処理を実装した具体的なオープンソースツールの名称です。手法とツール名の関係として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MeCabとBERTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MeCabはルールと辞書に基づく形態素解析の前処理ツールです。BERTは文脈を考慮して意味表現を学習するニューラル言語モデルです。MeCabで分割した結果を後段のモデルへ渡すことはありますが、役割は前処理 vs 表現学習で異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">MeCab</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>MeCabとは？空白のない日本語を切る——辞書と確率で形態素に分解する前処理</h1>
+    <p class="tool-hero-sub">読み：メキャブ ／ 英：MeCab</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>MeCab</strong>は、日本語の<strong>形態素解析</strong>を行うオープンソースツールです。英語は空白で単語が区切られますが、日本語は「形態素解析がないと単語の境目が見えない」——MeCabは<strong>辞書とコスト最小化</strong>で文を切り、品詞を付ける——本記事は辞書の選び方より、<strong>「古典NLP前処理とLLMのトークナイザの違い」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-morph">なぜ形態素解析が要るか</a></li>
+        <li><a href="#how-mecab">MeCabの出力</a></li>
+        <li><a href="#pipeline">NLPパイプラインでの位置</a></li>
+        <li><a href="#vs-tokenizer">BPE・LLMとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-morph">
+      <h2>なぜ形態素解析が要るか</h2>
+      <p>
+        <strong>形態素解析</strong>は、文章を意味を持つ最小単位に近い<strong>形態素</strong>へ分割し、品詞などを推定する処理です（<a href="../../exams/g-kentei/practice/q/g-022/">G-022</a>）。
+      </p>
+      <blockquote>
+        <p>「私は学校へ行った」→ 私/は/学校/へ/行っ/た（品詞付き）</p>
+      </blockquote>
+      <p>
+        日本語は<strong>単語間に空白がない</strong>ため、検索・感情分析・トピックモデル（<a href="../lda/">LDA</a>）などで「何を1語と数えるか」が最初の関門になります。<a href="../../exams/g-kentei/practice/q/g-331/">G-331</a>が示す<a href="../nlp/">自然言語処理</a>の典型タスクの多くが、この前処理を前提に設計されてきました。
+      </p>
+    </section>
+
+    <section id="how-mecab">
+      <h2>MeCabの出力</h2>
+      <p>MeCabは<strong>形態素解析エンジン</strong>——入力した文に対し、次のような情報を返します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>出力</th><th>内容</th><th>用途例</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>表層形</strong></td><td>文に現れた語の形</td><td>キーワード抽出</td></tr>
+          <tr><td><strong>品詞</strong></td><td>名詞・動詞・助詞など</td><td>不要語除去、特徴量設計</td></tr>
+          <tr><td><strong>原形・読み</strong></td><td>辞書形や読み仮名</td><td>正規化、検索のゆらぎ吸収</td></tr>
+        </tbody>
+      </table>
+      <p>
+        内部では<strong>辞書（形態素の候補とコスト）</strong>と、文全体でコストが最小になる分割（動的計画法／Viterbi的な探索）を組み合わせます。試験ではアルゴリズム名より、<strong>「辞書ベースの日本語前処理ツール」</strong>と覚えれば十分です。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>NLPパイプラインでの位置</h2>
+      <ul class="tool-steps">
+        <li><strong>1. 形態素解析</strong> — MeCabで分割・品詞付与（<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126</a>のNLP前処理）</li>
+        <li><strong>2. 正規化</strong> — ストップワード除去、原形化など</li>
+        <li><strong>3. 特徴量化</strong> — <a href="../bag-of-words/">BoW</a>、TF-IDF、埋め込みへ</li>
+        <li><strong>4. モデル</strong> — 分類・クラスタリング・<a href="../bert/">BERT</a>など</li>
+      </ul>
+      <p>
+        MeCabは<strong>パイプラインの入口</strong>——機械学習モデルそのものではなく、テキストを扱いやすい単位に整える道具です。<a href="../bag-of-words/">Bag-of-Words</a>が「単語の袋」なら、MeCabは<strong>袋に入れる前の「単語」を決める</strong>役割に近いです。
+      </p>
+    </section>
+
+    <section id="vs-tokenizer">
+      <h2>BPE・LLMとの違い</h2>
+      <p>現代の<a href="../llm/">LLM</a>は<a href="../bpe/">BPE</a>などで<strong>サブワード・トークン化</strong>します——語彙を統計的に構築し、モデル入力の<a href="../token/">トークン</a>列を作ります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>MeCab</th><th>BPE（LLM Tokenizer）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>目的</strong></td><td>言語学的な<strong>形態素＋品詞</strong></td><td>モデル学習向けの<strong>サブワード分割</strong></td></tr>
+          <tr><td><strong>根拠</strong></td><td>辞書・コスト最小化</td><td>コーパス頻度のペア統合</td></tr>
+          <tr><td><strong>出力</strong></td><td>品詞付き形態素列</td><td>トークンID列</td></tr>
+          <tr><td><strong>主な時代</strong></td><td>古典NLP・日本語前処理</td><td>大規模LLMの標準</td></tr>
+        </tbody>
+      </table>
+      <p>
+        GPTにそのまま入力する前処理としてMeCabを必ず通すわけではありません——<strong>日本語の古典NLPパイプライン</strong>と、<strong>LLMのトークナイザ</strong>は別系統、と整理すると試験のすり替えに強くなります。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 日本語<strong>形態素解析</strong>のオープンソースツール</li>
+        <li><strong>処理</strong> — 形態素への分割＋<strong>品詞推定</strong></li>
+        <li><strong>理由</strong> — 日本語は空白がないため前処理として重要（G-022）</li>
+        <li><strong>対比</strong> — 画像セグメンテーション・音声FFT・強化学習ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-022/">G-022</a>、<a href="../../exams/g-kentei/practice/q/g-331/">G-331</a>、<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126</a>、<a href="../../exams/g-kentei/practice/q/g-025/">G-025</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>MeCab＝形態素解析そのもの</td><td>手法 vs 具体的ツール名</td></tr>
+          <tr><td>MeCab＝画像セグメンテーション</td><td>テキスト前処理 vs 画素領域分割（G-022の誤答A）</td></tr>
+          <tr><td>MeCab＝<a href="../bert/">BERT</a></td><td>辞書ベース前処理 vs ニューラル言語モデル</td></tr>
+          <tr><td>MeCab＝<a href="../bpe/">BPE</a></td><td>形態素＋品詞 vs サブワードトークン化</td></tr>
+          <tr><td>MeCab＝<a href="../llm/">LLM</a></td><td>前処理ツール vs 大規模言語モデル</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>MeCabは何をするツールですか？</summary><p class="tool-faq-a">日本語の文章を形態素（意味を持つ最小単位に近い語の断片）に分割し、品詞や読みなどの情報を付与する形態素解析エンジンです。空白で単語が区切られない日本語の自然言語処理における前処理として使われます。</p></details>
+        <details><summary>MeCabと形態素解析は同じですか？</summary><p class="tool-faq-a">同じではありません。形態素解析は文章を形態素に分け品詞を推定する処理全般を指します。MeCabはその処理を実装した具体的なオープンソースツールの名称です。手法とツール名の関係として整理します。</p></details>
+        <details><summary>MeCabとBERTは同じですか？</summary><p class="tool-faq-a">同じではありません。MeCabはルールと辞書に基づく形態素解析の前処理ツールです。BERTは文脈を考慮して意味表現を学習するニューラル言語モデルです。MeCabで分割した結果を後段のモデルへ渡すことはありますが、役割は前処理 vs 表現学習で異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-022/">G-022 · 形態素解析の定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-331/">G-331 · NLPの範囲</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-126/">TF-126 · NLPタスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-025/">G-025 · 前処理の区別</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../bag-of-words/">Bag of Words</a></li>
+          <li><a href="../bpe/">BPE</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../lda/">LDA</a></li>
+          <li><a href="../nltk/">NLTK</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

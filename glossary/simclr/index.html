@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SimCLRとは？Simple Framework for Contrastive Learning。データ拡張とNT-Xentで自己教師あり表現学習。MoCo・MAEとの違いをG検定向けに解説。">
+  <title>SimCLRとは？1枚を2つの見え方に割る——拡張だけで正例を作る対照学習 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/simclr/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SimCLRとは？1枚を2つの見え方に割る——拡張だけで正例を作る対照学習">
+  <meta property="og:description" content="Simple Framework for Contrastive Learning of Visual Representations。データ拡張で正例ペアを作り、対照損失でラベルなし画像から表現を学ぶ自己教師あり手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/simclr/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SimCLR",
+        "alternateName": ["SimCLR", "シムシーエルアール", "Simple Framework for Contrastive Learning of Visual Representations"],
+        "description": "同じ画像の異なる拡張ビューを正例ペアとし、対照損失でラベルなし画像から視覚表現を学ぶ自己教師あり学習の枠組み。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SimCLRは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1枚の画像に異なるデータ拡張を2回適用して正例ペアを作り、同じ画像の埋め込みは近く・別画像の埋め込みは遠くなるように学ぶ自己教師ありの対照学習です。人手ラベルなしでCNNなどの表現を事前学習し、画像分類などへ転移します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SimCLRとMoCoは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも自己教師ありの対照学習ですが、SimCLRは大きなバッチと強いデータ拡張を中心にしたシンプルな枠組みです。MoCoは動量更新のキーエンコーダと負例キューで、小さなバッチでも多くの負例を使う設計が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SimCLRは教師あり学習ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SimCLRはラベルなし画像から、拡張ビュー同士を正例とする擬似教師信号で表現を学ぶ自己教師あり学習です。人手で付けたクラスラベルは事前学習段階では不要です（G-384）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SimCLR</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SimCLRとは？1枚を2つの見え方に割る——拡張だけで正例を作る対照学習</h1>
+    <p class="tool-hero-sub">読み：しむしーえるあーる ／ 英：SimCLR（Simple Framework for Contrastive Learning）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SimCLR</strong>は、<strong>同じ画像を2つの見え方に割る</strong>——クロップ・色変換などの<strong>データ拡張</strong>——だけで正例ペアを作り、<strong>対照損失</strong>で視覚表現を学ぶ<strong>自己教師あり</strong>の枠組みです。<a href="../moco/">MoCo</a>がキューと慣性エンコーダで負例を太くするのに対し、SimCLRは<strong>「拡張の設計と大きなバッチ」</strong>でシンプルに勝負する——本記事はアーキテクチャの細部より、<strong>「ラベルなしで何を正解にするか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#two-views">2つの見え方</a></li>
+        <li><a href="#augmentation">データ拡張が主役</a></li>
+        <li><a href="#contrastive">対照学習の流れ</a></li>
+        <li><a href="#vs-moco">MoCoとの設計差</a></li>
+        <li><a href="#transfer">事前学習と転移</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SimCLR単独の過去問は少ない一方、辞典の定義は<strong>「データ拡張と対照損失による自己教師あり学習」</strong>です。試験では<strong>自己教師ありの定義</strong>（<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>）、<strong>Contrastive Lossの思想</strong>（<a href="../../exams/g-kentei/practice/q/g-127/">G-127</a>）、<strong>データ拡張の注意</strong>（<a href="../../exams/g-kentei/drill/q/tf-109/">TF-109</a>）を土台に整理します。
+      </p>
+      <p>
+        誤答では、<strong>SimCLR＝教師あり分類</strong>、<strong>SimCLR＝<a href="../masked-autoencoder/">MAE</a></strong>（マスク再構成）、<strong>SimCLR＝<a href="../clip-model/">CLIP</a></strong>（画像テキスト対照）など、別手法とのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-384/">G-384（自己教師あり学習）</a>、<a href="../../exams/g-kentei/practice/q/g-127/">G-127（Contrastive Loss）</a>、<a href="../../exams/g-kentei/drill/q/tf-109/">TF-109（データ拡張）</a>、<a href="../../exams/g-kentei/practice/q/g-163/">G-163（埋め込み距離）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161（自己教師あり）</a></p>
+      </div>
+    </section>
+
+    <section id="two-views">
+      <h2>2つの見え方</h2>
+      <p>
+        SimCLRの出発点は極めて素朴です。<strong>同じ猫の写真</strong>を、ランダムクロップ・色のゆらぎ・ぼかしなどで<strong>2回加工</strong>すると、見た目は違っても「同じ物体」です——この2枚を<strong>正例ペア</strong>にします。
+      </p>
+      <p>
+        バッチ内の<strong>他の画像</strong>はすべて<strong>負例</strong>。「同じ元画像の2ビューは<a href="../embedding/">埋め込み</a>空間で近く、別画像は遠く」——<a href="../../exams/g-kentei/practice/q/g-163/">G-163</a>の距離学習の発想を、ラベルなしで実現するのがSimCLRです。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>入力</strong> — ラベルなし画像1枚</li>
+        <li><strong>拡張×2</strong> — 異なる変換でビューA・ビューBを生成</li>
+        <li><strong>正例</strong> — AとBは同じ画像由来 → 近づける</li>
+        <li><strong>負例</strong> — バッチ内の他画像 → 遠ざける</li>
+      </ul>
+    </section>
+
+    <section id="augmentation">
+      <h2>データ拡張が主役</h2>
+      <p>
+        SimCLRの論文が強調したのは、<strong>どんな拡張を組み合わせるか</strong>が性能を大きく左右する——という点です。<a href="../../exams/g-kentei/drill/q/tf-109/">TF-109</a>が示すように、拡張は<strong>ラベルの意味を変えない</strong>変換を選ぶ必要があります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>拡張例</th><th>効果</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ランダムクロップ</strong></td><td>部分見えの違いに頑健</td><td>正例ペアの多様性</td></tr>
+          <tr><td><strong>色変換</strong></td><td>照明・色調のゆらぎ</td><td>意味は同じ物体</td></tr>
+          <tr><td><strong>ぼかし・反転</strong></td><td>見え方の変化</td><td>過度な変換は避ける</td></tr>
+        </tbody>
+      </table>
+      <p>
+        教師あり学習でのデータ拡張が「学習データを増やす」目的なら、SimCLRでは拡張そのものが<strong>正解ペアの設計図</strong>——自己教師ありでは「何を正解にするか」の発明が核心です（G-384）。
+      </p>
+    </section>
+
+    <section id="contrastive">
+      <h2>対照学習の流れ</h2>
+      <p>試験向けのパイプラインは次のとおりです。</p>
+      <ol class="tool-steps">
+        <li><strong>エンコーダ</strong> — <a href="../cnn/">CNN</a>などで各ビューを特徴ベクトルへ</li>
+        <li><strong>プロジェクションヘッド</strong> — 対照学習専用の小さなMLP（下流タスクでは捨てることも）</li>
+        <li><strong>対照損失</strong> — <a href="../nt-xent-loss/">NT-Xent損失</a>などで正例を当てはめる</li>
+        <li><strong>大きなバッチ</strong> — 負例の数を確保（MoCoのキューに相当する役割の一部）</li>
+      </ol>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-127/">G-127</a>のContrastive Lossは「似ているペアは近く、似ていないペアは遠く」——SimCLRはその思想を<strong>拡張ビュー＝似ているペア</strong>として具体化した代表例です。
+      </p>
+    </section>
+
+    <section id="vs-moco">
+      <h2>MoCoとの設計差</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>SimCLR</th><th><a href="../moco/">MoCo</a></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>設計思想</strong></td><td>シンプルな枠組み</td><td>キュー＋慣性エンコーダ</td></tr>
+          <tr><td><strong>負例の確保</strong></td><td><strong>大きなバッチ</strong>が重要</td><td><strong>負例キュー</strong>でメモリ節約</td></tr>
+          <tr><td><strong>正例の作り方</strong></td><td>データ拡張の2ビュー</td><td>同様に拡張2ビュー</td></tr>
+          <tr><td><strong>損失</strong></td><td><a href="../nt-xent-loss/">NT-Xent</a>など</td><td>同系統の対照損失</td></tr>
+          <tr><td><strong>試験</strong></td><td>拡張＋対照の自己教師あり</td><td>負例辞書の自己教師あり</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どちらも<strong>対照学習</strong>の一族ですが、SimCLRは「拡張とバッチで足りる」、MoCoは「バッチが小さくてもキューで負例を太くする」——<strong>負例をどう集めるか</strong>の設計差として整理すると、MAE（<a href="../masked-autoencoder/">マスク再構成</a>）との三方向対比も明確になります。
+      </p>
+    </section>
+
+    <section id="transfer">
+      <h2>事前学習と転移</h2>
+      <p>
+        SimCLRで学んだエンコーダは、少量のラベル付きデータで<strong>ファインチューニング</strong>し、画像分類などへ転移します。人手ラベルを大量に集める前に、<strong>ラベルなし画像だけで表現を鍛える</strong>——<a href="../foundation-model/">基盤モデル</a>や転移学習の前段としての自己教師あり、という流れです（G-384）。
+      </p>
+      <p>
+        言語の事前学習（次トークン予測）と同様、視覚でも<strong>下流タスク用の共通表現</strong>を先に作る発想——試験では手法名の暗記より、「ラベルなし→表現学習→転移」のパイプラインを説明できることが重要です。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SimCLR＝教師あり学習</td><td>ラベルなしの自己教師あり（G-384）</td></tr>
+          <tr><td>SimCLR＝<a href="../masked-autoencoder/">MAE</a></td><td>対照学習 vs マスク再構成</td></tr>
+          <tr><td>SimCLR＝<a href="../clip-model/">CLIP</a></td><td>画像同士の対照 vs 画像テキストの対照</td></tr>
+          <tr><td>SimCLR＝<a href="../nt-xent-loss/">NT-Xent</a></td><td>学習枠組み vs 損失関数</td></tr>
+          <tr><td>SimCLR＝<a href="../gan/">GAN</a></td><td>表現学習 vs 生成器・識別器の対戦</td></tr>
+          <tr><td>拡張はラベルを変えてもよい</td><td>意味が変わる変換は正例ペアを壊す（TF-109）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SimCLRは何をする手法ですか？</summary>
+          <p class="tool-faq-a">1枚の画像に異なるデータ拡張を2回適用して正例ペアを作り、同じ画像の埋め込みは近く・別画像の埋め込みは遠くなるように学ぶ自己教師ありの対照学習です。人手ラベルなしでCNNなどの表現を事前学習し、画像分類などへ転移します。</p>
+        </details>
+        <details>
+          <summary>SimCLRとMoCoは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。どちらも自己教師ありの対照学習ですが、SimCLRは大きなバッチと強いデータ拡張を中心にしたシンプルな枠組みです。MoCoは動量更新のキーエンコーダと負例キューで、小さなバッチでも多くの負例を使う設計が特徴です。</p>
+        </details>
+        <details>
+          <summary>SimCLRは教師あり学習ですか？</summary>
+          <p class="tool-faq-a">いいえ。SimCLRはラベルなし画像から、拡張ビュー同士を正例とする擬似教師信号で表現を学ぶ自己教師あり学習です。人手で付けたクラスラベルは事前学習段階では不要です（G-384）。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-384/">G-384 · 自己教師あり学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-127/">G-127 · Contrastive Loss</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-109/">TF-109 · データ拡張</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161 · 自己教師あり</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../moco/">MoCo</a></li>
+          <li><a href="../nt-xent-loss/">NT-Xent損失</a></li>
+          <li><a href="../clip-model/">CLIP</a></li>
+          <li><a href="../masked-autoencoder/">MAE</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

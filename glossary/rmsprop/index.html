@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RMSpropとは？勾配二乗の移動平均で学習率を調整する最適化手法。AdaGrad・Adam・SGDとの違いをG検定向けに解説。">
+  <title>RMSpropとは？振れた勾配で歩幅を抑える——AdaGradの学習率ゼロ問題への応答 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/rmsprop/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RMSpropとは？振れた勾配で歩幅を抑える——AdaGradの学習率ゼロ問題への応答">
+  <meta property="og:description" content="勾配の二乗の移動平均でパラメータごとに学習率をスケールする適応的最適化。Adamの二次モーメントの祖先。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/rmsprop/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "RMSprop",
+        "alternateName": ["RMSprop", "アールエムエスプロップ", "Root Mean Square Propagation"],
+        "description": "勾配の二乗の移動平均を用いて、パラメータごとに学習率を調整する適応的最適化アルゴリズム。AdaGradの学習率が小さくなりすぎる問題を緩和する目的で説明されることが多い。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "RMSpropは何をする最適化手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "各パラメータについて、過去の勾配の二乗の移動平均を計算し、その大きさに応じて実効的な学習率をスケールして重みを更新する手法です。勾配が大きく振れるパラメータの歩幅を抑え、学習を安定させやすい点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RMSpropとAdamは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。RMSpropは勾配の二乗の移動平均で歩幅を調整する適応的手法です。Adamはその考え（二次モーメント）に加え、勾配の一次モーメント（Momentumに近い）も組み合わせた手法です。AdamはRMSpropとMomentumの要素を統合した、と整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RMSpropはデータ拡張手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。RMSpropは学習時にパラメータを更新する最適化アルゴリズムです。正解ラベルを自動生成するデータ拡張手法ではありません。最適化手法とデータ前処理は別の層として整理します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">RMSprop</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>RMSpropとは？振れた勾配で歩幅を抑える——AdaGradの学習率ゼロ問題への応答</h1>
+    <p class="tool-hero-sub">読み：アールエムエスプロップ ／ 英：RMSprop（Root Mean Square Propagation）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>RMSprop</strong>は、<strong>勾配の二乗の移動平均</strong>で各パラメータの歩幅を調整する適応的最適化アルゴリズムです。AdaGradが「学習が進むほど学習率がゼロに近づく」問題を抱えたのに対し、RMSpropは<strong>古い勾配の影響を減衰させる</strong>——本記事は数式の暗記より、<strong>「なぜ勾配の振れ幅で学習率を割るのか」</strong>——更新設計の系譜——に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#pipeline">学習パイプラインでの位置</a></li>
+        <li><a href="#squared-grad">勾配の二乗を見る理由</a></li>
+        <li><a href="#vs-adagrad">AdaGradとの対比</a></li>
+        <li><a href="#family">Adamへの系譜</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="pipeline">
+      <h2>学習パイプラインでの位置</h2>
+      <p>
+        <a href="../deep-learning/">深層学習</a>の1ステップは、順伝播→<a href="../loss-function/">損失</a>→<a href="../backpropagation/">誤差逆伝播</a>で勾配を求め、<strong>最適化手法</strong>で重みを更新します。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>勾配計算</strong> — 各重みが損失をどれだけ下げられるか（<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>）</li>
+        <li><strong>更新方針</strong> — <a href="../gradient-descent/">勾配降下法</a>、<strong>RMSprop</strong>、<a href="../adam/">Adam</a>など</li>
+        <li><strong>ハイパーパラメータ</strong> — ベース学習率などは人が設定（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）</li>
+      </ul>
+      <p>
+        RMSpropは<strong>勾配をどう使って重みを動かすか</strong>を決める層——<a href="../loss-function/">損失関数</a>そのものでも、<a href="../regularization/">正則化</a>手法でもありません。
+      </p>
+    </section>
+
+    <section id="squared-grad">
+      <h2>勾配の二乗を見る理由</h2>
+      <p>
+        ニューラルネットの重みは、層や役割によって<strong>勾配の大きさが大きく異なります</strong>。ある重みは勾配が常に大きく振れ、別の重みは小さく安定する——地形がパラメータごとに違う、というイメージです。
+      </p>
+      <p>
+        RMSpropは、各パラメータについて<strong>勾配の二乗の移動平均</strong>（Root Mean Squareに近い統計）を蓄え、その値で実効的な学習率を<strong>割り算でスケール</strong>します。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>勾配の性質</th><th>RMSpropの反応</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>大きく振れる</strong></td><td>二乗平均が大きい→歩幅を<strong>抑える</strong></td><td>暴走を防ぎやすい</td></tr>
+          <tr><td><strong>小さく安定</strong></td><td>二乗平均が小さい→相対的に<strong>進みやすい</strong></td><td>更新の不均衡を緩和</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-145/">G-145</a>の定義——<strong>勾配の二乗の移動平均を利用して学習率を調整する</strong>——が試験の核心です。
+      </p>
+    </section>
+
+    <section id="vs-adagrad">
+      <h2>AdaGradとの対比</h2>
+      <p>
+        RMSpropの前段に、<strong>AdaGrad</strong>があります。どちらも「パラメータごとに学習率を縮める」適応系ですが、蓄え方が異なります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>AdaGrad</th><th>RMSprop</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>勾配二乗の扱い</strong></td><td>過去を<strong>累積</strong>（減衰なし）</td><td><strong>移動平均</strong>（古い情報を減衰）</td></tr>
+          <tr><td><strong>長期学習</strong></td><td>学習率が<strong>小さくなりすぎる</strong>ことがある</td><td>その問題を<strong>緩和</strong>（G-145の解説）</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>適応系の祖先</td><td>AdaGrad改良として説明されることが多い</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では「RMSprop＝AdaGradと全く同じ」とは答えません。<strong>学習率がゼロに近づく問題への応答</strong>——という差分がポイントです。
+      </p>
+    </section>
+
+    <section id="family">
+      <h2>Adamへの系譜</h2>
+      <p>
+        <a href="../adam/">Adam</a>は、Momentum（一次モーメント）と<strong>RMSprop的な二次モーメント</strong>を組み合わせた手法として説明されます（<a href="../../exams/g-kentei/drill/q/tf-398/">TF-398</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>使う統計</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>SGD</strong></td><td>現在の勾配のみ</td><td>全パラメータ同じ学習率（<a href="../../exams/g-kentei/practice/q/g-141/">G-141</a>）</td></tr>
+          <tr><td><strong>Momentum</strong></td><td>勾配の移動平均（一次）</td><td>勢いを足す</td></tr>
+          <tr><td><strong>RMSprop</strong></td><td>勾配<strong>二乗</strong>の移動平均</td><td>歩幅をパラメータごとにスケール</td></tr>
+          <tr><td><strong>Adam</strong></td><td>一次＋二次モーメント</td><td>定番の適応的手法（<a href="../../exams/g-kentei/drill/q/tf-079/">TF-079</a>）</td></tr>
+          <tr><td><strong><a href="../adamw/">AdamW</a></strong></td><td>Adam＋重み減衰の分離</td><td>LLM学習で広い</td></tr>
+        </tbody>
+      </table>
+      <p>
+        現場ではAdam・AdamWが主流でも、試験では<strong>RMSprop単体の定義</strong>（G-145）と、Adamとの<strong>親子関係</strong>の両方が問われます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 勾配の<strong>二乗の移動平均</strong>で学習率を調整する最適化手法（G-145）</li>
+        <li><strong>目的</strong> — パラメータごとの勾配スケール差を吸収し、学習を安定化</li>
+        <li><strong>背景</strong> — AdaGradの学習率が小さくなりすぎる問題を緩和</li>
+        <li><strong>系譜</strong> — Adamの二次モーメントに近い。Momentumとは別の軸</li>
+        <li><strong>層</strong> — 最適化手法 ≠ 損失関数 ≠ データ拡張 ≠ 誤差逆伝播</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-145/">G-145</a>、<a href="../../exams/g-kentei/drill/q/tf-398/">TF-398</a>、<a href="../../exams/g-kentei/drill/q/tf-079/">TF-079</a>、<a href="../../exams/g-kentei/drill/q/tf-075/">TF-075</a>、<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>、<a href="../../exams/g-kentei/drill/q/tf-399/">TF-399</a>（最適化のすり替え）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>RMSprop＝<a href="../adam/">Adam</a></td><td>二次モーメント系 vs 一次＋二次の統合</td></tr>
+          <tr><td>RMSprop＝<a href="../backpropagation/">誤差逆伝播法</a></td><td>更新手法 vs 勾配の計算（TF-075）</td></tr>
+          <tr><td>RMSprop＝データ拡張</td><td>最適化 vs 学習データの加工（TF-399のAdamすり替えと同型）</td></tr>
+          <tr><td>RMSprop＝<a href="../loss-function/">損失関数</a></td><td>重みの更新 vs 誤差の定義</td></tr>
+          <tr><td>適応的＝学習率が完全自動</td><td>ベース学習率などハイパーパラメータは設定する（TF-052）</td></tr>
+          <tr><td>RMSprop＝<a href="../regularization/">L2正則化</a></td><td>歩幅調整 vs 重みペナルティ（G-167）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>RMSpropは何をする最適化手法ですか？</summary><p class="tool-faq-a">各パラメータについて、過去の勾配の二乗の移動平均を計算し、その大きさに応じて実効的な学習率をスケールして重みを更新する手法です。勾配が大きく振れるパラメータの歩幅を抑え、学習を安定させやすい点が特徴です。</p></details>
+        <details><summary>RMSpropとAdamは同じですか？</summary><p class="tool-faq-a">同じではありません。RMSpropは勾配の二乗の移動平均で歩幅を調整する適応的手法です。Adamはその考え（二次モーメント）に加え、勾配の一次モーメント（Momentumに近い）も組み合わせた手法です。AdamはRMSpropとMomentumの要素を統合した、と整理します。</p></details>
+        <details><summary>RMSpropはデータ拡張手法ですか？</summary><p class="tool-faq-a">いいえ。RMSpropは学習時にパラメータを更新する最適化アルゴリズムです。正解ラベルを自動生成するデータ拡張手法ではありません。最適化手法とデータ前処理は別の層として整理します。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-145/">G-145 · RMSpropの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-398/">TF-398 · AdamとRMSprop</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-079/">TF-079 · Adam（二次モーメント）</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-399/">TF-399 · 最適化のすり替え</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../adam/">Adam</a></li>
+          <li><a href="../adamw/">AdamW</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../sgd/">SGD</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

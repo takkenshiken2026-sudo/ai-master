@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SFTとは？Supervised Fine-Tuning。指示と模範回答の教師データでLLMを微調整する手法。RLHF・ファインチューニングとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>SFTとは？模範解答を見せて従わせる——指示追従の教師あり微調整 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/sft/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SFTとは？模範解答を見せて従わせる——指示追従の教師あり微調整">
+  <meta property="og:description" content="Supervised Fine-Tuning。プロンプトと正解応答のペアで言語モデルを追加学習し、指示追従を高めるファインチューニング手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/sft/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SFT",
+        "alternateName": ["SFT", "エスエフティー", "Supervised Fine-Tuning", "教師ありファインチューニング"],
+        "description": "指示と模範回答などの教師データを用いて、事前学習済み言語モデルを追加学習し、指示追従や対話形式の出力を改善するファインチューニング手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SFTは何の略ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Supervised Fine-Tuning（教師ありファインチューニング）の略です。ユーザー指示（プロンプト）と望ましい応答のペアなど、正解ラベル付きデータで事前学習済みモデルを追加学習し、指示に従う応答を出しやすくします。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SFTとRLHFは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。SFTは教師データの正解応答に合わせる教師あり学習によるファインチューニングです。RLHFは人間の好みを報酬に変換し、強化学習で出力を調整する手法です。LLMの調整パイプラインではSFTの後にRLHFを行うことが多いですが、役割と学習方式が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SFTは事前学習ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SFTは事前学習済みモデルを特定用途向けに追加学習するファインチューニングの一種です。大規模コーパスで一般能力を獲得する事前学習とは段階が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SFT</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SFTとは？模範解答を見せて従わせる——指示追従の教師あり微調整</h1>
+    <p class="tool-hero-sub">読み：えすえふてぃー ／ 英：SFT（Supervised Fine-Tuning）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SFT</strong>（Supervised Fine-Tuning／教師ありファインチューニング）は、<strong>指示と模範回答のペア</strong>で<a href="../llm/">LLM</a>を追加学習し、<strong>指示追従</strong>を高める手法です。<a href="../rlhf/">RLHF</a>が人間の好みを<strong>報酬</strong>に変換するのに対し、SFTは<strong>「正解の書き方」をそのまま見せて覚えさせる</strong>——本記事は損失関数の細部より、<strong>LLM調整パイプラインの「教師ありの一段」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">SFTとは</a></li>
+        <li><a href="#data">何を教師データにするか</a></li>
+        <li><a href="#pipeline">事前学習→SFT→RLHFの流れ</a></li>
+        <li><a href="#vs-others">他の調整手法との対比</a></li>
+        <li><a href="#risks">実務上の注意</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SFT単独の過去問は少ない一方、辞典の定義は<strong>「教師データで言語モデルを指示追従向けに微調整」</strong>です。試験では<a href="../fine-tuning/">ファインチューニング</a>の具体例（<a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127</a>、<a href="../../exams/g-kentei/practice/q/g-382/">G-382</a>）と、<strong><a href="../rlhf/">RLHF</a>との区別</strong>（<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311</a>）をセットで押さえます。
+      </p>
+      <p>
+        HQ-0311では、<strong>「事前学習済みモデルを特定用途のデータで追加学習」</strong>——これはファインチューニング／SFTの説明——を<strong>RLHFの定義</strong>とすり替えた誤答が選択肢にあります。SFTは教師ありFT、RLHFは好みに基づく強化学習——と分けて覚えることが得点源です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127（FT定義）</a>、<a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311（RLHFとの区別）</a>、<a href="../../exams/genai-passport/practice/q/hq-0241/">HQ-0241（FTの業務注意）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-382/">G-382</a>、<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>SFTとは</h2>
+      <p>
+        大規模<a href="../llm/">LLM</a>は、まずインターネット規模のテキストで<strong>事前学習（Pre-training）</strong>され、「次の語を予測する」一般能力を獲得します。しかし実務では<strong>「質問に答えて」「要約して」「この形式で出力して」</strong>——といった<strong>指示への従順さ</strong>が求められます。
+      </p>
+      <p>
+        SFTは、人間が書いた<strong>模範的な応答</strong>を教師信号として、モデルの重みを追加更新する<a href="../fine-tuning/">ファインチューニング</a>の一種です。InstructGPTやChatGPT系モデルの開発で、<strong>RLHFの前段</strong>としてSFTを行う——という流れが広く知られています。
+      </p>
+    </section>
+
+    <section id="data">
+      <h2>何を教師データにするか</h2>
+      <p>SFTの教師データは、ざっくり<strong>「入力（指示）→ 正解の出力」</strong>のペアです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>データの形</th><th>内容の例</th><th>学習で身につくこと</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>指示応答</strong></td><td>「この文章を3行で要約して」→ 模範要約</td><td>タスク形式への追従</td></tr>
+          <tr><td><strong>対話</strong></td><td>ユーザー発話 → アシスタントの望ましい返答</td><td>対話スタイル・丁寧さ</td></tr>
+          <tr><td><strong>社内QA</strong></td><td>社内マニュアルに関する質問 → 正しい回答</td><td>ドメイン知識の反映</td></tr>
+        </tbody>
+      </table>
+      <p>
+        学習は、教師応答のトークンを<strong>正解として予測</strong>する教師あり学習です。<a href="../rlhf/">RLHF</a>のように「AとBどちらが良いか」の比較データが主役になるわけではありません——SFTは<strong>模範解答そのもの</strong>を見せる段階です。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>事前学習→SFT→RLHFの流れ</h2>
+      <p>現代の対話型LLMでは、次の3段階がよく語られます。試験では<strong>順序と役割</strong>の整理が重要です。</p>
+      <ol class="tool-steps">
+        <li><strong>事前学習</strong> — 大規模コーパスで言語の一般能力を獲得（次トークン予測など）</li>
+        <li><strong>SFT</strong> — 指示・模範回答で<strong>基本的な追従</strong>を身につける</li>
+        <li><strong>RLHF</strong> — 人間の好みを報酬に、<strong>望ましい方向へ微調整</strong></li>
+      </ol>
+      <p>
+        SFTだけでもかなり使えるモデルになりますが、模範データにない<strong>好みの細部</strong>（丁寧さ、安全性、冗長さの回避など）はRLHFや<a href="../dpo/">DPO</a>などで補う——という分担が典型です。SFT＝パイプラインの最終段、とは答えません。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他の調整手法との対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>学習信号</th><th>重み更新</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>プロンプト</strong></td><td>推論時の指示・例示</td><td>なし</td><td>学習ではない</td></tr>
+          <tr><td><strong><a href="../rag/">RAG</a></strong></td><td>検索で外部知識を渡す</td><td>なし（通常）</td><td>知識の補完</td></tr>
+          <tr><td><strong>SFT</strong></td><td><strong>正解応答</strong>（教師あり）</td><td>あり</td><td>指示追従のFT</td></tr>
+          <tr><td><strong><a href="../lora/">LoRA</a></strong></td><td>SFT等と組み合わせ</td><td>一部のみ</td><td>FTの効率版（<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177</a>）</td></tr>
+          <tr><td><strong><a href="../rlhf/">RLHF</a></strong></td><td>人間の<strong>好み・報酬</strong></td><td>あり</td><td>強化学習による調整（HQ-0311）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../fine-tuning/">ファインチューニング</a>は広い総称、<strong>SFTはその中の教師あり型</strong>——という層の整理が試験で効きます。
+      </p>
+    </section>
+
+    <section id="risks">
+      <h2>実務上の注意</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>データ品質</strong>
+          誤った模範回答を学習すると、その誤りが固定化される
+        </li>
+        <li>
+          <strong>偏りの増幅</strong>
+          特定文体・立場に偏った教師データは出力の偏りを強める
+        </li>
+        <li>
+          <strong>プライバシー</strong>
+          教師データに<a href="../personal-information/">個人情報</a>や機密を含めない（<a href="../../exams/genai-passport/practice/q/hq-0241/">HQ-0241</a>）
+        </li>
+        <li>
+          <strong>限界</strong>
+          SFT後も<a href="../hallucination/">ハルシネーション</a>は残りうる。評価は必須
+        </li>
+      </ul>
+      <p>
+        SFTは出力の正確性や権利関係を<strong>自動保証しない</strong>——ファインチューニング全般に共通の注意です。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SFT＝<a href="../rlhf/">RLHF</a></td><td>教師ありFT vs 好みに基づく強化学習（HQ-0311）</td></tr>
+          <tr><td>SFT＝事前学習</td><td>追加学習 vs ゼロからの一般学習（TF-0127）</td></tr>
+          <tr><td>SFT＝<a href="../../tools/chatgpt/">ChatGPT</a></td><td>学習手法 vs サービス</td></tr>
+          <tr><td>SFT＝<a href="../rag/">RAG</a></td><td>重み更新 vs 検索で知識を渡す</td></tr>
+          <tr><td>SFT＝プロンプト設計</td><td>学習時の調整 vs 推論時の指示</td></tr>
+          <tr><td>模範データが多ければRLHF不要</td><td>SFTとRLHFは<strong>補完</strong>関係のことが多い</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SFTは何の略ですか？</summary>
+          <p class="tool-faq-a">Supervised Fine-Tuning（教師ありファインチューニング）の略です。ユーザー指示（プロンプト）と望ましい応答のペアなど、正解ラベル付きデータで事前学習済みモデルを追加学習し、指示に従う応答を出しやすくします。</p>
+        </details>
+        <details>
+          <summary>SFTとRLHFは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。SFTは教師データの正解応答に合わせる教師あり学習によるファインチューニングです。RLHFは人間の好みを報酬に変換し、強化学習で出力を調整する手法です。LLMの調整パイプラインではSFTの後にRLHFを行うことが多いですが、役割と学習方式が異なります。</p>
+        </details>
+        <details>
+          <summary>SFTは事前学習ですか？</summary>
+          <p class="tool-faq-a">いいえ。SFTは事前学習済みモデルを特定用途向けに追加学習するファインチューニングの一種です。大規模コーパスで一般能力を獲得する事前学習とは段階が異なります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127 · ファインチューニング定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0311/">HQ-0311 · RLHFとの区別</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0241/">HQ-0241 · FTの業務注意</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-382/">G-382 · ファインチューニング</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../peft/">PEFT</a></li>
+          <li><a href="../dpo/">DPO</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../alignment/">アライメント</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

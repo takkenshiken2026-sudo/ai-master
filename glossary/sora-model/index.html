@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Soraとは？OpenAIのテキストから動画を生成する拡散トランスフォーマーモデル。Text-to-Image・Stable Diffusionとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Soraとは？静止画の次は時間軸——テキストから映像の連続を刻む拡散モデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/sora-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Soraとは？静止画の次は時間軸——テキストから映像の連続を刻む拡散モデル">
+  <meta property="og:description" content="OpenAIのテキストから動画を生成する拡散トランスフォーマーモデル。時間軸を含む映像生成の代表例。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/sora-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Sora",
+        "alternateName": ["Sora", "ソラ", "OpenAI Sora"],
+        "description": "OpenAIが公開した、テキストや画像などの指示から動画を生成する拡散トランスフォーマーモデル。時間軸を含む映像の連続を生成する点が特徴。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Soraは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OpenAIが2024年に発表した、テキストプロンプトなどから短い動画クリップを生成するモデルです。拡散モデルとTransformerを組み合わせ、空間だけでなく時間方向も含めた映像の連続を生成します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SoraとStable Diffusionは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも拡散モデル系の生成AIですが、Stable Diffusionは主に静止画（Text-to-Image）の生成に使われる代表例です。Soraは動画（時間軸つき映像）の生成を目的としたモデルとして位置づけられます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SoraはLLMですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Soraは動画生成モデルです。GPTのような大規模言語モデルは主にテキストの理解・生成を扱います。Soraは映像という別モダリティの生成が主目的であり、動画生成AIとして整理します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Sora</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Soraとは？静止画の次は時間軸——テキストから映像の連続を刻む拡散モデル</h1>
+    <p class="tool-hero-sub">読み：ソラ ／ 英：Sora（OpenAI）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Sora</strong>は、OpenAIが2024年に発表した<strong>テキストから動画を生成する</strong>モデルです。<a href="../stable-diffusion/">Stable Diffusion</a>が<strong>1枚の絵</strong>を描くのに対し、Soraは<strong>時間が流れる映像</strong>——フレームの連続——を生成する。<a href="../denoising-diffusion/">拡散モデル</a>と<a href="../transformer/">Transformer</a>を組み合わせ、空間と時間の両方を扱う——本記事は内部パッチの細部より、<strong>「なぜ動画生成はText-to-Imageの延長ではないか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#time-axis">時間軸という難所</a></li>
+        <li><a href="#what-is">Soraとは</a></li>
+        <li><a href="#diffusion-transformer">拡散＋Transformer</a></li>
+        <li><a href="#vs-image">静止画生成との対比</a></li>
+        <li><a href="#use-risk">活用とリスク</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Sora単独の過去問は少ない一方、辞典の定義は<strong>「テキストから動画を生成する拡散トランスフォーマーモデル」</strong>です。生成AIパスポートでは<strong>動画生成AI</strong>の定義——<strong>「テキストや画像などをもとに動画を生成するAI」</strong>——が繰り返し問われます（<a href="../../exams/genai-passport/drill/q/tf-0219/">TF-0219</a>、<a href="../../exams/genai-passport/practice/q/hq-0344/">HQ-0344</a>）。
+      </p>
+      <p>
+        誤答では、<strong>Sora＝<a href="../text-to-image/">Text-to-Image</a>だけ</strong>、<strong>Sora＝<a href="../llm/">LLM</a>（文章生成）</strong>（<a href="../../exams/genai-passport/practice/q/hq-0333/">HQ-0333</a>）、<strong>Sora＝動画の切り抜き編集</strong>など、別タスクとのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0219/">TF-0219（動画生成AIの定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0220/">TF-0220</a>、<a href="../../exams/genai-passport/practice/q/hq-0344/">HQ-0344</a>、<a href="../../exams/genai-passport/practice/q/hq-0454/">HQ-0454</a></p>
+        <p>G検定：<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184（拡散と画像生成）</a>、<a href="../../exams/g-kentei/practice/q/g-394/">G-394（生成モデル比較）</a></p>
+      </div>
+    </section>
+
+    <section id="time-axis">
+      <h2>時間軸という難所</h2>
+      <p>
+        静止画生成は「1枚の画素配列」をノイズから復元すればよい——動画は<strong>フレームの連続</strong>であり、<strong>時間方向の一貫性</strong>が追加の難題です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>空間</strong> — 各フレーム内の人物・背景・物体の形</li>
+        <li><strong>時間</strong> — フレーム間で動きが自然につながること</li>
+        <li><strong>指示</strong> — テキストが「何がどう動くか」を伝えること</li>
+      </ul>
+      <p>
+        Soraは、映像を<strong>空間と時間をまとめたパッチ列</strong>として扱い、<a href="../transformer/">Transformer</a>で長い依存関係を学習する——という発想で、Text-to-Imageの「1枚」から一歩進んだ<strong>動画生成</strong>の代表として注目されました。
+      </p>
+    </section>
+
+    <section id="what-is">
+      <h2>Soraとは</h2>
+      <p>
+        SoraはOpenAIが2024年2月頃に発表した<strong>動画生成モデル</strong>です。入力は主に<strong>テキストプロンプト</strong>——「雪の中を歩く女性の映像」など——で、出力は<strong>短い動画クリップ</strong>です。画像や既存動画を条件に拡張・編集する用途も示されました。
+      </p>
+      <p>
+        試験では細かい仕様より、<strong>「OpenAIのテキスト→動画生成モデル」</strong>と<strong>「拡散＋Transformer系」</strong>——という位置づけを押さえれば十分なことが多いです。公開状況や利用範囲は時期により変わるため、最新情報は公式発表で確認してください（2026年6月時点）。
+      </p>
+    </section>
+
+    <section id="diffusion-transformer">
+      <h2>拡散＋Transformer</h2>
+      <p>
+        Soraの技術的な系譜は、<a href="../generative-ai/">生成AI</a>の二大潮流——<strong>拡散モデル</strong>と<strong>Transformer</strong>——の合流です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>役割</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>拡散モデル</strong></td><td>ノイズから徐々に映像を復元</td><td><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>の画像生成系譜</td></tr>
+          <tr><td><strong>Transformer</strong></td><td>パッチ列の長距離依存を学習</td><td>時間方向のつながりにも応用</td></tr>
+          <tr><td><strong>テキスト条件</strong></td><td>プロンプトで内容を制御</td><td><a href="../prompt/">プロンプト</a>設計が重要</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../stable-diffusion/">Stable Diffusion</a>が潜在空間で画像を拡散復元するのと同系統ですが、Soraは<strong>時間次元を含むデータ</strong>を対象にする——モダリティが「画」から「動画」へ広がった、と整理すると他モデルとの違いが明確です。
+      </p>
+    </section>
+
+    <section id="vs-image">
+      <h2>静止画生成との対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Text-to-Image（SD等）</th><th>Sora</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>出力</strong></td><td>静止画1枚</td><td><strong>動画（フレーム列）</strong></td></tr>
+          <tr><td><strong>時間</strong></td><td>なし</td><td><strong>動き・一貫性</strong>が課題</td></tr>
+          <tr><td><strong>試験定義</strong></td><td>TF-0190</td><td>動画生成AI（TF-0219）</td></tr>
+          <tr><td><strong>代表例</strong></td><td>Stable Diffusion、DALL·E</td><td>Sora、<a href="../../tools/runway/">Runway</a>、<a href="../../tools/pika/">Pika</a>など</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../multimodal-ai/">マルチモーダルAI</a>の文脈では、テキスト・画像に加え<strong>動画</strong>が生成対象に入る——Soraはその最前線のモデル名として試験・実務の両方で名前が出ます。
+      </p>
+    </section>
+
+    <section id="use-risk">
+      <h2>活用とリスク</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>企画・プレゼン</strong>
+          映像のラフ案を短時間で作る——広告・教育・プロトタイピング
+        </li>
+        <li>
+          <strong>クリエイティブ支援</strong>
+          実写撮影の前段階としての素材生成
+        </li>
+        <li>
+          <strong>リスク</strong>
+          偽映像・<a href="../deepfake/">ディープフェイク</a>的悪用、<a href="../copyright/">著作権</a>・肖像権、事実誤認——<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a>の権利確認が必須
+        </li>
+      </ul>
+      <p>
+        動画編集ツール（既存動画の切り抜き・字幕付け）と混同しないこと——<strong>生成</strong>は新しい映像を作る、<strong>編集</strong>は既存映像を加工する——別カテゴリです（TF-0219の定義）。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Sora＝<a href="../text-to-image/">Text-to-Image</a></td><td>動画生成 vs 静止画生成</td></tr>
+          <tr><td>Sora＝<a href="../gpt/">GPT</a>／<a href="../llm/">LLM</a></td><td>映像生成 vs テキスト生成（HQ-0333）</td></tr>
+          <tr><td>Sora＝動画編集AI</td><td>新規生成 vs 既存動画の加工</td></tr>
+          <tr><td>Sora＝<a href="../gan/">GAN</a></td><td>拡散トランスフォーマー系 vs 敵対的生成</td></tr>
+          <tr><td>Sora＝画像認識</td><td>生成 vs 認識・分類タスク</td></tr>
+          <tr><td>動画生成＝文章要約</td><td>別モダリティの生成タスク（HQ-0333）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Soraは何をするモデルですか？</summary>
+          <p class="tool-faq-a">OpenAIが2024年に発表した、テキストプロンプトなどから短い動画クリップを生成するモデルです。拡散モデルとTransformerを組み合わせ、空間だけでなく時間方向も含めた映像の連続を生成します。</p>
+        </details>
+        <details>
+          <summary>SoraとStable Diffusionは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。どちらも拡散モデル系の生成AIですが、Stable Diffusionは主に静止画（Text-to-Image）の生成に使われる代表例です。Soraは動画（時間軸つき映像）の生成を目的としたモデルとして位置づけられます。</p>
+        </details>
+        <details>
+          <summary>SoraはLLMですか？</summary>
+          <p class="tool-faq-a">いいえ。Soraは動画生成モデルです。GPTのような大規模言語モデルは主にテキストの理解・生成を扱います。Soraは映像という別モダリティの生成が主目的であり、動画生成AIとして整理します。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0219/">TF-0219 · 動画生成AIの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0220/">TF-0220 · 動画生成AI</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0344/">HQ-0344 · 動画生成AI</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184 · 拡散と生成</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

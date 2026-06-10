@@ -104,7 +104,7 @@
         LoRAは、大規模な事前学習済みモデルの<strong>元の重みを固定</strong>したまま、層に<strong>小さな低ランク行列</strong>を足し込み、その追加部分だけを学習する手法です。Full Fine-tuning（全パラメータ更新）より、GPUメモリや学習時間を大幅に抑えられることが多いです。
       </p>
       <p>
-        PEFT（Parameter-Efficient Fine-Tuning／パラメータ効率的ファインチューニング）の代表的な一つとして、オープンソースの<a href="../llm/">LLM</a>を社内データに合わせて調整する場面で広く使われています。
+        <a href="../peft/">PEFT</a>（Parameter-Efficient Fine-Tuning／パラメータ効率的ファインチューニング）の代表的な一つとして、オープンソースの<a href="../llm/">LLM</a>を社内データに合わせて調整する場面で広く使われています。
       </p>
     </section>
 
@@ -151,6 +151,12 @@
             <td>低ランクの追加パラメータ</td>
             <td>中程度（FTより軽い）</td>
             <td>全パラメータ更新ではない</td>
+          </tr>
+          <tr>
+            <td><strong><a href="../qlora/">QLoRA</a></strong></td>
+            <td>量子化基底＋LoRA追加部分</td>
+            <td>LoRAよりVRAMをさらに抑えやすい</td>
+            <td>LoRA＋量子化の組み合わせ</td>
           </tr>
           <tr>
             <td><strong>Full Fine-tuning</strong></td>
@@ -238,6 +244,8 @@
       <div class="tool-related-block">
         <h2 class="tool-related-heading">関連用語</h2>
         <ul class="tool-related-list">
+          <li><a href="../qlora/">QLoRA</a></li>
+          <li><a href="../peft/">PEFT</a></li>
           <li><a href="../fine-tuning/">ファインチューニング</a></li>
           <li><a href="../llm/">LLM</a></li>
           <li><a href="../rag/">RAG</a></li>

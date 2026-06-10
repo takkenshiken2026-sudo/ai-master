@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Text-to-SQLとは？自然言語の質問をSQLクエリに変換するタスク。LLM・RAG・構造化データとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Text-to-SQLとは？話し言葉をSELECTに翻訳する——表形式データへの自然言語の橋 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/text-to-sql/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Text-to-SQLとは？話し言葉をSELECTに翻訳する——表形式データへの自然言語の橋">
+  <meta property="og:description" content="自然言語の質問をSQLクエリへ変換するNLPタスク。構造化データベースへの問い合わせをLLMが担う。RAGとの違いも整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/text-to-sql/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Text-to-SQL",
+        "alternateName": ["Text-to-SQL", "テキストトゥエスキューエル", "NL2SQL", "自然言語からSQL生成"],
+        "description": "自然言語で書かれた質問を、データベース問い合わせ用のSQLクエリへ変換する自然言語処理タスク。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Text-to-SQLとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ユーザーが日本語や英語などの自然言語で書いた質問（例：「昨年の売上トップ10の商品は？」）を、データベースに投げるSQL文（SELECT文など）へ変換するタスクです。SQLを書けない人でも表形式データに問い合わせできるようにするのが目的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Text-to-SQLとRAGは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。RAGは文書を検索してLLMの回答に参照させる仕組みです。Text-to-SQLはリレーショナルデータベースなどの構造化データに対し、SQLクエリを生成して集計・抽出するタスクです。データの形（非構造化文書 vs 表）とアクセス手段（検索 vs SQL）が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Text-to-SQLは畳み込みニューラルネットワークですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Text-to-SQLは自然言語をSQL文へ変換するNLPタスクです。実装にはTransformerベースのLLMやSeq2Seqモデルが使われることがありますが、タスクそのものは画像の畳み込みとは無関係です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Text-to-SQL</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Text-to-SQLとは？話し言葉をSELECTに翻訳する——表形式データへの自然言語の橋</h1>
+    <p class="tool-hero-sub">読み：テキスト・トゥ・エスキューエル ／ 英：Text-to-SQL（NL2SQL）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Text-to-SQL</strong>は、<strong>自然言語の質問をSQLクエリへ変換する</strong>——「昨年の売上トップ10は？」→ <code>SELECT … ORDER BY … LIMIT 10</code>——<a href="../nlp/">NLP</a>タスクです。<a href="../rag/">RAG</a>がPDFや社内文書を検索するのに対し、Text-to-SQLは<strong>表形式のデータベース</strong>に直接問い合わせる橋。本記事はSQL方言の細部より、<strong>「なぜ翻訳タスクとして整理されるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#task-shape">入出力の形</a></li>
+        <li><a href="#schema">スキーマを渡す理由</a></li>
+        <li><a href="#pipeline">典型的な処理の流れ</a></li>
+        <li><a href="#vs-rag">RAG・ベクトルDBとの違い</a></li>
+        <li><a href="#risks">誤ったSQLのリスク</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Text-to-SQL単独の定義問題はまだ少ないですが、<strong>自然言語→別形式への変換</strong>として押さえます。<a href="../seq2seq/">Seq2Seq</a>は入力系列を出力系列へ変換する枠組み（<a href="../../exams/g-kentei/practice/q/g-255/">G-255</a>）——Text-to-SQLは<strong>文→SQL文</strong>という具体例です。
+      </p>
+      <p>
+        生成AIの文脈では、<a href="../llm/">LLM</a>がテキストを生成する能力（<a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178</a>）を、<strong>実行可能なクエリ</strong>に向けるタスクとして理解します。誤答では、Text-to-SQL＝<a href="../rag/">RAG</a>、Text-to-SQL＝<a href="../vector-database/">ベクトルDB</a>——などのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-255/">G-255（Seq2Seq）</a>、<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126（NLP）</a>、<a href="../../exams/g-kentei/drill/q/tf-174/">TF-174（RAGとの区別）</a>、<a href="../../exams/g-kentei/drill/q/tf-172/">TF-172（ハルシネーション）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178（テキスト生成）</a>、<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108（Transformer）</a></p>
+      </div>
+    </section>
+
+    <section id="task-shape">
+      <h2>入出力の形</h2>
+      <p>
+        Text-to-SQLは<a href="../t5-model/">T5</a>の<strong>Text-to-Text</strong>思想に近い——入力も出力も<strong>テキスト</strong>——タスクです。ただし出力のSQLは、データベースエンジンが<strong>実行する命令</strong>でもあります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>側</th><th>例</th><th>特徴</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>入力</strong></td><td>「東京都の顧客数を教えて」</td><td>話し言葉・ビジネス質問</td></tr>
+          <tr><td><strong>出力</strong></td><td><code>SELECT COUNT(*) FROM customers WHERE prefecture = '東京都'</code></td><td>構文規則のあるSQL</td></tr>
+          <tr><td><strong>結果</strong></td><td>数値・表・グラフ用データ</td><td>DB実行後にユーザーへ返す</td></tr>
+        </tbody>
+      </table>
+      <p>
+        機械翻訳（<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>）が言語A→言語Bなら、Text-to-SQLは<strong>自然言語→問い合わせ言語（SQL）</strong>——どちらも「別形式の系列へ変換」という整理が試験でも使えます。
+      </p>
+    </section>
+
+    <section id="schema">
+      <h2>スキーマを渡す理由</h2>
+      <p>
+        SQLを正しく書くには、<strong>どのテーブルにどの列があるか</strong>——スキーマ（schema）——の情報が不可欠です。「売上」が <code>sales.amount</code> なのか <code>orders.total</code> なのか、モデルは推測しかねません。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>テーブル名・列名</strong> — モデルへの入力にスキーマ定義を含める</li>
+        <li><strong>外部キー</strong> — JOIN先の関係を示す</li>
+        <li><strong>値の例</strong> — 「東京都」が <code>prefecture</code> 列か <code>region</code> 列かの手がかり</li>
+      </ul>
+      <p>
+        <a href="../rag/">RAG</a>がチャンク化した文書を検索するのに対し、Text-to-SQLは<strong>メタデータ（スキーマ）＋質問</strong>をモデルに渡す——データの渡し方が違います。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>典型的な処理の流れ</h2>
+      <ol class="tool-steps">
+        <li><strong>質問受付</strong> — ユーザーが自然言語で質問</li>
+        <li><strong>スキーマ付与</strong> — 対象DBのテーブル・列情報をプロンプトに含める</li>
+        <li><strong>SQL生成</strong> — <a href="../llm/">LLM</a>や専用モデルがSQL文字列を出力</li>
+        <li><strong>検証</strong> — 構文チェック、読み取り専用制限、権限確認</li>
+        <li><strong>実行・整形</strong> — DBでクエリを走らせ、結果を表や自然言語で返す</li>
+      </ol>
+      <p>
+        実務では「生成して即実行」ではなく、<strong>人間の確認</strong>や<strong>サンドボックス</strong>を挟むことが多い——生成AIの出力をそのまま信頼しない設計です（TF-172のハルシネーション文脈）。
+      </p>
+    </section>
+
+    <section id="vs-rag">
+      <h2>RAG・ベクトルDBとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Text-to-SQL</th><th>RAG</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>データ</strong></td><td>リレーショナルDBの表</td><td>文書・PDF・Webページ</td></tr>
+          <tr><td><strong>アクセス</strong></td><td>SQLで集計・JOIN・フィルタ</td><td>埋め込み検索で関連チャンク取得</td></tr>
+          <tr><td><strong>出力の型</strong></td><td>実行可能なクエリ</td><td>参照付きの自然言語回答</td></tr>
+          <tr><td><strong>得意</strong></td><td>「売上合計」「件数ランキング」</td><td>「規程の第3条に何と書いてあるか」</td></tr>
+          <tr><td><strong>試験</strong></td><td>系列変換・NLPタスク</td><td>TF-174の検索拡張生成</td></tr>
+        </tbody>
+      </table>
+      <p>
+        両方とも<a href="../generative-ai/">生成AI</a>のビジネス活用として語られますが、<strong>構造化データへの問い合わせ</strong>か<strong>非構造化文書の検索補強</strong>か——目的が異なります。併用する製品もあります。
+      </p>
+    </section>
+
+    <section id="risks">
+      <h2>誤ったSQLのリスク</h2>
+      <p>
+        自然言語の翻訳ミスと違い、SQLの誤りは<strong>データを壊す</strong>可能性があります。読み取り専用の <code>SELECT</code> 以外に、誤って <code>DELETE</code> や <code>UPDATE</code> を生成したら致命的です。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>列名の取り違え</strong>
+          似た名前の列をJOINし、集計がずれる——結果はもっともらしいが誤り（ハルシネーションに近い）
+        </li>
+        <li>
+          <strong>条件の欠落</strong>
+          <code>WHERE</code> が抜け全件集計——数値は出るが質問意図と不一致
+        </li>
+        <li>
+          <strong>権限外の参照</strong>
+          個人情報テーブルへのアクセス——ガバナンス上の問題
+        </li>
+      </ul>
+      <p>
+        試験では実装詳部より、<strong>「生成テキストをそのまま実行しない」</strong>という運用上の注意が、生成AIリテラシーとして押さえ目標です。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Text-to-SQL＝<a href="../rag/">RAG</a></td><td>SQL生成 vs 文書検索拡張（TF-174）</td></tr>
+          <tr><td>Text-to-SQL＝<a href="../vector-database/">ベクトルDB</a></td><td>タスク vs 埋め込み保存の基盤</td></tr>
+          <tr><td>Text-to-SQL＝<a href="../cnn/">CNN</a></td><td>NLPの系列変換 vs 画像の畳み込み</td></tr>
+          <tr><td>Text-to-SQL＝SQLエンジンそのもの</td><td>クエリを<strong>生成する</strong>タスク vs 実行するDB</td></tr>
+          <tr><td>生成SQLは常に正確</td><td>検証・権限制御が必要（TF-172）</td></tr>
+          <tr><td>Text-to-SQL＝<a href="../text-to-image/">Text-to-Image</a></td><td>SQL文生成 vs 画像生成。Text-to-○は別タスク</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Text-to-SQLとは何ですか？</summary>
+          <p class="tool-faq-a">ユーザーが日本語や英語などの自然言語で書いた質問（例：「昨年の売上トップ10の商品は？」）を、データベースに投げるSQL文（SELECT文など）へ変換するタスクです。SQLを書けない人でも表形式データに問い合わせできるようにするのが目的です。</p>
+        </details>
+        <details>
+          <summary>Text-to-SQLとRAGは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。RAGは文書を検索してLLMの回答に参照させる仕組みです。Text-to-SQLはリレーショナルデータベースなどの構造化データに対し、SQLクエリを生成して集計・抽出するタスクです。データの形（非構造化文書 vs 表）とアクセス手段（検索 vs SQL）が異なります。</p>
+        </details>
+        <details>
+          <summary>Text-to-SQLは畳み込みニューラルネットワークですか？</summary>
+          <p class="tool-faq-a">いいえ。Text-to-SQLは自然言語をSQL文へ変換するNLPタスクです。実装にはTransformerベースのLLMやSeq2Seqモデルが使われることがありますが、タスクそのものは画像の畳み込みとは無関係です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-255/">G-255 · Seq2Seqの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-126/">TF-126 · NLPの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-174/">TF-174 · RAGの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0178/">TF-0178 · 次トークン生成</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../seq2seq/">Seq2Seq</a></li>
+          <li><a href="../t5-model/">T5</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Seq2Seqとは？Sequence to Sequence。入力系列を別の出力系列へ変換するエンコーダ・デコーダ枠組み。機械翻訳・Attention・Transformerとの関係をG検定向けに解説。">
+  <title>Seq2Seqとは？入り口と出口で系列を渡す——エンコーダ・デコーダの型 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/seq2seq/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Seq2Seqとは？入り口と出口で系列を渡す——エンコーダ・デコーダの型">
+  <meta property="og:description" content="Sequence to Sequence。入力系列を別の出力系列へ変換するエンコーダ・デコーダ構成。機械翻訳・要約・対話で使われる系列変換の枠組み。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/seq2seq/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Seq2Seq",
+        "alternateName": ["Seq2Seq", "シーケンストゥシーケンス", "Sequence to Sequence", "系列変換モデル"],
+        "description": "入力系列を別の出力系列へ変換するエンコーダ・デコーダ構成のモデル枠組み。機械翻訳、要約、対話などの系列変換タスクで使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Seq2Seqは何の略ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sequence to Sequence（シーケンス・トゥ・シーケンス）の略です。入力側の系列（例：英語文）を、出力側の別系列（例：日本語文）へ変換するモデル構成を指します。エンコーダが入力を読み、デコーダが出力を逐次生成する構造が典型です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Seq2SeqとTransformerは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Seq2Seqは入力系列を出力系列へ変換する枠組み（設計パターン）です。TransformerはSelf-Attentionを中核とする具体的なモデルアーキテクチャで、機械翻訳などのSeq2Seqタスクに適用されることもあります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Seq2Seqは畳み込み操作ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Seq2Seqは系列変換のモデル構成です。畳み込みは画像などの局所特徴抽出に使われる操作であり、概念もタスクも異なります（G-255）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Seq2Seq</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Seq2Seqとは？入り口と出口で系列を渡す——エンコーダ・デコーダの型</h1>
+    <p class="tool-hero-sub">読み：しーくつーしーく ／ 英：Seq2Seq（Sequence to Sequence）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Seq2Seq</strong>（Sequence to Sequence）は、<strong>入力系列を別の出力系列へ変換する</strong>——エンコーダが「読み」、デコーダが「書く」——<a href="../nlp/">NLP</a>の<strong>設計パターン</strong>です。機械翻訳で英語文→日本語文、要約で長文→短文——本記事はRNNの数式より、<strong>「なぜ入り口と出口を分けたか」</strong>と<strong>Attentionが何を直したか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#two-sequences">二つの系列</a></li>
+        <li><a href="#encoder-decoder">エンコーダとデコーダ</a></li>
+        <li><a href="#tasks">典型タスク</a></li>
+        <li><a href="#attention-fix">ボトルネックとAttention</a></li>
+        <li><a href="#transformer-era">Transformer以降の整理</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Seq2Seqの定義は<strong>「入力系列を別の出力系列へ変換するモデル構成」</strong>です（<a href="../../exams/g-kentei/practice/q/g-255/">G-255</a>）。機械翻訳（<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>）、要約、対話など<strong>系列変換タスク</strong>の代表枠組みとして押さえます。
+      </p>
+      <p>
+        誤答では、<strong>Seq2Seq＝畳み込み</strong>（G-255）、<strong>Seq2Seq＝<a href="../gan/">GAN</a></strong>（<a href="../../exams/g-kentei/practice/q/g-372/">G-372</a>）、<strong>Seq2Seq＝クラスタリング</strong>（G-255）など、別タスクとのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-255/">G-255（定義）</a>、<a href="../../exams/g-kentei/practice/q/g-340/">G-340（機械翻訳）</a>、<a href="../../exams/g-kentei/practice/q/g-345/">G-345（統計的MTとニューラルMT）</a>、<a href="../../exams/g-kentei/practice/q/g-282/">G-282（Source-Target Attention）</a></p>
+      </div>
+    </section>
+
+    <section id="two-sequences">
+      <h2>二つの系列</h2>
+      <p>
+        画像分類は「画像→ラベル1つ」、物体検出は「画像→箱のリスト」——<strong>系列変換</strong>は形が違います。<strong>入力も出力も順序を持つ系列</strong>で、長さも異なり得ます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>例</th><th>入力系列</th><th>出力系列</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>機械翻訳</strong></td><td>英語の単語列</td><td>日本語の単語列</td></tr>
+          <tr><td><strong>要約</strong></td><td>長い記事</td><td>短い要約文</td></tr>
+          <tr><td><strong>対話</strong></td><td>ユーザーの発話列</td><td>システムの応答列</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/genai-passport/drill/q/tf-0104/">TF-0104</a>が示すように、文章は<strong>シーケンスデータ</strong>——要素の順序が意味を持つ——として扱われます。Seq2Seqは、その<strong>入り口系列と出口系列の対応</strong>を学習する枠組みです。
+      </p>
+    </section>
+
+    <section id="encoder-decoder">
+      <h2>エンコーダとデコーダ</h2>
+      <p>
+        Seq2Seqの骨格は<strong>エンコーダ（Encoder）</strong>と<strong>デコーダ（Decoder）</strong>の二部構成です。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>エンコーダ</strong> — 入力系列を左から右へ読み、文脈を<strong>内部表現</strong>（文全体の要約ベクトルなど）に圧縮</li>
+        <li><strong>デコーダ</strong> — 内部表現を受け取り、出力系列を<strong>1トークンずつ</strong>生成</li>
+        <li><strong>学習</strong> — 正解出力を使う<strong>教師強制</strong>（<a href="../../exams/g-kentei/practice/q/g-244/">G-244</a>）で安定化することも</li>
+      </ol>
+      <p>
+        実装の中身は<a href="../rnn/">RNN</a>、<a href="../lstm/">LSTM</a>、<a href="../transformer/">Transformer</a>など時代とともに変わりますが、試験では<strong>「エンコーダが読み、デコーダが書く」</strong>——という役割分担が得点源です。
+      </p>
+    </section>
+
+    <section id="tasks">
+      <h2>典型タスク</h2>
+      <p>Seq2Seqが語られるのは、だいたい次のような<strong>系列→系列</strong>タスクです。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>機械翻訳</strong>
+          ある言語の文を別言語の文へ（G-340）。統計的MTからニューラルMTへ発展（G-345）
+        </li>
+        <li>
+          <strong>要約</strong>
+          長文を短い文へ圧縮——<a href="../bart-model/">BART</a>などの事前学習モデルもこの系譜
+        </li>
+        <li>
+          <strong>対話・チャットボット</strong>
+          ユーザー発話から応答文を生成
+        </li>
+        <li>
+          <strong>音声認識（CTC以外）</strong>
+          音声特徴列から文字列へ——<a href="../ctc/">CTC</a>は別の整列手法
+        </li>
+      </ul>
+      <p>
+        一方、<a href="../bert/">BERT</a>のマスク言語モデル（穴埋め）や<a href="../gpt/">GPT</a>の「続きを書く」生成は、<strong>入出力の系列が同じ言語・同じ形式</strong>——Seq2Seqの「別系列への変換」とは整理を分けると混乱しにくいです。
+      </p>
+    </section>
+
+    <section id="attention-fix">
+      <h2>ボトルネックとAttention</h2>
+      <p>
+        初期のSeq2Seqは、エンコーダの<strong>最後の隠れ状態1つ</strong>に文全体の意味を押し込む——いわば<strong>ボトルネック</strong>——設計でした。長い文ほど情報が圧縮されすぎ、翻訳精度が落ちる問題がありました。
+      </p>
+      <p>
+        <a href="../attention/">Attention</a>は、この弱点を直す鍵です。デコーダが出力するたびに、<strong>入力系列のどの位置を参照するか</strong>を重み付け（<a href="../../exams/g-kentei/practice/q/g-282/">G-282</a>のSource-Target Attention）——エンコーダの全ステップを「見える化」して渡すイメージです。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>課題</strong> — 固定長ベクトル1つでは長文を表現しきれない</li>
+        <li><strong>Attention</strong> — 入力の各位置への<strong>注目の重み</strong>を動的に計算</li>
+        <li><strong>結果</strong> — 機械翻訳の精度向上 → <a href="../transformer/">Transformer</a>へ</li>
+      </ul>
+    </section>
+
+    <section id="transformer-era">
+      <h2>Transformer以降の整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>古典Seq2Seq（RNN系）</th><th>Transformer時代</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>中核</strong></td><td>RNN/LSTMの逐次処理</td><td>Self-Attentionの並列処理</td></tr>
+          <tr><td><strong>枠組み</strong></td><td>エンコーダ・デコーダは継続</td><td>翻訳モデルはEncoder-Decoder型Transformer</td></tr>
+          <tr><td><strong>GPT系</strong></td><td>—</td><td><strong>デコーダのみ</strong>で「続き生成」（厳密なSeq2Seqとは別整理も）</td></tr>
+          <tr><td><strong>試験</strong></td><td>G-255の定義は不変</td><td>Attention・Transformerと<strong>関連</strong>して理解</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Seq2Seqは<strong>消えたわけではなく</strong>、タスクの型として残っています。モデル名（BERT、GPT、BART）と、タスクの型（Seq2Seq、分類、生成）を<strong>別軸</strong>で整理すると、G-337やG-323のようなすり替え問題にも強くなります。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Seq2Seq＝畳み込み</td><td>系列変換の枠組み vs 画像の局所演算（G-255）</td></tr>
+          <tr><td>Seq2Seq＝<a href="../gan/">GAN</a></td><td>系列変換 vs 生成器・識別器の敵対学習（G-372）</td></tr>
+          <tr><td>Seq2Seq＝<a href="../transformer/">Transformer</a></td><td>タスクの型 vs 具体的アーキテクチャ</td></tr>
+          <tr><td>Seq2Seq＝<a href="../cnn/">CNN</a></td><td>系列変換 vs 画像認識の代表（G-239）</td></tr>
+          <tr><td>Seq2Seq＝クラスタリング</td><td>教師ありの系列変換 vs 教師なしのグループ分け</td></tr>
+          <tr><td>入出力の長さは常に同じ</td><td>翻訳・要約では<strong>異なる長さ</strong>が普通</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Seq2Seqは何の略ですか？</summary>
+          <p class="tool-faq-a">Sequence to Sequence（シーケンス・トゥ・シーケンス）の略です。入力側の系列（例：英語文）を、出力側の別系列（例：日本語文）へ変換するモデル構成を指します。エンコーダが入力を読み、デコーダが出力を逐次生成する構造が典型です。</p>
+        </details>
+        <details>
+          <summary>Seq2SeqとTransformerは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。Seq2Seqは入力系列を出力系列へ変換する枠組み（設計パターン）です。TransformerはSelf-Attentionを中核とする具体的なモデルアーキテクチャで、機械翻訳などのSeq2Seqタスクに適用されることもあります。</p>
+        </details>
+        <details>
+          <summary>Seq2Seqは畳み込み操作ですか？</summary>
+          <p class="tool-faq-a">いいえ。Seq2Seqは系列変換のモデル構成です。畳み込みは画像などの局所特徴抽出に使われる操作であり、概念もタスクも異なります（G-255）。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-255/">G-255 · Seq2Seqの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-340/">G-340 · 機械翻訳</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-345/">G-345 · 統計的MTとニューラルMT</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-282/">G-282 · Source-Target Attention</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../bart-model/">BART</a></li>
+          <li><a href="../t5-model/">T5</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../bleu/">BLEU</a></li>
+          <li><a href="../text-to-sql/">Text-to-SQL</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

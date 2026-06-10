@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NeRFとは？Neural Radiance Fields。3Dシーンをニューラル場で表現し新規視点画像を合成する手法。GAN・拡散モデル・BoWとの違いをG検定向けに解説。">
+  <title>NeRFとは？座標と視線ごとに色を聞く——ボリュームをニューラル場で描き、見ていない角度を合成する — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/nerf/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="NeRFとは？座標と視線ごとに色を聞く——ボリュームをニューラル場で描き、見ていない角度を合成する">
+  <meta property="og:description" content="Neural Radiance Fields。3D空間の各点の色と密度をニューラルネットで表現し、ボリュームレンダリングで新しい視点からの画像を合成する生成手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/nerf/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "NeRF",
+        "alternateName": ["NeRF", "ネルフ", "Neural Radiance Fields", "ニューラルレディアンスフィールド"],
+        "description": "3D空間の座標と視線方向を入力に、各点の色と密度をニューラルネットワークで予測する連続的な場の表現。複数視点の画像から学習し、ボリュームレンダリングで新規視点の画像を合成する手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "NeRFは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ニューラルネットワークで3Dシーンを連続的な場として表現し、学習時に観測していない新しい視点からの画像を合成する手法です。空間座標と視線方向ごとに色と密度を予測し、光線に沿って積分して画像を描きます。3D再構成や新規視点合成に使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NeRFとGANは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。GANは生成器と識別器を競わせて2D画像などを生成する対抗学習の枠組みです。NeRFは3D空間の放射場をニューラルネットで表現し、特定のカメラ視点の画像をボリュームレンダリングで合成します。どちらも生成に関わりますが、表現する対象と仕組みが異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NeRFとBag of Wordsは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。NeRFは3Dシーンの新規視点画像合成に関するコンピュータビジョンの手法です。Bag of Wordsは文書を単語の出現ベクトルで表す自然言語処理の手法です。G検定ではNeRFの誤答選択肢としてBoWがすり替えに使われることがあります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">NeRF</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>NeRFとは？座標と視線ごとに色を聞く——ボリュームをニューラル場で描き、見ていない角度を合成する</h1>
+    <p class="tool-hero-sub">読み：ネルフ ／ 英：NeRF（Neural Radiance Fields）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>NeRF</strong>（Neural Radiance Fields）は、<strong>3D空間の各点に色と密度を割り当てる連続場</strong>を<a href="../neural-network/">ニューラルネット</a>で表現し、<strong>見ていない視点の画像</strong>を合成する手法です。<a href="../stable-diffusion/">Stable Diffusion</a>がテキストから2D画像を「描く」のに対し、NeRFは<strong>複数視点の写真から3Dシーンを復元し、カメラを動かした映像を生成</strong>する——本記事はレンダリングの数式より、<strong>「場としての3D表現」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#field-idea">場としての3D表現</a></li>
+        <li><a href="#input-output">座標と視線を入れ、色と密度を出す</a></li>
+        <li><a href="#volume-render">ボリュームレンダリング</a></li>
+        <li><a href="#generative-family">生成モデル族の中での位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="field-idea">
+      <h2>場としての3D表現</h2>
+      <p>
+        従来の3D再構成は、メッシュや点群として形状を持たせる方法が多かったです。<a href="../lidar/">LiDAR</a>の点群は「離散的な座標の集合」——NeRFは別のアプローチで、空間を<strong>連続的な関数</strong>として扱います。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-379/">G-379</a>の定義——<strong>ニューラルネットワークで3Dシーンを表現し、新しい視点からの画像を生成する</strong>——が試験の核心です。ポリゴンを貼るのではなく、<strong>座標を入れると色と透明度が返る場</strong>を学習する、という発想の転換です。
+      </p>
+    </section>
+
+    <section id="input-output">
+      <h2>座標と視線を入れ、色と密度を出す</h2>
+      <p>NeRFのネットワークは、ざっくり次の入出力を持ちます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>入出力</th><th>内容</th><th>意味</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>入力</strong></td><td>3D座標 (x, y, z) ＋ 視線方向</td><td>「この点を、この角度から見たら？」</td></tr>
+          <tr><td><strong>出力</strong></td><td>色（RGB）＋ 体密度（σ）</td><td>その点がどれだけ光を放ち、どれだけ不透明か</td></tr>
+          <tr><td><strong>学習データ</strong></td><td>複数カメラ視点の写真</td><td>既知視点の画素色と予測を一致させる</td></tr>
+        </tbody>
+      </table>
+      <p>
+        視線方向を入れるのは、表面の見え方が<strong>見る角度で変わる</strong>（鏡面反射など）ため——単純な3Dテクスチャよりリッチな場を表現できます。試験では入出力の細部より、<strong>3D＋新規視点合成</strong>と覚えれば十分です。
+      </p>
+    </section>
+
+    <section id="volume-render">
+      <h2>ボリュームレンダリング</h2>
+      <p>
+        場ができても、カメラの画像は<strong>光線が通過する途中の積分</strong>で決まります。NeRFはカメラから各画素へ向かう光線（レイ）を飛ばし、途中の点の色と密度を<strong>ボリュームレンダリング</strong>で足し合わせて1画素の色を得ます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>1. レイ生成</strong> — カメラ位置と画素から光線を定義</li>
+        <li><strong>2. サンプリング</strong> — 光線上の複数点でNeRFに問い合わせ</li>
+        <li><strong>3. 積分</strong> — 密度で重み付けし色を合成→予測画像</li>
+        <li><strong>4. 学習</strong> — 実写真との誤差を逆伝播し場を更新</li>
+      </ul>
+      <p>
+        <a href="../cnn/">CNN</a>が2D画像の局所特徴を捉える（<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>）のに対し、NeRFは<strong>3D空間を経由して2Dを描く</strong>——2D認識と3D合成は別タスク、と整理するとすり替えに強くなります。
+      </p>
+    </section>
+
+    <section id="generative-family">
+      <h2>生成モデル族の中での位置</h2>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>は、<a href="../gan/">GAN</a>、<a href="../denoising-diffusion/">拡散モデル</a>、NeRFを<strong>生成モデルの代表例</strong>として並べます——出力は画像でも、NeRFの本質は<strong>3D場の表現＋視点合成</strong>です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>生成の仕方</th><th>NeRFとの差</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>NeRF</strong></td><td>3D場→ボリュームレンダリング→画像</td><td>複数視点から<strong>一つのシーン</strong>を復元</td></tr>
+          <tr><td><strong><a href="../gan/">GAN</a></strong></td><td>生成器が2D画像を直接出力</td><td>3D幾何を明示しない。対抗学習</td></tr>
+          <tr><td><strong><a href="../stable-diffusion/">拡散モデル</a></strong></td><td>ノイズ除去で2D画像生成</td><td>テキスト条件の単発画像が主流</td></tr>
+          <tr><td><strong><a href="../text-to-image/">Text-to-Image</a></strong></td><td>プロンプトから画像</td><td>3D一貫性は別課題</td></tr>
+        </tbody>
+      </table>
+      <p>
+        AR・VR、デジタルツイン、映画の仮想カメラワークなどで新規視点合成が注目されます——2026年6月時点でも研究・応用が続く分野です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Neural Radiance Fields＝NNで<strong>3Dシーン</strong>を表現し<strong>新規視点画像</strong>を生成</li>
+        <li><strong>キーワード</strong> — 3D再構成、新規視点合成、ボリューム表現</li>
+        <li><strong>対比</strong> — BoW（NLP）、MFCC（音声）、Q学習（強化学習）は誤答パターン（G-379）</li>
+        <li><strong>位置づけ</strong> — 生成モデルの一族（G-378）。2D画像分類のCNNとは別</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-379/">G-379</a>、<a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>、<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>（CNNとの対比）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>NeRF＝<a href="../bag-of-words/">Bag of Words</a></td><td>3D視点合成 vs 文書の単語ベクトル（G-379 B）</td></tr>
+          <tr><td>NeRF＝<a href="../gan/">GAN</a></td><td>放射場＋レンダリング vs 生成器―識別器の対抗</td></tr>
+          <tr><td>NeRF＝<a href="../cnn/">CNN</a></td><td>3D場の合成 vs 2D局所特徴の認識</td></tr>
+          <tr><td>NeRF＝<a href="../lidar/">LiDAR</a></td><td>学習ベースの連続場 vs 距離センサの点群</td></tr>
+          <tr><td>NeRF＝<a href="../stable-diffusion/">Stable Diffusion</a></td><td>マルチビュー3D復元 vs テキスト条件2D生成</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>NeRFは何をする手法ですか？</summary><p class="tool-faq-a">ニューラルネットワークで3Dシーンを連続的な場として表現し、学習時に観測していない新しい視点からの画像を合成する手法です。空間座標と視線方向ごとに色と密度を予測し、光線に沿って積分して画像を描きます。3D再構成や新規視点合成に使われます。</p></details>
+        <details><summary>NeRFとGANは同じですか？</summary><p class="tool-faq-a">同じではありません。GANは生成器と識別器を競わせて2D画像などを生成する対抗学習の枠組みです。NeRFは3D空間の放射場をニューラルネットで表現し、特定のカメラ視点の画像をボリュームレンダリングで合成します。どちらも生成に関わりますが、表現する対象と仕組みが異なります。</p></details>
+        <details><summary>NeRFとBag of Wordsは同じですか？</summary><p class="tool-faq-a">同じではありません。NeRFは3Dシーンの新規視点画像合成に関するコンピュータビジョンの手法です。Bag of Wordsは文書を単語の出現ベクトルで表す自然言語処理の手法です。G検定ではNeRFの誤答選択肢としてBoWがすり替えに使われることがあります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-379/">G-379 · NeRFの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-378/">G-378 · 生成モデルの代表例</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298 · CNN（2Dとの対比）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../gan/">GAN</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../neural-network/">ニューラルネット</a></li>
+          <li><a href="../structure-from-motion/">Structure from Motion</a></li>
+          <li><a href="../lidar/">LiDAR</a></li>
+          <li><a href="../text-to-image/">Text-to-Image</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

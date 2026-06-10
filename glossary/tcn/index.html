@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TCNとは？Temporal Convolutional Network。因果的畳み込みと空洞畳み込みで長い時系列を並列処理するネットワーク。RNNとの違いをG検定向けに解説。">
+  <title>TCNとは？未来は見えない——因果畳み込みで長系列を並列に読む — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/tcn/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TCNとは？未来は見えない——因果畳み込みで長系列を並列に読む">
+  <meta property="og:description" content="Temporal Convolutional Network。因果的畳み込みで未来情報を遮断し、空洞畳み込みで受容野を伸ばす。RNNの逐次処理に代わる系列モデルの選択肢。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/tcn/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "TCN",
+        "alternateName": ["TCN", "ティーシーエヌ", "Temporal Convolutional Network", "時間畳み込みネットワーク"],
+        "description": "因果的畳み込みと空洞畳み込みで長い時系列データを扱う1次元畳み込みニューラルネットワーク。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "TCNの因果的畳み込みとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "出力を計算するとき、現在と過去の入力だけを参照し、未来の値は見ない畳み込みの設計です。時系列予測や逐次推論で「まだ起きていないデータを使わない」という制約を満たすために重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TCNとRNNの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RNNは時刻ごとに隠れ状態を逐次更新し、長系列では並列化が難しい面があります。TCNは1次元畳み込みで系列を処理し、学習時に並列計算しやすい。長期依存は空洞畳み込みで受容野を広げて扱います。どちらも時系列や文章などの系列データ向けです（G-238、G-239）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TCNは画像用のCNNですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。TCNは1次元の時系列・系列向けの畳み込みネットワークです。2次元画像の局所特徴抽出が中心のCNN（G-239）とは主な対象データが異なります。畳み込みという演算は共通ですが、系列の時間方向に沿って適用する点がTCNの特徴です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">TCN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>TCNとは？未来は見えない——因果畳み込みで長系列を並列に読む</h1>
+    <p class="tool-hero-sub">読み：ティーシーエヌ ／ 英：TCN（Temporal Convolutional Network）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>TCN</strong>（Temporal Convolutional Network／時間畳み込みネットワーク）は、<strong>因果的畳み込み</strong>——未来の値は見ず、過去だけを参照する——と<strong>空洞畳み込み</strong>で、長い時系列を扱う1次元の<a href="../cnn/">CNN</a>系モデルです。<a href="../rnn/">RNN</a>が「1ステップずつ状態を渡す」逐次処理に対し、TCNは<strong>「畳み込みで系列をなぞり、学習は並列に」</strong>という別ルート。本記事はフィルタサイズの公式より、<strong>なぜ畳み込みが時系列に効くのか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#series-context">系列データの文脈</a></li>
+        <li><a href="#causal">因果的畳み込み</a></li>
+        <li><a href="#dilated">空洞畳み込みと受容野</a></li>
+        <li><a href="#parallel">並列学習の利点</a></li>
+        <li><a href="#compare">RNN・Transformerとの整理</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        TCN単独の定義問題はまだ少ないですが、<strong>系列データを扱うモデル</strong>の整理として押さえます。<a href="../rnn/">RNN</a>は時系列や文章のような<strong>順序を持つデータ</strong>向け（<a href="../../exams/g-kentei/practice/q/g-238/">G-238</a>、<a href="../../exams/g-kentei/practice/q/g-239/">G-239</a>）——TCNも同じ土俵に立つ<strong>代替アーキテクチャ</strong>です。
+      </p>
+      <p>
+        誤答では、TCN＝画像用<a href="../cnn/">CNN</a>（G-239の「い」）、TCN＝<a href="../transformer/">Transformer</a>、TCN＝未来の値も見る通常畳み込み——などのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-238/">G-238（RNNの定義）</a>、<a href="../../exams/g-kentei/practice/q/g-239/">G-239（RNNとCNNの対応）</a>、<a href="../../exams/g-kentei/practice/q/g-241/">G-241（系列モデル）</a>、<a href="../../exams/g-kentei/drill/q/tf-412/">TF-412（RNNと時系列）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0104/">TF-0104（シーケンスデータ）</a></p>
+      </div>
+    </section>
+
+    <section id="series-context">
+      <h2>系列データの文脈</h2>
+      <p>
+        株価、気温、センサー値、音声特徴——<strong>時間とともに並ぶ数値列</strong>は系列データです。文章も単語・文字の列として同じ枠組みで扱えます（TF-0104）。
+      </p>
+      <p>
+        長年、系列の定番は<a href="../rnn/">RNN</a>と<a href="../lstm/">LSTM</a>でした。隠れ状態を次の時刻へ渡し、過去を記憶する——理にかなっていますが、<strong>長い系列では学習が遅く、長期依存も難しい</strong>という課題も抱えています（勾配消失・爆発）。
+      </p>
+      <p>
+        TCNは「畳み込みなら並列に学習できるのでは？」という発想から、<strong>時系列専用の1D-CNN</strong>として設計されました。
+      </p>
+    </section>
+
+    <section id="causal">
+      <h2>因果的畳み込み</h2>
+      <p>
+        通常の畳み込みは、中心の位置の<strong>左右両方</strong>を見ます。画像なら問題ありませんが、時刻 <em>t</em> の予測に <em>t+1</em> の値を使うのは<strong>カンニング</strong>——未来の情報漏洩——です。
+      </p>
+      <p>
+        TCNの<strong>因果的（causal）畳み込み</strong>は、出力が参照する入力を<strong>現在と過去だけ</strong>に制限します。パディングを左側に足し、フィルタが未来方向には及ばないよう配置する——いわば<strong>「未来は見えない窓」</strong>です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>予測タスク</strong> — 過去だけで次を当てる。因果性が必須</li>
+        <li><strong>逐次推論</strong> — リアルタイムのセンサー処理でも同じ制約</li>
+        <li><strong>学習時</strong> — 系列全体を一度に渡しても、各位置の出力は過去のみ参照</li>
+      </ul>
+    </section>
+
+    <section id="dilated">
+      <h2>空洞畳み込みと受容野</h2>
+      <p>
+        因果的でも、フィルタ幅が狭いと<strong>見える過去が短い</strong>——受容野が小さい——ままです。TCNは<strong>空洞畳み込み</strong>（dilated convolution）でこれを伸ばします。フィルタの間に隙間（空洞）を空け、層を重ねるたびに隙間を広げ、<strong>指数関数的に受容野を拡大</strong>します。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>役割</th><th>比喩</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>因果的畳み込み</strong></td><td>未来を遮断</td><td>後ろ向きにしか振り返らない</td></tr>
+          <tr><td><strong>空洞畳み込み</strong></td><td>遠い過去へ届く</td><td>飛び石で離れた時刻にも触れる</td></tr>
+          <tr><td><strong>残差接続</strong></td><td>深い層でも学習安定</td><td>勾配の高速道路</td></tr>
+        </tbody>
+      </table>
+      <p>
+        浅い層で近過去、深い層で遠過去——<a href="../cnn/">CNN</a>の階層特徴に似た発想を、<strong>時間軸1本</strong>に適用したイメージです。
+      </p>
+    </section>
+
+    <section id="parallel">
+      <h2>並列学習の利点</h2>
+      <p>
+        RNNは時刻 <em>t</em> の計算が <em>t-1</em> に依存し、<strong>系列長に比例して逐次</strong>になりがちです。TCNは畳み込みなので、系列全体に対する演算を<strong>GPUで並列</strong>しやすい——学習のスループット面で有利なことがあります。
+      </p>
+      <p>
+        ただし「TCNが常にRNNより優れる」わけではありません。データの性質、系列長、タスクによって最適解は変わります。試験では<strong>「系列を扱う畳み込み系の選択肢」</strong>として名前と設計思想を押さえるのが現実的です。
+      </p>
+    </section>
+
+    <section id="compare">
+      <h2>RNN・Transformerとの整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>中核</th><th>系列の扱い</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>RNN / LSTM</strong></td><td>隠れ状態の逐次更新</td><td>時系列・文章の古典</td><td>G-238、G-239</td></tr>
+          <tr><td><strong>TCN</strong></td><td>因果＋空洞の1D畳み込み</td><td>並列学習しやすい系列モデル</td><td>RNNの代替軸として理解</td></tr>
+          <tr><td><strong>Transformer</strong></td><td>Self-Attention</td><td>長距離依存・NLPの主流</td><td>TF-0108</td></tr>
+          <tr><td><strong>CNN（2D）</strong></td><td>空間の局所畳み込み</td><td>画像の局所特徴（G-239の「い」）</td><td>対象データが異なる</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../ctc/">CTC</a>が音声認識の<strong>整列</strong>を担うのに対し、TCNは<strong>系列の特徴抽出・予測そのもの</strong>を担うバックボーン——役割も整理を分けます。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>TCN＝画像用<a href="../cnn/">CNN</a></td><td>1次元系列向け。画像CNNは2次元の局所特徴（G-239）</td></tr>
+          <tr><td>TCN＝未来も参照する畳み込み</td><td><strong>因果的</strong>——未来の値は使わない</td></tr>
+          <tr><td>TCN＝<a href="../transformer/">Transformer</a></td><td>畳み込み vs Self-Attention。別アーキテクチャ</td></tr>
+          <tr><td>TCN＝時系列に使えない</td><td>時系列・系列が<strong>主目的</strong>。RNNと同土俵</td></tr>
+          <tr><td>TCN＝<a href="../seq2seq/">Seq2Seq</a></td><td>モデル構造 vs 入出力系列のタスク型</td></tr>
+          <tr><td>畳み込み＝画像だけ</td><td>1D畳み込みで時間軸にも適用可能</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>TCNの因果的畳み込みとは何ですか？</summary>
+          <p class="tool-faq-a">出力を計算するとき、現在と過去の入力だけを参照し、未来の値は見ない畳み込みの設計です。時系列予測や逐次推論で「まだ起きていないデータを使わない」という制約を満たすために重要です。</p>
+        </details>
+        <details>
+          <summary>TCNとRNNの違いは？</summary>
+          <p class="tool-faq-a">RNNは時刻ごとに隠れ状態を逐次更新し、長系列では並列化が難しい面があります。TCNは1次元畳み込みで系列を処理し、学習時に並列計算しやすい。長期依存は空洞畳み込みで受容野を広げて扱います。どちらも時系列や文章などの系列データ向けです（G-238、G-239）。</p>
+        </details>
+        <details>
+          <summary>TCNは画像用のCNNですか？</summary>
+          <p class="tool-faq-a">いいえ。TCNは1次元の時系列・系列向けの畳み込みネットワークです。2次元画像の局所特徴抽出が中心のCNN（G-239）とは主な対象データが異なります。畳み込みという演算は共通ですが、系列の時間方向に沿って適用する点がTCNの特徴です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-238/">G-238 · RNNの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-239/">G-239 · RNNとCNNの対応</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-241/">G-241 · 系列モデル</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0104/">TF-0104 · シーケンスデータ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../rnn/">RNN</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../ctc/">CTC</a></li>
+          <li><a href="../seq2seq/">Seq2Seq</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

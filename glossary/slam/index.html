@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SLAMとは？Simultaneous Localization and Mapping。自己位置推定と地図構築を同時に行うロボティクス技術。LiDAR・GPS・物体検出との違いをG検定向けに解説。">
+  <title>SLAMとは？地図がないと居場所も分からない——位置推定と地図作成の同時解法 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/slam/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SLAMとは？地図がないと居場所も分からない——位置推定と地図作成の同時解法">
+  <meta property="og:description" content="Simultaneous Localization and Mapping。未知環境でロボットの自己位置推定と環境地図の構築を同時に行う技術。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/slam/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SLAM",
+        "alternateName": ["SLAM", "スラム", "Simultaneous Localization and Mapping", "同時自己位置推定・地図構築"],
+        "description": "未知の環境において、移動体の自己位置推定（Localization）と環境地図の構築（Mapping）を同時に行うロボティクス・コンピュータビジョンの技術。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SLAMは何の略ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Simultaneous Localization and Mapping（同時自己位置推定・地図構築）の略です。ロボットやドローンが未知の空間を移動しながら、自分がどこにいるかを推定し、同時に周囲の地図を作り上げる問題を扱います。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SLAMとGPSは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。GPSは衛星信号から大まかな絶対位置を得る仕組みです。SLAMはオンボードのセンサー（カメラ、LiDAR、IMUなど）と移動履歴から、未知環境でも相対的な位置と地図を同時に推定します。屋内やGPSが届きにくい場所ではSLAMが重要になります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SLAMは物体検出モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SLAMは自己位置と環境地図を同時に推定する技術・問題設定です。YOLOやSSDなどの物体検出モデルは画像中の物体の位置とクラスを推定する別タスクです。自動運転では両方が組み合わされることはありますが、概念は分けて整理します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SLAM</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SLAMとは？地図がないと居場所も分からない——位置推定と地図作成の同時解法</h1>
+    <p class="tool-hero-sub">読み：スラム ／ 英：SLAM（Simultaneous Localization and Mapping）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SLAM</strong>（Simultaneous Localization and Mapping）は、<strong>未知の環境</strong>でロボットが移動しながら、<strong>自分の位置（Localization）</strong>と<strong>周囲の地図（Mapping）</strong>を<strong>同時に</strong>推定する技術です。地図がないと「今どこにいるか」が分からず、位置が分からないと地図も更新できない——この<strong>鶏と卵</strong>を同時に解く——本記事はアルゴリズムの数式より、<strong>「なぜ自動運転・屋内ロボットで必須とされるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#chicken-egg">鶏と卵の問題</a></li>
+        <li><a href="#two-tasks">LocalizationとMapping</a></li>
+        <li><a href="#sensors">何を入力にするか</a></li>
+        <li><a href="#loop">ループ閉合と誤差</a></li>
+        <li><a href="#vs-others">GPS・物体検出との違い</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SLAM単独の過去問は少ない一方、辞典の定義は<strong>「自己位置推定と地図構築を同時に行う技術」</strong>です。試験では<strong>ロボティクス・センサー</strong>（<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>、<a href="../../exams/g-kentei/drill/q/tf-332/">TF-332</a>）と<strong>画像認識タスク</strong>（<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>）を混同しない整理が重要です。
+      </p>
+      <p>
+        誤答では、<strong>SLAM＝物体検出</strong>（<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>）、<strong>SLAM＝GPSだけで十分</strong>、<strong>SLAM＝単一の深層学習モデル名</strong>などのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-408/">G-408（センサーとエッジAI）</a>、<a href="../../exams/g-kentei/drill/q/tf-332/">TF-332（センサーデータ）</a>、<a href="../../exams/g-kentei/practice/q/g-021/">G-021（物体検出との区別）</a></p>
+      </div>
+    </section>
+
+    <section id="chicken-egg">
+      <h2>鶏と卵の問題</h2>
+      <p>
+        初めて入った建物の中をロボットが走る場面を想像してください。<strong>地図がなければ</strong>、センサーで壁を見つけても「その壁は建物のどこにあるのか」——絶対位置——が定まりません。<strong>自分の位置が分からなければ</strong>、新しく見えた壁を地図のどこに書き込むかも決められません。
+      </p>
+      <p>
+        SLAMはこの二つを<strong>同時に推定</strong>します。移動するたびにセンサー観測を積み重ね、<strong>軌跡（自分の動き）</strong>と<strong>地図（環境）</strong>を交互に更新しながら、一貫した世界モデルを作り上げます。
+      </p>
+    </section>
+
+    <section id="two-tasks">
+      <h2>LocalizationとMapping</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>問い</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Localization</strong>（位置推定）</td><td>ロボットは今、地図上のどこにいるか</td><td>自己位置・姿勢</td></tr>
+          <tr><td><strong>Mapping</strong>（地図構築）</td><td>周囲の障害物・壁・特徴はどこにあるか</td><td>環境モデル</td></tr>
+          <tr><td><strong>SLAM</strong></td><td>上記を<strong>同時に</strong>解く</td><td>Simultaneous の意味</td></tr>
+        </tbody>
+      </table>
+      <p>
+        地図が<strong>既に与えられている</strong>ときの位置推定だけを行うのは「Localization only」、地図はあるが位置は既知で環境だけ更新するのは別設定——SLAMは<strong>両方が未知</strong>という前提が特徴です。
+      </p>
+    </section>
+
+    <section id="sensors">
+      <h2>何を入力にするか</h2>
+      <p>SLAMは単一アルゴリズム名ではなく、センサーと推定手法の<strong>組み合わせ</strong>として実装されます。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>Visual SLAM</strong>
+          カメラ画像の特徴点対応から位置と地図を推定（<a href="../sift/">SIFT</a>、<a href="../orb/">ORB</a>などの特徴が土台になることも）
+        </li>
+        <li>
+          <strong>LiDAR SLAM</strong>
+          <a href="../lidar/">LiDAR</a>の<strong>点群</strong>から3D地図と軌跡を構築
+        </li>
+        <li>
+          <strong>IMU・オドメトリ</strong>
+          車輪の回転数や慣性センサで<strong>短期の動き</strong>を補助
+        </li>
+      </ul>
+      <p>
+        深層学習は、特徴抽出やセマンティック地図の構築に組み込まれることもありますが、SLAM＝<a href="../cnn/">CNN</a>物体検出、とは答えません（G-323）。
+      </p>
+    </section>
+
+    <section id="loop">
+      <h2>ループ閉合と誤差</h2>
+      <p>
+        ロボットが同じ場所を再訪したとき、<strong>「ここに来たことがある」</strong>と気づければ、それまで積み上げた軌跡・地図の矛盾を修正できます——<strong>ループ閉合（Loop Closure）</strong>です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>ドリフト</strong> — 移動を積み重ねるほど位置誤差が蓄積</li>
+        <li><strong>ループ検出</strong> — 過去に見た景色・点群パターンと照合</li>
+        <li><strong>最適化</strong> — 軌跡と地図全体を一括で整合（グラフ最適化など）</li>
+      </ul>
+      <p>
+        試験ではアルゴリズム名の暗記より、<strong>「観測を積み重ね、矛盾が出たら全体を直す」</strong>——という思想を押さえれば十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>GPS・物体検出との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>技術</th><th>主な問い</th><th>SLAMとの違い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GPS</strong></td><td>地球上の絶対座標はどこか</td><td>屋外・衛星前提。屋内は弱い</td></tr>
+          <tr><td><strong>SLAM</strong></td><td>未知環境で位置と地図を同時に</td><td>オンボードセンサー中心</td></tr>
+          <tr><td><strong>物体検出</strong>（SSD等）</td><td>画像のどこに何があるか</td><td>2D認識タスク。地図構築ではない</td></tr>
+          <tr><td><strong>経路計画</strong></td><td>地図上でどう走るか</td><td>SLAMの<strong>後段</strong>（地図があって初めて可能）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        自動運転では、<a href="../lidar/">LiDAR</a>点群の処理、カメラによる認識、SLAMによる位置推定、<a href="../reinforcement-learning/">強化学習</a>による制御——が<strong>パイプラインの別段</strong>として組み合わされます（G-408、<a href="../../exams/g-kentei/practice/q/g-361/">G-361</a>）。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SLAM＝<a href="../ssd/">SSD</a>／YOLO</td><td>位置・地図の同時推定 vs 物体検出（G-323）</td></tr>
+          <tr><td>SLAM＝GPS</td><td>未知環境のオンボード推定 vs 衛星測位</td></tr>
+          <tr><td>SLAM＝<a href="../pointnet/">PointNet</a></td><td>問題設定・システム vs 点群分類モデル</td></tr>
+          <tr><td>SLAM＝画像分類</td><td>地図と軌跡 vs クラスラベル</td></tr>
+          <tr><td>地図があればSLAM不要</td><td>地図ありはLocalization。SLAMは<strong>地図も未知</strong></td></tr>
+          <tr><td>SLAM＝経路探索そのもの</td><td>地図を作る段階 vs 地図上の走行計画</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SLAMは何の略ですか？</summary>
+          <p class="tool-faq-a">Simultaneous Localization and Mapping（同時自己位置推定・地図構築）の略です。ロボットやドローンが未知の空間を移動しながら、自分がどこにいるかを推定し、同時に周囲の地図を作り上げる問題を扱います。</p>
+        </details>
+        <details>
+          <summary>SLAMとGPSは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。GPSは衛星信号から大まかな絶対位置を得る仕組みです。SLAMはオンボードのセンサー（カメラ、LiDAR、IMUなど）と移動履歴から、未知環境でも相対的な位置と地図を同時に推定します。屋内やGPSが届きにくい場所ではSLAMが重要になります。</p>
+        </details>
+        <details>
+          <summary>SLAMは物体検出モデルですか？</summary>
+          <p class="tool-faq-a">いいえ。SLAMは自己位置と環境地図を同時に推定する技術・問題設定です。YOLOやSSDなどの物体検出モデルは画像中の物体の位置とクラスを推定する別タスクです。自動運転では両方が組み合わされることはありますが、概念は分けて整理します。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · センサーとエッジAI</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-332/">TF-332 · センサーデータ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-021/">G-021 · 物体検出タスク</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../structure-from-motion/">Structure from Motion</a></li>
+          <li><a href="../lidar/">LiDAR</a></li>
+          <li><a href="../pointnet/">PointNet</a></li>
+          <li><a href="../sift/">SIFT</a></li>
+          <li><a href="../orb/">ORB</a></li>
+          <li><a href="../reinforcement-learning/">強化学習</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ORBとは？Oriented FAST and Rotated BRIEF。高速バイナリ特徴記述子。HOG・CNN・SIFTとの違いをG検定向けに解説。">
+  <title>ORBとは？0と1の指紋で画像を照合——回転に強い高速バイナリ記述子 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/orb/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ORBとは？0と1の指紋で画像を照合——回転に強い高速バイナリ記述子">
+  <meta property="og:description" content="キーポイント検出とバイナリ記述子で画像間の対応点を高速マッチング。パノラマ合成・AR追跡など古典コンピュータビジョンの手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/orb/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ORB",
+        "alternateName": ["ORB", "オーアールビー", "Oriented FAST and Rotated BRIEF"],
+        "description": "画像の特徴点を検出し、各点にバイナリ記述子を付与して画像間の対応を高速に見つける古典的コンピュータビジョン手法。回転に比較的頑健でオープンソース実装が広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ORBは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像から目立つ特徴点（キーポイント）を検出し、各点の周辺パターンをバイナリの指紋（記述子）として符号化します。二枚の画像で記述子が似ている点を対応付け、カメラの動き推定や画像のつなぎ合わせなどに使います。深層学習以前の画像マッチングの定番です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ORBとHOGは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。HOGは画像の局所領域で勾配方向のヒストグラムを作り、物体の形状特徴として分類に使う手法です。ORBは個々の特徴点にバイナリ記述子を付け、画像どうしの対応点を見つけるマッチング向けです。どちらも古典的CVですが、領域の形状統計 vs 点の指紋照合で目的が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ORBとCNNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ORBは人が設計した特徴点検出とバイナリ記述の手順であり、学習で重みを更新しません。CNNは畳み込み層を通じてデータから特徴を学習するニューラルネットワークです。画像認識の歴史において、手作り特徴の系譜と深層学習の系譜は別ルートです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ORB</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ORBとは？0と1の指紋で画像を照合——回転に強い高速バイナリ記述子</h1>
+    <p class="tool-hero-sub">読み：オーアールビー ／ 英：ORB（Oriented FAST and Rotated BRIEF）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ORB</strong>は、画像の<strong>特徴点に0/1の指紋を付け、別の写真と突き合わせる</strong>古典的コンピュータビジョン手法です。<a href="../hog/">HOG</a>が領域全体の<strong>形の統計</strong>を数えるのに対し、ORBは<strong>点ごとのバイナリ記述子で「同じ場所か」を照合</strong>——パノラマ合成やAR追跡の入口——本記事はアルゴリズムの細部より、<strong>マッチング特徴量としてのORB</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#matching-problem">何を解く手法か</a></li>
+        <li><a href="#two-steps">検出と記述の二段</a></li>
+        <li><a href="#binary-fingerprint">バイナリ指紋の強み</a></li>
+        <li><a href="#vs-hog-cnn">HOG・CNNとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="matching-problem">
+      <h2>何を解く手法か</h2>
+      <p>
+        スマホでパノラマ写真を撮るとき、隣り合うフレームは<strong>少し視点がずれた同じ景色</strong>です。ORBの問いは「左の画像のこの角と、右の画像のどの角が同じ点か？」——<strong>画像間の対応点</strong>を見つける問題です。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>の物体検出は「1枚の画像のどこに何があるか」——ORBは<strong>2枚以上の画像で同じ物理点を結ぶ</strong>。タスクの入口が違います（<a href="../../exams/g-kentei/practice/q/g-315/">G-315</a>）。
+      </p>
+    </section>
+
+    <section id="two-steps">
+      <h2>検出と記述の二段</h2>
+      <p>ORBは名前のとおり、二つの古典手法を組み合わせています。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>内容</th><th>ORBでの役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>検出（FAST）</strong></td><td>コーナーやエッジなど<strong>目立つ点</strong>を探す</td><td>キーポイントの座標を得る</td></tr>
+          <tr><td><strong>向き（Oriented）</strong></td><td>点の周辺から<strong>主方向</strong>を推定</td><td>回転しても記述子が対応しやすい</td></tr>
+          <tr><td><strong>記述（BRIEF）</strong></td><td>周辺画素の比較を<strong>0/1列</strong>に符号化</td><td>バイナリ指紋（記述子）を得る</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験ではFASTやBRIEFの内部式より、<strong>特徴点＋バイナリ記述子で画像マッチング</strong>——と一言で押さえれば十分です。
+      </p>
+    </section>
+
+    <section id="binary-fingerprint">
+      <h2>バイナリ指紋の強み</h2>
+      <p>
+        SIFTのような実数ベクトル記述子は表現力が高い一方、照合コストが重くなりがちです。ORBの記述子は<strong>ビット列</strong>——ハミング距離（異なるビットの数）で高速に似ている点を探せます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>速い</strong> — モバイルや組み込みでもリアルタイム追跡が現実的</li>
+        <li><strong>オープン</strong> — 特許制約の少ない構成で広く実装された</li>
+        <li><strong>回転耐性</strong> — 主方向を揃えてから記述する設計</li>
+        <li><strong>限界</strong> — 大きな見た目の変化や繰り返し模様では誤対応も起きうる</li>
+      </ul>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-153/">G-153</a>が示す深層学習の強み——特徴をデータから学ぶ——に対し、ORBは<strong>設計済みの幾何手順</strong>。<a href="../../exams/g-kentei/practice/q/g-455/">G-455</a>の特徴量設計の文脈では、人がアルゴリズムとして設計した<strong>手作り特徴</strong>の一派です。
+      </p>
+    </section>
+
+    <section id="vs-hog-cnn">
+      <h2>HOG・CNNとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>単位</th><th>主な用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ORB</strong></td><td><strong>キーポイント</strong>のバイナリ指紋</td><td>画像間マッチング、カメラ姿勢推定</td></tr>
+          <tr><td><strong><a href="../hog/">HOG</a></strong></td><td>セル領域の勾配ヒストグラム</td><td>歩行者検出など<strong>分類</strong>向け形状特徴</td></tr>
+          <tr><td><strong><a href="../cnn/">CNN</a></strong></td><td>学習した畳み込み特徴マップ</td><td>分類・検出の<strong>端到端</strong>学習（<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        三つとも画像の局所パターンを扱いますが、<strong>点の照合 vs 領域の統計 vs 学習特徴</strong>——出力の形と目的が異なります。ORBを「物体検出モデル」や「CNNの別名」と答えるのは誤りです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Oriented FAST and Rotated BRIEF＝<strong>高速バイナリ特徴記述子</strong></li>
+        <li><strong>処理</strong> — キーポイント検出→バイナリ記述子→画像間マッチング</li>
+        <li><strong>位置づけ</strong> — 深層学習以前の<strong>手作り特徴</strong>・コンピュータビジョン</li>
+        <li><strong>対比</strong> — HOG（領域形状）、CNN（学習特徴）、BoW（文書・G-408誤答）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-455/">G-455</a>、<a href="../../exams/g-kentei/practice/q/g-153/">G-153</a>、<a href="../../exams/g-kentei/practice/q/g-315/">G-315</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ORB＝<a href="../cnn/">CNN</a></td><td>手作りマッチング特徴 vs 学習型ネット</td></tr>
+          <tr><td>ORB＝<a href="../hog/">HOG</a></td><td>点のバイナリ指紋 vs 領域の勾配ヒストグラム</td></tr>
+          <tr><td>ORB＝物体検出そのもの</td><td>対応点探索の部品。検出パイプラインの一部に過ぎないことも</td></tr>
+          <tr><td>ORB＝<a href="../bag-of-words/">Bag of Words</a></td><td>画像マッチング vs 文書の単語ベクトル（G-408 C）</td></tr>
+          <tr><td>ORB＝<a href="../nerf/">NeRF</a></td><td>2D特徴マッチング vs 3Dニューラル場の視点合成</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ORBは何をする手法ですか？</summary><p class="tool-faq-a">画像から目立つ特徴点（キーポイント）を検出し、各点の周辺パターンをバイナリの指紋（記述子）として符号化します。二枚の画像で記述子が似ている点を対応付け、カメラの動き推定や画像のつなぎ合わせなどに使います。深層学習以前の画像マッチングの定番です。</p></details>
+        <details><summary>ORBとHOGは同じですか？</summary><p class="tool-faq-a">同じではありません。HOGは画像の局所領域で勾配方向のヒストグラムを作り、物体の形状特徴として分類に使う手法です。ORBは個々の特徴点にバイナリ記述子を付け、画像どうしの対応点を見つけるマッチング向けです。どちらも古典的CVですが、領域の形状統計 vs 点の指紋照合で目的が異なります。</p></details>
+        <details><summary>ORBとCNNは同じですか？</summary><p class="tool-faq-a">同じではありません。ORBは人が設計した特徴点検出とバイナリ記述の手順であり、学習で重みを更新しません。CNNは畳み込み層を通じてデータから特徴を学習するニューラルネットワークです。画像認識の歴史において、手作り特徴の系譜と深層学習の系譜は別ルートです。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-455/">G-455 · 特徴量設計</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-153/">G-153 · 深層学習と特徴表現</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-315/">G-315 · 画像認識タスク</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · CNNの局所特徴</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../hog/">HOG</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../nerf/">NeRF</a></li>
+          <li><a href="../bag-of-words/">Bag of Words</a></li>
+          <li><a href="../sift/">SIFT</a></li>
+          <li><a href="../structure-from-motion/">Structure from Motion</a></li>
+          <li><a href="../slam/">SLAM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

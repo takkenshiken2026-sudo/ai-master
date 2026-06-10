@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Transformerブロックとは？Multi-Head Attention・FFN・レイヤー正規化・残差接続からなる基本単位。G検定向けに解説。">
+  <title>Transformerブロックとは？AttentionとFFNをひと塊に——積み上げる基本レゴ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/transformer-block/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Transformerブロックとは？AttentionとFFNをひと塊に——積み上げる基本レゴ">
+  <meta property="og:description" content="Multi-Head AttentionとFeed-Forward Networkを残差接続・レイヤー正規化で挟んだ、Transformerを深くする基本単位。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/transformer-block/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Transformerブロック",
+        "alternateName": ["Transformerブロック", "Transformer Block", "トランスフォーマーブロック", "Transformer層"],
+        "description": "Multi-Head Attention・Feed-Forward Network・レイヤー正規化・残差接続からなるTransformerの基本構成単位。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Transformerブロックとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Self-Attention（多くはMulti-Head Attention）とFeed-Forward Network（FFN）の2つのサブ層を、残差接続とレイヤー正規化で挟んだ、Transformerを構成する基本単位です。同じ形のブロックを何層も積み重ねて深いモデルにします。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TransformerブロックとTransformer全体は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Transformerブロックはモデルを構成する繰り返し単位（レゴの1パーツ）です。Transformer全体には、ブロックの積み重ねに加え、入力埋め込み、位置エンコーディング、エンコーダ・デコーダの構成なども含まれます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TransformerブロックはRNNの再帰層ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。TransformerブロックはSelf-AttentionとFFNを中心とした並列処理の単位です。RNNのように時刻ごとに隠れ状態を逐次更新する再帰結合だけで構成されるわけではありません（G-252）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Transformerブロック</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Transformerブロックとは？AttentionとFFNをひと塊に——積み上げる基本レゴ</h1>
+    <p class="tool-hero-sub">読み：とらんすふぉーまーぶろっく ／ 英：Transformer Block</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Transformerブロック</strong>は、<a href="../transformer/">Transformer</a>を構成する<strong>基本の積み木</strong>——<a href="../attention/">Multi-Head Attention</a>と<strong>Feed-Forward Network（FFN）</strong>を、<strong>残差接続</strong>と<a href="../layer-normalization/">レイヤー正規化</a>で挟んだひと塊——です。LLMの「96層」はしばしば<strong>このブロックを96回積んだ</strong>ことを指します。本記事は全体アーキテクチャの歴史より、<strong>1ブロックの中身</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#two-sublayers">2つのサブ層</a></li>
+        <li><a href="#residual-norm">残差と正規化</a></li>
+        <li><a href="#stack">積み重ねで深くする</a></li>
+        <li><a href="#variants">エンコーダとデコーダ</a></li>
+        <li><a href="#vs-whole">Transformer全体との違い</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Transformerブロック単独の名前は出題頻度は低いですが、構成要素として<strong>Multi-Head Attention</strong>を持つ（<a href="../../exams/g-kentei/practice/q/g-252/">G-252</a>）、Self-Attentionで系列内の関係を扱う（G-252のA）——という<strong>Transformerの説明</strong>にブロックの中身が直結します。
+      </p>
+      <p>
+        Multi-Head Attentionは複数の観点から依存関係を捉える（<a href="../../exams/g-kentei/practice/q/g-256/">G-256</a>）。誤答では、Transformer＝<strong>RNNの再帰だけ</strong>（G-252のD）——ブロックがAttention中心であることを忘れないことが得点源です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-252/">G-252（Transformerの構成）</a>、<a href="../../exams/g-kentei/practice/q/g-256/">G-256（Multi-Head Attention）</a>、<a href="../../exams/g-kentei/practice/q/g-295/">G-295（Attention）</a>、<a href="../../exams/g-kentei/practice/q/g-224/">G-224（レイヤー正規化）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108（Transformerの定義）</a></p>
+      </div>
+    </section>
+
+    <section id="two-sublayers">
+      <h2>2つのサブ層</h2>
+      <p>典型のTransformerブロックは、だいたい<strong>2つのサブ層</strong>から成ります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>サブ層</th><th>役割</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Multi-Head Self-Attention</strong></td><td>系列内のどの位置を相互に参照するか</td><td>G-252、G-256、G-295</td></tr>
+          <tr><td><strong>Feed-Forward Network（FFN）</strong></td><td>各位置のベクトルを非線形変換（<a href="../gelu/">GELU</a>など）</td><td>Transformerの構成要素として理解</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Attentionが<strong>位置間の関係</strong>を混ぜ合わせ、FFNが<strong>各位置の表現を個別に加工</strong>する——この2拍子が1ブロックの芯です。どちらか一方だけでは、Transformerらしい処理になりません。
+      </p>
+    </section>
+
+    <section id="residual-norm">
+      <h2>残差と正規化</h2>
+      <p>
+        各サブ層の前後には、だいたい次の2つが付きます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>残差接続（Residual Connection）</strong> — サブ層の入力を出力に足す。深いネットでも勾配が届きやすくする（<a href="../../exams/g-kentei/practice/q/g-235/">G-235</a>のResNetと同型の発想）</li>
+        <li><strong>レイヤー正規化（Layer Normalization）</strong> — サンプル内の特徴を正規化し学習を安定化（<a href="../../exams/g-kentei/practice/q/g-224/">G-224</a>、<a href="../../exams/g-kentei/practice/q/g-226/">G-226</a>）</li>
+      </ul>
+      <p>
+        図では「Add &amp; Norm」とまとめて書かれることが多いです。試験では数式より、<strong>「残差で深く、正規化で安定」</strong>——この役割分担が押さえ目標です。
+      </p>
+    </section>
+
+    <section id="stack">
+      <h2>積み重ねで深くする</h2>
+      <p>
+        1ブロックだけでは表現力が足りません。同じ<strong>形</strong>のブロックを何層も積み重ね、層が深いほど<strong>抽象度の高い特徴</strong>を学べるようにします。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>浅い層</strong> — 局所的な語法・近接関係</li>
+        <li><strong>中間層</strong> — 句・節レベルの構造</li>
+        <li><strong>深い層</strong> — 文脈全体の意味・タスク固有の表現</li>
+      </ol>
+      <p>
+        GPTやBERTの「層数」——12層、24層、96層——は、この<strong>ブロックの個数</strong>と読み替えられることが多いです。パラメータ数の大半はFFN側に載る、という話も層を重ねた結果として出てきます。
+      </p>
+    </section>
+
+    <section id="variants">
+      <h2>エンコーダとデコーダ</h2>
+      <p>ブロックの<strong>形</strong>は共通ですが、エンコーダ用とデコーダ用でAttentionの種類が変わります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ブロックの場所</th><th>Attentionの違い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>エンコーダ</strong></td><td>Self-Attention（双方向に系列内を見る）</td></tr>
+          <tr><td><strong>デコーダ</strong></td><td>Masked Self-Attention（未来のトークンを見ない）＋必要ならCross-Attention</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../bert/">BERT</a>はエンコーダブロックの積み重ね、<a href="../gpt/">GPT</a>はデコーダブロックの積み重ね——<strong>ブロックは同族、積み方が違う</strong>——という整理が試験でも使えます（<a href="../../exams/g-kentei/drill/q/tf-425/">TF-425</a>）。
+      </p>
+    </section>
+
+    <section id="vs-whole">
+      <h2>Transformer全体との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Transformerブロック</th><th>Transformer全体</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>スコープ</strong></td><td>1層分の繰り返し単位</td><td>モデル全体のアーキテクチャ</td></tr>
+          <tr><td><strong>含むもの</strong></td><td>Attention＋FFN＋残差＋正規化</td><td>上記の積み重ね＋埋め込み・位置情報・入出力</td></tr>
+          <tr><td><strong>比喩</strong></td><td>レゴの基本ブロック</td><td>完成した城</td></tr>
+          <tr><td><strong>試験</strong></td><td>G-252・G-256の構成要素</td><td>TF-0108の定義</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../transformer/">Transformer</a>記事が「なぜLLMの基盤か」を語るなら、本記事は<strong>「1層の中で何が起きているか」</strong>——深さの方向にズームした説明です。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ブロック＝Transformer全体</td><td>構成単位 vs アーキテクチャ全体</td></tr>
+          <tr><td>ブロック＝<a href="../rnn/">RNN</a>層</td><td>Self-Attention中心 vs 逐次の隠れ状態（G-252）</td></tr>
+          <tr><td>ブロックはAttentionのみ</td><td>FFNも<strong>必須の半分</strong></td></tr>
+          <tr><td>Multi-Head＝匿名加工</td><td>複数視点の注意 vs 個人情報制度（G-256のD）</td></tr>
+          <tr><td>レイヤー正規化＝<a href="../dropout/">ドロップアウト</a></td><td>分布の正規化 vs ユニット無効化の正則化（G-299）</td></tr>
+          <tr><td>位置エンコーディング＝各ブロック内のみ</td><td>入力側で付与が典型（TF-0112は別概念のすり替え）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Transformerブロックとは何ですか？</summary>
+          <p class="tool-faq-a">Self-Attention（多くはMulti-Head Attention）とFeed-Forward Network（FFN）の2つのサブ層を、残差接続とレイヤー正規化で挟んだ、Transformerを構成する基本単位です。同じ形のブロックを何層も積み重ねて深いモデルにします。</p>
+        </details>
+        <details>
+          <summary>TransformerブロックとTransformer全体は同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。Transformerブロックはモデルを構成する繰り返し単位（レゴの1パーツ）です。Transformer全体には、ブロックの積み重ねに加え、入力埋め込み、位置エンコーディング、エンコーダ・デコーダの構成なども含まれます。</p>
+        </details>
+        <details>
+          <summary>TransformerブロックはRNNの再帰層ですか？</summary>
+          <p class="tool-faq-a">いいえ。TransformerブロックはSelf-AttentionとFFNを中心とした並列処理の単位です。RNNのように時刻ごとに隠れ状態を逐次更新する再帰結合だけで構成されるわけではありません（G-252）。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-252/">G-252 · Transformerの構成</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-256/">G-256 · Multi-Head Attention</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-295/">G-295 · Attentionの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformerの定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../gelu/">GELU</a></li>
+          <li><a href="../layer-normalization/">レイヤー正規化</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../gpt-architecture/">GPTアーキテクチャ</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

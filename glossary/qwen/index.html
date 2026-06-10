@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Qwenとは？Alibabaの多言語対応オープンウェイトLLMファミリー。DeepSeek・GPTとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>Qwenとは？言語の壁を薄くする——Alibabaの多言語オープンウェイト — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/qwen/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Qwenとは？言語の壁を薄くする——Alibabaの多言語オープンウェイト">
+  <meta property="og:description" content="阿里巴巴（Alibaba）が公開する多言語対応オープンウェイトLLM。中国語・英語・日本語などを横断する基盤モデル系列。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/qwen/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Qwen",
+        "alternateName": ["Qwen", "クウェン", "通義千問", "Tongyi Qianwen"],
+        "description": "Alibaba（阿里巴巴）が開発する多言語対応のオープンウェイト大規模言語モデルファミリー。中国語・英語・日本語など複数言語を横断し、テキスト生成や下流タスクの基盤として利用される。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Qwenは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Alibabaが提供するオープンウェイトの多言語LLMファミリーです。Qwen・Qwen2・Qwen2.5などの世代があり、中国語・英語・日本語など複数言語のテキスト生成やファインチューニングの土台として使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "QwenとDeepSeekは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも中国発のオープンウェイトLLMですが、開発元（Alibaba vs DeepSeek）と前面に出す強みが異なります。Qwenは多言語対応を、DeepSeekは推論・コスト効率を強調する系列として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "QwenとChatGPTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。QwenはAlibabaのモデルファミリー、ChatGPTはOpenAIの対話サービスです。モデルとサービス、開発元を混同しないことが重要です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Qwen</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Qwenとは？言語の壁を薄くする——Alibabaの多言語オープンウェイト</h1>
+    <p class="tool-hero-sub">読み：クウェン ／ 英：Qwen（通義千問／Tongyi Qianwen）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Qwen</strong>（通義千問）は、<strong>Alibaba（阿里巴巴）</strong>が公開する<strong>多言語対応のオープンウェイト<a href="../llm/">LLM</a></strong>ファミリーです。<a href="../deepseek/">DeepSeek</a>が推論・コスト効率を前面に出すのに対し、Qwenは<strong>「中国語・英語・日本語などを横断して扱う」</strong>——言語の壁を薄くする——設計を軸に語られます。本記事はベンチマーク暗記ではなく、<strong>中国発オープンウェイトのうち「多言語」という切り口</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#multilingual">多言語対応の意味</a></li>
+        <li><a href="#qwen-line">Qwenファミリーの世代</a></li>
+        <li><a href="#vs-deepseek">DeepSeekとの棲み分け</a></li>
+        <li><a href="#open-map">オープンウェイトLLMの地図</a></li>
+        <li><a href="#use-cases">向いている使い方</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="multilingual">
+      <h2>多言語対応の意味</h2>
+      <p>
+        多くの<a href="../foundation-model/">基盤モデル</a>は英語中心のコーパスで学習されます（<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>）。Qwenは<strong>中国語を含む複数言語</strong>——英語・日本語・アラビア語など——を同一ファミリーで扱うことを前面に出しました。
+      </p>
+      <p>
+        試験では個別言語の性能より、<strong>「Alibaba発・オープンウェイト・多言語LLM」</strong>という三つ組で整理すれば十分です。多言語＝翻訳専用モデル、ではありません。汎用<a href="../llm/">LLM</a>が複数言語の生成・理解に対応する、という意味です。
+      </p>
+      <p>
+        日本語の業務文書やアジア圏の多言語チャットボットでは、<strong>英語のみ最適化されたモデルより適合しやすい</strong>場合がある——という実務の整理がQwenの話題性です。
+      </p>
+    </section>
+
+    <section id="qwen-line">
+      <h2>Qwenファミリーの世代</h2>
+      <p>Qwenは単一モデルではなく、世代とサイズが枝分かれするファミリーです。2026年6月時点の整理は以下の通りです（詳細仕様は公式発表を確認してください）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>世代</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Qwen / Qwen1.5</strong></td><td>初期のオープンウェイト系列。多言語基盤</td></tr>
+          <tr><td><strong>Qwen2</strong></td><td>性能・多言語・コード能力の強化</td></tr>
+          <tr><td><strong>Qwen2.5</strong></td><td>さらに言語・サイズ展開を拡大（mini〜large）</td></tr>
+          <tr><td><strong>Qwen-VL 等</strong></td><td>画像＋言語のマルチモーダル枝（別系統として整理）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        中国語名<strong>通義千問</strong>（Tongyi Qianwen）はブランド名として併記されます。試験では<strong>開発元Alibaba</strong>とセットで覚えるのが安全です。
+      </p>
+    </section>
+
+    <section id="vs-deepseek">
+      <h2>DeepSeekとの棲み分け</h2>
+      <p>どちらも<strong>中国発のオープンウェイト</strong>ですが、すり替えに注意します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Qwen</th><th>DeepSeek</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>開発元</strong></td><td>Alibaba（阿里巴巴）</td><td>DeepSeek（深度求索）</td></tr>
+          <tr><td><strong>前面の強み</strong></td><td><strong>多言語</strong>横断</td><td><strong>推論</strong>・コスト効率</td></tr>
+          <tr><td><strong>公開形態</strong></td><td>オープンウェイト</td><td>オープンウェイト</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>多言語基盤モデル</td><td>推論強化・性价比</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>Qwen＝DeepSeek</strong>と答えるのは誤りです。同じ「中国発」でも<strong>企業・設計思想・試験でのラベル</strong>が異なります。
+      </p>
+    </section>
+
+    <section id="open-map">
+      <h2>オープンウェイトLLMの地図</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ファミリー</th><th>開発元</th><th>試験向けの差分</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Qwen</strong></td><td>Alibaba（中国）</td><td>多言語オープンウェイト</td></tr>
+          <tr><td><strong><a href="../deepseek/">DeepSeek</a></strong></td><td>DeepSeek（中国）</td><td>推論・コスト効率</td></tr>
+          <tr><td><strong><a href="../llama/">LLaMA</a></strong></td><td>Meta（米国）</td><td>オープン系の代表格</td></tr>
+          <tr><td><strong><a href="../mistral/">Mistral</a></strong></td><td>Mistral AI（欧州）</td><td>効率重視オープンウェイト</td></tr>
+          <tr><td><strong><a href="../gpt/">GPT</a></strong></td><td>OpenAI（米国）</td><td>主にクローズドAPI</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>のように、オープンウェイトでも<strong>ライセンス条件の確認</strong>が必要です（<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a>）。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>向いている使い方</h2>
+      <ul class="tool-steps">
+        <li><strong>多言語チャット・翻訳補助</strong> — 中国語・英語・日本語をまたぐ対話</li>
+        <li><strong>研究・ローカル実行</strong> — 重み公開で自社環境に載せられる</li>
+        <li><strong>ファインチューニング</strong> — <a href="../lora/">LoRA</a>や<a href="../qlora/">QLoRA</a>で業界用語に適応</li>
+        <li><strong>アジア圏の基盤モデル</strong> — 英語中心モデルの代替候補</li>
+      </ul>
+      <p>
+        Alibabaクラウド上の対話サービス（通義千問）と、オープンウェイトの<strong>Qwenモデル</strong>は別層です。<a href="../../tools/chatgpt/">ChatGPT</a>のような<strong>サービス名</strong>と混同しないでください。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Alibabaの<strong>多言語オープンウェイトLLM</strong></li>
+        <li><strong>対比</strong> — DeepSeek＝別企業・推論軸／GPT＝OpenAI／ChatGPT＝サービス</li>
+        <li><strong>系譜</strong> — LLaMA・Mistralと並ぶオープン系だが開発元・強みが異なる</li>
+        <li><strong>層</strong> — モデル名 ≠ クラウドサービス ≠ 圧縮手法</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>、<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0270/">HQ-0270</a>（開発元の区別）、<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>（Claudeの開発元区別）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Qwen＝<a href="../deepseek/">DeepSeek</a></td><td>Alibaba vs DeepSeek。どちらも中国発だが別系列</td></tr>
+          <tr><td>Qwen＝<a href="../gpt/">GPT</a></td><td>Alibaba vs OpenAI</td></tr>
+          <tr><td>Qwen＝<a href="../../tools/chatgpt/">ChatGPT</a></td><td>モデルファミリー vs 対話サービス</td></tr>
+          <tr><td>Qwen＝<a href="../gemini-model/">Gemini</a></td><td>Alibaba vs Google</td></tr>
+          <tr><td>Qwen＝翻訳API</td><td>汎用LLMの多言語能力 vs 翻訳専用</td></tr>
+          <tr><td>Qwen＝<a href="../llama/">LLaMA</a></td><td>Alibaba vs Meta</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Qwenは何をするモデルですか？</summary><p class="tool-faq-a">Alibabaが提供するオープンウェイトの多言語LLMファミリーです。Qwen・Qwen2・Qwen2.5などの世代があり、中国語・英語・日本語など複数言語のテキスト生成やファインチューニングの土台として使われます。</p></details>
+        <details><summary>QwenとDeepSeekは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらも中国発のオープンウェイトLLMですが、開発元（Alibaba vs DeepSeek）と前面に出す強みが異なります。Qwenは多言語対応を、DeepSeekは推論・コスト効率を強調する系列として整理します。</p></details>
+        <details><summary>QwenとChatGPTは同じですか？</summary><p class="tool-faq-a">同じではありません。QwenはAlibabaのモデルファミリー、ChatGPTはOpenAIの対話サービスです。モデルとサービス、開発元を混同しないことが重要です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-478/">TF-478 · OSSライセンス</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0270/">HQ-0270 · 開発元の区別</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの開発元</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../deepseek/">DeepSeek</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../mistral/">Mistral</a></li>
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

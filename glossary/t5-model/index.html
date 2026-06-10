@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="T5とは？Text-to-Text Transfer Transformer。翻訳も分類も要約もすべてテキスト入出力に統一するNLPモデル。G検定向けに解説。">
+  <title>T5とは？翻訳も分類も全部テキスト入出力——NLPをText-to-Textに一本化する — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/t5-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="T5とは？翻訳も分類も全部テキスト入出力——NLPをText-to-Textに一本化する">
+  <meta property="og:description" content="Text-to-Text Transfer Transformer。タスクごとの専用ヘッドを捨て、入力も出力もテキストにそろえることでNLP全体を一つの枠組みにまとめた。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/t5-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "T5",
+        "alternateName": ["T5", "ティーファイブ", "Text-to-Text Transfer Transformer", "テキストトゥテキスト"],
+        "description": "全NLPタスクをテキスト入力からテキスト出力への変換として統一するEncoder-Decoder型Transformerモデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "T5のText-to-Textとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "すべての自然言語処理タスクを「テキストを入力として受け取り、テキストを出力する」形式にそろえる設計思想です。機械翻訳なら入力に「translate English to German: 英文」、出力にドイツ語文。文分類なら入力に「cola sentence: 文」、出力に「acceptable」や「not acceptable」のように、ラベルも文字列として扱います。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "T5とBERTの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BERTはTransformerのEncoderのみを使い、マスク言語モデルで双方向の文脈表現を学ぶ理解向けモデルです（G-337）。T5はEncoder-Decoder構成で、入力テキストから出力テキストを逐次生成するText-to-Text設計です。翻訳・要約など生成系タスクを同じ枠組みに載せる点がT5の特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "T5は畳み込みニューラルネットワークですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。T5はTransformerベースの言語モデルであり、畳み込みニューラルネットワーク（CNN）ではありません。Self-Attentionを中核とする系列処理モデルで、自然言語処理タスクをテキスト変換として扱います。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">T5</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>T5とは？翻訳も分類も全部テキスト入出力——NLPをText-to-Textに一本化する</h1>
+    <p class="tool-hero-sub">読み：ティーファイブ ／ 英：T5（Text-to-Text Transfer Transformer）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>T5</strong>（Text-to-Text Transfer Transformer）は、<a href="../nlp/">NLP</a>のタスクをすべて<strong>「テキストを入れて、テキストを出す」</strong>——Text-to-Text——にそろえる<a href="../transformer/">Transformer</a>モデルです。翻訳はドイツ語文、分類は「positive」という文字列、要約は短い段落——<strong>出力の型をタスクごとに変えない</strong>のが設計の肝です。本記事はC4データセットの規模より、<strong>なぜラベルまで文字列にしたか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#text-to-text">Text-to-Textの発想</a></li>
+        <li><a href="#task-prefix">タスクをプレフィックスで指定</a></li>
+        <li><a href="#architecture">Encoder-Decoderの骨格</a></li>
+        <li><a href="#family-compare">BERT・GPT・BARTとの整理</a></li>
+        <li><a href="#tokenize">トークナイズと学習</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        T5単独の定義問題はまだ少ないですが、<strong>系列変換・機械翻訳・Transformer系NLP</strong>の文脈で押さえます。<a href="../seq2seq/">Seq2Seq</a>は「入力系列→出力系列」の枠組み（<a href="../../exams/g-kentei/practice/q/g-255/">G-255</a>）、機械翻訳はその代表タスク（<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>）——T5はこれを<strong>全タスクに拡張した具体モデル</strong>です。
+      </p>
+      <p>
+        同時に<a href="../bert/">BERT</a>（<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>）や<a href="../gpt/">GPT</a>との<strong>役割の違い</strong>——理解専用か、生成か、Encoder-Decoderか——をすり替えないことが得点源です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-255/">G-255（Seq2Seq）</a>、<a href="../../exams/g-kentei/practice/q/g-340/">G-340（機械翻訳）</a>、<a href="../../exams/g-kentei/practice/q/g-337/">G-337（BERT）</a>、<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126（NLPの定義）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108（Transformer）</a></p>
+      </div>
+    </section>
+
+    <section id="text-to-text">
+      <h2>Text-to-Textの発想</h2>
+      <p>
+        従来のNLPはタスクごとに入出力の形がバラバラでした。分類は文→クラスID、翻訳は文→別言語の文、質問応答は段落＋質問→スパン——<strong>モデルもデータもヘッドも別設計</strong>になりがちです。
+      </p>
+      <p>
+        T5はここを割り切ります。<strong>入力も出力も常にテキスト</strong>。数値ラベルや専用の分類層に頼らず、モデルは「次のトークンを予測する」という<strong>一つの学習目標</strong>だけで多様なタスクをこなします。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>入力テキスト（例）</th><th>出力テキスト（例）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>機械翻訳</strong></td><td>translate English to German: Hello</td><td>Hallo</td></tr>
+          <tr><td><strong>要約</strong></td><td>summarize: 長い記事本文…</td><td>短い要約文</td></tr>
+          <tr><td><strong>文分類</strong></td><td>cola sentence: 文</td><td>acceptable / not acceptable</td></tr>
+          <tr><td><strong>類似度</strong></td><td>stsb sentence1: … sentence2: …</td><td>3.8（スコアも文字列）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では細かいプレフィックス名まで覚える必要はありません。<strong>「タスクの違いをテキストの書き方で表す」</strong>——この統一感がT5の本質です。
+      </p>
+    </section>
+
+    <section id="task-prefix">
+      <h2>タスクをプレフィックスで指定</h2>
+      <p>
+        入力の先頭に<strong>タスク指示</strong>（プレフィックス）を付けるのがT5流です。「translate …」「summarize:」「cola sentence:」——人間がプロンプトで指示する今の<a href="../llm/">LLM</a>の作法にも通じる発想ですが、T5は<strong>2019〜2020年頃</strong>にこの統一を体系化した先駆けです。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>利点1</strong> — 1つのモデルでマルチタスク学習・転移がしやすい</li>
+        <li><strong>利点2</strong> — 評価も生成テキストの一致・<a href="../bleu/">BLEU</a>など<strong>共通の物差し</strong>に寄せられる</li>
+        <li><strong>利点3</strong> — 新タスク追加時も、出力形式を増やさずプレフィックスを足すだけで済む</li>
+      </ul>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-345/">G-345</a>が示す統計的MTからニューラルMTへの流れの先に、<strong>「翻訳もただのテキスト変換のひとつ」</strong>として並べる——これがT5の整理です。
+      </p>
+    </section>
+
+    <section id="architecture">
+      <h2>Encoder-Decoderの骨格</h2>
+      <p>
+        T5の中身は<strong>Encoder-Decoder型のTransformer</strong>です。エンコーダが入力テキスト全体を読み、デコーダが出力テキストを1<a href="../token/">トークン</a>ずつ生成——<a href="../seq2seq/">Seq2Seq</a>の典型構造そのものです。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>エンコーダ</strong> — 双方向の文脈で入力を表現（BERTに近い「読む」側）</li>
+        <li><strong>デコーダ</strong> — 因果的マスクで左から右へ出力を生成（GPTに近い「書く」側）</li>
+        <li><strong>接続</strong> — クロスAttentionで入力のどこを参照するかを動的に選択</li>
+      </ol>
+      <p>
+        アーキテクチャ単体では革新的というより、<strong>タスク定式化の統一</strong>がT5の記号になります。試験では「T5＝Encoder-DecoderのText-to-Text」と一言で言えると安心です。
+      </p>
+    </section>
+
+    <section id="family-compare">
+      <h2>BERT・GPT・BARTとの整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>構成</th><th>主な役割</th><th>T5との違い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>BERT</strong></td><td>Encoderのみ</td><td>理解・分類・抽出（G-337）</td><td>穴埋め事前学習。生成は本来の設計外</td></tr>
+          <tr><td><strong>GPT</strong></td><td>Decoderのみ</td><td>続き生成・対話</td><td>入出力タスクの型統一はしない</td></tr>
+          <tr><td><strong>BART</strong></td><td>Encoder-Decoder</td><td>ノイズ除去からの復元・要約</td><td>事前学習は破損文の復元。T5はプレフィックスでタスク指定</td></tr>
+          <tr><td><strong>T5</strong></td><td>Encoder-Decoder</td><td>全タスクをText-to-Text</td><td><strong>タスク統一</strong>が設計の中心</td></tr>
+        </tbody>
+      </table>
+      <p>
+        モデル名（BERT/GPT/T5）と、タスクの型（分類/生成/<a href="../seq2seq/">Seq2Seq</a>）は<strong>別軸</strong>です。G-337でBERTを押さえたら、T5は「同じTransformer家族の、<strong>入出力をテキストに揃えた兄弟</strong>」として足せます。
+      </p>
+    </section>
+
+    <section id="tokenize">
+      <h2>トークナイズと学習</h2>
+      <p>
+        T5は<strong><a href="../sentencepiece/">SentencePiece</a></strong>によるサブワードトークナイズを採用します。語彙はモデルサイズ（Small/Base/Large など）で共有され、多言語・多タスクの前処理を一本化します。
+      </p>
+      <p>
+        大規模コーパス（C4など）での<strong>スパン破損</strong>（連続トークンをマスクして復元）を含む事前学習のあと、各ダウンストリームタスクをText-to-Text形式に整形してファインチューニング——「同じ損失関数・同じデコーダ出口」でタスクを並べる流れです。
+      </p>
+      <p>
+        試験ではデータセット名より、<strong>Encoder-Decoder＋テキスト入出力統一＋SentencePiece</strong>の三点セットを覚える方が再利用しやすいです。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>T5＝<a href="../bert/">BERT</a></td><td>Encoder-DecoderのText-to-Text vs Encoderのみの理解モデル（G-337）</td></tr>
+          <tr><td>T5＝<a href="../gpt/">GPT</a></td><td>入出力変換の統一 vs デコーダのみの続き生成</td></tr>
+          <tr><td>T5＝<a href="../cnn/">CNN</a></td><td>Transformer系列処理 vs 画像の畳み込み（G-239）</td></tr>
+          <tr><td>T5＝<a href="../seq2seq/">Seq2Seq</a>そのもの</td><td>Seq2Seqは枠組み、T5はその枠で<strong>全タスクをテキスト化</strong>した具体モデル</td></tr>
+          <tr><td>分類は数値クラスIDのみ</td><td>T5では<strong>ラベルも文字列</strong>として生成</td></tr>
+          <tr><td>T5＝物体検出</td><td>NLPモデル。画像のバウンディングボックス予測とは無関係</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>T5のText-to-Textとは何ですか？</summary>
+          <p class="tool-faq-a">すべての自然言語処理タスクを「テキストを入力として受け取り、テキストを出力する」形式にそろえる設計思想です。機械翻訳なら入力に「translate English to German: 英文」、出力にドイツ語文。文分類なら入力に「cola sentence: 文」、出力に「acceptable」や「not acceptable」のように、ラベルも文字列として扱います。</p>
+        </details>
+        <details>
+          <summary>T5とBERTの違いは？</summary>
+          <p class="tool-faq-a">BERTはTransformerのEncoderのみを使い、マスク言語モデルで双方向の文脈表現を学ぶ理解向けモデルです（G-337）。T5はEncoder-Decoder構成で、入力テキストから出力テキストを逐次生成するText-to-Text設計です。翻訳・要約など生成系タスクを同じ枠組みに載せる点がT5の特徴です。</p>
+        </details>
+        <details>
+          <summary>T5は畳み込みニューラルネットワークですか？</summary>
+          <p class="tool-faq-a">いいえ。T5はTransformerベースの言語モデルであり、畳み込みニューラルネットワーク（CNN）ではありません。Self-Attentionを中核とする系列処理モデルで、自然言語処理タスクをテキスト変換として扱います。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-255/">G-255 · Seq2Seqの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-340/">G-340 · 機械翻訳</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERT</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-126/">TF-126 · NLPの定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../seq2seq/">Seq2Seq</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../bart-model/">BART</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../sentencepiece/">SentencePiece</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../bleu/">BLEU</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../text-to-sql/">Text-to-SQL</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

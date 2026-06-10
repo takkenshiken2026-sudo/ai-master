@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SEブロックとは？Squeeze-and-Excitation。空間を潰してチャネルだけ再重み付けするCNNモジュール。CBAM・Transformer Attentionとの違いをG検定向けに解説。">
+  <title>SEブロックとは？空間を潰してチャネルだけ選ぶ——Squeeze-and-Excitation — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/squeeze-and-excitation/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SEブロックとは？空間を潰してチャネルだけ選ぶ——Squeeze-and-Excitation">
+  <meta property="og:description" content="Squeeze-and-Excitationブロック。特徴マップの空間情報を集約し、チャネル方向に依存関係を学習して再重み付けするCNN用モジュール。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/squeeze-and-excitation/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SEブロック",
+        "alternateName": ["SEブロック", "Squeeze-and-Excitation", "SE-Net", "チャネル注意"],
+        "description": "CNNの特徴マップで空間次元を集約（Squeeze）し、チャネル間の依存関係を学習して各チャネルを再重み付け（Excitation）するモジュール。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SEブロックは何をするモジュールですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Squeeze-and-Excitationの略で、畳み込みブロックの出力特徴マップに対し、まず空間方向を集約してチャネルごとの重要度を推定し、その重みを元の特徴に掛け直すモジュールです。どの特徴チャネルを強調するかを学習します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SEブロックとCBAMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。SEブロックはチャネル方向の再重み付けのみを行います。CBAMはチャネル注意に加え、空間注意（どの位置を重視するか）も適用する二段構成です。どちらもCNNの注意機構ですが、SEはより軽量でチャネル特化です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SEブロックはTransformerのAttentionですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SEブロックはCNNの特徴マップに挿入するチャネル再較正モジュールです。TransformerのSelf-Attentionは系列内の要素間関係を計算する中核機構であり、対象も計算も異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SEブロック</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SEブロックとは？空間を潰してチャネルだけ選ぶ——Squeeze-and-Excitation</h1>
+    <p class="tool-hero-sub">読み：えすいーぶろっく ／ 英：SEブロック（Squeeze-and-Excitation）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SEブロック</strong>（Squeeze-and-Excitation）は、<a href="../cnn/">CNN</a>の特徴マップに差し込む<strong>チャネル再較正モジュール</strong>です。高さ×幅の<strong>空間を一度つぶして（Squeeze）</strong>チャネルごとの重要度を推定し、<strong>チャネル方向だけ再重み付け（Excitation）</strong>する——<a href="../cbam/">CBAM</a>が「チャネル＋空間」の二段なのに対し、SEは<strong>「何の特徴か」だけを選ぶ軽量版</strong>——本記事はその設計思想に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">SEブロックとは</a></li>
+        <li><a href="#squeeze">Squeeze——空間を潰す</a></li>
+        <li><a href="#excitation">Excitation——チャネルを選ぶ</a></li>
+        <li><a href="#vs-cbam">CBAMとの対比</a></li>
+        <li><a href="#where">どこに載るか</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SEブロック単独の過去問は少ない一方、辞典の定義は<strong>「チャネル間の依存を学習し特徴を再重み付け」</strong>です。試験では<a href="../cnn/">CNN</a>の畳み込みが特徴を抽出する土台（<a href="../../exams/g-kentei/practice/q/g-298/">G-298</a>）の上に、<strong>どのチャネルを強調するか</strong>を学習する付加モジュールとして整理します。
+      </p>
+      <p>
+        誤答では、<strong>SE＝TransformerのAttention</strong>（<a href="../../exams/g-kentei/practice/q/g-251/">G-251</a>）、<strong>SE＝空間注意だけ</strong>、<strong>SE＝画像生成</strong>などのすり替えに注意します。SEは<strong>チャネル方向</strong>の再重み付けが核心です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-298/">G-298（畳み込み層）</a>、<a href="../../exams/g-kentei/practice/q/g-318/">G-318（画像認識タスク）</a>、<a href="../../exams/g-kentei/practice/q/g-251/">G-251（Transformerとの区別）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>SEブロックとは</h2>
+      <p>
+        SEブロックは、2018年の<strong>SE-Net</strong>（Squeeze-and-Excitation Networks）論文で提案された、<a href="../resnet/">ResNet</a>などの畳み込みブロックに<strong>プラグイン</strong>できる小さなモジュールです。畳み込みは局所的なパターンを拾いますが、<strong>チャネル同士は独立に扱われがち</strong>——SEは「エッジ検出チャネルと色チャネルは、今の入力ではどちらが効くか」という<strong>チャネル間の関係</strong>を明示的に学習します。
+      </p>
+      <p>
+        パラメータ増加は比較的少なく、既存のCNNに足すだけで精度向上が見込める——という実用性が、後続の<a href="../cbam/">CBAM</a>などチャネル注意研究の源流の一つになっています。
+      </p>
+    </section>
+
+    <section id="squeeze">
+      <h2>Squeeze——空間を潰す</h2>
+      <p>
+        入力は高さ×幅×チャネル数の三次元テンソルです。<strong>Squeeze</strong>では、各チャネルについて空間方向（高さ・幅）を<strong>集約</strong>し、チャネルごとに1つのスカラー（代表値）を得ます。典型的には<strong>グローバル平均プーリング</strong>で、画像全体のそのチャネルの平均応答を取ります。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>目的</strong> — 「このチャネルは画像全体でどれだけ反応したか」を1数値に圧縮</li>
+        <li><strong>効果</strong> — 空間位置の細部はいったん捨て、<strong>チャネルレベルの統計</strong>だけを次段へ渡す</li>
+        <li><strong>試験向け</strong> — Squeeze＝空間次元の集約、と覚える</li>
+      </ul>
+      <p>
+        ここで空間を潰すからこそ、SEは<strong>「どの位置か」ではなく「どの特徴種類か」</strong>に集中できます。位置の選択は<a href="../cbam/">CBAM</a>の空間注意が担当します。
+      </p>
+    </section>
+
+    <section id="excitation">
+      <h2>Excitation——チャネルを選ぶ</h2>
+      <p>
+        <strong>Excitation</strong>では、Squeezeで得たチャネルベクトルを小さな全結合層（ボトルネック構造）に通し、<strong>0〜1のゲート値</strong>を各チャネルに割り当てます。このゲートを元の特徴マップのチャネル方向に掛け直す——<strong>再較正（recalibration）</strong>——ことで、重要なチャネルを増幅し、不要なチャネルを抑えます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>操作</th><th>問い</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Squeeze</strong></td><td>空間を集約</td><td>各チャネルは全体でどれだけ反応したか</td></tr>
+          <tr><td><strong>Excitation</strong></td><td>チャネル間依存を学習</td><td>今の入力でどのチャネルを強調すべきか</td></tr>
+          <tr><td><strong>Scale</strong></td><td>元特徴にゲートを掛ける</td><td>再重み付けされた特徴を次層へ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        辞典の「<strong>チャネル間の依存を学習</strong>」は、このExcitation段階を指します。チャネルAが強いときチャネルBも強調する——といった<strong>共起関係</strong>を、軽量なMLPで近似します。
+      </p>
+    </section>
+
+    <section id="vs-cbam">
+      <h2>CBAMとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>SEブロック</th><th>CBAM</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>注意の対象</strong></td><td><strong>チャネルのみ</strong></td><td>チャネル＋<strong>空間</strong></td></tr>
+          <tr><td><strong>段数</strong></td><td>Squeeze → Excitation の<strong>一段</strong></td><td>チャネル注意 → 空間注意の<strong>二段</strong></td></tr>
+          <tr><td><strong>軽量さ</strong></td><td>よりパラメータ少なめ</td><td>空間注意分だけ増える</td></tr>
+          <tr><td><strong>問い</strong></td><td>「<strong>何の</strong>特徴か」</td><td>「何の特徴か」＋「<strong>どの位置</strong>か」</td></tr>
+          <tr><td><strong>試験</strong></td><td>チャネル再重み付け</td><td>CNN二段注意モジュール</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どちらも「Attention」という語を使う文脈がありますが、<strong>TransformerのSelf-Attention</strong>とは別物です。主語は<strong>CNNの特徴マップ</strong>に固定して覚えます。
+      </p>
+    </section>
+
+    <section id="where">
+      <h2>どこに載るか</h2>
+      <p>
+        SEブロックは、<a href="../resnet/">ResNet</a>の残差ブロックの直後など、<strong>畳み込みブロックの出力</strong>に挿入されます。SE-ResNetのように、既存アーキテクチャにSEを足した変種も広く使われました。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>画像分類</strong>
+          ノイズチャネルを抑え、物体に関係する特徴を強調
+        </li>
+        <li>
+          <strong>物体検出・セグメンテーション</strong>
+          バックボーンCNNにSEを載せ、下流タスクの表現力を底上げ
+        </li>
+        <li>
+          <strong>設計思想</strong>
+          アーキテクチャ全体を作り直すのではなく、<strong>モジュールを差す</strong>改良
+        </li>
+      </ul>
+      <p>
+        SEは<strong>画像を生成する</strong>モジュールではなく、<strong>認識・理解の特徴抽出</strong>を強化する部品です。<a href="../text-to-image/">Text-to-Image</a>や<a href="../stable-diffusion/">Stable Diffusion</a>とは別系統です。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SE＝<a href="../transformer/">Transformer</a>のAttention</td><td>CNNチャネル再較正 vs 系列のSelf-Attention（G-251）</td></tr>
+          <tr><td>SE＝<a href="../cbam/">CBAM</a>と同一</td><td>チャネルのみ vs チャネル＋空間</td></tr>
+          <tr><td>SE＝空間注意だけ</td><td>空間はSqueezeで<strong>集約</strong>。強調はチャネル方向</td></tr>
+          <tr><td>SE＝<a href="../batch-normalization/">バッチ正規化</a></td><td>チャネル依存の<strong>動的ゲート</strong> vs 正規化</td></tr>
+          <tr><td>SE＝画像生成モジュール</td><td>認識系CNNの付加 vs 生成モデル</td></tr>
+          <tr><td>Excitation＝活性化関数</td><td>チャネル重みの推定 vs 非線形変換全般</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SEブロックは何をするモジュールですか？</summary>
+          <p class="tool-faq-a">Squeeze-and-Excitationの略で、畳み込みブロックの出力特徴マップに対し、まず空間方向を集約してチャネルごとの重要度を推定し、その重みを元の特徴に掛け直すモジュールです。どの特徴チャネルを強調するかを学習します。</p>
+        </details>
+        <details>
+          <summary>SEブロックとCBAMは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。SEブロックはチャネル方向の再重み付けのみを行います。CBAMはチャネル注意に加え、空間注意（どの位置を重視するか）も適用する二段構成です。どちらもCNNの注意機構ですが、SEはより軽量でチャネル特化です。</p>
+        </details>
+        <details>
+          <summary>SEブロックはTransformerのAttentionですか？</summary>
+          <p class="tool-faq-a">いいえ。SEブロックはCNNの特徴マップに挿入するチャネル再較正モジュールです。TransformerのSelf-Attentionは系列内の要素間関係を計算する中核機構であり、対象も計算も異なります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-298/">G-298 · 畳み込み層の役割</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-318/">G-318 · 画像認識タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-251/">G-251 · TransformerとAttention</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../cbam/">CBAM</a></li>
+          <li><a href="../resnet/">ResNet</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../batch-normalization/">バッチ正規化</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

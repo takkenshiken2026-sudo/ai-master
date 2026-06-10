@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KVキャッシュとは？LLM推論で過去トークンのKey・Valueを再利用し自己回帰生成を高速化する技法。GQA・FlashAttentionとの違いを解説。">
+  <title>KVキャッシュとは？過去のKVを温存する——自己回帰生成の推論を速くする記憶 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/kv-cache/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="KVキャッシュとは？過去のKVを温存する——自己回帰生成の推論を速くする記憶">
+  <meta property="og:description" content="Transformer推論で既に計算したKey・Valueテンソルを保持し、新トークン生成時の再計算を避ける。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/kv-cache/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "KVキャッシュ",
+        "alternateName": ["KV Cache", "KVキャッシュ", "Key-Value cache", "キーバリューキャッシュ"],
+        "description": "LLMの自己回帰推論において、過去トークンに対応するKey・Valueテンソルをメモリに保持し、新しいトークン生成時に再計算を避けてAttentionを高速化する技法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "KVキャッシュは何をする技法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "TransformerベースのLLMがテキストを1トークンずつ生成するとき、すでに処理した過去トークンのKey・Valueをメモリに保存し、次のトークンでは新しい部分だけを計算する推論最適化です。毎ステップで全履歴をゼロから再計算する無駄を省き、生成速度を上げます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "KVキャッシュとFlashAttentionは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。KVキャッシュは推論時に過去のKey・Valueを保持して再計算を避ける手法です。FlashAttentionは注意計算そのものをGPUメモリIO効率よく実行する実装です。両方とも推論を速くしますが、解くボトルネック（履歴の再計算 vs 注意の計算効率）が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "KVキャッシュは学習時にも使いますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主に推論（テキスト生成）時の最適化として説明されます。学習時は通常、系列全体を並列に処理するため、自己回帰的に1トークンずつ生成する状況とは異なります。試験では推論高速化の文脈で押さえるのが中心です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">KVキャッシュ</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>KVキャッシュとは？過去のKVを温存する——自己回帰生成の推論を速くする記憶</h1>
+    <p class="tool-hero-sub">読み：ケーブイキャッシュ ／ 英：KV Cache（Key-Value cache）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>KVキャッシュ</strong>（KV Cache）は、<a href="../llm/">LLM</a>が<strong>1トークンずつ文章を生成</strong>するとき、過去トークンの<strong>Key・Value（KV）</strong>をメモリに残して<strong>再計算を避ける</strong>推論最適化です。キャッシュなしだと毎ステップで全履歴の注意をゼロから計算する——KVキャッシュは<strong>「すでに見た部分の記憶を温存する」</strong>——本記事はテンソル形状の暗記より、<strong>自己回帰生成のボトルネック</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#autoregressive">自己回帰生成の足かせ</a></li>
+        <li><a href="#qkv">Query・Key・Valueの役割</a></li>
+        <li><a href="#how-cache">キャッシュが効く仕組み</a></li>
+        <li><a href="#memory-trade">メモリとのトレードオフ</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="autoregressive">
+      <h2>自己回帰生成の足かせ</h2>
+      <p>
+        <a href="../gpt-architecture/">GPT</a>系の<a href="../llm/">LLM</a>は、次の1トークンを予測→出力に追加→また次を予測、を繰り返します（<strong>自己回帰</strong>）。<a href="../transformer/">Transformer</a>の<a href="../attention/">Attention</a>は、新トークンの<strong>Query</strong>が、これまでの全トークン（過去の文脈）を見にいきます（<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>）。
+      </p>
+      <p>
+        素朴な実装では、トークンが増えるたびに<strong>全履歴のKey・Valueを毎回再計算</strong>します。文が長くなるほど1トークンあたりのコストが膨らむ——KVキャッシュはこの無駄を削ります。
+      </p>
+    </section>
+
+    <section id="qkv">
+      <h2>Query・Key・Valueの役割</h2>
+      <p>Scaled Dot-Product Attentionでは、各トークンから3つのベクトルが作られます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>記号</th><th>役割</th><th>KVキャッシュとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Q（Query）</strong></td><td>「何を探すか」</td><td>新トークン分だけ毎ステップ計算</td></tr>
+          <tr><td><strong>K（Key）</strong></td><td>「何として索引されるか」</td><td><strong>過去分をキャッシュに保存</strong></td></tr>
+          <tr><td><strong>V（Value）</strong></td><td>「取り出す中身」</td><td><strong>過去分をキャッシュに保存</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        過去トークンのK・Vは生成が進んでも<strong>変わらない</strong>——だから保存して再利用できる。これがKVキャッシュの前提です（<a href="../../exams/g-kentei/practice/q/g-304/">G-304</a>の注意の枠組み）。
+      </p>
+    </section>
+
+    <section id="how-cache">
+      <h2>キャッシュが効く仕組み</h2>
+      <ul class="tool-steps">
+        <li><strong>ステップ1</strong> — 最初のトークンでK・Vを計算し、キャッシュへ格納</li>
+        <li><strong>ステップ2以降</strong> — 新トークンのQ・K・Vだけ計算。K・Vはキャッシュの過去分と連結</li>
+        <li><strong>Attention</strong> — 新Qが「キャッシュ済みK全体」を参照して重み付き和</li>
+        <li><strong>効果</strong> — 履歴長に比例した<strong>再計算の削減</strong>→生成が速くなる</li>
+      </ul>
+      <p>
+        <a href="../flash-attention/">FlashAttention</a>が注意<strong>計算の中身</strong>を速くするのに対し、KVキャッシュは<strong>何を計算しないか</strong>を決める——両方とも推論高速化（<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>）に効きますが、層が違います。
+      </p>
+    </section>
+
+    <section id="memory-trade">
+      <h2>メモリとのトレードオフ</h2>
+      <p>
+        キャッシュは<strong>GPUメモリを消費</strong>します。文脈が長いほど、層数×ヘッド数×トークン数ぶんのK・Vを保持する——<a href="../context-window/">コンテキストウィンドウ</a>が大きいモデルほど、KVキャッシュのメモリ圧力も上がります（<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>何を減らすか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>KVキャッシュ</strong></td><td>再計算（時間）</td></tr>
+          <tr><td><strong><a href="../multi-query-attention/">MQA</a></strong></td><td>KVを<strong>1組に集約</strong>→キャッシュ最小</td></tr>
+          <tr><td><strong><a href="../grouped-query-attention/">GQA</a></strong></td><td>KVヘッド数→<strong>キャッシュ容量</strong>そのもの</td></tr>
+          <tr><td><strong><a href="../flash-attention/">FlashAttention</a></strong></td><td>注意計算のメモリIO</td></tr>
+        </tbody>
+      </table>
+      <p>
+        GQAは「KVを束ねてキャッシュを軽くする」設計、KVキャッシュは「軽くしたKVを捨てずに使い回す」設計——<strong>推論効率の別レイヤー</strong>として整理すると、試験のすり替えに強くなります。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 推論時に過去トークンの<strong>K・Vを保持・再利用</strong>する技法</li>
+        <li><strong>前提</strong> — 自己回帰的に1トークンずつ生成するLLM</li>
+        <li><strong>効果</strong> — 履歴の再計算を避け、<strong>生成速度</strong>を改善</li>
+        <li><strong>対比</strong> — FlashAttention＝計算実装、GQA＝KVヘッド削減、学習時バッチ処理とは別</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>、<a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-304/">G-304</a>、<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>、<a href="../../exams/g-kentei/practice/q/g-226/">G-226</a>、<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>KVキャッシュ＝<a href="../flash-attention/">FlashAttention</a></td><td>履歴の再利用 vs 注意計算のIO効率化</td></tr>
+          <tr><td>KVキャッシュ＝<a href="../context-window/">コンテキストウィンドウ</a></td><td>推論最適化 vs 扱える文脈長の上限</td></tr>
+          <tr><td>KVキャッシュ＝<a href="../rag/">RAG</a></td><td>モデル内部の記憶 vs 外部検索で文脈を足す</td></tr>
+          <tr><td>KVキャッシュ＝学習手法</td><td><strong>推論時</strong>の高速化が中心</td></tr>
+          <tr><td>KVキャッシュ＝<a href="../token/">トークン</a>そのもの</td><td>K・Vテンソルの保存 vs テキストの分割単位</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>KVキャッシュは何をする技法ですか？</summary><p class="tool-faq-a">TransformerベースのLLMがテキストを1トークンずつ生成するとき、すでに処理した過去トークンのKey・Valueをメモリに保存し、次のトークンでは新しい部分だけを計算する推論最適化です。毎ステップで全履歴をゼロから再計算する無駄を省き、生成速度を上げます。</p></details>
+        <details><summary>KVキャッシュとFlashAttentionは同じですか？</summary><p class="tool-faq-a">同じではありません。KVキャッシュは推論時に過去のKey・Valueを保持して再計算を避ける手法です。FlashAttentionは注意計算そのものをGPUメモリIO効率よく実行する実装です。両方とも推論を速くしますが、解くボトルネック（履歴の再計算 vs 注意の計算効率）が異なります。</p></details>
+        <details><summary>KVキャッシュは学習時にも使いますか？</summary><p class="tool-faq-a">主に推論（テキスト生成）時の最適化として説明されます。学習時は通常、系列全体を並列に処理するため、自己回帰的に1トークンずつ生成する状況とは異なります。試験では推論高速化の文脈で押さえるのが中心です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformer</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0170/">TF-0170 · コンテキストウィンドウ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-406/">G-406 · 推論高速化</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-304/">G-304 · Scaled Dot-Product Attention</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../multi-query-attention/">MQA</a></li>
+          <li><a href="../grouped-query-attention/">GQA</a></li>
+          <li><a href="../flash-attention/">FlashAttention</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../context-window/">コンテキストウィンドウ</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../gpt-architecture/">GPT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

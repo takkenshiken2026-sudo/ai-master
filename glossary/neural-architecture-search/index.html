@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NASとは？Neural Architecture Search。層の形そのものを自動探索する研究。ハイパーパラメータ調整との違いをG検定向けに解説。">
+  <title>NASとは？層を手で積むから形を探索するへ——ネットワーク設計そのものを自動化する研究 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/neural-architecture-search/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="NASとは？層を手で積むから形を探索するへ——ネットワーク設計そのものを自動化する研究">
+  <meta property="og:description" content="Neural Architecture Search。CNNやTransformerの層数・接続・フィルタ数など、ネットワーク構造そのものを探索空間から自動で選ぶ研究領域。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/neural-architecture-search/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "NAS",
+        "alternateName": ["NAS", "エヌエーエス", "Neural Architecture Search", "ニューラルアーキテクチャ探索"],
+        "description": "ニューラルネットワークの層数・接続・チャネル幅などアーキテクチャそのものを探索空間から自動で選ぶ研究領域。ハイパーパラメータ調整とは対象が異なり、設計図を探す自動化に焦点を当てる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "NASは何を自動化する研究ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ニューラルネットワークの構造そのもの——層の種類や数、フィルタサイズ、接続の仕方など——を探索空間から自動で選ぶ研究領域です。学習率やバッチサイズのようなハイパーパラメータ調整とは、いじる対象がアーキテクチャか学習設定かで区別します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NASとハイパーパラメータ探索は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ハイパーパラメータ探索は、層構成が決まったモデルに対して学習率や正則化係数などを調整します。NASは層の積み方や接続そのものを変えながら、より良いネットワーク設計を探します。どちらも「良い設定を探す」点は共通ですが、探索対象の粒度が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NASとAlexNetは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。AlexNetは人間が設計した具体的なCNNモデル名です。NASはそのような設計を自動で見つけようとする研究手法の総称です。AlexNetは手作業の設計の代表例、NASは設計プロセスの自動化という対比で整理します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">NAS</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>NASとは？層を手で積むから形を探索するへ——ネットワーク設計そのものを自動化する研究</h1>
+    <p class="tool-hero-sub">読み：エヌエーエス ／ 英：NAS（Neural Architecture Search）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>NAS</strong>（Neural Architecture Search）は、<a href="../neural-network/">ニューラルネット</a>の<strong>層の積み方・接続・幅</strong>といった<strong>アーキテクチャそのもの</strong>を、探索空間から自動で選ぶ研究領域です。<a href="../alexnet/">AlexNet</a>のように人間が設計図を描く時代から、「どんな形が最適か」を<strong>アルゴリズムに探させる</strong>——本記事は手法の暗記より、<strong>ハイパーパラメータ調整との決定的な違い</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#design-shift">設計の自動化という問い</a></li>
+        <li><a href="#search-space">何を探すのか</a></li>
+        <li><a href="#vs-hyperparam">ハイパーパラメータ調整との違い</a></li>
+        <li><a href="#methods-cost">探索の仕方とコスト</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="design-shift">
+      <h2>設計の自動化という問い</h2>
+      <p>
+        深層学習の歴史には、<strong>人間がアーキテクチャを手で設計</strong>した時代が長く続きました。<a href="../cnn/">CNN</a>なら畳み込み層を何段重ね、プーリングをどこに置くか——<a href="../../exams/g-kentei/drill/q/tf-118/">TF-118</a>が示す<a href="../alexnet/">AlexNet</a>も、その典型です。
+      </p>
+      <p>
+        NASは次の問いを立てます。「層の形を人間が決めるのではなく、<strong>探索アルゴリズムに任せたら</strong>、同じ計算資源でより良い設計が見つかるか？」——設計図の探索そのものを研究対象にする、という発想の転換です。
+      </p>
+    </section>
+
+    <section id="search-space">
+      <h2>何を探すのか</h2>
+      <p>NASが動かす<strong>探索空間</strong>は、学習率のようなスカラー値とは性質が異なります。変えうるのは<strong>ネットワークの骨格</strong>です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>探索対象の例</th><th>意味</th><th>関連</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>層の種類・数</strong></td><td>畳み込み・プーリング・全結合を何段積むか</td><td><a href="../cnn/">CNN</a>の深さ</td></tr>
+          <tr><td><strong>フィルタ・チャネル幅</strong></td><td>各層の出力次元</td><td><a href="../efficientnet/">EfficientNet</a>の幅スケール</td></tr>
+          <tr><td><strong>接続パターン</strong></td><td>スキップ接続や分岐の有無</td><td>ResNet的な設計</td></tr>
+          <tr><td><strong>演算の選択</strong></td><td>セル内でどの演算を使うか</td><td>NASNetなどの研究例</td></tr>
+        </tbody>
+      </table>
+      <p>
+        見つかった設計は、しばしば<strong>人間が思いつかなかった接続</strong>を含みます。一方で、探索そのものに膨大な学習試行が要る——「自動だが安くない」という現実もセットで覚えておきます。
+      </p>
+    </section>
+
+    <section id="vs-hyperparam">
+      <h2>ハイパーパラメータ調整との違い</h2>
+      <p>試験で最も混同されやすいのが、<strong>NASとハイパーパラメータ探索</strong>のすり替えです（<a href="../../exams/g-kentei/practice/q/g-150/">G-150</a>）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>ハイパーパラメータ調整</th><th>NAS</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>いじる対象</strong></td><td>学習率、バッチサイズ、正則化係数など（<a href="../../exams/g-kentei/practice/q/g-190/">G-190</a>）</td><td><strong>層構成・接続・幅</strong>そのもの</td></tr>
+          <tr><td><strong>モデル構造</strong></td><td>固定（ResNetのまま等）</td><td><strong>探索のたびに変わりうる</strong></td></tr>
+          <tr><td><strong>典型手法</strong></td><td>グリッドサーチ、ランダムサーチ（<a href="../../exams/g-kentei/practice/q/g-198/">G-198</a>、<a href="../../exams/g-kentei/practice/q/g-187/">G-187</a>）</td><td>強化学習コントローラ、進化的探索、微分可能NASなど</td></tr>
+          <tr><td><strong>重みの更新</strong></td><td>勾配降下で学習（<a href="../../exams/g-kentei/practice/q/g-152/">G-152</a>）</td><td>構造選択＋各候補の学習を繰り返す</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どちらも「良い設定を探す」点は共通ですが、<strong>設計図を変えるか、学習ノブを回すか</strong>——この一文で答えを切り分けられます。
+      </p>
+    </section>
+
+    <section id="methods-cost">
+      <h2>探索の仕方とコスト</h2>
+      <p>NASの実装は研究により異なりますが、試験では<strong>「構造を自動探索する」</strong>という定義が中心です。</p>
+      <ul class="tool-steps">
+        <li><strong>コントローラ＋強化学習</strong> — 候補アーキテクチャを生成し、検証精度を報酬にして設計を改善</li>
+        <li><strong>進化的アルゴリズム</strong> — 設計を個体として突然変異・交叉し、世代を重ねて良い形を残す</li>
+        <li><strong>微分可能NAS</strong> — 連続化して勾配で構造も含め最適化しようとする系譜</li>
+        <li><strong>現実の制約</strong> — 候補ごとに学習が要り、GPU時間が膨大——大規模<a href="../llm/">LLM</a>では手設計＋スケーリング法則が主流になりやすい</li>
+      </ul>
+      <p>
+        NASの成果は、しばしば<strong>具体モデル名</strong>として流通します（例：探索で得られた効率<a href="../cnn/">CNN</a>）。NASは<strong>探し方</strong>、<a href="../mobilenet/">MobileNet</a>や<a href="../efficientnet/">EfficientNet</a>は<strong>設計の結果</strong>——この関係で整理すると、AutoML全般との混同も避けやすくなります。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Neural Architecture Search＝<strong>ネットワーク構造</strong>の自動探索</li>
+        <li><strong>対比</strong> — ハイパーパラメータ調整（学習率等）、手設計モデル（AlexNet等）</li>
+        <li><strong>対象</strong> — 層数・接続・フィルタ幅など<strong>アーキテクチャ</strong></li>
+        <li><strong>注意</strong> — 探索は計算コストが高い、モデル学習そのものではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-150/">G-150</a>、<a href="../../exams/g-kentei/practice/q/g-198/">G-198</a>、<a href="../../exams/g-kentei/practice/q/g-187/">G-187</a>、<a href="../../exams/g-kentei/drill/q/tf-118/">TF-118</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>NAS＝ハイパーパラメータ探索</td><td>構造探索 vs 学習率・バッチサイズ等（G-150）</td></tr>
+          <tr><td>NAS＝<a href="../alexnet/">AlexNet</a></td><td>探索手法 vs 手設計の具体モデル</td></tr>
+          <tr><td>NAS＝モデル学習そのもの</td><td>設計を探す段階＋候補の学習がセット</td></tr>
+          <tr><td>NAS＝AutoML全体</td><td>アーキテクチャ探索はAutoMLの一部領域</td></tr>
+          <tr><td>NAS＝<a href="../moe/">MoE</a></td><td>構造探索 vs ルータがExpertを選ぶ設計パターン</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>NASは何を自動化する研究ですか？</summary><p class="tool-faq-a">ニューラルネットワークの構造そのもの——層の種類や数、フィルタサイズ、接続の仕方など——を探索空間から自動で選ぶ研究領域です。学習率やバッチサイズのようなハイパーパラメータ調整とは、いじる対象がアーキテクチャか学習設定かで区別します。</p></details>
+        <details><summary>NASとハイパーパラメータ探索は同じですか？</summary><p class="tool-faq-a">同じではありません。ハイパーパラメータ探索は、層構成が決まったモデルに対して学習率や正則化係数などを調整します。NASは層の積み方や接続そのものを変えながら、より良いネットワーク設計を探します。どちらも「良い設定を探す」点は共通ですが、探索対象の粒度が異なります。</p></details>
+        <details><summary>NASとAlexNetは同じですか？</summary><p class="tool-faq-a">同じではありません。AlexNetは人間が設計した具体的なCNNモデル名です。NASはそのような設計を自動で見つけようとする研究手法の総称です。AlexNetは手作業の設計の代表例、NASは設計プロセスの自動化という対比で整理します。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-150/">G-150 · ハイパーパラメータの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-198/">G-198 · グリッドサーチ</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-187/">G-187 · ランダムサーチ</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-118/">TF-118 · AlexNet（手設計の例）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../neural-network/">ニューラルネット</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../efficientnet/">EfficientNet</a></li>
+          <li><a href="../mobilenet/">MobileNet</a></li>
+          <li><a href="../deep-learning/">深層学習</a></li>
+          <li><a href="../training/">学習</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="シグモイド関数とは？入力を0〜1に写すS字状活性化関数。ReLU・Softmax・ロジスティック回帰との違いをG検定向けに解説。">
+  <title>シグモイド関数とは？S字で確率に写す——深層の主役を退いた古典の出口 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/sigmoid/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="シグモイド関数とは？S字で確率に写す——深層の主役を退いた古典の出口">
+  <meta property="og:description" content="Sigmoid。入力を0から1の範囲に変換するS字状活性化関数。二値分類の出力層やロジスティック回帰で使われる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/sigmoid/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "シグモイド関数",
+        "alternateName": ["シグモイド関数", "Sigmoid", "シグモイド", "σ関数"],
+        "description": "入力を0から1の範囲に変換するS字状の活性化関数。二値分類の確率出力やロジスティック回帰、LSTMのゲートなどで使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "シグモイド関数の出力範囲は？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "0から1の範囲です。入力が大きく正でも1に近づき、大きく負でも0に近づくS字状の曲線を描きます。-1から1の範囲はtanh関数の出力であり、シグモイドの範囲ではありません（G-157）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "シグモイド関数とReLUは同じ用途ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主な用途は異なります。ReLUは隠れ層で広く使われ、負の入力を0に切り捨てます。シグモイドは二値分類の出力層で確率を0〜1に写す場合や、LSTMのゲートなどで使われます。深い隠れ層の主役はReLU時代に移りました（G-158）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "シグモイド関数とソフトマックス関数は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。シグモイドは主に二値分類で1つの出力を0〜1の確率に変換します。ソフトマックスは多クラス分類の出力層で、複数クラスの確率を合計1の分布に変換します（G-121）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">シグモイド関数</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>シグモイド関数とは？S字で確率に写す——深層の主役を退いた古典の出口</h1>
+    <p class="tool-hero-sub">読み：しぐもいど ／ 英：Sigmoid</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>シグモイド関数</strong>（Sigmoid）は、任意の実数入力を<strong>0〜1のS字カーブ</strong>へ写す活性化関数です。ロジスティック回帰の「確率」、二値分類の出力層、<a href="../lstm/">LSTM</a>のゲート——本記事は数式の暗記より、<strong>「なぜ深層の隠れ層からReLUに主役が移ったか」</strong>と<strong>「今もどこで使われるか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#s-curve">S字カーブの直感</a></li>
+        <li><a href="#roles">使われる場所</a></li>
+        <li><a href="#vs-others">ReLU・Softmaxとの役割分担</a></li>
+        <li><a href="#vanishing">飽和と勾配消失</a></li>
+        <li><a href="#history">深層学習史での位置</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        シグモイドの定義は<strong>「入力を0から1の範囲に変換する活性化関数」</strong>です（<a href="../../exams/g-kentei/practice/q/g-121/">G-121</a>、<a href="../../exams/g-kentei/practice/q/g-157/">G-157</a>）。二値分類の確率表現（G-121）と、<strong>出力範囲の誤り</strong>（-1〜1は×——G-157、<a href="../../exams/g-kentei/drill/q/tf-060/">TF-060</a>）が定番です。
+      </p>
+      <p>
+        活性化関数全体では、<a href="../../exams/g-kentei/practice/q/g-203/">G-203</a>のように「ないと線形の重ね合わせになる」——非線形性の導入——と、<a href="../../exams/g-kentei/practice/q/g-193/">G-193</a>の<strong>層・タスクごとの使い分け</strong>が問われます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-121/">G-121（シグモイド vs ソフトマックス）</a>、<a href="../../exams/g-kentei/practice/q/g-157/">G-157（出力範囲）</a>、<a href="../../exams/g-kentei/practice/q/g-032/">G-032（ロジスティック回帰）</a>、<a href="../../exams/g-kentei/practice/q/g-158/">G-158（ReLUとの対比）</a></p>
+      </div>
+    </section>
+
+    <section id="s-curve">
+      <h2>S字カーブの直感</h2>
+      <p>
+        シグモイドは、入力が小さいときは<strong>0に近い</strong>、大きいときは<strong>1に近い</strong>——その間をなだらかな<strong>S字</strong>でつなぎます。いわば「0か1かの境界を、ソフトに確率へ変換する」関数です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>入力の傾向</th><th>出力</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>大きく正</strong></td><td>1に近づく</td><td>「陽性」の確率が高い</td></tr>
+          <tr><td><strong>0付近</strong></td><td>約0.5</td><td>境界線上</td></tr>
+          <tr><td><strong>大きく負</strong></td><td>0に近づく</td><td>「陰性」の確率が高い</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-032/">G-032</a>のロジスティック回帰は、このシグモイドで<strong>クラスに属する確率</strong>を推定する分類手法です。名称に「回帰」とあるため連続値予測と混同しやすい——試験では<strong>分類</strong>として押さえます。
+      </p>
+    </section>
+
+    <section id="roles">
+      <h2>使われる場所</h2>
+      <p>シグモイドは「どこに置くか」で意味が変わります。試験では<strong>層とタスク</strong>の対応が重要です（G-193）。</p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>二値分類の出力層</strong>
+          「このメールはスパムか？」→ 確率0.87（G-121）
+        </li>
+        <li>
+          <strong>ロジスティック回帰</strong>
+          古典的な分類の確率出力（G-032）
+        </li>
+        <li>
+          <strong>LSTM・GRUのゲート</strong>
+          どれだけ情報を通すかを0〜1で制御——<a href="../lstm/">LSTM</a>内部でもシグモイドが使われる
+        </li>
+        <li>
+          <strong>隠れ層（過去）</strong>
+          深層化以前は隠れ層の活性化にも使われたが、<strong>今のCNNの主役はReLU</strong>
+        </li>
+      </ul>
+    </section>
+
+    <section id="vs-others">
+      <h2>ReLU・Softmaxとの役割分担</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>関数</th><th>主な出力範囲</th><th>主な置き場所</th><th>試験</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>シグモイド</strong></td><td>0〜1</td><td>二値分類の出力層</td><td>G-121</td></tr>
+          <tr><td><strong>ソフトマックス</strong></td><td>合計1の確率分布</td><td>多クラス分類の出力層</td><td>G-121</td></tr>
+          <tr><td><strong>ReLU</strong></td><td>0以上（負は0）</td><td><strong>隠れ層</strong></td><td>G-011、G-158</td></tr>
+          <tr><td><strong>tanh</strong></td><td>-1〜1</td><td>隠れ層（一部）・RNN系</td><td>G-122</td></tr>
+        </tbody>
+      </table>
+      <p>
+        G-121の正解パターン——<strong>（あ）シグモイド　（い）ソフトマックス</strong>——は暗記どころか、<strong>二値 vs 多クラス</strong>の出口の違いを表しています。ReLUを出力層の確率変換に使うのは通常の設計ではありません。
+      </p>
+    </section>
+
+    <section id="vanishing">
+      <h2>飽和と勾配消失</h2>
+      <p>
+        シグモイドの弱点は、入力の絶対値が<strong>大きい領域</strong>——カーブがほぼ水平になる<strong>飽和域</strong>——で<strong>勾配が小さくなる</strong>ことです（G-157、<a href="../../exams/g-kentei/practice/q/g-122/">G-122</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>勾配消失</strong> — 深い層ほど誤差が伝わりにくい（<a href="../../exams/g-kentei/practice/q/g-124/">G-124</a>、<a href="../../exams/g-kentei/drill/q/tf-392/">TF-392</a>）</li>
+        <li><strong>ReLUの台頭</strong> — 正の領域で勾配が一定 → 深層でも学習しやすい（G-158）</li>
+        <li><strong>He初期化</strong> — ReLU時代の重み初期化（<a href="../he-initialization/">He初期化</a>）。シグモイド時代はXavier（Glorot）想定</li>
+      </ul>
+      <p>
+        だから「シグモイド＝悪」ではなく、<strong>深い隠れ層の主役を退いた</strong>——一方、出力層の二値確率やLSTMゲートでは今も現役——という整理が試験向けです。
+      </p>
+    </section>
+
+    <section id="history">
+      <h2>深層学習史での位置</h2>
+      <p>
+        初期の<a href="../neural-network/">ニューラルネット</a>では、隠れ層にもシグモイドやtanhが使われました。<a href="../alexnet/">AlexNet</a>（2012）以降、<a href="../relu/">ReLU</a>が隠れ層のデフォルトに——<a href="../../exams/g-kentei/practice/q/g-319/">G-319</a>——シグモイドは<strong>「深層を育てる活性化」から「確率に写す出口」</strong>へ役割が狭まった、と歴史を一望すると理解が定着します。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-160/">G-160</a>が列挙する活性化関数の代表——ReLU、シグモイド、tanh、ソフトマックス——は、<strong>時代と層で使い分けられた道具箱</strong>です。名前だけでなく「どの層で何のために」をセットで覚えると、G-193のような総合問題にも対応できます。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>出力は-1〜1</td><td>0〜1（G-157、TF-060）。-1〜1はtanh</td></tr>
+          <tr><td>シグモイド＝ソフトマックス</td><td>二値確率 vs 多クラス分布（G-121）</td></tr>
+          <tr><td>シグモイド＝<a href="../relu/">ReLU</a></td><td>出力層の確率変換 vs 隠れ層の非線形（G-158）</td></tr>
+          <tr><td>隠れ層の第一選択</td><td>現代の深層CNNでは<strong>ReLU</strong>が主流</td></tr>
+          <tr><td>シグモイド＝ロジスティック回帰そのもの</td><td>関数 vs 分類モデル全体（G-032）</td></tr>
+          <tr><td>活性化がなくても深層は十分</td><td>線形の重ね合わせに近くなる（G-203）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>シグモイド関数の出力範囲は？</summary>
+          <p class="tool-faq-a">0から1の範囲です。入力が大きく正でも1に近づき、大きく負でも0に近づくS字状の曲線を描きます。-1から1の範囲はtanh関数の出力であり、シグモイドの範囲ではありません（G-157）。</p>
+        </details>
+        <details>
+          <summary>シグモイド関数とReLUは同じ用途ですか？</summary>
+          <p class="tool-faq-a">主な用途は異なります。ReLUは隠れ層で広く使われ、負の入力を0に切り捨てます。シグモイドは二値分類の出力層で確率を0〜1に写す場合や、LSTMのゲートなどで使われます。深い隠れ層の主役はReLU時代に移りました（G-158）。</p>
+        </details>
+        <details>
+          <summary>シグモイド関数とソフトマックス関数は同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。シグモイドは主に二値分類で1つの出力を0〜1の確率に変換します。ソフトマックスは多クラス分類の出力層で、複数クラスの確率を合計1の分布に変換します（G-121）。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-121/">G-121 · シグモイドとソフトマックス</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-157/">G-157 · 出力範囲</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-032/">G-032 · ロジスティック回帰</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-158/">G-158 · ReLUとの対比</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../relu/">ReLU</a></li>
+          <li><a href="../gelu/">GELU</a></li>
+          <li><a href="../leaky-relu/">Leaky ReLU</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../he-initialization/">He初期化</a></li>
+          <li><a href="../lstm/">LSTM</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

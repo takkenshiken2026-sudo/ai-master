@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ResNetとは？Residual Network。残差接続で非常に深いCNNを学習可能にした画像認識モデル。DenseNet・AlexNetとの違いをG検定向けに解説。">
+  <title>ResNetとは？恒等写像の近くで残差だけ学ぶ——超深層へのショートカット — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/resnet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ResNetとは？恒等写像の近くで残差だけ学ぶ——超深層へのショートカット">
+  <meta property="og:description" content="スキップ結合による残差学習で152層級のCNNを実現。勾配消失を緩和し深層化を可能にした画像認識の転換点。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/resnet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ResNet",
+        "alternateName": ["ResNet", "レズネット", "Residual Network", "残差ネットワーク"],
+        "description": "スキップ結合（残差接続）により入力を出力に足し合わせ、層が深くても学習しやすいCNNアーキテクチャ。画像認識で非常に深いネットワークの学習を可能にした。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ResNetは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像認識向けのCNNで、スキップ結合による残差接続を導入したモデルファミリーです。ある層の入力を後段の出力に直接足し合わせ、ネットワークが恒等写像に近い変換から始めつつ残差だけを学習しやすくします。非常に深い層でも勾配が伝わりやすくなり、学習が安定しやすい点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ResNetとDenseNetは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ResNetはスキップ結合で入力を出力に足し合わせ残差を学習しやすくします。DenseNetは以前の全層の特徴マップを結合して受け渡す密結合です。どちらも深いCNNの学習を助けますが、接続の仕方が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "残差接続は正解ラベルを削除する処理ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。残差接続は、層の入力を後段の出力に足し合わせるネットワーク構造です。正解ラベルを削除する処理ではありません。ResNetの中核的な構成要素として試験に登場します（G-303）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ResNet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ResNetとは？恒等写像の近くで残差だけ学ぶ——超深層へのショートカット</h1>
+    <p class="tool-hero-sub">読み：レズネット ／ 英：ResNet（Residual Network）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ResNet</strong>（Residual Network）は、<strong>入力を出力に足し戻すショートカット</strong>——残差接続——で<a href="../cnn/">CNN</a>を<strong>100層超</strong>まで深くした画像認識モデルです。<a href="../alexnet/">AlexNet</a>が「深くして勝つ」を示したのに対し、ResNetは<strong>「深くしすぎて学習が壊れる問題」を構造で解く</strong>——本記事は層数の暗記より、<strong>残差学習という設計思想</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#deep-problem">深くすると何が起きるか</a></li>
+        <li><a href="#residual-idea">残差学習の発想</a></li>
+        <li><a href="#skip-connection">スキップ結合の仕組み</a></li>
+        <li><a href="#cnn-line">CNN系譜での位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="deep-problem">
+      <h2>深くすると何が起きるか</h2>
+      <p>
+        <a href="../deep-learning/">深層学習</a>では、層を増やすと表現力は上がる一方、<strong>勾配が浅い層まで届きにくい</strong>——勾配消失——問題が起きやすくなります（<a href="../../exams/g-kentei/practice/q/g-237/">G-237</a>）。
+      </p>
+      <p>
+        単純に層を積むだけでは、深いネットワークほど学習が難しくなる——2010年代前半の<a href="../cnn/">CNN</a>設計の壁でした。ResNetはこの壁に対する<strong>構造的な回答</strong>として語られます。
+      </p>
+    </section>
+
+    <section id="residual-idea">
+      <h2>残差学習の発想</h2>
+      <p>
+        ResNetの核心は、層が<strong>入力そのものを丸ごと変換する</strong>のではなく、<strong>入力に足す差分（残差）</strong>だけを学習する、という発想です。
+      </p>
+      <p>
+        記号的には、望ましい出力を H(x)、層が学習する変換を F(x) とすると、<strong>H(x) = x + F(x)</strong>——恒等写像（何もしない）の近くから始め、必要な差分だけを足す——という整理です（<a href="../../exams/g-kentei/practice/q/g-278/">G-278</a>）。
+      </p>
+      <p>
+        試験では数式より、<strong>「層が入力ではなく残差を学習しやすくなる」</strong>（G-235）という言い回しが押さえ目標です。
+      </p>
+    </section>
+
+    <section id="skip-connection">
+      <h2>スキップ結合の仕組み</h2>
+      <p>
+        実装では<strong>スキップ結合（skip connection）</strong>——ある層の入力を、数層飛ばして後段の出力に<strong>足し合わせる</strong>——が使われます（<a href="../../exams/g-kentei/practice/q/g-291/">G-291</a>、<a href="../../exams/g-kentei/practice/q/g-236/">G-236</a>）。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>入力 x</strong>が畳み込みブロックを通る</li>
+        <li><strong>変換 F(x)</strong>が得られる</li>
+        <li><strong>出力 = x + F(x)</strong>——ショートカットで x がそのまま加算される</li>
+        <li><strong>勾配</strong>もショートカット経由で浅い層へ流れやすい（G-237）</li>
+      </ol>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-303/">G-303</a>が明確にするように、残差接続は<strong>正解ラベルを削除する処理ではない</strong>——ネットワークの接続構造です。
+      </p>
+    </section>
+
+    <section id="cnn-line">
+      <h2>CNN系譜での位置</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>深層化の工夫</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../alexnet/">AlexNet</a></strong></td><td>深いCNN＋ReLU＋GPU</td><td>DLブームの契機（G-319）</td></tr>
+          <tr><td><strong><a href="../googlenet/">GoogLeNet</a></strong></td><td>Inceptionで並列畳み込み</td><td>幅・多スケール</td></tr>
+          <tr><td><strong>ResNet</strong></td><td><strong>残差接続</strong>で超深層化</td><td>G-322の核心</td></tr>
+          <tr><td><strong><a href="../densenet/">DenseNet</a></strong></td><td>全層密結合で特徴再利用</td><td>接続の仕方が異なる（G-235対比）</td></tr>
+          <tr><td><strong><a href="../efficientnet/">EfficientNet</a></strong></td><td>深さ・幅・解像度の複合スケール</td><td>効率重視の別軸</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>の正解は、<strong>スキップ結合による残差接続で非常に深いネットワークでも学習しやすくした</strong>——ResNetの試験定番フレーズです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>残差接続（スキップ結合）</strong>を持つCNN（Residual Network）</li>
+        <li><strong>思想</strong> — 入力に足す<strong>残差 F(x)</strong>を学習（H(x)=x+F(x)）</li>
+        <li><strong>効果</strong> — 勾配が伝わりやすく、<strong>非常に深い</strong>ネットでも学習可能（G-322、G-237）</li>
+        <li><strong>対比</strong> — DenseNet＝密結合、GoogLeNet＝Inception、AlexNet＝先駆の深層CNN</li>
+        <li><strong>層</strong> — 接続構造 ≠ 正解ラベル削除（G-303）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>、<a href="../../exams/g-kentei/practice/q/g-278/">G-278</a>、<a href="../../exams/g-kentei/practice/q/g-235/">G-235</a>、<a href="../../exams/g-kentei/practice/q/g-291/">G-291</a>、<a href="../../exams/g-kentei/practice/q/g-303/">G-303</a>、<a href="../../exams/g-kentei/practice/q/g-237/">G-237</a>、<a href="../../exams/g-kentei/practice/q/g-236/">G-236</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>残差接続＝正解ラベル削除</td><td>入力を出力に足す構造（G-303）</td></tr>
+          <tr><td>ResNet＝<a href="../densenet/">DenseNet</a></td><td>残差の加算 vs 全層の特徴結合</td></tr>
+          <tr><td>ResNet＝<a href="../googlenet/">GoogLeNet</a></td><td>残差接続 vs Inceptionモジュール</td></tr>
+          <tr><td>ResNet＝<a href="../bert/">BERT</a></td><td>画像CNN vs NLP（G-323）</td></tr>
+          <tr><td>ResNet＝<a href="../dropout/">ドロップアウト</a></td><td>接続構造 vs 正則化</td></tr>
+          <tr><td>深くすれば必ず精度向上</td><td>学習可能性の問題がありResNetが対処</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ResNetは何をするモデルですか？</summary><p class="tool-faq-a">画像認識向けのCNNで、スキップ結合による残差接続を導入したモデルファミリーです。ある層の入力を後段の出力に直接足し合わせ、ネットワークが恒等写像に近い変換から始めつつ残差だけを学習しやすくします。非常に深い層でも勾配が伝わりやすくなり、学習が安定しやすい点が特徴です。</p></details>
+        <details><summary>ResNetとDenseNetは同じですか？</summary><p class="tool-faq-a">同じではありません。ResNetはスキップ結合で入力を出力に足し合わせ残差を学習しやすくします。DenseNetは以前の全層の特徴マップを結合して受け渡す密結合です。どちらも深いCNNの学習を助けますが、接続の仕方が異なります。</p></details>
+        <details><summary>残差接続は正解ラベルを削除する処理ですか？</summary><p class="tool-faq-a">いいえ。残差接続は、層の入力を後段の出力に足し合わせるネットワーク構造です。正解ラベルを削除する処理ではありません。ResNetの中核的な構成要素として試験に登場します（G-303）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-322/">G-322 · ResNetの意義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-278/">G-278 · 残差学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-291/">G-291 · スキップ結合とResNet</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-303/">G-303 · 残差接続の定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../densenet/">DenseNet</a></li>
+          <li><a href="../googlenet/">GoogLeNet</a></li>
+          <li><a href="../squeeze-and-excitation/">SEブロック</a></li>
+          <li><a href="../efficientnet/">EfficientNet</a></li>
+          <li><a href="../inception/">Inception</a></li>
+          <li><a href="../image-dataset-imagenet/">ImageNet</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Phiとは？Microsoftの小型高性能オープンウェイトLLMファミリー。Copilot・GPTとの違い、小さくて賢いSLMの考え方をG検定向けに解説。">
+  <title>Phiとは？小さくて賢い——Microsoftが「質の高い学習データ」で割るSLM — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/phi-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Phiとは？小さくて賢い——Microsoftが「質の高い学習データ」で割るSLM">
+  <meta property="og:description" content="Microsoft Researchの小型高性能オープンウェイトLLM。パラメータ数だけでなく学習データの質で性能を引き上げるSLMファミリー。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/phi-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Phi",
+        "alternateName": ["Phi", "ファイ", "Phi model", "Microsoft Phi"],
+        "description": "Microsoftが公開する小型高性能のオープンウェイト大規模言語モデルファミリー。パラメータ規模を抑えつつ、高品質な学習データ設計で推論・コーディングなどの能力を高めたSLM系列。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Phiは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoftが提供するオープンウェイトの小型高性能LLMファミリーです。Phi-1・Phi-2・Phi-3・Phi-4などの世代があり、比較的小さいパラメータ規模でも推論やコーディングで高い性能を狙うSLM（Small Language Model）として位置づけられます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PhiとCopilotは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Phiはモデルファミリー（学習済み重みの系列）であり、CopilotはMicrosoftが提供する生成AI支援機能・サービス群です。Copilotの裏側で様々なモデルが使われ得ますが、名前を入れ替えて答えないことが重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PhiとLLaMAは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもオープンウェイト系のLLMファミリーですが、開発元（Microsoft vs Meta）と設計思想が異なります。Phiは特に小型高性能（SLM）と学習データの質を前面に出す系列として整理します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Phi</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Phiとは？小さくて賢い——Microsoftが「質の高い学習データ」で割るSLM</h1>
+    <p class="tool-hero-sub">読み：ファイ ／ 英：Phi</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Phi</strong>は、Microsoftが公開する<strong>小型高性能のオープンウェイト<a href="../llm/">LLM</a></strong>ファミリーです。巨大な<a href="../gpt/">GPT</a>系列が「パラメータを積んで賢くする」路線なら、Phiは<strong>「学習データの質で小さく賢くする」</strong>——本記事はベンチマークの数値暗記ではなく、<strong>SLM（Small Language Model）としてPhiが何を狙っているか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#quality-over-scale">質で割るという設計思想</a></li>
+        <li><a href="#phi-line">Phiファミリーの世代</a></li>
+        <li><a href="#vs-copilot">Copilot・GPTとの棲み分け</a></li>
+        <li><a href="#slm-map">小型LLMの地図</a></li>
+        <li><a href="#use-cases">向いている使い方</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="quality-over-scale">
+      <h2>質で割るという設計思想</h2>
+      <p>
+        2020年代のLLM競争では「パラメータ数を増やせば賢くなる」というスケール則が語られました。Phiはその傍らに、<strong>学習データの選別・合成・品質管理</strong>で能力を引き上げる路線を示しました。
+      </p>
+      <p>
+        Phi-1の公開時には、高品質な教科書的テキストを中心に学習する——いわゆる「textbooks are all you need」——というメッセージが注目を集めました。試験では細部の論文名より、<strong>「小型でもデータ設計で性能を稼ぐSLM」</strong>という整理が押さえ目標です。
+      </p>
+      <p>
+        これは<a href="../foundation-model/">基盤モデル</a>の定義そのものを変える話ではなく、<strong>同じ基盤モデルの枠組みの中で、規模よりデータ品質を前面に出した系列</strong>として理解します（<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>）。
+      </p>
+    </section>
+
+    <section id="phi-line">
+      <h2>Phiファミリーの世代</h2>
+      <p>Phiは単一モデルではなく、世代ごとに拡張されるファミリーです。2026年6月時点の整理は以下の通りです（詳細仕様は公式発表を確認してください）。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>世代</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Phi-1 / Phi-1.5</strong></td><td>小型・高品質データ学習の先駆。コーディング寄り</td></tr>
+          <tr><td><strong>Phi-2</strong></td><td>さらに推論・一般知識を強化した小型版</td></tr>
+          <tr><td><strong>Phi-3</strong>（mini / small / medium 等）</td><td>端末・エッジ向けの多サイズ展開（G-408）</td></tr>
+          <tr><td><strong>Phi-4</strong></td><td>推論・STEM寄り能力を強化した後継系列</td></tr>
+        </tbody>
+      </table>
+      <p>世代名は試験でそのまま出ることもありますが、<strong>MicrosoftのオープンウェイトSLM</strong>という上位概念で答えられるようにしておきます。</p>
+    </section>
+
+    <section id="vs-copilot">
+      <h2>Copilot・GPTとの棲み分け</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Phi</th><th>Copilot</th><th>GPT（OpenAI）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>何か</strong></td><td><strong>モデル</strong>ファミリー</td><td><strong>サービス</strong>群</td><td><strong>モデル</strong>ファミリー（主にAPI）</td></tr>
+          <tr><td><strong>開発元</strong></td><td>Microsoft</td><td>Microsoft</td><td>OpenAI</td></tr>
+          <tr><td><strong>公開形態</strong></td><td>オープンウェイト</td><td>製品・クラウド連携</td><td>主にクローズドAPI</td></tr>
+          <tr><td><strong>規模感</strong></td><td>小型（SLM）</td><td>裏側モデルは非公開も</td><td>大規模フラッグシップ中心</td></tr>
+        </tbody>
+      </table>
+      <p>
+        生成AIパスポートでは、Copilotを<strong>「Microsoftが提供する生成AI支援機能・サービス群」</strong>と整理します（<a href="../../exams/genai-passport/practice/q/hq-0270/">HQ-0270</a>）。Phiはその<strong>モデル層</strong>の話であり、名前を入れ替えないことが重要です。
+      </p>
+    </section>
+
+    <section id="slm-map">
+      <h2>小型LLMの地図</h2>
+      <p>「小さい＝弱い」とは限りません。オープンウェイトの軽量系列は複数社が並走します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ファミリー</th><th>開発元</th><th>Phiとの差分（試験向け）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Phi</strong></td><td>Microsoft</td><td>SLM・高品質データ設計を前面に</td></tr>
+          <tr><td><strong><a href="../gemma/">Gemma</a></strong></td><td>Google</td><td>軽量オープン。Geminiとは別系統</td></tr>
+          <tr><td><strong><a href="../llama/">LLaMA</a></strong></td><td>Meta</td><td>オープンウェイトの代表格・派生が多い</td></tr>
+          <tr><td><strong><a href="../mistral/">Mistral</a></strong></td><td>Mistral AI</td><td>欧州発・コンパクト高性能</td></tr>
+        </tbody>
+      </table>
+      <p>
+        いずれも<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>のように、オープンウェイト＝<strong>ライセンス条件の確認が必要</strong>という整理が共通です。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>向いている使い方</h2>
+      <ul class="tool-steps">
+        <li><strong>端末・エッジ推論</strong> — 小型モデルはオンデバイスと相性がよい（G-408）</li>
+        <li><strong>研究・教育</strong> — 重み公開で再現実験がしやすい</li>
+        <li><strong>ファインチューニング</strong> — <a href="../lora/">LoRA</a>や<a href="../peft/">PEFT</a>で社内用途に適応</li>
+        <li><strong>コスト制約下の推論</strong> — 巨大モデルよりVRAM・遅延を抑えやすい</li>
+      </ul>
+      <p>Phiそのものが対話アプリではありません。<a href="../../tools/copilot/">Copilot</a>のような<strong>製品体験</strong>と混同しないでください。</p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Microsoftの<strong>オープンウェイト小型高性能LLM</strong>（SLM）</li>
+        <li><strong>思想</strong> — パラメータ規模だけでなく<strong>学習データの質</strong>で性能を稼ぐ</li>
+        <li><strong>対比</strong> — Copilot＝サービス、Phi＝モデル／GPT＝OpenAI</li>
+        <li><strong>系譜</strong> — Gemma・LLaMA・Mistralと並ぶオープン系だが開発元が異なる</li>
+        <li><strong>層</strong> — モデル名 ≠ サービス名 ≠ 圧縮手法</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>、<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>、<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0270/">HQ-0270</a>（CopilotとGeminiの開発元区別）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Phi＝<a href="../../tools/copilot/">Copilot</a></td><td>モデルファミリー vs Microsoftのサービス群</td></tr>
+          <tr><td>Phi＝<a href="../gpt/">GPT</a></td><td>Microsoft vs OpenAI。開発元のすり替え</td></tr>
+          <tr><td>Phi＝<a href="../gemini-model/">Gemini</a></td><td>Microsoft vs Google</td></tr>
+          <tr><td>Phi＝<a href="../../tools/chatgpt/">ChatGPT</a></td><td>モデル vs 対話サービス</td></tr>
+          <tr><td>Phi＝量子化</td><td>モデル名 vs 圧縮手法（G-404）</td></tr>
+          <tr><td>Phi＝<a href="../llama/">LLaMA</a></td><td>Microsoft vs Meta。どちらもオープン系</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Phiは何をするモデルですか？</summary><p class="tool-faq-a">Microsoftが提供するオープンウェイトの小型高性能LLMファミリーです。Phi-1・Phi-2・Phi-3・Phi-4などの世代があり、比較的小さいパラメータ規模でも推論やコーディングで高い性能を狙うSLM（Small Language Model）として位置づけられます。</p></details>
+        <details><summary>PhiとCopilotは同じですか？</summary><p class="tool-faq-a">同じではありません。Phiはモデルファミリー（学習済み重みの系列）であり、CopilotはMicrosoftが提供する生成AI支援機能・サービス群です。Copilotの裏側で様々なモデルが使われ得ますが、名前を入れ替えて答えないことが重要です。</p></details>
+        <details><summary>PhiとLLaMAは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもオープンウェイト系のLLMファミリーですが、開発元（Microsoft vs Meta）と設計思想が異なります。Phiは特に小型高性能（SLM）と学習データの質を前面に出す系列として整理します。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · エッジAI</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-478/">TF-478 · OSSライセンス</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0270/">HQ-0270 · CopilotとGeminiの区別</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../gemma/">Gemma</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../mistral/">Mistral</a></li>
+          <li><a href="../peft/">PEFT</a></li>
+          <li><a href="../lora/">LoRA</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

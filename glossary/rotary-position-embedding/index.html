@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RoPEとは？Rotary Position Embedding。Query/Keyを位置に応じて回転させる位置情報の与え方。位置エンコーディング・ALiBiとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>RoPEとは？ベクトルを回転させて距離を刻む——現代LLMの位置情報 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/rotary-position-embedding/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RoPEとは？ベクトルを回転させて距離を刻む——現代LLMの位置情報">
+  <meta property="og:description" content="Rotary Position Embedding。Self-AttentionのQuery/Keyに位置依存の回転を適用し、相対距離を表現する位置情報手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/rotary-position-embedding/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "RoPE",
+        "alternateName": ["RoPE", "ロープ", "Rotary Position Embedding", "回転位置埋め込み"],
+        "description": "TransformerのSelf-Attentionにおいて、QueryとKeyのベクトルを位置に応じて回転させ、トークン間の相対距離を表現する位置情報の与え方。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "RoPEは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Rotary Position Embedding（回転位置埋め込み）の略で、系列内の各トークン位置に応じてSelf-AttentionのQueryとKeyベクトルを回転させ、語順・距離の情報をモデルに伝えます。位置エンコーディングの一種として、LLaMAなど多くの大規模言語モデルで採用されています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RoPEと位置エンコーディングは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "位置エンコーディングは系列内で各トークンの位置情報をモデルに与える仕組みの総称です。RoPEはその実装方式の一つで、入力埋め込みにベクトルを足すのではなく、AttentionのQuery/Keyを位置に応じて回転させる設計が特徴です。目的は同じく語順を伝えることです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RoPEはAttentionそのものですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。RoPEは位置情報を与える手法であり、入力のどの部分に注目するかを重み付けするAttention機構そのものではありません。位置エンコーディングとAttentionは別概念として区別します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">RoPE</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>RoPEとは？ベクトルを回転させて距離を刻む——現代LLMの位置情報</h1>
+    <p class="tool-hero-sub">読み：ロープ ／ 英：RoPE（Rotary Position Embedding）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>RoPE</strong>（Rotary Position Embedding／回転位置埋め込み）は、<a href="../transformer/">Transformer</a>の<strong>Self-Attention</strong>で、<strong>QueryとKeyのベクトルを位置に応じて回転させる</strong>ことで語順を伝える手法です。古典的な<strong>位置ベクトルの加算</strong>や<a href="../alibi/">ALiBi</a>の<strong>距離バイアス</strong>とは設計が異なり——本記事は回転行列の暗記ではなく、<strong>「なぜ現代LLMが回転で距離を刻むのか」</strong>という位置情報の第三の道に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#why-position">なぜ位置情報が要るか</a></li>
+        <li><a href="#rotation-idea">回転で距離を刻む考え方</a></li>
+        <li><a href="#vs-others">位置エンコーディング・ALiBiとの対比</a></li>
+        <li><a href="#llm-adoption">LLMでの採用</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        位置情報の基本定義は<strong>「系列内で各トークンの位置情報をモデルに与える仕組み」</strong>（<a href="../../exams/genai-passport/practice/q/hq-0260/">HQ-0260</a>、<a href="../../exams/genai-passport/practice/q/hq-0236/">HQ-0236</a>）。RoPEはその<strong>実装方式の一つ</strong>として、辞典では<strong>「回転で位置情報を埋め込む手法。LLMで広く採用」</strong>と整理します。
+      </p>
+      <p>
+        誤答では、<strong>RoPE＝Attention</strong>（<a href="../../exams/genai-passport/practice/q/hq-0284/">HQ-0284</a>）、<strong>RoPE＝Transformer全体</strong>（<a href="../../exams/genai-passport/practice/q/hq-0308/">HQ-0308</a>）など、概念の入れ替えに注意します。RoPEは<strong>語順を伝える部品</strong>であり、モデル全体の名前ではありません。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0260/">HQ-0260（定義）</a>、<a href="../../exams/genai-passport/practice/q/hq-0284/">HQ-0284（Attentionとの区別）</a>、<a href="../../exams/genai-passport/practice/q/hq-0308/">HQ-0308（Transformerとの区別）</a></p>
+        <p>G検定：<a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112（位置エンコーディング）</a></p>
+      </div>
+    </section>
+
+    <section id="why-position">
+      <h2>なぜ位置情報が要るか</h2>
+      <p>
+        <a href="../attention/">Self-Attention</a>は、系列内のトークン同士の関連を<strong>重み付きで集約</strong>します。しかし Attention だけでは、入力の<strong>並び順</strong>が失われます——「犬が猫を追う」と「猫が犬を追う」を区別できません。
+      </p>
+      <p>
+        そこで<strong>位置エンコーディング</strong>——系列内で各トークンの位置情報をモデルに与える仕組み——が必要になります。元のTransformer論文では正弦・余弦の位置ベクトルを<strong>入力埋め込みに加算</strong>する方式が使われました。RoPEは、この問題に対する<strong>別の答え</strong>です。
+      </p>
+    </section>
+
+    <section id="rotation-idea">
+      <h2>回転で距離を刻む考え方</h2>
+      <p>
+        RoPEの核心はシンプルです。<strong>位置mのトークンと位置nのトークンのAttentionスコア</strong>が、主に<strong>相対距離（m−n）</strong>に依存するように設計します。そのために、各ヘッドのQuery・Keyベクトルの次元ペアを<strong>2次元平面の回転</strong>として扱い、位置に応じた角度で回します。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>加算しない</strong> — 入力埋め込みに別ベクトルを足すのではなく、<strong>Q/Kに回転を適用</strong></li>
+        <li><strong>相対距離</strong> — 二つの位置の回転角の差が距離を表す</li>
+        <li><strong>内積の性質</strong> — 回転後のQとKの内積が相対位置に依存しやすい</li>
+        <li><strong>外挿</strong> — 学習長を超える位置にも角度を割り当て可能（完全ではないが、固定長の学習済み埋め込みより柔軟とされることが多い）</li>
+      </ul>
+      <p>
+        試験では回転行列の導出より、<strong>「Q/Kを位置で回転させ、相対距離をAttentionに刻む」</strong>と説明できれば十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>位置エンコーディング・ALiBiとの対比</h2>
+      <p>語順を伝える手法は複数あります。RoPEは<strong>Attentionの中核（Q/K）に位置を組み込む</strong>系統です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>位置の与え方</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>正弦位置エンコーディング</strong>（古典）</td><td>位置ベクトルを<strong>入力に加算</strong></td><td>Transformer原論文の典型</td></tr>
+          <tr><td><strong>学習可能な位置埋め込み</strong></td><td>位置ごとのベクトルを<strong>学習</strong></td><td>固定長で学習しやすい</td></tr>
+          <tr><td><strong><a href="../alibi/">ALiBi</a></strong></td><td>Attentionスコアに<strong>距離の線形バイアス</strong></td><td>位置埋め込み層を省略しやすい</td></tr>
+          <tr><td><strong>RoPE</strong></td><td><strong>Q/Kを回転</strong>して相対距離を表現</td><td>現代LLMで広く採用</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どれも目的は同じ——<strong>系列内で各トークンの位置情報をモデルに与える</strong>——です。実装の置き場所（入力加算 vs Attentionバイアス vs Q/K回転）が異なります。
+      </p>
+    </section>
+
+    <section id="llm-adoption">
+      <h2>LLMでの採用</h2>
+      <p>
+        RoPEは2019〜2021年頃の研究として提案され、<strong>オープンウェイトの大規模言語モデル</strong>で標準的な選択肢の一つになりました。<a href="../llama/">LLaMA</a>をはじめ、多くのデコーダ型<a href="../llm/">LLM</a>がRoPE（またはその改良版）を採用しています。
+      </p>
+      <p>
+        <a href="../bert/">BERT</a>などのエンコーダ型は、学習可能な位置埋め込みや他方式を使うことも多く、RoPE＝すべてのTransformer、とは言えません。試験では<strong>「LLMで広く採用される位置情報の手法」</strong>と覚えるのが安全です。
+      </p>
+      <p>
+        長文対応では、学習時の最大長を超える入力への<strong>外挿（extrapolation）</strong>が課題になり、RoPEの拡張手法も研究されています。詳細の暗記より、<strong>位置情報の設計が長文性能に直結する</strong>——という認識が実務でも役立ちます。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>RoPE＝<a href="../attention/">Attention</a></td><td>位置情報の手法 vs 重み付き集約の仕組み（HQ-0284）</td></tr>
+          <tr><td>RoPE＝<a href="../transformer/">Transformer</a></td><td>部品の一つ vs モデル全体（HQ-0308）</td></tr>
+          <tr><td>RoPE＝匿名加工（ALiBiと混同）</td><td>位置情報 vs 個人情報保護の制度（TF-0112の文脈）</td></tr>
+          <tr><td>RoPE＝<a href="../gpt/">GPT</a></td><td>位置の与え方 vs デコーダ型言語モデル</td></tr>
+          <tr><td>位置エンコーディング＝RoPEだけ</td><td>RoPEは位置エンコーディングの<strong>一実装</strong></td></tr>
+          <tr><td>RoPEがあれば語順不要</td><td>RoPEこそが<strong>語順を与える</strong>ための仕組み</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>RoPEは何をする手法ですか？</summary>
+          <p class="tool-faq-a">Rotary Position Embedding（回転位置埋め込み）の略で、系列内の各トークン位置に応じてSelf-AttentionのQueryとKeyベクトルを回転させ、語順・距離の情報をモデルに伝えます。位置エンコーディングの一種として、LLaMAなど多くの大規模言語モデルで採用されています。</p>
+        </details>
+        <details>
+          <summary>RoPEと位置エンコーディングは同じですか？</summary>
+          <p class="tool-faq-a">位置エンコーディングは系列内で各トークンの位置情報をモデルに与える仕組みの総称です。RoPEはその実装方式の一つで、入力埋め込みにベクトルを足すのではなく、AttentionのQuery/Keyを位置に応じて回転させる設計が特徴です。目的は同じく語順を伝えることです。</p>
+        </details>
+        <details>
+          <summary>RoPEはAttentionそのものですか？</summary>
+          <p class="tool-faq-a">いいえ。RoPEは位置情報を与える手法であり、入力のどの部分に注目するかを重み付けするAttention機構そのものではありません。位置エンコーディングとAttentionは別概念として区別します。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/practice/q/hq-0260/">HQ-0260 · 位置エンコーディングの定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0284/">HQ-0284 · Attentionとの区別</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0308/">HQ-0308 · Transformerとの区別</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0112/">TF-0112 · 位置エンコーディング</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../alibi/">ALiBi</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../kv-cache/">KVキャッシュ</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

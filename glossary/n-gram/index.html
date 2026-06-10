@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="N-gramとは？直前n語で次の語を予測する古典言語モデル。LLM・BoW・BPEとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>N-gramとは？直前n語だけで次を当てる——文脈の短い古典言語モデル — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/n-gram/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="N-gramとは？直前n語だけで次を当てる——文脈の短い古典言語モデル">
+  <meta property="og:description" content="連続n個の語列を単位に、次の語の出現確率を推定する言語モデルの基礎。LLMではない古典的LM。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/n-gram/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "N-gram",
+        "alternateName": ["N-gram", "エヌグラム", "n-gramモデル"],
+        "description": "連続するn個の語（または文字）の並びを単位とし、直前のn語程度の文脈から次の語の出現確率を推定する古典的な言語モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "N-gramは何をする言語モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "直前のn個程度の語を文脈として、次に来る語の確率を推定する言語モデルです。バイグラムなら直前1語、トライグラムなら直前2語を見て次語を予測します。大規模パラメータのニューラルLLMとは設計が異なる古典的LMです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "N-gramとLLMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。N-gramは短い文脈と出現カウントに基づく古典的言語モデルです。LLMは大規模データと多数のパラメータを持つニューラルネットベースの大規模言語モデルです。生成AIパスポートではこのすり替えが頻出します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "N-gramとBag of Wordsは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。N-gramは連続する語の並び（局所の順序）を扱い、次語予測などに使います。Bag of Wordsは文書内の語の出現有無や回数を袋に入れた表現で、語順をほぼ失います。どちらもNLPの特徴表現ですが、順序の扱いが異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">N-gram</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>N-gramとは？直前n語だけで次を当てる——文脈の短い古典言語モデル</h1>
+    <p class="tool-hero-sub">読み：エヌグラム ／ 英：N-gram</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>N-gram</strong>は、<strong>直前のn個程度の語</strong>だけを手がかりに<strong>次の語の確率</strong>を推定する古典的<a href="../nlp/">言語モデル</a>です。<a href="../llm/">LLM</a>が長い文脈と巨大パラメータで生成するのに対し、N-gramは<strong>「ごく短い記憶のマルコフ近似」</strong>——本記事は平滑化の式より、<strong>「なぜ試験でLLMと混同されるのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#what-counts">nとは何か</a></li>
+        <li><a href="#predict-next">次の語を予測する</a></li>
+        <li><a href="#limits">短い文脈の限界</a></li>
+        <li><a href="#vs-others">BoW・BPE・LLMとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="what-counts">
+      <h2>nとは何か</h2>
+      <p>
+        N-gramの <strong>n</strong> は、連続する<strong>語（または文字）の個数</strong>です（<a href="../../exams/g-kentei/practice/q/g-334/">G-334</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名称</th><th>n</th><th>例（文：私は学校へ）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ユニグラム</strong></td><td>1</td><td>「私」「は」「学校」…（単語の出現頻度）</td></tr>
+          <tr><td><strong>バイグラム</strong></td><td>2</td><td>「私は」「は学校」「学校へ」</td></tr>
+          <tr><td><strong>トライグラム</strong></td><td>3</td><td>「私は学校」「は学校へ」</td></tr>
+        </tbody>
+      </table>
+      <p>
+        語順の<strong>局所パターン</strong>を数える単位——<a href="../bag-of-words/">Bag of Words</a>が袋の中で順序を捨てるのに対し、N-gramは<strong>隣り合った並び</strong>を保持します。
+      </p>
+    </section>
+
+    <section id="predict-next">
+      <h2>次の語を予測する</h2>
+      <p>
+        生成AIパスポートの定番定義は次の一文です（<a href="../../exams/genai-passport/practice/q/hq-0798/">HQ-0798</a>、<a href="../../exams/genai-passport/practice/q/hq-0703/">HQ-0703</a>）。
+      </p>
+      <blockquote>
+        <p>直前のn個程度の語をもとに、<strong>次の語の確率</strong>を考える言語モデル</p>
+      </blockquote>
+      <p>
+        コーパス内の出現回数から条件付き確率を推定します——「学校」の次に「へ」が来る確率は、「学校」の直前に何があったか（n-gramの文脈）で変わる、というイメージです。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>学習</strong> — 大規模テキストでN-gramの<strong>カウント</strong>を集める</li>
+        <li><strong>推定</strong> — カウントから次語確率を計算（平滑化でゼロ頻度を回避）</li>
+        <li><strong>生成</strong> — 確率に従って語を1つずつ選ぶ（自己回帰的だが表現は単純）</li>
+      </ul>
+    </section>
+
+    <section id="limits">
+      <h2>短い文脈の限界</h2>
+      <p>
+        nを大きくすれば長い依存を捉えられますが、可能なN-gramの組み合わせは<strong>爆発</strong>し、稀疏（まばら）なデータになります。だからnは2〜3程度に留めることが多く、<strong>遠い前文は見えない</strong>——古典N-gramの構造的限界です。
+      </p>
+      <p>
+        現代の<a href="../llm/">LLM</a>は<a href="../transformer/">Transformer</a>で長い文脈を扱い、<a href="../bpe/">BPE</a>で語彙を柔軟に分割——N-gramは<strong>LMの歴史の出発点</strong>として理解するのが試験向きです（<a href="../../exams/genai-passport/practice/q/hq-0741/">HQ-0741</a>のLMとLLMの関係）。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>BoW・BPE・LLMとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>用語</th><th>何をするか</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>N-gram</strong></td><td>短い文脈で<strong>次語確率</strong></td><td>古典<strong>言語モデル</strong></td></tr>
+          <tr><td><strong><a href="../bag-of-words/">BoW</a></strong></td><td>語の出現回数ベクトル</td><td>順序をほぼ失う文書表現（G-332）</td></tr>
+          <tr><td><strong><a href="../embedding/">単語埋め込み</a></strong></td><td>語を固定長ベクトルに</td><td>意味の近さを表現（G-334の対比）</td></tr>
+          <tr><td><strong><a href="../bpe/">BPE</a></strong></td><td>サブワードで<strong>トークン化</strong></td><td>LLMの前処理。LMそのものではない</td></tr>
+          <tr><td><strong><a href="../llm/">LLM</a></strong></td><td>大規模ニューラルで生成</td><td>多数パラメータ。<strong>N-gramではない</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        HQ-0703・HQ-0741の誤答パターン——「大規模データと多数パラメータのLLM」——は<strong>LLMの定義をN-gramにすり替えたもの</strong>。主語と説明の対応を確認すると外しやすくなります。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 直前n語程度から<strong>次の語の確率</strong>を推定する言語モデル</li>
+        <li><strong>単位</strong> — 連続n個の語の並び（バイグラム・トライグラム等）</li>
+        <li><strong>位置づけ</strong> — 古典LM。<strong>LLMではない</strong></li>
+        <li><strong>対比</strong> — BoW＝袋、埋め込み＝ベクトル、BPE＝トークナイザ</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-334/">G-334</a>、<a href="../../exams/g-kentei/practice/q/g-332/">G-332</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0798/">HQ-0798</a>、<a href="../../exams/genai-passport/practice/q/hq-0703/">HQ-0703</a>、<a href="../../exams/genai-passport/practice/q/hq-0741/">HQ-0741</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>N-gram＝<a href="../llm/">LLM</a></td><td>古典カウント型LM vs 大規模ニューラルLM</td></tr>
+          <tr><td>N-gram＝<a href="../bag-of-words/">BoW</a></td><td>局所順序あり vs 語順ほぼなし</td></tr>
+          <tr><td>N-gram＝<a href="../bpe/">BPE</a></td><td>言語モデル vs トークン分割手法</td></tr>
+          <tr><td>N-gram＝<a href="../rag/">RAG</a></td><td>確率モデル vs 外部検索して渡す</td></tr>
+          <tr><td>N-gram＝画像のn分割</td><td>NLP用語 vs 画像パッチ（別文脈）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>N-gramは何をする言語モデルですか？</summary><p class="tool-faq-a">直前のn個程度の語を文脈として、次に来る語の確率を推定する言語モデルです。バイグラムなら直前1語、トライグラムなら直前2語を見て次語を予測します。大規模パラメータのニューラルLLMとは設計が異なる古典的LMです。</p></details>
+        <details><summary>N-gramとLLMは同じですか？</summary><p class="tool-faq-a">同じではありません。N-gramは短い文脈と出現カウントに基づく古典的言語モデルです。LLMは大規模データと多数のパラメータを持つニューラルネットベースの大規模言語モデルです。生成AIパスポートではこのすり替えが頻出します。</p></details>
+        <details><summary>N-gramとBag of Wordsは同じですか？</summary><p class="tool-faq-a">同じではありません。N-gramは連続する語の並び（局所の順序）を扱い、次語予測などに使います。Bag of Wordsは文書内の語の出現有無や回数を袋に入れた表現で、語順をほぼ失います。どちらもNLPの特徴表現ですが、順序の扱いが異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/practice/q/hq-0798/">HQ-0798 · n-gramの定義</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0703/">HQ-0703 · LLMすり替え（×）</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0741/">HQ-0741 · LMとLLM</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-334/">G-334 · n-gramと埋め込み</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../bag-of-words/">Bag of Words</a></li>
+          <li><a href="../bpe/">BPE</a></li>
+          <li><a href="../token/">トークン</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../nltk/">NLTK</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

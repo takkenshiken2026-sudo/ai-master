@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inceptionとは？複数スケールの畳み込みを並列化したCNN設計ファミリー。GoogLeNetとの違いと1×1ボトルネックをG検定向けに解説。">
+  <title>Inceptionとは？受容野を並べて選ぶ——CNNに残した並列畳み込みの設計部品 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/inception/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Inceptionとは？受容野を並べて選ぶ——CNNに残した並列畳み込みの設計部品">
+  <meta property="og:description" content="1×1・3×3・5×5とプーリングを並列に走らせるInceptionモジュール。GoogLeNet v1から派生するCNNファミリー。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/inception/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Inception",
+        "alternateName": ["Inception", "インセプション", "Inception module", "Inception v3"],
+        "description": "複数サイズの畳み込みとプーリングを並列に適用し、多様な受容野の特徴を効率的に得るCNNの設計思想とモデルファミリー。Inceptionモジュールを基本部品とする。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Inceptionとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "複数サイズの畳み込みフィルタとプーリングを並列に走らせ、出力をチャネル方向に結合するCNNの設計思想です。Inceptionモジュールを積み重ねたモデル群（Inception v1〜v4、Inception-ResNetなど）として知られ、画像認識で多様なスケールの特徴を一度に捉えることを狙います。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "InceptionとGoogLeNetは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "厳密には同じではありません。GoogLeNetはInception v1と呼ばれる最初の実装の通称であり、Inceptionモジュールを採用したCNNの代表例です。Inceptionは設計思想・部品名・モデルファミリー全体を指し、GoogLeNetはその中の一モデル（v1）として整理するのが試験向けです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Inceptionのボトルネックはオートエンコーダのボトルネックと同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Inceptionでは1×1畳み込みでチャネル数を一時的に減らし、計算量を抑える工夫をボトルネックと呼びます。オートエンコーダのボトルネックは、入力より低次元の潜在表現へ圧縮する構造を指します。用語が「ボトルネック」を共有しますが、文脈が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Inception</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Inceptionとは？受容野を並べて選ぶ——CNNに残した並列畳み込みの設計部品</h1>
+    <p class="tool-hero-sub">読み：インセプション ／ 英：Inception</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Inception</strong>は、<strong>複数サイズの畳み込みを並列に走らせ</strong>、多様な受容野の特徴を一度に得る<a href="../cnn/">CNN</a>の<strong>設計思想</strong>です。<a href="../googlenet/">GoogLeNet</a>（Inception v1）がその最初の実装として試験に出ますが、Inceptionは<strong>部品名（モジュール）とファミリー全体</strong>——本記事はバージョン暗記より、<strong>「なぜフィルタサイズを選ばず並べるのか」</strong>と、<strong>GoogLeNetとの層の違い</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-parallel">なぜ並列に畳むか</a></li>
+        <li><a href="#module">Inceptionモジュールの中身</a></li>
+        <li><a href="#bottleneck">1×1ボトルネックの役割</a></li>
+        <li><a href="#family">ファミリーとしてのInception</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-parallel">
+      <h2>なぜ並列に畳むか</h2>
+      <p>
+        画像認識では、<strong>小さなテクスチャ</strong>と<strong>大きな物体全体</strong>の両方が手がかりになります。3×3だけ、5×5だけ——どれか一つに固定すると、見落としが生じます。
+      </p>
+      <p>
+        Inceptionの答えは<strong>「全部並べる」</strong>です。1×1・3×3・5×5の畳み込みとプーリングを同時に走らせ、チャネル方向に結合する——<a href="../../exams/g-kentei/practice/q/g-321/">G-321</a>の正解文「複数サイズの畳み込みを組み合わせる」は、この思想の要約です。
+      </p>
+      <p>
+        後の<a href="../fpn/">FPN</a>が検出でマルチスケール特徴をピラミッド化するのも、同じ課題への別解——Inceptionは<strong>1ブロック内で</strong>スケールを並べる点が特徴です。
+      </p>
+    </section>
+
+    <section id="module">
+      <h2>Inceptionモジュールの中身</h2>
+      <ul class="tool-steps">
+        <li><strong>入力</strong> — 前段の特徴マップ</li>
+        <li><strong>並列枝</strong> — 1×1、3×3、5×5畳み込み＋プーリング（各枝で特徴抽出）</li>
+        <li><strong>結合</strong> — 各枝の出力をチャネル方向に連結（concatenate）</li>
+        <li><strong>出力</strong> — 多スケール特徴が混ざった特徴マップ</li>
+      </ul>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>枝</th><th>受容野のイメージ</th><th>捉えやすいもの</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1×1</strong></td><td>局所・チャネル混合</td><td>次元圧縮・線形結合</td></tr>
+          <tr><td><strong>3×3</strong></td><td>中程度</td><td>エッジ・小パーツ</td></tr>
+          <tr><td><strong>5×5</strong></td><td>やや広い</td><td>大きめのパターン</td></tr>
+          <tr><td><strong>プーリング</strong></td><td>空間要約</td><td>位置不変な手がかり</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="bottleneck">
+      <h2>1×1ボトルネックの役割</h2>
+      <p>
+        並列枝を増やすと計算が膨らむ——そこで<strong>3×3・5×5の前に1×1畳み込みでチャネルを減らす</strong>工夫が入ります。これがInception文脈の「ボトルネック」です。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-274/">G-274</a>が問う1×1畳み込みは、空間サイズを保ちつつ<strong>チャネル方向を混合・圧縮</strong>する操作——Inceptionの効率化と直結します。
+      </p>
+      <p>
+        オートエンコーダのボトルネック（<a href="../../exams/g-kentei/practice/q/g-311/">G-311</a>）は潜在次元への<strong>情報圧縮</strong>——名前は同じでも、Inceptionの1×1は<strong>計算削減のための前処理</strong>です。
+      </p>
+    </section>
+
+    <section id="family">
+      <h2>ファミリーとしてのInception</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名称</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Inception v1 / <a href="../googlenet/">GoogLeNet</a></strong></td><td>最初の実装。ILSVRC 2014で話題</td></tr>
+          <tr><td><strong>Inception v2・v3</strong></td><td>モジュール改良・正規化・分解畳み込みなど</td></tr>
+          <tr><td><strong>Inception v4</strong></td><td>さらに深いInceptionスタック</td></tr>
+          <tr><td><strong>Inception-ResNet</strong></td><td>Inception＋残差接続のハイブリッド</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では個別バージョンの細部より、<strong>Inceptionモジュール＝多スケール並列畳み込みの部品</strong>、<strong>GoogLeNet＝その代表実装</strong>——の二層で覚えると、G-321と用語辞典の両方に効きます。
+      </p>
+      <p>
+        VGGが「3×3を直列に深く積む」設計（<a href="../../exams/g-kentei/drill/q/tf-119/">TF-119</a>）なのに対し、Inceptionは<strong>幅（並列）でスケールを取る</strong>——CNN設計史の分岐点です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 複数サイズの畳み込みを<strong>並列</strong>に組み合わせるCNN設計</li>
+        <li><strong>部品</strong> — Inceptionモジュール（1×1・3×3・5×5・プーリング→結合）</li>
+        <li><strong>代表</strong> — GoogLeNet＝Inception v1</li>
+        <li><strong>効率</strong> — 1×1ボトルネックで計算量を抑える</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-321/">G-321</a>、<a href="../../exams/g-kentei/practice/q/g-274/">G-274</a>、<a href="../../exams/g-kentei/drill/q/tf-119/">TF-119</a>、<a href="../../exams/g-kentei/practice/q/g-322/">G-322</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Inception＝GoogLeNetのみ</td><td>設計ファミリー vs v1の通称</td></tr>
+          <tr><td>Inception＝<a href="../transformer/">Transformer</a></td><td>CNN並列畳み込み vs Attention</td></tr>
+          <tr><td>Inception＝物体検出</td><td>画像分類向けCNN設計（検出はFaster R-CNN等）</td></tr>
+          <tr><td>ボトルネック＝オートエンコーダ</td><td>1×1チャネル圧縮 vs 潜在次元圧縮（G-311）</td></tr>
+          <tr><td>Inception＝知識獲得のボトルネック</td><td>CNN部品 vs エキスパートシステムの課題（G-004）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Inceptionとは何ですか？</summary><p class="tool-faq-a">複数サイズの畳み込みフィルタとプーリングを並列に走らせ、出力をチャネル方向に結合するCNNの設計思想です。Inceptionモジュールを積み重ねたモデル群（Inception v1〜v4、Inception-ResNetなど）として知られ、画像認識で多様なスケールの特徴を一度に捉えることを狙います。</p></details>
+        <details><summary>InceptionとGoogLeNetは同じですか？</summary><p class="tool-faq-a">厳密には同じではありません。GoogLeNetはInception v1と呼ばれる最初の実装の通称であり、Inceptionモジュールを採用したCNNの代表例です。Inceptionは設計思想・部品名・モデルファミリー全体を指し、GoogLeNetはその中の一モデル（v1）として整理するのが試験向けです。</p></details>
+        <details><summary>Inceptionのボトルネックはオートエンコーダのボトルネックと同じですか？</summary><p class="tool-faq-a">同じではありません。Inceptionでは1×1畳み込みでチャネル数を一時的に減らし、計算量を抑える工夫をボトルネックと呼びます。オートエンコーダのボトルネックは、入力より低次元の潜在表現へ圧縮する構造を指します。用語が「ボトルネック」を共有しますが、文脈が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-321/">G-321 · GoogLeNet／Inceptionの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-274/">G-274 · 1×1畳み込み</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-119/">TF-119 · VGG（対比）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-311/">G-311 · ボトルネックのすり替え</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../googlenet/">GoogLeNet</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../efficientnet/">EfficientNet</a></li>
+          <li><a href="../fpn/">FPN</a></li>
+          <li><a href="../cbam/">CBAM</a></li>
+          <li><a href="../resnet/">ResNet</a></li>
+          <li class="tool-related-list__soon">VGG（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

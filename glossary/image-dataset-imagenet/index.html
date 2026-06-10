@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ImageNetとは？大規模画像分類データセットとILSVRC。AlexNet・転移学習との関係をG検定向けに解説。深層学習ブームの火付け役。">
+  <title>ImageNetとは？1000クラスで競った——深層学習を起動した画像データの基盤 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/image-dataset-imagenet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ImageNetとは？1000クラスで競った——深層学習を起動した画像データの基盤">
+  <meta property="og:description" content="WordNet階層に沿った大規模画像分類データセット。ILSVRCでAlexNetが躍進し、転移学習の土台にもなった。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/image-dataset-imagenet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ImageNet",
+        "alternateName": ["ImageNet", "イメージネット", "ImageNet dataset"],
+        "description": "WordNetの概念階層に沿って収集・ラベル付けされた大規模画像分類データセット。ILSVRCコンペティションを通じて深層学習の実用性が示され、転移学習の事前学習データとしても広く使われた。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ImageNetは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "多数のカテゴリに分類された大規模な画像データセットです。ILSVRCではその一部（1000クラスなど）を用いた画像分類競技が行われ、2012年のAlexNetの躍進とともにディープラーニング普及の象徴的出来事になりました。データセットそのものと、そこで競われたコンペの文脈をセットで覚えると試験に効きます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ImageNetとAlexNetは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ImageNetは画像とラベルのデータセット（およびそれを用いた競技会ILSVRC）であり、AlexNetは2012年のコンペで高性能を示したCNNモデルの名前です。データとモデルは別物です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ImageNetとCOCOは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ImageNetは主に画像分類向けの大規模データセットとして知られます。COCOは物体検出・セグメンテーションなどにバウンディングボックスやマスク注釈が付いたデータセットです。タスクと注釈の形式が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ImageNet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ImageNetとは？1000クラスで競った——深層学習を起動した画像データの基盤</h1>
+    <p class="tool-hero-sub">読み：イメージネット ／ 英：ImageNet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ImageNet</strong>は、<strong>WordNet</strong>の概念階層に沿ってラベル付けされた<strong>大規模画像分類データセット</strong>です。<a href="../alexnet/">AlexNet</a>が2012年の<strong>ILSVRC</strong>で躍進した舞台——データとコンペが揃って<strong>深層学習の実用性が一気に可視化</strong>された——本記事は画像枚数の暗記より、<strong>「なぜデータセットがモデルより歴史に刻まれたか」</strong>と、<strong>AlexNet・COCOとの役割分担</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#dataset-role">データセットが主役になる理由</a></li>
+        <li><a href="#wordnet-tree">WordNetと1000クラス</a></li>
+        <li><a href="#ilsvrc">ILSVRC——競技会としてのImageNet</a></li>
+        <li><a href="#after-2012">2012年以降の遺産</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="dataset-role">
+      <h2>データセットが主役になる理由</h2>
+      <p>
+        機械学習では<strong>データの規模と質</strong>が性能の上限を決めます。ImageNetは、インターネットから収集した画像に<strong>人間によるラベル付け</strong>を行い、カテゴリ数・枚数ともに当時としては突出した規模を実現しました。
+      </p>
+      <p>
+        深層学習はパラメータが多く、小さなデータでは過学習しやすい——ImageNetのような<strong>大規模教師データ</strong>が揃って初めて、深い<a href="../cnn/">CNN</a>の学習が現実的になった、という語りが試験の歴史パートで繰り返されます。
+      </p>
+    </section>
+
+    <section id="wordnet-tree">
+      <h2>WordNetと1000クラス</h2>
+      <p>
+        ImageNetのカテゴリは<strong>WordNet</strong>の同義語集合（synset）に紐づけられ、犬・車・楽器など<strong>意味の階層</strong>に沿って整理されています。ILSVRCの画像分類タスクでは、代表として<strong>1000クラス</strong>のサブセットがよく使われます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>ImageNetの特徴</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>タスク</strong></td><td>画像全体に1ラベル（<strong>分類</strong>）</td></tr>
+          <tr><td><strong>規模</strong></td><td>百万枚規模のデータセットとして知られる</td></tr>
+          <tr><td><strong>ラベル設計</strong></td><td>WordNet階層に基づく概念カテゴリ</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>大規模画像分類データセットの代表例</td></tr>
+        </tbody>
+      </table>
+      <p>
+        物体の<strong>位置</strong>を矩形で囲む注釈が主役の<a href="../coco-dataset/">COCO</a>とは、ImageNetは<strong>画像全体のクラス当て</strong>が中心——データセット選びはタスク選び、とセットで覚えます。
+      </p>
+    </section>
+
+    <section id="ilsvrc">
+      <h2>ILSVRC——競技会としてのImageNet</h2>
+      <p>
+        <strong>ILSVRC</strong>（ImageNet Large Scale Visual Recognition Challenge）は、ImageNetを用いた画像認識の<strong>国際コンペティション</strong>です（<a href="../../exams/g-kentei/drill/q/tf-328/">TF-328</a>）。2012年、<a href="../alexnet/">AlexNet</a>が従来手法を大きく上回り、<strong>ディープラーニング普及の重要な契機</strong>になった——と試験では定型句として出ます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>2012年以前</strong> — 手作り特徴＋古典的分類器が主流</li>
+        <li><strong>2012年</strong> — 深いCNN＋GPU＋大規模データがベンチマークで勝利</li>
+        <li><strong>以降</strong> — <a href="../googlenet/">GoogLeNet</a>、<a href="../resnet/">ResNet</a>等、CNNアーキテクチャ競争が加速</li>
+      </ul>
+      <p>
+        ダートマス会議（1956年）をImageNetのために開催した、という説明は誤りです（<a href="../../exams/g-kentei/drill/q/tf-347/">TF-347</a>）。時代も目的も別の出来事——すり替え問題の定番です。
+      </p>
+    </section>
+
+    <section id="after-2012">
+      <h2>2012年以降の遺産</h2>
+      <p>
+        ImageNetの影響はコンペ当日で終わりません。<strong>転移学習</strong>では、ImageNetで学習したCNNの重みを初期値として、別タスクに<strong>ファインチューニング</strong>する流れが長く標準でした（<a href="../../exams/g-kentei/practice/q/g-382/">G-382</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>ImageNetとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>データ</strong></td><td>ImageNet</td><td>大規模分類の<strong>教師データ</strong></td></tr>
+          <tr><td><strong>コンペ</strong></td><td>ILSVRC</td><td>モデル性能の<strong>公開ベンチマーク</strong></td></tr>
+          <tr><td><strong>モデル</strong></td><td>AlexNet、VGG等</td><td>コンペで勝った<strong>設計の名前</strong></td></tr>
+          <tr><td><strong>応用</strong></td><td>転移学習</td><td>学習済み重みを他タスクへ移植</td></tr>
+        </tbody>
+      </table>
+      <p>
+        現在はより巨大なデータや自己教師あり学習が台頭していますが、試験ではImageNetを<strong>深層学習ブームの燃料と舞台</strong>として押さえることが優先です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 大規模<strong>画像分類</strong>データセット（WordNet階層）</li>
+        <li><strong>ILSVRC</strong> — ImageNetを用いた競技会。2012年AlexNetが象徴的</li>
+        <li><strong>歴史</strong> — 深層学習実用化の契機として引用される</li>
+        <li><strong>対比</strong> — ImageNet＝データ、AlexNet＝モデル、COCO＝検出・セグ向け</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-328/">TF-328</a>、<a href="../../exams/g-kentei/drill/q/tf-347/">TF-347</a>、<a href="../../exams/g-kentei/drill/q/tf-331/">TF-331</a>、<a href="../../exams/g-kentei/drill/q/tf-330/">TF-330</a>、<a href="../../exams/g-kentei/practice/q/g-382/">G-382</a>、<a href="../../exams/g-kentei/practice/q/g-315/">G-315</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ImageNet＝AlexNet</td><td>データセット vs 2012年のCNNモデル</td></tr>
+          <tr><td>ImageNet＝<a href="../coco-dataset/">COCO</a></td><td>分類中心 vs 検出・セグメンテーション注釈</td></tr>
+          <tr><td>ImageNet＝ダートマス会議</td><td>2010年代のデータ・コンペ vs 1956年のAI起源（TF-347）</td></tr>
+          <tr><td>ImageNet＝<a href="../cnn/">CNN</a></td><td>教師データ vs ネットワーク構造</td></tr>
+          <tr><td>ImageNet＝ランダムフォレスト</td><td>深層学習のデータ vs 古典的アンサンブル（TF-331すり替え文脈）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ImageNetは何ですか？</summary><p class="tool-faq-a">多数のカテゴリに分類された大規模な画像データセットです。ILSVRCではその一部（1000クラスなど）を用いた画像分類競技が行われ、2012年のAlexNetの躍進とともにディープラーニング普及の象徴的出来事になりました。データセットそのものと、そこで競われたコンペの文脈をセットで覚えると試験に効きます。</p></details>
+        <details><summary>ImageNetとAlexNetは同じですか？</summary><p class="tool-faq-a">同じではありません。ImageNetは画像とラベルのデータセット（およびそれを用いた競技会ILSVRC）であり、AlexNetは2012年のコンペで高性能を示したCNNモデルの名前です。データとモデルは別物です。</p></details>
+        <details><summary>ImageNetとCOCOは同じですか？</summary><p class="tool-faq-a">同じではありません。ImageNetは主に画像分類向けの大規模データセットとして知られます。COCOは物体検出・セグメンテーションなどにバウンディングボックスやマスク注釈が付いたデータセットです。タスクと注釈の形式が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-328/">TF-328 · ILSVRCとImageNet</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-330/">TF-330 · AlexNetの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-347/">TF-347 · ダートマス会議のすり替え</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-382/">G-382 · 転移学習・ファインチューニング</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../googlenet/">GoogLeNet</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../deep-learning/">深層学習</a></li>
+          <li><a href="../resnet/">ResNet</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

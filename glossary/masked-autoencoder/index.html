@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MAE（Masked Autoencoder）とは？高マスク率で画像パッチを再構成するViT向け自己教師あり学習。BEiTとの違いをG検定向けに解説。">
+  <title>MAEとは？見えない75%を描き直す——極端なマスクでViTを鍛える自己教師あり — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/masked-autoencoder/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MAEとは？見えない75%を描き直す——極端なマスクでViTを鍛える自己教師あり">
+  <meta property="og:description" content="Masked Autoencoder。画像の大部分を隠し、軽量デコーダでピクセルを再構成してVision Transformerを事前学習する手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/masked-autoencoder/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Masked Autoencoder",
+        "alternateName": ["MAE", "マスクドオートエンコーダ", "Masked Autoencoder"],
+        "description": "画像パッチの大部分をランダムにマスクし、エンコーダで見えている部分だけを処理したうえでデコーダが隠れたパッチのピクセルを再構成する自己教師あり学習手法。Vision Transformerの効率的な事前学習として知られる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "MAEは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像をパッチに分割し、大部分をマスクして隠したうえで、見えているパッチの文脈から隠れた部分のピクセルを再構成させる自己教師あり学習です。ラベルなし画像からVision Transformerの表現を学び、後段の画像分類などに転移します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MAEとBEiTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもマスク画像モデリングですが、BEiTは離散トークナイザで隠れたパッチのトークンIDを予測するのに対し、MAEは高いマスク率でエンコーダを軽量化し、デコーダがピクセル値を直接再構成します。設計の簡潔さと計算効率がMAEの特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MAEとオートエンコーダは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "完全に同じではありません。古典的オートエンコーダは入力全体をエンコードして復元します。MAEは入力の大部分をマスクし、見えている一部だけでエンコードして隠れた部分を復元する自己教師ありの変種です。潜在表現の学習という大枠は共通しますが、マスクと高マスク率がMAEの設計の核です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">MAE</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>MAEとは？見えない75%を描き直す——極端なマスクでViTを鍛える自己教師あり</h1>
+    <p class="tool-hero-sub">読み：マスクド オートエンコーダ ／ 英：Masked Autoencoder（MAE）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>MAE</strong>（Masked Autoencoder）は、画像パッチの<strong>大部分（約75%）を隠し</strong>、見えているわずかな手がかりから<strong>隠れた部分のピクセルを描き直す</strong>自己教師あり学習です。<a href="../beit/">BEiT</a>が「BERTの穴埋めを画像に移植」したのに対し、MAEは<strong>極端なマスク＋非対称なエンコーダ／デコーダ</strong>で計算を省きつつViTを鍛える——本記事はアーキテクチャの細部より、<strong>「なぜあえて大部分を隠すのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#masked-task">マスク再構成という課題</a></li>
+        <li><a href="#asymmetric">非対称エンコーダ／デコーダ</a></li>
+        <li><a href="#high-mask">なぜ75%も隠すか</a></li>
+        <li><a href="#vs-beit">BEiT・BERTとの違い</a></li>
+        <li><a href="#downstream">事前学習の先</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="masked-task">
+      <h2>マスク再構成という課題</h2>
+      <p>
+        <strong>自己教師あり学習</strong>は、人手ラベルなしに<strong>データ自身から正解を作る</strong>枠組みです（<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>）。「一部を隠して予測させる」型は、言語でも画像でも共通です（<a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>分割</strong> — 画像を固定サイズの<strong>パッチ</strong>に区切る（ViTと同型、<a href="../../exams/g-kentei/practice/q/g-328/">G-328</a>）</li>
+        <li><strong>マスク</strong> — ランダムに<strong>大部分のパッチを隠す</strong></li>
+        <li><strong>再構成</strong> — 見えているパッチの文脈から、隠れたパッチの<strong>ピクセル値を復元</strong></li>
+      </ul>
+      <p>
+        古典的<a href="../../exams/g-kentei/practice/q/g-283/">オートエンコーダ</a>が「入力全体→潜在表現→全体復元」なのに対し、MAEは<strong>見えている一部だけでエンコードし、隠れた部分だけをデコード</strong>——課題の難易度と計算量のバランスを取った設計です。
+      </p>
+    </section>
+
+    <section id="asymmetric">
+      <h2>非対称エンコーダ／デコーダ</h2>
+      <p>MAEの効率の鍵は<strong>役割分担の非対称さ</strong>です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>入力</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>エンコーダ（重い）</strong></td><td><strong>見えているパッチだけ</strong></td><td>高品質な視覚表現を学ぶ。事前学習後は下流タスクでも使う</td></tr>
+          <tr><td><strong>デコーダ（軽い）</strong></td><td>エンコーダ出力＋マスク位置情報</td><td>隠れたパッチのピクセル再構成。<strong>事前学習専用</strong>で推論時は捨てる</td></tr>
+        </tbody>
+      </table>
+      <p>
+        マスクされたパッチはエンコーダを通さない——だから<strong>隠す割合が高いほどエンコーダの計算が減る</strong>。これがBEiTよりシンプルなパイプラインで高速に学習できる理由の一つです。
+      </p>
+    </section>
+
+    <section id="high-mask">
+      <h2>なぜ75%も隠すか</h2>
+      <p>
+        直感に反して、MAEは<strong>高いマスク率</strong>で性能が伸びることが示されました。隠す割合が低いと「隣のパッチをコピーすれば済む」——<strong>簡単すぎる課題</strong>になり、表現学習が弱くなります。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>低マスク率</strong> — 局所コピーで解ける。文脈理解が浅い</li>
+        <li><strong>高マスク率（〜75%）</strong> — 全体構造・意味を推論する必要がある。難しいが<strong>有益な表現</strong>が得やすい</li>
+        <li><strong>計算面</strong> — 見えるパッチが少ないのでエンコーダ負荷も下がる</li>
+      </ul>
+      <p>
+        「隠すほど学べる」——MAEの独自性は、この<strong>極端なマスク率と効率の両立</strong>にあります。
+      </p>
+    </section>
+
+    <section id="vs-beit">
+      <h2>BEiT・BERTとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>BERT</th><th>BEiT</th><th>MAE</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>モダリティ</td><td>テキスト</td><td>画像</td><td>画像</td></tr>
+          <tr><td>マスク対象</td><td>語トークン</td><td>画像パッチ</td><td>画像パッチ（<strong>高率</strong>）</td></tr>
+          <tr><td>予測目標</td><td>隠れた語</td><td>離散<strong>ビジュアルトークンID</strong></td><td><strong>ピクセル値</strong>を直接再構成</td></tr>
+          <tr><td>補助モデル</td><td>不要</td><td>トークナイザが必要</td><td>トークナイザ不要で<strong>シンプル</strong></td></tr>
+          <tr><td>学習の型</td><td>自己教師あり</td><td>自己教師あり</td><td>自己教師あり</td></tr>
+        </tbody>
+      </table>
+      <p>
+        BEiTが「BERTのレシピ移植」なら、MAEは「<strong>オートエンコーダの再構成</strong>をマスクで尖らせた」設計——同じマスク画像モデリングでも、<strong>何を予測するか</strong>で個性が分かれます。
+      </p>
+    </section>
+
+    <section id="downstream">
+      <h2>事前学習の先</h2>
+      <p>MAEの流れは<a href="../foundation-model/">基盤モデル</a>思想の画像版です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1. 事前学習</strong></td><td>大量のラベルなし画像でマスク再構成。エンコーダが視覚表現を獲得</td></tr>
+          <tr><td><strong>2. ファインチューニング</strong></td><td>少量ラベルで画像分類等に適応（<a href="../fine-tuning/">ファインチューニング</a>）</td></tr>
+          <tr><td><strong>3. 位置づけ</strong></td><td>ViTの<strong>事前学習レシピ</strong>。ViT＝アーキテクチャ、MAE＝学習手法</td></tr>
+        </tbody>
+      </table>
+      <p>
+        デコーダは事前学習の「教師役」——本番の分類タスクではエンコーダ（＋分類ヘッド）だけが使われます。LLMの事前学習（次トークン予測）と同じく、<strong>大規模データで表現を作り、下流へ転移</strong>する流れです（<a href="../../exams/genai-passport/drill/q/tf-0162/">TF-0162</a>は自己教師ありの誤解を否定）。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 画像パッチを<strong>マスクして再構成</strong>する自己教師あり学習（Masked Autoencoder）</li>
+        <li><strong>特徴</strong> — <strong>高マスク率</strong>、非対称エンコーダ／デコーダ、ピクセル直接復元</li>
+        <li><strong>対比</strong> — BEiT＝離散トークン予測、BERT＝テキストMLM、MAE＝画像ピクセル再構成</li>
+        <li><strong>位置づけ</strong> — ViT向け<strong>事前学習手法</strong>。生成AIサービス名ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>、<a href="../../exams/g-kentei/practice/q/g-328/">G-328</a>、<a href="../../exams/g-kentei/practice/q/g-283/">G-283</a>、<a href="../../exams/g-kentei/drill/q/tf-123/">TF-123</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161</a>、<a href="../../exams/genai-passport/drill/q/tf-0162/">TF-0162</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>MAE＝<a href="../beit/">BEiT</a></td><td>ピクセル再構成 vs 離散トークン予測</td></tr>
+          <tr><td>MAE＝<a href="../bert/">BERT</a></td><td>画像の事前学習 vs テキストのMLM</td></tr>
+          <tr><td>MAE＝<a href="../gan/">GAN</a></td><td>マスク再構成の自己教師あり vs 生成器・識別器の対戦</td></tr>
+          <tr><td>MAE＝オートエンコーダそのもの</td><td>高マスク率の変種。全体復元の古典版とは設計が異なる</td></tr>
+          <tr><td>MAE＝<a href="../llm/">LLM</a></td><td>画像ViTの事前学習 vs 大規模言語モデル</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>MAEは何をする手法ですか？</summary><p class="tool-faq-a">画像をパッチに分割し、大部分をマスクして隠したうえで、見えているパッチの文脈から隠れた部分のピクセルを再構成させる自己教師あり学習です。ラベルなし画像からVision Transformerの表現を学び、後段の画像分類などに転移します。</p></details>
+        <details><summary>MAEとBEiTは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもマスク画像モデリングですが、BEiTは離散トークナイザで隠れたパッチのトークンIDを予測するのに対し、MAEは高いマスク率でエンコーダを軽量化し、デコーダがピクセル値を直接再構成します。設計の簡潔さと計算効率がMAEの特徴です。</p></details>
+        <details><summary>MAEとオートエンコーダは同じですか？</summary><p class="tool-faq-a">完全に同じではありません。古典的オートエンコーダは入力全体をエンコードして復元します。MAEは入力の大部分をマスクし、見えている一部だけでエンコードして隠れた部分を復元する自己教師ありの変種です。潜在表現の学習という大枠は共通しますが、マスクと高マスク率がMAEの設計の核です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-384/">G-384 · 自己教師あり学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-328/">G-328 · ViTの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-283/">G-283 · オートエンコーダ</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161 · 自己教師あり学習</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../simclr/">SimCLR</a></li>
+          <li><a href="../beit/">BEiT</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../swin-transformer/">Swin Transformer</a></li>
+          <li><a href="../moco/">MoCo</a></li>
+          <li class="tool-related-list__soon">Vision Transformer（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

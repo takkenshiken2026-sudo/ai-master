@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Leaky ReLUとは？負の領域に小さな勾配を残すReLU改良。GELU・死んだニューロンとの違いをG検定向けに解説。">
+  <title>Leaky ReLUとは？負の領域に細い勾配——死んだニューロンへの一滴の救い — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/leaky-relu/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Leaky ReLUとは？負の領域に細い勾配——死んだニューロンへの一滴の救い">
+  <meta property="og:description" content="負の入力でもわずかに勾配を通す活性化関数。ReLUのゼロ切り落としを緩和する。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/leaky-relu/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Leaky ReLU",
+        "alternateName": ["Leaky ReLU", "リーキーReLU", "Leaky Rectified Linear Unit"],
+        "description": "負の入力に対しても小さな傾き（α倍）で出力を通す活性化関数。ReLUが負の領域を完全にゼロにするのに対し、勾配消失や死んだニューロンを緩和する改良版。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Leaky ReLUは何をする活性化関数ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "入力が正ならReLUと同様にそのまま通し、負なら入力に小さな係数αを掛けた値を出力する活性化関数です。負の領域でも勾配が完全にゼロにならないため、ReLUで起きやすい死んだニューロンを減らしやすいと説明されます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Leaky ReLUとReLUは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ReLUは負の入力を常に0に切り落とします。Leaky ReLUは負の領域に細い傾きを残し、わずかな勾配を通します。正の領域の振る舞いは近いですが、負の領域の扱いが異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Leaky ReLUとHe初期化は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Leaky ReLUは隠れ層などで使う活性化関数であり、He初期化は学習開始前の重みの分散設定です。どちらもReLU系ネットワークの学習安定化に関わりますが、学習中の非線形変換 vs 学習前の初期化という役割が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Leaky ReLU</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Leaky ReLUとは？負の領域に細い勾配——死んだニューロンへの一滴の救い</h1>
+    <p class="tool-hero-sub">読み：リーキー レクティファイド リニア ユニット ／ 英：Leaky ReLU</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Leaky ReLU</strong>は、<strong>負の入力でも完全にゼロにしない</strong>活性化関数です。標準の<strong>ReLU</strong>が負の領域を切り落とすと、ユニットが恒久的に出力0のまま——<strong>死んだニューロン</strong>——になりやすい。Leaky ReLUは負の側に<strong>細い傾き（α）</strong>を残し、勾配の一滴を通す——本記事はαの数値暗記より、<strong>「ReLUのどこを直そうとしたか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#relu-problem">ReLUの弱点</a></li>
+        <li><a href="#leaky-shape">Leaky ReLUの形</a></li>
+        <li><a href="#activation-family">活性化関数の系譜</a></li>
+        <li><a href="#where-used">どこで使われるか</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="relu-problem">
+      <h2>ReLUの弱点</h2>
+      <p>
+        ReLUは入力が正ならそのまま、0以下なら<strong>0</strong>を出力します（<a href="../../exams/g-kentei/drill/q/tf-384/">TF-384</a>、<a href="../../exams/g-kentei/practice/q/g-158/">G-158</a>）。計算が単純で勾配消失を緩和しやすい——<a href="../alexnet/">AlexNet</a>以降の定番です。
+      </p>
+      <p>
+        しかし負の領域では勾配が<strong>完全に0</strong>。学習中にユニットが一度負側ばかりに入ると、以降更新されず<strong>死んだニューロン</strong>になることがあります。深いネットでは<a href="../../exams/g-kentei/practice/q/g-196/">勾配消失・爆発</a>とも関連して、活性化の選び方が学習安定性に効きます。
+      </p>
+    </section>
+
+    <section id="leaky-shape">
+      <h2>Leaky ReLUの形</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>入力 x</th><th>ReLU</th><th>Leaky ReLU</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>x &gt; 0</strong></td><td>x</td><td>x（同じ）</td></tr>
+          <tr><td><strong>x ≤ 0</strong></td><td>0（勾配も0）</td><td><strong>αx</strong>（小さな負の傾き、勾配はα）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        αは0.01など<strong>小さな正の定数</strong>——「Leaky（漏れる）」は、負の領域から<strong>わずかに勾配が漏れる</strong>イメージです。試験では式より、<strong>負の領域を完全に切らないReLUの改良</strong>と覚えれば十分です。
+      </p>
+    </section>
+
+    <section id="activation-family">
+      <h2>活性化関数の系譜</h2>
+      <p><a href="../../exams/g-kentei/drill/q/tf-382/">TF-382</a>：活性化は<strong>非線形性</strong>を与える——同じ目的で、形だけが違う仲間です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>関数</th><th>負の領域</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ReLU</strong></td><td>完全に0</td><td>CNNの古典。シンプル（G-011）</td></tr>
+          <tr><td><strong>Leaky ReLU</strong></td><td>細い傾きαx</td><td><strong>死んだニューロン対策</strong></td></tr>
+          <tr><td><strong><a href="../gelu/">GELU</a></strong></td><td>滑らかな曲線</td><td>TransformerのFFN向け</td></tr>
+          <tr><td><strong>シグモイド/tanh</strong></td><td>飽和しやすい</td><td>勾配消失しやすい（G-122）</td></tr>
+          <tr><td><strong>ソフトマックス</strong></td><td>—</td><td><strong>出力層</strong>の確率化（G-156）。隠れ層ではない</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Leaky ReLUは<a href="../gelu/">GELU</a>のような「滑らかさ」ではなく、<strong>ReLUの折れ目を少し傾ける</strong>——最小変更の改良、という位置づけです。
+      </p>
+    </section>
+
+    <section id="where-used">
+      <h2>どこで使われるか</h2>
+      <p>
+        主に<a href="../cnn/">CNN</a>や<a href="../neural-network/">全結合ネット</a>の<strong>隠れ層</strong>で、ReLUの代替として選ばれます。TransformerのFFNでは<a href="../gelu/">GELU</a>が主流——<strong>アーキテクチャ世代</strong>で定番が変わる、と整理します。
+      </p>
+      <p>
+        <a href="../he-initialization/">He初期化</a>はReLU向けの<strong>重みの出発点</strong>、Leaky ReLUは<strong>順伝播中の非線形</strong>——初期化と活性化は別のノブです（<a href="../../exams/g-kentei/practice/q/g-160/">G-160</a>：活性化＝非線形性）。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 負の入力に<strong>小さな傾き</strong>を残すReLUの改良活性化</li>
+        <li><strong>目的</strong> — 死んだニューロン・負領域の勾配ゼロを緩和</li>
+        <li><strong>対比</strong> — ReLU＝負を完全カット、GELU＝滑らか、ソフトマックス＝出力層</li>
+        <li><strong>すり替え回避</strong> — 初期化・損失関数・正則化ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-158/">G-158</a>、<a href="../../exams/g-kentei/drill/q/tf-384/">TF-384</a>、<a href="../../exams/g-kentei/drill/q/tf-382/">TF-382</a>、<a href="../../exams/g-kentei/practice/q/g-160/">G-160</a>、<a href="../../exams/g-kentei/practice/q/g-196/">G-196</a>、<a href="../../exams/g-kentei/practice/q/g-011/">G-011</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Leaky ReLU＝ReLU</td><td>負領域の扱いが異なる改良版</td></tr>
+          <tr><td>Leaky ReLU＝<a href="../gelu/">GELU</a></td><td>折れ目を傾ける vs 滑らかな曲線</td></tr>
+          <tr><td>Leaky ReLU＝<a href="../he-initialization/">He初期化</a></td><td>活性化関数 vs 重み初期化</td></tr>
+          <tr><td>Leaky ReLU＝ソフトマックス</td><td>隠れ層の活性化 vs 出力層の確率化</td></tr>
+          <tr><td>Leaky ReLU＝<a href="../dropout/">ドロップアウト</a></td><td>非線形変換 vs 正則化</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Leaky ReLUは何をする活性化関数ですか？</summary><p class="tool-faq-a">入力が正ならReLUと同様にそのまま通し、負なら入力に小さな係数αを掛けた値を出力する活性化関数です。負の領域でも勾配が完全にゼロにならないため、ReLUで起きやすい死んだニューロンを減らしやすいと説明されます。</p></details>
+        <details><summary>Leaky ReLUとReLUは同じですか？</summary><p class="tool-faq-a">同じではありません。ReLUは負の入力を常に0に切り落とします。Leaky ReLUは負の領域に細い傾きを残し、わずかな勾配を通します。正の領域の振る舞いは近いですが、負の領域の扱いが異なります。</p></details>
+        <details><summary>Leaky ReLUとHe初期化は同じですか？</summary><p class="tool-faq-a">同じではありません。Leaky ReLUは隠れ層などで使う活性化関数であり、He初期化は学習開始前の重みの分散設定です。どちらもReLU系ネットワークの学習安定化に関わりますが、学習中の非線形変換 vs 学習前の初期化という役割が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-158/">G-158 · ReLUの普及</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-384/">TF-384 · ReLUの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-160/">G-160 · 活性化と非線形性</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-196/">G-196 · 勾配消失と活性化</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gelu/">GELU</a></li>
+          <li><a href="../he-initialization/">He初期化</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

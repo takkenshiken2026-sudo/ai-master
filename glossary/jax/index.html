@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="JAXとは？NumPy風APIに自動微分とJITを載せた数値計算ライブラリ。PyTorch・TensorFlow・CUDAとの違いをG検定向けに解説。">
+  <title>JAXとは？配列に微分を載せる——研究向けの自動微分＋JIT実行基盤 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/jax/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="JAXとは？配列に微分を載せる——研究向けの自動微分＋JIT実行基盤">
+  <meta property="og:description" content="Google発の数値計算ライブラリ。gradで微分、jitで高速化。TPU研究で広く使われる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/jax/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "JAX",
+        "alternateName": ["JAX", "ジャックス"],
+        "description": "NumPyに近い配列APIに自動微分とJITコンパイルを組み合わせた数値計算ライブラリ。研究用途でGPU・TPU上の高速な微分可能プログラム記述に使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "JAXは何をするライブラリですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "配列演算を記述するPythonライブラリで、関数に自動微分（grad等）を適用して勾配を求めたり、JITコンパイルでGPU・TPU上の実行を高速化したりできます。深層学習の研究や科学計算で、微分可能なプログラムを効率よく書くための基盤として使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "JAXとPyTorchは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。PyTorchはモデル定義・学習ループまで含む深層学習フレームワークです。JAXは数値計算と自動微分・JITに特化したライブラリで、上にFlaxやHaikuなどのニューラルネット用ラッパーを載せて使うことが多いです。層が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "JAXとCUDAは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。CUDAはNVIDIA GPU上で並列計算を動かすためのソフトウェア基盤です。JAXはPythonから配列演算と自動微分を書くためのライブラリであり、GPU・TPUでの実行はXLAなどのコンパイル基盤を通じて行われます。ハード基盤と数値計算ライブラリは別物です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">JAX</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>JAXとは？配列に微分を載せる——研究向けの自動微分＋JIT実行基盤</h1>
+    <p class="tool-hero-sub">読み：ジャックス ／ 英：JAX</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>JAX</strong>は、Googleが公開する<strong>数値計算ライブラリ</strong>です。NumPyに近い配列APIに<strong>自動微分</strong>と<strong>JITコンパイル</strong>を載せ、研究コードをGPU・TPU上で速く・微分可能に実行する——<a href="../cuda/">CUDA</a>や<a href="../pytorch/">PyTorch</a>のような「学習フレームワーク全体」ではなく、<strong>配列プログラムの実行基盤</strong>——本記事はAPIの暗記より、<strong>スタックのどこに位置するか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#three-powers">JAXの三つの力</a></li>
+        <li><a href="#stack">ソフトウェアスタックでの位置</a></li>
+        <li><a href="#autodiff">自動微分と誤差逆伝播</a></li>
+        <li><a href="#jit">JITで速くする理由</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="three-powers">
+      <h2>JAXの三つの力</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>機能</th><th>何ができるか</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>配列API</strong></td><td>NumPy風にテンソル演算を記述</td><td>科学計算・DLの土台</td></tr>
+          <tr><td><strong>自動微分</strong></td><td><code>grad</code>等で関数の勾配を自動計算</td><td><a href="../backpropagation/">誤差逆伝播</a>の実装基盤</td></tr>
+          <tr><td><strong>JIT</strong></td><td>関数をコンパイルして高速実行</td><td>GPU・TPUでの推論・学習加速</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では「JAX＝モデル名」ではなく、<strong>数値計算＋微分＋高速化のライブラリ</strong>——とラベル付けするのが安全です。
+      </p>
+    </section>
+
+    <section id="stack">
+      <h2>ソフトウェアスタックでの位置</h2>
+      <p><a href="../cuda/">CUDA</a>の記事と同様、<strong>層の分離</strong>が得点の近道です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ハードウェア</strong></td><td><a href="../gpu/">GPU</a>、TPU</td><td>物理チップ（<a href="../../exams/g-kentei/practice/q/g-202/">G-202</a>）</td></tr>
+          <tr><td><strong>実行基盤</strong></td><td>CUDA、XLA</td><td>並列演算の実行環境</td></tr>
+          <tr><td><strong>数値計算ライブラリ</strong></td><td><strong>JAX</strong></td><td>配列・微分・JIT</td></tr>
+          <tr><td><strong>高水準フレームワーク</strong></td><td>PyTorch、TensorFlow、Flax</td><td>モデル定義・学習ループ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        JAXは<strong>真ん中の「微分可能な配列プログラム」層</strong>。その上にFlaxなどを載せて<a href="../transformer/">Transformer</a>を組み立てる、という使い方が研究で多いです。
+      </p>
+    </section>
+
+    <section id="autodiff">
+      <h2>自動微分と誤差逆伝播</h2>
+      <p>
+        深層学習の学習は、損失をパラメータで微分した<strong>勾配</strong>で重みを更新します（<a href="../../exams/g-kentei/practice/q/g-171/">G-171</a>、<a href="../../exams/g-kentei/drill/q/tf-072/">TF-072</a>）。
+      </p>
+      <p>
+        JAXの<strong>自動微分</strong>は、Pythonで書いた関数を解析し、連鎖律に沿った勾配計算を<strong>自動生成</strong>します——手で逆伝播式を書く代わりに、<code>grad(loss_fn)</code>のように宣言する発想です（<a href="../../exams/g-kentei/drill/q/tf-391/">TF-391</a>：誤差逆伝播は人手修正ではない）。
+      </p>
+      <p>
+        勾配ブースティング（<a href="../../exams/g-kentei/practice/q/g-063/">G-063</a>）の「勾配」とは別物——JAXの文脈では<strong>ニューラルネットのパラメータ微分</strong>を指します。
+      </p>
+    </section>
+
+    <section id="jit">
+      <h2>JITで速くする理由</h2>
+      <p>
+        <strong>JIT</strong>（Just-In-Time compilation）は、Python関数を一度コンパイルし、以降の呼び出しを<strong>最適化された機械コード</strong>としてGPU・TPU上で走らせます。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>素のPython</strong> — ループが遅く、デバイス転送が多い</li>
+        <li><strong>JIT後</strong> — 演算が融合・並列化され、学習・推論が速くなる</li>
+        <li><strong>効果の限界</strong> — 計算を速くするだけで、データ品質や精度は保証しない（G-202）</li>
+      </ul>
+      <p>
+        モデル軽量化（量子化・蒸留など）とは別の<strong>実行効率化</strong>——<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>の「推論の高速化」は複数の手段の組み合わせであり、JAXはそのうち<strong>実装・実行基盤</strong>の選択肢の一つです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 自動微分とJITを備えた<strong>数値計算ライブラリ</strong></li>
+        <li><strong>開発元</strong> — Google（研究・TPU文脈で出やすい）</li>
+        <li><strong>対比</strong> — PyTorch/TF＝フレームワーク、CUDA＝GPU基盤、JAX＝配列＋微分層</li>
+        <li><strong>すり替え回避</strong> — モデル名・GPUチップ・勾配ブースティングではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-171/">G-171</a>、<a href="../../exams/g-kentei/drill/q/tf-072/">TF-072</a>、<a href="../../exams/g-kentei/drill/q/tf-391/">TF-391</a>、<a href="../../exams/g-kentei/practice/q/g-202/">G-202</a>、<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>、<a href="../../exams/g-kentei/practice/q/g-118/">G-118</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>JAX＝PyTorch</td><td>数値計算ライブラリ vs 学習フレームワーク</td></tr>
+          <tr><td>JAX＝<a href="../cuda/">CUDA</a></td><td>配列・微分のAPI vs GPU実行基盤</td></tr>
+          <tr><td>JAX＝<a href="../gpu/">GPU</a></td><td>ソフトウェア vs ハードウェア</td></tr>
+          <tr><td>JAX＝<a href="../llm/">LLM</a></td><td>実行基盤 vs 言語モデル</td></tr>
+          <tr><td>JAX＝勾配ブースティング</td><td>自動微分の勾配 vs アンサンブル手法（G-063）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>JAXは何をするライブラリですか？</summary><p class="tool-faq-a">配列演算を記述するPythonライブラリで、関数に自動微分（grad等）を適用して勾配を求めたり、JITコンパイルでGPU・TPU上の実行を高速化したりできます。深層学習の研究や科学計算で、微分可能なプログラムを効率よく書くための基盤として使われます。</p></details>
+        <details><summary>JAXとPyTorchは同じですか？</summary><p class="tool-faq-a">同じではありません。PyTorchはモデル定義・学習ループまで含む深層学習フレームワークです。JAXは数値計算と自動微分・JITに特化したライブラリで、上にFlaxやHaikuなどのニューラルネット用ラッパーを載せて使うことが多いです。層が異なります。</p></details>
+        <details><summary>JAXとCUDAは同じですか？</summary><p class="tool-faq-a">同じではありません。CUDAはNVIDIA GPU上で並列計算を動かすためのソフトウェア基盤です。JAXはPythonから配列演算と自動微分を書くためのライブラリであり、GPU・TPUでの実行はXLAなどのコンパイル基盤を通じて行われます。ハード基盤と数値計算ライブラリは別物です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-171/">G-171 · 誤差逆伝播と勾配</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-202/">G-202 · GPU・TPU</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-072/">TF-072 · 連鎖律と逆伝播</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-406/">G-406 · 推論高速化</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cuda/">CUDA</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../pytorch/">PyTorch</a></li>
+          <li><a href="../keras/">Keras</a></li>
+          <li><a href="../tensorflow/">TensorFlow</a></li>
+          <li><a href="../tensorrt/">TensorRT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

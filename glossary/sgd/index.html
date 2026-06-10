@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SGDとは？Stochastic Gradient Descent。ミニバッチで勾配降下する基本最適化。勾配降下法・Adam・ミニバッチとの違いをG検定向けに解説。">
+  <title>SGDとは？全データを待たず一歩進む——確率的勾配降下の更新リズム — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/sgd/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SGDとは？全データを待たず一歩進む——確率的勾配降下の更新リズム">
+  <meta property="og:description" content="Stochastic Gradient Descent。訓練データの一部で勾配を近似しパラメータを更新する深層学習の基本最適化手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/sgd/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SGD",
+        "alternateName": ["SGD", "エスジーディー", "Stochastic Gradient Descent", "確率的勾配降下法"],
+        "description": "訓練データの一部（ミニバッチなど）で勾配を計算または近似し、損失が小さくなる方向へパラメータを更新する最適化手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SGDは何の略ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Stochastic Gradient Descent（確率的勾配降下法）の略です。全訓練データではなく一部のデータで勾配を求め、パラメータを更新します。深層学習ではミニバッチ学習として広く使われ、1回の更新計算をバッチ勾配降下法より軽くできます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SGDと勾配降下法は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "勾配降下法は損失の勾配でパラメータを更新する最適化の総称です。SGDはその中で、データの一部を使って勾配を近似する方式の一つです。全データを使うバッチ勾配降下法と対比して整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SGDは損失関数を使いませんか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SGDは損失関数の勾配を用いてパラメータを更新する最適化手法です。損失や勾配を一切使わない説明は誤りです。勾配の計算には誤差逆伝播法などが使われることが多いです。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SGD</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SGDとは？全データを待たず一歩進む——確率的勾配降下の更新リズム</h1>
+    <p class="tool-hero-sub">読み：えすじーでぃー ／ 英：SGD（Stochastic Gradient Descent）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SGD</strong>（Stochastic Gradient Descent／確率的勾配降下法）は、<strong>訓練データの一部だけ</strong>で勾配を求め、<a href="../loss-function/">損失</a>が小さくなる方向へパラメータを更新する最適化手法です。全データの勾配を毎回計算する<a href="../gradient-descent/">勾配降下法</a>の「バッチ版」に対し、SGDは<strong>待たずに一歩進む更新リズム</strong>——本記事は式の暗記より、<strong>ミニバッチ・ノイズ・後継手法（Adam等）との位置づけ</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">SGDとは</a></li>
+        <li><a href="#stochastic">「確率的」とは何が違うか</a></li>
+        <li><a href="#minibatch">ミニバッチという実務形</a></li>
+        <li><a href="#noise">ノイズのメリットとデメリット</a></li>
+        <li><a href="#vs-others">他の最適化手法との対比</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SGDの定義は<strong>「訓練データの一部を使って勾配を計算または近似し、パラメータを更新する」</strong>（<a href="../../exams/g-kentei/practice/q/g-141/">G-141</a>）。全データを毎回使うバッチ勾配降下法より<strong>1回の更新が軽い</strong>こと、<strong>ミニバッチ学習</strong>と関連して使われることが多いこと（<a href="../../exams/g-kentei/drill/q/tf-078/">TF-078</a>）が頻出です。
+      </p>
+      <p>
+        誤答では、<strong>損失や勾配を一切使わない</strong>（G-141の不適切肢）、<strong>SGD＝学習率が自動学習される</strong>（<a href="../../exams/g-kentei/drill/q/tf-052/">TF-052</a>）などのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-141/">G-141（SGDの不適切説明）</a>、<a href="../../exams/g-kentei/drill/q/tf-078/">TF-078（ミニバッチ）</a>、<a href="../../exams/g-kentei/practice/q/g-138/">G-138（勾配降下法）</a>、<a href="../../exams/g-kentei/practice/q/g-197/">G-197（最適化手法一覧）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>SGDとは</h2>
+      <p>
+        ニューラルネットの学習では、<a href="../backpropagation/">誤差逆伝播法</a>などで<strong>損失関数の勾配</strong>を求め、重みを更新します。その<strong>更新のルール</strong>の基本形が勾配降下法であり、SGDはその<strong>データの切り方</strong>が特徴的な方式です。
+      </p>
+      <p>
+        毎ステップで全訓練データ（数万〜数十億サンプル）の勾配を計算するのは現実的ではありません。SGDは<strong>ランダムに選んだ一部</strong>——典型的には<strong>ミニバッチ</strong>——の勾配で「本当の全体勾配」を近似し、更新を繰り返します。
+      </p>
+    </section>
+
+    <section id="stochastic">
+      <h2>「確率的」とは何が違うか</h2>
+      <p>勾配をどのデータで計算するかで、名前と性質が変わります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>1回の更新で使うデータ</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>バッチ勾配降下法</strong></td><td>全訓練データ</td><td>勾配は正確だが1回が重い</td></tr>
+          <tr><td><strong>SGD（厳密には1サンプル版も含む）</strong></td><td><strong>一部</strong>（1件〜ミニバッチ）</td><td>近似勾配で軽く更新</td></tr>
+          <tr><td><strong>ミニバッチ学習</strong></td><td>小さなまとまり（例：32件）</td><td>実務・深層学習の標準（TF-078）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「Stochastic（確率的）」は、<strong>どのサンプル／ミニバッチが当たるかにランダム性がある</strong>——という意味合いで整理します。試験では、SGD＝訓練データを使わない、とは答えません（G-141）。
+      </p>
+    </section>
+
+    <section id="minibatch">
+      <h2>ミニバッチという実務形</h2>
+      <p>
+        現代の深層学習で「SGD」と言ったとき、多くは<strong>ミニバッチ勾配降下</strong>を指します。1件ずつ更新する純粋なオンラインSGDと、全データのバッチ勾配降下の<strong>中間</strong>——計算効率と安定性のバランスがよい——と理解すると実務と試験の両方に繋がります（TF-078）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>エポック</strong> — 訓練データ全体を1周する単位（<a href="../../exams/g-kentei/practice/q/g-179/">G-179</a>）</li>
+        <li><strong>イテレーション</strong> — ミニバッチ1回分の更新（パラメータ更新1回）</li>
+        <li><strong>バッチサイズ</strong> — ミニバッチの件数。大きいほど勾配は安定、1回の計算は重い</li>
+      </ul>
+      <p>
+        <a href="../batch-normalization/">バッチ正規化</a>はミニバッチ内の統計を使いますが、SGDそのものではありません——最適化と正規化は別レイヤーの話です（<a href="../../exams/g-kentei/practice/q/g-017/">G-017</a>）。
+      </p>
+    </section>
+
+    <section id="noise">
+      <h2>ノイズのメリットとデメリット</h2>
+      <p>
+        一部データだけの勾配は、全体勾配に対して<strong>ノイズ（揺らぎ）</strong>を含みます。この揺らぎが、非凸な損失地形で<strong>局所最適や鞍点から抜け出しやすくする</strong>——という説明がよくされます（<a href="../../exams/g-kentei/practice/q/g-188/">G-188</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>一部データの勾配</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>計算コスト</strong></td><td>1回の更新が軽い</td><td>大規模データで必須に近い</td></tr>
+          <tr><td><strong>安定性</strong></td><td>勾配がぶれる</td><td>学習率設計が重要（<a href="../../exams/g-kentei/practice/q/g-190/">G-190</a>）</td></tr>
+          <tr><td><strong>探索</strong></td><td>ノイズが探索経路に影響</td><td>初期値・手法とセット（G-188）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        ノイズが大きすぎると収束が不安定になるため、<a href="../adam/">Adam</a>や<a href="../rmsprop/">RMSprop</a>など、<strong>SGDを土台に歩幅を工夫した手法</strong>が発展しました（<a href="../../exams/g-kentei/practice/q/g-197/">G-197</a>、<a href="../../exams/g-kentei/drill/q/tf-079/">TF-079</a>）。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他の最適化手法との対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>SGDとの関係</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../gradient-descent/">勾配降下法</a></strong></td><td>SGDはその<strong>一部の実装方式</strong></td><td>総称 vs データの切り方</td></tr>
+          <tr><td><strong>Momentum</strong></td><td>SGDに<strong>慣性</strong>を足す</td><td>過去の勾配方向を記憶</td></tr>
+          <tr><td><strong><a href="../rmsprop/">RMSprop</a></strong></td><td>勾配の振れで<strong>歩幅を調整</strong></td><td>適応的学習率</td></tr>
+          <tr><td><strong><a href="../adam/">Adam</a></strong></td><td>Momentum＋RMSprop的要素</td><td>深層学習で広く使われる</td></tr>
+          <tr><td><strong>AdaBound</strong></td><td>後半でSGDに<strong>近い挙動</strong>を狙う</td><td>適応＋上限下限（<a href="../../exams/g-kentei/practice/q/g-182/">G-182</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Adamが便利でも、<strong>SGD＋適切な学習率スケジュール</strong>が最終性能で勝つ場面もあります。試験では「SGDは古くて使われない」ではなく、<strong>最適化手法の原点とミニバッチ学習の基盤</strong>として押さえます。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SGD＝損失・勾配を使わない</td><td>最適化手法として勾配が必須（G-141）</td></tr>
+          <tr><td>SGD＝訓練データを使わない</td><td>一部を使って更新する</td></tr>
+          <tr><td>SGD＝<a href="../backpropagation/">誤差逆伝播法</a></td><td>勾配の<strong>求め方</strong> vs <strong>使い方</strong></td></tr>
+          <tr><td>SGD＝<a href="../adam/">Adam</a></td><td>基本形 vs 適応的拡張</td></tr>
+          <tr><td>学習率はSGDで自動学習</td><td>ハイパーパラメータ（TF-052）</td></tr>
+          <tr><td>SGD＝ミニバッチ正規化</td><td>最適化 vs 中間層の正規化（G-017）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SGDは何の略ですか？</summary>
+          <p class="tool-faq-a">Stochastic Gradient Descent（確率的勾配降下法）の略です。全訓練データではなく一部のデータで勾配を求め、パラメータを更新します。深層学習ではミニバッチ学習として広く使われ、1回の更新計算をバッチ勾配降下法より軽くできます。</p>
+        </details>
+        <details>
+          <summary>SGDと勾配降下法は同じですか？</summary>
+          <p class="tool-faq-a">勾配降下法は損失の勾配でパラメータを更新する最適化の総称です。SGDはその中で、データの一部を使って勾配を近似する方式の一つです。全データを使うバッチ勾配降下法と対比して整理します。</p>
+        </details>
+        <details>
+          <summary>SGDは損失関数を使いませんか？</summary>
+          <p class="tool-faq-a">いいえ。SGDは損失関数の勾配を用いてパラメータを更新する最適化手法です。損失や勾配を一切使わない説明は誤りです。勾配の計算には誤差逆伝播法などが使われることが多いです。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-141/">G-141 · SGDの不適切説明</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-078/">TF-078 · ミニバッチ学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-138/">G-138 · 勾配降下法</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-197/">G-197 · 最適化手法一覧</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../adam/">Adam</a></li>
+          <li><a href="../rmsprop/">RMSprop</a></li>
+          <li><a href="../batch-normalization/">バッチ正規化</a></li>
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

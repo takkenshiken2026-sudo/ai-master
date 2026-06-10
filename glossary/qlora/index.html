@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="QLoRAとは？量子化とLoRAを組み合わせた省メモリ微調整。量子化・PEFT・Full FTとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>QLoRAとは？ビットを削ってLoRAを載せる——VRAMの二重の節約 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/qlora/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="QLoRAとは？ビットを削ってLoRAを載せる——VRAMの二重の節約">
+  <meta property="og:description" content="4bit量子化した巨大LLMの上にLoRAアダプタだけを学習する省メモリ微調整。量子化とPEFTを同時に使う実務的な組み合わせ。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/qlora/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "QLoRA",
+        "alternateName": ["QLoRA", "キューロラ", "Quantized LoRA"],
+        "description": "巨大なLLMを低ビット量子化してメモリを抑えつつ、LoRAアダプタだけを学習する省メモリファインチューニング手法。量子化とパラメータ効率的微調整を組み合わせたPEFTの実務的な拡張。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "QLoRAは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "事前学習済みLLMの基底重みを4bitなどの低精度で保持し、LoRAの追加パラメータだけを高精度で学習する省メモリ微調整です。量子化でVRAMを節約しつつ、LoRAで用途に適応させる二段構えの効率化が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "QLoRAとLoRAは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。LoRAは低ランク行列を追加して学習するPEFT手法です。QLoRAはその上に量子化を組み合わせ、凍結した基底モデルを低ビットで載せることでさらにメモリを削る拡張です。QLoRA＝LoRA＋量子化、と整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "QLoRAと量子化は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。量子化は重みや演算のビット数を減らして軽量化する手法全般です。QLoRAは量子化した基底の上でLoRA微調整を行う具体的な組み合わせ手法です。推論だけの量子化と、学習まで含むQLoRAは目的が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">QLoRA</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>QLoRAとは？ビットを削ってLoRAを載せる——VRAMの二重の節約</h1>
+    <p class="tool-hero-sub">読み：キューロラ ／ 英：QLoRA（Quantized LoRA）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>QLoRA</strong>は、<strong>量子化した巨大<a href="../llm/">LLM</a>の上に<a href="../lora/">LoRA</a>だけを載せて学習する</strong>省メモリ微調整です。<a href="../lora/">LoRA</a>が「更新するパラメータを減らす」なら、QLoRAは<strong>「載せるモデル自体のビット数も減らす」</strong>——VRAMを二方向から押さえる——本記事は論文の数式より、<strong>量子化とPEFTがどう噛み合うか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#double-saving">二重の節約</a></li>
+        <li><a href="#how-it-works">ざっくり仕組み</a></li>
+        <li><a href="#vs-lora">LoRA単体との違い</a></li>
+        <li><a href="#vs-quant">量子化単体との違い</a></li>
+        <li><a href="#peft-map">PEFTの地図での位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="double-saving">
+      <h2>二重の節約</h2>
+      <p>
+        70B級の<a href="../llm/">LLM</a>を1枚のGPUで<a href="../fine-tuning/">ファインチューニング</a>しようとすると、<strong>VRAM（GPUメモリ）</strong>が最初の壁になります。対策は大きく二つあります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>節約の方向</th><th>手法</th><th>何を減らすか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>学習する量</strong></td><td><a href="../lora/">LoRA</a> / <a href="../peft/">PEFT</a></td><td>更新パラメータ・勾配の保存</td></tr>
+          <tr><td><strong>載せる重みの精度</strong></td><td><strong>量子化</strong></td><td>基底モデルのメモリ占有（<a href="../../exams/g-kentei/practice/q/g-404/">G-404</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        QLoRAはこの<strong>二つを同時に使う</strong>。凍結した基底を4bitなどの低精度でGPUに載せ、<strong>LoRAアダプタだけ</strong>を高精度で学習する——「巨大モデルを1枚の消費者向けGPUでも微調整できる」という実務的なブレークスルーとして知られています。
+      </p>
+    </section>
+
+    <section id="how-it-works">
+      <h2>ざっくり仕組み</h2>
+      <p>試験レベルでは、次の流れで十分です。</p>
+      <ul class="tool-steps">
+        <li><strong>1. 基底を凍結</strong> — 事前学習済みLLMの重みは更新しない（<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177</a>）</li>
+        <li><strong>2. 基底を量子化</strong> — 16bit→4bitなどでメモリを圧縮（G-404の「量子化」）</li>
+        <li><strong>3. LoRAを追加</strong> — 低ランクの差分行列だけを学習対象に</li>
+        <li><strong>4. 推論</strong> — 量子化基底＋学習済みLoRAで用途に適応した出力</li>
+      </ul>
+      <p>
+        量子化には精度低下のリスクがありますが、QLoRAでは<strong>学習するLoRA部分を高精度に保つ</strong>ことで品質を取り戻す設計が典型です。細部のアルゴリズム名（NF4等）は試験範囲外であることが多く、<strong>「量子化＋LoRAの組み合わせ」</strong>と覚えれば足ります。
+      </p>
+    </section>
+
+    <section id="vs-lora">
+      <h2>LoRA単体との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>LoRA</th><th>QLoRA</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>更新対象</strong></td><td>低ランクの追加パラメータ</td><td>同じ（LoRA部分）</td></tr>
+          <tr><td><strong>基底の載せ方</strong></td><td>通常は16bit等で載せる</td><td><strong>低ビット量子化</strong>で載せる</td></tr>
+          <tr><td><strong>VRAM</strong></td><td>LoRAより軽いが基底は大きい</td><td>基底も軽く、さらに抑えやすい</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>PEFTの代表（TF-177）</td><td>LoRA＋量子化の拡張</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>QLoRA＝LoRA</strong>と答えるのは誤りです。LoRAはPEFTの一手法、QLoRAはその上に量子化を重ねた<strong>組み合わせ</strong>です。
+      </p>
+    </section>
+
+    <section id="vs-quant">
+      <h2>量子化単体との違い</h2>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-404/">G-404</a>の量子化は、重みや演算の<strong>ビット数を減らして軽量化</strong>する手法です。推論の高速化・エッジ展開（<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>、<a href="../../exams/g-kentei/practice/q/g-409/">G-409</a>）でも重要です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>量子化（推論軽量化）</th><th>QLoRA</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>主目的</strong></td><td>推論コスト・サイズ削減</td><td><strong>微調整時のVRAM削減</strong></td></tr>
+          <tr><td><strong>重み更新</strong></td><td>学習しないことも多い</td><td>LoRA部分を<strong>学習する</strong></td></tr>
+          <tr><td><strong>FTとの関係</strong></td><td>圧縮手法</td><td><a href="../fine-tuning/">ファインチューニング</a>手法</td></tr>
+        </tbody>
+      </table>
+      <p>
+        プルーニングや蒸留（<a href="../../exams/g-kentei/practice/q/g-025/">G-025</a>）も軽量化の仲間ですが、QLoRAは<strong>「圧縮しつつ微調整する」</strong>という独自の立ち位置です。
+      </p>
+    </section>
+
+    <section id="peft-map">
+      <h2>PEFTの地図での位置</h2>
+      <p>
+        <a href="../peft/">PEFT</a>は、全パラメータを更新しない<a href="../fine-tuning/">ファインチューニング</a>の総称です（<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>PEFTか</th><th>量子化との関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../lora/">LoRA</a></strong></td><td>はい</td><td>別手法。組み合わせ可</td></tr>
+          <tr><td><strong>QLoRA</strong></td><td>はい（LoRA系）</td><td><strong>量子化を内包</strong></td></tr>
+          <tr><td><strong>Full Fine-tuning</strong></td><td>いいえ</td><td>量子化とは独立</td></tr>
+          <tr><td><strong>量子化のみ</strong></td><td>いいえ（FTではない）</td><td>単体の軽量化</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127</a>・<a href="../../exams/genai-passport/practice/q/hq-0193/">HQ-0193</a>のファインチューニング定義——事前学習済みモデルの追加学習——に、QLoRAも含まれます。ただし<strong>人手で出力を直す作業</strong>（<a href="../../exams/g-kentei/drill/q/tf-434/">TF-434</a>）ではありません。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <strong>量子化＋LoRA</strong>の省メモリ微調整</li>
+        <li><strong>目的</strong> — 巨大LLMを<strong>少ないVRAM</strong>でファインチューニング</li>
+        <li><strong>二重の節約</strong> — 載せる基底を量子化＋学習はLoRAだけ</li>
+        <li><strong>対比</strong> — LoRA単体、量子化単体、Full FT、プロンプトのみ、RAG</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-177/">TF-177</a>、<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>、<a href="../../exams/g-kentei/practice/q/g-404/">G-404</a>、<a href="../../exams/g-kentei/practice/q/g-409/">G-409</a>、<a href="../../exams/g-kentei/practice/q/g-025/">G-025</a>、<a href="../../exams/g-kentei/drill/q/tf-434/">TF-434</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127</a>、<a href="../../exams/genai-passport/drill/q/tf-0164/">TF-0164</a>、<a href="../../exams/genai-passport/practice/q/hq-0193/">HQ-0193</a>、<a href="../../exams/genai-passport/drill/q/tf-0128/">TF-0128</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>QLoRA＝<a href="../lora/">LoRA</a></td><td>LoRA＋量子化 vs LoRA単体</td></tr>
+          <tr><td>QLoRA＝量子化</td><td>微調整手法 vs 軽量化手法（G-404）</td></tr>
+          <tr><td>QLoRA＝Full Fine-tuning</td><td>一部更新 vs 全パラメータ更新</td></tr>
+          <tr><td>QLoRA＝<a href="../peft/">PEFT</a>全体</td><td>LoRA系の一実装 vs PEFT総称</td></tr>
+          <tr><td>QLoRA＝<a href="../rag/">RAG</a></td><td>重み更新 vs 外部検索で知識を渡す</td></tr>
+          <tr><td>QLoRA＝人手修正</td><td>モデル学習 vs 出力の手直し（TF-434）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>QLoRAは何をする手法ですか？</summary><p class="tool-faq-a">事前学習済みLLMの基底重みを4bitなどの低精度で保持し、LoRAの追加パラメータだけを高精度で学習する省メモリ微調整です。量子化でVRAMを節約しつつ、LoRAで用途に適応させる二段構えの効率化が特徴です。</p></details>
+        <details><summary>QLoRAとLoRAは同じですか？</summary><p class="tool-faq-a">同じではありません。LoRAは低ランク行列を追加して学習するPEFT手法です。QLoRAはその上に量子化を組み合わせ、凍結した基底モデルを低ビットで載せることでさらにメモリを削る拡張です。QLoRA＝LoRA＋量子化、と整理します。</p></details>
+        <details><summary>QLoRAと量子化は同じですか？</summary><p class="tool-faq-a">同じではありません。量子化は重みや演算のビット数を減らして軽量化する手法全般です。QLoRAは量子化した基底の上でLoRA微調整を行う具体的な組み合わせ手法です。推論だけの量子化と、学習まで含むQLoRAは目的が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-177/">TF-177 · LoRA</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-404/">G-404 · 量子化とプルーニング</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-383/">G-383 · 事前学習とFT</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0127/">TF-0127 · ファインチューニング</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../peft/">PEFT</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

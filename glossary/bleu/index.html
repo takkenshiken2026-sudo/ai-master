@@ -161,7 +161,8 @@
         <tbody>
           <tr><td><strong>n-gramモデル</strong></td><td>次の語を予測する<strong>言語モデル</strong></td><td>BLEUは<strong>評価指標</strong>。モデルではない</td></tr>
           <tr><td><strong>損失関数</strong></td><td>学習時に最小化する目的</td><td>BLEUは通常<strong>評価時</strong>に使う指標</td></tr>
-          <tr><td><strong>正解率・F値</strong></td><td>分類タスクの指標</td><td>BLEUは<strong>翻訳・生成</strong>向け</td></tr>
+          <tr><td><strong><a href="../rouge/">ROUGE</a></strong></td><td>要約の自動評価（Recall志向）</td><td>BLEU＝翻訳・Precision寄り</td></tr>
+          <tr><td><strong>正解率・F値</strong></td><td>分類タスクの指標</td><td>BLEUは<strong>翻訳</strong>向け</td></tr>
           <tr><td><strong>ディープブルー</strong></td><td>チェス対戦システム</td><td>発音が近いだけで<strong>無関係</strong>（TF-324）</td></tr>
         </tbody>
       </table>
@@ -222,6 +223,8 @@
           <li><a href="../loss-function/">損失関数</a></li>
           <li><a href="../bart-model/">BART</a></li>
           <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../rouge/">ROUGE</a></li>
+          <li><a href="../human-eval/">HumanEval</a></li>
           <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
         </ul>
       </div>

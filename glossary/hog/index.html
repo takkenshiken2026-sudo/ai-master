@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HOG（Histogram of Oriented Gradients）とは？勾配方向ヒストグラムで形状特徴を表現する古典的画像特徴量。CNNとの違いと物体検出の系譜をG検定向けに解説。">
+  <title>HOGとは？勾配の向きを数える——深層学習以前に形を読んだ特徴量 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/hog/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="HOGとは？勾配の向きを数える——深層学習以前に形を読んだ特徴量">
+  <meta property="og:description" content="画像の局所領域で勾配方向をヒストグラム化し、人や物体の輪郭を特徴量にする。CNN登場前の代表的手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/hog/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "HOG",
+        "alternateName": ["HOG", "Histogram of Oriented Gradients", "勾配方向ヒストグラム"],
+        "description": "画像の局所領域ごとに画素の勾配方向をヒストグラム化し、エッジや輪郭の形状を数値特徴として表現する古典的な画像特徴量抽出手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "HOGは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像を小さなセルに分割し、各セル内の画素勾配の向きをヒストグラムにまとめて特徴ベクトルを作る手法です。人のシルエットや物体の輪郭といった形状情報を、学習前に設計された手順で数値化します。CNN以前の物体検出や歩行者検出で広く使われました。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "HOGとCNNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。HOGは人が設計した特徴抽出の手順であり、ニューラルネットワークの学習とは別物です。CNNは畳み込み層を通じて特徴をデータから自動で学習します。どちらも画像の局所パターンを扱いますが、特徴の作り方と学習の有無が根本的に異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "HOGの勾配は誤差逆伝播の勾配と同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。HOGでいう勾配は、画像の輝度が横・縦方向にどれだけ変化するかという画素レベルの微分情報です。誤差逆伝播の勾配は、損失関数をパラメータで微分した学習用の信号です。用語が「勾配」を共有しますが、文脈と意味が別です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">HOG</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>HOGとは？勾配の向きを数える——深層学習以前に形を読んだ特徴量</h1>
+    <p class="tool-hero-sub">読み：エイチオージー ／ 英：Histogram of Oriented Gradients</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>HOG</strong>（Histogram of Oriented Gradients、勾配方向ヒストグラム）は、画像の<strong>局所領域で画素の勾配の向きを数え</strong>、エッジや輪郭の形状を<strong>手作りの特徴ベクトル</strong>に変換する古典的手法です。<a href="../cnn/">CNN</a>が特徴をデータから学ぶのに対し、HOGは<strong>人が設計した手順で形を読む</strong>——本記事はセルの細かい式より、<strong>「なぜ深層学習の前にこれが標準だったか」</strong>と、<strong>勾配という言葉のすり替え</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#before-cnn">CNN以前の世界</a></li>
+        <li><a href="#how-hog">HOGが形を読む手順</a></li>
+        <li><a href="#pedestrian-era">歩行者検出の記憶</a></li>
+        <li><a href="#vs-cnn">CNNとの対比</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="before-cnn">
+      <h2>CNN以前の世界</h2>
+      <p>
+        2010年代前半まで、画像認識の多くは<strong>特徴抽出＋分類器</strong>の二段構成でした。まずHOGやSIFTなどで数値特徴を作り、次にSVMやランダムフォレストでクラスを当てる——<a href="../alexnet/">AlexNet</a>以降は<a href="../cnn/">CNN</a>が特徴と分類を<strong>端到端</strong>で学ぶ流れが主流になりました（<a href="../../exams/g-kentei/practice/q/g-315/">G-315</a>）。
+      </p>
+      <p>
+        HOGは「画像のどこに、どんな向きのエッジが多いか」を<strong>固定アルゴリズム</strong>で要約します。学習データから重みを更新するのではなく、<strong>設計済みの変換</strong>——試験では「古典的な特徴量」「手作り特徴」とラベル付けされることが多いです。
+      </p>
+    </section>
+
+    <section id="how-hog">
+      <h2>HOGが形を読む手順</h2>
+      <p>厳密なパラメータは実装依存ですが、試験向けの流れは次のとおりです。</p>
+      <ul class="tool-steps">
+        <li><strong>前処理</strong> — 輝度の正規化などで照明のゆらぎを抑える</li>
+        <li><strong>勾配計算</strong> — 各画素で横・縦方向の輝度変化から<strong>勾配の大きさと向き</strong>を求める</li>
+        <li><strong>セル分割</strong> — 画像を小さなセル（例：8×8画素）に区切る</li>
+        <li><strong>ヒストグラム化</strong> — セル内の勾配向きをビンに数え、方向ヒストグラムを作る</li>
+        <li><strong>ブロック正規化</strong> — 隣接セルをまとめて正規化し、特徴ベクトルを完成させる</li>
+      </ul>
+      <p>
+        ここでの<strong>勾配</strong>は、画像のエッジ（明暗の境目）の向きを表す<strong>画素レベルの微分</strong>です。<a href="../backpropagation/">誤差逆伝播</a>で層の重みを更新する<strong>学習用勾配</strong>とは別物——名前が同じでも文脈が違います。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>何を残すか</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>勾配計算</strong></td><td>エッジの向きと強さ</td><td>形状の手がかり</td></tr>
+          <tr><td><strong>ヒストグラム</strong></td><td>向きの分布</td><td>回転に比較的頑健</td></tr>
+          <tr><td><strong>正規化</strong></td><td>照明差の影響を抑える</td><td>局所コントラストへの対策</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="pedestrian-era">
+      <h2>歩行者検出の記憶</h2>
+      <p>
+        HOGが広く知られるきっかけの一つは、<strong>歩行者検出</strong>です。人の胴体や四肢は縦横斜めのエッジが規則的に並ぶため、勾配方向の分布が<strong>人らしいパターン</strong>になりやすい——HOG特徴＋線形SVMの組み合わせは、ディープ学習以前の物体検出パイプラインの代表例として教科書に載ります。
+      </p>
+      <p>
+        現在の<a href="../faster-rcnn/">Faster R-CNN</a>やYOLOは、候補領域の生成から分類までをニューラルネットで一気に学習します（<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>）。HOGは<strong>系譜の起点</strong>として覚えると、画像認識の歴史が一本につながります。
+      </p>
+    </section>
+
+    <section id="vs-cnn">
+      <h2>CNNとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>HOG</th><th>CNN</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>特徴の作り方</strong></td><td>人が設計した固定手順</td><td>畳み込み層でデータから学習</td></tr>
+          <tr><td><strong>学習の要否</strong></td><td>特徴抽出自体は学習不要</td><td>重みを<a href="../gradient-descent/">勾配降下</a>で更新</td></tr>
+          <tr><td><strong>得意な情報</strong></td><td>エッジ・輪郭の形状</td><td>低次から高次まで階層的特徴</td></tr>
+          <tr><td><strong>試験での位置づけ</strong></td><td>古典的特徴量</td><td>深層学習の中核（<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        HOGは「畳み込みそのもの」ではありません（<a href="../../exams/g-kentei/practice/q/g-255/">G-255</a>のすり替えに注意）。局所領域を見る<strong>発想</strong>はCNNと通じますが、<strong>学習可能なフィルタを重ねる構造</strong>ではない——この差が試験の要点です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 勾配<strong>方向</strong>のヒストグラムで形状特徴を表現する古典的手法</li>
+        <li><strong>役割</strong> — 特徴抽出（分類器そのものではない）</li>
+        <li><strong>歴史</strong> — CNN以前の画像認識・歩行者検出で標準的だった</li>
+        <li><strong>対比</strong> — 手作り特徴 vs 端到端学習。画素勾配 vs 学習勾配</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-315/">G-315</a>、<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>、<a href="../../exams/g-kentei/practice/q/g-323/">G-323</a>、<a href="../../exams/g-kentei/practice/q/g-255/">G-255</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>HOG＝CNN</td><td>手作り特徴抽出 vs 学習型ネットワーク</td></tr>
+          <tr><td>HOG＝物体検出モデル</td><td>特徴量。検出にはSVM等の分類器が別途必要だった</td></tr>
+          <tr><td>HOGの勾配＝誤差逆伝播の勾配</td><td>画素の輝度変化 vs 損失のパラメータ微分</td></tr>
+          <tr><td>HOG＝データ拡張</td><td>特徴抽出 vs 学習データを増やす前処理（<a href="../../exams/g-kentei/practice/q/g-020/">G-020</a>）</td></tr>
+          <tr><td>HOG＝<a href="../loss-function/">損失関数</a></td><td>入力画像の変換 vs 学習の誤差定義</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>HOGは何をする手法ですか？</summary><p class="tool-faq-a">画像を小さなセルに分割し、各セル内の画素勾配の向きをヒストグラムにまとめて特徴ベクトルを作る手法です。人のシルエットや物体の輪郭といった形状情報を、学習前に設計された手順で数値化します。CNN以前の物体検出や歩行者検出で広く使われました。</p></details>
+        <details><summary>HOGとCNNは同じですか？</summary><p class="tool-faq-a">同じではありません。HOGは人が設計した特徴抽出の手順であり、ニューラルネットワークの学習とは別物です。CNNは畳み込み層を通じて特徴をデータから自動で学習します。どちらも画像の局所パターンを扱いますが、特徴の作り方と学習の有無が根本的に異なります。</p></details>
+        <details><summary>HOGの勾配は誤差逆伝播の勾配と同じですか？</summary><p class="tool-faq-a">同じではありません。HOGでいう勾配は、画像の輝度が横・縦方向にどれだけ変化するかという画素レベルの微分情報です。誤差逆伝播の勾配は、損失関数をパラメータで微分した学習用の信号です。用語が「勾配」を共有しますが、文脈と意味が別です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-315/">G-315 · 画像認識タスク</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · CNNの局所特徴</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-323/">G-323 · 物体検出の代表例</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-255/">G-255 · 畳み込みのすり替え</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../faster-rcnn/">Faster R-CNN</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../orb/">ORB</a></li>
+          <li><a href="../sift/">SIFT</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

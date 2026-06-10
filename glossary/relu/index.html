@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReLUとは？Rectified Linear Unit。負値を0にする活性化関数。シグモイド・Softmaxとの違いをG検定向けに解説。">
+  <title>ReLUとは？負を切り捨てて非線形を足す——深層学習のデフォルトスイッチ — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/relu/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ReLUとは？負を切り捨てて非線形を足す——深層学習のデフォルトスイッチ">
+  <meta property="og:description" content="max(0,x)で負の入力を0にするシンプルな活性化関数。隠れ層の非線形性と勾配消失の緩和に広く使われる。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/relu/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ReLU",
+        "alternateName": ["ReLU", "レルー", "Rectified Linear Unit", "整流線形ユニット"],
+        "description": "入力が負のとき0、正のときはそのまま通す活性化関数。ニューラルネットワークの隠れ層に非線形性を導入し、深層学習で広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ReLUは何をする活性化関数ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Rectified Linear Unitの略で、f(x)=max(0,x)の形を持つ活性化関数です。負の入力を0に切り捨て、正の入力はそのまま通します。隠れ層に非線形性を導入し、線形変換の重ね合わせだけでは表現できない複雑な関係を学習可能にします。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ReLUとSoftmaxは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ReLUは主に隠れ層で使われ、負の値を0にする単純な非線形関数です。Softmaxは出力層でクラス確率を合計1の分布に変換する活性化関数です。役割と数式が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "活性化関数がないと何が問題ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "隠れ層に活性化関数がないと、線形変換だけを重ねたことになり、全体として1つの線形変換に近くなります。複雑な非線形関係を表現しにくくなるため、ReLUなどの活性化関数が必要です（G-203）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ReLU</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ReLUとは？負を切り捨てて非線形を足す——深層学習のデフォルトスイッチ</h1>
+    <p class="tool-hero-sub">読み：レルー ／ 英：ReLU（Rectified Linear Unit）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ReLU</strong>（Rectified Linear Unit）は、<strong>負の入力を0に、正の入力はそのまま通す</strong>——いわば「負を切り捨てる」——活性化関数です。<a href="../neural-network/">ニューラルネット</a>の隠れ層に<strong>非線形性</strong>を足す部品——本記事は数式の暗記より、<strong>「なぜこんなに単純な関数が深層学習の標準になったか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-nonlinear">非線形性が必要な理由</a></li>
+        <li><a href="#relu-shape">ReLUの形と性質</a></li>
+        <li><a href="#vs-sigmoid">シグモイドとの対比</a></li>
+        <li><a href="#where-used">どこで使われるか</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-nonlinear">
+      <h2>非線形性が必要な理由</h2>
+      <p>
+        <a href="../neural-network/">ニューラルネット</a>の各層は、だいたい「加重和→活性化関数」という流れです。活性化関数がないと、線形変換だけを何層も重ねたことになり、<strong>全体として1つの線形変換</strong>に近くなります。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-203/">G-203</a>が示すように、隠れ層に活性化関数を入れないと<strong>複雑な関係を表現しにくい</strong>——だからReLU、シグモイド、tanhなどが必要です。ReLUはその中でも<strong>最も単純で計算が速い</strong>代表格として広まりました。
+      </p>
+    </section>
+
+    <section id="relu-shape">
+      <h2>ReLUの形と性質</h2>
+      <p>試験レベルでは、次の定義で十分です。</p>
+      <p><strong>f(x) = max(0, x)</strong>——xが正ならそのまま、負なら0。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>性質</th><th>意味</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>非線形</strong></td><td>直線だけではない</td><td>隠れ層の表現力の源泉</td></tr>
+          <tr><td><strong>計算が軽い</strong></td><td>比較演算と0クリップ</td><td>深いネットで有利</td></tr>
+          <tr><td><strong>正側の勾配</strong></td><td>入力が正なら勾配は1</td><td>シグモイドより勾配消失しにくい</td></tr>
+          <tr><td><strong>負側は0</strong></td><td>「死んだニューロン」問題も</td><td>Leaky ReLU等の改良は試験範囲外なことも</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="vs-sigmoid">
+      <h2>シグモイドとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>ReLU</th><th><a href="../sigmoid/">シグモイド</a></th><th>Softmax</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>主な使い所</strong></td><td><strong>隠れ層</strong></td><td>隠れ層・二値出力（古典）</td><td><strong>出力層</strong>（多クラス分類）</td></tr>
+          <tr><td><strong>出力範囲</strong></td><td>0以上（非負）</td><td>0〜1</td><td>確率分布（合計1）</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>活性化関数の代表（G-203）</td><td>飽和で勾配消失しやすい</td><td>確率分布化（<a href="../../exams/g-kentei/practice/q/g-263/">G-263</a>のすり替え対象）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>ReLU＝Softmax</strong>と答えるのは誤りです。ReLUは隠れ層の非線形化、Softmaxは出力層の確率化——層と役割が異なります。
+      </p>
+    </section>
+
+    <section id="where-used">
+      <h2>どこで使われるか</h2>
+      <p>
+        <a href="../alexnet/">AlexNet</a>（<a href="../../exams/g-kentei/practice/q/g-319/">G-319</a>）がILSVRC 2012で勝利したとき、<strong>ReLU・<a href="../dropout/">ドロップアウト</a>・<a href="../gpu/">GPU</a>活用</strong>が話題になり、現代<a href="../cnn/">CNN</a>の標準コンポーネントとして定着しました。
+      </p>
+      <ul class="tool-steps">
+        <li><strong><a href="../cnn/">CNN</a>の畳み込み層のあと</strong> — 特徴マップに非線形性を付与</li>
+        <li><strong>全結合隠れ層</strong> — MLPの中間層</li>
+        <li><strong>出力層ではない</strong> — 分類の確率化はSoftmax等が担当</li>
+      </ul>
+      <p>
+        ReLUは<strong>モデル名（AlexNet等）でも損失関数でもない</strong>——層の直後に置く<strong>部品</strong>として整理します。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 負値を0にする<strong>活性化関数</strong>（Rectified Linear Unit）</li>
+        <li><strong>役割</strong> — 隠れ層に<strong>非線形性</strong>を導入（G-203）</li>
+        <li><strong>式</strong> — f(x)=max(0,x)</li>
+        <li><strong>歴史</strong> — AlexNetとともにCNNの標準部品として普及（G-319）</li>
+        <li><strong>対比</strong> — Softmax（出力層）、損失関数、正則化、交絡（G-480のすり替え）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-203/">G-203</a>、<a href="../../exams/g-kentei/practice/q/g-011/">G-011</a>、<a href="../../exams/g-kentei/practice/q/g-120/">G-120</a>、<a href="../../exams/g-kentei/practice/q/g-319/">G-319</a>、<a href="../../exams/g-kentei/practice/q/g-263/">G-263</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ReLU＝Softmax</td><td>隠れ層の非線形 vs 出力層の確率化</td></tr>
+          <tr><td>ReLU＝<a href="../loss-function/">損失関数</a></td><td>活性化 vs 誤差の定義</td></tr>
+          <tr><td>ReLU＝<a href="../dropout/">ドロップアウト</a></td><td>非線形化 vs 正則化</td></tr>
+          <tr><td>ReLU＝交絡</td><td>活性化関数 vs 統計の第三要因（G-480）</td></tr>
+          <tr><td>ReLU＝バウンディングボックス</td><td>NN部品 vs 物体検出の矩形</td></tr>
+          <tr><td>活性化なしでも深く学べる</td><td>線形の重ね合わせに近づく（G-203）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ReLUは何をする活性化関数ですか？</summary><p class="tool-faq-a">Rectified Linear Unitの略で、f(x)=max(0,x)の形を持つ活性化関数です。負の入力を0に切り捨て、正の入力はそのまま通します。隠れ層に非線形性を導入し、線形変換の重ね合わせだけでは表現できない複雑な関係を学習可能にします。</p></details>
+        <details><summary>ReLUとSoftmaxは同じですか？</summary><p class="tool-faq-a">同じではありません。ReLUは主に隠れ層で使われ、負の値を0にする単純な非線形関数です。Softmaxは出力層でクラス確率を合計1の分布に変換する活性化関数です。役割と数式が異なります。</p></details>
+        <details><summary>活性化関数がないと何が問題ですか？</summary><p class="tool-faq-a">隠れ層に活性化関数がないと、線形変換だけを重ねたことになり、全体として1つの線形変換に近くなります。複雑な非線形関係を表現しにくくなるため、ReLUなどの活性化関数が必要です（G-203）。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-203/">G-203 · 活性化関数の必要性</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-319/">G-319 · AlexNetとReLU</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-011/">G-011 · 活性化関数</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-263/">G-263 · Softmax（対比）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../neural-network/">ニューラルネットワーク</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../sigmoid/">シグモイド関数</a></li>
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

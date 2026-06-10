@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ROUGEとは？要約のn-gram再現に基づく評価指標。BLEUとの違い、機械翻訳・損失関数との区別をG検定向けに解説。">
+  <title>ROUGEとは？参照文をどれだけ拾えたか——要約評価の再現率ベース指標 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/rouge/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ROUGEとは？参照文をどれだけ拾えたか——要約評価の再現率ベース指標">
+  <meta property="og:description" content="Recall-Oriented Understudy for Gisting Evaluation。自動要約と参照要約のn-gram一致を再現率中心に測るNLP評価指標。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/rouge/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ROUGE",
+        "alternateName": ["ROUGE", "ルージュ", "Recall-Oriented Understudy for Gisting Evaluation"],
+        "description": "自動要約の出力と人手参照要約の間で、n-gramなどの一致を主に再現率の観点から測る自然言語生成の自動評価指標。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ROUGEは何を評価しますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主に自動要約の品質です。システムが生成した要約文（候補）と、人手で用意した参照要約の間で、連続する語の並び（n-gram）などがどれだけ一致するかを見て、再現率を中心にスコア化します。文書要約は自然言語処理の代表タスクの一つです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ROUGEとBLEUは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらもn-gram一致を使う自動評価指標ですが、ROUGEは要約評価で再現率（Recall）を重視し、BLEUは主に機械翻訳評価で適合率（Precision）寄りの設計として整理されます。タスクと重視する観点が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ROUGEは損失関数ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。ROUGEはモデル出力を評価する指標であり、学習時に勾配降下で最小化する損失関数とは別物です。評価指標と学習の目的関数は役割が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ROUGE</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ROUGEとは？参照文をどれだけ拾えたか——要約評価の再現率ベース指標</h1>
+    <p class="tool-hero-sub">読み：ルージュ ／ 英：ROUGE（Recall-Oriented Understudy for Gisting Evaluation）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ROUGE</strong>は、<strong>自動要約</strong>の出力が人手の<strong>参照要約</strong>をどれだけ「拾えているか」——<strong>再現率（Recall）</strong>中心——を測る評価指標です。<a href="../bleu/">BLEU</a>が機械翻訳で<strong>適合率（Precision）</strong>寄りに設計されたのに対し、ROUGEは<strong>「短い要約に重要な語句が含まれているか」</strong>——本記事はバリアント名の暗記より、<strong>BLEUとの対になる評価の物差し</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#summarization">要約というタスク</a></li>
+        <li><a href="#recall-focus">再現率を重視する理由</a></li>
+        <li><a href="#mechanism">ROUGEの考え方</a></li>
+        <li><a href="#vs-bleu">BLEUとの対比</a></li>
+        <li><a href="#variants">バリアントの整理</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="summarization">
+      <h2>要約というタスク</h2>
+      <p>
+        <a href="../nlp/">自然言語処理</a>には、形態素解析、機械翻訳、質問応答、<strong>文書要約</strong>、感情分析などが含まれます（<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126</a>）。
+      </p>
+      <p>
+        要約は、長い原文から<strong>短い文</strong>を生成し、要点を伝えるタスクです。ニュース記事のダイジェストや議事録の概要などが典型です。品質を測るには人手評価が理想ですが、研究・開発では<strong>参照要約との自動比較</strong>が必要——ROUGEはその古典的な物差しです。
+      </p>
+      <p>
+        <a href="../attention/">Attention</a>は翻訳・要約・画像認識など多くの応用で使われますが（<a href="../../exams/g-kentei/drill/q/tf-417/">TF-417</a>）、ROUGEは<strong>モデル構造ではなく評価指標</strong>です。
+      </p>
+    </section>
+
+    <section id="recall-focus">
+      <h2>再現率を重視する理由</h2>
+      <p>
+        要約では、参照要約に含まれる重要な語句・フレーズを<strong>候補要約がどれだけカバーしているか</strong>が問われます。極端に短い要約は無関係な語を含まないため適合率は高く見えても、<strong>要点を落としている</strong>——再現率が低い——可能性があります。
+      </p>
+      <p>
+        ROUGEの <strong>R</strong>ecall-<strong>O</strong>riented（再現率志向）という名前は、この設計思想を表します。試験では数式より、<strong>「要約＝参照文の内容をどれだけ拾えたか（Recall）」</strong>と覚えるとBLEUとの対比が明確になります。
+      </p>
+    </section>
+
+    <section id="mechanism">
+      <h2>ROUGEの考え方</h2>
+      <ul class="tool-steps">
+        <li><strong>比較対象</strong> — システムの<strong>候補要約</strong> vs 人手の<strong>参照要約</strong></li>
+        <li><strong>一致の見方</strong> — <strong>n-gram</strong>（連続する語の並び）の重なり（<a href="../../exams/g-kentei/practice/q/g-334/">G-334</a>）</li>
+        <li><strong>重視する観点</strong> — 主に<strong>再現率</strong>（参照側のn-gramのうち何割が候補に含まれるか）</li>
+        <li><strong>位置づけ</strong> — <strong>評価指標</strong>。<a href="../loss-function/">損失関数</a>ではない</li>
+      </ul>
+      <p>
+        複数の参照要約がある場合、いずれかとの一致を認める設計もあります。同義語の言い換えは一致とみなされないなど、<a href="../bleu/">BLEU</a>と同様の<strong>自動指標の限界</strong>があります（<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>）。
+      </p>
+    </section>
+
+    <section id="vs-bleu">
+      <h2>BLEUとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>ROUGE</th><th>BLEU</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>主なタスク</strong></td><td><strong>要約</strong></td><td><strong>機械翻訳</strong>（<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>）</td></tr>
+          <tr><td><strong>比較単位</strong></td><td>候補要約 vs 参照要約</td><td>候補訳 vs 参照訳</td></tr>
+          <tr><td><strong>設計の重心</strong></td><td><strong>再現率（Recall）</strong>志向</td><td><strong>適合率（Precision）</strong>寄り</td></tr>
+          <tr><td><strong>共通技術</strong></td><td colspan="2">n-gram一致による自動評価</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>要約の評価指標</td><td>翻訳の評価指標</td></tr>
+        </tbody>
+      </table>
+      <p>
+        名前の響きが近い<strong>BLEU</strong>と<strong>ROUGE</strong>は、すり替え問題の定番です。タスク（要約 vs 翻訳）と重視する観点（Recall vs Precision）をセットで覚えます。
+      </p>
+    </section>
+
+    <section id="variants">
+      <h2>バリアントの整理</h2>
+      <p>論文・ツールでは複数のROUGEが使われます。試験では細部より<strong>家族としての位置づけ</strong>で十分なことが多いです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>例</th><th>何を見るか</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ROUGE-N</strong></td><td>n-gramの一致（再現率中心）</td><td>ROUGEの基本形</td></tr>
+          <tr><td><strong>ROUGE-L</strong></td><td>最長共通部分列（語順の連続性）</td><td>フレーズの流れも評価</td></tr>
+          <tr><td><strong>ROUGE-W 等</strong></td><td>重み付き・改良版</td><td>バリアントの一つ。暗記不要なことも</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../bart-model/">BART</a>などの要約モデルや、<a href="../transformer/">Transformer</a>ベースの生成モデルでも、開発時の比較にROUGEが使われることがあります——ただし<strong>ROUGE＝要約モデル</strong>ではありません。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 要約の<strong>n-gram再現</strong>に基づく自動評価指標</li>
+        <li><strong>タスク</strong> — 文書要約（TF-126のNLPタスク一覧）</li>
+        <li><strong>対比</strong> — BLEU＝翻訳・Precision寄り、ROUGE＝要約・Recall志向</li>
+        <li><strong>種別</strong> — 評価指標。損失関数・言語モデル・生成モデル本体ではない</li>
+        <li><strong>限界</strong> — 自動指標だけでは品質・事実性を完全には測れない（G-350、<a href="../../exams/g-kentei/practice/q/g-474/">G-474</a>）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-126/">TF-126</a>、<a href="../../exams/g-kentei/practice/q/g-340/">G-340</a>（BLEU対比）、<a href="../../exams/g-kentei/practice/q/g-350/">G-350</a>、<a href="../../exams/g-kentei/practice/q/g-334/">G-334</a>、<a href="../../exams/g-kentei/practice/q/g-474/">G-474</a>、<a href="../../exams/g-kentei/drill/q/tf-417/">TF-417</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ROUGE＝<a href="../bleu/">BLEU</a></td><td>要約・Recall vs 翻訳・Precision寄り</td></tr>
+          <tr><td>ROUGE＝<a href="../loss-function/">損失関数</a></td><td>評価指標 vs 学習の目的関数</td></tr>
+          <tr><td>ROUGE＝<a href="../n-gram/">n-gram</a>モデル</td><td>評価指標 vs 言語モデル</td></tr>
+          <tr><td>ROUGE＝要約モデル</td><td>品質を測る指標 vs 要約を生成するモデル</td></tr>
+          <tr><td>ROUGE＝機械翻訳</td><td>要約評価 vs 翻訳タスク（G-340）</td></tr>
+          <tr><td>ROUGEが高ければ事実性も保証</td><td>参照との一致であり、真偽の保証ではない（G-350）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ROUGEは何を評価しますか？</summary><p class="tool-faq-a">主に自動要約の品質です。システムが生成した要約文（候補）と、人手で用意した参照要約の間で、連続する語の並び（n-gram）などがどれだけ一致するかを見て、再現率を中心にスコア化します。文書要約は自然言語処理の代表タスクの一つです。</p></details>
+        <details><summary>ROUGEとBLEUは同じですか？</summary><p class="tool-faq-a">同じではありません。どちらもn-gram一致を使う自動評価指標ですが、ROUGEは要約評価で再現率（Recall）を重視し、BLEUは主に機械翻訳評価で適合率（Precision）寄りの設計として整理されます。タスクと重視する観点が異なります。</p></details>
+        <details><summary>ROUGEは損失関数ですか？</summary><p class="tool-faq-a">いいえ。ROUGEはモデル出力を評価する指標であり、学習時に勾配降下で最小化する損失関数とは別物です。評価指標と学習の目的関数は役割が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-126/">TF-126 · NLPタスク（要約）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-340/">G-340 · 機械翻訳（BLEU対比）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-350/">G-350 · NLP評価の注意</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-334/">G-334 · n-gram</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../bleu/">BLEU</a></li>
+          <li><a href="../bleu-score/">BLEUスコア</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../n-gram/">n-gram</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../bart-model/">BART</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

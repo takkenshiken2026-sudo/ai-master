@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MoCoとは？Momentum Contrast。負例キューと慣性エンコーダで対照学習を安定化する自己教師あり手法。CLIPとの違いをG検定向けに解説。">
+  <title>MoCoとは？負例キューを慣性更新——対照学習の辞書を太くする自己教師あり — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/moco/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MoCoとは？負例キューを慣性更新——対照学習の辞書を太くする自己教師あり">
+  <meta property="og:description" content="Momentum Contrast。大量の負例キーをキューに蓄え、動量更新エンコーダで安定した対照学習を行う視覚表現学習手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/moco/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "MoCo",
+        "alternateName": ["MoCo", "エムオーシー", "Momentum Contrast"],
+        "description": "対照学習で正例ペアを近づけ負例を遠ざける自己教師あり手法。動量更新のキーエンコーダと大量の負例キーをキューに保持し、小さなバッチでも多様な負例で安定学習する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "MoCoは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像の異なる拡張ビューを正例ペアとして、同じ画像の表現は近く・別画像の表現は遠くなるように学ぶ自己教師ありの対照学習です。動量更新のキーエンコーダと負例キーのキューにより、バッチサイズに依存せず多くの負例を使えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MoCoとCLIPは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MoCoは画像の拡張ビュー同士の対照学習で視覚表現を学ぶ手法です。CLIPは画像とテキストのペアを共通埋め込み空間に載せるマルチモーダルモデルです。どちらも対照的な学習思想を含みますが、モダリティと目的が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MoCoとMAEは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MoCoは正例・負例の距離関係を学ぶ対照学習です。MAEは画像パッチをマスクして再構成する自己教師あり学習です。どちらもラベルなしデータの事前学習ですが、学習課題の設計が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">MoCo</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>MoCoとは？負例キューを慣性更新——対照学習の辞書を太くする自己教師あり</h1>
+    <p class="tool-hero-sub">読み：エムオーシー ／ 英：MoCo（Momentum Contrast）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>MoCo</strong>（Momentum Contrast）は、<strong>正例は近く・負例は遠く</strong>——<a href="../../exams/g-kentei/practice/q/g-127/">Contrastive Loss</a>の思想——で視覚表現を学ぶ<strong>自己教師あり</strong>手法です。対照学習は負例の数と質が効くのに、GPUメモリはバッチを太くできない——MoCoは<strong>キューに負例を溜め、キーエンコーダを慣性更新</strong>して安定させる——本記事は数式より、<strong>「なぜ辞書とスローエンコーダが要るか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#contrastive">対照学習の課題</a></li>
+        <li><a href="#two-encoder">二つのエンコーダ</a></li>
+        <li><a href="#queue">負例キュー</a></li>
+        <li><a href="#vs-others">MAE・CLIPとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="contrastive">
+      <h2>対照学習の課題</h2>
+      <p>
+        <strong>自己教師あり学習</strong>は、ラベルなしデータから擬似的な正解を作ります（<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>）。対照学習では、同じ画像の<strong>異なる拡張</strong>（クロップ・色変換など）を<strong>正例ペア</strong>にし、別画像を<strong>負例</strong>にします。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-163/">G-163</a>が示すように、Contrastive Lossは「似ているペアは<a href="../embedding/">埋め込み</a>空間で近く、似ていないペアは遠く」——顔認証の距離学習と同型の発想です。画像の自己教師ありでも、<strong>豊富な負例</strong>があるほど表現が鍛えられやすい——が、1ステップのバッチに入れられる負例数はメモリで頭打ちになります。
+      </p>
+    </section>
+
+    <section id="two-encoder">
+      <h2>二つのエンコーダ</h2>
+      <p>MoCoの構成は、ざっくり<strong>Query側</strong>と<strong>Key側</strong>の二系統です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>更新の仕方</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Queryエンコーダ</strong></td><td>勾配で<strong>通常更新</strong></td><td>拡張ビュー1の特徴を出す（学習の主役）</td></tr>
+          <tr><td><strong>Keyエンコーダ</strong></td><td><strong>動量（慣性）更新</strong></td><td>拡張ビュー2の特徴を出す。Queryの過去のゆるいコピー</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Keyエンコーダをいきなり同期更新すると、正例ペアのターゲットが激しく動き学習が不安定——<strong>Momentum</strong>でゆっくり追従させ、安定した「比較先」を保つのがMoCoの名の由来です。
+      </p>
+    </section>
+
+    <section id="queue">
+      <h2>負例キュー</h2>
+      <ul class="tool-steps">
+        <li><strong>正例</strong> — 同じ画像の2拡張のQuery・Key特徴を近づける</li>
+        <li><strong>負例キュー</strong> — 過去バッチのKey特徴を<strong>FIFOキュー</strong>に蓄積（数千〜数万件）</li>
+        <li><strong>対照</strong> — Queryがキュー内の多数Keyと比較し、自分の正例Keyだけ似せる</li>
+        <li><strong>効果</strong> — 小バッチでも<strong>負例の辞書</strong>が太い——対照学習のボトルネックを緩和</li>
+      </ul>
+      <p>
+        試験では「キュー」「動量エンコーダ」の細部より、<strong>自己教師ありの対照学習で、負例を大量に使う設計</strong>と覚えれば十分です。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>MAE・CLIPとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>学習課題</th><th>モダリティ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>MoCo</strong></td><td>正例近・負例遠の<strong>対照</strong></td><td>画像のみ</td></tr>
+          <tr><td><strong><a href="../masked-autoencoder/">MAE</a></strong></td><td>マスクパッチの<strong>再構成</strong></td><td>画像のみ</td></tr>
+          <tr><td><strong><a href="../clip-model/">CLIP</a></strong></td><td>画像―テキストの<strong>対応</strong></td><td>マルチモーダル（<a href="../../exams/g-kentei/practice/q/g-393/">G-393</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どれも<a href="../foundation-model/">基盤モデル</a>向けの<strong>事前学習レシピ</strong>——課題の作り方が違うだけで、下流の分類・検出へ転移する流れは共通です（<a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161</a>）。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Momentum Contrast＝<strong>対照学習</strong>の自己教師あり手法</li>
+        <li><strong>特徴</strong> — 動量更新Keyエンコーダ＋<strong>負例キュー</strong></li>
+        <li><strong>目的</strong> — ラベルなし画像から汎用の視覚<a href="../embedding/">埋め込み</a>を学ぶ</li>
+        <li><strong>対比</strong> — Contrastive Lossの実装例、CLIP＝画像+テキスト、MAE＝再構成</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-127/">G-127</a>、<a href="../../exams/g-kentei/practice/q/g-163/">G-163</a>、<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>、<a href="../../exams/g-kentei/practice/q/g-393/">G-393</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>MoCo＝<a href="../clip-model/">CLIP</a></td><td>画像対照 vs 画像―テキスト</td></tr>
+          <tr><td>MoCo＝<a href="../masked-autoencoder/">MAE</a></td><td>対照学習 vs マスク再構成</td></tr>
+          <tr><td>MoCo＝教師あり学習</td><td>自己教師あり（ラベル不要）</td></tr>
+          <tr><td>MoCo＝<a href="../mixup/">Mixup</a></td><td>表現学習の事前学習 vs 教師ありデータ拡張</td></tr>
+          <tr><td>MoCo＝Contrastive Lossそのもの</td><td>損失の思想を使った<strong>手法名</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>MoCoは何をする手法ですか？</summary><p class="tool-faq-a">画像の異なる拡張ビューを正例ペアとして、同じ画像の表現は近く・別画像の表現は遠くなるように学ぶ自己教師ありの対照学習です。動量更新のキーエンコーダと負例キーのキューにより、バッチサイズに依存せず多くの負例を使えます。</p></details>
+        <details><summary>MoCoとCLIPは同じですか？</summary><p class="tool-faq-a">同じではありません。MoCoは画像の拡張ビュー同士の対照学習で視覚表現を学ぶ手法です。CLIPは画像とテキストのペアを共通埋め込み空間に載せるマルチモーダルモデルです。どちらも対照的な学習思想を含みますが、モダリティと目的が異なります。</p></details>
+        <details><summary>MoCoとMAEは同じですか？</summary><p class="tool-faq-a">同じではありません。MoCoは正例・負例の距離関係を学ぶ対照学習です。MAEは画像パッチをマスクして再構成する自己教師あり学習です。どちらもラベルなしデータの事前学習ですが、学習課題の設計が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-127/">G-127 · Contrastive Loss</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-384/">G-384 · 自己教師あり学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-393/">G-393 · CLIP（対比）</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161 · 自己教師あり</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../nt-xent-loss/">NT-Xent損失</a></li>
+          <li><a href="../simclr/">SimCLR</a></li>
+          <li><a href="../clip-model/">CLIP</a></li>
+          <li><a href="../masked-autoencoder/">MAE</a></li>
+          <li><a href="../beit/">BEiT</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

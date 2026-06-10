@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PointNetとは？点群を直接処理する深層学習アーキテクチャ。並べ替え不変性・LiDAR・3D CNNとの違いをG検定向けに解説。">
+  <title>PointNetとは？並べ替えに強い——点群をそのまま読む3D認識 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/pointnet/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PointNetとは？並べ替えに強い——点群をそのまま読む3D認識">
+  <meta property="og:description" content="3D点群をボクセル化せず直接入力する深層学習。点の順序に依存しない並べ替え不変性が設計の核心。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/pointnet/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "PointNet",
+        "alternateName": ["PointNet", "ポイントネット"],
+        "description": "3D点群をそのまま入力として扱う深層学習アーキテクチャ。点の並べ替えに対して不変（順序に依存しない）な特徴抽出を行い、物体分類やセグメンテーションなどに応用される。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "PointNetは何をするアーキテクチャですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "3D点群（空間上の点の集合）をニューラルネットワークへ直接入力し、物体の分類や点ごとのラベル付け（セグメンテーション）などを行う深層学習の設計です。画像のように格子状のピクセルへ変換せず、点の集合として処理する点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PointNetとLiDARは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。LiDARはレーザーで距離を測り3D点群を取得するセンサー技術です。PointNetはその点群データを機械学習で解釈するニューラルネットワークのアーキテクチャです。センサーとモデルを混同しないことが重要です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PointNetと3D CNNは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。3D CNNはボクセルや動画ボリュームなど格子状の3次元データに畳み込みを適用します。PointNetは非構造な点群をそのまま扱い、点の順序に依存しない（並べ替え不変）設計が核心です。入力の表現とネットワーク構造が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">PointNet</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>PointNetとは？並べ替えに強い——点群をそのまま読む3D認識</h1>
+    <p class="tool-hero-sub">読み：ポイントネット ／ 英：PointNet</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>PointNet</strong>は、<strong>3D点群をそのまま食べる</strong><a href="../deep-learning/">深層学習</a>アーキテクチャです。<a href="../lidar/">LiDAR</a>が座標付きの点を吐き出すなら、PointNetは<strong>「点の並べ順が変わっても同じ答えを返す」</strong>読み方——本記事は論文の数式追跡ではなく、<strong>並べ替え不変性という設計の核心</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#point-cloud-input">点群という入力</a></li>
+        <li><a href="#permutation-invariant">並べ替え不変性の核心</a></li>
+        <li><a href="#vs-grid">ボクセル・3D CNNとの違い</a></li>
+        <li><a href="#tasks">向いているタスク</a></li>
+        <li><a href="#pipeline">センサーから認識まで</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="point-cloud-input">
+      <h2>点群という入力</h2>
+      <p>
+        点群（Point Cloud）は、3D空間上の点 {(x, y, z)} の集合です。<a href="../lidar/">LiDAR</a>や深度カメラ、3Dスキャナが典型的な取得元で、自動運転・ロボティクス・測量で広く使われます。
+      </p>
+      <p>
+        画像は格子状のピクセル——行と列が決まっている——ですが、点群は<strong>非構造データ</strong>です。点の数も順序もサンプルごとに変わり、<a href="../cnn/">2D CNN</a>をそのまま当てはめられません。
+      </p>
+      <p>
+        従来は点群を<strong>ボクセル（3D格子）</strong>や<strong>鳥瞰図（BEV）</strong>に変換してから畳み込む前処理が一般的でした。PointNetは「変換の手間と情報損失を減らし、点を直接読めないか」という問いへの答えです。
+      </p>
+    </section>
+
+    <section id="permutation-invariant">
+      <h2>並べ替え不変性の核心</h2>
+      <p>
+        点群の最大の性質は、<strong>点の列挙順序に意味がない</strong>ことです。同じ物体でもスキャン順が変われば点の並びは入れ替わります。ネットワークはこの並べ替えに対して<strong>同じ出力</strong>を返すべき——これを<strong>並べ替え不変性（permutation invariance）</strong>と呼びます。
+      </p>
+      <p>
+        PointNetの基本アイデアは次の流れです。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>点ごとの変換</strong> — 各点の座標（と法線など）を小さなMLPで特徴ベクトルへ</li>
+        <li><strong>対称な集約</strong> — 全点の特徴を max pooling など<strong>順序に依存しない演算</strong>で1つのグローバル特徴へ</li>
+        <li><strong>下流タスク</strong> — 分類ヘッドや点ごとのラベル付け（PointNet++で局所構造も強化）</li>
+      </ul>
+      <p>
+        試験では数式より、<strong>「点の順序が変わっても同じ答えになる設計」</strong>という一言が押さえ目標です。
+      </p>
+    </section>
+
+    <section id="vs-grid">
+      <h2>ボクセル・3D CNNとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>PointNet</th><th>ボクセル + 3D CNN</th><th><a href="../3d-cnn/">3D CNN</a>（動画等）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>入力</strong></td><td>非構造な<strong>点群</strong></td><td>3D格子へ<strong>離散化</strong></td><td>格子状の3Dボリューム</td></tr>
+          <tr><td><strong>前処理</strong></td><td>点をそのまま（正規化はあり）</td><td>ボクセル化でメモリ・解像度のトレードオフ</td><td>フレーム束・CT断層など</td></tr>
+          <tr><td><strong>設計の肝</strong></td><td><strong>並べ替え不変</strong></td><td>畳み込みの局所性</td><td>時空の局所パターン</td></tr>
+          <tr><td><strong>試験の整理</strong></td><td>点群直接処理の代表</td><td>3D認識の古典的手法</td><td>動画・医療ボリューム（G-239）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../nerf/">NeRF</a>が「座標と視線から色を聞く」新規視点合成なら、PointNetは<strong>「点の集合から物体を識別する」</strong>認識寄りの系譜です。どちらも3Dですが、タスクと入出力が異なります。
+      </p>
+    </section>
+
+    <section id="tasks">
+      <h2>向いているタスク</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>物体分類</strong>
+          点群全体から「椅子」「車」などのラベルを予測
+        </li>
+        <li>
+          <strong>点ごとのセグメンテーション</strong>
+          各点に部品ラベル（タイヤ・ボディ等）を付与
+        </li>
+        <li>
+          <strong>ロボット・自動運転の知覚</strong>
+          LiDAR点群から周囲物体を検出・把握
+        </li>
+      </ul>
+      <p>
+        後継の PointNet++ などは、近傍点の局所構造を階層的に集めることで精度を高めます。試験では細部より<strong>「点群を直接扱う深層学習の先駆」</strong>として整理すれば十分です。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>センサーから認識まで</h2>
+      <p>実務・試験の地図では、層を分けて覚えるとすり替えに強くなります。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>センサー</strong></td><td><a href="../lidar/">LiDAR</a>、深度カメラ</td><td>3D点群を<strong>取得</strong></td></tr>
+          <tr><td><strong>前処理</strong></td><td>ノイズ除去、ダウンサンプリング</td><td>点の品質・数を調整</td></tr>
+          <tr><td><strong>モデル</strong></td><td><strong>PointNet</strong>、ボクセルCNN</td><td>点群から<strong>意味を読む</strong></td></tr>
+          <tr><td><strong>応用</strong></td><td>自動運転、ロボット掴み</td><td>検出・追跡・計画へ接続</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/drill/q/tf-332/">TF-332</a>のように、センサーデータとAIの接点は試験で問われます。LiDARは「何を入力として得るか」、PointNetは「その入力をどう解釈するか」です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 点群を<strong>直接</strong>処理する深層学習アーキテクチャ</li>
+        <li><strong>核心</strong> — <strong>並べ替え不変性</strong>（点の順序に依存しない）</li>
+        <li><strong>対比</strong> — LiDAR＝センサー、PointNet＝モデル／3D CNN＝格子畳み込み</li>
+        <li><strong>用途</strong> — 3D物体分類・点セグメンテーション・自動運転の知覚</li>
+        <li><strong>層</strong> — センサー ≠ 前処理 ≠ ニューラルネット ≠ 応用システム</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>（CNNの基礎）、<a href="../../exams/g-kentei/practice/q/g-239/">G-239</a>（データとモデル）、<a href="../../exams/g-kentei/drill/q/tf-332/">TF-332</a>（センサーデータとAI）、<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>（エッジ・センサー文脈）</p>
+        <p>関連：<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>（画像認識との対比）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>PointNet＝<a href="../lidar/">LiDAR</a></td><td>モデル vs レーザーセンサー</td></tr>
+          <tr><td>PointNet＝<a href="../3d-cnn/">3D CNN</a></td><td>点群直接 vs 格子畳み込み</td></tr>
+          <tr><td>PointNet＝<a href="../cnn/">2D CNN</a></td><td>非構造点群 vs 2D画像格子</td></tr>
+          <tr><td>PointNet＝<a href="../nerf/">NeRF</a></td><td>認識 vs 新規視点合成</td></tr>
+          <tr><td>PointNet＝<a href="../reinforcement-learning/">強化学習</a></td><td>教師ありの表現学習 vs 報酬で学ぶ枠組み</td></tr>
+          <tr><td>点群＝画像</td><td>点の集合 vs ピクセル格子（G-021の対比）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>PointNetは何をするアーキテクチャですか？</summary><p class="tool-faq-a">3D点群（空間上の点の集合）をニューラルネットワークへ直接入力し、物体の分類や点ごとのラベル付け（セグメンテーション）などを行う深層学習の設計です。画像のように格子状のピクセルへ変換せず、点の集合として処理する点が特徴です。</p></details>
+        <details><summary>PointNetとLiDARは同じですか？</summary><p class="tool-faq-a">同じではありません。LiDARはレーザーで距離を測り3D点群を取得するセンサー技術です。PointNetはその点群データを機械学習で解釈するニューラルネットワークのアーキテクチャです。センサーとモデルを混同しないことが重要です。</p></details>
+        <details><summary>PointNetと3D CNNは同じですか？</summary><p class="tool-faq-a">同じではありません。3D CNNはボクセルや動画ボリュームなど格子状の3次元データに畳み込みを適用します。PointNetは非構造な点群をそのまま扱い、点の順序に依存しない（並べ替え不変）設計が核心です。入力の表現とネットワーク構造が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · CNN</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-239/">G-239 · データとモデル</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-332/">TF-332 · センサーデータとAI</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-021/">G-021 · 画像認識（対比）</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../lidar/">LiDAR</a></li>
+          <li><a href="../3d-cnn/">3D CNN</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../deep-learning/">ディープラーニング</a></li>
+          <li><a href="../nerf/">NeRF</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Segment Anythingとは？MetaのSAM。点・枠のプロンプトで任意物体を切り出す汎用セグメンテーション基盤モデル。Mask R-CNN・SAM 2との違いをG検定向けに解説。">
+  <title>Segment Anythingとは？1億枚のマスクで「何でも」を学んだ——汎用セグの原点 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/segment-anything/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Segment Anythingとは？1億枚のマスクで「何でも」を学んだ——汎用セグの原点">
+  <meta property="og:description" content="MetaのSegment Anything Model（SAM）。プロンプトで任意物体のマスクを切り出す画像セグメンテーションの基盤モデル。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/segment-anything/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Segment Anything",
+        "alternateName": ["Segment Anything", "セグメントエニシング", "SAM", "サム", "Segment Anything Model"],
+        "description": "点・矩形・マスクなどのプロンプトで画像中の任意物体の領域を切り出す汎用セグメンテーションの基盤モデル。Metaが2023年に公開したSAMの通称。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Segment Anythingは何をする技術ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像の中から、ユーザーが点や矩形などで指定した物体の輪郭（マスク）を切り出す汎用セグメンテーションの基盤モデルです。あらかじめ決めたクラス名（人・車など）に縛られず、プロンプトで「何でも」対象を分離できる点が特徴です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Segment AnythingとSAM 2は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じ系譜ですが別世代です。Segment Anything（SAM）は2023年に公開された静止画向けの汎用セグメンテーションモデルです。SAM 2はその後継で、動画フレーム間の追跡を強化したモデルとして位置づけられます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Segment Anythingは物体検出モデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。物体検出はバウンディングボックスとクラスを推定するタスクです。Segment Anythingは画素単位のマスク（領域の輪郭）を出力するセグメンテーション向けモデルで、ユーザーのプロンプトで対象を指定する設計が特徴です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Segment Anything</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Segment Anythingとは？1億枚のマスクで「何でも」を学んだ——汎用セグの原点</h1>
+    <p class="tool-hero-sub">読み：せぐめんと・えにぃしんぐ ／ 英：Segment Anything（SAM）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Segment Anything</strong>（通称 <strong>SAM</strong>）は、Metaが2023年に公開した<strong>画像の汎用セグメンテーション基盤モデル</strong>です。従来の<a href="../mask-rcnn/">Mask R-CNN</a>が「人・車など<strong>決め打ちクラス</strong>」を学習するのに対し、SAMは<strong>1,100万枚・10億超のマスク</strong>で「切り出し方」そのものを学び、<strong>点や枠のプロンプトだけで任意の輪郭を返す</strong>——本記事はアーキテクチャの部品名より、<strong>「なぜラベル地獄を終わらせようとしたか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#label-hell">ラベル地獄からの脱却</a></li>
+        <li><a href="#anything">Anythingの意味</a></li>
+        <li><a href="#prompt">プロンプトで対象を指定</a></li>
+        <li><a href="#foundation">基盤モデルとしての位置づけ</a></li>
+        <li><a href="#vs-sam2">SAM 2との関係</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Segment Anything単独の過去問はまだ少ない一方、辞典の定義は<strong>「プロンプトで任意物体をセグメントする基盤モデル」</strong>です。試験では<strong>セグメンテーションの種類</strong>（<a href="../../exams/g-kentei/practice/q/g-317/">G-317</a>、<a href="../../exams/g-kentei/drill/q/tf-116/">TF-116</a>）と<strong>代表モデルとの違い</strong>（<a href="../../exams/g-kentei/practice/q/g-326/">G-326</a>）を土台に整理します。
+      </p>
+      <p>
+        誤答では、<strong>SAM＝物体検出だけ</strong>（<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>）、<strong>SAM＝画像生成</strong>、<strong>SAM＝形態素解析</strong>（<a href="../../exams/g-kentei/practice/q/g-022/">G-022</a>）など、別タスクとのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-317/">G-317（セマンティック vs インスタンス）</a>、<a href="../../exams/g-kentei/practice/q/g-326/">G-326（Mask R-CNN）</a>、<a href="../../exams/g-kentei/practice/q/g-396/">G-396（基盤モデル）</a>、<a href="../../exams/g-kentei/drill/q/tf-117/">TF-117（インスタンスセグ）</a></p>
+      </div>
+    </section>
+
+    <section id="label-hell">
+      <h2>ラベル地獄からの脱却</h2>
+      <p>
+        画像認識の実務では、<strong>「何をラベルするか」</strong>がボトルネックになります。物体検出なら箱とクラス、セグメンテーションなら画素ごとのマスク——対象クラスを増やすほど、アノテーションコストは爆発します。
+      </p>
+      <p>
+        Segment Anythingは、<strong>クラス一覧を先に決めない</strong>設計を採りました。大規模データ（SA-1Bなど）で「点を置けばその周辺の物体らしい輪郭が返る」という<strong>汎用的な切り出し能力</strong>を学習し、下流タスクでは<strong>プロンプトで対象を指定</strong>します。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>従来</strong> — クラスごとに教師データを用意 → そのクラスだけ検出・セグ</li>
+        <li><strong>SAM</strong> — 切り出し能力を汎用学習 → 利用時にプロンプトで対象指定</li>
+        <li><strong>試験向け</strong> — 「固定クラス教師あり」vs「プロンプト駆動の汎用セグ」の対比</li>
+      </ul>
+    </section>
+
+    <section id="anything">
+      <h2>Anythingの意味</h2>
+      <p>
+        名前の <strong>Anything</strong> は「犬でも車でもコップでも、<strong>プロンプトで指したものなら切り出せる</strong>」という野心を表します。モデル内部に「80クラス」「1000クラス」といった<strong>閉じた語彙表は持たない</strong>——これが<a href="../foundation-model/">基盤モデル</a>としてのセグメンテーションの転換点です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>教師ありセグ（例: Mask R-CNN）</th><th>Segment Anything</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>対象の決め方</strong></td><td>学習済みクラスを自動検出</td><td><strong>ユーザーのプロンプト</strong></td></tr>
+          <tr><td><strong>未知クラス</strong></td><td>学習外は検出しにくい</td><td>プロンプトがあれば切り出し可能</td></tr>
+          <tr><td><strong>出力</strong></td><td>箱＋クラス＋マスク</td><td><strong>マスク中心</strong></td></tr>
+          <tr><td><strong>試験</strong></td><td>G-326</td><td>汎用セグ・基盤モデル（G-396）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="prompt">
+      <h2>プロンプトで対象を指定</h2>
+      <p>
+        SAMの「プロンプト」は、テキスト指示だけではありません。<strong>空間的なヒント</strong>が中心です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>プロンプト</th><th>ユーザーの操作</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>点（ポジティブ/ネガティブ）</strong></td><td>「ここにある／ここは違う」</td><td>最小クリックでマスク取得</td></tr>
+          <tr><td><strong>矩形（ボックス）</strong></td><td>「この範囲の主対象」</td><td>検出框に近いが<strong>マスク出力</strong></td></tr>
+          <tr><td><strong>既存マスク</strong></td><td>「この形を修正して」</td><td>インタラクティブ編集</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../fcn/">FCN</a>が<strong>セマンティックセグメンテーション</strong>（画素ごとに「道路」「空」などクラスを一括付与——個体は区別しない）の代表であるのに対し、SAMは<strong>プロンプトで個体レベルのマスク</strong>を得ます。インスタンスセグに近い出力を、クラス名なしで実現する——と整理すると、G-317・TF-117との接続が明確になります。
+      </p>
+    </section>
+
+    <section id="foundation">
+      <h2>基盤モデルとしての位置づけ</h2>
+      <p>
+        SAMは、大規模データで事前学習し、<strong>下流タスクへ転用</strong>されることを想定した<a href="../foundation-model/">基盤モデル</a>です（G-396）。BERTがテキスト理解の共通基盤であるのと同様、SAMは<strong>「画像から領域を切り出す」共通エンジン</strong>として使われます。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>アノテーション支援</strong>
+          点1つでマスク草案 → 人間が修正してラベルコスト削減
+        </li>
+        <li>
+          <strong>画像編集</strong>
+          背景ぼかし・物体消去・切り抜き合成の前処理
+        </li>
+        <li>
+          <strong>下流パイプライン</strong>
+          切り出した領域を別の認識・計測モデルへ渡す
+        </li>
+      </ul>
+      <p>
+        SAMは<strong>画像を新しく描く</strong>モデルではありません。<a href="../stable-diffusion/">Stable Diffusion</a>などの生成モデルと組み合わせて「切り出した部分だけ編集する」——パイプラインの<strong>部品</strong>として使われることはありますが、生成そのものは別タスクです。
+      </p>
+    </section>
+
+    <section id="vs-sam2">
+      <h2>SAM 2との関係</h2>
+      <p>
+        <a href="../sam2/">SAM 2</a>（Segment Anything Model 2）は、SAMの<strong>後継</strong>です。SAMが<strong>静止画</strong>の汎用セグを確立したのに対し、SAM 2は<strong>動画フレーム間で対象を追跡</strong>しながらマスクを更新する点を強化しました。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>Segment Anything（SAM）</th><th>SAM 2</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>主な入力</strong></td><td>画像</td><td>画像＋<strong>動画系列</strong></td></tr>
+          <tr><td><strong>時系列</strong></td><td>フレーム独立が基本</td><td><strong>フレーム間追跡</strong></td></tr>
+          <tr><td><strong>公開</strong></td><td>2023年</td><td>2024年</td></tr>
+          <tr><td><strong>試験</strong></td><td>汎用セグの原点として整理</td><td>動画セグの拡張として整理</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では世代の細部より、<strong>「プロンプト駆動の汎用セグメンテーション」</strong>という共通の設計思想を押さえるのが先です。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SAM＝<a href="../ssd/">SSD</a>／YOLO</td><td>マスク出力のセグ vs 物体検出（G-021）</td></tr>
+          <tr><td>SAM＝<a href="../stable-diffusion/">Stable Diffusion</a></td><td>領域切り出し vs 画像生成</td></tr>
+          <tr><td>SAM＝<a href="../mask-rcnn/">Mask R-CNN</a></td><td>プロンプト駆動の汎用セグ vs 固定クラス教師あり</td></tr>
+          <tr><td>SAM＝形態素解析</td><td>画像の領域分割 vs 文章の分割（G-022）</td></tr>
+          <tr><td>SAM＝<a href="../fcn/">FCN</a>の別名</td><td>プロンプト指定の個体マスク vs 画素一括クラス分類</td></tr>
+          <tr><td>Anything＝全自動で何でも検出</td><td><strong>プロンプト</strong>で対象を指定する必要がある</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Segment Anythingは何をする技術ですか？</summary>
+          <p class="tool-faq-a">画像の中から、ユーザーが点や矩形などで指定した物体の輪郭（マスク）を切り出す汎用セグメンテーションの基盤モデルです。あらかじめ決めたクラス名（人・車など）に縛られず、プロンプトで「何でも」対象を分離できる点が特徴です。</p>
+        </details>
+        <details>
+          <summary>Segment AnythingとSAM 2は同じですか？</summary>
+          <p class="tool-faq-a">同じ系譜ですが別世代です。Segment Anything（SAM）は2023年に公開された静止画向けの汎用セグメンテーションモデルです。SAM 2はその後継で、動画フレーム間の追跡を強化したモデルとして位置づけられます。</p>
+        </details>
+        <details>
+          <summary>Segment Anythingは物体検出モデルですか？</summary>
+          <p class="tool-faq-a">いいえ。物体検出はバウンディングボックスとクラスを推定するタスクです。Segment Anythingは画素単位のマスク（領域の輪郭）を出力するセグメンテーション向けモデルで、ユーザーのプロンプトで対象を指定する設計が特徴です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-317/">G-317 · セグの種類</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-326/">G-326 · Mask R-CNN</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-117/">TF-117 · インスタンスセグ</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../sam2/">SAM 2</a></li>
+          <li><a href="../mask-rcnn/">Mask R-CNN</a></li>
+          <li><a href="../fcn/">FCN</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../coco-dataset/">COCO</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

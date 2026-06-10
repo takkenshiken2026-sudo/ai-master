@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OCRとは？光学文字認識。画像中の文字を読み取りテキスト化する技術。Image Captioning・NLP・LLMとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>OCRとは？ピクセルの中の字を読む——画像認識がテキスト化を担う古典応用 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/optical-character-recognition/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="OCRとは？ピクセルの中の字を読む——画像認識がテキスト化を担う古典応用">
+  <meta property="og:description" content="Optical Character Recognition。スキャン画像や写真から文字を検出・認識し、編集可能なテキストに変換するコンピュータビジョンの応用。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/optical-character-recognition/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "OCR",
+        "alternateName": ["OCR", "オーシーシーアール", "Optical Character Recognition", "光学文字認識"],
+        "description": "画像中の文字を検出・認識してテキストデータに変換する技術。紙の文書のデジタル化、請求書処理、名刺読取などで使われるコンピュータビジョンの応用。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "OCRは何をする技術ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像やスキャンデータに写っている文字を検出し、機械が扱えるテキスト（文字列）に変換する技術です。紙の文書をデジタル化したり、写真に写った文字を抽出したりする用途で使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "OCRとImage Captioningは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。OCRは画像に写った文字そのものを読み取りテキスト化します。Image Captioningは画像の内容を自然言語の説明文として生成するタスクです。前者は文字の復元、後者は内容の要約・説明であり、出力の性質が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "OCRとLLMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。OCRは画像から文字を読み取るコンピュータビジョンの応用タスクです。LLMは大規模なテキストデータで学習した言語モデルです。マルチモーダルLLMが画像内の文字を読める場合もありますが、OCRはタスク名、LLMはモデルクラスとして区別します。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">OCR</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>OCRとは？ピクセルの中の字を読む——画像認識がテキスト化を担う古典応用</h1>
+    <p class="tool-hero-sub">読み：オーシーシーアール ／ 英：OCR（Optical Character Recognition）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>OCR</strong>（光学文字認識）は、<strong>画像に写った文字を読み取り、テキストデータに戻す</strong>技術です。<a href="../llm/">LLM</a>が文章を<strong>生成</strong>する流れと逆に、紙や写真から<strong>既にある文字列を復元</strong>する——<a href="../text-to-image/">Text-to-Image</a>とも方向が正反対——本記事は製品名の羅列より、<strong>画像認識タスクとしてのOCR</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#reverse-direction">生成とは逆方向の変換</a></li>
+        <li><a href="#pipeline">典型的な処理の流れ</a></li>
+        <li><a href="#cv-tasks">画像認識タスクとの位置づけ</a></li>
+        <li><a href="#modern-era">古典応用とマルチモーダル時代</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="reverse-direction">
+      <h2>生成とは逆方向の変換</h2>
+      <p>
+        デジタル文書はテキストとして扱えますが、紙の契約書・レシート・看板の写真は<strong>最初は画像</strong>です。OCRはそこに写った<strong>文字そのもの</strong>を検出・認識し、Unicodeの文字列へ変換します。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-390/">G-390</a>のImage Captioningは「犬が公園で走っている」といった<strong>説明文を生成</strong>——OCRは「請求書No.12345」のように<strong>写っている文字をそのまま転写</strong>——出力の性質が根本的に異なります。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>典型的な処理の流れ</h2>
+      <p>OCRは単一のボタンではなく、だいたい次の段階で構成されます。</p>
+      <ul class="tool-steps">
+        <li><strong>1. 前処理</strong> — 傾き補正、二値化、ノイズ除去で文字を読みやすくする</li>
+        <li><strong>2. 文字領域検出</strong> — 画像のどこに文字があるかを特定（行・単語・文字ボックス）</li>
+        <li><strong>3. 文字認識</strong> — 各領域の画素パターンを文字クラスへ（<a href="../cnn/">CNN</a>など）</li>
+        <li><strong>4. 後処理</strong> — 辞書照合、言語モデルで誤認識を補正</li>
+      </ul>
+      <p>
+        深層学習以前から実用化されていますが、現代でも<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>が示す<strong>畳み込みによる局所特徴</strong>——文字のストロークや部品——の捉え方はOCRの核です。
+      </p>
+    </section>
+
+    <section id="cv-tasks">
+      <h2>画像認識タスクとの位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>出力</th><th>OCRとの差</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>画像分類</strong></td><td>画像全体の1ラベル</td><td>「請求書」かどうか vs 中の文字列</td></tr>
+          <tr><td><strong>物体検出</strong></td><td>種類＋位置（<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>）</td><td>物体の箱 vs 文字の読取</td></tr>
+          <tr><td><strong>OCR</strong></td><td><strong>文字列テキスト</strong></td><td>ピクセル→編集可能な文字</td></tr>
+          <tr><td><strong>Image Captioning</strong></td><td>説明文章（G-390）</td><td>内容の言語化 vs 文字の転写</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>が扱う「画像中のどこに何があるか」——OCRも<strong>位置（どこに字があるか）と内容（何の字か）</strong>の両方を扱う点で物体検出に近い面がありますが、目的は<strong>テキスト化</strong>です。
+      </p>
+    </section>
+
+    <section id="modern-era">
+      <h2>古典応用とマルチモーダル時代</h2>
+      <p>
+        請求書処理、名刺デジタル化、書籍スキャン、交通標識の読取——OCRは<strong>弱いAI</strong>（特定タスク特化）の典型応用のひとつです（<a href="../weak-ai/">弱いAI</a>）。
+      </p>
+      <p>
+        <a href="../multimodal-ai/">マルチモーダル</a>の<a href="../llm/">LLM</a>が画像を入力に文字を答える場合もあります（<a href="../../exams/genai-passport/practice/q/hq-0267/">HQ-0267</a>）——ただし試験では<strong>OCR＝画像から文字をテキスト化する技術</strong>と、<strong>マルチモーダル＝複数種類の情報を扱える性質</strong>を混同しないことが重要です。
+      </p>
+      <p>
+        OCR結果は<a href="../rag/">RAG</a>の検索対象や、<a href="../nlp/">NLP</a>パイプラインの入力にもなります——<strong>画像→テキスト</strong>の出口でOCRが終わり、以降はテキスト処理の世界に入ります。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Optical Character Recognition＝画像中の<strong>文字を認識してテキスト化</strong></li>
+        <li><strong>分野</strong> — <strong>コンピュータビジョン</strong>の応用（画像認識）</li>
+        <li><strong>対比</strong> — 形態素解析（NLP）、Image Captioning、Text-to-Image、音声認識</li>
+        <li><strong>すり替え回避</strong> — LLMそのもの・文書のトピック分析（LDA）ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-316/">G-316</a>、<a href="../../exams/g-kentei/practice/q/g-390/">G-390</a>、<a href="../../exams/g-kentei/practice/q/g-021/">G-021</a>、<a href="../../exams/g-kentei/practice/q/g-023/">G-023</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298</a>、<a href="../../exams/genai-passport/practice/q/hq-0267/">HQ-0267</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>OCR＝Image Captioning</td><td>文字の転写 vs 内容の説明文（G-390）</td></tr>
+          <tr><td>OCR＝<a href="../text-to-image/">Text-to-Image</a></td><td>画像→テキスト vs テキスト→画像</td></tr>
+          <tr><td>OCR＝形態素解析</td><td>画像から文字抽出 vs テキストの分割（G-021 C）</td></tr>
+          <tr><td>OCR＝<a href="../llm/">LLM</a></td><td>CV応用タスク vs 大規模言語モデル</td></tr>
+          <tr><td>OCR＝MFCC</td><td>文字の画像認識 vs 音声特徴量（G-023）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>OCRは何をする技術ですか？</summary><p class="tool-faq-a">画像やスキャンデータに写っている文字を検出し、機械が扱えるテキスト（文字列）に変換する技術です。紙の文書をデジタル化したり、写真に写った文字を抽出したりする用途で使われます。</p></details>
+        <details><summary>OCRとImage Captioningは同じですか？</summary><p class="tool-faq-a">同じではありません。OCRは画像に写った文字そのものを読み取りテキスト化します。Image Captioningは画像の内容を自然言語の説明文として生成するタスクです。前者は文字の復元、後者は内容の要約・説明であり、出力の性質が異なります。</p></details>
+        <details><summary>OCRとLLMは同じですか？</summary><p class="tool-faq-a">同じではありません。OCRは画像から文字を読み取るコンピュータビジョンの応用タスクです。LLMは大規模なテキストデータで学習した言語モデルです。マルチモーダルLLMが画像内の文字を読める場合もありますが、OCRはタスク名、LLMはモデルクラスとして区別します。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-316/">G-316 · 画像認識タスク</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-390/">G-390 · Image Captioning（対比）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-021/">G-021 · 物体検出</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0298/">HQ-0298 · CNN</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../nlp/">NLP</a></li>
+          <li><a href="../multimodal-ai/">マルチモーダル</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../rag/">RAG</a></li>
+          <li><a href="../text-to-image/">Text-to-Image</a></li>
+          <li><a href="../weak-ai/">弱いAI</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

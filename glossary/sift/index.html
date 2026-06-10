@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SIFTとは？Scale-Invariant Feature Transform。スケール不変な局所特徴記述子。HOG・CNN・ORBとの違いをG検定向けに解説。">
+  <title>SIFTとは？キーポイントという目印を尺度不変で刻む——マッチング時代の局所特徴 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/sift/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SIFTとは？キーポイントという目印を尺度不変で刻む——マッチング時代の局所特徴">
+  <meta property="og:description" content="Scale-Invariant Feature Transform。画像の目立つ点にスケール・回転に頑健な特徴ベクトルを付与し、画像マッチングや物体認識の前処理に使われた古典的手法。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/sift/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SIFT",
+        "alternateName": ["SIFT", "シフト", "Scale-Invariant Feature Transform", "スケール不変特徴変換"],
+        "description": "画像から安定したキーポイントを検出し、スケールや回転に比較的頑健な局所特徴記述子を付与する古典的な画像特徴抽出手法。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SIFTは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Scale-Invariant Feature Transformの略で、画像の角やエッジなど安定した位置（キーポイント）を見つけ、各点に128次元などの特徴ベクトル（記述子）を付与します。拡大縮小や回転があっても同じ場所を対応づけやすく、画像マッチングや物体認識の前処理としてCNN以前に広く使われました。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SIFTとHOGは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。どちらも古典的な手作り特徴ですが、HOGは画像全体をセルに分割して勾配方向のヒストグラムを密に作ります。SIFTは目立つ点だけをキーポイントとして選び、各点にスケール不変な記述子を付けます。密度と不変性の設計が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SIFTはCNNですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SIFTは人が設計した特徴抽出アルゴリズムであり、畳み込みニューラルネットワークの学習とは別物です。CNNはデータから特徴を自動学習します。どちらも局所パターンを扱いますが、特徴の作り方と学習の有無が根本的に異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SIFT</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SIFTとは？キーポイントという目印を尺度不変で刻む——マッチング時代の局所特徴</h1>
+    <p class="tool-hero-sub">読み：しふと ／ 英：SIFT（Scale-Invariant Feature Transform）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SIFT</strong>（Scale-Invariant Feature Transform）は、画像の<strong>目立つ点（キーポイント）</strong>に、拡大縮小や回転に比較的強い<strong>局所特徴記述子</strong>を付与する古典的手法です。<a href="../hog/">HOG</a>が画像全体をセルごとに<strong>密に</strong>数えるのに対し、SIFTは<strong>疎な「目印」辞書</strong>を作って画像同士を対応づける——本記事はDoGピラミッドの細部より、<strong>「なぜスケール不変がマッチングに効いたか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">SIFTとは</a></li>
+        <li><a href="#keypoint">キーポイントと記述子</a></li>
+        <li><a href="#scale-invariant">スケール不変の意味</a></li>
+        <li><a href="#matching-era">マッチング時代の使われ方</a></li>
+        <li><a href="#vs-others">HOG・CNN・ORBとの対比</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SIFT単独の過去問は少ない一方、辞典の定義は<strong>「スケール不変な局所特徴記述子」</strong>です。試験では<a href="../cnn/">CNN</a>以前の<strong>手作り特徴抽出</strong>（<a href="../../exams/g-kentei/practice/q/g-315/">G-315</a>）と、<strong>局所特徴</strong>の文脈（<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>）で整理します。
+      </p>
+      <p>
+        誤答では、<strong>SIFT＝CNN</strong>、<strong>SIFT＝誤差逆伝播の勾配</strong>、<strong>SIFT＝画像生成</strong>などのすり替えに注意します。SIFTは<strong>学習で重みを更新しない固定アルゴリズム</strong>です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-315/">G-315（画像認識タスク）</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401（CNNの局所特徴）</a>、<a href="../../exams/g-kentei/practice/q/g-239/">G-239（CNNとRNNの対比）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>SIFTとは</h2>
+      <p>
+        SIFTは2000年代に提案され、コンピュータビジョンの<strong>特徴抽出＋マッチング</strong>パイプラインの代表格になりました。入力画像から<strong>安定したキーポイント</strong>を検出し、各点に<strong>128次元などの特徴ベクトル</strong>を割り当てます。
+      </p>
+      <p>
+        名前の <strong>Scale-Invariant</strong>（スケール不変）は、同じ物体が写真で大きく写っても小さく写っても、<strong>同じ目印として対応づけやすい</strong>——という設計目標を表します。試験では数式より、この<strong>不変性の意味</strong>が重要です。
+      </p>
+    </section>
+
+    <section id="keypoint">
+      <h2>キーポイントと記述子</h2>
+      <p>SIFTの処理は、試験向けに次の二段で覚えると整理しやすいです。</p>
+      <ol class="tool-steps">
+        <li><strong>キーポイント検出</strong> — コーナーやエッジなど、位置・スケールが安定しやすい点を選ぶ</li>
+        <li><strong>記述子の生成</strong> — キーポイント周辺の勾配分布から特徴ベクトルを作る</li>
+      </ol>
+      <p>
+        <a href="../hog/">HOG</a>は画像全体を格子状に走査して<strong>すべてのセル</strong>に特徴を付けます。SIFTは<strong>重要そうな点だけ</strong>に特徴を付ける——疎な表現——ため、パノラマ合成や物体検索のように<strong>点同士の対応</strong>が要るタスクと相性がよかった時代があります。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>役割</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>キーポイント</strong></td><td>画像上の「目印」の座標・スケール</td><td>どこを見るか</td></tr>
+          <tr><td><strong>記述子</strong></td><td>その周辺の見え方を数値化</td><td>どう見えるか</td></tr>
+          <tr><td><strong>マッチング</strong></td><td>記述子の距離で対応を探す</td><td>別画像の同じ目印を結ぶ</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="scale-invariant">
+      <h2>スケール不変の意味</h2>
+      <p>
+        同じ建物の写真を近づいて撮ると物体は大きく、離れて撮ると小さく写ります。ピクセル単位の生の値では対応が取れません。SIFTは<strong>ガウシアンピラミッド</strong>（ぼかしを変えながら多解像度で見る）上で極値点を探し、<strong>その点が「どのスケールで一番目立つか」</strong>も一緒に記録します。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>スケール</strong>
+          拡大縮小しても同じキーポイントとして検出しやすい
+        </li>
+        <li>
+          <strong>回転</strong>
+          主方向を推定し、記述子を正規化して回転差を吸収
+        </li>
+        <li>
+          <strong>照明</strong>
+          勾配の向き・大きさの正規化である程度の変化に耐える
+        </li>
+      </ul>
+      <p>
+        「不変」とは<strong>完全に変化しない</strong>ではなく、実務で困る変換（スケール・回転など）に<strong>頑健</strong>——と理解するのが試験向けです。
+      </p>
+    </section>
+
+    <section id="matching-era">
+      <h2>マッチング時代の使われ方</h2>
+      <p>
+        <a href="../alexnet/">AlexNet</a>以前は、多くの画像認識が<strong>特徴抽出＋分類器</strong>の二段構成でした（G-315）。SIFT記述子を集めてBag-of-Visual-Wordsにする、SVMで学習する——といった流れが典型です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>画像マッチング</strong> — 記述子の最近傍探索で同じ点を対応づけ</li>
+        <li><strong>パノラマ合成</strong> — 複数写真のキーポイント対応から幾何変換を推定</li>
+        <li><strong>物体認識</strong> — 大量のSIFT特徴から学習（CNN以前の代表的手法の一つ）</li>
+        <li><strong>3D復元</strong> — 複数視点の対応からカメラ位置・形状を推定</li>
+      </ul>
+      <p>
+        現代では<a href="../cnn/">CNN</a>が特徴と分類を<strong>端到端</strong>で学ぶため、SIFTを直接使う場面は減りました。それでも試験では<strong>「深層学習以前に何が標準だったか」</strong>——系譜——として問われることがあります。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>HOG・CNN・ORBとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>特徴の作り方</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>SIFT</strong></td><td>キーポイント＋スケール不変記述子</td><td>疎・マッチング向き</td></tr>
+          <tr><td><strong><a href="../hog/">HOG</a></strong></td><td>セル全体の勾配ヒストグラム</td><td>密・歩行者検出など</td></tr>
+          <tr><td><strong><a href="../orb/">ORB</a></strong></td><td>高速なバイナリ特徴（SIFTの後継系）</td><td>実時間寄りの代替</td></tr>
+          <tr><td><strong><a href="../cnn/">CNN</a></strong></td><td>畳み込みで<strong>学習</strong>した特徴</td><td>現代の主流（TF-401）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        SIFTの「勾配」は画素の輝度変化です。<a href="../gradient-descent/">勾配降下法</a>や<a href="../backpropagation/">誤差逆伝播</a>の<strong>学習用勾配</strong>とは別物——<a href="../hog/">HOG</a>記事と同じすり替えに注意します。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SIFT＝<a href="../cnn/">CNN</a></td><td>手作り特徴 vs 学習する畳み込み</td></tr>
+          <tr><td>SIFT＝<a href="../hog/">HOG</a></td><td>キーポイント記述子 vs 密なセルヒストグラム</td></tr>
+          <tr><td>SIFT＝学習用勾配</td><td>画素勾配 vs 損失のパラメータ勾配</td></tr>
+          <tr><td>SIFT＝<a href="../text-to-image/">Text-to-Image</a></td><td>特徴抽出 vs 画像生成</td></tr>
+          <tr><td>SIFT＝全画素に特徴</td><td><strong>選ばれたキーポイント</strong>に記述子</td></tr>
+          <tr><td>スケール不変＝任意変形に不変</td><td>主にスケール・回転などへの頑健性</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SIFTは何をする手法ですか？</summary>
+          <p class="tool-faq-a">Scale-Invariant Feature Transformの略で、画像の角やエッジなど安定した位置（キーポイント）を見つけ、各点に128次元などの特徴ベクトル（記述子）を付与します。拡大縮小や回転があっても同じ場所を対応づけやすく、画像マッチングや物体認識の前処理としてCNN以前に広く使われました。</p>
+        </details>
+        <details>
+          <summary>SIFTとHOGは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。どちらも古典的な手作り特徴ですが、HOGは画像全体をセルに分割して勾配方向のヒストグラムを密に作ります。SIFTは目立つ点だけをキーポイントとして選び、各点にスケール不変な記述子を付けます。密度と不変性の設計が異なります。</p>
+        </details>
+        <details>
+          <summary>SIFTはCNNですか？</summary>
+          <p class="tool-faq-a">いいえ。SIFTは人が設計した特徴抽出アルゴリズムであり、畳み込みニューラルネットワークの学習とは別物です。CNNはデータから特徴を自動学習します。どちらも局所パターンを扱いますが、特徴の作り方と学習の有無が根本的に異なります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-315/">G-315 · 画像認識タスク</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-401/">TF-401 · CNNの局所特徴</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-239/">G-239 · CNNとRNNの対比</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../hog/">HOG</a></li>
+          <li><a href="../orb/">ORB</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../alexnet/">AlexNet</a></li>
+          <li><a href="../structure-from-motion/">Structure from Motion</a></li>
+          <li><a href="../slam/">SLAM</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

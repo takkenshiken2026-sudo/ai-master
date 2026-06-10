@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TensorRTとは？NVIDIAの推論最適化ランタイム。学習済みモデルをGPU向けに高速化する。量子化・ONNX・エッジAIとの関係をG検定向けに解説。">
+  <title>TensorRTとは？推論だけを極限まで軽く——NVIDIA GPU向けの最適化エンジン — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/tensorrt/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TensorRTとは？推論だけを極限まで軽く——NVIDIA GPU向けの最適化エンジン">
+  <meta property="og:description" content="NVIDIAの推論最適化ランタイム。層の融合・精度低下・カーネル最適化で学習済みモデルの推論を高速化。学習はしない。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/tensorrt/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "TensorRT",
+        "alternateName": ["TensorRT", "テンソルアールティー", "TRT"],
+        "description": "NVIDIAが提供する推論最適化ランタイム。学習済みニューラルネットワークをNVIDIA GPU向けに最適化し、推論の高速化とメモリ削減を実現する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "TensorRTは何をするソフトウェアですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "学習済みモデルを読み込み、層の融合や精度調整（FP16・INT8量子化など）、GPU向けカーネル最適化を行って推論専用エンジンを構築し、入力データに対して高速に予測を返すランタイムです。学習（重みの更新）は行いません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TensorRTとTensorFlowは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。TensorFlowはモデルを定義し学習する深層学習フレームワークです。TensorRTは学習済みモデルの推論をNVIDIA GPU上で高速化する最適化ランタイムです。TensorFlowで学習したモデルをTensorRT向けに変換して本番推論する、という役割分担が典型です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TensorRTは学習にも使いますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。TensorRTは推論（inference）の高速化に特化したランタイムです。モデルの学習はTensorFlow、PyTorchなどのフレームワークで行い、学習済みモデルをTensorRTで最適化してデプロイする流れが一般的です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">TensorRT</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>TensorRTとは？推論だけを極限まで軽く——NVIDIA GPU向けの最適化エンジン</h1>
+    <p class="tool-hero-sub">読み：テンソルアールティー ／ 英：TensorRT</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>TensorRT</strong>は、NVIDIAが提供する<strong>推論最適化ランタイム</strong>です。<a href="../tensorflow/">TensorFlow</a>や<a href="../pytorch/">PyTorch</a>で<strong>学習</strong>したモデルを、そのまま本番に載せるより軽く・速く——層の融合、低ビット化、<a href="../gpu/">GPU</a>向けカーネル調整——して<strong><a href="../inference/">推論</a>専用エンジン</strong>に仕上げます。本記事はベンチマーク数値より、<strong>「学習の荷物を推論用に詰め替える」</strong>工程に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#inference-only">推論だけを担う</a></li>
+        <li><a href="#optimize">何を最適化するか</a></li>
+        <li><a href="#pipeline">デプロイの流れ</a></li>
+        <li><a href="#edge">エッジと軽量化の文脈</a></li>
+        <li><a href="#compare">ONNX Runtimeとの整理</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        TensorRT単独の定義問題はまだ少ないですが、<strong>推論の高速化・モデル圧縮</strong>の文脈で押さえます。量子化は重みのビット数を減らしてメモリと計算を削減し、推論高速化に役立つことがある（<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>）——TensorRTはその<strong>実装・実行</strong>側の代表例です。
+      </p>
+      <p>
+        モデル圧縮は量子化・プルーニング・蒸留などを含み、精度低下とのトレードオフがある（<a href="../../exams/g-kentei/practice/q/g-409/">G-409</a>）。「圧縮すれば必ず精度維持」は誤りです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-406/">G-406（量子化）</a>、<a href="../../exams/g-kentei/practice/q/g-409/">G-409（モデル圧縮）</a>、<a href="../../exams/g-kentei/practice/q/g-403/">G-403（軽量化の目的）</a>、<a href="../../exams/g-kentei/practice/q/g-408/">G-408（エッジAI）</a></p>
+      </div>
+    </section>
+
+    <section id="inference-only">
+      <h2>推論だけを担う</h2>
+      <p>
+        深層学習のライフサイクルは大きく<strong>学習（training）</strong>と<strong>推論（inference）</strong>に分かれます（<a href="../../exams/g-kentei/drill/q/tf-309/">TF-309</a>）。TensorRTは<strong>推論側だけ</strong>——学習済みの重みを固定し、入力から出力を返す——に特化します。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>段階</th><th>やること</th><th>典型ツール</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>学習</strong></td><td>データで重みを更新</td><td>TensorFlow、PyTorch</td></tr>
+          <tr><td><strong>変換</strong></td><td>モデルを推論向け形式へ</td><td>ONNXエクスポートなど</td></tr>
+          <tr><td><strong>最適化・実行</strong></td><td>GPU向けに高速化して推論</td><td><strong>TensorRT</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        名前に Tensor と付きますが、<strong>TensorFlowそのものではない</strong>——試験で混同しやすいポイントです。
+      </p>
+    </section>
+
+    <section id="optimize">
+      <h2>何を最適化するか</h2>
+      <p>TensorRTが学習済みモデルに施す最適化の代表例です。</p>
+      <ul class="tool-steps">
+        <li><strong>層の融合（layer fusion）</strong> — 連続する演算を1つのGPUカーネルにまとめ、メモリ往復を減らす</li>
+        <li><strong>精度の調整</strong> — FP32→FP16やINT8<strong>量子化</strong>で演算とメモリを軽く（G-406）</li>
+        <li><strong>カーネル自動選択</strong> — 対象GPUに最適な実装を選ぶ</li>
+        <li><strong>動的バッチ</strong> — リクエスト数に応じたバッチ処理の効率化</li>
+      </ul>
+      <p>
+        いずれも<strong>推論レイテンシとスループット</strong>——1回の予測が何ミリ秒か、1秒に何件処理できるか——の改善が目的です。学習時の収束速度とは別の関心事です。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>デプロイの流れ</h2>
+      <p>典型的なパイプラインは次のようなイメージです。</p>
+      <ol class="tool-steps">
+        <li><strong>学習</strong> — PyTorch / TensorFlow でモデルを訓練</li>
+        <li><strong>エクスポート</strong> — <a href="../onnx/">ONNX</a>やTensorFlow SavedModelなどへ書き出し</li>
+        <li><strong>TensorRT変換</strong> — 最適化エンジン（.plan など）をビルド</li>
+        <li><strong>本番推論</strong> — NVIDIA GPU上でエンジンをロードして serving</li>
+      </ol>
+      <p>
+        <a href="../onnx-runtime/">ONNX Runtime</a>も推論エンジンですが、TensorRTは<strong>NVIDIA GPU向けに深く最適化</strong>する点で立ち位置が異なります。クラウドの推論サーバ、組込みのJetson系デバイスなどで語られることが多いです。
+      </p>
+    </section>
+
+    <section id="edge">
+      <h2>エッジと軽量化の文脈</h2>
+      <p>
+        スマートフォンやカメラ、センサー機器では<strong>計算資源が限られる</strong>（<a href="../../exams/g-kentei/practice/q/g-403/">G-403</a>）。エッジAIは端末側で推論する形態（<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>）——いずれも<strong>推論の高速化・メモリ削減</strong>が鍵です。
+      </p>
+      <p>
+        TensorRTはクラウドGPUだけでなく、NVIDIAのエッジ向けプラットフォームでも推論加速の選択肢として登場します。ただし<strong>NVIDIA GPUが前提</strong>——CPUのみの環境や他社GPUでは別のランタイム（ONNX Runtimeなど）を選ぶこともあります。
+      </p>
+    </section>
+
+    <section id="compare">
+      <h2>ONNX Runtimeとの整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>製品</th><th>種類</th><th>特徴</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../tensorflow/">TensorFlow</a></strong></td><td>学習フレームワーク</td><td>モデル定義・学習。推論もできるが本番最適化は別工程も</td></tr>
+          <tr><td><strong><a href="../onnx/">ONNX</a></strong></td><td>交換フォーマット</td><td>モデル構造の「箱」</td></tr>
+          <tr><td><strong><a href="../onnx-runtime/">ONNX Runtime</a></strong></td><td>汎用推論ランタイム</td><td>CPU・複数GPU。ベンダ横断</td></tr>
+          <tr><td><strong>TensorRT</strong></td><td>NVIDIA推論ランタイム</td><td>同社GPU向けに最適化特化。量子化・融合が強み</td></tr>
+        </tbody>
+      </table>
+      <p>
+        試験では「推論を速くするソフトウェア」と「学習するフレームワーク」を<strong>別カード</strong>で整理すると、G-406・G-409の文脈にもそのままつながります。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>TensorRT＝<a href="../tensorflow/">TensorFlow</a></td><td>推論ランタイム vs 学習フレームワーク</td></tr>
+          <tr><td>TensorRTで学習する</td><td><strong>推論専用</strong>。重み更新はしない</td></tr>
+          <tr><td>TensorRT＝量子化そのもの</td><td>量子化を<strong>含み得る</strong>推論エンジン（G-406）</td></tr>
+          <tr><td>最適化すれば精度は必ず維持</td><td>トレードオフあり（G-409のDは×）</td></tr>
+          <tr><td>TensorRT＝<a href="../onnx/">ONNX</a></td><td>実行エンジン vs ファイル規格</td></tr>
+          <tr><td>TensorRT＝<a href="../gpu/">GPU</a>ハードウェア</td><td>ソフトウェアランタイム vs チップ</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>TensorRTは何をするソフトウェアですか？</summary>
+          <p class="tool-faq-a">学習済みモデルを読み込み、層の融合や精度調整（FP16・INT8量子化など）、GPU向けカーネル最適化を行って推論専用エンジンを構築し、入力データに対して高速に予測を返すランタイムです。学習（重みの更新）は行いません。</p>
+        </details>
+        <details>
+          <summary>TensorRTとTensorFlowは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。TensorFlowはモデルを定義し学習する深層学習フレームワークです。TensorRTは学習済みモデルの推論をNVIDIA GPU上で高速化する最適化ランタイムです。TensorFlowで学習したモデルをTensorRT向けに変換して本番推論する、という役割分担が典型です。</p>
+        </details>
+        <details>
+          <summary>TensorRTは学習にも使いますか？</summary>
+          <p class="tool-faq-a">いいえ。TensorRTは推論（inference）の高速化に特化したランタイムです。モデルの学習はTensorFlow、PyTorchなどのフレームワークで行い、学習済みモデルをTensorRTで最適化してデプロイする流れが一般的です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-406/">G-406 · 量子化</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-409/">G-409 · モデル圧縮</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-403/">G-403 · 軽量化の目的</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · エッジAI</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../inference/">推論</a></li>
+          <li><a href="../tensorflow/">TensorFlow</a></li>
+          <li><a href="../pytorch/">PyTorch</a></li>
+          <li><a href="../onnx/">ONNX</a></li>
+          <li><a href="../onnx-runtime/">ONNX Runtime</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../cuda/">CUDA</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PyTorchとは？動的計算グラフが特徴の深層学習フレームワーク。Keras・JAX・ONNXとの違いをG検定向けに解説。">
+  <title>PyTorchとは？実行しながら形が決まる——動的計算グラフの研究者向けエンジン — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/pytorch/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PyTorchとは？実行しながら形が決まる——動的計算グラフの研究者向けエンジン">
+  <meta property="og:description" content="Meta発の深層学習フレームワーク。Pythonでモデルを書き、実行と同時に計算グラフを組み立てる動的スタイルが特徴。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/pytorch/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "PyTorch",
+        "alternateName": ["PyTorch", "パイトーチ", "Torch"],
+        "description": "Metaが開発する深層学習フレームワーク。Pythonでモデルを記述し、実行と同時に計算グラフを組み立てる動的スタイルと自動微分により、研究・実装の両方で広く使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "PyTorchは何をするフレームワークですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "テンソル演算・自動微分・GPU実行を備え、ニューラルネットワークを定義して学習・推論するための深層学習フレームワークです。nn.Moduleで層を組み立て、損失関数と最適化手法を組み合わせて学習ループを回すのが典型です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PyTorchとKerasは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。KerasはTensorFlow上の高水準APIで、層を積んでcompile/fitする宣言的スタイルが特徴です。PyTorchはフレームワーク本体で、Pythonの制御構造と組み合わせやすい動的な記述スタイルが特徴です。別エコシステムとして整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PyTorchとONNXは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。PyTorchは学習・実験のためのフレームワークです。ONNXは学習済みモデルを共通フォーマットで書き出し、別環境へ運ぶための交換規格です。PyTorchで学習したモデルをONNXへエクスポートする、という関係が典型です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">PyTorch</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>PyTorchとは？実行しながら形が決まる——動的計算グラフの研究者向けエンジン</h1>
+    <p class="tool-hero-sub">読み：パイトーチ ／ 英：PyTorch</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>PyTorch</strong>は、Metaが開発する<strong><a href="../deep-learning/">深層学習</a>フレームワーク</strong>です。先に計算グラフ全体を固定するのではなく、<strong>コードを実行しながらグラフの形が決まる</strong>——いわゆる<strong>動的計算グラフ</strong>——<a href="../keras/">Keras</a>の「層を宣言してfit」とは対照的に、<strong>Pythonのif文やループと自然に組み合わせる</strong>書き方が研究現場で広く採用されています。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#dynamic-graph">動的計算グラフの意味</a></li>
+        <li><a href="#workflow">典型的なワークフロー</a></li>
+        <li><a href="#stack">ハードウェアから見た位置</a></li>
+        <li><a href="#vs-others">Keras・JAX・ONNXとの対比</a></li>
+        <li><a href="#ecosystem">学習から運用へ</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="dynamic-graph">
+      <h2>動的計算グラフの意味</h2>
+      <p>
+        <a href="../neural-network/">ニューラルネット</a>の学習では、順伝播で出力を計算し、<a href="../backpropagation/">誤差逆伝播</a>で勾配を求め、<a href="../gradient-descent/">勾配降下</a>で重みを更新します（<a href="../../exams/g-kentei/practice/q/g-171/">G-171</a>）。この一連の計算を<strong>計算グラフ</strong>として表現します。
+      </p>
+      <p>
+        PyTorchの特徴は、<strong>実行（Eager）しながらグラフを組み立てる</strong>点です。入力の長さや分岐で処理が変わるモデル——可変長系列や条件付き計算——を、デバッグしやすいPythonコードのまま書けます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>スタイル</th><th>グラフの決まり方</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>動的（PyTorch）</strong></td><td>実行と同時に組み立て</td><td>研究・実験向き。柔軟</td></tr>
+          <tr><td><strong>宣言的（Keras等）</strong></td><td>層を先に積んで定義</td><td>定型モデルを短く記述</td></tr>
+          <tr><td><strong>交換フォーマット（ONNX）</strong></td><td>学習<strong>後</strong>に固定化</td><td>運用・移植向き</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="workflow">
+      <h2>典型的なワークフロー</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — <code>nn.Module</code>を継承し、層と<code>forward</code>を実装</li>
+        <li><strong>順伝播</strong> — 入力テンソルをモデルへ通す</li>
+        <li><strong>損失計算</strong> — <a href="../loss-function/">損失関数</a>で誤差を算出</li>
+        <li><strong>逆伝播</strong> — <code>loss.backward()</code>で勾配を計算（G-171）</li>
+        <li><strong>更新</strong> — 最適化手法（Adam等）でパラメータを更新</li>
+      </ul>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-117/">G-117</a>の「順伝播→損失→逆伝播→更新」というサイクルは、Kerasの<code>fit</code>に隠れていても、PyTorchでは<strong>学習ループを明示的に書く</strong>形が典型です。試験ではループの細部より、<strong>フレームワークがこのサイクルを支える道具</strong>と整理すれば十分です。
+      </p>
+    </section>
+
+    <section id="stack">
+      <h2>ハードウェアから見た位置</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ハードウェア</strong></td><td><a href="../gpu/">GPU</a>、TPU</td><td>並列演算チップ（<a href="../../exams/g-kentei/practice/q/g-202/">G-202</a>、<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a>）</td></tr>
+          <tr><td><strong>実行基盤</strong></td><td><a href="../cuda/">CUDA</a></td><td>GPU上の並列実行</td></tr>
+          <tr><td><strong>フレームワーク</strong></td><td><strong>PyTorch</strong></td><td>テンソル演算・自動微分・学習ループ</td></tr>
+          <tr><td><strong>高水準API</strong></td><td>torchvision等</td><td>データセット・定番モデル</td></tr>
+        </tbody>
+      </table>
+      <p>
+        PyTorchは<strong>GPUそのものではない</strong>——行列演算をGPU上で動かすためのソフトウェア層です。<a href="../cuda/">CUDA</a>や<a href="../gpu/">GPU</a>と名前を入れ替えないことが重要です。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>Keras・JAX・ONNXとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名称</th><th>位置づけ</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>PyTorch</strong></td><td>DL<strong>フレームワーク本体</strong></td><td>動的グラフ・研究で広い</td></tr>
+          <tr><td><strong><a href="../keras/">Keras</a></strong></td><td>TensorFlow上の高水準API</td><td>層を積んでfit</td></tr>
+          <tr><td><strong><a href="../jax/">JAX</a></strong></td><td>数値計算＋自動微分</td><td>下位層。Flax等を載せる</td></tr>
+          <tr><td><strong><a href="../onnx/">ONNX</a></strong></td><td>モデル交換フォーマット</td><td>学習後の持ち運び。FWではない</td></tr>
+        </tbody>
+      </table>
+      <p>
+        どれも<a href="../cnn/">CNN</a>や<a href="../transformer/">Transformer</a>を<strong>実装するための道具</strong>——<a href="../alexnet/">AlexNet</a>や<a href="../llm/">LLM</a>そのものではありません（<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a>）。
+      </p>
+    </section>
+
+    <section id="ecosystem">
+      <h2>学習から運用へ</h2>
+      <p>
+        研究室やプロトタイプではPyTorchで実験し、本番環境では<strong>別ランタイム</strong>へ渡す——という流れがよくあります。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>学習</strong> — PyTorchでモデル定義・<a href="../training/">学習</a></li>
+        <li><strong>エクスポート</strong> — <a href="../onnx/">ONNX</a>などへ変換</li>
+        <li><strong>推論</strong> — <a href="../onnx-runtime/">ONNX Runtime</a>や専用エンジンで高速化（<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>）</li>
+      </ul>
+      <p>
+        2020年代の<a href="../llm/">LLM</a>研究でもPyTorchベースの実装が多く、<a href="../lora/">LoRA</a>や<a href="../peft/">PEFT</a>による<a href="../fine-tuning/">ファインチューニング</a>のコード例もPyTorchで語られることが多い——ただし試験では<strong>「PyTorch＝LoRA」</strong>と答える必要はありません。層を分けて整理します。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Meta発の<strong>深層学習フレームワーク</strong></li>
+        <li><strong>特徴</strong> — <strong>動的計算グラフ</strong>（実行しながらグラフを組み立て）</li>
+        <li><strong>役割</strong> — モデル定義・自動微分・GPU学習・推論</li>
+        <li><strong>対比</strong> — Keras（高水準API）、JAX（数値計算基盤）、ONNX（交換フォーマット）、GPU/CUDA（ハード・実行基盤）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-117/">G-117</a>、<a href="../../exams/g-kentei/practice/q/g-171/">G-171</a>、<a href="../../exams/g-kentei/drill/q/tf-416/">TF-416</a>、<a href="../../exams/g-kentei/drill/q/tf-401/">TF-401</a>、<a href="../../exams/g-kentei/practice/q/g-202/">G-202</a>、<a href="../../exams/g-kentei/drill/q/tf-055/">TF-055</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>PyTorch＝<a href="../keras/">Keras</a></td><td>フレームワーク本体 vs TensorFlow上のAPI</td></tr>
+          <tr><td>PyTorch＝<a href="../onnx/">ONNX</a></td><td>学習FW vs モデル交換フォーマット</td></tr>
+          <tr><td>PyTorch＝<a href="../cuda/">CUDA</a></td><td>DLフレームワーク vs GPU実行基盤</td></tr>
+          <tr><td>PyTorch＝<a href="../gpu/">GPU</a></td><td>ソフトウェア vs ハードウェア</td></tr>
+          <tr><td>PyTorch＝<a href="../alexnet/">AlexNet</a></td><td>組み立て道具 vs 特定モデル</td></tr>
+          <tr><td>PyTorch＝<a href="../llm/">LLM</a></td><td>学習ライブラリ vs 言語モデル</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>PyTorchは何をするフレームワークですか？</summary><p class="tool-faq-a">テンソル演算・自動微分・GPU実行を備え、ニューラルネットワークを定義して学習・推論するための深層学習フレームワークです。nn.Moduleで層を組み立て、損失関数と最適化手法を組み合わせて学習ループを回すのが典型です。</p></details>
+        <details><summary>PyTorchとKerasは同じですか？</summary><p class="tool-faq-a">同じではありません。KerasはTensorFlow上の高水準APIで、層を積んでcompile/fitする宣言的スタイルが特徴です。PyTorchはフレームワーク本体で、Pythonの制御構造と組み合わせやすい動的な記述スタイルが特徴です。別エコシステムとして整理します。</p></details>
+        <details><summary>PyTorchとONNXは同じですか？</summary><p class="tool-faq-a">同じではありません。PyTorchは学習・実験のためのフレームワークです。ONNXは学習済みモデルを共通フォーマットで書き出し、別環境へ運ぶための交換規格です。PyTorchで学習したモデルをONNXへエクスポートする、という関係が典型です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-117/">G-117 · 順伝播と学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-171/">G-171 · 誤差逆伝播と勾配</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-416/">TF-416 · NNはデータから学習</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-202/">G-202 · GPU・TPU</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../keras/">Keras</a></li>
+          <li><a href="../tensorflow/">TensorFlow</a></li>
+          <li><a href="../jax/">JAX</a></li>
+          <li><a href="../onnx/">ONNX</a></li>
+          <li><a href="../onnx-runtime/">ONNX Runtime</a></li>
+          <li><a href="../cuda/">CUDA</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

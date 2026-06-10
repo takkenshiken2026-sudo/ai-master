@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LLaVAとは？視覚エンコーダとLLMを結合したVLM。CLIP・BLIPとの違いと画像会話をG検定・生成AIパスポート向けに解説。">
+  <title>LLaVAとは？画像を会話に乗せる——視覚トークンでLLMと話すVLM — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/llava/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="LLaVAとは？画像を会話に乗せる——視覚トークンでLLMと話すVLM">
+  <meta property="og:description" content="Large Language and Vision Assistant。画像を視覚トークン化しLLMへ渡してVQAや画像説明を対話形式で行う。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/llava/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "LLaVA",
+        "alternateName": ["LLaVA", "ラヴァ", "Large Language and Vision Assistant"],
+        "description": "視覚エンコーダで画像を特徴化し、それを言語モデルが扱える視覚トークンとして渡すことで、画像に関する質問応答や説明を対話形式で行う視覚言語モデル（VLM）。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "LLaVAは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像とテキストの両方を入力として受け取り、画像の内容について質問に答えたり説明文を生成したりする視覚言語モデルです。視覚エンコーダで画像をベクトル化し、それを大規模言語モデルへ接続して会話形式で推論します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LLaVAとCLIPは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。CLIPは画像とテキストを共通の埋め込み空間に載せ、類似度検索やZero-shot分類に強いモデルです。LLaVAは画像特徴を言語モデルに渡し、自然言語で長い回答を生成する対話型VLMとして位置づけられます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "LLaVAとChatGPTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。LLaVAは画像入力を扱う視覚言語モデルの研究系名称であり、ChatGPTはOpenAIの対話サービスです。どちらも言語生成に関わりますが、モデル名・サービス名・開発元・入力モダリティの整理が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">LLaVA</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>LLaVAとは？画像を会話に乗せる——視覚トークンでLLMと話すVLM</h1>
+    <p class="tool-hero-sub">読み：ラヴァ ／ 英：LLaVA（Large Language and Vision Assistant）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>LLaVA</strong>は、<strong>画像を視覚トークンに変換して<a href="../llm/">LLM</a>へ渡す</strong>ことで、「この写真に何が写っている？」「左の物体は？」といった<strong>対話形式の画像理解</strong>を実現する<a href="../multimodal-ai/">マルチモーダル</a>モデル（VLM）です。<a href="../clip-model/">CLIP</a>が座標を揃えるのに対し、LLaVAは<strong>画像をチャットの文脈に載せる</strong>——本記事はアーキテクチャの細部より、<strong>「なぜLLMに画像を接続するのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-bridge">なぜLLMに画像を渡すか</a></li>
+        <li><a href="#pipeline">LLaVAの流れ</a></li>
+        <li><a href="#tasks">得意なタスク</a></li>
+        <li><a href="#vs-others">CLIP・BLIPとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-bridge">
+      <h2>なぜLLMに画像を渡すか</h2>
+      <p>
+        テキストだけのLLMは文章に強いが、<strong>ピクセルを直接は読めない</strong>。一方、画像キャプションやVQA（視覚的質問応答）は、視覚認識と言語生成の<strong>両方</strong>が必要です（<a href="../../exams/g-kentei/drill/q/tf-167/">TF-167</a>）。
+      </p>
+      <p>
+        LLaVAの発想はシンプルです。<strong>視覚エンコーダで画像をベクトル化</strong>し、それをLLMが理解できる<strong>視覚トークン列</strong>に変換してプロンプトに挿入する——テキストの続きに「画像の意味」が乗るイメージです。
+      </p>
+    </section>
+
+    <section id="pipeline">
+      <h2>LLaVAの流れ</h2>
+      <ul class="tool-steps">
+        <li><strong>画像入力</strong> — 写真・図表などを視覚エンコーダ（しばしば<a href="../clip-model/">CLIP</a>系のViT）へ</li>
+        <li><strong>投影</strong> — 視覚特徴をLLMの埋め込み次元へ写像するコネクタ</li>
+        <li><strong>プロンプト統合</strong> — 視覚トークン＋ユーザーの質問テキストをLLMへ</li>
+        <li><strong>生成</strong> — LLMが自然言語で回答（説明・VQA・推論）</li>
+      </ul>
+      <p>
+        学習では<strong>視覚指示チューニング</strong>（画像付きの指示データでファインチューニング）が鍵——事前学習済みの視覚・言語の部品を、<strong>会話形式の画像タスク</strong>に合わせます。
+      </p>
+    </section>
+
+    <section id="tasks">
+      <h2>得意なタスク</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>タスク</th><th>入出力</th><th>試験の接点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>画像キャプション</strong></td><td>画像→説明文</td><td>TF-167、<a href="../../exams/g-kentei/practice/q/g-390/">G-390</a></td></tr>
+          <tr><td><strong>VQA</strong></td><td>画像＋質問→回答</td><td><a href="../../exams/g-kentei/practice/q/g-392/">G-392</a></td></tr>
+          <tr><td><strong>画像会話</strong></td><td>画像＋多ターン対話</td><td>マルチモーダルAI（<a href="../../exams/g-kentei/practice/q/g-389/">G-389</a>）</td></tr>
+          <tr><td><strong>テキスト画像生成</strong></td><td>テキスト→画像</td><td>DALL·E等。LLaVAの主戦場ではない（<a href="../../exams/g-kentei/practice/q/g-394/">G-394</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        LLaVAは<strong>画像を理解して言葉で答える</strong>方向——生成（Text-to-Image）とはモダリティの矢印が逆です。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>CLIP・BLIPとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>モデル</th><th>強み</th><th>出力の形</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../clip-model/">CLIP</a></strong></td><td>画像―テキストの<strong>共通埋め込み</strong></td><td>ベクトル類似度・Zero-shot分類（<a href="../../exams/g-kentei/practice/q/g-393/">G-393</a>、<a href="../../exams/g-kentei/practice/q/g-395/">G-395</a>）</td></tr>
+          <tr><td><strong><a href="../blip/">BLIP</a></strong></td><td>キャプション・VQA向け<strong>事前学習</strong></td><td>言語出力あり。LLaVAの系譜に近い</td></tr>
+          <tr><td><strong>LLaVA</strong></td><td><strong>LLMへの接続</strong>で対話的推論</td><td>チャット形式の長い自然言語回答</td></tr>
+          <tr><td><strong><a href="../gemini-model/">Gemini</a>等</strong></td><td>商用マルチモーダルサービス</td><td>モデル名・サービス名として別整理</td></tr>
+        </tbody>
+      </table>
+      <p>
+        CLIPは「座標を揃える」、LLaVAは「座標を<strong>会話に載せる</strong>」——同じ<a href="../multimodal-ai/">マルチモーダル</a>でも、<strong>埋め込み vs 生成</strong>で役割が分かれます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 視覚エンコーダ＋<strong>LLM</strong>のVLM（Large Language and Vision Assistant）</li>
+        <li><strong>入力</strong> — 画像＋テキスト（質問・指示）</li>
+        <li><strong>出力</strong> — 自然言語での説明・VQA回答</li>
+        <li><strong>対比</strong> — CLIP＝埋め込み、DALL·E＝画像生成、ChatGPT＝サービス名</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-393/">G-393</a>、<a href="../../exams/g-kentei/practice/q/g-390/">G-390</a>、<a href="../../exams/g-kentei/practice/q/g-392/">G-392</a>、<a href="../../exams/g-kentei/drill/q/tf-167/">TF-167</a>、<a href="../../exams/g-kentei/practice/q/g-389/">G-389</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>（Transformer・LLMの文脈）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>LLaVA＝<a href="../clip-model/">CLIP</a></td><td>対話型VLM vs 埋め込み・Zero-shot</td></tr>
+          <tr><td>LLaVA＝<a href="../llama/">LLaMA</a></td><td>視覚＋言語モデル vs テキストLLMファミリー</td></tr>
+          <tr><td>LLaVA＝画像生成</td><td>画像理解・言語回答 vs Text-to-Image</td></tr>
+          <tr><td>LLaVA＝<a href="../cnn/">CNN</a></td><td>マルチモーダルモデル名 vs ネットワーク構造</td></tr>
+          <tr><td>LLaVA＝<a href="../rag/">RAG</a></td><td>画像をモデルに入力 vs 外部文書を検索して渡す</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>LLaVAは何をするモデルですか？</summary><p class="tool-faq-a">画像とテキストの両方を入力として受け取り、画像の内容について質問に答えたり説明文を生成したりする視覚言語モデルです。視覚エンコーダで画像をベクトル化し、それを大規模言語モデルへ接続して会話形式で推論します。</p></details>
+        <details><summary>LLaVAとCLIPは同じですか？</summary><p class="tool-faq-a">同じではありません。CLIPは画像とテキストを共通の埋め込み空間に載せ、類似度検索やZero-shot分類に強いモデルです。LLaVAは画像特徴を言語モデルに渡し、自然言語で長い回答を生成する対話型VLMとして位置づけられます。</p></details>
+        <details><summary>LLaVAとChatGPTは同じですか？</summary><p class="tool-faq-a">同じではありません。LLaVAは画像入力を扱う視覚言語モデルの研究系名称であり、ChatGPTはOpenAIの対話サービスです。どちらも言語生成に関わりますが、モデル名・サービス名・開発元・入力モダリティの整理が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-393/">G-393 · CLIP（対比）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-390/">G-390 · Image Captioning</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-167/">TF-167 · 画像キャプション</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-389/">G-389 · マルチモーダルAI</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../clip-model/">CLIP</a></li>
+          <li><a href="../blip/">BLIP</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

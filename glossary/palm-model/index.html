@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PaLMとは？Pathways Language Model。Googleの大規模言語モデル系列。Gemini・Gemma・BERTとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>PaLMとは？Geminiの前にあったGoogle LLM——Pathwaysで育てた事前学習の系譜 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/palm-model/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PaLMとは？Geminiの前にあったGoogle LLM——Pathwaysで育てた事前学習の系譜">
+  <meta property="og:description" content="Pathways Language Model。Googleが大規模データで事前学習したLLM系列。Gemini登場以前のGoogle言語モデルの代表。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/palm-model/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "PaLM",
+        "alternateName": ["PaLM", "パーム", "Pathways Language Model", "パスウェイズランゲージモデル"],
+        "description": "GoogleがPathways基盤で大規模データの事前学習により構築した大規模言語モデル系列。Gemini登場以前のGoogle LLMの代表例として知られる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "PaLMは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Googleが大規模テキストデータで事前学習した大規模言語モデル系列です。Pathwaysと呼ばれる分散学習基盤を用いて巨大なパラメータ規模のLLMを訓練し、テキスト生成や推論など言語タスクの基盤モデルとして位置づけられました。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PaLMとGeminiは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。PaLMはGemini以前の世代のGoogle大規模言語モデル系列です。Geminiはその後のGoogle主力マルチモーダルLLMファミリーとして試験でも主要生成AIの代表に位置づけられます。開発元は同じGoogle系ですが、世代と製品ラインが異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "PaLMとBERTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。BERTは双方向エンコーダ中心の事前学習モデルで、主に理解・分類タスクに広く使われました。PaLMはデコーダ型の大規模言語モデル系列で、テキスト生成を中心とするLLMです。いずれもGoogle関連ですが、アーキテクチャと主用途が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">PaLM</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>PaLMとは？Geminiの前にあったGoogle LLM——Pathwaysで育てた事前学習の系譜</h1>
+    <p class="tool-hero-sub">読み：パーム ／ 英：PaLM（Pathways Language Model）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>PaLM</strong>（Pathways Language Model）は、Googleが<strong>Pathways</strong>基盤で大規模事前学習した<a href="../llm/">LLM</a>系列です。試験で今すぐ名前が出るのは<a href="../gemini-model/">Gemini</a>（<a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316</a>）——PaLMは<strong>Gemini以前のGoogle言語モデルの系譜</strong>として、<strong>「誰の・どの世代のモデルか」</strong>を歴史的に整理する切り口で押さえます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#pathways-era">Pathwaysと巨大事前学習</a></li>
+        <li><a href="#what-palm">PaLMが担った役割</a></li>
+        <li><a href="#google-lineage">Google LLMの世代整理</a></li>
+        <li><a href="#foundation-context">基盤モデル文脈での位置</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="pathways-era">
+      <h2>Pathwaysと巨大事前学習</h2>
+      <p>
+        PaLMの「P」は<strong>Pathways</strong>——Googleが提唱した、複数のAIタスクを効率よく学習するための<strong>分散学習基盤</strong>——に由来します。試験ではPathwaysの内部設計より、<strong>「大規模データで事前学習したGoogleのLLM」</strong>という整理が要点です。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>の事前学習——大量データで汎用的な表現を学ぶ段階——PaLMはまさにこの<strong>「あ」</strong>を巨大スケールで行ったモデル系列の代表例です。その後、特定用途へは<a href="../fine-tuning/">ファインチューニング</a>やプロンプトで適応します。
+      </p>
+    </section>
+
+    <section id="what-palm">
+      <h2>PaLMが担った役割</h2>
+      <p>PaLMはサービス名というより、<strong>研究・製品の土台になるLLM</strong>として公開されました。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>PaLMの位置づけ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>アーキテクチャ</strong></td><td><a href="../transformer/">Transformer</a>ベースのデコーダ型<a href="../llm/">LLM</a></td></tr>
+          <tr><td><strong>学習</strong></td><td>大規模テキストの<strong>事前学習</strong></td></tr>
+          <tr><td><strong>用途</strong></td><td>テキスト生成・推論・コードなど言語タスクの基盤</td></tr>
+          <tr><td><strong>時代</strong></td><td>2022年前後のGoogle LLMブーム。のちにGeminiへ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        PaLM 2は後継として幅広く製品に組み込まれ、Bard（のちの<a href="../gemini-model/">Gemini</a>）の背後にも登場しました——<strong>モデル名の変遷</strong>は細部暗記より、Google系LLMの<strong>世代の流れ</strong>として覚えるのが試験向きです。
+      </p>
+    </section>
+
+    <section id="google-lineage">
+      <h2>Google LLMの世代整理</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名称</th><th>世代・性質</th><th>試験での整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><a href="../bert/">BERT</a></strong></td><td>エンコーダ中心。理解・分類</td><td>古典的事前学習（NLP）</td></tr>
+          <tr><td><strong>PaLM</strong></td><td>大規模デコーダ型LLM</td><td>Gemini<strong>以前</strong>のGoogle LLM</td></tr>
+          <tr><td><strong><a href="../gemini-model/">Gemini</a></strong></td><td>マルチモーダル主力ファミリー</td><td>現在のGoogle主要生成AI（HQ-0316）</td></tr>
+          <tr><td><strong><a href="../gemma/">Gemma</a></strong></td><td>オープンウェイト軽量LLM</td><td>研究・端末向け。別ライン</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「GoogleのAI＝Geminiだけ」は危険——PaLMは<strong>歴史的なLLM名</strong>、Geminiは<strong>現在の主力ブランド</strong>——開発元は同じでも、試験では<strong>主語と説明の対応</strong>を確認します（<a href="../../exams/genai-passport/practice/q/hq-0292/">HQ-0292</a>のすり替えパターン）。
+      </p>
+    </section>
+
+    <section id="foundation-context">
+      <h2>基盤モデル文脈での位置</h2>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>の<a href="../foundation-model/">基盤モデル</a>——大規模データで事前学習され、ファインチューニングやプロンプトで下流タスクに適用できる——PaLMはこの定義に合致する<strong>Google製のLLM基盤</strong>です。
+      </p>
+      <p>
+        一方、<a href="../gpt/">GPT</a>がOpenAI、<a href="../claude-model/">Claude</a>がAnthropic——<strong>開発元でモデル系列を切り分ける</strong>のが生成AIパスポート第2章の得点源です。PaLMは「Googleの歴史的LLM」、Geminiは「Googleの現在の主力」——二層で整理すると、ChatGPTやClaudeとの比較問題にも強くなります。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Pathways Language Model＝Googleの<strong>大規模事前学習LLM</strong>系列</li>
+        <li><strong>キーワード</strong> — Pathways、事前学習、Google、LLM</li>
+        <li><strong>世代</strong> — Gemini<strong>以前</strong>のGoogle言語モデルの代表</li>
+        <li><strong>対比</strong> — Gemini（現主力）、Gemma（軽量OW）、BERT（エンコーダ）、GPT（OpenAI）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>、<a href="../../exams/g-kentei/practice/q/g-383/">G-383</a>、<a href="../../exams/g-kentei/practice/q/g-337/">G-337</a>（BERT対比）</p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316</a>、<a href="../../exams/genai-passport/practice/q/hq-0292/">HQ-0292</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>PaLM＝<a href="../gemini-model/">Gemini</a></td><td>前世代LLM vs 現主力ファミリー</td></tr>
+          <tr><td>PaLM＝<a href="../gemma/">Gemma</a></td><td>大規模クラウドLLM vs 軽量オープンウェイト</td></tr>
+          <tr><td>PaLM＝<a href="../bert/">BERT</a></td><td>デコーダ型LLM vs エンコーダ中心（G-337）</td></tr>
+          <tr><td>PaLM＝<a href="../gpt/">GPT</a></td><td>Google vs OpenAIの別系列</td></tr>
+          <tr><td>PaLM＝Pathwaysそのもの</td><td>モデル名 vs 学習基盤の名称</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>PaLMは何をするモデルですか？</summary><p class="tool-faq-a">Googleが大規模テキストデータで事前学習した大規模言語モデル系列です。Pathwaysと呼ばれる分散学習基盤を用いて巨大なパラメータ規模のLLMを訓練し、テキスト生成や推論など言語タスクの基盤モデルとして位置づけられました。</p></details>
+        <details><summary>PaLMとGeminiは同じですか？</summary><p class="tool-faq-a">同じではありません。PaLMはGemini以前の世代のGoogle大規模言語モデル系列です。Geminiはその後のGoogle主力マルチモーダルLLMファミリーとして試験でも主要生成AIの代表に位置づけられます。開発元は同じGoogle系ですが、世代と製品ラインが異なります。</p></details>
+        <details><summary>PaLMとBERTは同じですか？</summary><p class="tool-faq-a">同じではありません。BERTは双方向エンコーダ中心の事前学習モデルで、主に理解・分類タスクに広く使われました。PaLMはデコーダ型の大規模言語モデル系列で、テキスト生成を中心とするLLMです。いずれもGoogle関連ですが、アーキテクチャと主用途が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-383/">G-383 · 事前学習</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316 · Gemini vs Claude</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-337/">G-337 · BERT</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gemini-model/">Gemini</a></li>
+          <li><a href="../gemma/">Gemma</a></li>
+          <li><a href="../bert/">BERT</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../gpt/">GPT</a></li>
+          <li><a href="../claude-model/">Claude</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

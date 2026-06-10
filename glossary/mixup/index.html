@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mixupとは？2つのサンプルを線形補間して汎化を高めるデータ拡張。ドロップアウト・正則化との違いをG検定向けに解説。">
+  <title>Mixupとは？2枚を混ぜてラベルも混ぜる——中間例で境界をならすデータ拡張 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/mixup/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mixupとは？2枚を混ぜてラベルも混ぜる——中間例で境界をならすデータ拡張">
+  <meta property="og:description" content="入力と正解ラベルを同じ係数で線形補間するデータ拡張手法。過学習抑制と汎化性能向上を狙う。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/mixup/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Mixup",
+        "alternateName": ["Mixup", "ミックスアップ"],
+        "description": "2つの学習サンプルとその正解ラベルを同じ乱数係数で線形補間して新しい仮想サンプルを作るデータ拡張手法。クラス境界付近の中間例を学習させ、汎化性能の向上を狙う。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Mixupは何をする手法ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "2つの入力データと正解ラベルを、同じ係数λで線形補間して新しい学習例を作るデータ拡張です。画像なら2枚を半透明に重ねたような中間画像と、その両クラスを混ぜたソフトなラベルで学習し、過学習を抑えて汎化を高めることを狙います。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Mixupとデータ拡張は同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mixupはデータ拡張の一種です。ただし回転や反転のように1枚を変形するのではなく、2枚のサンプルを混ぜ合わせる点が特徴的です。データ拡張全般の目的である学習データの多様性向上と過学習抑制に寄与します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Mixupとドロップアウトは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Mixupは学習データ側で中間例を作るデータ拡張です。ドロップアウトは学習時に一部のニューロンを無効化する正則化手法です。どちらも汎化に効きますが、データを増やすかネットワークの経路を制限するかで役割が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Mixup</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Mixupとは？2枚を混ぜてラベルも混ぜる——中間例で境界をならすデータ拡張</h1>
+    <p class="tool-hero-sub">読み：ミックスアップ ／ 英：Mixup</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Mixup</strong>は、2つの学習サンプルを<strong>同じ係数で線形補間</strong>し、<strong>ラベルも一緒に混ぜる</strong>データ拡張です。回転や反転が「1枚を別角度から見せる」手法なのに対し、Mixupは<strong>存在しない中間例</strong>——猫と犬のあいだの半透明画像のようなもの——を学習に入れ、決定境界をなだらかにする——本記事はλの分布より、<strong>「なぜ入力とラベルを同時に混ぜるのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-mix">なぜ混ぜるか</a></li>
+        <li><a href="#how-works">Mixupの流れ</a></li>
+        <li><a href="#vs-augment">他のデータ拡張との違い</a></li>
+        <li><a href="#vs-regularization">正則化との違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-mix">
+      <h2>なぜ混ぜるか</h2>
+      <p>
+        <strong>データ拡張</strong>は、既存データに変換を加えて多様性を増やし、<strong>過学習を抑える</strong>手法です（<a href="../../exams/g-kentei/practice/q/g-266/">G-266</a>、<a href="../../exams/genai-passport/practice/q/hq-0433/">HQ-0433</a>）。
+      </p>
+      <p>
+        分類器はクラス境界の<strong>近くで過信しやすい</strong>——訓練データにない「あいだ」の入力で誤ることがある。Mixupは意図的に<strong>あいだの例</strong>を作り、モデルに「0か1かだけではない」ソフトな正解を学ばせます。
+      </p>
+    </section>
+
+    <section id="how-works">
+      <h2>Mixupの流れ</h2>
+      <p>1ミニバッチ内で、2つのサンプル (x₁, y₁) と (x₂, y₂) を選び、係数 λ（0〜1の乱数）で混ぜます。</p>
+      <blockquote>
+        <p>混合入力 x̃ ＝ λ·x₁ ＋ (1−λ)·x₂</p>
+        <p>混合ラベル ỹ ＝ λ·y₁ ＋ (1−λ)·y₂</p>
+      </blockquote>
+      <ul class="tool-steps">
+        <li><strong>λの抽選</strong> — 例：Beta分布からサンプリング（試験では分布名より「同じλで混ぜる」で可）</li>
+        <li><strong>入力の混合</strong> — 画像なら2枚を<strong>重ね合わせ</strong>たような中間画像</li>
+        <li><strong>ラベルの混合</strong> — ワンホットなら「70%猫・30%犬」のような<strong>ソフトラベル</strong></li>
+        <li><strong>損失</strong> — 混合ラベルに対する通常の損失（交差エントロピー等）を計算</li>
+      </ul>
+      <p>
+        ポイントは<strong>入力とラベルを同じλで混ぜる</strong>こと——画像だけ半透明にしてラベルは硬いまま、では教師信号が矛盾します。
+      </p>
+    </section>
+
+    <section id="vs-augment">
+      <h2>他のデータ拡張との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>操作</th><th>ラベル</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>回転・反転</strong></td><td>1枚を幾何変換</td><td>元ラベルのまま（<a href="../../exams/g-kentei/practice/q/g-020/">G-020</a>）</td></tr>
+          <tr><td><strong>色調変更</strong></td><td>1枚の見え方を変える</td><td>元ラベルのまま</td></tr>
+          <tr><td><strong>Mixup</strong></td><td><strong>2枚を線形補間</strong></td><td><strong>2ラベルも補間</strong></td></tr>
+          <tr><td><strong>Cutout/CutMix</strong></td><td>一部を隠す・貼り付ける</td><td>領域に応じて調整（別手法）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Mixupは「現実に存在する変形」ではなく<strong>仮想の中間点</strong>を増やす——データ拡張の一族ですが、設計思想は独特です。
+      </p>
+    </section>
+
+    <section id="vs-regularization">
+      <h2>正則化との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>何をいじるか</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Mixup</strong></td><td><strong>学習データ</strong>（入力＋ラベル）</td><td>データ拡張</td></tr>
+          <tr><td><strong><a href="../dropout/">ドロップアウト</a></strong></td><td>ネットワークの経路</td><td>正則化（<a href="../../exams/g-kentei/practice/q/g-132/">G-132</a>）</td></tr>
+          <tr><td><strong>L1/L2</strong></td><td>重みへのペナルティ</td><td>正則化（<a href="../../exams/g-kentei/practice/q/g-170/">G-170</a>）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        目的はどれも<a href="../overfitting/">過学習</a>抑制・汎化向上——<strong>データ側かモデル側か</strong>で分類すると、試験のすり替えに強くなります。Mixupは損失関数の名前でも活性化関数でもありません。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 2サンプルとラベルを<strong>同じ係数で線形補間</strong>するデータ拡張</li>
+        <li><strong>目的</strong> — 多様性向上・過学習抑制・<strong>汎化性能</strong>向上（G-266）</li>
+        <li><strong>特徴</strong> — 中間例と<strong>ソフトラベル</strong>で境界をならかに</li>
+        <li><strong>対比</strong> — 回転/反転＝1枚変形、ドロップアウト＝正則化、GAN＝生成モデル</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-266/">G-266</a>、<a href="../../exams/g-kentei/practice/q/g-020/">G-020</a>、<a href="../../exams/g-kentei/practice/q/g-132/">G-132</a>、<a href="../../exams/g-kentei/practice/q/g-170/">G-170</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0433/">HQ-0433</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Mixup＝<a href="../mixtral/">Mixtral</a></td><td>データ拡張 vs MoE型LLM（綴りが近いが無関係）</td></tr>
+          <tr><td>Mixup＝<a href="../dropout/">ドロップアウト</a></td><td>データ混合 vs ユニット無効化</td></tr>
+          <tr><td>Mixup＝<a href="../regularization/">L2正則化</a></td><td>データ拡張 vs 重みペナルティ</td></tr>
+          <tr><td>Mixup＝<a href="../gan/">GAN</a></td><td>既存2枚の補間 vs 生成器・識別器</td></tr>
+          <tr><td>Mixup＝ラベル削除</td><td>ソフトラベルで教える vs 教師なし化（G-266の誤答B）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Mixupは何をする手法ですか？</summary><p class="tool-faq-a">2つの入力データと正解ラベルを、同じ係数λで線形補間して新しい学習例を作るデータ拡張です。画像なら2枚を半透明に重ねたような中間画像と、その両クラスを混ぜたソフトなラベルで学習し、過学習を抑えて汎化を高めることを狙います。</p></details>
+        <details><summary>Mixupとデータ拡張は同じですか？</summary><p class="tool-faq-a">Mixupはデータ拡張の一種です。ただし回転や反転のように1枚を変形するのではなく、2枚のサンプルを混ぜ合わせる点が特徴的です。データ拡張全般の目的である学習データの多様性向上と過学習抑制に寄与します。</p></details>
+        <details><summary>Mixupとドロップアウトは同じですか？</summary><p class="tool-faq-a">同じではありません。Mixupは学習データ側で中間例を作るデータ拡張です。ドロップアウトは学習時に一部のニューロンを無効化する正則化手法です。どちらも汎化に効きますが、データを増やすかネットワークの経路を制限するかで役割が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-266/">G-266 · データ拡張の目的</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-020/">G-020 · 拡張の例</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-132/">G-132 · ドロップアウト（対比）</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0433/">HQ-0433 · データ拡張の定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../overfitting/">過学習</a></li>
+          <li><a href="../dropout/">ドロップアウト</a></li>
+          <li><a href="../regularization/">正則化</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../machine-learning/">機械学習</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

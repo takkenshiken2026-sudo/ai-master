@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MQAとは？全AttentionヘッドでKVを1組共有し推論を高速化する手法。GQA・MHAとの違いをG検定向けに解説。">
+  <title>MQAとは？全ヘッドが同じKVを見る——推論最速の共有Attention — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/multi-query-attention/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MQAとは？全ヘッドが同じKVを見る——推論最速の共有Attention">
+  <meta property="og:description" content="Multi-Query Attention。Queryヘッドは複数のまま、Key・Valueを1組に集約してKVキャッシュと推論コストを最小化する。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/multi-query-attention/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Multi-Query Attention",
+        "alternateName": ["MQA", "マルチクエリアテンション", "Multi-Query Attention"],
+        "description": "TransformerのAttentionで、複数のQueryヘッドが1組のKey・Valueを共有する効率化手法。KVキャッシュのメモリと帯域を大幅に削減し、推論を高速化する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "MQAは何をするAttentionの改良ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "標準のマルチヘッド注意では各ヘッドが独自のKey・Valueを持ちますが、MQAは全Queryヘッドが1組のKey・Valueを共有します。推論時のKVキャッシュ量を最小化し、トークン生成の速度とメモリ効率を改善する目的で使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MQAとGQAは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MQAは全ヘッドでKVを1組に完全共有します。GQAは複数のQueryヘッドがグループごとにKVを共有する中間案です。MQAの方が共有度が高く推論は速い一方、表現力のトレードオフが大きくなりやすいと整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MQAとKVキャッシュは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。KVキャッシュは過去トークンのKey・Valueを保存して再計算を避ける推論最適化です。MQAはAttentionのヘッド設計としてKVの本数自体を減らす手法です。MQAを採用するとキャッシュが小さくなり、KVキャッシュの効果も相乗的に得やすくなります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">MQA</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>MQAとは？全ヘッドが同じKVを見る——推論最速の共有Attention</h1>
+    <p class="tool-hero-sub">読み：マルチ クエリ アテンション ／ 英：Multi-Query Attention（MQA）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>MQA</strong>（Multi-Query Attention）は、<a href="../transformer/">Transformer</a>の<a href="../attention/">Attention</a>で<strong>全Queryヘッドが1組のKey・Value（KV）を共有</strong>する効率化です。標準のマルチヘッド注意はヘッドごとにKVを持ち、推論時の<a href="../kv-cache/">KVキャッシュ</a>が膨らむ——MQAは<strong>「視点（Q）は複数、記憶（KV）は一本」</strong>——本記事は<a href="../grouped-query-attention/">GQA</a>が「中間案」として触れるスペクトラムの<strong>最速端</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#inference-bottleneck">推論のボトルネック</a></li>
+        <li><a href="#mqa-design">MQAの設計</a></li>
+        <li><a href="#sharing-spectrum">MHA・GQA・MQAの並び</a></li>
+        <li><a href="#tradeoff">速度と表現力</a></li>
+        <li><a href="#with-cache">KVキャッシュとの関係</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="inference-bottleneck">
+      <h2>推論のボトルネック</h2>
+      <p>
+        <a href="../llm/">LLM</a>の生成は<strong>1トークンずつ</strong>進みます。各ステップで新トークンのQueryが、過去全トークンのKey・Valueを参照する——<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>のAttentionの枠組みは同じです。
+      </p>
+      <p>
+        過去のK・Vは<a href="../kv-cache/">KVキャッシュ</a>に保存して再利用しますが、<strong>ヘッド数×層数×トークン数</strong>ぶんのKVを抱えるほどメモリ帯域が逼迫します（<a href="../../exams/g-kentei/practice/q/g-180/">G-180</a>）。MQAはこの<strong>KVの本数そのもの</strong>を減らす設計です。
+      </p>
+    </section>
+
+    <section id="mqa-design">
+      <h2>MQAの設計</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>標準MHA</th><th>MQA</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Query（Q）</strong></td><td>ヘッドごとに独立</td><td>ヘッドごとに独立（<strong>複数の視点を維持</strong>）</td></tr>
+          <tr><td><strong>Key（K）</strong></td><td>ヘッドごとに独立</td><td><strong>全ヘッドで1組を共有</strong></td></tr>
+          <tr><td><strong>Value（V）</strong></td><td>ヘッドごとに独立</td><td><strong>全ヘッドで1組を共有</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        たとえばQueryヘッドが8本あっても、K・Vは<strong>1本だけ</strong>——8つの「探し方」が、同じ索引棚（K）と同じ引き出し（V）を見にいくイメージです。<a href="../../exams/g-kentei/practice/q/g-304/">G-304</a>のScaled Dot-Product Attentionの計算式は変わりません。変えるのは<strong>KVテンソルの数</strong>だけです。
+      </p>
+    </section>
+
+    <section id="sharing-spectrum">
+      <h2>MHA・GQA・MQAの並び</h2>
+      <p><a href="../grouped-query-attention/">GQA</a>記事が示す<strong>共有度のスペクトラム</strong>で、MQAは最右端に立ちます。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>KVの持ち方</th><th>推論効率</th><th>表現力</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>MHA</strong>（標準）</td><td>ヘッドごとに<strong>独自KV</strong></td><td>△（キャッシュ大）</td><td>◎</td></tr>
+          <tr><td><strong>GQA</strong></td><td><strong>グループ共有</strong></td><td>○（中間）</td><td>○</td></tr>
+          <tr><td><strong>MQA</strong></td><td><strong>全ヘッドで1組KV</strong></td><td>◎（最軽・最速）</td><td>△</td></tr>
+        </tbody>
+      </table>
+      <p>
+        近年の大規模<a href="../llm/">LLM</a>では、精度劣化を抑えつつ効率を取る<strong>GQA</strong>がMQAより選ばれることも多い——MQAは「最速端の選択肢」として覚えると、試験の対比が明確になります。
+      </p>
+    </section>
+
+    <section id="tradeoff">
+      <h2>速度と表現力</h2>
+      <p>
+        KVを1組に集約すると、<strong>メモリ読み出しとキャッシュ容量</strong>が劇的に減ります——長いコンテキストでの生成が速くなりやすい（<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>の推論高速化の文脈）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>利点</strong> — KVキャッシュ最小、帯域効率◎、デプロイコスト削減</li>
+        <li><strong>代償</strong> — ヘッドごとに異なる「記憶の引き出し」がなくなる→表現の多様性が制限されやすい</li>
+        <li><strong>実務</strong> — 学習時はMHA相当で学び、推論時にMQAへ変換する手法も研究されている</li>
+      </ul>
+      <p>
+        MQAは<strong>学習アルゴリズム</strong>（損失関数・最適化）ではなく、<strong>Attentionの部品設計</strong>——<a href="../flash-attention/">FlashAttention</a>（実装最適化）や<a href="../alibi/">ALiBi</a>（位置符号）とは別レイヤーの効率化です。
+      </p>
+    </section>
+
+    <section id="with-cache">
+      <h2>KVキャッシュとの関係</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>手法</th><th>何を減らすか</th><th>層</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>KVキャッシュ</strong></td><td>過去KVの<strong>再計算</strong></td><td>推論の実装・アルゴリズム</td></tr>
+          <tr><td><strong>MQA</strong></td><td>KVの<strong>本数</strong>→キャッシュ容量そのもの</td><td>Attentionの<strong>設計</strong></td></tr>
+          <tr><td><strong>FlashAttention</strong></td><td>注意計算の<strong>メモリIO</strong></td><td>GPU実装</td></tr>
+        </tbody>
+      </table>
+      <p>
+        KVキャッシュは「同じ量のKVを賢く使い回す」、MQAは「そもそもKVの量を減らす」——<strong>両方効く</strong>ため、長文生成の高速化でセットで語られることがあります（<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a>のTransformer文脈）。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 全Queryヘッドが<strong>1組のKVを共有</strong>するAttention効率化</li>
+        <li><strong>目的</strong> — 推論時のKVキャッシュ削減・速度向上</li>
+        <li><strong>位置づけ</strong> — MHAとGQAの<strong>共有度スペクトラムの最速端</strong></li>
+        <li><strong>すり替え回避</strong> — Transformer名・学習率・損失関数ではない</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>、<a href="../../exams/g-kentei/practice/q/g-304/">G-304</a>、<a href="../../exams/g-kentei/practice/q/g-180/">G-180</a>、<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>MQA＝<a href="../grouped-query-attention/">GQA</a></td><td>全ヘッド1組KV vs グループ共有の中間案</td></tr>
+          <tr><td>MQA＝<a href="../kv-cache/">KVキャッシュ</a></td><td>ヘッド設計でKV削減 vs 再計算回避のキャッシュ</td></tr>
+          <tr><td>MQA＝<a href="../flash-attention/">FlashAttention</a></td><td>Attention設計 vs IO実装最適化</td></tr>
+          <tr><td>MQA＝<a href="../transformer/">Transformer</a></td><td>注意の部品 vs モデル全体</td></tr>
+          <tr><td>MQA＝<a href="../lora/">LoRA</a></td><td>推論効率のAttention設計 vs 軽量ファインチューニング</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>MQAは何をするAttentionの改良ですか？</summary><p class="tool-faq-a">標準のマルチヘッド注意では各ヘッドが独自のKey・Valueを持ちますが、MQAは全Queryヘッドが1組のKey・Valueを共有します。推論時のKVキャッシュ量を最小化し、トークン生成の速度とメモリ効率を改善する目的で使われます。</p></details>
+        <details><summary>MQAとGQAは同じですか？</summary><p class="tool-faq-a">同じではありません。MQAは全ヘッドでKVを1組に完全共有します。GQAは複数のQueryヘッドがグループごとにKVを共有する中間案です。MQAの方が共有度が高く推論は速い一方、表現力のトレードオフが大きくなりやすいと整理します。</p></details>
+        <details><summary>MQAとKVキャッシュは同じですか？</summary><p class="tool-faq-a">同じではありません。KVキャッシュは過去トークンのKey・Valueを保存して再計算を避ける推論最適化です。MQAはAttentionのヘッド設計としてKVの本数自体を減らす手法です。MQAを採用するとキャッシュが小さくなり、KVキャッシュの効果も相乗的に得やすくなります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-295/">G-295 · Attentionの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-304/">G-304 · スケーリング注意</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-406/">G-406 · 推論高速化</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0108/">TF-0108 · Transformer</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../grouped-query-attention/">GQA</a></li>
+          <li><a href="../kv-cache/">KVキャッシュ</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../flash-attention/">FlashAttention</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

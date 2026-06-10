@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SDXLとは？Stable Diffusion XL。二重テキストエンコーダと大きなUNetで解像度・品質を引き上げた潜在拡散モデル。SD 1.x・FLUXとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>SDXLとは？大きく描くために二重化した——Stable Diffusionの高解像度版 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/sdxl/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SDXLとは？大きく描くために二重化した——Stable Diffusionの高解像度版">
+  <meta property="og:description" content="Stable Diffusion XL。潜在拡散のまま解像度と描写品質を高めたSDファミリーの大型版。タスク名とモデル名の層を整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/sdxl/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "SDXL",
+        "alternateName": ["SDXL", "エスディーエックスエル", "Stable Diffusion XL"],
+        "description": "Stable Diffusionファミリーの高解像度・高品質版。潜在拡散の枠組みを保ちつつ、大きなUNetと二重のテキストエンコーダなどで描写力を強化したテキスト画像生成モデル。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "SDXLは何の略ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Stable Diffusion XLの略です。Stable Diffusion（SD）ファミリーの中で、より高い解像度と描写品質を狙って設計されたバージョンとして位置づけられます。Text-to-Imageタスクを潜在拡散で実現する点はSD 1.xなどと共通です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SDXLとStable Diffusionは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SDXLはStable Diffusionファミリーの一員ですが、SD全体と同一ではありません。SD 1.xなど初期版よりモデル規模・テキストエンコーダ・ネイティブ解像度が大きく、高品質生成向けに設計されています。試験では「SDの高解像度版」として整理するのが安全です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SDXLはGANですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。SDXLは潜在拡散モデルに基づくText-to-Imageモデルです。GANのような生成器・識別器の対抗学習とは別系統です。拡散モデルは画像生成AIの代表的な仕組みの一つとして扱われます。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">SDXL</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>SDXLとは？大きく描くために二重化した——Stable Diffusionの高解像度版</h1>
+    <p class="tool-hero-sub">読み：エスディーエックスエル ／ 英：SDXL（Stable Diffusion XL）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>SDXL</strong>（Stable Diffusion XL）は、<a href="../stable-diffusion/">Stable Diffusion</a>ファミリーの<strong>高解像度・高品質版</strong>です。SD 1.xが512px前後を主戦場にしたのに対し、SDXLは<strong>1024px級を前提にした大きなUNetと二重のテキストエンコーダ</strong>で描写を強化——本記事はバージョン番号の暗記ではなく、<strong>「同じ潜在拡散でも、大きく描くために何を二重化したか」</strong>という設計転換に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">SDXLとは</a></li>
+        <li><a href="#design">高解像度化の設計</a></li>
+        <li><a href="#vs-sd1">SD 1.xとの対比</a></li>
+        <li><a href="#vs-others">他の画像生成モデルとの整理</a></li>
+        <li><a href="#ecosystem">エコシステムと注意点</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        SDXLの定義は<strong>「Stable Diffusionの高解像度・高品質版モデル」</strong>です。単独の細かい過去問は少ない一方、<strong>Text-to-Image</strong>（<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>）と<strong>拡散モデル</strong>（<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184</a>）の文脈で、<a href="../stable-diffusion/">Stable Diffusion</a>・<a href="../dalle-model/">DALL·E</a>と並ぶ<strong>固有名詞のモデル</strong>として整理します。
+      </p>
+      <p>
+        誤答では、<strong>SDXL＝拡散モデル全体</strong>、<strong>SDXL＝GAN</strong>（<a href="../../exams/g-kentei/practice/q/g-394/">G-394</a>）、<strong>SDXL＝Midjourney</strong>（<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190</a>）などのすり替えに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184（拡散と画像生成）</a>、<a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190（Text-to-Image）</a>、<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211（権利確認）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-394/">G-394（DALL·Eとの比較）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>SDXLとは</h2>
+      <p>
+        SDXLは、Stability AIなどが2023年頃に公開した<strong><a href="../text-to-image/">テキスト画像生成</a>モデル</strong>です。中核は<a href="../latent-diffusion/">潜在拡散</a>——<a href="../denoising-diffusion/">拡散モデル</a>のノイズ除去を潜在空間で行う——というSDファミリーと同じです。
+      </p>
+      <p>
+        「XL」は<strong>Extra Large</strong>のニュアンス——UNetやテキスト条件付けの規模を拡大し、<strong>より大きなキャンバスで細部まで描く</strong>ことを狙った世代として覚えると、SD 1.xとの違いが腹落ちしやすくなります。
+      </p>
+    </section>
+
+    <section id="design">
+      <h2>高解像度化の設計</h2>
+      <p>試験では数式より<strong>何を強化したかの意味</strong>が重要です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>要素</th><th>SDXLでの強化</th><th>試験向けの一言</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ネイティブ解像度</strong></td><td>1024px級を前提</td><td>小さい画像を引き伸ばすより<strong>最初から大きく生成</strong></td></tr>
+          <tr><td><strong>UNet</strong></td><td>より大きな拡散ネットワーク</td><td>細部・構図の表現力向上</td></tr>
+          <tr><td><strong>テキストエンコーダ</strong></td><td><strong>二重</strong>（CLIP系を2系統）</td><td>プロンプト理解の強化</td></tr>
+          <tr><td><strong>Refiner（任意）</strong></td><td>後段で高周波成分を磨くモデル</td><td>二段生成のオプション</td></tr>
+          <tr><td><strong>基盤</strong></td><td><a href="../latent-diffusion/">潜在拡散</a>は継続</td><td>拡散の考え方はSDと同じ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        二重のテキストエンコーダは、短いキャプションと長い記述で得意な表現が異なる——という知見を<strong>役割分担</strong>として組み込んだ、と理解すると設計意図が掴みやすいです。試験で細部を問われなくても、「<strong>テキスト理解を二系統で強化</strong>」と答えられれば十分なことが多いです。
+      </p>
+    </section>
+
+    <section id="vs-sd1">
+      <h2>SD 1.xとの対比</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>SD 1.x 等</th><th>SDXL</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>位置づけ</strong></td><td>SDファミリーの初期〜中核</td><td><strong>高解像度・高品質版</strong></td></tr>
+          <tr><td><strong>解像度</strong></td><td>512px前後が典型</td><td><strong>1024px級</strong>を想定</td></tr>
+          <tr><td><strong>モデル規模</strong></td><td>比較的コンパクト</td><td>UNet・条件付けが<strong>大型化</strong></td></tr>
+          <tr><td><strong>生成の考え方</strong></td><td>潜在拡散</td><td><strong>同じ</strong>（潜在拡散）</td></tr>
+          <tr><td><strong>LoRA等</strong></td><td>豊富なコミュニティ拡張</td><td>SDXL向けの追加学習も流通</td></tr>
+        </tbody>
+      </table>
+      <p>
+        SDXLは<strong>Stable Diffusionの別バージョン／大型版</strong>であり、<a href="../latent-diffusion/">潜在拡散</a>という技術カテゴリそのものではありません。層を混同しないことが重要です。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他の画像生成モデルとの整理</h2>
+      <p><a href="../flux-model/">FLUX</a>記事と同様、<strong>タスク名 ≠ モデル名</strong>を先に固定します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>SDXLの位置</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>タスク</strong></td><td><a href="../text-to-image/">Text-to-Image</a></td><td>テキストから画像を生成する</td></tr>
+          <tr><td><strong>技術</strong></td><td><a href="../denoising-diffusion/">拡散モデル</a>・<a href="../latent-diffusion/">潜在拡散</a></td><td>ノイズ除去で画像を合成</td></tr>
+          <tr><td><strong>モデル名</strong></td><td>SDXL、<a href="../dalle-model/">DALL·E</a>、<a href="../flux-model/">FLUX</a></td><td><strong>SDファミリーのXL版</strong></td></tr>
+          <tr><td><strong>サービス名</strong></td><td>各社のWeb UI・API</td><td>製品は<a href="../../tools/">AIツール一覧</a>へ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../controlnet/">ControlNet</a>や<a href="../lora/">LoRA</a>は、SDXLでも構図制御・スタイル適応に使われますが、<strong>SDXL＝ControlNet</strong>ではありません——周辺技術と本体を分けて覚えます。
+      </p>
+    </section>
+
+    <section id="ecosystem">
+      <h2>エコシステムと注意点</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>計算資源</strong>
+          SD 1.xよりVRAM・時間がかかりやすい——高品質の代償
+        </li>
+        <li>
+          <strong>コミュニティモデル</strong>
+          SDXL向けLoRA・チェックポイントの流通
+        </li>
+        <li>
+          <strong>ライセンス</strong>
+          バージョンごとに商用条件が異なる。利用前に要確認（2026年6月時点）
+        </li>
+        <li>
+          <strong>権利・倫理</strong>
+          肖像・商標・<a href="../deepfake/">ディープフェイク</a>的悪用（<a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211</a>）
+        </li>
+      </ul>
+      <p>
+        社内の機密データで追加学習する場合は、<a href="../fine-tuning/">ファインチューニング</a>の技術的可能性だけでなく、<a href="../confidential-data-leak/">情報漏洩</a>リスクとライセンスを必ず確認してください。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>SDXL＝<a href="../denoising-diffusion/">拡散モデル</a>全体</td><td>潜在拡散を用いた<strong>具体モデル</strong>（TF-0184）</td></tr>
+          <tr><td>SDXL＝<a href="../stable-diffusion/">Stable Diffusion</a>と完全同一</td><td>SDファミリーの<strong>高解像度版</strong></td></tr>
+          <tr><td>SDXL＝<a href="../flux-model/">FLUX</a></td><td>同タスク・別開発元・別モデル</td></tr>
+          <tr><td>SDXL＝GAN</td><td>拡散ベース vs 対抗学習（G-394）</td></tr>
+          <tr><td>SDXL＝<a href="../text-to-image/">Text-to-Image</a>そのもの</td><td>タスクを実現する<strong>モデル名</strong>の一つ</td></tr>
+          <tr><td>高解像度＝権利確認不要</td><td>生成物の利用は肖像・商標等を確認（TF-0211）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>SDXLは何の略ですか？</summary>
+          <p class="tool-faq-a">Stable Diffusion XLの略です。Stable Diffusion（SD）ファミリーの中で、より高い解像度と描写品質を狙って設計されたバージョンとして位置づけられます。Text-to-Imageタスクを潜在拡散で実現する点はSD 1.xなどと共通です。</p>
+        </details>
+        <details>
+          <summary>SDXLとStable Diffusionは同じですか？</summary>
+          <p class="tool-faq-a">SDXLはStable Diffusionファミリーの一員ですが、SD全体と同一ではありません。SD 1.xなど初期版よりモデル規模・テキストエンコーダ・ネイティブ解像度が大きく、高品質生成向けに設計されています。試験では「SDの高解像度版」として整理するのが安全です。</p>
+        </details>
+        <details>
+          <summary>SDXLはGANですか？</summary>
+          <p class="tool-faq-a">いいえ。SDXLは潜在拡散モデルに基づくText-to-Imageモデルです。GANのような生成器・識別器の対抗学習とは別系統です。拡散モデルは画像生成AIの代表的な仕組みの一つとして扱われます。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0184/">TF-0184 · 拡散と画像生成</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0190/">TF-0190 · Text-to-Image</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-394/">G-394 · DALL·Eとの比較</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0211/">TF-0211 · 権利確認</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../latent-diffusion/">潜在拡散モデル</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../controlnet/">ControlNet</a></li>
+          <li><a href="../lora/">LoRA</a></li>
+          <li><a href="../flux-model/">FLUX</a></li>
+          <li><a href="../dalle-model/">DALL·E</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

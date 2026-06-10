@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NT-Xent損失とは？正規化温度付き対照損失。SimCLR・MoCoで使う自己教師ありの損失関数。Contrastive Loss・交差エントロピーとの違いをG検定向けに解説。">
+  <title>NT-Xent損失とは？正例だけを強く引く——温度で負例の影を薄める対照損失 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/nt-xent-loss/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="NT-Xent損失とは？正例だけを強く引く——温度で負例の影を薄める対照損失">
+  <meta property="og:description" content="Normalized Temperature-scaled Cross Entropy Loss。対照学習で正例ペアを近づけ負例を遠ざける自己教師あり向けの損失関数。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/nt-xent-loss/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "NT-Xent損失",
+        "alternateName": ["NT-Xent損失", "NT-Xent Loss", "エヌティーエックスエント損失", "Normalized Temperature-scaled Cross Entropy Loss", "正規化温度付き対照損失"],
+        "description": "対照学習で用いる損失関数。埋め込みを正規化し温度パラメータでスケールした類似度のソフトマックス交差エントロピーとして、正例ペアを近づけ負例を遠ざける。SimCLRやMoCoなど自己教師あり表現学習で使われる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "NT-Xent損失は何をする損失関数ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "対照学習で、正例ペアの埋め込みは近く、負例の埋め込みは遠くなるように学習させる損失関数です。正規化した類似度を温度でスケールし、ソフトマックス交差エントロピーとして正例を当てはめる形で最適化します。自己教師ありの視覚表現学習で広く使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NT-Xent損失とContrastive Lossは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。Contrastive Lossは正例を近づけ負例を遠ざける損失の総称です。NT-Xentはその一実装で、正規化・温度スケール・ソフトマックス交差エントロピーを組み合わせた具体形です。思想は共通ですが、名称と設計の詳細が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "NT-Xent損失とMoCoは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。NT-Xentは損失関数の名称です。MoCoは動量エンコーダと負例キューを使う自己教師ありの対照学習手法の名称です。MoCo v2などではNT-Xentを損失として採用しますが、損失と手法は別物です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">NT-Xent損失</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>NT-Xent損失とは？正例だけを強く引く——温度で負例の影を薄める対照損失</h1>
+    <p class="tool-hero-sub">読み：エヌティーエックスエント ／ 英：NT-Xent Loss（Normalized Temperature-scaled Cross Entropy Loss）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>NT-Xent損失</strong>は、<strong>正例は近く・負例は遠く</strong>——<a href="../../exams/g-kentei/practice/q/g-127/">Contrastive Loss</a>の思想——を、<strong>正規化した類似度のソフトマックス</strong>として書き下した対照学習用の<a href="../loss-function/">損失関数</a>です。<a href="../moco/">MoCo</a>がキューと慣性エンコーダで「負例を太くする」なら、NT-Xentは<strong>「どの負例をどれだけ押し返すか」を温度τで調整する</strong>——本記事は数式の暗記より、<strong>正規化・温度・交差エントロピーの三つ組</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#softmax-contrast">類似度のソフトマックス</a></li>
+        <li><a href="#three-ingredients">三つの部品</a></li>
+        <li><a href="#self-supervised">自己教師ありでの使われ方</a></li>
+        <li><a href="#vs-others">他の損失との違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="softmax-contrast">
+      <h2>類似度のソフトマックス</h2>
+      <p>
+        対照学習では、同じ画像の2つの拡張ビューから得た<a href="../embedding/">埋め込み</a>を<strong>正例ペア</strong>にします（<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>）。バッチ内の他画像は<strong>負例</strong>——<a href="../../exams/g-kentei/practice/q/g-163/">G-163</a>が示す「似ているペアは近く、似ていないペアは遠く」という距離学習の発想です。
+      </p>
+      <p>
+        NT-Xentは、この比較を<strong>「正例が正解クラスになる分類」</strong>に見立てます。Query埋め込みから見て、多数の候補（正例Key＋負例Keys）のうち<strong>正例だけを当てる</strong>——損失はソフトマックス<a href="../loss-function/">交差エントロピー</a>の形——だから名前に<strong>Cross Entropy</strong>が入ります。
+      </p>
+    </section>
+
+    <section id="three-ingredients">
+      <h2>三つの部品</h2>
+      <p>NT-Xentの頭文字は、設計の三要素をそのまま表しています。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>意味</th><th>なぜ要るか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>N（Normalized）</strong></td><td>埋め込みを<strong>L2正規化</strong></td><td>ベクトルの長さではなく<strong>向き（コサイン類似度）</strong>で比較する</td></tr>
+          <tr><td><strong>T（Temperature-scaled）</strong></td><td>類似度を温度τで<strong>スケール</strong></td><td>τが小さいと正例・負例の差が強調され、大きいと分布がならす</td></tr>
+          <tr><td><strong>Xent（Cross Entropy）</strong></td><td>ソフトマックス＋交差エントロピー</td><td>多数負例の中から正例を選ぶ<strong>確率的な当て推量</strong>として最適化</td></tr>
+        </tbody>
+      </table>
+      <p>
+        温度τはハイパーパラメータ——試験ではτの値より、<strong>「正規化＋温度付きの対照交差エントロピー」</strong>という位置づけが要点です。
+      </p>
+    </section>
+
+    <section id="self-supervised">
+      <h2>自己教師ありでの使われ方</h2>
+      <p>
+        NT-Xentは<strong>ラベルなし</strong>データで表現を学ぶ自己教師ありのレシピに組み込まれます（<a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161</a>）。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>1. 拡張</strong> — 同じ画像にクロップ・色変換などを施し2ビュー作成</li>
+        <li><strong>2. エンコード</strong> — 各ビューを<a href="../cnn/">CNN</a>などで埋め込みへ</li>
+        <li><strong>3. NT-Xent</strong> — 正例ペアの類似度を上げ、負例との類似度を相対的に下げる</li>
+        <li><strong>4. 転移</strong> — 学習したエンコーダを下流の分類・検出へ</li>
+      </ul>
+      <p>
+        <a href="../moco/">MoCo</a> v2や<a href="../simclr/">SimCLR</a>など、画像の対照学習ブームの背後にはこの損失がいます——<strong>手法（MoCo）と損失（NT-Xent）</strong>は別レイヤー、と切り分けて覚えましょう。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他の損失との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>損失</th><th>課題</th><th>NT-Xentとの差</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Contrastive Loss（総称）</strong></td><td>正例近・負例遠</td><td>思想は同じ。NT-Xentは<strong>正規化＋温度＋ソフトマックスCE</strong>の具体形</td></tr>
+          <tr><td><strong>分類の交差エントロピー</strong></td><td>クラスラベル予測</td><td>教師あり。NT-Xentは<strong>正例ペアが擬似ラベル</strong></td></tr>
+          <tr><td><strong><a href="../huber-loss/">Huber損失</a></strong></td><td>回帰の外れ値耐性</td><td>別タスクの回帰損失</td></tr>
+          <tr><td><strong><a href="../dice-loss/">Dice Loss</a></strong></td><td>セグメンテーション重複</td><td>画素マスク向け。対照学習とは無関係</td></tr>
+        </tbody>
+      </table>
+      <p>
+        InfoNCEと呼ばれる系譜の損失とも近い——試験では細かい別名より、<strong>自己教師あり対照学習の損失</strong>と答えれば十分です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Normalized Temperature-scaled Cross Entropy＝<strong>対照学習用</strong>の損失</li>
+        <li><strong>三要素</strong> — 正規化、温度スケール、交差エントロピー</li>
+        <li><strong>文脈</strong> — 自己教師あり表現学習（SimCLR、MoCoなど）</li>
+        <li><strong>対比</strong> — Contrastive Loss（総称）、MoCo（手法）、分類CE（教師あり）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-127/">G-127</a>、<a href="../../exams/g-kentei/practice/q/g-163/">G-163</a>、<a href="../../exams/g-kentei/practice/q/g-384/">G-384</a>、<a href="../../exams/g-kentei/practice/q/g-443/">G-443</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>NT-Xent＝<a href="../moco/">MoCo</a></td><td>損失関数 vs 対照学習手法</td></tr>
+          <tr><td>NT-Xent＝Contrastive Lossそのもの</td><td>総称 vs 正規化温度付きの具体実装</td></tr>
+          <tr><td>NT-Xent＝教師あり分類損失</td><td>ラベルなし正例ペアの自己教師あり</td></tr>
+          <tr><td>NT-Xent＝<a href="../clip-model/">CLIP</a></td><td>損失の一種 vs 画像―テキストモデル</td></tr>
+          <tr><td>温度＝推論時のTemperature</td><td>対照学習のハイパーパラメータτ（別文脈の同名語に注意）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>NT-Xent損失は何をする損失関数ですか？</summary><p class="tool-faq-a">対照学習で、正例ペアの埋め込みは近く、負例の埋め込みは遠くなるように学習させる損失関数です。正規化した類似度を温度でスケールし、ソフトマックス交差エントロピーとして正例を当てはめる形で最適化します。自己教師ありの視覚表現学習で広く使われます。</p></details>
+        <details><summary>NT-Xent損失とContrastive Lossは同じですか？</summary><p class="tool-faq-a">同じではありません。Contrastive Lossは正例を近づけ負例を遠ざける損失の総称です。NT-Xentはその一実装で、正規化・温度スケール・ソフトマックス交差エントロピーを組み合わせた具体形です。思想は共通ですが、名称と設計の詳細が異なります。</p></details>
+        <details><summary>NT-Xent損失とMoCoは同じですか？</summary><p class="tool-faq-a">同じではありません。NT-Xentは損失関数の名称です。MoCoは動量エンコーダと負例キューを使う自己教師ありの対照学習手法の名称です。MoCo v2などではNT-Xentを損失として採用しますが、損失と手法は別物です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-127/">G-127 · Contrastive Loss</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-163/">G-163 · 埋め込み距離</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-384/">G-384 · 自己教師あり学習</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0161/">TF-0161 · 自己教師あり</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../moco/">MoCo</a></li>
+          <li><a href="../simclr/">SimCLR</a></li>
+          <li><a href="../clip-model/">CLIP</a></li>
+          <li><a href="../masked-autoencoder/">MAE</a></li>
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../embedding/">埋め込み</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

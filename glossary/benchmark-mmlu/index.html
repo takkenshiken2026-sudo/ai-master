@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MMLUとは？57教科の4択で測るLLMベンチマーク。GLUE・HumanEvalとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>MMLUとは？57教科の4択で測る——LLMの百科事典力ベンチマーク — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/benchmark-mmlu/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MMLUとは？57教科の4択で測る——LLMの百科事典力ベンチマーク">
+  <meta property="og:description" content="Massive Multitask Language Understanding。多分野の選択式問題で大規模言語モデルの広い知識を数値化するベンチマーク。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/benchmark-mmlu/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "MMLU",
+        "alternateName": ["MMLU", "エムエムエルユー", "Massive Multitask Language Understanding"],
+        "description": "大学レベルを含む57の学問分野の4択問題で、大規模言語モデルの多分野知識を測るベンチマーク。正答率でモデル間の広い知識量を比較する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "MMLUは何を測るベンチマークですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "歴史、法律、医学、数学など57の学問分野の4択問題で、大規模言語モデルがどれだけ広い知識を持つかを測るベンチマークです。各問題の正答率を集計し、モデル間の百科事典的な知識量を比較します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MMLUとGLUEは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。GLUEは自然言語理解の複数タスクでモデル性能を比較するベンチマークです。MMLUは学問分野横断の選択式問題で広い知識を測ります。どちらも評価用データセットですが、測る能力の幅と問題形式が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MMLUとChatGPTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MMLUはモデル性能を測るベンチマークの名称であり、ChatGPTはOpenAIの対話サービスです。ChatGPTのようなLLMがMMLUでスコアを報告することはありますが、ベンチマーク名とサービス名は別物です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">MMLU</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>MMLUとは？57教科の4択で測る——LLMの百科事典力ベンチマーク</h1>
+    <p class="tool-hero-sub">読み：エムエムエルユー ／ 英：MMLU（Massive Multitask Language Understanding）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>MMLU</strong>は、<strong>57の学問分野</strong>にわたる<strong>4択問題</strong>で<a href="../llm/">LLM</a>の知識の広さを測るベンチマークです。歴史から医学、法律から数学まで——単一タスクの精度ではなく、<strong>百科事典的な知識量</strong>を1つのスコアにまとめる——本記事は57教科の暗記より、<strong>「なぜ4択の横断試験がLLM評価の定番になったか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#what-measures">何を測るか</a></li>
+        <li><a href="#how-scored">採点の流れ</a></li>
+        <li><a href="#zero-shot">Zero-shotとFew-shot</a></li>
+        <li><a href="#vs-benchmarks">他ベンチマークとの違い</a></li>
+        <li><a href="#limits">スコアの読み方</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="what-measures">
+      <h2>何を測るか</h2>
+      <p>
+        MMLUの正式名 <strong>Massive Multitask Language Understanding</strong> は、「大量のタスクにわたる言語理解」を意味します。各タスクは<strong>学問分野ごとの4択クイズ</strong>——大学レベルの知識を含む57分野、約1万4千問規模のデータセットです。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>MMLUの設計</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>分野</strong></td><td>人文・社会・STEM・医学・法律など<strong>横断</strong></td></tr>
+          <tr><td><strong>形式</strong></td><td>4つの選択肢から正解を選ぶ<strong>多肢選択</strong></td></tr>
+          <tr><td><strong>目的</strong></td><td><a href="../foundation-model/">基盤モデル</a>の<strong>汎用知識</strong>を1指標で比較（<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>）</td></tr>
+          <tr><td><strong>位置づけ</strong></td><td>モデル名ではなく<strong>評価用ベンチマーク</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        文章生成が自然に見えることと、専門分野の正答率が高いことは別問題——MMLUは後者を<strong>客観的に数える</strong>道具です。
+      </p>
+    </section>
+
+    <section id="how-scored">
+      <h2>採点の流れ</h2>
+      <ul class="tool-steps">
+        <li><strong>問題提示</strong> — 分野・質問文・4つの選択肢A〜Dをモデルへ入力</li>
+        <li><strong>回答生成</strong> — LLMが正解と思われる選択肢（またはその文字）を出力</li>
+        <li><strong>正誤判定</strong> — 正解ラベルと照合し、正答率（accuracy）を計算</li>
+        <li><strong>集計</strong> — 分野別・全体の平均スコアを報告</li>
+      </ul>
+      <p>
+        <a href="../human-eval/">HumanEval</a>が<strong>コードの実行結果</strong>で採点するのに対し、MMLUは<strong>選択肢の一致</strong>で採点——どちらもベンチマークですが、正解の定義が異なります。
+      </p>
+    </section>
+
+    <section id="zero-shot">
+      <h2>Zero-shotとFew-shot</h2>
+      <p>
+        MMLUの報告では、問題例を与えずに解かせる<strong>Zero-shot</strong>や、各分野で数問の例を見せてから解かせる<strong>Few-shot</strong>が使われます（<a href="../../exams/g-kentei/practice/q/g-395/">G-395</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>設定</th><th>内容</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Zero-shot</strong></td><td>例なしで直接回答</td><td>事前学習だけでどこまで通用するか</td></tr>
+          <tr><td><strong>Few-shot</strong></td><td>数問の例をプロンプトに含める</td><td>文脈内学習の効果も含めた評価</td></tr>
+          <tr><td><strong>ファインチューニング</strong></td><td>ベンチマーク自体で追加学習</td><td>MMLUの<strong>標準報告</strong>とは別設定。すり替え注意</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="vs-benchmarks">
+      <h2>他ベンチマークとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>ベンチマーク</th><th>測るもの</th><th>採点の軸</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GLUE</strong></td><td>自然言語理解（複数NLUタスク）</td><td>分類・類推などの精度（<a href="../../exams/g-kentei/practice/q/g-348/">G-348</a>、<a href="../../exams/g-kentei/drill/q/tf-137/">TF-137</a>）</td></tr>
+          <tr><td><strong>MMLU</strong></td><td><strong>多分野の知識</strong></td><td>4択の<strong>正答率</strong></td></tr>
+          <tr><td><strong>HumanEval</strong></td><td>コード生成</td><td>ユニットテストの合否</td></tr>
+        </tbody>
+      </table>
+      <p>
+        GLUEが「言語理解の幅」、HumanEvalが「実装力」なら、MMLUは<strong>学問知識の幅</strong>——LLMの性能表に並ぶ指標の<strong>役割分担</strong>を意識すると整理しやすいです。
+      </p>
+    </section>
+
+    <section id="limits">
+      <h2>スコアの読み方</h2>
+      <p>
+        MMLUのスコアが高いからといって、実務の専門判断を代替できるわけではありません（<a href="../../exams/genai-passport/drill/q/tf-0473/">TF-0473</a>）。4択の形式知と、個別事情を踏まえた判断は別物です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>高スコアの意味</strong> — 広い分野で選択式問題に強い。モデル選定の参考指標</li>
+        <li><strong>限界</strong> — 最新情報・地域固有の知識は学習データの切れ目に依存</li>
+        <li><strong>すり替え</strong> — ベンチマーク点数＝実世界での安全性・正確性、とは限らない</li>
+      </ul>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 57分野の4択でLLMの<strong>多分野知識</strong>を測るベンチマーク</li>
+        <li><strong>指標</strong> — 正答率（accuracy）</li>
+        <li><strong>対比</strong> — GLUE＝NLUタスク、HumanEval＝コード、MMLU＝学問知識</li>
+        <li><strong>位置づけ</strong> — 評価データセット。GPT・Claudeなどの<strong>モデル名ではない</strong></li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-348/">G-348</a>、<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>、<a href="../../exams/g-kentei/practice/q/g-395/">G-395</a>、<a href="../../exams/g-kentei/drill/q/tf-137/">TF-137</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0473/">TF-0473</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>MMLU＝<a href="../llm/">LLM</a></td><td>ベンチマーク vs モデル</td></tr>
+          <tr><td>MMLU＝<a href="../human-eval/">HumanEval</a></td><td>学問4択 vs コード実行採点</td></tr>
+          <tr><td>MMLU＝GLUE</td><td>多分野知識 vs NLUタスク群</td></tr>
+          <tr><td>MMLU＝<a href="../gpt/">GPT</a></td><td>評価データセット vs モデルファミリー</td></tr>
+          <tr><td>MMLU高得点＝専門家代替</td><td>選択式知識 vs 個別の専門判断</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>MMLUは何を測るベンチマークですか？</summary><p class="tool-faq-a">歴史、法律、医学、数学など57の学問分野の4択問題で、大規模言語モデルがどれだけ広い知識を持つかを測るベンチマークです。各問題の正答率を集計し、モデル間の百科事典的な知識量を比較します。</p></details>
+        <details><summary>MMLUとGLUEは同じですか？</summary><p class="tool-faq-a">同じではありません。GLUEは自然言語理解の複数タスクでモデル性能を比較するベンチマークです。MMLUは学問分野横断の選択式問題で広い知識を測ります。どちらも評価用データセットですが、測る能力の幅と問題形式が異なります。</p></details>
+        <details><summary>MMLUとChatGPTは同じですか？</summary><p class="tool-faq-a">同じではありません。MMLUはモデル性能を測るベンチマークの名称であり、ChatGPTはOpenAIの対話サービスです。ChatGPTのようなLLMがMMLUでスコアを報告することはありますが、ベンチマーク名とサービス名は別物です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-348/">G-348 · GLUE（対比）</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-395/">G-395 · Zero-shot</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0473/">TF-0473 · LLMの限界</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../human-eval/">HumanEval</a></li>
+          <li><a href="../zero-shot-prompting/">Zero-shot Prompting</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li class="tool-related-list__soon">GLUE（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

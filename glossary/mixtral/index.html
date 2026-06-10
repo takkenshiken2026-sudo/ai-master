@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mixtralとは？Mistral AIのMoE型オープンLLM。ルータと専門家の仕組みをG検定・生成AIパスポート向けに解説。">
+  <title>Mixtralとは？ルータが呼ぶ少数の専門家——全重みを毎回動かさないMoE型LLM — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/mixtral/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mixtralとは？ルータが呼ぶ少数の専門家——全重みを毎回動かさないMoE型LLM">
+  <meta property="og:description" content="Mixture of Expertsを採用したMistral AIのオープンウェイトLLM。スパース活性化で推論効率を高める。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/mixtral/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Mixtral",
+        "alternateName": ["Mixtral", "ミクストラル", "Mixtral 8x7B"],
+        "description": "Mistral AIが公開するMixture of Experts（MoE）型のオープンウェイト大規模言語モデル。多数の専門家（Expert）のうちルータが少数だけを活性化し、計算コストを抑えつつ大規模パラメータを活用する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Mixtralは何をするLLMですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mistral AIが開発するMoE型のオープンウェイト大規模言語モデルです。層ごとに複数の専門家ネットワークを持ち、入力に応じてルータが少数の専門家だけを選んで計算するため、全パラメータを毎トークンで動かす密モデルより推論効率が高い設計です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MixtralとMistralは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MistralはMistral AIのLLMファミリー全体を指す名称です。Mixtralはその中のMoEアーキテクチャを採用した具体的なモデル系列（例：Mixtral 8x7B）です。開発元は共通ですが、密モデルかMoEかで設計が異なります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MixtralとGPTは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MixtralはMistral AIのオープンウェイトMoE型LLMの名称であり、GPTはOpenAIのモデルファミリーです。どちらも大規模言語モデルですが、開発元・提供形態・アーキテクチャの整理が異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Mixtral</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Mixtralとは？ルータが呼ぶ少数の専門家——全重みを毎回動かさないMoE型LLM</h1>
+    <p class="tool-hero-sub">読み：ミクストラル ／ 英：Mixtral（Mistral AI）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Mixtral</strong>は、<a href="../mistral/">Mistral AI</a>の<strong>MoE（Mixture of Experts）</strong>型<a href="../llm/">LLM</a>です。パラメータ総数は大きいのに、推論時は<strong>ルータが選んだ少数の専門家だけ</strong>を動かす——<a href="../mistral/">Mistral 7B</a>が「小さくて強い密モデル」なのに対し、Mixtralは<strong>「大きいがら空（スパース）に賢く」</strong>——本記事はエキスパート数の暗記より、<strong>「なぜ全層を毎回計算しないのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#dense-vs-moe">密モデルとの違い</a></li>
+        <li><a href="#router">ルータと専門家</a></li>
+        <li><a href="#mixtral-8x7b">Mixtral 8x7Bの読み方</a></li>
+        <li><a href="#open-weights">オープンウェイトとして</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="dense-vs-moe">
+      <h2>密モデルとの違い</h2>
+      <p>
+        標準の<a href="../transformer/">Transformer</a>型LLMは、各層の<strong>全パラメータが毎トークンで使われる</strong>——密（Dense）モデルです。パラメータを増やすほど賢くなりやすい一方、推論コストも線形に膨らみます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>方式</th><th>推論時の計算</th><th>試験向けの整理</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>密モデル</strong></td><td>全重みを毎回使用</td><td>Mistral 7B、<a href="../llama/">LLaMA</a>など</td></tr>
+          <tr><td><strong>MoEモデル</strong></td><td><strong>一部の専門家だけ</strong>活性化</td><td><strong>Mixtral</strong>、一部の超大規模LLM</td></tr>
+        </tbody>
+      </table>
+      <p>
+        MoEは「パラメータ容量は大きいが、<strong>実際に動くのは一部</strong>」——メモリ上の総パラメータ数と、1トークンあたりの計算量は別物、と整理すると試験のすり替えに強くなります。
+      </p>
+    </section>
+
+    <section id="router">
+      <h2>ルータと専門家</h2>
+      <p>MoE層の典型構成は次の2部品です。</p>
+      <ul class="tool-steps">
+        <li><strong>Expert（専門家）</strong> — 複数のフィードフォワードネット。それぞれ異なる「得意分野」を学習しうる</li>
+        <li><strong>Router（ルータ／ゲート）</strong> — 入力トークンごとに、<strong>どの専門家を使うか</strong>をスコアリングして選ぶ</li>
+        <li><strong>スパース活性化</strong> — 例えば8人中2人だけ起動——残りは計算しない</li>
+        <li><strong>出力</strong> — 選ばれた専門家の出力を重み付き合成</li>
+      </ul>
+      <p>
+        比喩としては、大きな病院（多数の専門医）にいるが、受付（ルータ）が症状に応じて<strong>関連科だけ</strong>を呼ぶ——全診療科を毎回回す必要がない、というイメージです。
+      </p>
+    </section>
+
+    <section id="mixtral-8x7b">
+      <h2>Mixtral 8x7Bの読み方</h2>
+      <p>
+        代表例 <strong>Mixtral 8x7B</strong> は「8つの約7B級専門家」——のような<strong>命名</strong>として広く引用されます。試験では次を区別します。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>数字の意味</th><th>誤解しやすい点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>8x</strong></td><td>専門家の<strong>本数</strong>（層ごとのExpert数）</td></tr>
+          <tr><td><strong>7B</strong></td><td>各専門家の<strong>規模感</strong>（厳密なパラメータ数は版により異なる）</td></tr>
+          <tr><td><strong>活性化数</strong></td><td>毎トークン<strong>2専門家</strong>など、全8つは動かない</td></tr>
+        </tbody>
+      </table>
+      <p>
+        「8×7B＝56Bを毎回計算」ではない——<strong>総容量</strong>と<strong>実効コスト</strong>を分けて答えるのが安全です。<a href="../grouped-query-attention/">GQA</a>や<a href="../kv-cache/">KVキャッシュ</a>と同様、大規模LLMの<strong>推論効率</strong>が設計の主戦場です。
+      </p>
+    </section>
+
+    <section id="open-weights">
+      <h2>オープンウェイトとして</h2>
+      <p>
+        Mixtralは<a href="../mistral/">Mistral</a>ファミリーの一部として<strong>オープンウェイト</strong>公開され、自社GPUでのホストや<a href="../fine-tuning/">ファインチューニング</a>の対象になります（<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>の基盤モデル文脈）。
+      </p>
+      <p>
+        利用時はモデルごとの<strong>ライセンス条件</strong>を確認します（<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a>）。オープンウェイト＝無条件で商用利用可、とは限りません。
+      </p>
+      <p>
+        API経由のクラウド提供と、重みダウンロードのセルフホスト——<a href="../mistral/">Mistral</a>記事が示す「閉源APIだけではない第三の道」は、Mixtralでも同じです。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Mistral AIの<strong>MoE型</strong>オープンウェイトLLM</li>
+        <li><strong>仕組み</strong> — ルータが<strong>少数のExpert</strong>だけを活性化（スパース）</li>
+        <li><strong>目的</strong> — 大規模パラメータと<strong>推論効率</strong>の両立</li>
+        <li><strong>対比</strong> — Mistral＝ファミリー名、GPT＝OpenAI、密モデル＝全重み毎回使用</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-396/">G-396</a>、<a href="../../exams/g-kentei/drill/q/tf-478/">TF-478</a>、<a href="../../exams/g-kentei/drill/q/tf-479/">TF-479</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>（開発元の区別）</p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Mixtral＝<a href="../mistral/">Mistral</a>そのもの</td><td>MoE型の具体モデル vs ファミリー全体</td></tr>
+          <tr><td>Mixtral＝<a href="../gpt/">GPT</a></td><td>Mistral AI vs OpenAI</td></tr>
+          <tr><td>8x7B＝毎回56B計算</td><td>総容量 vs 活性化は少数Expert</td></tr>
+          <tr><td>MoE＝<a href="../lora/">LoRA</a></td><td>アーキテクチャ設計 vs 軽量ファインチューニング</td></tr>
+          <tr><td>Mixtral＝<a href="../mixup/">Mixup</a></td><td>LLM名 vs データ拡張手法（綴りが近いが無関係）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Mixtralは何をするLLMですか？</summary><p class="tool-faq-a">Mistral AIが開発するMoE型のオープンウェイト大規模言語モデルです。層ごとに複数の専門家ネットワークを持ち、入力に応じてルータが少数の専門家だけを選んで計算するため、全パラメータを毎トークンで動かす密モデルより推論効率が高い設計です。</p></details>
+        <details><summary>MixtralとMistralは同じですか？</summary><p class="tool-faq-a">同じではありません。MistralはMistral AIのLLMファミリー全体を指す名称です。Mixtralはその中のMoEアーキテクチャを採用した具体的なモデル系列（例：Mixtral 8x7B）です。開発元は共通ですが、密モデルかMoEかで設計が異なります。</p></details>
+        <details><summary>MixtralとGPTは同じですか？</summary><p class="tool-faq-a">同じではありません。MixtralはMistral AIのオープンウェイトMoE型LLMの名称であり、GPTはOpenAIのモデルファミリーです。どちらも大規模言語モデルですが、開発元・提供形態・アーキテクチャの整理が異なります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-396/">G-396 · 基盤モデル</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-478/">TF-478 · OSSライセンス</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-479/">TF-479 · 完全自由は誤り</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · 開発元の区別</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../mistral/">Mistral</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li><a href="../llama/">LLaMA</a></li>
+          <li><a href="../fine-tuning/">ファインチューニング</a></li>
+          <li><a href="../kv-cache/">KVキャッシュ</a></li>
+          <li><a href="../moe/">MoE</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ONNXとは？Open Neural Network Exchange。PyTorch・TensorFlow間でモデルを運ぶ共通フォーマット。ONNX Runtime・推論との違いをG検定向けに解説。">
+  <title>ONNXとは？学習の骨格を共通語で書き出す——フレームワークをまたいでモデルを運ぶ交換フォーマット — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/onnx/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ONNXとは？学習の骨格を共通語で書き出す——フレームワークをまたいでモデルを運ぶ交換フォーマット">
+  <meta property="og:description" content="Open Neural Network Exchange。学習済みニューラルネットの構造と重みを共通フォーマットで保存し、異なるフレームワークや推論環境へ持ち運ぶための規格。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/onnx/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ONNX",
+        "alternateName": ["ONNX", "オーエヌエヌエックス", "Open Neural Network Exchange", "オープンニューラルネットワークエクスチェンジ"],
+        "description": "ニューラルネットワークの計算グラフと重みを共通フォーマットで表現し、PyTorch・TensorFlowなど異なるフレームワーク間でモデルを交換するためのオープン規格。ファイル形式であり学習フレームワークそのものではない。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ONNXは何をするフォーマットですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "学習済みニューラルネットワークの構造（計算グラフ）と重みを共通のファイル形式で保存し、異なるフレームワークや推論環境へ持ち運ぶための交換規格です。開発チームやクラウド・エッジで学習環境と本番環境が異なるときに使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ONNXとONNX Runtimeは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ONNXはモデルを記述する交換フォーマット（ファイル規格）です。ONNX RuntimeはONNX形式のモデルを高速に推論実行するランタイムソフトウェアです。荷物の箱と、箱を運ぶ配送車の関係に近いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ONNXとPyTorchは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。PyTorchはモデルを定義し学習するための深層学習フレームワークです。ONNXは学習後のモデルをエクスポートして他環境へ渡すための共通フォーマットです。PyTorchからONNXへ変換して運ぶ、という関係が典型です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ONNX</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ONNXとは？学習の骨格を共通語で書き出す——フレームワークをまたいでモデルを運ぶ交換フォーマット</h1>
+    <p class="tool-hero-sub">読み：オーエヌエヌエックス ／ 英：ONNX（Open Neural Network Exchange）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ONNX</strong>は、学習済み<a href="../neural-network/">ニューラルネット</a>の<strong>計算グラフと重みを共通フォーマットで書き出す</strong>交換規格です。研究室では<a href="../pytorch/">PyTorch</a>、本番では別ランタイム——<a href="../keras/">Keras</a>/<a href="../jax/">JAX</a>など<strong>学習の道具</strong>と<strong>運用の道具</strong>が分かれるとき、ONNXは<strong>モデルそのものの共通語</strong>——本記事はランタイムの性能比較より、<strong>「何を運び、何ではないか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why-exchange">なぜ交換フォーマットが要るか</a></li>
+        <li><a href="#what-inside">ONNXファイルに入っているもの</a></li>
+        <li><a href="#workflow">学習から本番への流れ</a></li>
+        <li><a href="#vs-runtime">ONNX Runtimeとの違い</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why-exchange">
+      <h2>なぜ交換フォーマットが要るか</h2>
+      <p>
+        深層学習の現場では、<strong>学習</strong>と<strong>推論</strong>で環境がずれることがよくあります（<a href="../inference/">推論</a>記事）。GPUサーバーで学習し、エッジ端末やクラウドの別サービスで実行——フレームワークが違えば、そのままではモデルファイルを共有できません。
+      </p>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-458/">G-458</a>が示すMLOps——開発・<strong>デプロイ</strong>・監視——の文脈で、ONNXは<strong>デプロイの橋渡し</strong>に使われます。モデル名（<a href="../bert/">BERT</a>、<a href="../alexnet/">AlexNet</a>）ではなく、<strong>ファイル形式の規格</strong>です。
+      </p>
+    </section>
+
+    <section id="what-inside">
+      <h2>ONNXファイルに入っているもの</h2>
+      <p>ONNXは「AIモデルそのもの」ではなく、<strong>モデルの設計図と重みの書き方</strong>を標準化したものです。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>内容</th><th>役割</th><th>例え</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>計算グラフ</strong></td><td>層の種類・接続・演算の順序</td><td>回路図</td></tr>
+          <tr><td><strong>重み（パラメータ）</strong></td><td>学習で得た数値</td><td>部品の設定値</td></tr>
+          <tr><td><strong>入出力の型・形状</strong></td><td>推論時のテンソル仕様</td><td>コネクタの規格</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../pytorch/">PyTorch</a>で学習→ONNXへエクスポート→別環境で読み込み——<strong>フレームワークをまたぐ</strong>のが目的です。試験では演算の細部より、<strong>モデル交換の共通フォーマット</strong>と覚えれば十分です。
+      </p>
+    </section>
+
+    <section id="workflow">
+      <h2>学習から本番への流れ</h2>
+      <ul class="tool-steps">
+        <li><strong>1. 学習</strong> — <a href="../pytorch/">PyTorch</a>、TensorFlow/<a href="../keras/">Keras</a>などでモデルを訓練</li>
+        <li><strong>2. エクスポート</strong> — 学習済みモデルを<strong>ONNX形式</strong>（.onnx）へ変換</li>
+        <li><strong>3. 最適化</strong> — 量子化・プルーニングなどで軽量化（<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>、<a href="../../exams/g-kentei/practice/q/g-025/">G-025</a>）</li>
+        <li><strong>4. 推論</strong> — ONNX Runtimeなどのランタイムやエッジ環境で<a href="../inference/">推論</a>（<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>）</li>
+      </ul>
+      <p>
+        ONNXは<strong>2の箱</strong>——軽量化や高速化は別の工程です。箱を速く運ぶ車は<strong>ONNX Runtime</strong>（別記事）であり、ONNXそのものではありません。
+      </p>
+    </section>
+
+    <section id="vs-runtime">
+      <h2>ONNX Runtimeとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>名称</th><th>性質</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ONNX</strong></td><td>交換<strong>フォーマット</strong>（規格・ファイル）</td><td>モデルを共通語で記述</td></tr>
+          <tr><td><strong>ONNX Runtime</strong></td><td>推論<strong>ランタイム</strong>（ソフトウェア）</td><td>ONNXモデルを高速実行</td></tr>
+          <tr><td><strong><a href="../pytorch/">PyTorch</a></strong></td><td>学習<strong>フレームワーク</strong></td><td>定義・学習・実験</td></tr>
+          <tr><td><strong><a href="../cuda/">CUDA</a></strong></td><td>GPU実行<strong>基盤</strong></td><td>ハードウェア上の演算加速</td></tr>
+        </tbody>
+      </table>
+      <p>
+        フォーマット・ランタイム・フレームワーク・GPU基盤——四つはよくセットで出ますが、<strong>層が違う</strong>と切り分けて答えるのが試験の要点です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — Open Neural Network Exchange＝モデル<strong>交換</strong>の共通フォーマット</li>
+        <li><strong>目的</strong> — フレームワークや環境の違いを越えてモデルを運ぶ</li>
+        <li><strong>対比</strong> — ONNX Runtime（実行）、PyTorch/Keras（学習）、MLOps（運用全体）</li>
+        <li><strong>位置づけ</strong> — 学習後のデプロイ・推論パイプラインの一部</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-458/">G-458</a>、<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>、<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>、<a href="../../exams/g-kentei/drill/q/tf-309/">TF-309</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ONNX＝ONNX Runtime</td><td>ファイル規格 vs 推論ランタイム</td></tr>
+          <tr><td>ONNX＝PyTorch</td><td>交換フォーマット vs 学習フレームワーク</td></tr>
+          <tr><td>ONNX＝<a href="../model/">モデル</a>名</td><td>記述形式 vs BERT等の具体モデル</td></tr>
+          <tr><td>ONNX＝MLOps</td><td>フォーマットの一部 vs 運用全体（G-458）</td></tr>
+          <tr><td>ONNX＝量子化</td><td>交換規格 vs 軽量化手法（G-406）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ONNXは何をするフォーマットですか？</summary><p class="tool-faq-a">学習済みニューラルネットワークの構造（計算グラフ）と重みを共通のファイル形式で保存し、異なるフレームワークや推論環境へ持ち運ぶための交換規格です。開発チームやクラウド・エッジで学習環境と本番環境が異なるときに使われます。</p></details>
+        <details><summary>ONNXとONNX Runtimeは同じですか？</summary><p class="tool-faq-a">同じではありません。ONNXはモデルを記述する交換フォーマット（ファイル規格）です。ONNX RuntimeはONNX形式のモデルを高速に推論実行するランタイムソフトウェアです。荷物の箱と、箱を運ぶ配送車の関係に近いです。</p></details>
+        <details><summary>ONNXとPyTorchは同じですか？</summary><p class="tool-faq-a">同じではありません。PyTorchはモデルを定義し学習するための深層学習フレームワークです。ONNXは学習後のモデルをエクスポートして他環境へ渡すための共通フォーマットです。PyTorchからONNXへ変換して運ぶ、という関係が典型です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-458/">G-458 · MLOps</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-406/">G-406 · 推論の高速化</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · エッジAI</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-309/">TF-309 · 推論の定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../onnx-runtime/">ONNX Runtime</a></li>
+          <li><a href="../inference/">推論</a></li>
+          <li><a href="../pytorch/">PyTorch</a></li>
+          <li><a href="../keras/">Keras</a></li>
+          <li><a href="../tensorflow/">TensorFlow</a></li>
+          <li><a href="../tensorrt/">TensorRT</a></li>
+          <li><a href="../jax/">JAX</a></li>
+          <li><a href="../model/">モデル</a></li>
+          <li><a href="../training/">学習</a></li>
+          <li><a href="../cuda/">CUDA</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

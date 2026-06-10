@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Swin Transformerとは？階層的ウィンドウ注意を用いる画像Transformer。ViTの計算量問題を窓の中だけの注意で解く。G検定向けに解説。">
+  <title>Swin Transformerとは？窓の中だけ見る——階層的ウィンドウ注意がViTの重さを解く — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/swin-transformer/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Swin Transformerとは？窓の中だけ見る——階層的ウィンドウ注意がViTの重さを解く">
+  <meta property="og:description" content="画像全体にSelf-Attentionを浴びせると計算が爆発する。Swinはウィンドウ内の局所注意とシフトで、CNNのような階層特徴をViT系で実現。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/swin-transformer/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Swin Transformer",
+        "alternateName": ["Swin Transformer", "スウィントランスフォーマー", "Swin", "Shifted Window Transformer"],
+        "description": "階層的ウィンドウ注意を用いる画像Transformer。局所ウィンドウ内のSelf-Attentionとシフト操作で計算効率と多スケール表現を両立する。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Swin TransformerとViTの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Vision Transformer（ViT）は画像パッチ列に対して全パッチ間のグローバルSelf-Attentionを行うのが典型です。Swin Transformerはウィンドウ内の局所注意に限定し、層をまたいでウィンドウをシフトさせることで遠方のパッチとも情報を交換します。さらにパッチマージで解像度を下げ、CNNのように階層的な特徴マップを作ります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ウィンドウ注意とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像を小さな矩形のウィンドウに区切り、各ウィンドウの中のパッチ同士だけでSelf-Attentionを計算する方式です。全パッチ対全パッチの注意より計算量が小さくなります。隣接ウィンドウが直接つながらない問題は、次の層でウィンドウ位置をずらすシフト操作で解消します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Swin TransformerはCNNですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。Swin Transformerは画像をパッチ列としてTransformerで処理する系統であり、畳み込みニューラルネットワーク（CNN）そのものではありません。ただしパッチマージで解像度を段階的に下げるなど、CNNが持つ階層的な特徴抽出の利点をViT系アーキテクチャに取り込んだ設計です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Swin Transformer</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Swin Transformerとは？窓の中だけ見る——階層的ウィンドウ注意がViTの重さを解く</h1>
+    <p class="tool-hero-sub">読み：スウィン・トランスフォーマー ／ 英：Swin Transformer（Shifted Window Transformer）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Swin Transformer</strong>は、画像をパッチ列として扱う<strong>Vision Transformer（ViT）系</strong>のひとつで、<strong>階層的ウィンドウ注意</strong>——小さな窓の中だけで<a href="../attention/">Attention</a>を計算し、層ごとに窓をずらしてつなぐ——設計が特徴です。ViTが「画像全体を一度に見る」重さを抱えたのに対し、Swinは<strong>「まず近所だけ、次の階で広げる」</strong>というCNNに近い発想を<a href="../transformer/">Transformer</a>に持ち込みました。本記事はパラメータ数の比較より、<strong>なぜ窓に区切るのか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#vit-weight">ViTが重くなる理由</a></li>
+        <li><a href="#window-attention">ウィンドウ注意とシフト</a></li>
+        <li><a href="#hierarchy">階層とパッチマージ</a></li>
+        <li><a href="#use-cases">どこで使われるか</a></li>
+        <li><a href="#vit-family">ViT系の位置づけ</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        Swin Transformer単独の定義問題はまだ少ないですが、<strong>ViTの延長線</strong>として押さえます。ViTは「画像をパッチに分割し、Transformerの仕組みを画像認識に適用するモデル」（<a href="../../exams/g-kentei/practice/q/g-328/">G-328</a>、<a href="../../exams/g-kentei/drill/q/tf-123/">TF-123</a>）——Swinもこの系譜です。
+      </p>
+      <p>
+        同時に、<strong>Attentionの計算対象</strong>（<a href="../../exams/g-kentei/practice/q/g-295/">G-295</a>）と、<strong>CNNとの対比</strong>——畳み込みではなくパッチ列のTransformer処理——を混同しないことが得点源です。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-328/">G-328（ViTの定義）</a>、<a href="../../exams/g-kentei/drill/q/tf-123/">TF-123（ViTの○×）</a>、<a href="../../exams/g-kentei/practice/q/g-295/">G-295（Attention）</a>、<a href="../../exams/g-kentei/practice/q/g-239/">G-239（CNNとの区別）</a></p>
+      </div>
+    </section>
+
+    <section id="vit-weight">
+      <h2>ViTが重くなる理由</h2>
+      <p>
+        ViTは画像を一定サイズの<strong>パッチ</strong>に切り、各パッチをトークンとして系列化します。典型のViTでは、<strong>すべてのパッチ同士</strong>にSelf-Attentionをかける——いわば画像全体を一度に見渡す——設計です。
+      </p>
+      <p>
+        パッチ数を <em>n</em> とすると、注意の計算はおおむね <em>O(n²)</em> で増えます。解像度を上げるほどパッチが増え、メモリと計算が急増する。これが「Transformerを画像にそのまま持ち込むと重い」という課題です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>ViTの強み</strong> — 長距離の依存関係を1層でつなげられる</li>
+        <li><strong>ViTの弱み</strong> — 高解像度・密な予測（セグメンテーションなど）でコストが厳しい</li>
+        <li><strong>Swinの問い</strong> — 全体を見ずに、どう精度を落とさずに軽くするか</li>
+      </ul>
+    </section>
+
+    <section id="window-attention">
+      <h2>ウィンドウ注意とシフト</h2>
+      <p>
+        Swinの答えは<strong>ウィンドウ内の局所Self-Attention</strong>です。画像上の小さな矩形（ウィンドウ）ごとにパッチをまとめ、<strong>その窓の中だけ</strong>で注意を計算します。窓の外のパッチとは、その層では直接やり取りしません。
+      </p>
+      <p>
+        しかし窓だけだと、隣の窓の情報が届かない——「部屋の壁で遮断された」状態です。Swinは<strong>シフトしたウィンドウ注意</strong>（Shifted Window）でこれを解きます。奇数層と偶数層でウィンドウの切り方を半分ずらし、前の層では別窓だったパッチが、次の層では同じ窓に入るようにします。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>操作</th><th>役割</th><th>イメージ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ウィンドウ注意</strong></td><td>計算量を局所に抑える</td><td>近所のパッチだけ会話</td></tr>
+          <tr><td><strong>ウィンドウシフト</strong></td><td>窓をまたぐ情報伝達</td><td>隣の部屋とも次の階で顔を合わせる</td></tr>
+          <tr><td><strong>相対位置バイアス</strong></td><td>窓内の位置関係を表現</td><td>絶対座標より柔軟な位置づけ</td></tr>
+        </tbody>
+      </table>
+      <p>
+        結果として、層を重ねるほど<strong>実効的な受容野</strong>が広がり、遠いパッチ間の関係も学習できます。全パッチ一括の注意より軽く、かつViTの「関係性を直接つなぐ」利点も残す——これがSwinの設計の芯です。
+      </p>
+    </section>
+
+    <section id="hierarchy">
+      <h2>階層とパッチマージ</h2>
+      <p>
+        SwinはViTの「単一解像度のパッチ列」だけで終わりません。<strong>パッチマージ</strong>（Patch Merging）で隣接パッチをまとめ、段階的に系列を短く・チャネルを太くします——<a href="../cnn/">CNN</a>がプーリングで特徴マップを縮小するのに似た<strong>階層構造</strong>です。
+      </p>
+      <ol class="tool-steps">
+        <li><strong>Stage 1</strong> — 細かいパッチ、高解像度の特徴</li>
+        <li><strong>Stage 2〜4</strong> — マージを繰り返し、粗いスケールへ</li>
+        <li><strong>出力</strong> — 複数スケールの表現——検出・セグメンテーション向き</li>
+      </ol>
+      <p>
+        分類だけなら最終段の表現で足りますが、<strong>物体の位置まで欲しいタスク</strong>では、粗い段と細かい段の両方が効きます。<a href="../fpn/">FPN</a>がCNNバックボーンから多スケール特徴を抜くのと同様、SwinはTransformer単体で<strong>階層的バックボーン</strong>になり得ます。
+      </p>
+    </section>
+
+    <section id="use-cases">
+      <h2>どこで使われるか</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>画像分類</strong>
+          ImageNetなどでViT系として高精度——ViTそのものとの比較対象
+        </li>
+        <li>
+          <strong>物体検出・セグメンテーション</strong>
+          バックボーンとして採用され、<a href="../detr/">DETR</a>などとは別系統の「特徴抽出器」としても登場
+        </li>
+        <li>
+          <strong>事前学習の土台</strong>
+          <a href="../masked-autoencoder/">MAE</a>や<a href="../beit/">BEiT</a>が対象とするViTに代わる、または補完するバックボーンとして研究・実装で参照される
+        </li>
+      </ul>
+      <p>
+        試験ではモデル名そのものより、<strong>「画像＝パッチ列＋Transformer」「Attentionで関係をとる」「CNNとは違う経路」</strong>というViT共通の骨格を押さえる方が再利用しやすいです。
+      </p>
+    </section>
+
+    <section id="vit-family">
+      <h2>ViT系の位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>典型ViT</th><th>Swin Transformer</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>注意の範囲</strong></td><td>全パッチ（グローバル）</td><td>ウィンドウ内（局所）＋シフトで接続</td></tr>
+          <tr><td><strong>解像度</strong></td><td>基本は単一スケール</td><td>パッチマージで階層化</td></tr>
+          <tr><td><strong>計算</strong></td><td>高解像度で重い</td><td>局所注意で効率化</td></tr>
+          <tr><td><strong>CNNとの関係</strong></td><td>対抗軸として語られる</td><td>階層性を積極的に取り込む</td></tr>
+          <tr><td><strong>試験</strong></td><td>G-328・TF-123の定義</td><td>ViT系の改良として理解</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../simclr/">SimCLR</a>や<a href="../masked-autoencoder/">MAE</a>が「どう学習するか」、Swinは「どう<strong>構造</strong>するか」——自己教師ありのレシピと、アーキテクチャの工夫は別軸で整理すると試験でも実務でも混乱しません。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Swin＝<a href="../cnn/">CNN</a></td><td>パッチ列のTransformer。畳み込み演算そのものではない（G-239）</td></tr>
+          <tr><td>Swin＝ViTと完全同一</td><td>ViT系だが、<strong>ウィンドウ注意と階層化</strong>が独自の改良点</td></tr>
+          <tr><td>ウィンドウ注意＝畳み込み</td><td>どちらも局所性を使うが、Self-Attentionと畳み込みは別メカニズム</td></tr>
+          <tr><td>画像をピクセル列1本で処理</td><td>ViT同様、<strong>パッチ</strong>単位で系列化（G-328）</td></tr>
+          <tr><td>Swin＝<a href="../rnn/">RNN</a></td><td>並列なAttention処理 vs 逐次の隠れ状態更新</td></tr>
+          <tr><td>全パッチ間の注意が常に必要</td><td>Swinは<strong>局所＋シフト</strong>で実効的な広がりを得る</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Swin TransformerとViTの違いは？</summary>
+          <p class="tool-faq-a">Vision Transformer（ViT）は画像パッチ列に対して全パッチ間のグローバルSelf-Attentionを行うのが典型です。Swin Transformerはウィンドウ内の局所注意に限定し、層をまたいでウィンドウをシフトさせることで遠方のパッチとも情報を交換します。さらにパッチマージで解像度を下げ、CNNのように階層的な特徴マップを作ります。</p>
+        </details>
+        <details>
+          <summary>ウィンドウ注意とは何ですか？</summary>
+          <p class="tool-faq-a">画像を小さな矩形のウィンドウに区切り、各ウィンドウの中のパッチ同士だけでSelf-Attentionを計算する方式です。全パッチ対全パッチの注意より計算量が小さくなります。隣接ウィンドウが直接つながらない問題は、次の層でウィンドウ位置をずらすシフト操作で解消します。</p>
+        </details>
+        <details>
+          <summary>Swin TransformerはCNNですか？</summary>
+          <p class="tool-faq-a">いいえ。Swin Transformerは画像をパッチ列としてTransformerで処理する系統であり、畳み込みニューラルネットワーク（CNN）そのものではありません。ただしパッチマージで解像度を段階的に下げるなど、CNNが持つ階層的な特徴抽出の利点をViT系アーキテクチャに取り込んだ設計です。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-328/">G-328 · ViTの定義</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-123/">TF-123 · ViTの○×</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-295/">G-295 · Attentionの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-239/">G-239 · CNNとの区別</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../transformer/">Transformer</a></li>
+          <li><a href="../attention/">Attention</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li><a href="../beit/">BEiT</a></li>
+          <li><a href="../masked-autoencoder/">MAE</a></li>
+          <li><a href="../detr/">DETR</a></li>
+          <li><a href="../fpn/">FPN</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li class="tool-related-list__soon">Vision Transformer（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

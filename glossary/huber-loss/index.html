@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Huber損失とは？二乗誤差と絶対誤差の中間で外れ値に頑健な回帰損失。MSE・MAEとの違いをG検定・生成AIパスポート対策向けに解説。">
+  <title>Huber損失とは？二乗と絶対値のあいだ——外れ値に翻訳されない回帰損失 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/huber-loss/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Huber損失とは？二乗と絶対値のあいだ——外れ値に翻訳されない回帰損失">
+  <meta property="og:description" content="誤差が小さいときはMSE、大きいときはMAEに近い振る舞い。外れ値で勾配が暴走しにくい回帰用損失。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/huber-loss/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Huber損失",
+        "alternateName": ["Huber Loss", "Huber損失", "ヒューバー損失"],
+        "description": "回帰タスクで、誤差が小さい領域では二乗誤差に近く、大きい領域では絶対誤差に近い振る舞いをする損失関数。外れ値の影響を抑えつつ、小さな誤差では滑らかに学習できる。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Huber損失は何をする損失関数ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "回帰問題で予測値と正解値のずれを測る損失です。誤差が閾値δより小さいときは二乗誤差（MSE）のように滑らかに罰し、δより大きいときは絶対誤差（MAE）のように線形に罰します。外れ値で損失と勾配が極端に膨らむのを抑えつつ、通常の誤差では効率よく学習できるよう設計されています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Huber損失とMSEは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。MSE（平均二乗誤差）は誤差を常に二乗するため、外れ値の影響を強く受けます。Huber損失は小さな誤差ではMSEに近いですが、大きな誤差では線形ペナルティに切り替わり、外れ値への頑健性が高くなります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Huber損失は分類問題で使いますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主に回帰問題の損失として使われます。分類では交差エントロピーが標準的です。MSEを分類にそのまま当てはめるのは誤りであり（TF-064）、タスクに応じて損失を選ぶ必要があります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Huber損失</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Huber損失とは？二乗と絶対値のあいだ——外れ値に翻訳されない回帰損失</h1>
+    <p class="tool-hero-sub">読み：ヒューバーロス ／ 英：Huber Loss</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Huber損失</strong>（Huber Loss）は、<strong>回帰</strong>で予測と正解のずれを測る<a href="../loss-function/">損失関数</a>の一つです。誤差が小さいときは<strong>二乗誤差（MSE）のように滑らか</strong>に、大きいときは<strong>絶対誤差（MAE）のように線形</strong>に罰する——外れ値一つで学習が引きずられないよう、<strong>損失の形を切り替える</strong>——本記事はδの式より、<strong>「なぜMSEとMAEの弱点を同時に避けたいのか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#regression-loss">回帰損失の二択</a></li>
+        <li><a href="#huber-shape">Huber損失の形</a></li>
+        <li><a href="#outlier-story">外れ値が学習を壊す理由</a></li>
+        <li><a href="#vs-others">他の損失との位置づけ</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="regression-loss">
+      <h2>回帰損失の二択</h2>
+      <p>
+        連続値を予測する<a href="../../exams/g-kentei/practice/q/g-062/">回帰</a>では、学習中に<strong>損失関数</strong>で誤差を数値化し、<a href="../gradient-descent/">勾配降下</a>でパラメータを更新します（<a href="../../exams/g-kentei/drill/q/tf-388/">TF-388</a>）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>損失</th><th>誤差の扱い</th><th>特徴</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>MSE（二乗誤差）</strong></td><td>誤差を二乗</td><td>小さな誤差に敏感・滑らか。外れ値に弱い</td></tr>
+          <tr><td><strong>MAE（絶対誤差）</strong></td><td>誤差の絶対値</td><td>外れ値に比較的頑健。大誤差の罰が線形</td></tr>
+          <tr><td><strong>Huber損失</strong></td><td>小→二乗、大→線形</td><td><strong>両者の中間</strong>を狙う</td></tr>
+        </tbody>
+      </table>
+      <p>
+        評価指標としてもMSE・RMSE・MAEは使われます（<a href="../../exams/g-kentei/practice/q/g-090/">G-090</a>）が、Huber損失は<strong>学習時の損失</strong>として設計されたもの——評価と損失は対応し得ますが、同義ではありません。
+      </p>
+    </section>
+
+    <section id="huber-shape">
+      <h2>Huber損失の形</h2>
+      <p>予測値と正解値の差を <strong>|e|</strong> とすると、閾値 <strong>δ</strong>（デルタ）を境に振る舞いが変わります。</p>
+      <ul class="tool-steps">
+        <li><strong>|e| ≤ δ</strong> — 二乗誤差に近い領域。勾配が滑らかで、通常の誤差を効率よく減らせる</li>
+        <li><strong>|e| &gt; δ</strong> — 線形ペナルティに近い領域。外れ値でも損失・勾配が暴走しにくい</li>
+        <li><strong>δの役割</strong> — 「どこから外れ値扱いに切り替えるか」のノブ。データのスケールに合わせて調整</li>
+      </ul>
+      <p>
+        直感としては、<strong>近くの誤差は丁寧に、遠くの誤差は強く抑えすぎない</strong>——MSEだけだと遠い点に引きずられ、MAEだけだと小さな誤差の学習効率が落ちる——Huberはその間を取ります。
+      </p>
+    </section>
+
+    <section id="outlier-story">
+      <h2>外れ値が学習を壊す理由</h2>
+      <p>
+        外れ値は測定ミス・入力ミス・まれな正常値など<strong>複数の理由</strong>で現れます（<a href="../../exams/g-kentei/drill/q/tf-466/">TF-466</a>）。前処理で確認することも重要ですが（<a href="../../exams/g-kentei/drill/q/tf-189/">TF-189</a>）、損失の選び方も影響します。
+      </p>
+      <p>
+        MSEは誤差を<strong>二乗</strong>するため、一つの大きな外れ値が損失全体を支配し、モデルが「外れ値に合わせる」方向へ引かれます。Huber損失は大誤差域で<strong>線形</strong>に切り替わるため、外れ値の翻訳（モデル全体の予測が大きく歪むこと）を抑えやすい——<strong>頑健回帰</strong>の文脈で覚えると試験に効きます。
+      </p>
+    </section>
+
+    <section id="vs-others">
+      <h2>他の損失との位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>損失</th><th>主なタスク</th><th>Huberとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>交差エントロピー</strong></td><td>分類</td><td>別タスク。MSEを分類に使うのは誤り（<a href="../../exams/g-kentei/drill/q/tf-064/">TF-064</a>、<a href="../../exams/g-kentei/practice/q/g-131/">G-131</a>）</td></tr>
+          <tr><td><strong><a href="../focal-loss/">Focal Loss</a></strong></td><td>不均衡分類</td><td>難例の重み付け。回帰・外れ値とは目的が異なる</td></tr>
+          <tr><td><strong><a href="../dice-loss/">Dice Loss</a></strong></td><td>セグメンテーション</td><td>重なり率を直接最適化。回帰損失ではない</td></tr>
+          <tr><td><strong>Huber損失</strong></td><td><strong>回帰</strong></td><td>MSEとMAEのハイブリッド</td></tr>
+        </tbody>
+      </table>
+      <p>
+        損失はタスクとデータの性質に合わせて選びます。Huber損失は「回帰＋外れ値が気になる」ときの選択肢の一つ——万能ではありませんが、<strong>二乗と絶対値のトレードオフを一つの関数にまとめた</strong>点が名前の価値です。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — 回帰用。小誤差は二乗、大誤差は線形に近い<strong>頑健損失</strong></li>
+        <li><strong>目的</strong> — 外れ値の影響を抑えつつ、通常誤差では滑らかに学習</li>
+        <li><strong>対比</strong> — MSE＝外れ値に弱い、MAE＝頑健だが小誤差の学習効率が落ちる</li>
+        <li><strong>タスク</strong> — 分類の交差エントロピーとは別。回帰の損失として整理</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-064/">TF-064</a>、<a href="../../exams/g-kentei/drill/q/tf-388/">TF-388</a>、<a href="../../exams/g-kentei/practice/q/g-090/">G-090</a>、<a href="../../exams/g-kentei/practice/q/g-131/">G-131</a>、<a href="../../exams/g-kentei/drill/q/tf-466/">TF-466</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Huber損失＝MSE</td><td>小誤差域は近いが、大誤差域で線形に切り替わる</td></tr>
+          <tr><td>Huber損失＝MAE</td><td>大誤差域は近いが、小誤差域は二乗に近い</td></tr>
+          <tr><td>Huber損失＝交差エントロピー</td><td>回帰損失 vs 分類損失</td></tr>
+          <tr><td>Huber損失＝評価指標</td><td>学習損失として設計（評価に使うこともあるが同義ではない）</td></tr>
+          <tr><td>Huber損失＝<a href="../focal-loss/">Focal Loss</a></td><td>外れ値への頑健性 vs 不均衡分類の難例重み付け</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>Huber損失は何をする損失関数ですか？</summary><p class="tool-faq-a">回帰問題で予測値と正解値のずれを測る損失です。誤差が閾値δより小さいときは二乗誤差（MSE）のように滑らかに罰し、δより大きいときは絶対誤差（MAE）のように線形に罰します。外れ値で損失と勾配が極端に膨らむのを抑えつつ、通常の誤差では効率よく学習できるよう設計されています。</p></details>
+        <details><summary>Huber損失とMSEは同じですか？</summary><p class="tool-faq-a">同じではありません。MSE（平均二乗誤差）は誤差を常に二乗するため、外れ値の影響を強く受けます。Huber損失は小さな誤差ではMSEに近いですが、大きな誤差では線形ペナルティに切り替わり、外れ値への頑健性が高くなります。</p></details>
+        <details><summary>Huber損失は分類問題で使いますか？</summary><p class="tool-faq-a">主に回帰問題の損失として使われます。分類では交差エントロピーが標準的です。MSEを分類にそのまま当てはめるのは誤りであり（TF-064）、タスクに応じて損失を選ぶ必要があります。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/drill/q/tf-064/">TF-064 · MSEと分類のすり替え</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-388/">TF-388 · 損失関数の選び方</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-090/">G-090 · MSE・MAEなどの評価</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-466/">TF-466 · 外れ値</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../loss-function/">損失関数</a></li>
+          <li><a href="../gradient-descent/">勾配降下法</a></li>
+          <li><a href="../backpropagation/">誤差逆伝播法</a></li>
+          <li><a href="../focal-loss/">Focal Loss</a></li>
+          <li><a href="../dice-loss/">Dice Loss</a></li>
+          <li class="tool-related-list__soon">MSE（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

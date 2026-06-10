@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="StyleGANとは？高品質顔画像生成で知られるGANファミリー。生成器のスタイル制御・拡散モデルとの違いをG検定・生成AIパスポート向けに解説。">
+  <title>StyleGANとは？顔の潜在空間を層で刻む——高品質生成で有名になったGANの進化形 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/stylegan/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="StyleGANとは？顔の潜在空間を層で刻む——高品質生成で有名になったGANの進化形">
+  <meta property="og:description" content="Style-Based Generator Architecture for GAN。スタイルを層ごとに注入する生成器で、高品質な顔画像生成を実現したGANファミリー。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/stylegan/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "StyleGAN",
+        "alternateName": ["StyleGAN", "スタイルガン", "Style-Based GAN"],
+        "description": "生成器にスタイル情報を層ごとに注入する設計で、高品質な顔画像生成を実現したGANファミリー。潜在空間の操作やスタイルミキシングが可能。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "StyleGANは何をするモデルですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GANの一種で、生成器にスタイル（画風・構図・細部など）を層ごとに制御する設計を採用し、特に高品質な顔画像の生成で知られます。ランダムな潜在ベクトルから写実的な顔を合成し、潜在空間の操作で属性を変化させる研究・応用が広がりました。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "StyleGANとGANは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "StyleGANはGANファミリーの具体的なモデルです。GANは生成器と識別器を競わせる一般的な枠組み（G-372）であり、StyleGANはその生成器アーキテクチャをスタイルベースに改良した代表例として整理します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "StyleGANとStable Diffusionは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。StyleGANは敵対的学習（GAN）による画像生成モデルです。Stable Diffusionは潜在拡散モデルに基づくText-to-Imageの代表例です。どちらも画像生成ですが、学習原理とアーキテクチャが異なります。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">StyleGAN</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>StyleGANとは？顔の潜在空間を層で刻む——高品質生成で有名になったGANの進化形</h1>
+    <p class="tool-hero-sub">読み：すたいるがん ／ 英：StyleGAN（Style-Based Generator Architecture for GAN）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>StyleGAN</strong>は、<strong>スタイルを層ごとに注入する生成器</strong>で高品質な顔画像を生む——<a href="../gan/">GAN</a>ファミリーの代表傑作です。初期のGANが「とにかく本物っぽく」だったのに対し、StyleGANは<strong>粗い構図から細部へ段階的に描き足す</strong>設計で、潜在空間の操作（スタイルミキシング）まで可能にした——本記事はレイヤー数の暗記より、<strong>「なぜGAN史の転換点になったか」</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#style-based">スタイルベースの意味</a></li>
+        <li><a href="#progressive">粗さから細部へ</a></li>
+        <li><a href="#latent">潜在空間の操作</a></li>
+        <li><a href="#vs-gan">GANとの関係</a></li>
+        <li><a href="#vs-diffusion">拡散モデルとの位置づけ</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        StyleGAN単独の過去問は少ない一方、辞典の定義は<strong>「高品質顔画像生成で知られるGANファミリー」</strong>です。試験では<strong>GANの基本構造</strong>（<a href="../../exams/g-kentei/practice/q/g-372/">G-372</a>、<a href="../../exams/g-kentei/practice/q/g-373/">G-373</a>）と<strong>生成モデルの代表例</strong>（<a href="../../exams/g-kentei/practice/q/g-378/">G-378</a>）を土台に整理します。
+      </p>
+      <p>
+        誤答では、<strong>StyleGAN＝<a href="../stable-diffusion/">Stable Diffusion</a></strong>、<strong>StyleGAN＝<a href="../cyclegan/">CycleGAN</a></strong>（ドメイン変換）、<strong>識別器と生成器の役割逆転</strong>（<a href="../../exams/genai-passport/practice/q/hq-0303/">HQ-0303</a>）などに注意します。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-372/">G-372（GANの定義）</a>、<a href="../../exams/g-kentei/practice/q/g-373/">G-373（生成器と識別器）</a>、<a href="../../exams/g-kentei/practice/q/g-378/">G-378（生成モデル一覧）</a>、<a href="../../exams/g-kentei/drill/q/tf-151/">TF-151（競合学習）</a></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/practice/q/hq-0157/">HQ-0157（GAN）</a>、<a href="../../exams/genai-passport/practice/q/hq-0303/">HQ-0303（役割の識別）</a></p>
+      </div>
+    </section>
+
+    <section id="style-based">
+      <h2>スタイルベースの意味</h2>
+      <p>
+        名前の <strong>Style</strong> は、画像の<strong>画風・構図・細部</strong>——粗いレイアウトから髪の質感まで——を層ごとに制御する設計を指します。
+      </p>
+      <p>
+        従来のGAN生成器は、潜在ベクトルを一度に畳み込み層へ流すだけでした。StyleGANは、潜在コードを<strong>スタイル変換（AdaINなど）</strong>で各解像度層に注入——「どの層で何を決めるか」を分離したのが革新です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層の段階</th><th>制御しやすい属性</th><th>試験向け</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>低解像度層</strong></td><td>顔の向き・ポーズ・大まかな髪型</td><td>構図レベルのスタイル</td></tr>
+          <tr><td><strong>高解像度層</strong></td><td>色・テクスチャ・細部</td><td>質感レベルのスタイル</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-227/">G-227</a>のインスタンス正規化は「画像生成・スタイル変換」で語られる正規化——StyleGANのAdaINとも思想が近い、と試験文脈では結びつけられます。
+      </p>
+    </section>
+
+    <section id="progressive">
+      <h2>粗さから細部へ</h2>
+      <p>
+        StyleGAN 1は<strong>プログレッシブ成長</strong>——低解像度から始めて段階的に解像度を上げる——も採用しました。いわば「まず顔の輪郭を描き、次に目鼻口、最後に肌の質感」——という人間の描き方に近い学習です。
+      </p>
+      <ul class="tool-steps">
+        <li><strong>課題</strong> — 初期GANは高解像度生成が不安定</li>
+        <li><strong>対策1</strong> — プログレッシブ成長で段階的に学習</li>
+        <li><strong>対策2</strong> — スタイルベース生成器で層ごとに制御</li>
+        <li><strong>結果</strong> — 1024px級の写実的な顔生成が可能に</li>
+      </ul>
+      <p>
+        StyleGAN 2以降は、アーティファクト低減や品質向上が進み、<strong>顔生成のデファクトスタンダード</strong>として研究・実務で名前が出続けました。
+      </p>
+    </section>
+
+    <section id="latent">
+      <h2>潜在空間の操作</h2>
+      <p>
+        StyleGANの潜在ベクトル（<strong>W空間</strong>など）は、単なるノイズではなく<strong>意味のある方向</strong>を持つことが知られています。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>スタイルミキシング</strong>
+          二つの潜在コードから、層ごとに別々のスタイルを混ぜる——髪型はA、顔立ちはB
+        </li>
+        <li>
+          <strong>潜在空間トラバーサル</strong>
+          ベクトルを少し動かすと、年齢・笑顔・メガネなどが連続的に変化
+        </li>
+        <li>
+          <strong>応用とリスク</strong>
+          高品質な顔合成は<a href="../deepfake/">ディープフェイク</a>の文脈でも問題化——倫理・法務の論点
+        </li>
+      </ul>
+      <p>
+        試験では潜在空間の数学より、<strong>「GANで高品質顔を生成し、潜在空間を操作できる代表モデル」</strong>——という整理が得点源です。
+      </p>
+    </section>
+
+    <section id="vs-gan">
+      <h2>GANとの関係</h2>
+      <p>
+        StyleGANは<a href="../gan/">GAN</a>の<strong>具体的な実装・モデル名</strong>です。基本構造は変わりません（G-372）。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>部品</th><th>役割</th><th>試験</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>生成器（G）</strong></td><td>本物らしい画像を作る</td><td>G-373の（あ）</td></tr>
+          <tr><td><strong>識別器（D）</strong></td><td>本物か生成物かを見分ける</td><td>G-373の（い）</td></tr>
+          <tr><td><strong>StyleGANの差分</strong></td><td>生成器のスタイルベース設計</td><td>アーキテクチャの改良</td></tr>
+        </tbody>
+      </table>
+      <p>
+        識別器が<strong>常に多クラス分類器</strong>である——という説明は×（<a href="../../exams/g-kentei/drill/q/tf-152/">TF-152</a>）。StyleGANでも基本は<strong>二値判定</strong>の識別器です。
+      </p>
+    </section>
+
+    <section id="vs-diffusion">
+      <h2>拡散モデルとの位置づけ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>StyleGAN</th><th><a href="../stable-diffusion/">Stable Diffusion</a></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>学習原理</strong></td><td>生成器 vs 識別器の対抗</td><td>ノイズ除去の拡散</td></tr>
+          <tr><td><strong>入力</strong></td><td>潜在ベクトル（＋条件付き版も）</td><td>テキストプロンプトが典型</td></tr>
+          <tr><td><strong>得意領域</strong></td><td>高品質顔（特定ドメイン）</td><td>汎用Text-to-Image</td></tr>
+          <tr><td><strong>試験</strong></td><td>GAN系の代表例</td><td>拡散系の代表例（G-378）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        2022年以降、汎用画像生成の主役は<a href="../denoising-diffusion/">拡散モデル</a>へ移りましたが、StyleGANは<strong>GAN時代の到達点</strong>として、顔生成・潜在空間操作の教科書的モデルとして試験に名前が残ります。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>StyleGAN＝<a href="../stable-diffusion/">Stable Diffusion</a></td><td>GAN vs 拡散モデル</td></tr>
+          <tr><td>StyleGAN＝<a href="../cyclegan/">CycleGAN</a></td><td>新規生成 vs ドメイン間変換（G-376）</td></tr>
+          <tr><td>識別器が多クラス分類</td><td>基本は本物/偽物の二値（TF-152）</td></tr>
+          <tr><td>生成器が本物を判定</td><td>生成器は作る、識別器が判定（HQ-0303）</td></tr>
+          <tr><td>StyleGAN＝<a href="../nerf/">NeRF</a></td><td>2D画像生成 vs 3D新規視点合成</td></tr>
+          <tr><td>StyleGAN＝Text-to-Imageの総称</td><td>特定のGANアーキテクチャ名</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>StyleGANは何をするモデルですか？</summary>
+          <p class="tool-faq-a">GANの一種で、生成器にスタイル（画風・構図・細部など）を層ごとに制御する設計を採用し、特に高品質な顔画像の生成で知られます。ランダムな潜在ベクトルから写実的な顔を合成し、潜在空間の操作で属性を変化させる研究・応用が広がりました。</p>
+        </details>
+        <details>
+          <summary>StyleGANとGANは同じですか？</summary>
+          <p class="tool-faq-a">StyleGANはGANファミリーの具体的なモデルです。GANは生成器と識別器を競わせる一般的な枠組み（G-372）であり、StyleGANはその生成器アーキテクチャをスタイルベースに改良した代表例として整理します。</p>
+        </details>
+        <details>
+          <summary>StyleGANとStable Diffusionは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。StyleGANは敵対的学習（GAN）による画像生成モデルです。Stable Diffusionは潜在拡散モデルに基づくText-to-Imageの代表例です。どちらも画像生成ですが、学習原理とアーキテクチャが異なります。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-372/">G-372 · GANの定義</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-373/">G-373 · 生成器と識別器</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-378/">G-378 · 生成モデル一覧</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0157/">HQ-0157 · GAN</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../gan/">GAN</a></li>
+          <li><a href="../cyclegan/">CycleGAN</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../stable-diffusion/">Stable Diffusion</a></li>
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../deepfake/">ディープフェイク</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../cnn/">CNN</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

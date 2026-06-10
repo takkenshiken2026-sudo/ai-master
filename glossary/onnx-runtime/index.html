@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ONNX Runtimeとは？ONNXモデルの高速推論ランタイム。ONNXフォーマット・PyTorch・エッジAIとの違いをG検定向けに解説。">
+  <title>ONNX Runtimeとは？箱を運ぶ配送車——ONNXファイルを本番で速く回す推論エンジン — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/onnx-runtime/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ONNX Runtimeとは？箱を運ぶ配送車——ONNXファイルを本番で速く回す推論エンジン">
+  <meta property="og:description" content="ONNX形式の学習済みモデルを読み込み、CPU・GPU・エッジ端末上で高速に推論実行するランタイムソフトウェア。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/onnx-runtime/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "ONNX Runtime",
+        "alternateName": ["ONNX Runtime", "オーエヌエヌエックスランタイム", "ORT"],
+        "description": "ONNX形式で保存されたニューラルネットワークを読み込み、CPU・GPU・エッジ端末などで高速に推論実行するランタイムソフトウェア。モデル交換フォーマットであるONNXそのものではなく、本番推論の実行エンジン。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ONNX Runtimeは何をするソフトウェアですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ONNX形式の学習済みモデルを読み込み、入力データに対して順伝播を実行して予測結果を返す推論ランタイムです。学習は行わず、本番環境やエッジ端末でモデルを高速に動かすための実行エンジンとして使われます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ONNX RuntimeとONNXは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。ONNXはモデルの構造と重みを記述する交換フォーマット（ファイル規格）です。ONNX Runtimeはそのフォーマットのモデルを実際に実行するランタイムソフトウェアです。箱（ONNX）と配送車（ONNX Runtime）の関係に近いです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ONNX RuntimeとPyTorchは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。PyTorchはモデルを定義し学習するための深層学習フレームワークです。ONNX Runtimeは学習済みモデルの推論実行に特化したランタイムです。PyTorchで学習しONNXへエクスポートしたモデルを、ONNX Runtimeで本番推論する、という役割分担が典型です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">ONNX Runtime</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>ONNX Runtimeとは？箱を運ぶ配送車——ONNXファイルを本番で速く回す推論エンジン</h1>
+    <p class="tool-hero-sub">読み：オーエヌエヌエックスランタイム ／ 英：ONNX Runtime（ORT）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>ONNX Runtime</strong>は、<a href="../onnx/">ONNX</a>形式の学習済みモデルを<strong>本番で動かす推論エンジン</strong>です。<a href="../onnx/">ONNX</a>が「荷物の箱」なら、Runtimeは<strong>箱を目的地まで速く運ぶ配送車</strong>——<a href="../training/">学習</a>は<a href="../pytorch/">PyTorch</a>側、<a href="../inference/">推論</a>はRuntime側——本記事はベンチマーク数値より、<strong>デプロイパイプラインのどこに立つか</strong>に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#inference-engine">推論専用の実行エンジン</a></li>
+        <li><a href="#pipeline-slot">パイプライン上の位置</a></li>
+        <li><a href="#speed-stack">速くする仕組みの層</a></li>
+        <li><a href="#edge-ops">エッジとMLOpsでの役割</a></li>
+        <li><a href="#exam-study">試験で押さえるポイント</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="inference-engine">
+      <h2>推論専用の実行エンジン</h2>
+      <p>
+        深層学習のライフサイクルには、<strong>学習</strong>と<strong>推論</strong>の二段があります（<a href="../../exams/g-kentei/drill/q/tf-309/">TF-309</a>）。ONNX Runtimeが担うのは後者だけ——.onnxファイルを読み込み、入力テンソルを渡すと出力を返す<strong>実行エンジン</strong>です。
+      </p>
+      <p>
+        重みの更新や損失の逆伝播は行いません。ユーザーが体験するAPIの背後、カメラアプリの物体認識、エッジ端末の異常検知——多くはこの<strong>推論フェーズ</strong>で動いています。
+      </p>
+    </section>
+
+    <section id="pipeline-slot">
+      <h2>パイプライン上の位置</h2>
+      <ul class="tool-steps">
+        <li><strong>1. 学習</strong> — <a href="../pytorch/">PyTorch</a>、TensorFlow/<a href="../keras/">Keras</a>などでモデルを訓練</li>
+        <li><strong>2. エクスポート</strong> — <a href="../onnx/">ONNX</a>形式（.onnx）へ変換</li>
+        <li><strong>3. 最適化</strong> — 量子化・プルーニングで軽量化（<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>、<a href="../../exams/g-kentei/practice/q/g-025/">G-025</a>）</li>
+        <li><strong>4. 実行</strong> — <strong>ONNX Runtime</strong>が本番・エッジで<a href="../inference/">推論</a></li>
+      </ul>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-458/">G-458</a>のMLOps——開発・デプロイ・監視——において、Runtimeは<strong>デプロイ後の実行層</strong>。フォーマット（ONNX）とランタイム（Runtime）は別名詞、と切り分けるのが試験の第一関門です。
+      </p>
+    </section>
+
+    <section id="speed-stack">
+      <h2>速くする仕組みの層</h2>
+      <p>推論の高速化は一つの魔法ではなく、<strong>積み重ね</strong>です（G-406）。ONNX Runtimeはそのうち<strong>実行エンジン層</strong>を担います。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>層</th><th>例</th><th>Runtimeとの関係</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>モデル設計</strong></td><td><a href="../mobilenet/">MobileNet</a>など軽量CNN</td><td>入力する.onnxの中身</td></tr>
+          <tr><td><strong>圧縮</strong></td><td>量子化、プルーニング</td><td>軽い.onnxを渡せる</td></tr>
+          <tr><td><strong>ランタイム</strong></td><td><strong>ONNX Runtime</strong></td><td>グラフ最適化・演算融合で実行を速く</td></tr>
+          <tr><td><strong>ハード基盤</strong></td><td><a href="../cuda/">CUDA</a>、CPU命令</td><td>Runtimeが下層を利用</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Runtime＝量子化、Runtime＝<a href="../cuda/">CUDA</a>——どちらもすり替えです。Runtimeは<strong>最適化された実行環境</strong>であり、ビット削減そのものでもGPUチップでもありません。
+      </p>
+    </section>
+
+    <section id="edge-ops">
+      <h2>エッジとMLOpsでの役割</h2>
+      <p>
+        <a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>のエッジAI——端末側で推論——では、計算資源が限られます。PyTorch本体を端末に載せるより、<strong>ONNXへ変換してRuntimeで走らせる</strong>構成がよく選ばれます。
+      </p>
+      <p>
+        クラウドとエッジで<strong>同じ.onnx</strong>を共有し、環境に応じてRuntimeの実行プロバイダ（CPU/GPU等）を切り替える——学習チームと運用チームの境界を越える<strong>共通の実行口</strong>、という整理が実務的です。2026年6月時点でも、推論デプロイの定番選択肢の一つとして位置づけられます。
+      </p>
+    </section>
+
+    <section id="exam-study">
+      <h2>試験で押さえるポイント</h2>
+      <ul class="tool-steps">
+        <li><strong>定義</strong> — ONNXモデルを<strong>高速推論</strong>するランタイムソフトウェア</li>
+        <li><strong>役割</strong> — 学習後の本番・エッジでの<strong>実行</strong>（学習はしない）</li>
+        <li><strong>対比</strong> — ONNX（フォーマット）、PyTorch（学習）、MLOps（運用全体）</li>
+        <li><strong>文脈</strong> — 推論高速化・エッジAI・デプロイ（G-406、G-408、G-458）</li>
+      </ul>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>G検定：<a href="../../exams/g-kentei/practice/q/g-458/">G-458</a>、<a href="../../exams/g-kentei/practice/q/g-406/">G-406</a>、<a href="../../exams/g-kentei/practice/q/g-408/">G-408</a>、<a href="../../exams/g-kentei/drill/q/tf-309/">TF-309</a></p>
+      </div>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>ONNX Runtime＝<a href="../onnx/">ONNX</a></td><td>実行エンジン vs 交換フォーマット</td></tr>
+          <tr><td>ONNX Runtime＝PyTorch</td><td>推論ランタイム vs 学習フレームワーク</td></tr>
+          <tr><td>ONNX Runtime＝量子化</td><td>実行環境 vs 軽量化手法（G-406）</td></tr>
+          <tr><td>ONNX Runtime＝<a href="../cuda/">CUDA</a></td><td>アプリ層のランタイム vs GPU基盤</td></tr>
+          <tr><td>ONNX Runtime＝MLOps</td><td>推論実行の一部 vs 運用全体（G-458）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details><summary>ONNX Runtimeは何をするソフトウェアですか？</summary><p class="tool-faq-a">ONNX形式の学習済みモデルを読み込み、入力データに対して順伝播を実行して予測結果を返す推論ランタイムです。学習は行わず、本番環境やエッジ端末でモデルを高速に動かすための実行エンジンとして使われます。</p></details>
+        <details><summary>ONNX RuntimeとONNXは同じですか？</summary><p class="tool-faq-a">同じではありません。ONNXはモデルの構造と重みを記述する交換フォーマット（ファイル規格）です。ONNX Runtimeはそのフォーマットのモデルを実際に実行するランタイムソフトウェアです。箱（ONNX）と配送車（ONNX Runtime）の関係に近いです。</p></details>
+        <details><summary>ONNX RuntimeとPyTorchは同じですか？</summary><p class="tool-faq-a">同じではありません。PyTorchはモデルを定義し学習するための深層学習フレームワークです。ONNX Runtimeは学習済みモデルの推論実行に特化したランタイムです。PyTorchで学習しONNXへエクスポートしたモデルを、ONNX Runtimeで本番推論する、という役割分担が典型です。</p></details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/g-kentei/practice/q/g-458/">G-458 · MLOps</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-406/">G-406 · 量子化と推論高速化</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-408/">G-408 · エッジAI</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-309/">TF-309 · 推論の定義</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../onnx/">ONNX</a></li>
+          <li><a href="../inference/">推論</a></li>
+          <li><a href="../training/">学習</a></li>
+          <li><a href="../pytorch/">PyTorch</a></li>
+          <li><a href="../keras/">Keras</a></li>
+          <li><a href="../mobilenet/">MobileNet</a></li>
+          <li><a href="../tensorflow/">TensorFlow</a></li>
+          <li><a href="../tensorrt/">TensorRT</a></li>
+          <li><a href="../cuda/">CUDA</a></li>
+          <li><a href="../gpu/">GPU</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
