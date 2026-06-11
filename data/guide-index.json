@@ -812,6 +812,17 @@
       "priority": "高",
       "featured": true,
       "published": true
+    },
+    {
+      "id": "g-kentei-practice-02",
+      "no": 72,
+      "name": "G検定の過去問想定問題で対策する方法",
+      "summary": "",
+      "category": "g-kentei-practice",
+      "keyword": "G検定 過去問 対策",
+      "priority": "高",
+      "featured": true,
+      "published": true
     }
   ]
 }
