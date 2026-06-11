@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude Fable 5とは？AnthropicのMythosクラス初の一般公開LLM。安全性分類器・フォールバック・Mythos 5との違いをG検定・生成AIパスポート向けに解説。">
+  <title>Claude Fable 5とは？安全性分類器付き——Mythosクラスの一般公開版 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/claude-fable-5/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude Fable 5とは？安全性分類器付き——Mythosクラスの一般公開版">
+  <meta property="og:description" content="Anthropicが2026年6月に一般公開したMythosクラスLLM。高リスク領域では安全性分類器が拒否し、Opus 4.8へフォールバック可能。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/claude-fable-5/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Claude Fable 5",
+        "alternateName": ["Claude Fable 5", "クロード・フェイブル・ファイブ", "claude-fable-5"],
+        "description": "AnthropicがMythosクラスのモデルとして2026年6月に一般公開した大規模言語モデル。安全性分類器を内蔵し、高リスク領域では自動拒否・フォールバックが働く。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claude Fable 5とClaude Opus 4.8の違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude Fable 5はAnthropicが一般公開しているモデルの中で最も高性能なMythosクラスのモデルです。Claude Opus 4.8は複雑な推論やエージェント型コーディングに優れる従来のOpusティアモデルで、Fable 5が安全性分類器によって拒否したリクエストのフォールバック先としても機能します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude Fable 5の安全性分類器とはどのような仕組みですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "サイバーセキュリティ・生物学・化学・蒸留などの高リスク領域に関するリクエストを自動検知して拒否する機能です。拒否された場合はHTTP 200でstop_reason: \"refusal\"が返り、出力が生成される前の拒否には課金されません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude Fable 5とClaude Mythos 5は何が違いますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "モデルの基本能力は同等ですが、Fable 5には安全性分類器が搭載されており一般公開されています。Mythos 5は安全性分類器を含まず、Project Glasswingの承認済みパートナー限定で提供されています。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li><a href="../claude-model/">Claude</a></li>
+      <li aria-current="page">Claude Fable 5</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Claude Fable 5とは？安全性分類器付き——Mythosクラスの一般公開版</h1>
+    <p class="tool-hero-sub">読み：クロード・フェイブル・ファイブ ／ 英：Claude Fable 5</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-11">2026年6月11日</time></span>
+    <span>読了目安：約6分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Claude Fable 5</strong>は、<a href="../claude-model/">Anthropic</a>が2026年6月9日に一般公開した<a href="../llm/">大規模言語モデル</a>で、<strong>Mythosクラス</strong>として初めて広く提供されたモデルです。能力は最上位ティアながら、<strong>安全性分類器</strong>——高リスク領域を自動拒否——と<strong>フォールバック</strong>が内蔵されています。本記事は料金表の暗記より、<strong>「Fable 5＝Mythosそのもの」という誤解</strong>と拒否時のAPI挙動に焦点を当てます。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Claude Fable 5とは</a></li>
+        <li><a href="#features">主な特徴・スペック</a></li>
+        <li><a href="#safety">安全性分類器とフォールバック</a></li>
+        <li><a href="#comparison">FableとMythosの比較</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        開発元はAnthropic、製品群はClaude——という整理は生成AIパスポートの定番です（<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142</a>、<a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316</a>）。Fable 5はその中で<strong>「安全性分類器を持つ一般公開の最上位モデル」</strong>として押さえます。
+      </p>
+      <p>
+        G検定では、高性能モデルの社会実装と<strong>AIガバナンス</strong>——高リスク用途の制限——がセットで問われます（<a href="../../exams/g-kentei/drill/q/tf-499/">TF-499</a>）。<a href="../constitutional-ai/">Constitutional AI</a>の延長線上に、分類器による自動拒否がある、と整理すると試験でも実務でも混乱しません。
+      </p>
+      <p>
+        よくある誤解は「Claude Fable 5＝Claude Mythos 5」です。正確には<strong>Mythosクラスの能力に安全性分類器を足した一般公開版</strong>であり、限定公開のMythos 5本体とは別モデルです。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142（Claudeの位置づけ）</a>、<a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316（Gemini vs Claude）</a></p>
+        <p>G検定：<a href="../../exams/g-kentei/drill/q/tf-499/">TF-499（高リスクAI）</a>、<a href="../../exams/g-kentei/practice/q/g-350/">G-350（安全性・事実性の確認）</a></p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Claude Fable 5とは</h2>
+      <p>
+        Claude Fable 5は、AnthropicのAIシステム安全評価基準で上位に位置づけられる<strong>Mythosクラス</strong>の能力を備えたLLMです。Anthropicが広く公開しているモデルの中では最も高性能とされ、ソフトウェアエンジニアリング・複雑な推論・知識作業・長期的な<a href="../generative-ai/">生成AI</a>エージェントタスクが主な用途です。
+      </p>
+      <p>
+        APIモデルIDは <code>claude-fable-5</code>。Claude API・Amazon Bedrock・Vertex AI・Microsoft Foundryなどから利用できます。コンテキストは100万<a href="../token/">トークン</a>、最大出力128kトークンで、テキスト・画像入力に対応します。
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>主な特徴・スペック</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>項目</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>APIモデルID</strong></td><td><code>claude-fable-5</code></td></tr>
+          <tr><td><strong>提供開始</strong></td><td>2026年6月9日</td></tr>
+          <tr><td><strong>コンテキスト</strong></td><td>100万トークン</td></tr>
+          <tr><td><strong>最大出力</strong></td><td>128,000トークン</td></tr>
+          <tr><td><strong>入力</strong></td><td>テキスト・画像</td></tr>
+          <tr><td><strong>料金（入力）</strong></td><td>$10 / 100万トークン</td></tr>
+          <tr><td><strong>料金（出力）</strong></td><td>$50 / 100万トークン</td></tr>
+          <tr><td><strong>安全性分類器</strong></td><td>あり（高リスク領域で自動拒否）</td></tr>
+          <tr><td><strong>フォールバック</strong></td><td>Claude Opus 4.8（自動 or クライアント側）</td></tr>
+        </tbody>
+      </table>
+      <ul class="tool-example-list">
+        <li><strong>ソフトウェアエンジニアリング</strong> — 複雑なコード生成・レビュー・リファクタリング</li>
+        <li><strong>複雑な推論・知識作業</strong> — 多段論理・大量文書の要約・分析</li>
+        <li><strong>ビジョン</strong> — 画像入力を伴う理解・説明タスク</li>
+        <li><strong>長期エージェント作業</strong> — 自律的なマルチステップタスク</li>
+      </ul>
+    </section>
+
+    <section id="safety">
+      <h2>安全性分類器とフォールバック</h2>
+      <p>
+        Fable 5の最大の特徴は、内蔵の<strong>安全性分類器</strong>です。サイバーセキュリティ・生物学・化学・蒸留（distillation）などの高リスク領域を自動検知し、応答を拒否します。
+      </p>
+      <h3>拒否時のAPI動作</h3>
+      <p>
+        拒否はHTTPエラー（4xx/5xx）ではなく<strong>HTTP 200</strong>で返り、<code>stop_reason</code> が <code>"refusal"</code> になります。出力生成前の拒否には<strong>課金されません</strong>。
+      </p>
+      <h3>フォールバック</h3>
+      <p>
+        拒否されたリクエストは別モデルで処理できます。<code>fallbacks</code> パラメータによるサーバー側フォールバックと、SDKを使ったクライアント側フォールバックがあります。フォールバック時はプロンプトキャッシュコストを補填する「フォールバッククレジット」が適用されます。
+      </p>
+    </section>
+
+    <section id="comparison">
+      <h2>FableとMythosの比較</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>比較項目</th><th>Claude Fable 5</th><th><a href="../claude-mythos-5/">Claude Mythos 5</a></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>APIモデルID</strong></td><td><code>claude-fable-5</code></td><td><code>claude-mythos-5</code></td></tr>
+          <tr><td><strong>基本能力</strong></td><td>Mythosクラス</td><td>Mythosクラス（同等）</td></tr>
+          <tr><td><strong>安全性分類器</strong></td><td>あり</td><td>なし</td></tr>
+          <tr><td><strong>提供対象</strong></td><td>一般公開</td><td>Project Glasswing承認パートナー限定</td></tr>
+          <tr><td><strong>フォールバック</strong></td><td>あり</td><td>不要（分類器なし）</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤った説明</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Fable 5＝Mythos 5</td><td>能力は同等だが別モデル。Fableは分類器付き一般公開版</td></tr>
+          <tr><td>拒否＝HTTPエラー</td><td>HTTP 200 + <code>stop_reason: "refusal"</code></td></tr>
+          <tr><td>拒否されても課金される</td><td>出力前の拒否は課金なし</td></tr>
+          <tr><td>Fable 5＝<a href="../claude-4-opus/">Claude 4 Opus</a></td><td>別ティア。Opus 4.8はフォールバック先のひとつ</td></tr>
+          <tr><td>最強＝すべての用途に最適</td><td>高リスク領域では自動拒否。用途に応じて使い分け</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Claude Fable 5とClaude Opus 4.8の違いは何ですか？</summary>
+          <p class="tool-faq-a">Claude Fable 5はAnthropicが一般公開しているモデルの中で最も高性能なMythosクラスのモデルです。Claude Opus 4.8は複雑な推論やエージェント型コーディングに優れる従来のOpusティアモデルで、Fable 5が安全性分類器によって拒否したリクエストのフォールバック先としても機能します。</p>
+        </details>
+        <details>
+          <summary>Claude Fable 5の安全性分類器とはどのような仕組みですか？</summary>
+          <p class="tool-faq-a">サイバーセキュリティ・生物学・化学・蒸留などの高リスク領域に関するリクエストを自動検知して拒否する機能です。拒否された場合はHTTP 200でstop_reason: "refusal"が返り、出力が生成される前の拒否には課金されません。</p>
+        </details>
+        <details>
+          <summary>Claude Fable 5とClaude Mythos 5は何が違いますか？</summary>
+          <p class="tool-faq-a">モデルの基本能力は同等ですが、Fable 5には安全性分類器が搭載されており一般公開されています。Mythos 5は安全性分類器を含まず、Project Glasswingの承認済みパートナー限定で提供されています。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0142/">TF-0142 · Claudeの位置づけ</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0316/">HQ-0316 · Gemini vs Claude</a></li>
+          <li><a href="../../exams/g-kentei/drill/q/tf-499/">TF-499 · 高リスクAI</a></li>
+          <li><a href="../../exams/g-kentei/practice/q/g-350/">G-350 · 安全性・事実性</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../claude-mythos-5/">Claude Mythos 5</a></li>
+          <li><a href="../claude-model/">Claude</a></li>
+          <li><a href="../claude-4-opus/">Claude 4 Opus</a></li>
+          <li><a href="../constitutional-ai/">Constitutional AI</a></li>
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../foundation-model/">Foundation Model</a></li>
+          <li class="tool-related-list__soon">Project Glasswing（準備中）</li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
