@@ -26,11 +26,15 @@ GLOSSARY_INDEX = ROOT / "glossary" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 SITE_ORIGIN = "https://ai-master.jp"
 
-FEATURED_TERMS = [
-    {"id": "claude-fable-5", "icon": "tools/anthropic.svg"},
-    {"id": "claude-mythos-5", "icon": "tools/anthropic.svg"},
-]
-FEATURED_TERM_IDS = [t["id"] for t in FEATURED_TERMS]
+FEATURED_JSON = ROOT / "data" / "glossary-featured.json"
+ICON_ALIASES_JSON = ROOT / "data" / "glossary-icon-aliases.json"
+GLOSSARY_IMG = ROOT / "assets/images" / "glossary"
+
+PREFIX_VENDOR = (
+    ("claude-", "Anthropic"),
+    ("gpt-", "OpenAI"),
+    ("gemini-", "Google"),
+)
 
 PER_PAGE = 100
 INDEX_JSON = ROOT / "data" / "glossary-index.json"
@@ -79,6 +83,81 @@ def term_has_page(term: dict) -> bool:
     return (ROOT / "glossary" / term["id"] / "index.html").is_file()
 
 
+def load_featured_ids() -> list[str]:
+    if not FEATURED_JSON.is_file():
+        return []
+    return json.loads(FEATURED_JSON.read_text(encoding="utf-8"))
+
+
+def load_icon_aliases() -> dict:
+    if not ICON_ALIASES_JSON.is_file():
+        return {"vendors": {}, "terms": {}}
+    data = json.loads(ICON_ALIASES_JSON.read_text(encoding="utf-8"))
+    return {
+        "vendors": data.get("vendors") or {},
+        "terms": data.get("terms") or {},
+    }
+
+
+def _glossary_image_rel(path: Path) -> str | None:
+    try:
+        rel = path.relative_to(ROOT / "assets" / "images")
+    except ValueError:
+        return None
+    return rel.as_posix()
+
+
+def resolve_glossary_icon(term_id: str, csv_row: dict, aliases: dict) -> str | None:
+    """人気カード用アイコンを解決。詳細は data/GLOSSARY-FEATURED.md。"""
+    terms_map = aliases.get("terms") or {}
+    if term_id in terms_map:
+        return terms_map[term_id]
+
+    for ext in (".svg", ".png", ".webp"):
+        candidate = GLOSSARY_IMG / f"{term_id}{ext}"
+        if candidate.is_file():
+            return _glossary_image_rel(candidate)
+
+    notes = csv_row.get("notes") or ""
+    vendor_match = re.search(r"開発元:\s*(.+)", notes)
+    vendors = aliases.get("vendors") or {}
+    if vendor_match:
+        vendor = vendor_match.group(1).strip()
+        if vendor in vendors:
+            return vendors[vendor]
+
+    for prefix, vendor in PREFIX_VENDOR:
+        if term_id.startswith(prefix) and vendor in vendors:
+            return vendors[vendor]
+
+    category = csv_row.get("category") or ""
+    for ext in (".svg", ".png", ".webp"):
+        candidate = GLOSSARY_IMG / "categories" / f"{category}{ext}"
+        if candidate.is_file():
+            return _glossary_image_rel(candidate)
+
+    return None
+
+
+def build_featured_payload(csv_by_id: dict[str, dict]) -> tuple[list[str], list[dict]]:
+    aliases = load_icon_aliases()
+    featured: list[dict] = []
+    for term_id in load_featured_ids():
+        csv_row = csv_by_id.get(term_id)
+        if not csv_row:
+            print(f"warn: featured term not in CSV: {term_id}")
+            continue
+        if not term_has_page({"id": term_id}):
+            print(f"warn: featured term has no page: {term_id}")
+            continue
+        item: dict = {"id": term_id}
+        icon = resolve_glossary_icon(term_id, csv_row, aliases)
+        if icon:
+            item["icon"] = icon
+        featured.append(item)
+    return [item["id"] for item in featured], featured
+
+
 def render_term_row(term: dict, categories: dict) -> str:
     cat_label = categories.get(term["category"], term["category"])
     tag_cls = TAG_CLASS.get(term["category"], "tag-basics")
@@ -110,13 +189,14 @@ def render_term_row(term: dict, categories: dict) -> str:
     )
 
 
-def write_index_json(data: dict) -> None:
+def write_index_json(data: dict, csv_by_id: dict[str, dict]) -> None:
     categories = data["categories"]
     terms = data["terms"]
+    featured_ids, featured = build_featured_payload(csv_by_id)
     payload = {
         "categories": categories,
-        "featuredIds": FEATURED_TERM_IDS,
-        "featured": FEATURED_TERMS,
+        "featuredIds": featured_ids,
+        "featured": featured,
         "terms": [
             {
                 "id": t["id"],
@@ -438,6 +518,7 @@ def main() -> None:
 
     data = load_data()
     categories = data["categories"]
+    csv_by_id = {row["id"]: row for row in load_terms_csv()}
 
     if args.scaffold:
         term = next((t for t in data["terms"] if t["id"] == args.scaffold), None)
@@ -446,7 +527,7 @@ def main() -> None:
         scaffold_term_page(term, categories)
         return
 
-    write_index_json(data)
+    write_index_json(data, csv_by_id)
     GLOSSARY_INDEX.write_text(build_index_html(data), encoding="utf-8")
     print(f"wrote {GLOSSARY_INDEX.relative_to(ROOT)}")
     subprocess.run(

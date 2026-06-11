@@ -1,0 +1,8 @@
+{
+  "vendors": {
+    "Anthropic": "tools/anthropic.svg",
+    "OpenAI": "tools/chatgpt/logo.svg",
+    "Google": "tools/gemini/icon.svg"
+  },
+  "terms": {}
+}
