@@ -127,11 +127,6 @@
   justify-self: start;
   margin: 0 0 0 14px;
 }
-.tool-row-link > .hub-list-icon-spacer {
-  width: 56px;
-  height: 56px;
-  margin: 0 0 0 14px;
-}
 
 .tool-row-body {
   min-width: 0;
