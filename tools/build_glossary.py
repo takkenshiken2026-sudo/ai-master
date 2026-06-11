@@ -26,6 +26,8 @@ GLOSSARY_INDEX = ROOT / "glossary" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 SITE_ORIGIN = "https://ai-master.jp"
 
+FEATURED_TERM_IDS = ["claude-fable-5", "claude-mythos-5"]
+
 PER_PAGE = 100
 INDEX_JSON = ROOT / "data" / "glossary-index.json"
 
@@ -109,6 +111,7 @@ def write_index_json(data: dict) -> None:
     terms = data["terms"]
     payload = {
         "categories": categories,
+        "featuredIds": FEATURED_TERM_IDS,
         "terms": [
             {
                 "id": t["id"],
@@ -214,7 +217,7 @@ def build_index_html(data: dict) -> str:
   <div class="hub-filter-row" id="glossaryCategoryFilters" aria-label="カテゴリで絞り込み"></div>
 
   <section class="hub-featured" id="glossaryFeatured">
-    <p class="hub-featured-label">解説付きの用語</p>
+    <p class="hub-featured-label">人気のページ</p>
     <div class="hub-featured-grid" id="glossaryFeaturedGrid"></div>
   </section>
 

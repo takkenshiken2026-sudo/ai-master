@@ -1,5 +1,4 @@
 const PER_PAGE = 100;
-const FEATURED_LIMIT = 3;
 const INDEX_URL = '../data/glossary-index.json';
 
 const CATEGORY_ORDER = [
@@ -16,6 +15,7 @@ const HUB_CHEVRON =
 
 let categories = {};
 let allTerms = [];
+let featuredIds = [];
 
 function parseState() {
   const params = new URLSearchParams(window.location.search);
@@ -90,10 +90,12 @@ function renderFeatured(cat, page, q, sort) {
   const grid = document.getElementById('glossaryFeaturedGrid');
   if (!section || !grid) return;
   const show = cat === 'all' && page === 1 && !q;
-  const published = allTerms.filter((t) => t.published).slice(0, FEATURED_LIMIT);
-  section.hidden = !show || published.length === 0;
-  if (!show || published.length === 0) return;
-  grid.innerHTML = published.map(renderFeaturedCard).join('');
+  const featured = featuredIds
+    .map((id) => allTerms.find((t) => t.id === id && t.published))
+    .filter(Boolean);
+  section.hidden = !show || featured.length === 0;
+  if (!show || featured.length === 0) return;
+  grid.innerHTML = featured.map(renderFeaturedCard).join('');
 }
 
 function renderTermRow(term) {
@@ -318,6 +320,7 @@ async function init() {
     const data = await res.json();
     categories = data.categories || {};
     allTerms = data.terms || [];
+    featuredIds = data.featuredIds || [];
   } catch (err) {
     const list = document.getElementById('termList');
     if (list) {
