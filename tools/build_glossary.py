@@ -27,7 +27,7 @@ from hub_icons import (  # noqa: E402
     load_section_aliases,
     resolve_glossary_icon,
 )
-from site_meta import SITE_GA4_HTML  # noqa: E402
+from site_meta import SITE_GA4_HTML, SITE_ICONS_HTML  # noqa: E402
 GLOSSARY_INDEX = ROOT / "glossary" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 SITE_ORIGIN = "https://ai-master.jp"
@@ -163,7 +163,7 @@ def build_index_html(data: dict) -> str:
   <meta name="description" content="G検定・生成AIパスポートの学習に役立つAI用語辞典。生成AI、LLM、プロンプトなど、わかりやすく解説した用語集を掲載しています。">
   <title>AI用語辞典 — AI Master</title>
   <link rel="canonical" href="{SITE_ORIGIN}/glossary/">
-  <meta property="og:type" content="website">
+{SITE_ICONS_HTML}  <meta property="og:type" content="website">
   <meta property="og:site_name" content="AI Master">
   <meta property="og:title" content="AI用語辞典 — AI Master">
   <meta property="og:description" content="G検定・生成AIパスポートの学習に役立つAI用語辞典。">
