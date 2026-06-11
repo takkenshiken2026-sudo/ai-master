@@ -367,6 +367,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-pr",
+      "name": "広報・PRにおすすめのAI資格｜プレスリリース・危機対応に活かす方法",
+      "yomi": "AI Certs for PR",
+      "summary": "広報・PR向けにAI資格の選び方と活かし方。プレスリリース・メディア対応・危機コミュニケーションへの接続、事実確認とキャリアも解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "広報",
+        "PR",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
