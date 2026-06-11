@@ -212,6 +212,7 @@ def build_index_html(data: dict) -> str:
   <a href="../index.html" class="logo">AI<em>マスター</em></a>
   <ul class="nav-links">
     <li><a href="../exams/">試験対策</a></li>
+    <li><a href="../guide/">学習ガイド</a></li>
     <li><a href="index.html" class="active">用語辞典</a></li>
     <li><a href="../tools/">AIツール</a></li>
     <li><a href="../career/">キャリア</a></li>
@@ -354,6 +355,7 @@ def scaffold_term_page(term: dict, categories: dict) -> None:
   <a href="../../index.html" class="logo">AI<em>マスター</em></a>
   <ul class="nav-links">
     <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
     <li><a href="../index.html" class="active">用語辞典</a></li>
     <li><a href="../../tools/">AIツール</a></li>
     <li><a href="../../career/">キャリア</a></li>
