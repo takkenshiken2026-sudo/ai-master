@@ -217,6 +217,23 @@
       "published": true
     },
     {
+      "id": "non-engineer-ai-certs",
+      "name": "非エンジニアにおすすめのAI資格｜文系・ビジネス職が選ぶべき資格",
+      "yomi": "Non-Engineer AI Certs",
+      "summary": "文系・ビジネス職向けにAI資格を比較。生成AIパスポート・G検定・ITパスポートの選び方と、業務・転職への活かし方。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "文系",
+        "未経験",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": true,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
