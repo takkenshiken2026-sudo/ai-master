@@ -26,7 +26,11 @@ GLOSSARY_INDEX = ROOT / "glossary" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 SITE_ORIGIN = "https://ai-master.jp"
 
-FEATURED_TERM_IDS = ["claude-fable-5", "claude-mythos-5"]
+FEATURED_TERMS = [
+    {"id": "claude-fable-5", "icon": "tools/anthropic.svg"},
+    {"id": "claude-mythos-5", "icon": "tools/anthropic.svg"},
+]
+FEATURED_TERM_IDS = [t["id"] for t in FEATURED_TERMS]
 
 PER_PAGE = 100
 INDEX_JSON = ROOT / "data" / "glossary-index.json"
@@ -112,6 +116,7 @@ def write_index_json(data: dict) -> None:
     payload = {
         "categories": categories,
         "featuredIds": FEATURED_TERM_IDS,
+        "featured": FEATURED_TERMS,
         "terms": [
             {
                 "id": t["id"],

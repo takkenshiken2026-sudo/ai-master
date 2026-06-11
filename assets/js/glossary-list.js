@@ -1,4 +1,5 @@
 const PER_PAGE = 100;
+const ICON_BASE = '../assets/images/';
 const INDEX_URL = '../data/glossary-index.json';
 
 const CATEGORY_ORDER = [
@@ -15,7 +16,7 @@ const HUB_CHEVRON =
 
 let categories = {};
 let allTerms = [];
-let featuredIds = [];
+let featuredItems = [];
 
 function parseState() {
   const params = new URLSearchParams(window.location.search);
@@ -78,9 +79,21 @@ function matchesSearch(term, q) {
   return haystack.includes(needle);
 }
 
-function renderFeaturedCard(term) {
+function termIcon(iconPath) {
+  if (!iconPath) return '';
+  return (
+    `<div class="hub-featured-icon">` +
+    `<img src="${ICON_BASE}${iconPath}" alt="" width="32" height="32" loading="lazy">` +
+    `</div>`
+  );
+}
+
+function renderFeaturedCard(term, icon) {
   const inner =
+    `<div class="hub-featured-head">` +
+    termIcon(icon) +
     `<h3 class="hub-featured-name">${escapeHtml(term.name)}</h3>` +
+    `</div>` +
     `<p class="hub-featured-summary">${escapeHtml(term.summary || '')}</p>`;
   return `<a href="${encodeURI(term.id)}/" class="hub-featured-card">${inner}</a>`;
 }
@@ -90,12 +103,15 @@ function renderFeatured(cat, page, q, sort) {
   const grid = document.getElementById('glossaryFeaturedGrid');
   if (!section || !grid) return;
   const show = cat === 'all' && page === 1 && !q;
-  const featured = featuredIds
-    .map((id) => allTerms.find((t) => t.id === id && t.published))
+  const featured = featuredItems
+    .map(({ id, icon }) => {
+      const term = allTerms.find((t) => t.id === id && t.published);
+      return term ? { term, icon } : null;
+    })
     .filter(Boolean);
   section.hidden = !show || featured.length === 0;
   if (!show || featured.length === 0) return;
-  grid.innerHTML = featured.map(renderFeaturedCard).join('');
+  grid.innerHTML = featured.map(({ term, icon }) => renderFeaturedCard(term, icon)).join('');
 }
 
 function renderTermRow(term) {
@@ -320,7 +336,7 @@ async function init() {
     const data = await res.json();
     categories = data.categories || {};
     allTerms = data.terms || [];
-    featuredIds = data.featuredIds || [];
+    featuredItems = data.featured || (data.featuredIds || []).map((id) => ({ id }));
   } catch (err) {
     const list = document.getElementById('termList');
     if (list) {

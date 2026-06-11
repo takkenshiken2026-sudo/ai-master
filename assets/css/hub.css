@@ -171,6 +171,28 @@
   cursor: default;
   opacity: 0.92;
 }
+.hub-featured-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hub-featured-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+}
+.hub-featured-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
 .hub-featured-summary {
   font-size: var(--text-sm);
   line-height: 1.65;
