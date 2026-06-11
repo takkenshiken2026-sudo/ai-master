@@ -955,6 +955,7 @@
   padding: 10px 12px;
   background: var(--white);
   border-radius: 0;
+  border: 1px solid var(--gray-200);
   border-left: 3px solid var(--blue);
   text-decoration: none;
   width: 100%;
@@ -963,10 +964,13 @@
 .tool-related-wrap:has(#related-exams) .tool-related-list--cards li:not(.tool-related-list__index) a:hover {
   background: var(--blue-soft);
   color: var(--blue);
+  border-color: var(--blue-mid);
+  border-left-color: var(--blue);
 }
 .tool-related-wrap:has(#related-exams) #related-terms .tool-related-list--cards .tool-related-list__soon {
   font-size: var(--text-sm);
   color: var(--text-muted);
+  border-color: var(--gray-200);
   border-left-color: var(--gray-300);
 }
 .tool-related-wrap:has(#related-exams) .tool-related-list--cards .tool-related-list__index {
