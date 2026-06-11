@@ -412,6 +412,20 @@ FLOWS: dict[str, FlowSpec] = {
         highlight_index=3,
         loop_caption="目的が変われば次の資格も見直す",
     ),
+    "ai-certs-by-role": FlowSpec(
+        title="職種別AI資格の選び方",
+        subtitle="自分の立場から第1候補へ",
+        steps=[
+            ("01", "職種", "確認", "業界も"),
+            ("02", "一覧", "参照", "第1候補"),
+            ("03", "詳細", "記事", "深掘り"),
+            ("04", "学習", "・合格", ""),
+            ("05", "業務", "試行", "成果記録"),
+            ("06", "次の", "資格", "必要なら"),
+        ],
+        highlight_index=2,
+        loop_caption="詳細記事で学習方針を固める",
+    ),
     "non-engineer-ai-certs": FlowSpec(
         title="非エンジニアのAI資格選び",
         subtitle="文系・ビジネス職が第1候補を決める",
