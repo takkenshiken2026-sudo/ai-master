@@ -782,7 +782,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px 36px;
-  align-items: stretch;
+  align-items: start;
 }
 .tool-related-section-title {
   font-size: var(--text-xl);
@@ -821,7 +821,7 @@
   #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms):not(#related-guides):not(#related-resources) {
   grid-column: 1 / -1;
 }
-/* 用語辞典: 試験問題｜関連用語（正方形・背景なし） */
+/* 用語辞典・ガイド・キャリア: 試験問題｜関連用語（2列カード・背景なし） */
 .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-exams,
 .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-guides,
 .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-terms,
@@ -833,19 +833,6 @@
   border: none;
   border-radius: 0;
   box-sizing: border-box;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  overflow: hidden;
-}
-.tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-exams .tool-related-list--cards,
-.tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-guides .tool-related-list--cards,
-.tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-terms .tool-related-list--cards,
-.tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-resources .tool-related-list--cards {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
 }
 .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-exams .tool-related-heading,
 .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-guides .tool-related-heading,
@@ -1156,13 +1143,6 @@ body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#re
     #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms):not(#related-guides):not(#related-resources) {
     grid-column: 1;
     grid-row: auto;
-  }
-  .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-exams,
-  .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-guides,
-  .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-terms,
-  .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)) #related-resources {
-    aspect-ratio: auto;
-    overflow: visible;
   }
 }
 @media (max-width: 640px) {
