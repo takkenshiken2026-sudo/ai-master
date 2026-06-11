@@ -10,6 +10,12 @@ function hubFeaturedIcon(iconPath) {
   );
 }
 
+function hubListIcon(iconPath) {
+  return iconPath
+    ? hubFeaturedIcon(iconPath)
+    : '<div class="hub-list-icon-spacer" aria-hidden="true"></div>';
+}
+
 function hubFeaturedCardInner(name, summary, icon, badgeHtml) {
   const badge = badgeHtml || '';
   const title = `<h3 class="hub-featured-name">${name}</h3>`;

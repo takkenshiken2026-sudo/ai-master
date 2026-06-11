@@ -84,9 +84,13 @@ def audit_report(articles: list[dict], meta: dict) -> str:
 def sync_index_categories(data: dict, meta: dict) -> dict:
     categories = {k: v["label"] for k, v in meta["categories"].items()}
     articles = data.get("articles") or data.get("roles") or []
+    aliases = load_section_aliases("career")
     cleaned = []
     for article in articles:
         row = {k: v for k, v in article.items() if k not in ("featured", "icon")}
+        icon = resolve_career_icon(article["id"], article.get("category", ""), aliases)
+        if icon:
+            row["icon"] = icon
         cleaned.append(row)
     return {"categories": categories, "articles": cleaned}
 

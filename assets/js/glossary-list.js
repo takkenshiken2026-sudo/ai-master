@@ -109,6 +109,7 @@ function renderTermRow(term) {
     ? ''
     : '<span class="hub-list-pill">準備中</span>';
   const inner =
+    hubListIcon(term.icon) +
     `<div class="hub-list-body">` +
     `<div class="hub-list-top">` +
     `<h2 class="hub-list-name">${escapeHtml(term.name)}</h2>` +

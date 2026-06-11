@@ -72,6 +72,7 @@ function renderArticleRow(article) {
     ? ''
     : '<span class="hub-list-pill">準備中</span>';
   const inner =
+    hubListIcon(article.icon) +
     `<div class="hub-list-body">` +
     `<div class="hub-list-top">` +
     `<h2 class="hub-list-name">${escapeHtml(article.name)}</h2>` +

@@ -45,6 +45,7 @@ def main() -> None:
 
     articles: list[dict] = []
     by_id: dict[str, dict] = {}
+    aliases = load_section_aliases("guide")
     with CSV_FILE.open(encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -68,11 +69,13 @@ def main() -> None:
                 "priority": row["優先度"].strip(),
                 "published": article_published(article_id),
             }
+            icon = resolve_guide_icon(article_id, category, aliases)
+            if icon:
+                article["icon"] = icon
             articles.append(article)
             by_id[article_id] = {"category": category}
 
     articles.sort(key=lambda a: a["no"])
-    aliases = load_section_aliases("guide")
 
     def resolve(article_id: str, ctx: dict) -> str | None:
         return resolve_guide_icon(article_id, ctx["category"], aliases)

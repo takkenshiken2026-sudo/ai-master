@@ -129,22 +129,28 @@ def write_index_json(data: dict, csv_by_id: dict[str, dict]) -> None:
     categories = data["categories"]
     terms = data["terms"]
     featured_ids, featured = build_featured_payload(csv_by_id)
+    aliases = load_section_aliases("glossary")
+    term_rows: list[dict] = []
+    for t in terms:
+        csv_row = csv_by_id.get(t["id"], {})
+        entry = {
+            "id": t["id"],
+            "name": t["name"],
+            "yomi": t.get("yomi") or "",
+            "summary": t.get("summary") or "",
+            "category": t["category"],
+            "sortKey": t.get("sortKey") or t["name"][:1],
+            "published": term_has_page(t),
+        }
+        icon = resolve_glossary_icon(t["id"], csv_row, aliases)
+        if icon:
+            entry["icon"] = icon
+        term_rows.append(entry)
     payload = {
         "categories": categories,
         "featuredIds": featured_ids,
         "featured": featured,
-        "terms": [
-            {
-                "id": t["id"],
-                "name": t["name"],
-                "yomi": t.get("yomi") or "",
-                "summary": t.get("summary") or "",
-                "category": t["category"],
-                "sortKey": t.get("sortKey") or t["name"][:1],
-                "published": term_has_page(t),
-            }
-            for t in terms
-        ],
+        "terms": term_rows,
     }
     INDEX_JSON.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     print(f"wrote {INDEX_JSON.relative_to(ROOT)}")
