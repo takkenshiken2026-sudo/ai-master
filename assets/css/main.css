@@ -296,15 +296,15 @@ body {
   transform: translateY(-3px);
 }
 .cat-icon-tile {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   margin-bottom: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 5px 4px 4px;
+  gap: 2px;
+  padding: 4px 2px 3px;
   background: #fff;
   border: 1px solid var(--gray-200);
   border-radius: 10px;

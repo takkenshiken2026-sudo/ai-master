@@ -312,7 +312,7 @@
   color: var(--blue);
 }
 .hub-list-link {
-  --hub-list-icon-w: 88px;
+  --hub-list-icon-w: 80px;
   --hub-list-aside-w: 52px;
   display: grid;
   grid-template-columns: var(--hub-list-icon-w) minmax(0, 1fr) var(--hub-list-aside-w);
