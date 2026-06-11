@@ -909,6 +909,13 @@
   margin-top: 0;
   margin-bottom: 12px;
   padding-top: 0;
+  align-items: stretch;
+}
+.tool-content section .tool-phase > h3::before {
+  width: 4px;
+  height: auto;
+  align-self: stretch;
+  background: var(--blue);
 }
 .tool-phase .tool-example-list {
   margin-top: 0;
