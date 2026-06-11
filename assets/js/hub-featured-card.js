@@ -49,7 +49,7 @@ function hubFeaturedIcon(iconPath) {
 
 function hubListIconTile(iconPath, label) {
   const icon = iconPath
-    ? `<img class="hub-list-icon-tile__img" src="${HUB_ICON_BASE}${iconPath}" alt="" width="40" height="40" loading="lazy">`
+    ? `<img class="hub-list-icon-tile__img" src="${HUB_ICON_BASE}${iconPath}" alt="" width="48" height="48" loading="lazy">`
     : '<span class="hub-list-icon-tile__img hub-list-icon-tile__img--empty" aria-hidden="true"></span>';
   const text = label
     ? `<span class="hub-list-icon-tile__label">${label}</span>`

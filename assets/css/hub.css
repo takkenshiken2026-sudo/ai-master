@@ -203,20 +203,15 @@
   height: 72%;
   padding: 0;
 }
-/* カテゴリ線画（グレータイル上・黒 stroke） */
-.hub-featured-icon:has(img[src*="hub-icons/"]) {
-  background: #f2f2f2;
-  border-color: transparent;
-  box-shadow: none;
-}
+/* カテゴリ線画 — AIツールと同じ白背景・枠・影 */
 .hub-featured-icon:has(img[src*="hub-icons/"]) img {
-  width: 70%;
-  height: 70%;
+  width: 72%;
+  height: 72%;
   padding: 0;
 }
 .hub-list-icon-tile:has(img[src*="hub-icons/"]) .hub-list-icon-tile__img {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
 }
 .hub-featured-summary {
   font-size: var(--text-sm);
@@ -311,7 +306,7 @@
   color: var(--blue);
 }
 .hub-list-link {
-  --hub-list-icon-w: 88px;
+  --hub-list-icon-w: 112px;
   --hub-list-aside-w: 52px;
   display: grid;
   grid-template-columns: var(--hub-list-icon-w) minmax(0, 1fr) var(--hub-list-aside-w);
@@ -323,45 +318,43 @@
   background: transparent;
 }
 .hub-list-icon-tile {
-  width: 72px;
-  min-height: 72px;
-  margin: 12px 0 12px 14px;
+  width: 96px;
+  min-height: 96px;
+  margin: 14px 0 14px 16px;
   align-self: center;
   justify-self: start;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 10px 4px 8px;
-  background: #f2f2f2;
+  gap: 8px;
+  padding: 12px 8px 10px;
+  background: #fff;
+  border: 1px solid var(--gray-200);
   border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.1);
   box-sizing: border-box;
 }
 .hub-list-icon-tile__img {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
 }
-.hub-list-icon-tile:has(img[src*="hub-icons/"]) .hub-list-icon-tile__img {
-  width: 32px;
-  height: 32px;
-}
 .hub-list-icon-tile:has(img[src*="tools/"]) .hub-list-icon-tile__img {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
 }
 .hub-list-icon-tile__img--empty {
-  background: var(--gray-200);
-  border-radius: 8px;
+  background: var(--gray-100);
+  border-radius: 10px;
 }
 .hub-list-icon-tile__label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.3;
   text-align: center;
   color: var(--ink);
   max-width: 100%;
