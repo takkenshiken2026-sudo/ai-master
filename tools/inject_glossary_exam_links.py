@@ -33,6 +33,13 @@ EXAM_HUBS = {
     ],
 }
 
+EXAM_GROUP_LABELS = {
+    "g-kentei": "G検定",
+    "genai-passport": "生成AIパスポート",
+}
+
+SECTION_TITLE = '      <h2 class="tool-related-section-title">関連する試験・用語</h2>'
+
 
 def hub_exams(entry: dict) -> list[str]:
     """Show drill/mock/practice hubs for exams with hand-curated question links first."""
@@ -46,33 +53,65 @@ def hub_exams(entry: dict) -> list[str]:
 def render_resources_block(entry: dict) -> str:
     exams = hub_exams(entry)
     questions = entry.get("questions") or []
-    items: list[str] = []
+    groups: list[str] = []
 
     for exam_id in exams:
+        hub_items: list[str] = []
+        prefix = EXAM_GROUP_LABELS.get(exam_id, exam_id)
         for label, mode in EXAM_HUBS.get(exam_id, []):
             href = f"../../exams/{exam_id}/{mode}/"
-            items.append(f'          <li><a href="{href}">{html.escape(label)}</a></li>')
+            short = label.removeprefix(f"{prefix} ").strip()
+            hub_items.append(
+                f'              <li><a href="{href}">{html.escape(short)}</a></li>'
+            )
+        if not hub_items:
+            continue
+        lis = "\n".join(hub_items)
+        groups.append(
+            f"""        <div class="tool-related-exam-group">
+          <p class="tool-related-subheading">{html.escape(prefix)}</p>
+          <ul class="tool-related-list tool-related-list--hubs">
+{lis}
+          </ul>
+        </div>"""
+        )
 
+    drill_html = ""
     first_drill = next((q for q in questions if q.get("mode") == "drill"), None)
     if first_drill:
         player = first_drill.get("playerUrl", "").lstrip("/")
         qid = first_drill.get("id") or first_drill.get("slug", "").upper()
-        items.append(
-            f'          <li><a href="../../{player}">{html.escape(qid)}を演習モードで解く</a></li>'
+        drill_html = (
+            f'        <p class="tool-related-drill-link">'
+            f'<a href="../../{player}">{html.escape(qid)}を演習モードで解く →</a></p>'
         )
 
-    if not items:
+    if not groups and not drill_html:
         return ""
 
-    lis = "\n".join(items)
+    groups_html = "\n".join(groups)
     return f"""{MARKER_START}
       <div class="tool-related-block" id="exam-resources">
         <h2 class="tool-related-heading">演習・模擬試験</h2>
-        <ul class="tool-related-list">
-{lis}
-        </ul>
+        <div class="tool-related-exam-groups">
+{groups_html}
+        </div>
+{drill_html}
       </div>
 {MARKER_END}"""
+
+
+def ensure_section_title(text: str) -> str:
+    if "tool-related-section-title" in text:
+        return text
+    if "exam-resources:start" not in text and 'id="exam-resources"' not in text:
+        return text
+    return re.sub(
+        r'(<aside class="tool-related-wrap"[^>]*>)',
+        r"\1\n" + SECTION_TITLE,
+        text,
+        count=1,
+    )
 
 
 def inject_into_html(text: str, block: str) -> str:
@@ -117,6 +156,7 @@ def inject_term(term_id: str, entry: dict) -> bool:
         return False
     original = path.read_text(encoding="utf-8")
     updated = inject_into_html(original, block)
+    updated = ensure_section_title(updated)
     if updated == original:
         print(f"unchanged: {term_id}")
         return False
