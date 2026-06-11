@@ -21,14 +21,18 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from glossary_terms import load_terms_csv, sync_json_from_csv, terms_to_json_payload  # noqa: E402
-from hub_icons import load_aliases, resolve_glossary_icon  # noqa: E402
+from hub_icons import (  # noqa: E402
+    build_featured,
+    load_featured_ids,
+    load_section_aliases,
+    resolve_glossary_icon,
+)
 from site_meta import SITE_GA4_HTML  # noqa: E402
 GLOSSARY_INDEX = ROOT / "glossary" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 SITE_ORIGIN = "https://ai-master.jp"
 
 FEATURED_JSON = ROOT / "data" / "glossary-featured.json"
-ICON_ALIASES_JSON = ROOT / "data" / "glossary-icon-aliases.json"
 
 PER_PAGE = 100
 INDEX_JSON = ROOT / "data" / "glossary-index.json"
@@ -77,29 +81,19 @@ def term_has_page(term: dict) -> bool:
     return (ROOT / "glossary" / term["id"] / "index.html").is_file()
 
 
-def load_featured_ids() -> list[str]:
-    if not FEATURED_JSON.is_file():
-        return []
-    return json.loads(FEATURED_JSON.read_text(encoding="utf-8"))
-
-
 def build_featured_payload(csv_by_id: dict[str, dict]) -> tuple[list[str], list[dict]]:
-    aliases = load_aliases(ICON_ALIASES_JSON)
-    featured: list[dict] = []
-    for term_id in load_featured_ids():
-        csv_row = csv_by_id.get(term_id)
-        if not csv_row:
-            print(f"warn: featured term not in CSV: {term_id}")
-            continue
-        if not term_has_page({"id": term_id}):
-            print(f"warn: featured term has no page: {term_id}")
-            continue
-        item: dict = {"id": term_id}
-        icon = resolve_glossary_icon(term_id, csv_row, aliases)
-        if icon:
-            item["icon"] = icon
-        featured.append(item)
-    return [item["id"] for item in featured], featured
+    aliases = load_section_aliases("glossary")
+
+    def resolve(term_id: str, ctx: dict) -> str | None:
+        return resolve_glossary_icon(term_id, ctx, aliases)
+
+    return build_featured(
+        load_featured_ids(FEATURED_JSON),
+        resolve_icon=resolve,
+        context_by_id=csv_by_id,
+        is_live=lambda term_id: term_has_page({"id": term_id}),
+        label="glossary featured",
+    )
 
 
 def render_term_row(term: dict, categories: dict) -> str:

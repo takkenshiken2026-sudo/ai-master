@@ -15,10 +15,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from hub_icons import load_aliases, resolve_career_icon  # noqa: E402
+from hub_icons import (  # noqa: E402
+    build_featured,
+    load_featured_ids,
+    load_section_aliases,
+    resolve_career_icon,
+)
 CATEGORIES_FILE = ROOT / "data" / "career-categories.json"
 INDEX_FILE = ROOT / "data" / "career-index.json"
-ICON_ALIASES_JSON = ROOT / "data" / "career-icon-aliases.json"
+FEATURED_JSON = ROOT / "data" / "career-featured.json"
+CAREER_DIR = ROOT / "career"
 
 
 def load_categories() -> dict:
@@ -27,6 +33,10 @@ def load_categories() -> dict:
 
 def load_index() -> dict:
     return json.loads(INDEX_FILE.read_text(encoding="utf-8"))
+
+
+def article_published(article_id: str) -> bool:
+    return (CAREER_DIR / article_id / "index.html").is_file()
 
 
 def validate(articles: list[dict], cat_ids: set[str]) -> list[str]:
@@ -71,20 +81,30 @@ def audit_report(articles: list[dict], meta: dict) -> str:
     return "\n".join(lines)
 
 
-def enrich_article_icons(articles: list[dict]) -> None:
-    aliases = load_aliases(ICON_ALIASES_JSON)
-    for article in articles:
-        icon = resolve_career_icon(article["id"], article.get("category", ""), aliases)
-        if icon:
-            article["icon"] = icon
-        else:
-            article.pop("icon", None)
-
-
 def sync_index_categories(data: dict, meta: dict) -> dict:
     categories = {k: v["label"] for k, v in meta["categories"].items()}
     articles = data.get("articles") or data.get("roles") or []
-    return {"categories": categories, "articles": articles}
+    cleaned = []
+    for article in articles:
+        row = {k: v for k, v in article.items() if k not in ("featured", "icon")}
+        cleaned.append(row)
+    return {"categories": categories, "articles": cleaned}
+
+
+def build_featured_payload(articles: list[dict]) -> tuple[list[str], list[dict]]:
+    by_id = {a["id"]: {"category": a.get("category", "")} for a in articles}
+    aliases = load_section_aliases("career")
+
+    def resolve(article_id: str, ctx: dict) -> str | None:
+        return resolve_career_icon(article_id, ctx["category"], aliases)
+
+    return build_featured(
+        load_featured_ids(FEATURED_JSON),
+        resolve_icon=resolve,
+        context_by_id=by_id,
+        is_live=article_published,
+        label="career featured",
+    )
 
 
 def main() -> None:
@@ -105,9 +125,12 @@ def main() -> None:
         raise SystemExit(1)
 
     payload = sync_index_categories(data, meta)
-    enrich_article_icons(payload["articles"])
+    featured_ids, featured = build_featured_payload(payload["articles"])
+    payload["featuredIds"] = featured_ids
+    payload["featured"] = featured
+
     INDEX_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"synced {INDEX_FILE.relative_to(ROOT)}")
+    print(f"synced {INDEX_FILE} ({len(featured)} featured)")
     print()
     print(audit_report(payload["articles"], meta))
 

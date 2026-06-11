@@ -1,5 +1,4 @@
 const PER_PAGE = 10;
-const FEATURED_LIMIT = 3;
 const INDEX_URL = '../data/career-index.json';
 
 const CATEGORY_ORDER = ['role', 'learn', 'move', 'market'];
@@ -10,6 +9,7 @@ const HUB_CHEVRON =
 
 let categories = {};
 let allArticles = [];
+let featuredItems = [];
 
 function parseState() {
   const params = new URLSearchParams(window.location.search);
@@ -101,13 +101,15 @@ function renderArticleRow(article) {
   return `<li class="hub-list-row hub-list-row--planned"><div class="hub-list-link" aria-disabled="true">${inner}</div></li>`;
 }
 
-function renderFeaturedCard(article) {
+function renderFeaturedCard(item) {
+  const article = allArticles.find((a) => a.id === item.id);
+  if (!article) return '';
   const cls = article.published ? 'hub-featured-card' : 'hub-featured-card hub-featured-card--planned';
   const badge = article.published ? '' : '<span class="hub-list-pill">準備中</span>';
   const inner = hubFeaturedCardInner(
     escapeHtml(article.name),
     escapeHtml(article.summary),
-    article.icon,
+    item.icon,
     badge,
   );
 
@@ -142,13 +144,15 @@ function renderFeatured(cat, page, q) {
   const grid = document.getElementById('careerFeaturedGrid');
   if (!section || !grid) return;
   const show = cat === 'all' && page === 1 && !q;
-  section.hidden = !show;
-  if (!show) return;
-  grid.innerHTML = allArticles
-    .filter((a) => a.featured)
-    .slice(0, FEATURED_LIMIT)
-    .map(renderFeaturedCard)
-    .join('');
+  const featured = featuredItems
+    .map((item) => {
+      const article = allArticles.find((a) => a.id === item.id && a.published);
+      return article ? item : null;
+    })
+    .filter(Boolean);
+  section.hidden = !show || featured.length === 0;
+  if (!show || featured.length === 0) return;
+  grid.innerHTML = featured.map(renderFeaturedCard).join('');
 }
 
 function renderPagination(cat, page, q, totalPages) {
@@ -259,6 +263,7 @@ async function init() {
     const data = await res.json();
     categories = data.categories || {};
     allArticles = data.articles || data.roles || [];
+    featuredItems = data.featured || [];
   } catch (err) {
     const list = document.getElementById('roleList');
     if (list) {

@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""ハブ（用語辞典・学習ガイド・キャリア）のカードアイコン解決。"""
+"""人気カード用アイコン解決（用語辞典・学習ガイド・キャリア共通）。"""
 
 from __future__ import annotations
 
 import json
 import re
+from typing import Callable
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 IMAGES = ROOT / "assets" / "images"
+ALIASES_FILE = ROOT / "data" / "hub-icon-aliases.json"
 ICON_EXTS = (".svg", ".png", ".webp", ".jpg")
 
 PREFIX_VENDOR = (
@@ -18,14 +20,48 @@ PREFIX_VENDOR = (
 )
 
 
-def load_aliases(path: Path) -> dict:
+def load_featured_ids(path: Path) -> list[str]:
     if not path.is_file():
+        return []
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_section_aliases(section: str) -> dict:
+    if not ALIASES_FILE.is_file():
         return {"vendors": {}, "terms": {}}
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return {
-        "vendors": data.get("vendors") or {},
-        "terms": data.get("terms") or {},
-    }
+    data = json.loads(ALIASES_FILE.read_text(encoding="utf-8"))
+    block = data.get(section) or {}
+    if section == "glossary":
+        return {
+            "vendors": block.get("vendors") or {},
+            "terms": block.get("terms") or {},
+        }
+    return {"vendors": {}, "terms": block.get("terms") or {}}
+
+
+def build_featured(
+    featured_ids: list[str],
+    *,
+    resolve_icon: Callable[[str, dict], str | None],
+    context_by_id: dict[str, dict],
+    is_live: Callable[[str], bool],
+    label: str = "featured",
+) -> tuple[list[str], list[dict]]:
+    featured: list[dict] = []
+    for item_id in featured_ids:
+        ctx = context_by_id.get(item_id)
+        if not ctx:
+            print(f"warn: {label} id not found: {item_id}")
+            continue
+        if not is_live(item_id):
+            print(f"warn: {label} id not published: {item_id}")
+            continue
+        entry: dict = {"id": item_id}
+        icon = resolve_icon(item_id, ctx)
+        if icon:
+            entry["icon"] = icon
+        featured.append(entry)
+    return [item["id"] for item in featured], featured
 
 
 def rel_image(path: Path) -> str | None:
