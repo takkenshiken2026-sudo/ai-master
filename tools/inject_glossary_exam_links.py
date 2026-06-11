@@ -114,6 +114,23 @@ def ensure_section_title(text: str) -> str:
     )
 
 
+def move_exam_resources_to_end(text: str) -> str:
+    """Place exam-resources after related terms (bottom of aside)."""
+    pattern = re.compile(
+        re.escape(MARKER_START) + r"[\s\S]*?" + re.escape(MARKER_END)
+    )
+    match = pattern.search(text)
+    if not match:
+        return text
+    block = match.group(0)
+    text_without = pattern.sub("", text, count=1)
+    text_without = re.sub(r"\n{3,}", "\n\n", text_without)
+    aside_end = text_without.rfind("</aside>")
+    if aside_end == -1:
+        return text
+    return text_without[:aside_end].rstrip() + "\n" + block + "\n" + text_without[aside_end:]
+
+
 def inject_into_html(text: str, block: str) -> str:
     if not block:
         return text
@@ -122,27 +139,16 @@ def inject_into_html(text: str, block: str) -> str:
         re.escape(MARKER_START) + r"[\s\S]*?" + re.escape(MARKER_END)
     )
     if pattern.search(text):
-        return pattern.sub(block, text, count=1)
-
-    if 'id="exam-resources"' in text or "exam-resources:start" in text:
+        text = pattern.sub(block, text, count=1)
+    elif 'id="exam-resources"' in text or "exam-resources:start" in text:
         return text
+    else:
+        aside_end = text.rfind("</aside>")
+        if aside_end == -1:
+            return text
+        text = text[:aside_end].rstrip() + "\n" + block + "\n" + text[aside_end:]
 
-    # Insert after related-exams block if present, else after opening aside
-    anchor = '      <div class="tool-related-block" id="related-exams">'
-    if anchor in text:
-        end = text.find("      </div>", text.find(anchor))
-        if end != -1:
-            end += len("      </div>")
-            return text[:end] + "\n" + block + text[end:]
-
-    aside = '<aside class="tool-related-wrap"'
-    pos = text.find(aside)
-    if pos == -1:
-        return text
-    close = text.find(">", pos)
-    if close == -1:
-        return text
-    return text[: close + 1] + "\n" + block + text[close + 1 :]
+    return move_exam_resources_to_end(text)
 
 
 def inject_term(term_id: str, entry: dict) -> bool:
@@ -157,6 +163,7 @@ def inject_term(term_id: str, entry: dict) -> bool:
     original = path.read_text(encoding="utf-8")
     updated = inject_into_html(original, block)
     updated = ensure_section_title(updated)
+    updated = move_exam_resources_to_end(updated)
     if updated == original:
         print(f"unchanged: {term_id}")
         return False

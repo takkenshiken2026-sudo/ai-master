@@ -796,19 +796,59 @@
   background: var(--blue);
   border-radius: 2px;
 }
-/* 用語辞典: 試験2列 + 以降フル幅 */
+/* 用語辞典: 上段＝試験問題｜関連用語、下段＝演習カード */
 .tool-related-wrap:has(#exam-resources) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px 36px;
+  gap: 24px 36px;
   align-items: start;
 }
 .tool-related-wrap:has(#exam-resources) .tool-related-section-title {
   grid-column: 1 / -1;
   margin-bottom: 4px;
 }
-.tool-related-wrap:has(#exam-resources) #exam-resources ~ .tool-related-block {
+.tool-related-wrap:has(#exam-resources) #related-exams {
+  grid-column: 1;
+  grid-row: 2;
+}
+.tool-related-wrap:has(#exam-resources)
+  #related-exams ~ .tool-related-block:not(#exam-resources):first-of-type {
+  grid-column: 2;
+  grid-row: 2;
+}
+.tool-related-wrap:has(#exam-resources)
+  #related-exams ~ .tool-related-block:not(#exam-resources):not(:first-of-type) {
   grid-column: 1 / -1;
+}
+.tool-related-wrap:has(#exam-resources) #exam-resources {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  padding: 20px 24px;
+  background: var(--blue-soft);
+  border: 1px solid var(--blue-mid);
+  border-radius: var(--radius-md);
+}
+.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-heading {
+  margin-bottom: 16px;
+}
+.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-exam-groups {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+}
+.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-exam-group {
+  flex: 1 1 220px;
+}
+.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-drill-link {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border-top: none;
+  background: var(--white);
+  border: 1px solid var(--blue-mid);
+  border-radius: var(--radius-sm);
+}
+.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-drill-link a {
+  font-size: var(--text-base);
 }
 /* AIツール記事: 2列（ツール / 用語） */
 .tool-related-wrap:not(:has(#exam-resources)) {
@@ -948,14 +988,16 @@
   background: var(--blue-soft);
   color: var(--blue);
 }
-/* 関連用語・関連ツール（チップ） */
-.tool-related-wrap:has(#exam-resources) #exam-resources ~ .tool-related-block .tool-related-list,
+/* 関連用語・関連ツール（チップ）— exam-resources より前のブロック */
+.tool-related-wrap:has(#exam-resources)
+  #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-list,
 .tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 10px;
 }
-.tool-related-wrap:has(#exam-resources) #exam-resources ~ .tool-related-block .tool-related-list a,
+.tool-related-wrap:has(#exam-resources)
+  #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-list a,
 .tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list a {
   width: auto;
   padding: 7px 14px;
@@ -965,7 +1007,8 @@
   border-radius: 999px;
   text-decoration: none;
 }
-.tool-related-wrap:has(#exam-resources) #exam-resources ~ .tool-related-block .tool-related-list a:hover,
+.tool-related-wrap:has(#exam-resources)
+  #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-list a:hover,
 .tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list a:hover {
   border-color: var(--blue-mid);
   background: var(--blue-soft);
@@ -1072,8 +1115,18 @@
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  .tool-related-wrap:has(#exam-resources) #exam-resources ~ .tool-related-block {
+  .tool-related-wrap:has(#exam-resources) #related-exams,
+  .tool-related-wrap:has(#exam-resources)
+    #related-exams ~ .tool-related-block:not(#exam-resources):first-of-type,
+  .tool-related-wrap:has(#exam-resources)
+    #related-exams ~ .tool-related-block:not(#exam-resources):not(:first-of-type),
+  .tool-related-wrap:has(#exam-resources) #exam-resources {
     grid-column: 1;
+    grid-row: auto;
+  }
+  .tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-exam-groups {
+    flex-direction: column;
+    gap: 16px;
   }
 }
 @media (max-width: 640px) {
