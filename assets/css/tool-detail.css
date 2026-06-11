@@ -776,9 +776,13 @@
   margin-top: 48px;
   padding-top: 32px;
 }
-.tool-related-wrap:has(#exam-resources) {
+.tool-related-wrap:has(#related-exams) {
   border-top: none;
   padding-top: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 36px;
+  align-items: stretch;
 }
 .tool-related-section-title {
   font-size: var(--text-xl);
@@ -799,42 +803,29 @@
   background: var(--blue);
   border-radius: 2px;
 }
-/* 用語辞典: 上段＝試験問題｜関連用語、下段＝演習カード */
-.tool-related-wrap:has(#exam-resources) {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px 36px;
-  align-items: stretch;
-}
-.tool-related-wrap:has(#exam-resources) .tool-related-section-title {
+.tool-related-wrap:has(#related-exams) .tool-related-section-title {
   grid-column: 1 / -1;
   margin-bottom: 4px;
 }
-.tool-related-wrap:has(#exam-resources) #related-exams {
+.tool-related-wrap:has(#related-exams) #related-exams {
   grid-column: 1;
   grid-row: 2;
 }
-.tool-related-wrap:has(#exam-resources)
-  #related-exams + .tool-related-block:not(#exam-resources) {
+.tool-related-wrap:has(#related-exams) #related-terms {
   grid-column: 2;
   grid-row: 2;
 }
-.tool-related-wrap:has(#exam-resources) #related-terms {
-  grid-column: 2;
-  grid-row: 2;
-}
-.tool-related-wrap:has(#exam-resources)
-  #related-exams + .tool-related-block:not(#exam-resources)
-  ~ .tool-related-block:not(#exam-resources) {
+.tool-related-wrap:has(#related-exams)
+  #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms) {
   grid-column: 1 / -1;
 }
-/* 上段2枚: 試験問題・関連用語（枠線なし・正方形） */
-.tool-related-wrap:has(#exam-resources) #related-exams,
-.tool-related-wrap:has(#exam-resources) #related-terms,
-.tool-related-wrap:has(#exam-resources)
-  #related-exams + .tool-related-block:not(#exam-resources):not(#related-terms) {
-  padding: 20px 24px;
-  background: var(--gray-100);
+/* 用語辞典: 試験問題｜関連用語（正方形・背景なし） */
+.tool-related-wrap:has(#related-exams) #related-exams,
+.tool-related-wrap:has(#related-exams) #related-terms,
+.tool-related-wrap:has(#related-exams)
+  #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms) {
+  padding: 0;
+  background: none;
   border: none;
   border-radius: 0;
   box-sizing: border-box;
@@ -844,59 +835,20 @@
   min-height: 0;
   overflow: hidden;
 }
-.tool-related-wrap:has(#exam-resources) #related-exams .tool-related-list--cards,
-.tool-related-wrap:has(#exam-resources) #related-terms .tool-related-list--cards {
+.tool-related-wrap:has(#related-exams) #related-exams .tool-related-list--cards,
+.tool-related-wrap:has(#related-exams) #related-terms .tool-related-list--cards {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
 }
-.tool-related-wrap:has(#exam-resources)
-  #related-exams + .tool-related-block:not(#exam-resources)
-  ~ .tool-related-block:not(#exam-resources) {
-  padding: 20px 24px;
-  background: var(--gray-100);
-  border: none;
-  border-radius: 0;
-  box-sizing: border-box;
-}
-.tool-related-wrap:has(#exam-resources) #exam-resources {
-  grid-column: 1 / -1;
-  margin-top: 4px;
-  padding: 20px 24px;
-  background: var(--blue-soft);
-  border: none;
-  border-radius: 0;
-  box-sizing: border-box;
-}
-.tool-related-wrap:has(#exam-resources) #related-exams .tool-related-heading,
-.tool-related-wrap:has(#exam-resources) #related-terms .tool-related-heading,
-.tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-heading {
+.tool-related-wrap:has(#related-exams) #related-exams .tool-related-heading,
+.tool-related-wrap:has(#related-exams) #related-terms .tool-related-heading,
+.tool-related-wrap:has(#related-exams)
+  #related-exams ~ .tool-related-block:not(#related-exams) .tool-related-heading {
   margin-bottom: 16px;
-}
-.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-heading {
-  margin-bottom: 16px;
-}
-.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-exam-groups {
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px 40px;
-}
-.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-exam-group {
-  flex: 1 1 220px;
-}
-.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-drill-link {
-  margin: 16px 0 0;
-  padding: 12px 16px;
-  border: none;
-  background: var(--white);
-  border-radius: 0;
-}
-.tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-drill-link a {
-  font-size: var(--text-base);
 }
 /* AIツール記事: 2列（ツール / 用語） */
-.tool-related-wrap:not(:has(#exam-resources)) {
+.tool-related-wrap:not(:has(#related-exams)) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px 36px;
@@ -992,14 +944,14 @@
   text-decoration-color: var(--blue);
 }
 /* 試験問題・関連用語（カード行） */
-.tool-related-wrap:has(#exam-resources) .tool-related-list--cards {
+.tool-related-wrap:has(#related-exams) .tool-related-list--cards {
   display: flex;
   flex-direction: column;
   gap: 8px;
   flex-wrap: nowrap;
 }
-.tool-related-wrap:has(#exam-resources) .tool-related-list--cards li:not(.tool-related-list__index) a,
-.tool-related-wrap:has(#exam-resources) #related-terms .tool-related-list--cards .tool-related-list__soon {
+.tool-related-wrap:has(#related-exams) .tool-related-list--cards li:not(.tool-related-list__index) a,
+.tool-related-wrap:has(#related-exams) #related-terms .tool-related-list--cards .tool-related-list__soon {
   padding: 10px 12px;
   background: var(--white);
   border-radius: 0;
@@ -1008,22 +960,22 @@
   width: 100%;
   box-sizing: border-box;
 }
-.tool-related-wrap:has(#exam-resources) .tool-related-list--cards li:not(.tool-related-list__index) a:hover {
+.tool-related-wrap:has(#related-exams) .tool-related-list--cards li:not(.tool-related-list__index) a:hover {
   background: var(--blue-soft);
   color: var(--blue);
 }
-.tool-related-wrap:has(#exam-resources) #related-terms .tool-related-list--cards .tool-related-list__soon {
+.tool-related-wrap:has(#related-exams) #related-terms .tool-related-list--cards .tool-related-list__soon {
   font-size: var(--text-sm);
   color: var(--text-muted);
   border-left-color: var(--gray-300);
 }
-.tool-related-wrap:has(#exam-resources) .tool-related-list--cards .tool-related-list__index {
+.tool-related-wrap:has(#related-exams) .tool-related-list--cards .tool-related-list__index {
   flex: 0 0 auto;
   margin-top: 4px;
   padding-top: 8px;
   border-top: 1px solid var(--gray-200);
 }
-.tool-related-wrap:has(#exam-resources) .tool-related-list--cards .tool-related-list__index a {
+.tool-related-wrap:has(#related-exams) .tool-related-list--cards .tool-related-list__index a {
   padding: 6px 0;
   background: none;
   border: none;
@@ -1032,7 +984,7 @@
   text-decoration: underline;
   text-decoration-color: var(--gray-300);
 }
-.tool-related-wrap:has(#exam-resources) .tool-related-list--cards .tool-related-list__index a:hover {
+.tool-related-wrap:has(#related-exams) .tool-related-list--cards .tool-related-list__index a:hover {
   background: none;
   color: var(--blue);
 }
@@ -1061,16 +1013,16 @@
   color: var(--blue);
 }
 /* 関連AIツール等（exam-resources より前・関連用語以外） */
-.tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources):not(#related-terms) .tool-related-list,
-.tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list {
+.tool-related-wrap:has(#related-exams)
+  #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms) .tool-related-list,
+.tool-related-wrap:not(:has(#related-exams)) .tool-related-block:last-child .tool-related-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 10px;
 }
-.tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources):not(#related-terms) .tool-related-list a,
-.tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list a {
+.tool-related-wrap:has(#related-exams)
+  #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms) .tool-related-list a,
+.tool-related-wrap:not(:has(#related-exams)) .tool-related-block:last-child .tool-related-list a {
   width: auto;
   padding: 7px 14px;
   font-size: var(--text-sm);
@@ -1079,9 +1031,9 @@
   border-radius: 0;
   text-decoration: none;
 }
-.tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources):not(#related-terms) .tool-related-list a:hover,
-.tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list a:hover {
+.tool-related-wrap:has(#related-exams)
+  #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms) .tool-related-list a:hover,
+.tool-related-wrap:not(:has(#related-exams)) .tool-related-block:last-child .tool-related-list a:hover {
   background: var(--blue-soft);
   color: var(--blue);
 }
@@ -1181,28 +1133,20 @@
     width: min(80%, 100%);
   }
   .tool-plan-grid { grid-template-columns: repeat(2, 1fr); }
-  .tool-related-wrap:has(#exam-resources),
-  .tool-related-wrap:not(:has(#exam-resources)) {
+  .tool-related-wrap:has(#related-exams),
+  .tool-related-wrap:not(:has(#related-exams)) {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  .tool-related-wrap:has(#exam-resources) #related-exams,
-  .tool-related-wrap:has(#exam-resources) #related-terms,
-  .tool-related-wrap:has(#exam-resources)
-    #related-exams + .tool-related-block:not(#exam-resources),
-  .tool-related-wrap:has(#exam-resources)
-    #related-exams + .tool-related-block:not(#exam-resources)
-    ~ .tool-related-block:not(#exam-resources),
-  .tool-related-wrap:has(#exam-resources) #exam-resources {
+  .tool-related-wrap:has(#related-exams) #related-exams,
+  .tool-related-wrap:has(#related-exams) #related-terms,
+  .tool-related-wrap:has(#related-exams)
+    #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms) {
     grid-column: 1;
     grid-row: auto;
   }
-  .tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-exam-groups {
-    flex-direction: column;
-    gap: 16px;
-  }
-  .tool-related-wrap:has(#exam-resources) #related-exams,
-  .tool-related-wrap:has(#exam-resources) #related-terms {
+  .tool-related-wrap:has(#related-exams) #related-exams,
+  .tool-related-wrap:has(#related-exams) #related-terms {
     aspect-ratio: auto;
     overflow: visible;
   }
@@ -1213,8 +1157,8 @@
   .tool-hero--article h1 { font-size: var(--text-xl); }
   .tool-content > section h2 { font-size: var(--text-lg); }
   .tool-related-section-title { font-size: var(--text-lg); }
-  .tool-related-wrap:has(#exam-resources),
-  .tool-related-wrap:not(:has(#exam-resources)) { gap: 20px; }
+  .tool-related-wrap:has(#related-exams),
+  .tool-related-wrap:not(:has(#related-exams)) { gap: 20px; }
   .tool-feature-grid,
   .tool-usecase-grid { grid-template-columns: 1fr; }
   .tool-plan-grid { grid-template-columns: 1fr; }

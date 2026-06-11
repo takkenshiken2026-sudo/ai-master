@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""用語辞典記事に「演習・模擬試験」ブロックを注入する（SEO主リンクは維持）。
+"""（非推奨）用語辞典への exam-resources 注入は廃止。除去は strip_glossary_footer_extras.py を使用。
 
-  python3 tools/inject_glossary_exam_links.py --ids generative-ai,text-to-video,bert
-  python3 tools/inject_glossary_exam_links.py --all
+  python3 tools/strip_glossary_footer_extras.py
 """
 
 from __future__ import annotations

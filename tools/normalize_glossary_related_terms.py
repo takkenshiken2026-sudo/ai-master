@@ -48,7 +48,7 @@ def normalize_terms_list(items: list[str], limit: int) -> list[str]:
             soon.append(li.strip())
         else:
             links.append(li.strip())
-    return links[:limit] + soon + index
+    return links[:limit] + soon
 
 
 def normalize_html(text: str) -> tuple[str, bool]:
