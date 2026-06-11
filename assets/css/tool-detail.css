@@ -59,17 +59,31 @@
   object-fit: cover;
   object-position: center;
 }
-.tool-hero-visual--affiliate a {
+.tool-hero-visual.tool-hero-visual--affiliate {
+  overflow: visible;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto !important;
+  max-height: none !important;
+}
+.tool-hero--career .tool-hero-visual.tool-hero-visual--affiliate,
+.tool-hero--guide .tool-hero-visual.tool-hero-visual--affiliate {
+  max-width: 300px;
+}
+.tool-hero-visual.tool-hero-visual--affiliate a {
   display: block;
   line-height: 0;
 }
-.tool-hero-visual--affiliate img {
-  aspect-ratio: auto;
+.tool-hero--career .tool-hero-visual.tool-hero-visual--affiliate img,
+.tool-hero--guide .tool-hero-visual.tool-hero-visual--affiliate img {
+  flex: none;
   width: 100%;
-  max-width: 300px;
   height: auto;
+  min-height: 0;
+  aspect-ratio: 6 / 5;
   object-fit: contain;
-  margin-inline: auto;
+  object-position: center;
 }
 .career-article .tool-content .tool-figure,
 .guide-article .tool-content .tool-figure {
@@ -278,6 +292,16 @@
   display: block;
   width: 100%;
   height: auto;
+}
+.tool-figure > a {
+  display: block;
+  line-height: 0;
+}
+.tool-figure > a img {
+  transition: opacity 0.15s;
+}
+.tool-figure > a:hover img {
+  opacity: 0.88;
 }
 .tool-figure figcaption {
   padding: 10px 14px;
@@ -567,6 +591,25 @@
 .tool-content a[href^="http"]:hover {
   opacity: 0.65;
 }
+/* アフィリエイト（sponsored）テキストリンク */
+.tool-content a[rel~="sponsored"]:not(:has(img)),
+.tool-product-links a[rel~="sponsored"] {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-color: var(--blue-mid);
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+.tool-content a[rel~="sponsored"]:not(:has(img)) strong,
+.tool-product-links a[rel~="sponsored"] strong {
+  color: inherit;
+}
+.tool-content a[rel~="sponsored"]:not(:has(img)):hover,
+.tool-product-links a[rel~="sponsored"]:hover {
+  color: var(--blue-hover);
+  text-decoration-color: var(--blue);
+  opacity: 1;
+}
 
 .tool-spec-table {
   width: 100%;
@@ -698,7 +741,17 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+.tool-steps a[rel~="sponsored"] {
+  color: var(--blue);
+  text-decoration-color: var(--blue-mid);
+  font-weight: 600;
+}
 .tool-steps a:hover { opacity: 0.65; }
+.tool-steps a[rel~="sponsored"]:hover {
+  color: var(--blue-hover);
+  text-decoration-color: var(--blue);
+  opacity: 1;
+}
 .tool-steps li strong {
   display: block;
   font-size: var(--text-base);
@@ -1169,10 +1222,15 @@ body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#re
     aspect-ratio: 16 / 9;
     object-fit: cover;
   }
-  .tool-hero-visual--affiliate img {
-    aspect-ratio: auto;
-    object-fit: contain;
+  .tool-hero--career .tool-hero-visual.tool-hero-visual--affiliate,
+  .tool-hero--guide .tool-hero-visual.tool-hero-visual--affiliate {
     max-width: min(300px, 100%);
+    justify-self: center;
+  }
+  .tool-hero--career .tool-hero-visual.tool-hero-visual--affiliate img,
+  .tool-hero--guide .tool-hero-visual.tool-hero-visual--affiliate img {
+    aspect-ratio: 6 / 5;
+    object-fit: contain;
   }
   .career-article .tool-content .tool-figure,
   .guide-article .tool-content .tool-figure {
