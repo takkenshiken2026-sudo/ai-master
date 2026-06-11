@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AIマスター各一覧の「人気のページ」カードの運用。設定ファイル・公開中の記事リンク。">
+  <title>人気カードの書き方 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/docs/hub-featured/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <style>
+    .hub-featured-live { list-style:none; padding:0; margin:16px 0 0; display:grid; gap:10px; }
+    .hub-featured-live__item a,
+    .hub-featured-live__item { display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--surface-inset); border:1px solid var(--border-subtle); text-decoration:none; color:inherit; }
+    .hub-featured-live__item a:hover { background:var(--blue-soft); }
+    .hub-featured-live__item img { width:32px; height:32px; object-fit:contain; flex-shrink:0; }
+    .hub-featured-live__ph { width:32px; text-align:center; color:var(--gray-400); flex-shrink:0; }
+    .hub-featured-live__item--warn { opacity:.85; }
+    .tool-content-section { margin-top:36px; }
+    .tool-content-section h2 { font-size:var(--text-xl); margin:0 0 8px; }
+    .tool-spec-table code { font-size:.9em; }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li aria-current="page">人気カードの書き方</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">運用</p>
+    <h1>人気カードの書き方</h1>
+    <p class="tool-hero-sub">用語辞典 · 学習ガイド · キャリア共通</p>
+  </header>
+  <article class="tool-content">
+    <p class="tool-lead">一覧上部の <strong>人気のページ</strong> に載る記事とアイコンの設定方法です。下のリンクから<strong>現在公開中の記事</strong>を確認できます。</p>
+
+    <section>
+      <h2>一覧ページ</h2>
+      <ul class="tool-example-list">
+        <li><a href="https://ai-master.jp/glossary/">用語辞典</a></li>
+        <li><a href="https://ai-master.jp/guide/">学習ガイド</a></li>
+        <li><a href="https://ai-master.jp/career/">キャリア</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>いま載っている記事</h2>
+    <section class="tool-content-section">
+      <h2>用語辞典</h2>
+      <p><a href="https://ai-master.jp/glossary/">一覧を見る</a> · 設定: <code>data/glossary-featured.json</code></p>
+      <ul class="hub-featured-live">
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/claude-fable-5/"><img src="/assets/images/tools/anthropic.svg" alt="" width="32" height="32" loading="lazy"><span>Claude Fable 5</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/claude-mythos-5/"><img src="/assets/images/tools/anthropic.svg" alt="" width="32" height="32" loading="lazy"><span>Claude Mythos 5</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/agi/"><img src="/assets/images/glossary/categories/basics.svg" alt="" width="32" height="32" loading="lazy"><span>AGI</span></a></li>
+</ul>
+    </section>
+    <section class="tool-content-section">
+      <h2>学習ガイド</h2>
+      <p><a href="https://ai-master.jp/guide/">一覧を見る</a> · 設定: <code>data/guide-featured.json</code></p>
+      <ul class="hub-featured-live">
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/g-kentei-overview-01/"><img src="/assets/images/guide/categories/g-kentei.svg" alt="" width="32" height="32" loading="lazy"><span>G検定とは？AIに詳しくない人でもわかる試験の全体像</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/g-kentei-overview-02/"><img src="/assets/images/guide/categories/g-kentei.svg" alt="" width="32" height="32" loading="lazy"><span>G検定の受験料・試験日程・申込方法【2026年最新版】</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/genai-overview-01/"><img src="/assets/images/guide/categories/genai.svg" alt="" width="32" height="32" loading="lazy"><span>生成AIパスポートとは？AI初心者向けに試験の全体像を解説</span></a></li>
+</ul>
+    </section>
+    <section class="tool-content-section">
+      <h2>キャリア</h2>
+      <p><a href="https://ai-master.jp/career/">一覧を見る</a> · 設定: <code>data/career-featured.json</code></p>
+      <ul class="hub-featured-live">
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/ai-engineer/"><img src="/assets/images/career/ai-engineer/role-flow.png" alt="" width="32" height="32" loading="lazy"><span>AIエンジニアとは？仕事内容・年収・必要スキル</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/machine-learning-engineer/"><img src="/assets/images/career/machine-learning-engineer/role-flow.png" alt="" width="32" height="32" loading="lazy"><span>機械学習エンジニアとは？仕事内容・年収・キャリアパス</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/data-scientist/"><img src="/assets/images/career/data-scientist/role-flow.png" alt="" width="32" height="32" loading="lazy"><span>データサイエンティストとは？分析業務とキャリア像</span></a></li>
+</ul>
+    </section>
+    </section>
+
+    <section>
+      <h2>やること（2つ）</h2>
+      <h3>1. 載せる記事を決める</h3>
+      <p><code>*-featured.json</code> に記事IDを上から順に書く。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>ページ</th><th>ファイル</th></tr></thead>
+        <tbody>
+          <tr><td>用語辞典</td><td><code>data/glossary-featured.json</code></td></tr>
+          <tr><td>学習ガイド</td><td><code>data/guide-featured.json</code></td></tr>
+          <tr><td>キャリア</td><td><code>data/career-featured.json</code></td></tr>
+        </tbody>
+      </table>
+      <h3>2. ビルド</h3>
+      <pre class="tool-code-block"><code>python3 tools/build_glossary.py
+python3 tools/build_guide_index.py
+python3 tools/rebuild_career.py
+python3 tools/build_hub_featured_doc.py</code></pre>
+    </section>
+
+    <section>
+      <h2>アイコン</h2>
+      <p>画像を置けば自動。例外だけ <code>data/hub-icon-aliases.json</code>。</p>
+      <table class="tool-spec-table">
+        <thead><tr><th>ページ</th><th>記事用</th><th>共通</th></tr></thead>
+        <tbody>
+          <tr><td>用語辞典</td><td><code>assets/images/glossary/{ID}.svg</code></td><td><code>glossary/categories/</code></td></tr>
+          <tr><td>学習ガイド</td><td><code>assets/images/guide/{ID}/icon.svg</code></td><td><code>guide/categories/</code></td></tr>
+          <tr><td>キャリア</td><td><code>assets/images/career/{ID}/role*.png</code></td><td><code>career/categories/</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

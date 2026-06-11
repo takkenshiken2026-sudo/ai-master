@@ -474,6 +474,11 @@ def main() -> None:
         check=True,
         cwd=str(ROOT),
     )
+    subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "build_hub_featured_doc.py")],
+        check=True,
+        cwd=str(ROOT),
+    )
     update_sitemap(data)
 
 
