@@ -1041,6 +1041,27 @@
   background: var(--blue-soft);
   color: var(--blue);
 }
+/* 学習ガイド: 2列とも縦並びリンク（ツール記事のチップ表示を上書き） */
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list {
+  display: block;
+}
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list a {
+  width: 100%;
+  padding: 9px 0;
+  font-size: var(--text-base);
+  line-height: 1.55;
+  background: none;
+  border: none;
+  border-radius: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--gray-300);
+  text-underline-offset: 3px;
+}
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list a:hover {
+  background: none;
+  color: var(--blue);
+  text-decoration-color: var(--blue);
+}
 .tool-related-list__index {
   flex: 1 0 100%;
   margin-top: 4px;
