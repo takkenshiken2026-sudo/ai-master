@@ -232,6 +232,11 @@
   font-size: var(--text-base);
 }
 
+/* SEO 用クローラリンク（JS 描画前の FOUC 防止） */
+.hub-crawl-links[hidden] {
+  display: none !important;
+}
+
 /* List（AIツール基準） */
 .hub-list {
   list-style: none;
