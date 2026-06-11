@@ -215,10 +215,6 @@
   height: 72%;
   padding: 0;
 }
-.hub-list-icon-tile:has(img[src*="hub-icons/"]) .hub-list-icon-tile__img {
-  width: 36px;
-  height: 36px;
-}
 .hub-featured-summary {
   font-size: var(--text-sm);
   line-height: 1.65;
@@ -324,8 +320,8 @@
   background: transparent;
 }
 .hub-list-icon-tile {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   margin: 0;
   align-self: center;
   justify-self: center;
@@ -334,7 +330,7 @@
   align-items: center;
   justify-content: center;
   gap: 3px;
-  padding: 5px 4px 4px;
+  padding: 6px 5px 5px;
   background: #fff;
   border: 1px solid var(--gray-200);
   border-radius: 10px;
@@ -343,11 +339,15 @@
   overflow: hidden;
 }
 .hub-list-icon-tile__img {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
+}
+.hub-list-icon-tile:has(img[src*="hub-icons/"]) .hub-list-icon-tile__img {
+  width: 34px;
+  height: 34px;
 }
 .hub-list-icon-tile:has(img[src*="tools/"]) .hub-list-icon-tile__img {
   width: 34px;
@@ -355,8 +355,8 @@
   border-radius: 7px;
 }
 .hub-list-icon-tile__img--empty {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   background: var(--gray-100);
   border-radius: 7px;
 }
@@ -407,7 +407,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 14px 20px;
+  padding: 16px 20px;
   border-left: 1px solid var(--border-default);
 }
 .hub-list-top {
