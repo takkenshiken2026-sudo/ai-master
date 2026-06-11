@@ -71,17 +71,22 @@ function countByCategory() {
 
 function toolIcon(tool, options) {
   const opts = options || {};
+  if (!tool.logo) {
+    return opts.featured
+      ? ''
+      : '<div class="hub-list-icon-spacer" aria-hidden="true"></div>';
+  }
   if (opts.featured) {
-    if (!tool.logo) return '';
     return (
       `<div class="hub-featured-icon">` +
       `<img src="${logoSrc(tool)}" alt="" width="56" height="56" loading="lazy">` +
       `</div>`
     );
   }
-  return hubListIconTile(
-    tool.logo ? `tools/${tool.logo}` : '',
-    escapeHtml(tool.catLabel || '')
+  return (
+    `<div class="hub-featured-icon">` +
+    `<img src="${logoSrc(tool)}" alt="" width="56" height="56" loading="lazy">` +
+    `</div>`
   );
 }
 

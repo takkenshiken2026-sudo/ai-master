@@ -368,7 +368,9 @@
   margin: 16px 0 16px 20px;
 }
 .hub-list-link > .hub-list-icon-spacer {
-  display: none;
+  width: 56px;
+  height: 56px;
+  margin: 0 0 0 14px;
 }
 .hub-list-row--planned .hub-list-link {
   cursor: default;

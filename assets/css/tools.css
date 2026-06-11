@@ -117,13 +117,20 @@
   background: transparent;
   transition: background 0.12s;
 }
-.tool-row-link > .hub-list-icon-tile {
+.tool-row-link > .hub-list-icon-spacer {
+  width: 56px;
+  height: 56px;
   margin: 0 0 0 14px;
 }
 .tool-row-link > .hub-featured-icon {
   align-self: center;
   justify-self: start;
-  margin: 16px 0 16px 20px;
+  margin: 0 0 0 14px;
+}
+.tool-row-link > .hub-list-icon-spacer {
+  width: 56px;
+  height: 56px;
+  margin: 0 0 0 14px;
 }
 
 .tool-row-body {
