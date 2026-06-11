@@ -22,7 +22,7 @@ function hubCategoryShortLabel(hub, category, fullLabel) {
   if (mapped) return mapped;
   if (hub === 'guide') {
     if (category.startsWith('g-kentei')) return 'G検定';
-    if (category.startsWith('genai')) return 'パスポート';
+    if (category.startsWith('genai')) return 'AIパスポート';
     const guideLabels = {
       compare: '比較',
       terms: '用語',
