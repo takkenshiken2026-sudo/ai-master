@@ -300,6 +300,22 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-admin",
+      "name": "事務職におすすめのAI資格｜業務効率化・文書作成に活かせる資格を解説",
+      "yomi": "AI Certs for Admin",
+      "summary": "事務職向けにAI資格の選び方と活かし方。メール・議事録・社内文書の効率化、情報管理とキャリアパスも解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "事務",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
