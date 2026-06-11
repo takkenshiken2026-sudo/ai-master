@@ -77,8 +77,6 @@ function escapeHtml(text) {
 function renderArticleRow(article) {
   const catLabel = categories[article.category] || article.category;
   const tileLabel = hubCategoryShortLabel('career', article.category, catLabel);
-  const salary = formatSalary(article);
-  const sub = salary || article.yomi || '';
   const status = article.published
     ? ''
     : '<span class="hub-list-pill">準備中</span>';
@@ -89,7 +87,6 @@ function renderArticleRow(article) {
     `<h2 class="hub-list-name">${escapeHtml(article.name)}</h2>` +
     status +
     `</div>` +
-    (sub ? `<p class="hub-list-sub">${escapeHtml(sub)}</p>` : '') +
     (article.summary ? `<p class="hub-list-desc">${escapeHtml(article.summary)}</p>` : '') +
     `</div>` +
     `<div class="hub-list-aside">` +
