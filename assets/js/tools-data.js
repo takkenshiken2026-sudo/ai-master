@@ -668,6 +668,17 @@ const TOOLS = [
     url: "https://pika.art",
   },
   {
+    id: "plaud",
+    name: "Plaud",
+    maker: "Plaud",
+    logo: "plaud/app-icon.png",
+    cat: "audio",
+    catLabel: "音声・動画・音楽",
+    article: true,
+    tagline: "AIボイスレコーダー。対面・通話の文字起こしと要約",
+    url: "https://jp.plaud.ai/",
+  },
+  {
     id: "runway",
     name: "Runway",
     maker: "Runway",

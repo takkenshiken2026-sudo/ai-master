@@ -15,6 +15,20 @@
       "published": true,
       "datePublished": "2026-06-12",
       "notes": null
+    },
+    {
+      "id": "plaud",
+      "path": "tools/plaud/",
+      "type": "tool",
+      "partner": "Plaud",
+      "officialUrl": "https://jp.plaud.ai/",
+      "affiliateUrl": "https://px.a8.net/svt/ejp?a8mat=4B5R02+728BSY+5J4W+5YRHE",
+      "affiliateBannerUrl": "https://px.a8.net/svt/ejp?a8mat=4B5R02+728BSY+5J4W+62MDD",
+      "affiliateBannerImage": "https://www22.a8.net/svt/bgt?aid=260608754427&wid=011&eno=01&mid=s00000025808001020000&mc=1",
+      "asp": "A8",
+      "published": true,
+      "datePublished": "2026-06-13",
+      "notes": null
     }
   ]
 }
