@@ -823,6 +823,17 @@
       "priority": "高",
       "featured": true,
       "published": true
+    },
+    {
+      "id": "g-kentei-practice-03",
+      "no": 73,
+      "name": "G検定の模擬試験の使い方と復習方法",
+      "summary": "",
+      "category": "g-kentei-practice",
+      "keyword": "G検定 模擬試験 使い方",
+      "priority": "高",
+      "featured": false,
+      "published": true
     }
   ]
 }
