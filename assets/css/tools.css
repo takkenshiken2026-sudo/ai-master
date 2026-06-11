@@ -105,7 +105,7 @@
   background: var(--surface-table-row);
 }
 .tool-row-link {
-  --tool-list-icon-w: 112px;
+  --tool-list-icon-w: 88px;
   --tool-list-aside-w: 52px;
   display: grid;
   grid-template-columns: var(--tool-list-icon-w) minmax(0, 1fr) var(--tool-list-aside-w);
@@ -118,7 +118,7 @@
   transition: background 0.12s;
 }
 .tool-row-link > .hub-list-icon-tile {
-  margin: 14px 0 14px 16px;
+  margin: 12px 0 12px 14px;
 }
 .tool-row-link > .hub-featured-icon {
   align-self: center;
