@@ -400,6 +400,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-newgrad",
+      "name": "新入社員におすすめのAI資格｜入社前・配属後に取るべき資格と活かし方",
+      "yomi": "AI Certs for New Grad",
+      "summary": "新入社員・新卒向けにAI資格の選び方と活かし方。入社前の取得タイミング、配属後の業務接続、社内ルールとキャリアも解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "新入社員",
+        "新卒",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
