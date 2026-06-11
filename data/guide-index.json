@@ -869,6 +869,17 @@
       "priority": "高",
       "featured": true,
       "published": true
+    },
+    {
+      "id": "genai-practice-02",
+      "no": 77,
+      "name": "生成AIパスポートの過去問想定問題で対策する方法",
+      "summary": "",
+      "category": "genai-practice",
+      "keyword": "生成AIパスポート 過去問 対策",
+      "priority": "高",
+      "featured": true,
+      "published": true
     }
   ]
 }
