@@ -200,6 +200,23 @@
       "published": true
     },
     {
+      "id": "beginner-ai-certs-compare",
+      "name": "AI初心者が最初に取るべき資格｜生成AIパスポート・G検定・ITパスポートを比較",
+      "yomi": "Beginner AI Certs",
+      "summary": "AI初心者向けに3資格を目的別に比較。業務活用・AI職・IT基礎のどれを優先するか、最初の1枚として整理。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "未経験",
+        "資格",
+        "G検定",
+        "生成AIパスポート"
+      ],
+      "featured": true,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
