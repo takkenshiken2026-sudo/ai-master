@@ -812,18 +812,19 @@
   grid-row: 2;
 }
 .tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources):first-of-type {
+  #related-exams + .tool-related-block:not(#exam-resources) {
   grid-column: 2;
   grid-row: 2;
 }
 .tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources):not(:first-of-type) {
+  #related-exams + .tool-related-block:not(#exam-resources)
+  ~ .tool-related-block:not(#exam-resources) {
   grid-column: 1 / -1;
 }
 /* 上段2枚: 試験問題・関連用語カード */
 .tool-related-wrap:has(#exam-resources) #related-exams,
 .tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources):first-of-type {
+  #related-exams + .tool-related-block:not(#exam-resources) {
   padding: 20px 24px;
   background: var(--white);
   border: 1px solid var(--gray-200);
@@ -831,7 +832,8 @@
   box-sizing: border-box;
 }
 .tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources):not(:first-of-type) {
+  #related-exams + .tool-related-block:not(#exam-resources)
+  ~ .tool-related-block:not(#exam-resources) {
   padding: 20px 24px;
   background: var(--white);
   border: 1px solid var(--gray-200);
@@ -1141,9 +1143,10 @@
   }
   .tool-related-wrap:has(#exam-resources) #related-exams,
   .tool-related-wrap:has(#exam-resources)
-    #related-exams ~ .tool-related-block:not(#exam-resources):first-of-type,
+    #related-exams + .tool-related-block:not(#exam-resources),
   .tool-related-wrap:has(#exam-resources)
-    #related-exams ~ .tool-related-block:not(#exam-resources):not(:first-of-type),
+    #related-exams + .tool-related-block:not(#exam-resources)
+    ~ .tool-related-block:not(#exam-resources),
   .tool-related-wrap:has(#exam-resources) #exam-resources {
     grid-column: 1;
     grid-row: auto;
