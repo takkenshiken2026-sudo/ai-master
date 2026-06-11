@@ -417,6 +417,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-30s",
+      "name": "30代社会人におすすめのAI資格｜リスキリングとキャリアの広げ方",
+      "yomi": "AI Certs for 30s",
+      "summary": "30代社会人向けにAI資格の選び方と活かし方。本業との両立、転職・昇進・副業での第1候補と第二資格、時間の確保まで解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "30代",
+        "リスキリング",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
