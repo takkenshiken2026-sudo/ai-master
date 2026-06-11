@@ -70,6 +70,9 @@ function countByCategory() {
 }
 
 function toolIcon(tool) {
+  if (!tool.logo) {
+    return '<div class="hub-list-icon-spacer" aria-hidden="true"></div>';
+  }
   return (
     `<div class="hub-featured-icon">` +
     `<img src="${logoSrc(tool)}" alt="" width="56" height="56" loading="lazy">` +

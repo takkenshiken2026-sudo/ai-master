@@ -281,7 +281,9 @@ def ensure_article_images(tool_id: str, page_url: str, maker: str) -> tuple[str,
         for host in hosts:
             for url in (
                 f"https://{host}/apple-touch-icon.png",
-                f"https://www.google.com/s2/favicons?domain={host}&sz=256",
+                f"https://{host}/favicon-32x32.png",
+                f"https://{host}/favicon.png",
+                f"https://{host}/favicon.ico",
             ):
                 data = fetch_bytes(url)
                 if data:

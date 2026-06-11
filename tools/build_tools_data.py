@@ -51,7 +51,7 @@ USER_AGENT = (
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 )
 
-# メーカー共通 SVG（個別アイコンが取れないときのフォールバック）
+# メーカー共通 SVG — 一覧表示には使わない（記事内のベンダー表記用にファイルのみ保持）
 SHARED_LOGO = {
     "chatgpt": "openai.svg",
     "dalle": "openai.svg",
@@ -101,12 +101,13 @@ ICON_DOMAIN_OVERRIDE = {
 
 # 直接ダウンロードURL（Bot対策で favicon が HTML になる場合）
 DIRECT_ICON_URL = {
-    "devin": "https://devin.ai/icon.png",
-    "ollama": "https://ollama.com/public/apple-touch-icon.png",
-    "bolt-new": "https://cdn.simpleicons.org/stackblitz/1389FD",
-    # 記事用ヒーローアイコン（各社公式）
+    "chatgpt": "https://chatgpt.com/cdn/assets/favicon-32x32.png",
     "claude": "https://claude.ai/apple-touch-icon.png",
     "gemini": "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg",
+    "devin": "https://devin.ai/icon.png",
+    "ollama": "https://ollama.com/public/apple-touch-icon.png",
+    "bolt-new": "https://bolt.new/static/favicon-32x32.png",
+    "lovable": "https://lovable.dev/apple-touch-icon.png",
     "copilot": "https://copilot.microsoft.com/favicon.ico",
     "grok": "https://grok.com/apple-touch-icon.png",
     "meta-ai": "https://static.xx.fbcdn.net/assets/?set=meta_ai_assets&name=meta-ai-orbit-favicon-180px-raster&density=4x&mode=light",
@@ -124,11 +125,7 @@ DIRECT_ICON_URL = {
     "bing-image-creator": "https://www.bing.com/sa/simg/favicon-2x.ico",
     "github-copilot": "https://github.com/apple-touch-icon.png",
     "cursor": "https://cursor.com/apple-touch-icon.png",
-    "windsurf": "https://www.google.com/s2/favicons?domain=codeium.com&sz=256",
     "replit": "https://replit.com/public/images/replit-logo-small.png",
-    "v0": "https://www.google.com/s2/favicons?domain=v0.dev&sz=256",
-    "bolt-new": "https://cdn.simpleicons.org/stackblitz/1389FD",
-    "lovable": "https://lovable.dev/apple-touch-icon.png",
     "tabnine": "https://www.tabnine.com/wp-content/uploads/2024/09/cropped-tabnine-favicon-270x270.png",
     "amazon-q-developer": "https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/product-categories/business-application/approved/images/qdev_merch_qdev_v1_1280x1280.e0fc098598c9a070a7a5c866716c387fba743c1e.jpg",
     "warp": "https://www.warp.dev/android-chrome-512x512.png",
@@ -281,16 +278,14 @@ def icon_hosts(tool_id: str, page_url: str) -> list[str]:
 
 
 def icon_candidates(host: str) -> list[tuple[str, str]]:
+    """各ツール公式ドメインからのみ取得（Google/DuckDuckGo プロキシは使わない）。"""
     return [
-        (f"https://icons.duckduckgo.com/ip3/{host}.ico", ".ico"),
-        (f"https://www.google.com/s2/favicons?domain={host}&sz=128", ".png"),
         (f"https://{host}/apple-touch-icon.png", ".png"),
         (f"https://{host}/apple-touch-icon-precomposed.png", ".png"),
         (f"https://{host}/favicon-32x32.png", ".png"),
         (f"https://{host}/favicon.png", ".png"),
         (f"https://{host}/favicon.svg", ".svg"),
         (f"https://{host}/favicon.ico", ".ico"),
-        (f"https://www.google.com/s2/favicons?domain={host}&sz=64", ".png"),
     ]
 
 
@@ -344,20 +339,36 @@ def logo_quality_ok(path: Path) -> bool:
     return size >= MIN_RASTER_BYTES
 
 
+OFFICIAL_ICON_NAMES = ("app-icon", "logo", "icon")
+
+
+def official_tool_icon(tool_id: str) -> str | None:
+    """assets/images/tools/{id}/ 内の公式アイコン（記事ビルドで取得済み）。"""
+    tool_dir = ICON_DIR / tool_id
+    if not tool_dir.is_dir():
+        return None
+    for name in OFFICIAL_ICON_NAMES:
+        for ext in (".png", ".webp", ".svg", ".jpg", ".jpeg", ".ico"):
+            candidate = tool_dir / f"{name}{ext}"
+            if logo_file_valid(candidate):
+                return f"{tool_id}/{candidate.name}"
+    return None
+
+
 def ensure_logo(tool: dict, force: bool = False) -> str:
+    """各ツールの公式アイコンのみ。ベンダー共通 SVG へのフォールバックはしない。"""
     tool_id = tool["id"]
     page_url = tool["url"]
 
     if not force:
-        for pattern in (f"{tool_id}.png", f"{tool_id}.ico", f"{tool_id}.svg", f"{tool_id}.webp"):
-            candidate = ICON_DIR / pattern
+        found = official_tool_icon(tool_id)
+        if found:
+            return found
+
+        for ext in (".png", ".ico", ".svg", ".webp", ".jpg", ".jpeg"):
+            candidate = ICON_DIR / f"{tool_id}{ext}"
             if logo_quality_ok(candidate):
                 return candidate.name
-
-        if tool_id in SHARED_LOGO:
-            shared = ICON_DIR / SHARED_LOGO[tool_id]
-            if logo_quality_ok(shared):
-                return SHARED_LOGO[tool_id]
 
     fetched = None
     if page_url:
@@ -365,15 +376,15 @@ def ensure_logo(tool: dict, force: bool = False) -> str:
         if fetched and logo_quality_ok(ICON_DIR / fetched):
             return fetched
 
-    if tool_id in SHARED_LOGO:
-        shared = ICON_DIR / SHARED_LOGO[tool_id]
-        if logo_file_valid(shared):
-            return SHARED_LOGO[tool_id]
+    found = official_tool_icon(tool_id)
+    if found:
+        return found
 
     if fetched and logo_file_valid(ICON_DIR / fetched):
         return fetched
 
-    return "openai.svg"
+    print(f"warn: 公式アイコン未取得 {tool_id} ({page_url})")
+    return ""
 
 
 def js_string(value: str) -> str:
@@ -395,7 +406,7 @@ def render_js(tools: list[dict]) -> str:
         lines.append(f"    id: {js_string(tool['id'])},")
         lines.append(f"    name: {js_string(tool['name'])},")
         lines.append(f"    maker: {js_string(tool['maker'])},")
-        lines.append(f"    logo: {js_string(tool['logo'])},")
+        lines.append(f"    logo: {js_string(tool.get('logo') or '')},")
         lines.append(f"    cat: {js_string(tool['cat'])},")
         lines.append(f"    catLabel: {js_string(tool['catLabel'])},")
         if tool["featured"]:
