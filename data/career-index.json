@@ -451,6 +451,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-finance",
+      "name": "金融業界におすすめのAI資格｜銀行・証券・保険での活かし方",
+      "yomi": "AI Certs for Finance",
+      "summary": "銀行・証券・保険・フィンテック向けにAI資格の選び方と活かし方。コンプライアンス、業務別の第1候補、キャリアチェンジまで解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "金融",
+        "銀行",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
