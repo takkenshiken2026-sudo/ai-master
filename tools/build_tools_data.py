@@ -44,7 +44,7 @@ FILTER_LABELS = {
     "local": "ローカル",
 }
 
-FEATURED_IDS = {"chatgpt", "claude", "gemini"}
+FEATURED_IDS = {"chatgpt", "claude", "plaud"}
 MIN_RASTER_BYTES = 2500
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
