@@ -311,7 +311,7 @@
   display: grid;
   grid-template-columns: var(--hub-list-icon-w) minmax(0, 1fr) var(--hub-list-aside-w);
   gap: 0;
-  align-items: stretch;
+  align-items: center;
   padding: 0;
   text-decoration: none;
   color: inherit;
@@ -320,7 +320,7 @@
 .hub-list-icon-tile {
   width: 64px;
   height: 64px;
-  margin: 12px 0 12px 14px;
+  margin: 0 0 0 14px;
   align-self: center;
   justify-self: start;
   display: flex;
@@ -391,7 +391,11 @@
 
 .hub-list-body {
   min-width: 0;
-  padding: 16px 20px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 20px;
   border-left: 1px solid var(--border-default);
 }
 .hub-list-top {
@@ -444,10 +448,11 @@
 .hub-list-aside {
   display: flex;
   align-items: center;
+  align-self: stretch;
   gap: 12px;
   width: 100%;
   min-width: 0;
-  padding: 16px 12px;
+  padding: 14px 12px;
   border-left: 1px solid var(--border-default);
   justify-content: center;
 }
@@ -457,7 +462,7 @@
 .hub-list-chevron {
   width: 16px;
   height: 16px;
-  margin-left: auto;
+  margin-left: 0;
   color: var(--gray-400);
   flex-shrink: 0;
 }

@@ -110,7 +110,7 @@
   display: grid;
   grid-template-columns: var(--tool-list-icon-w) minmax(0, 1fr) var(--tool-list-aside-w);
   gap: 0;
-  align-items: stretch;
+  align-items: center;
   padding: 0;
   text-decoration: none;
   color: inherit;
@@ -118,7 +118,7 @@
   transition: background 0.12s;
 }
 .tool-row-link > .hub-list-icon-tile {
-  margin: 12px 0 12px 14px;
+  margin: 0 0 0 14px;
 }
 .tool-row-link > .hub-featured-icon {
   align-self: center;
@@ -128,7 +128,11 @@
 
 .tool-row-body {
   min-width: 0;
-  padding: 16px 20px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 20px;
   border-left: 1px solid var(--border-default);
 }
 .tool-row-top {
@@ -167,10 +171,11 @@
 .tool-row-aside {
   display: flex;
   align-items: center;
+  align-self: stretch;
   gap: 12px;
   width: 100%;
   min-width: 0;
-  padding: 16px 12px;
+  padding: 14px 12px;
   border-left: 1px solid var(--border-default);
   justify-content: center;
 }
@@ -189,7 +194,7 @@
 .tool-row-arrow {
   width: 16px;
   height: 16px;
-  margin-left: auto;
+  margin-left: 0;
   flex-shrink: 0;
   color: var(--gray-400);
 }
