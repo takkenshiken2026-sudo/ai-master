@@ -32,7 +32,7 @@ alwaysApply: false
 | `tool` | `tools/{id}/` | SaaS・AIツール（ASPあり） |
 | `roundup` | `guide/compare-{nn}/` 等 | 複数製品比較 |
 
-`data/affiliate-articles.json` の `type` と `path` を必ず登録する。
+ASPツール記事（`type: tool`）は `<body class="page-body affiliate-article">` を付与する。
 
 ## リッチ骨格（参照実装の順序・ID）
 
@@ -68,7 +68,7 @@ main.page-wrap.page-wrap--article
 
 | クラス | アフィリエイトでの使い方 |
 |--------|-------------------------|
-| `tool-hero-visual--affiliate` | ヒーローA8バナー（6:5・390px幅） |
+| `tool-hero-visual--affiliate` | ヒーローA8バナー（300×250・タイトル横） |
 | `tool-feature-grid` + `tool-feature-card--{blue,white}` | 機能カード（青・白交互。アイコンなし） |
 | `tool-split` | 本文テキスト + 公式引用画像の2カラム |
 | `tool-phase` | フェーズ別活用法（h3左青線・グレー背景） |

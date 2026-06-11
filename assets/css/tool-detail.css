@@ -30,16 +30,21 @@
   gap: 28px;
   align-items: start;
 }
-/* キャリア・学習ガイド記事: ヒーロー写真（テキスト高さに合わせない・約20%縮小） */
+/* キャリア・学習ガイド・アフィリエイト記事: ヒーロー（タイトル横バナー等） */
 .career-article,
 .guide-article {
   --career-hero-max-width: 400px;
   --career-affiliate-banner-max-width: 390px;
   --career-figure-max-width: 768px;
 }
+.affiliate-article {
+  --career-hero-max-width: 300px;
+  --career-affiliate-banner-max-width: 300px;
+  --career-figure-max-width: 768px;
+}
 .tool-hero--career.tool-hero--split,
 .tool-hero--guide.tool-hero--split {
-  grid-template-columns: minmax(0, 1fr) minmax(0, var(--career-hero-max-width));
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--career-hero-max-width, 400px));
   align-items: start;
   gap: 32px;
 }
@@ -68,13 +73,14 @@
   overflow: visible;
   display: block;
   width: 100%;
-  max-width: var(--career-affiliate-banner-max-width);
+  max-width: var(--career-affiliate-banner-max-width, 300px);
   height: auto !important;
   max-height: none !important;
+  justify-self: end;
 }
 .tool-hero--career .tool-hero-visual.tool-hero-visual--affiliate,
 .tool-hero--guide .tool-hero-visual.tool-hero-visual--affiliate {
-  max-width: var(--career-affiliate-banner-max-width);
+  max-width: var(--career-affiliate-banner-max-width, 300px);
 }
 .tool-hero-visual.tool-hero-visual--affiliate a {
   display: block;
@@ -86,7 +92,7 @@
   width: 100%;
   height: auto;
   min-height: 0;
-  aspect-ratio: 6 / 5;
+  aspect-ratio: 300 / 250;
   object-fit: contain;
   object-position: center;
 }
@@ -1296,6 +1302,9 @@ body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#re
   .guide-article {
     --career-hero-max-width: min(400px, 80vw);
   }
+  .affiliate-article {
+    --career-hero-max-width: min(300px, 80vw);
+  }
   .tool-hero--career .tool-hero-visual,
   .tool-hero--guide .tool-hero-visual {
     width: 100%;
@@ -1314,7 +1323,7 @@ body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#re
   }
   .tool-hero--career .tool-hero-visual.tool-hero-visual--affiliate img,
   .tool-hero--guide .tool-hero-visual.tool-hero-visual--affiliate img {
-    aspect-ratio: 6 / 5;
+    aspect-ratio: 300 / 250;
     object-fit: contain;
   }
   .career-article .tool-content .tool-figure,
