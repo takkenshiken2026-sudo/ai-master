@@ -706,15 +706,15 @@
   "featured": [
     {
       "id": "ai-engineer",
-      "icon": "career/ai-engineer/role-flow.png"
+      "icon": "career/categories/role.svg"
     },
     {
       "id": "machine-learning-engineer",
-      "icon": "career/machine-learning-engineer/role-flow.png"
+      "icon": "career/categories/role.svg"
     },
     {
       "id": "data-scientist",
-      "icon": "career/data-scientist/role-flow.png"
+      "icon": "career/categories/role.svg"
     }
   ]
 }

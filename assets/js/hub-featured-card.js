@@ -5,7 +5,7 @@ function hubFeaturedIcon(iconPath) {
   if (!iconPath) return '';
   return (
     `<div class="hub-featured-icon">` +
-    `<img src="${HUB_ICON_BASE}${iconPath}" alt="" width="32" height="32" loading="lazy">` +
+    `<img src="${HUB_ICON_BASE}${iconPath}" alt="" width="56" height="56" loading="lazy">` +
     `</div>`
   );
 }

@@ -17,8 +17,10 @@
     .hub-featured-live__item a,
     .hub-featured-live__item { display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--surface-inset); border:1px solid var(--border-subtle); text-decoration:none; color:inherit; }
     .hub-featured-live__item a:hover { background:var(--blue-soft); }
-    .hub-featured-live__item img { width:32px; height:32px; object-fit:contain; flex-shrink:0; }
-    .hub-featured-live__ph { width:32px; text-align:center; color:var(--gray-400); flex-shrink:0; }
+    .hub-featured-live__icon { width:56px; height:56px; border-radius:12px; background:#fff; border:1px solid var(--gray-200); box-shadow:0 1px 4px rgba(15,23,42,.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; }
+    .hub-featured-live__icon img { width:100%; height:100%; object-fit:contain; padding:4px; box-sizing:border-box; }
+    .hub-featured-live__icon:has(img[src*="tools/"]) img { width:72%; height:72%; padding:0; }
+    .hub-featured-live__ph { width:56px; text-align:center; color:var(--gray-400); flex-shrink:0; }
     .hub-featured-live__item--warn { opacity:.85; }
     .tool-content-section { margin-top:36px; }
     .tool-content-section h2 { font-size:var(--text-xl); margin:0 0 8px; }
@@ -74,27 +76,27 @@
       <h2>用語辞典</h2>
       <p><a href="https://ai-master.jp/glossary/">一覧を見る</a> · 設定: <code>data/glossary-featured.json</code></p>
       <ul class="hub-featured-live">
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/claude-fable-5/"><img src="/assets/images/tools/anthropic.svg" alt="" width="32" height="32" loading="lazy"><span>Claude Fable 5</span></a></li>
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/claude-mythos-5/"><img src="/assets/images/tools/anthropic.svg" alt="" width="32" height="32" loading="lazy"><span>Claude Mythos 5</span></a></li>
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/agi/"><img src="/assets/images/glossary/categories/basics.svg" alt="" width="32" height="32" loading="lazy"><span>AGI</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/claude-fable-5/"><span class="hub-featured-live__icon"><img src="/assets/images/tools/anthropic.svg" alt="" width="56" height="56" loading="lazy"></span><span>Claude Fable 5</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/claude-mythos-5/"><span class="hub-featured-live__icon"><img src="/assets/images/tools/anthropic.svg" alt="" width="56" height="56" loading="lazy"></span><span>Claude Mythos 5</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/glossary/agi/"><span class="hub-featured-live__icon"><img src="/assets/images/glossary/categories/basics.svg" alt="" width="56" height="56" loading="lazy"></span><span>AGI</span></a></li>
 </ul>
     </section>
     <section class="tool-content-section">
       <h2>学習ガイド</h2>
       <p><a href="https://ai-master.jp/guide/">一覧を見る</a> · 設定: <code>data/guide-featured.json</code></p>
       <ul class="hub-featured-live">
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/g-kentei-overview-01/"><img src="/assets/images/guide/categories/g-kentei.svg" alt="" width="32" height="32" loading="lazy"><span>G検定とは？AIに詳しくない人でもわかる試験の全体像</span></a></li>
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/g-kentei-overview-02/"><img src="/assets/images/guide/categories/g-kentei.svg" alt="" width="32" height="32" loading="lazy"><span>G検定の受験料・試験日程・申込方法【2026年最新版】</span></a></li>
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/genai-overview-01/"><img src="/assets/images/guide/categories/genai.svg" alt="" width="32" height="32" loading="lazy"><span>生成AIパスポートとは？AI初心者向けに試験の全体像を解説</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/g-kentei-overview-01/"><span class="hub-featured-live__icon"><img src="/assets/images/guide/categories/g-kentei.svg" alt="" width="56" height="56" loading="lazy"></span><span>G検定とは？AIに詳しくない人でもわかる試験の全体像</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/g-kentei-overview-02/"><span class="hub-featured-live__icon"><img src="/assets/images/guide/categories/g-kentei.svg" alt="" width="56" height="56" loading="lazy"></span><span>G検定の受験料・試験日程・申込方法【2026年最新版】</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/guide/genai-overview-01/"><span class="hub-featured-live__icon"><img src="/assets/images/guide/categories/genai.svg" alt="" width="56" height="56" loading="lazy"></span><span>生成AIパスポートとは？AI初心者向けに試験の全体像を解説</span></a></li>
 </ul>
     </section>
     <section class="tool-content-section">
       <h2>キャリア</h2>
       <p><a href="https://ai-master.jp/career/">一覧を見る</a> · 設定: <code>data/career-featured.json</code></p>
       <ul class="hub-featured-live">
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/ai-engineer/"><img src="/assets/images/career/ai-engineer/role-flow.png" alt="" width="32" height="32" loading="lazy"><span>AIエンジニアとは？仕事内容・年収・必要スキル</span></a></li>
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/machine-learning-engineer/"><img src="/assets/images/career/machine-learning-engineer/role-flow.png" alt="" width="32" height="32" loading="lazy"><span>機械学習エンジニアとは？仕事内容・年収・キャリアパス</span></a></li>
-<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/data-scientist/"><img src="/assets/images/career/data-scientist/role-flow.png" alt="" width="32" height="32" loading="lazy"><span>データサイエンティストとは？分析業務とキャリア像</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/ai-engineer/"><span class="hub-featured-live__icon"><img src="/assets/images/career/categories/role.svg" alt="" width="56" height="56" loading="lazy"></span><span>AIエンジニアとは？仕事内容・年収・必要スキル</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/machine-learning-engineer/"><span class="hub-featured-live__icon"><img src="/assets/images/career/categories/role.svg" alt="" width="56" height="56" loading="lazy"></span><span>機械学習エンジニアとは？仕事内容・年収・キャリアパス</span></a></li>
+<li class="hub-featured-live__item"><a href="https://ai-master.jp/career/data-scientist/"><span class="hub-featured-live__icon"><img src="/assets/images/career/categories/role.svg" alt="" width="56" height="56" loading="lazy"></span><span>データサイエンティストとは？分析業務とキャリア像</span></a></li>
 </ul>
     </section>
     </section>
@@ -126,7 +128,7 @@ python3 tools/build_hub_featured_doc.py</code></pre>
         <tbody>
           <tr><td>用語辞典</td><td><code>assets/images/glossary/{ID}.svg</code></td><td><code>glossary/categories/</code></td></tr>
           <tr><td>学習ガイド</td><td><code>assets/images/guide/{ID}/icon.svg</code></td><td><code>guide/categories/</code></td></tr>
-          <tr><td>キャリア</td><td><code>assets/images/career/{ID}/role*.png</code></td><td><code>career/categories/</code></td></tr>
+          <tr><td>キャリア</td><td><code>assets/images/career/{ID}/icon.svg</code></td><td><code>career/categories/</code></td></tr>
         </tbody>
       </table>
     </section>

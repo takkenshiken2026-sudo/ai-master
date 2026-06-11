@@ -80,16 +80,6 @@ def first_existing_dir(base: Path, names: list[str]) -> Path | None:
     return None
 
 
-def first_existing_glob(base: Path, patterns: list[str]) -> Path | None:
-    if not base.is_dir():
-        return None
-    for pattern in patterns:
-        for candidate in sorted(base.glob(pattern)):
-            if candidate.is_file():
-                return candidate
-    return None
-
-
 def resolve_glossary_icon(term_id: str, csv_row: dict, aliases: dict) -> str | None:
     terms_map = aliases.get("terms") or {}
     if term_id in terms_map:
@@ -150,10 +140,7 @@ def resolve_career_icon(article_id: str, category: str, aliases: dict) -> str | 
     if article_id in terms_map:
         return terms_map[article_id]
 
-    found = first_existing_glob(
-        IMAGES / "career" / article_id,
-        ["role-*.png", "role_*.png", "role*.png", "icon.svg", "icon.png"],
-    )
+    found = first_existing_dir(IMAGES / "career" / article_id, ["icon"])
     if found:
         return rel_image(found)
 

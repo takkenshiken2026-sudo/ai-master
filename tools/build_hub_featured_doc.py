@@ -92,7 +92,9 @@ def render_featured_cards(rows: list[dict]) -> str:
     for row in rows:
         icon = row.get("icon")
         icon_html = (
-            f'<img src="/assets/images/{html.escape(icon)}" alt="" width="32" height="32" loading="lazy">'
+            f'<span class="hub-featured-live__icon">'
+            f'<img src="/assets/images/{html.escape(icon)}" alt="" width="56" height="56" loading="lazy">'
+            f"</span>"
             if icon
             else '<span class="hub-featured-live__ph" aria-hidden="true">—</span>'
         )
@@ -166,8 +168,10 @@ def main() -> None:
     .hub-featured-live__item a,
     .hub-featured-live__item {{ display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--surface-inset); border:1px solid var(--border-subtle); text-decoration:none; color:inherit; }}
     .hub-featured-live__item a:hover {{ background:var(--blue-soft); }}
-    .hub-featured-live__item img {{ width:32px; height:32px; object-fit:contain; flex-shrink:0; }}
-    .hub-featured-live__ph {{ width:32px; text-align:center; color:var(--gray-400); flex-shrink:0; }}
+    .hub-featured-live__icon {{ width:56px; height:56px; border-radius:12px; background:#fff; border:1px solid var(--gray-200); box-shadow:0 1px 4px rgba(15,23,42,.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; }}
+    .hub-featured-live__icon img {{ width:100%; height:100%; object-fit:contain; padding:4px; box-sizing:border-box; }}
+    .hub-featured-live__icon:has(img[src*="tools/"]) img {{ width:72%; height:72%; padding:0; }}
+    .hub-featured-live__ph {{ width:56px; text-align:center; color:var(--gray-400); flex-shrink:0; }}
     .hub-featured-live__item--warn {{ opacity:.85; }}
     .tool-content-section {{ margin-top:36px; }}
     .tool-content-section h2 {{ font-size:var(--text-xl); margin:0 0 8px; }}
@@ -241,7 +245,7 @@ python3 tools/build_hub_featured_doc.py</code></pre>
         <tbody>
           <tr><td>用語辞典</td><td><code>assets/images/glossary/{{ID}}.svg</code></td><td><code>glossary/categories/</code></td></tr>
           <tr><td>学習ガイド</td><td><code>assets/images/guide/{{ID}}/icon.svg</code></td><td><code>guide/categories/</code></td></tr>
-          <tr><td>キャリア</td><td><code>assets/images/career/{{ID}}/role*.png</code></td><td><code>career/categories/</code></td></tr>
+          <tr><td>キャリア</td><td><code>assets/images/career/{{ID}}/icon.svg</code></td><td><code>career/categories/</code></td></tr>
         </tbody>
       </table>
     </section>
