@@ -316,6 +316,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-hr",
+      "name": "人事・総務におすすめのAI資格｜採用・研修・社内ルール整備に活かす方法",
+      "yomi": "AI Certs for HR",
+      "summary": "人事・総務向けにAI資格の選び方と活かし方。採用・研修・社内ルール整備への接続、個人情報管理とキャリアも解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "人事",
+        "総務",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
