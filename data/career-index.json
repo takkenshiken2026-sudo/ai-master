@@ -350,6 +350,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-cs",
+      "name": "カスタマーサクセスにおすすめのAI資格｜オンボーディング・解約防止に活かす方法",
+      "yomi": "AI Certs for CS",
+      "summary": "CS向けにAI資格の選び方と活かし方。オンボーディング・QBR・FAQ整備への接続、顧客情報管理とキャリアも解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "CS",
+        "カスタマーサクセス",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
