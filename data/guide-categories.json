@@ -25,6 +25,10 @@
       "label": "生成AIパスポート 勉強法",
       "description": "勉強時間・テキスト・直前対策"
     },
+    "genai-practice": {
+      "label": "生成AIパスポート 演習・過去問",
+      "description": "過去問の入手・模擬問題・演習の使い方"
+    },
     "g-kentei-domain": {
       "label": "G検定 分野別解説",
       "description": "機械学習・DL・倫理など分野別の要点"
@@ -65,6 +69,7 @@
     "G検定 勉強法": "g-kentei-study",
     "G検定 演習・過去問": "g-kentei-practice",
     "生成AIパスポート 勉強法": "genai-study",
+    "生成AIパスポート 演習・過去問": "genai-practice",
     "G検定 分野別解説": "g-kentei-domain",
     "生成AIパスポート 分野別解説": "genai-domain",
     "用語解説": "terms",

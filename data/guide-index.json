@@ -6,6 +6,7 @@
     "g-kentei-study": "G検定 勉強法",
     "g-kentei-practice": "G検定 演習・過去問",
     "genai-study": "生成AIパスポート 勉強法",
+    "genai-practice": "生成AIパスポート 演習・過去問",
     "g-kentei-domain": "G検定 分野別解説",
     "genai-domain": "生成AIパスポート 分野別解説",
     "terms": "用語解説",
@@ -22,6 +23,7 @@
     "g-kentei-study",
     "g-kentei-practice",
     "genai-study",
+    "genai-practice",
     "g-kentei-domain",
     "genai-domain",
     "terms",
@@ -855,6 +857,17 @@
       "keyword": "G検定 分野別 勉強法",
       "priority": "高",
       "featured": false,
+      "published": true
+    },
+    {
+      "id": "genai-practice-01",
+      "no": 76,
+      "name": "生成AIパスポートの過去問は公開されている？入手方法と注意点",
+      "summary": "",
+      "category": "genai-practice",
+      "keyword": "生成AIパスポート 過去問 公開",
+      "priority": "高",
+      "featured": true,
       "published": true
     }
   ]
