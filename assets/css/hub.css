@@ -371,6 +371,11 @@
   overflow: hidden;
   letter-spacing: -0.02em;
 }
+.hub-list-icon-tile__label--compact,
+.cat-icon-tile__label--compact {
+  font-size: 10px;
+  letter-spacing: -0.03em;
+}
 .hub-list-link > .hub-featured-icon {
   align-self: center;
   justify-self: center;

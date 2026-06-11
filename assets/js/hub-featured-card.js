@@ -47,13 +47,19 @@ function hubFeaturedIcon(iconPath) {
   );
 }
 
+function hubTileLabelClass(label) {
+  if (!label) return 'hub-list-icon-tile__label';
+  // 64pxタイルで切れる長さ（5文字以上）のみ 10px に縮小
+  return label.length >= 5
+    ? 'hub-list-icon-tile__label hub-list-icon-tile__label--compact'
+    : 'hub-list-icon-tile__label';
+}
+
 function hubListIconTile(iconPath, label) {
   const icon = iconPath
     ? `<img class="hub-list-icon-tile__img" src="${HUB_ICON_BASE}${iconPath}" alt="" width="34" height="34" loading="lazy">`
     : '<span class="hub-list-icon-tile__img hub-list-icon-tile__img--empty" aria-hidden="true"></span>';
-  const text = label
-    ? `<span class="hub-list-icon-tile__label">${label}</span>`
-    : '';
+  const text = label ? `<span class="${hubTileLabelClass(label)}">${label}</span>` : '';
   return `<div class="hub-list-icon-tile">${icon}${text}</div>`;
 }
 
