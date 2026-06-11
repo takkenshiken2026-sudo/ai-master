@@ -34,8 +34,17 @@ EXAM_HUBS = {
 }
 
 
+def hub_exams(entry: dict) -> list[str]:
+    """Show drill/mock/practice hubs for exams with hand-curated question links first."""
+    questions = entry.get("questions") or []
+    html_exams = sorted({q["exam"] for q in questions if q.get("source") == "html"})
+    if html_exams:
+        return html_exams
+    return sorted(entry.get("exams") or [])
+
+
 def render_resources_block(entry: dict) -> str:
-    exams = entry.get("exams") or []
+    exams = hub_exams(entry)
     questions = entry.get("questions") or []
     items: list[str] = []
 
