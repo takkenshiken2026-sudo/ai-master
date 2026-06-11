@@ -60,6 +60,10 @@
   object-fit: cover;
   object-position: center;
 }
+.tool-affiliate-banner-slot {
+  margin: 0 0 24px;
+  max-width: var(--career-affiliate-banner-max-width, 390px);
+}
 .tool-hero-visual.tool-hero-visual--affiliate {
   overflow: visible;
   display: block;
