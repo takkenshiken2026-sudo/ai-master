@@ -284,6 +284,22 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-marketing",
+      "name": "マーケティング職におすすめのAI資格｜データ分析・生成AI活用に役立つ学び方",
+      "yomi": "AI Certs for Marketing",
+      "summary": "マーケティング職向けにAI資格の選び方と活かし方。コンテンツ制作・データ分析・効果測定への接続、キャリアパスも解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "マーケティング",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
