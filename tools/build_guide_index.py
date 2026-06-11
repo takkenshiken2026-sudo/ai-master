@@ -8,13 +8,18 @@ from __future__ import annotations
 
 import csv
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from hub_icons import load_aliases, resolve_guide_icon  # noqa: E402
 CSV_FILE = ROOT / "data" / "guide-articles.csv"
 META_FILE = ROOT / "data" / "guide-categories.json"
 INDEX_FILE = ROOT / "data" / "guide-index.json"
+ICON_ALIASES_JSON = ROOT / "data" / "guide-icon-aliases.json"
 GUIDE_DIR = ROOT / "guide"
 
 
@@ -48,19 +53,24 @@ def main() -> None:
             priority = row["優先度"].strip()
             keyword = row["想定キーワード"].strip()
 
-            articles.append(
-                {
-                    "id": article_id,
-                    "no": no,
-                    "name": row["タイトル"].strip(),
-                    "summary": "",
-                    "category": category,
-                    "keyword": keyword,
-                    "priority": priority,
-                    "featured": priority == "高" and cat_counters[category] <= 2,
-                    "published": article_published(article_id),
-                }
-            )
+            article = {
+                "id": article_id,
+                "no": no,
+                "name": row["タイトル"].strip(),
+                "summary": "",
+                "category": category,
+                "keyword": keyword,
+                "priority": priority,
+                "featured": priority == "高" and cat_counters[category] <= 2,
+                "published": article_published(article_id),
+            }
+            articles.append(article)
+
+    aliases = load_aliases(ICON_ALIASES_JSON)
+    for article in articles:
+        icon = resolve_guide_icon(article["id"], article["category"], aliases)
+        if icon:
+            article["icon"] = icon
 
     articles.sort(key=lambda a: a["no"])
     payload = {

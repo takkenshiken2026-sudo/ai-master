@@ -19,7 +19,8 @@
         "G検定"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/ai-engineer/role-flow.png"
     },
     {
       "id": "machine-learning-engineer",
@@ -34,7 +35,8 @@
         "クラウド"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/machine-learning-engineer/role-flow.png"
     },
     {
       "id": "data-scientist",
@@ -49,7 +51,8 @@
         "Python"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/data-scientist/role-flow.png"
     },
     {
       "id": "generative-ai-engineer",
@@ -64,7 +67,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/generative-ai-engineer/role-flow.png"
     },
     {
       "id": "mlops-engineer",
@@ -79,7 +83,8 @@
         "クラウド"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/mlops-engineer/role-flow.png"
     },
     {
       "id": "prompt-engineer",
@@ -94,7 +99,8 @@
         "未経験可"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/prompt-engineer/role-flow.png"
     },
     {
       "id": "data-analyst",
@@ -109,7 +115,8 @@
         "未経験可"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/data-analyst/role-flow.png"
     },
     {
       "id": "ai-product-manager",
@@ -124,7 +131,8 @@
         "PoC"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-product-manager/role-flow.png"
     },
     {
       "id": "data-scientist-vs-analyst",
@@ -138,7 +146,8 @@
         "比較"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/data-scientist-vs-analyst/role-flow.png"
     },
     {
       "id": "ai-engineer-vs-mlops",
@@ -152,7 +161,8 @@
         "比較"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-engineer-vs-mlops/role-flow.png"
     },
     {
       "id": "beginner-ai-roles-top5",
@@ -167,7 +177,8 @@
         "未経験"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/beginner-ai-roles-top5/role-flow.png"
     },
     {
       "id": "g-kentei-career",
@@ -182,7 +193,8 @@
         "資格"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/g-kentei-career/role-flow.png"
     },
     {
       "id": "genai-passport-career",
@@ -197,7 +209,8 @@
         "資格"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/genai-passport-career/role-flow.png"
     },
     {
       "id": "ai-certs-by-role",
@@ -214,7 +227,8 @@
         "生成AIパスポート"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-by-role/role-flow.png"
     },
     {
       "id": "beginner-ai-certs-compare",
@@ -231,7 +245,8 @@
         "生成AIパスポート"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/beginner-ai-certs-compare/role-flow.png"
     },
     {
       "id": "non-engineer-ai-certs",
@@ -248,7 +263,8 @@
         "生成AIパスポート"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/non-engineer-ai-certs/role-flow.png"
     },
     {
       "id": "ai-certs-career-value",
@@ -266,7 +282,8 @@
         "生成AIパスポート"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-career-value/role-flow.png"
     },
     {
       "id": "ai-certs-for-sales",
@@ -282,7 +299,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-sales/role-flow.png"
     },
     {
       "id": "ai-certs-for-planning",
@@ -298,7 +316,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-planning/role-flow.png"
     },
     {
       "id": "ai-certs-for-marketing",
@@ -314,7 +333,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-marketing/role-flow.png"
     },
     {
       "id": "ai-certs-for-admin",
@@ -330,7 +350,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-admin/role-flow.png"
     },
     {
       "id": "ai-certs-for-hr",
@@ -347,7 +368,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-hr/role-flow.png"
     },
     {
       "id": "ai-certs-for-accounting",
@@ -364,7 +386,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-accounting/role-flow.png"
     },
     {
       "id": "ai-certs-for-support",
@@ -380,7 +403,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-support/role-flow.png"
     },
     {
       "id": "ai-certs-for-cs",
@@ -397,7 +421,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-cs/role-flow.png"
     },
     {
       "id": "ai-certs-for-pr",
@@ -414,7 +439,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-pr/role-flow.png"
     },
     {
       "id": "ai-certs-for-newgrad",
@@ -431,7 +457,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-newgrad/role-flow.png"
     },
     {
       "id": "ai-certs-for-30s",
@@ -448,7 +475,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-30s/role-flow.png"
     },
     {
       "id": "ai-certs-for-managers",
@@ -465,7 +493,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-managers/role-flow.png"
     },
     {
       "id": "ai-certs-for-finance",
@@ -482,7 +511,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-finance/role-flow.png"
     },
     {
       "id": "ai-certs-for-manufacturing",
@@ -499,7 +529,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-manufacturing/role-flow.png"
     },
     {
       "id": "ai-certs-for-healthcare",
@@ -516,7 +547,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-healthcare/role-flow.png"
     },
     {
       "id": "ai-certs-for-education",
@@ -533,7 +565,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-education/role-flow.png"
     },
     {
       "id": "ai-certs-for-public-sector",
@@ -550,7 +583,8 @@
         "生成AIパスポート"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-certs-for-public-sector/role-flow.png"
     },
     {
       "id": "beginner-learning-roadmap",
@@ -565,7 +599,8 @@
         "ロードマップ"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/beginner-learning-roadmap/role-flow.png"
     },
     {
       "id": "ai-portfolio-guide",
@@ -579,7 +614,8 @@
         "ポートフォリオ"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-portfolio-guide/role-flow.png"
     },
     {
       "id": "ai-side-job-prep",
@@ -593,7 +629,8 @@
         "副業"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-side-job-prep/role-flow.png"
     },
     {
       "id": "manufacturing-to-ai-engineer",
@@ -608,7 +645,8 @@
         "転職"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/manufacturing-to-ai-engineer/role-flow.png"
     },
     {
       "id": "finance-data-scientist-career",
@@ -623,7 +661,8 @@
         "転職"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/finance-data-scientist-career/role-flow.png"
     },
     {
       "id": "liberal-arts-to-ai",
@@ -639,7 +678,8 @@
         "転職"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/liberal-arts-to-ai/role-flow.png"
     },
     {
       "id": "sier-to-ai-startup",
@@ -654,7 +694,8 @@
         "転職"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/sier-to-ai-startup/role-flow.png"
     },
     {
       "id": "second-career-ai",
@@ -669,7 +710,8 @@
         "転職"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/second-career-ai/role-flow.png"
     },
     {
       "id": "ai-career-outlook-2026",
@@ -683,7 +725,8 @@
         "将来性"
       ],
       "featured": true,
-      "published": true
+      "published": true,
+      "icon": "career/ai-career-outlook-2026/role-flow.png"
     },
     {
       "id": "ai-engineer-salary-trend",
@@ -697,7 +740,8 @@
         "年収"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-engineer-salary-trend/role-flow.png"
     },
     {
       "id": "overseas-ai-engineer-salary",
@@ -712,7 +756,8 @@
         "年収"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/overseas-ai-engineer-salary/role-flow.png"
     },
     {
       "id": "ai-freelance-market",
@@ -727,7 +772,8 @@
         "副業"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/ai-freelance-market/role-flow.png"
     },
     {
       "id": "grad-school-ai-worth",
@@ -742,7 +788,8 @@
         "研究"
       ],
       "featured": false,
-      "published": true
+      "published": true,
+      "icon": "career/grad-school-ai-worth/role-flow.png"
     }
   ]
 }

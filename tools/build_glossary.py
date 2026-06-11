@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from glossary_terms import load_terms_csv, sync_json_from_csv, terms_to_json_payload  # noqa: E402
+from hub_icons import load_aliases, resolve_glossary_icon  # noqa: E402
 from site_meta import SITE_GA4_HTML  # noqa: E402
 GLOSSARY_INDEX = ROOT / "glossary" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
@@ -28,13 +29,6 @@ SITE_ORIGIN = "https://ai-master.jp"
 
 FEATURED_JSON = ROOT / "data" / "glossary-featured.json"
 ICON_ALIASES_JSON = ROOT / "data" / "glossary-icon-aliases.json"
-GLOSSARY_IMG = ROOT / "assets/images" / "glossary"
-
-PREFIX_VENDOR = (
-    ("claude-", "Anthropic"),
-    ("gpt-", "OpenAI"),
-    ("gemini-", "Google"),
-)
 
 PER_PAGE = 100
 INDEX_JSON = ROOT / "data" / "glossary-index.json"
@@ -89,58 +83,8 @@ def load_featured_ids() -> list[str]:
     return json.loads(FEATURED_JSON.read_text(encoding="utf-8"))
 
 
-def load_icon_aliases() -> dict:
-    if not ICON_ALIASES_JSON.is_file():
-        return {"vendors": {}, "terms": {}}
-    data = json.loads(ICON_ALIASES_JSON.read_text(encoding="utf-8"))
-    return {
-        "vendors": data.get("vendors") or {},
-        "terms": data.get("terms") or {},
-    }
-
-
-def _glossary_image_rel(path: Path) -> str | None:
-    try:
-        rel = path.relative_to(ROOT / "assets" / "images")
-    except ValueError:
-        return None
-    return rel.as_posix()
-
-
-def resolve_glossary_icon(term_id: str, csv_row: dict, aliases: dict) -> str | None:
-    """人気カード用アイコンを解決。詳細は data/GLOSSARY-FEATURED.md。"""
-    terms_map = aliases.get("terms") or {}
-    if term_id in terms_map:
-        return terms_map[term_id]
-
-    for ext in (".svg", ".png", ".webp"):
-        candidate = GLOSSARY_IMG / f"{term_id}{ext}"
-        if candidate.is_file():
-            return _glossary_image_rel(candidate)
-
-    notes = csv_row.get("notes") or ""
-    vendor_match = re.search(r"開発元:\s*(.+)", notes)
-    vendors = aliases.get("vendors") or {}
-    if vendor_match:
-        vendor = vendor_match.group(1).strip()
-        if vendor in vendors:
-            return vendors[vendor]
-
-    for prefix, vendor in PREFIX_VENDOR:
-        if term_id.startswith(prefix) and vendor in vendors:
-            return vendors[vendor]
-
-    category = csv_row.get("category") or ""
-    for ext in (".svg", ".png", ".webp"):
-        candidate = GLOSSARY_IMG / "categories" / f"{category}{ext}"
-        if candidate.is_file():
-            return _glossary_image_rel(candidate)
-
-    return None
-
-
 def build_featured_payload(csv_by_id: dict[str, dict]) -> tuple[list[str], list[dict]]:
-    aliases = load_icon_aliases()
+    aliases = load_aliases(ICON_ALIASES_JSON)
     featured: list[dict] = []
     for term_id in load_featured_ids():
         csv_row = csv_by_id.get(term_id)
@@ -365,6 +309,7 @@ def build_index_html(data: dict) -> str:
 </footer>
 
 <script src="../assets/js/hub-list-nav.js" defer></script>
+<script src="../assets/js/hub-featured-card.js" defer></script>
 <script src="../assets/js/glossary-list.js" defer></script>
 </body>
 </html>

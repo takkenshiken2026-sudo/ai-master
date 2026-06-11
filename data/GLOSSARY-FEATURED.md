@@ -1,5 +1,7 @@
 # 用語辞典「人気のページ」運用ルール
 
+**→ 全ハブ共通の運用ルールは [HUB-FEATURED.md](./HUB-FEATURED.md)、アイコン一覧は [HUB-ICONS.md](./HUB-ICONS.md) を参照。**
+
 ## 人気記事の追加・入れ替え
 
 1. `data/glossary-featured.json` を編集する（**上から表示順**）

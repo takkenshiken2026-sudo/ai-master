@@ -104,10 +104,12 @@ function renderArticleRow(article) {
 function renderFeaturedCard(article) {
   const cls = article.published ? 'hub-featured-card' : 'hub-featured-card hub-featured-card--planned';
   const badge = article.published ? '' : '<span class="hub-list-pill">準備中</span>';
-  const inner =
-    badge +
-    `<h3 class="hub-featured-name">${escapeHtml(article.name)}</h3>` +
-    `<p class="hub-featured-summary">${escapeHtml(article.summary)}</p>`;
+  const inner = hubFeaturedCardInner(
+    escapeHtml(article.name),
+    escapeHtml(article.summary),
+    article.icon,
+    badge,
+  );
 
   if (article.published) {
     return `<a href="${encodeURI(article.id)}/" class="${cls}">${inner}</a>`;

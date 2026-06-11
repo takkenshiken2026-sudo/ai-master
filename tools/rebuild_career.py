@@ -13,8 +13,12 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from hub_icons import load_aliases, resolve_career_icon  # noqa: E402
 CATEGORIES_FILE = ROOT / "data" / "career-categories.json"
 INDEX_FILE = ROOT / "data" / "career-index.json"
+ICON_ALIASES_JSON = ROOT / "data" / "career-icon-aliases.json"
 
 
 def load_categories() -> dict:
@@ -67,6 +71,16 @@ def audit_report(articles: list[dict], meta: dict) -> str:
     return "\n".join(lines)
 
 
+def enrich_article_icons(articles: list[dict]) -> None:
+    aliases = load_aliases(ICON_ALIASES_JSON)
+    for article in articles:
+        icon = resolve_career_icon(article["id"], article.get("category", ""), aliases)
+        if icon:
+            article["icon"] = icon
+        else:
+            article.pop("icon", None)
+
+
 def sync_index_categories(data: dict, meta: dict) -> dict:
     categories = {k: v["label"] for k, v in meta["categories"].items()}
     articles = data.get("articles") or data.get("roles") or []
@@ -91,10 +105,11 @@ def main() -> None:
         raise SystemExit(1)
 
     payload = sync_index_categories(data, meta)
+    enrich_article_icons(payload["articles"])
     INDEX_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"synced {INDEX_FILE.relative_to(ROOT)}")
     print()
-    print(audit_report(articles, meta))
+    print(audit_report(payload["articles"], meta))
 
 
 if __name__ == "__main__":

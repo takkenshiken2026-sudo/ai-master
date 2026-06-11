@@ -1,5 +1,4 @@
 const PER_PAGE = 100;
-const ICON_BASE = '../assets/images/';
 const INDEX_URL = '../data/glossary-index.json';
 
 const CATEGORY_ORDER = [
@@ -79,22 +78,12 @@ function matchesSearch(term, q) {
   return haystack.includes(needle);
 }
 
-function termIcon(iconPath) {
-  if (!iconPath) return '';
-  return (
-    `<div class="hub-featured-icon">` +
-    `<img src="${ICON_BASE}${iconPath}" alt="" width="32" height="32" loading="lazy">` +
-    `</div>`
-  );
-}
-
 function renderFeaturedCard(term, icon) {
-  const inner =
-    `<div class="hub-featured-head">` +
-    termIcon(icon) +
-    `<h3 class="hub-featured-name">${escapeHtml(term.name)}</h3>` +
-    `</div>` +
-    `<p class="hub-featured-summary">${escapeHtml(term.summary || '')}</p>`;
+  const inner = hubFeaturedCardInner(
+    escapeHtml(term.name),
+    escapeHtml(term.summary || ''),
+    icon,
+  );
   return `<a href="${encodeURI(term.id)}/" class="hub-featured-card">${inner}</a>`;
 }
 
