@@ -1042,10 +1042,14 @@
   color: var(--blue);
 }
 /* 学習ガイド: 2列とも縦並びリンク（ツール記事のチップ表示を上書き） */
-.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list {
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list,
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block:last-child .tool-related-list {
   display: block;
+  flex-wrap: nowrap;
+  gap: 0;
 }
-.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list a {
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list a,
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block:last-child .tool-related-list a {
   width: 100%;
   padding: 9px 0;
   font-size: var(--text-base);
@@ -1057,7 +1061,8 @@
   text-decoration-color: var(--gray-300);
   text-underline-offset: 3px;
 }
-.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list a:hover {
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block .tool-related-list a:hover,
+.guide-article .tool-related-wrap:not(:has(#related-exams)) .tool-related-block:last-child .tool-related-list a:hover {
   background: none;
   color: var(--blue);
   text-decoration-color: var(--blue);
