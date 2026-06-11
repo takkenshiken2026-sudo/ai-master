@@ -133,7 +133,6 @@ function toolRowInner(t) {
             <h2 class="tool-row-name">${escapeHtml(t.name)}</h2>
             ${soonBadge}
           </div>
-          <p class="tool-row-maker">${escapeHtml(t.maker)}</p>
           <p class="tool-row-desc">${escapeHtml(t.tagline)}</p>
         </div>
         <div class="tool-row-aside">
