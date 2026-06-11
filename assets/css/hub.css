@@ -176,6 +176,12 @@
   align-items: center;
   gap: 10px;
 }
+.hub-featured-head .hub-list-icon-tile {
+  flex-shrink: 0;
+}
+.hub-featured-head .hub-list-pill {
+  flex-shrink: 0;
+}
 .hub-featured-icon {
   width: 56px;
   height: 56px;

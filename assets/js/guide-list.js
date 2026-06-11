@@ -99,11 +99,14 @@ function renderFeaturedCard(item) {
     ? 'hub-featured-card'
     : 'hub-featured-card hub-featured-card--planned';
   const badge = article.published ? '' : '<span class="hub-list-pill">準備中</span>';
+  const catLabel = categories[article.category] || article.category;
+  const tileLabel = escapeHtml(hubCategoryShortLabel('guide', article.category, catLabel));
   const inner = hubFeaturedCardInner(
     escapeHtml(article.name),
     article.summary ? escapeHtml(article.summary) : '',
     item.icon,
     badge,
+    tileLabel,
   );
 
   if (article.published) {

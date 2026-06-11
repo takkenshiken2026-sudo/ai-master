@@ -79,10 +79,14 @@ function matchesSearch(term, q) {
 }
 
 function renderFeaturedCard(term, icon) {
+  const catLabel = categories[term.category] || term.category;
+  const tileLabel = escapeHtml(hubCategoryShortLabel('glossary', term.category, catLabel));
   const inner = hubFeaturedCardInner(
     escapeHtml(term.name),
     escapeHtml(term.summary || ''),
     icon,
+    '',
+    tileLabel,
   );
   return `<a href="${encodeURI(term.id)}/" class="hub-featured-card">${inner}</a>`;
 }

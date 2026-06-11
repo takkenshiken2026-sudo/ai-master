@@ -61,12 +61,21 @@ function hubListIcon(iconPath, label) {
   return hubListIconTile(iconPath, label || '');
 }
 
-function hubFeaturedCardInner(name, summary, icon, badgeHtml) {
+function hubFeaturedCardIcon(iconPath, tileLabel) {
+  if (!iconPath) return '';
+  if (iconPath.includes('hub-icons/')) {
+    return hubListIconTile(iconPath, tileLabel || '');
+  }
+  return hubFeaturedIcon(iconPath);
+}
+
+function hubFeaturedCardInner(name, summary, icon, badgeHtml, tileLabel) {
   const badge = badgeHtml || '';
   const title = `<h3 class="hub-featured-name">${name}</h3>`;
-  const head = icon
-    ? `<div class="hub-featured-head">${hubFeaturedIcon(icon)}${title}</div>`
-    : badge + title;
+  const iconHtml = hubFeaturedCardIcon(icon, tileLabel);
+  const head = iconHtml || badge
+    ? `<div class="hub-featured-head">${iconHtml}${badge}${title}</div>`
+    : title;
   const sum = summary ? `<p class="hub-featured-summary">${summary}</p>` : '';
   return head + sum;
 }
