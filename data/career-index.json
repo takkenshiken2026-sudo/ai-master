@@ -333,6 +333,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-accounting",
+      "name": "経理・財務におすすめのAI資格｜AI時代に必要なリテラシーと注意点",
+      "yomi": "AI Certs for Accounting",
+      "summary": "経理・財務向けにAI資格の選び方と活かし方。レポート要約・業務文案・内部統制への接続、数値確認とキャリアも解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "経理",
+        "財務",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
