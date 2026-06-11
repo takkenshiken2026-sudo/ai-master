@@ -650,6 +650,20 @@ FLOWS: dict[str, FlowSpec] = {
         highlight_index=3,
         loop_caption="統制確認で次の学習へ",
     ),
+    "ai-certs-for-education": FlowSpec(
+        title="教育業界のAI資格活用フロー",
+        subtitle="学びの現場と業務へ接続する",
+        steps=[
+            ("01", "業態", "整理", "学校塾等"),
+            ("02", "第1", "資格", "選定"),
+            ("03", "学習", "・合格", ""),
+            ("04", "業務", "試行", "ルール確認"),
+            ("05", "振り", "返", "改善"),
+            ("06", "キャリア", "記録", "アピール"),
+        ],
+        highlight_index=3,
+        loop_caption="ルール確認で次の学習へ",
+    ),
 }
 
 
