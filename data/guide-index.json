@@ -834,6 +834,17 @@
       "priority": "高",
       "featured": false,
       "published": true
+    },
+    {
+      "id": "g-kentei-practice-04",
+      "no": 74,
+      "name": "G検定の一問一答は意味ある？",
+      "summary": "",
+      "category": "g-kentei-practice",
+      "keyword": "G検定 一問一答 意味",
+      "priority": "高",
+      "featured": false,
+      "published": true
     }
   ]
 }
