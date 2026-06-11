@@ -434,6 +434,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-managers",
+      "name": "管理職におすすめのAI資格｜チーム推進・ガバナンスとキャリアの活かし方",
+      "yomi": "AI Certs for Managers",
+      "summary": "管理職・マネージャー向けにAI資格の選び方と活かし方。チーム推進、ガバナンス、昇進・社内評価での第1候補と展開の進め方を解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "管理職",
+        "マネージャー",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
