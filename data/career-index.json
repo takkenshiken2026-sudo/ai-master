@@ -519,6 +519,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-public-sector",
+      "name": "公共・行政におすすめのAI資格｜自治体・省庁での活かし方",
+      "yomi": "AI Certs for Public Sector",
+      "summary": "自治体・省庁・公共機関向けにAI資格の選び方と活かし方。行政文書、個人情報保護、情報公開、DX推進、業態別の第1候補と安全な活用範囲を解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "公共",
+        "行政",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
