@@ -69,14 +69,19 @@ function countByCategory() {
   return counts;
 }
 
-function toolIcon(tool) {
-  if (!tool.logo) {
-    return '<div class="hub-list-icon-spacer" aria-hidden="true"></div>';
+function toolIcon(tool, options) {
+  const opts = options || {};
+  if (opts.featured) {
+    if (!tool.logo) return '';
+    return (
+      `<div class="hub-featured-icon">` +
+      `<img src="${logoSrc(tool)}" alt="" width="56" height="56" loading="lazy">` +
+      `</div>`
+    );
   }
-  return (
-    `<div class="hub-featured-icon">` +
-    `<img src="${logoSrc(tool)}" alt="" width="56" height="56" loading="lazy">` +
-    `</div>`
+  return hubListIconTile(
+    tool.logo ? `tools/${tool.logo}` : '',
+    escapeHtml(tool.catLabel || '')
   );
 }
 
@@ -113,7 +118,7 @@ function renderFeatured() {
     .map((t) => {
       const body = `
       <div class="featured-head">
-        ${toolIcon(t)}
+        ${toolIcon(t, { featured: true })}
         <h3 class="featured-name">${escapeHtml(t.name)}</h3>
         ${hasArticle(t) ? '' : '<span class="tool-soon-badge">準備中</span>'}
       </div>
@@ -142,7 +147,6 @@ function toolRowInner(t) {
           <p class="tool-row-desc">${escapeHtml(t.tagline)}</p>
         </div>
         <div class="tool-row-aside">
-          <span class="tool-category">${escapeHtml(t.catLabel)}</span>
           ${chevron}
         </div>`;
 }

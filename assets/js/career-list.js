@@ -76,13 +76,14 @@ function escapeHtml(text) {
 
 function renderArticleRow(article) {
   const catLabel = categories[article.category] || article.category;
+  const tileLabel = hubCategoryShortLabel('career', article.category, catLabel);
   const salary = formatSalary(article);
   const sub = salary || article.yomi || '';
   const status = article.published
     ? ''
     : '<span class="hub-list-pill">準備中</span>';
   const inner =
-    hubListIcon(article.icon) +
+    hubListIconTile(article.icon, escapeHtml(tileLabel)) +
     `<div class="hub-list-body">` +
     `<div class="hub-list-top">` +
     `<h2 class="hub-list-name">${escapeHtml(article.name)}</h2>` +
@@ -92,7 +93,6 @@ function renderArticleRow(article) {
     (article.summary ? `<p class="hub-list-desc">${escapeHtml(article.summary)}</p>` : '') +
     `</div>` +
     `<div class="hub-list-aside">` +
-    `<span class="hub-list-cat">${escapeHtml(catLabel)}</span>` +
     HUB_CHEVRON +
     `</div>`;
 

@@ -105,11 +105,12 @@ function renderFeatured(cat, page, q, sort) {
 
 function renderTermRow(term) {
   const catLabel = categories[term.category] || term.category;
+  const tileLabel = hubCategoryShortLabel('glossary', term.category, catLabel);
   const status = term.published
     ? ''
     : '<span class="hub-list-pill">準備中</span>';
   const inner =
-    hubListIcon(term.icon) +
+    hubListIconTile(term.icon, escapeHtml(tileLabel)) +
     `<div class="hub-list-body">` +
     `<div class="hub-list-top">` +
     `<h2 class="hub-list-name">${escapeHtml(term.name)}</h2>` +
@@ -118,7 +119,6 @@ function renderTermRow(term) {
     (term.summary ? `<p class="hub-list-desc">${escapeHtml(term.summary)}</p>` : '') +
     `</div>` +
     `<div class="hub-list-aside">` +
-    `<span class="hub-list-cat">${escapeHtml(catLabel)}</span>` +
     HUB_CHEVRON +
     `</div>`;
 

@@ -105,8 +105,8 @@
   background: var(--surface-table-row);
 }
 .tool-row-link {
-  --tool-list-icon-w: 96px;
-  --tool-list-aside-w: 180px;
+  --tool-list-icon-w: 88px;
+  --tool-list-aside-w: 52px;
   display: grid;
   grid-template-columns: var(--tool-list-icon-w) minmax(0, 1fr) var(--tool-list-aside-w);
   gap: 0;
@@ -116,6 +116,9 @@
   color: inherit;
   background: transparent;
   transition: background 0.12s;
+}
+.tool-row-link > .hub-list-icon-tile {
+  margin: 12px 0 12px 14px;
 }
 .tool-row-link > .hub-featured-icon {
   align-self: center;
@@ -167,8 +170,12 @@
   gap: 12px;
   width: 100%;
   min-width: 0;
-  padding: 16px 20px;
+  padding: 16px 12px;
   border-left: 1px solid var(--border-default);
+  justify-content: center;
+}
+.tool-category {
+  display: none;
 }
 .tool-origin {
   font-size: var(--text-xs);
@@ -178,21 +185,6 @@
   background: var(--gray-100);
   color: var(--gray-600);
   border: 1px solid var(--gray-200);
-}
-.tool-category {
-  flex: 0 0 108px;
-  width: 108px;
-  box-sizing: border-box;
-  font-size: var(--text-xs);
-  padding: 3px 6px;
-  border-radius: 20px;
-  white-space: nowrap;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: var(--surface-inset);
-  color: var(--text-body);
-  border: 1px solid var(--border-subtle);
 }
 .tool-row-arrow {
   width: 16px;

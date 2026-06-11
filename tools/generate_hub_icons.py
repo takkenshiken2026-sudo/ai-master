@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ハブカテゴリアイコン — 色付き背景 + 線画 + 文字（G/P）を assets/images/hub-icons/ に生成。"""
+"""ハブカテゴリアイコン — 色付き背景 + 線画を assets/images/hub-icons/ に生成。"""
 
 from __future__ import annotations
 
@@ -139,27 +139,27 @@ PATHS: dict[str, list[str]] = {
 }
 
 THEMES = {
-    "blue": {"bg": "#E8F0FE", "stroke": "#1A5CDB", "letter": "#1A5CDB"},
-    "green": {"bg": "#EAF3DE", "stroke": "#3B6D11", "letter": "#3B6D11"},
-    "purple": {"bg": "#F3EEFF", "stroke": "#4A1EA0", "letter": "#4A1EA0"},
-    "pink": {"bg": "#FBEAF0", "stroke": "#993556", "letter": "#993556"},
-    "slate": {"bg": "#E8EEF4", "stroke": "#334155", "letter": "#334155"},
-    "indigo": {"bg": "#EEF2FF", "stroke": "#4338CA", "letter": "#4338CA"},
+    "blue": {"bg": "#E8F0FE", "stroke": "#1A5CDB"},
+    "green": {"bg": "#EAF3DE", "stroke": "#3B6D11"},
+    "purple": {"bg": "#F3EEFF", "stroke": "#4A1EA0"},
+    "pink": {"bg": "#FBEAF0", "stroke": "#993556"},
+    "slate": {"bg": "#E8EEF4", "stroke": "#334155"},
+    "indigo": {"bg": "#EEF2FF", "stroke": "#4338CA"},
 }
 
-# slug -> {theme, paths_key, letter?}
+# slug -> {theme, paths_key}
 BADGES: dict[str, dict] = {
-    # 学習ガイド — G検定系（G + 線画）
-    "gk-exam-overview": {"theme": "blue", "paths": "exam-overview", "letter": "G"},
-    "gk-study-method": {"theme": "blue", "paths": "study-method", "letter": "G"},
-    "gk-exam-scope": {"theme": "blue", "paths": "exam-scope", "letter": "G"},
-    "gk-domain-grid": {"theme": "blue", "paths": "domain-grid", "letter": "G"},
-    # 生成AIパスポート系（P + 線画）
-    "gp-exam-overview": {"theme": "green", "paths": "exam-overview", "letter": "P"},
-    "gp-study-method": {"theme": "green", "paths": "study-method", "letter": "P"},
-    "gp-exam-scope": {"theme": "green", "paths": "exam-scope", "letter": "P"},
-    "gp-domain-grid": {"theme": "green", "paths": "domain-grid", "letter": "P"},
-    # 学習ガイド — 共通（文字なし）
+    # 学習ガイド — G検定系
+    "gk-exam-overview": {"theme": "blue", "paths": "exam-overview"},
+    "gk-study-method": {"theme": "blue", "paths": "study-method"},
+    "gk-exam-scope": {"theme": "blue", "paths": "exam-scope"},
+    "gk-domain-grid": {"theme": "blue", "paths": "domain-grid"},
+    # 生成AIパスポート系
+    "gp-exam-overview": {"theme": "green", "paths": "exam-overview"},
+    "gp-study-method": {"theme": "green", "paths": "study-method"},
+    "gp-exam-scope": {"theme": "green", "paths": "exam-scope"},
+    "gp-domain-grid": {"theme": "green", "paths": "domain-grid"},
+    # 学習ガイド — 共通
     "cert-compare": {"theme": "indigo", "paths": "cert-compare"},
     "nav-glossary": {"theme": "indigo", "paths": "nav-glossary"},
     "audience": {"theme": "indigo", "paths": "audience"},
@@ -168,8 +168,8 @@ BADGES: dict[str, dict] = {
     "difficulty": {"theme": "indigo", "paths": "difficulty"},
     "after-cert": {"theme": "indigo", "paths": "after-cert"},
     # 資格マーク単体（フォールバック）
-    "g-kentei": {"theme": "blue", "paths": "g-kentei-mark", "letter": "G"},
-    "genai": {"theme": "green", "paths": "genai-mark", "letter": "P"},
+    "g-kentei": {"theme": "blue", "paths": "g-kentei-mark"},
+    "genai": {"theme": "green", "paths": "genai-mark"},
     # 用語辞典
     "glossary-basics": {"theme": "blue", "paths": "glossary-basics"},
     "glossary-models": {"theme": "blue", "paths": "glossary-models"},
@@ -189,31 +189,20 @@ BADGES: dict[str, dict] = {
 }
 
 
-def render_badge(*, theme: dict, paths: list[str], letter: str | None) -> str:
+def render_badge(*, theme: dict, paths: list[str]) -> str:
     path_lines = "\n".join(
         f'    <path d="{d}"/>'
         for d in paths
     )
-    # 線画は上段、文字は下段（G/P が一覧で判別しやすい）
-    icon_y = 3 if letter else 4
-    icon_scale = 0.72 if letter else 0.78
     icon_block = (
-        f'  <g transform="translate(4,{icon_y}) scale({icon_scale})" '
+        f'  <g transform="translate(4,4) scale(0.78)" '
         f'fill="none" stroke="{theme["stroke"]}" stroke-width="1.75" '
         f'stroke-linecap="round" stroke-linejoin="round">\n{path_lines}\n  </g>'
     )
-    letter_block = ""
-    if letter:
-        letter_block = (
-            f'  <text x="16" y="28" text-anchor="middle" '
-            f'font-family="system-ui,sans-serif" font-size="11" font-weight="800" '
-            f'fill="{theme["letter"]}">{letter}</text>'
-        )
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">\n'
         f'  <rect width="32" height="32" rx="8" fill="{theme["bg"]}"/>\n'
         f"{icon_block}\n"
-        f"{letter_block}\n"
         f"</svg>\n"
     )
 
@@ -223,9 +212,8 @@ def main() -> None:
     for slug, spec in BADGES.items():
         theme = THEMES[spec["theme"]]
         paths = PATHS[spec["paths"]]
-        letter = spec.get("letter")
         (OUT / f"{slug}.svg").write_text(
-            render_badge(theme=theme, paths=paths, letter=letter),
+            render_badge(theme=theme, paths=paths),
             encoding="utf-8",
         )
     print(f"wrote {len(BADGES)} badge icons to {OUT.relative_to(ROOT)}")

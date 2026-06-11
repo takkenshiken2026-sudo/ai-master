@@ -1,10 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
   <rect width="32" height="32" rx="8" fill="#E8F0FE"/>
-  <g transform="translate(4,3) scale(0.72)" fill="none" stroke="#1A5CDB" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(4,4) scale(0.78)" fill="none" stroke="#1A5CDB" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
     <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"/>
     <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2"/>
     <path d="M9 12l.01 0"/>
     <path d="M13 12l2 0"/>
   </g>
-  <text x="16" y="28" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="800" fill="#1A5CDB">G</text>
 </svg>

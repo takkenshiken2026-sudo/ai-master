@@ -304,8 +304,8 @@
   color: var(--blue);
 }
 .hub-list-link {
-  --hub-list-icon-w: 96px;
-  --hub-list-aside-w: 180px;
+  --hub-list-icon-w: 88px;
+  --hub-list-aside-w: 52px;
   display: grid;
   grid-template-columns: var(--hub-list-icon-w) minmax(0, 1fr) var(--hub-list-aside-w);
   gap: 0;
@@ -315,15 +315,59 @@
   color: inherit;
   background: transparent;
 }
+.hub-list-icon-tile {
+  width: 72px;
+  min-height: 72px;
+  margin: 12px 0 12px 14px;
+  align-self: center;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px 8px;
+  background: #f2f2f2;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+.hub-list-icon-tile__img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+.hub-list-icon-tile:has(img[src*="hub-icons/"]) .hub-list-icon-tile__img {
+  width: 32px;
+  height: 32px;
+}
+.hub-list-icon-tile:has(img[src*="tools/"]) .hub-list-icon-tile__img {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+}
+.hub-list-icon-tile__img--empty {
+  background: var(--gray-200);
+  border-radius: 8px;
+}
+.hub-list-icon-tile__label {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--ink);
+  max-width: 100%;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
 .hub-list-link > .hub-featured-icon {
   align-self: center;
   justify-self: start;
   margin: 16px 0 16px 20px;
 }
 .hub-list-link > .hub-list-icon-spacer {
-  width: 56px;
-  height: 56px;
-  margin: 16px 0 16px 20px;
+  display: none;
 }
 .hub-list-row--planned .hub-list-link {
   cursor: default;
@@ -402,23 +446,12 @@
   gap: 12px;
   width: 100%;
   min-width: 0;
-  padding: 16px 20px;
+  padding: 16px 12px;
   border-left: 1px solid var(--border-default);
+  justify-content: center;
 }
 .hub-list-cat {
-  flex: 0 0 108px;
-  width: 108px;
-  box-sizing: border-box;
-  font-size: var(--text-xs);
-  padding: 3px 6px;
-  border-radius: 20px;
-  white-space: nowrap;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: var(--surface-inset);
-  color: var(--text-body);
-  border: 1px solid var(--border-subtle);
+  display: none;
 }
 .hub-list-chevron {
   width: 16px;
@@ -464,5 +497,8 @@
   }
   .hub-list-aside {
     display: none;
+  }
+  .hub-list-icon-tile {
+    margin-left: 12px;
   }
 }
