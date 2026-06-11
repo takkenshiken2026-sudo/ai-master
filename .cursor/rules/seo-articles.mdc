@@ -9,6 +9,8 @@ alwaysApply: false
 参照実装: `tools/chatgpt/index.html`（ツール）、`glossary/generative-ai/index.html`（用語）。
 スタイルは `assets/css/tool-detail.css` のみ。記事専用CSSを新設しない。
 
+**ASPリンク付き・収益化が目的の記事**は `.cursor/rules/affiliate-articles.mdc` を優先する（構成・CTA・表記が異なる）。
+
 ## 記事の種類
 
 | 種類 | パス | ヒーロー |

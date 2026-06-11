@@ -1,0 +1,154 @@
+---
+description: アフィリエイト記事（収益化コンテンツ）の作成・品質・公開ルール
+globs: career/*/index.html,tools/*/index.html,guide/compare-*/index.html
+alwaysApply: false
+---
+
+# アフィリエイト記事 作成ルール
+
+収益源として最重要のコンテンツ。**SEO記事（`.cursor/rules/seo-articles.mdc`）の骨格を継承しつつ、構成・信頼・CV導線をリッチにする**。
+
+参照実装: `career/onecareer-ai-tensyoku/index.html`（パートナー）、`tools/manus/index.html`（ツール・高品質）。
+
+マスター: `data/affiliate-articles.json`（パートナーURL・ASPリンク・公開状態）。
+
+## SEO記事との違い
+
+| 観点 | SEO記事 | アフィリエイト記事 |
+|------|---------|-------------------|
+| 目的 | 検索流入・試験導線 | **コンバージョン（登録・申込・購入）** |
+| 切り口 | 試験定義・誤解整理 | **読者の意思決定を後押し**（比較・向き不向き・手順） |
+| 外部リンク | ツールは末尾公式のみ | **末尾CTA必須** + `rel="sponsored"` |
+| 構成 | 10前後セクション | **下記リッチ骨格（必須セクション多め）** |
+| 量産 | テンプレ可（用語等） | **1本1本オリジナリティ必須**。テンプレ量産禁止 |
+
+ツール記事でASPリンクがある場合は**アフィリエイト扱い**。試験導線のみのツールはSEO記事ルールに従う。
+
+## 記事タイプ
+
+| type | 配置 | 例 |
+|------|------|-----|
+| `partner` | `career/{id}/` | 転職・学習・B2Bサービス |
+| `tool` | `tools/{id}/` | SaaS・AIツール（ASPあり） |
+| `roundup` | `guide/compare-{nn}/` 等 | 複数製品比較・おすすめN選 |
+
+`data/affiliate-articles.json` の `type` と `path` を必ず登録する。
+
+## リッチ骨格（この順序・IDを基本とする）
+
+```
+main.page-wrap.page-wrap--article
+  nav.breadcrumb
+  header.tool-hero（--split / --career / ツールは --split + 公式画像）
+  div.tool-meta-bar
+  article.tool-content
+    p.tool-lead                    ← 1つ。外部リンク禁止
+    nav.tool-toc
+    section#overview               ← 【必須】サービス概要・運営・ターゲット
+    section#misconception          ← 【必須】よくある誤解（2項目以上）
+    section#features               ← 【推奨】tool-feature-grid（4カード前後）
+    section#verdict                 ← 【推奨】結論ボックス（tool-callout・ページ内アンカーのみ）
+    section#who-for                ← 【推奨】向いている人 / 向いていない人
+    section#{use-case}             ← 【必須】AI Master読者向け活用法（フェーズ分け可）
+    section#compare                ← 【必須】競合・代替との比較表（3社以上・公平）
+    section#pricing                ← 【任意】料金。変動情報は YYYY年M月時点
+    section#register-cta           ← 【推奨】登録〜利用の手順（tool-steps・ステップ1にASP1本）
+    section#pros-cons              ← 【必須】tool-pros-cons-table（5行程度）
+    section#faq + .tool-faq        ← 【必須】5問以上。JSON-LDと完全一致
+    p.tool-product-links--footer   ← 【必須】公式 or ASPリンク（sponsored）
+    aside.tool-related-wrap
+  footer（プロモーション表記）
+```
+
+**最低ライン**: 必須セクションすべて + 本文 **8,000字以上** + FAQ **5問** + 比較表 **3行以上**。
+
+## コンポーネント
+
+SEO記事と同じ `tool-detail.css` クラスのみ使用（新規CSS禁止）。アフィリエイトで特に使うもの:
+
+| クラス | アフィリエイトでの使い方 |
+|--------|-------------------------|
+| `tool-feature-grid` | サービスの差別化ポイント |
+| `tool-spec-table` | 競合比較・料金比較 |
+| `tool-pros-cons-table` | 正直なメリデメ（デメリット省略禁止） |
+| `tool-example-list` | フェーズ別活用法（転職・学習など） |
+| `tool-steps` | 登録〜利用の流れ |
+| `tool-callout` | **自サイト**への信頼導線（試験・キャリア記事）。外部ASPは置かない |
+| `tool-product-links--footer` | **唯一の主CTA置き場** |
+
+## リンク・表記（コンプライアンス）
+
+- **リード・目次・h1付近**: 外部リンク（ASP含む）を置かない
+- **本文中**: ASPリンクは原則 **0〜1本**。決断直前セクション（`#register-cta` のステップ1）に1本
+- **主CTA**: 記事末尾 `tool-product-links--footer` に1箇所（行動喚起コピー必須）
+- **中間CTA**: `tool-callout` は**自サイトリンク or ページ内アンカー**のみ（`#register-cta` 等）
+- **属性**: `target="_blank" rel="noopener noreferrer sponsored"`
+- **URL優先順**: `affiliateUrl`（JSON）→ なければ `officialUrl`
+- **フッター**: `foot-disclaimer` に「本記事の外部リンクにはプロモーションを含む場合があります」を追加
+- **誇大表現禁止**: 「絶対」「必ず稼げる」「公式認定」等。料金・機能は公式確認を促す
+
+## 画像（パートナー記事）
+
+- **本文用**: 公式サイト（トップ・LP）の掲載画像を `assets/images/career/{id}/` に保存して引用
+- **保存名**: `official-{内容}.png` など内容が分かる名前
+- **figcaption**: `出典：{サービス名}公式` + 公式URLリンク + 取得時期（`YYYY年M月時点`）
+- **ヒーロー**: Unsplash 等のストックも可。本文の公式引用画像は **1枚以上推奨**（サービスの実在感）
+- **禁止**: 競合サービスのスクショ、UIの自作モック、出典不明の画像
+
+## コンテンツ品質（オリジナリティ）
+
+各記事に **AI Master 固有の1軸** を必ず入れる:
+
+1. **試験接続** — G検定・生成AIパスポートのどの論点と接続するか（ツール記事）
+2. **キャリア接続** — 未経験・第二新卒・職種別の文脈（パートナー記事）
+3. **比較の切り口** — 競合と「何軸で」比べたか（機能一覧のコピペ不可）
+4. **数値の根拠** — 公式・プレスリリースベース。`YYYY年M月時点` を明記
+5. **向き不向き** — 全員おすすめにしない。ペルソナを明示
+
+**禁止**: 他記事の段落差し替えのみ、競合のデメリット省略、未検証の口コミ引用。
+
+## 内部リンク戦略
+
+アフィリエイト記事は**自サイト回遊**で信頼を積んでからCVする:
+
+```
+パートナー記事 → キャリア記事 / 試験対策 / 学習ガイド
+ツール記事     → 用語辞典 / 試験問題 / 関連ツール（公開済みのみ）
+比較記事       → 各ツール記事 / 試験ハブ
+```
+
+関連セクションは **2ブロック**（同ジャンル記事 + 学習リソース）を標準とする。
+
+## head / SEO / 構造化データ
+
+SEO記事ルールに加え:
+
+- `title`: `{訴求}｜{対象} — AI Master`（検索意図 + 信頼）
+- `meta description`: **120〜160字**。結論・対象者・更新性
+- JSON-LD: `BreadcrumbList` + `Article` + `WebPage` + `FAQPage`（必須）
+- ツール: 追加で `SoftwareApplication`（`offers` に料金但し書き）
+- パートナー: `Article` の `about` に `Organization` または `Service` を検討
+- OG画像: 1200×630 以上推奨（キャリアは `assets/images/career/{id}/hero.jpg`）
+
+## 公開チェックリスト
+
+1. `data/affiliate-articles.json` にエントリ追加（`affiliateUrl` / `asp` / `published`）
+2. HTMLを参照実装の骨格どおりに執筆
+3. 必須セクション・FAQ 5問・比較表・メリデメを確認
+4. JSON-LD と FAQ 本文の一致確認
+5. 関連リンクがすべて実在URLか確認
+6. `sitemap.xml` に URL 追加
+7. タイプ別インデックス更新:
+   - `partner` → `data/career-index.json` + `python3 tools/rebuild_career.py`
+   - `tool` → `python3 tools/build_tools_data.py` + 画像チェック
+   - `roundup` → `data/guide-index.json` + `python3 tools/build_guide_index.py`
+8. ASPリンクの動作確認（リダイレクト・パラメータ）
+
+## 新規パートナー追加の流れ
+
+1. `data/affiliate-articles.json` に `id` / `partner` / URL を定義
+2. 配置先を決める（基本 `career/{id}/`）
+3. 本ルールのリッチ骨格で執筆
+4. インデックス・sitemap を更新
+
+コミット・push はユーザー指示時のみ（deploy ルール参照）。

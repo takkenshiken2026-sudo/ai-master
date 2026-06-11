@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "description": "アフィリエイト記事マスター。affiliateUrl が null のときは officialUrl を記事に使用する。",
+  "articles": [
+    {
+      "id": "onecareer-ai-tensyoku",
+      "path": "career/onecareer-ai-tensyoku/",
+      "type": "partner",
+      "partner": "ワンキャリア転職",
+      "officialUrl": "https://plus.onecareer.jp/",
+      "affiliateUrl": "https://px.a8.net/svt/ejp?a8mat=4B42RC+70G0ZM+5O7E+BYT9F",
+      "affiliateBannerUrl": "https://px.a8.net/svt/ejp?a8mat=4B42RC+70G0ZM+5O7E+BXB8X",
+      "affiliateBannerImage": "https://www28.a8.net/svt/bgt?aid=260530680424&wid=011&eno=01&mid=s00000026465002003000&mc=1",
+      "asp": "A8",
+      "published": true,
+      "datePublished": "2026-06-12",
+      "notes": null
+    }
+  ]
+}

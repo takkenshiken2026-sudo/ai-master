@@ -743,6 +743,21 @@
       ],
       "published": true,
       "icon": "hub-icons/career-market.svg"
+    },
+    {
+      "id": "onecareer-ai-tensyoku",
+      "name": "ワンキャリア転職はAI転職に使える？評判・向き不向き",
+      "yomi": "OneCareer AI Tensyoku",
+      "summary": "面接対策・キャリアパスが先に読める。向き不向き・無料登録の流れを整理。",
+      "category": "move",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "転職",
+        "未経験可"
+      ],
+      "published": true,
+      "icon": "hub-icons/career-move.svg"
     }
   ],
   "featuredIds": [

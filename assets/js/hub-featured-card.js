@@ -49,6 +49,9 @@ function hubFeaturedIcon(iconPath) {
 
 function hubTileLabelClass(label) {
   if (!label) return 'hub-list-icon-tile__label';
+  if (label === 'AIパスポート') {
+    return 'hub-list-icon-tile__label hub-list-icon-tile__label--micro';
+  }
   // 64pxタイルで切れる長さ（5文字以上）のみ 10px に縮小
   return label.length >= 5
     ? 'hub-list-icon-tile__label hub-list-icon-tile__label--compact'
