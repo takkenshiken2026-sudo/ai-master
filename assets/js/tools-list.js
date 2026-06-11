@@ -69,9 +69,12 @@ function countByCategory() {
   return counts;
 }
 
-function toolIcon(tool, size) {
-  const cls = size === 'sm' ? 'tool-icon tool-icon--sm' : 'tool-icon';
-  return `<div class="${cls}"><img src="${logoSrc(tool)}" alt="" width="32" height="32" loading="lazy"></div>`;
+function toolIcon(tool) {
+  return (
+    `<div class="hub-featured-icon">` +
+    `<img src="${logoSrc(tool)}" alt="" width="56" height="56" loading="lazy">` +
+    `</div>`
+  );
 }
 
 function renderCategoryFilters(cat, q) {
@@ -127,7 +130,7 @@ function toolRowInner(t) {
   const soonBadge = hasArticle(t) ? '' : '<span class="tool-soon-badge">準備中</span>';
   const chevron = hasArticle(t) ? TOOL_CHEVRON : '';
   return `
-        ${toolIcon(t, 'sm')}
+        ${toolIcon(t)}
         <div class="tool-row-body">
           <div class="tool-row-top">
             <h2 class="tool-row-name">${escapeHtml(t.name)}</h2>

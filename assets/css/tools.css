@@ -1,26 +1,4 @@
-/* AIツール — 一覧固有 */
-
-.tool-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: var(--gray-100);
-  border: 1px solid var(--gray-200);
-  overflow: hidden;
-}
-.tool-icon img {
-  width: 26px;
-  height: 26px;
-  object-fit: contain;
-}
-.tool-icon--sm img {
-  width: 24px;
-  height: 24px;
-}
+/* AIツール — 一覧固有（アイコンは hub.css の .hub-featured-icon を共用） */
 
 /* 人気のAIツール */
 .featured-section {
@@ -127,7 +105,7 @@
   background: var(--surface-table-row);
 }
 .tool-row-link {
-  --tool-list-icon-w: 74px;
+  --tool-list-icon-w: 96px;
   --tool-list-aside-w: 180px;
   display: grid;
   grid-template-columns: var(--tool-list-icon-w) minmax(0, 1fr) var(--tool-list-aside-w);
@@ -139,7 +117,7 @@
   background: transparent;
   transition: background 0.12s;
 }
-.tool-row-link > .tool-icon {
+.tool-row-link > .hub-featured-icon {
   align-self: center;
   justify-self: start;
   margin: 16px 0 16px 20px;
