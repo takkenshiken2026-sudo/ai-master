@@ -534,7 +534,8 @@
   flex-shrink: 0;
   background: var(--blue);
 }
-.tool-content section > h3 {
+.tool-content section > h3,
+.tool-content section .tool-phase > h3 {
   font-size: var(--text-lg);
   font-weight: 700;
   margin: 24px 0 12px;
@@ -545,7 +546,8 @@
   gap: 10px;
   line-height: 1.4;
 }
-.tool-content section > h3::before {
+.tool-content section > h3::before,
+.tool-content section .tool-phase > h3::before {
   content: '';
   width: 2px;
   height: 1em;
@@ -885,7 +887,38 @@
 }
 .tool-example-list strong {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  font-size: var(--text-base);
+  line-height: 1.45;
+}
+.tool-example-list li span {
+  display: block;
+  color: var(--text-body);
+  line-height: 1.8;
+}
+.tool-phase {
+  margin-top: 20px;
+  padding: 18px 20px 14px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+}
+.tool-phase:first-of-type {
+  margin-top: 16px;
+}
+.tool-content section .tool-phase > h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 0;
+}
+.tool-phase .tool-example-list {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.tool-phase .tool-example-list li:first-child {
+  padding-top: 0;
+}
+.tool-phase .tool-example-list li:last-child {
+  padding-bottom: 0;
 }
 
 .tool-related-wrap {
