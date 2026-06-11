@@ -203,13 +203,20 @@
   height: 72%;
   padding: 0;
 }
-/* カテゴリバッジ（色付き背景込み） */
+/* カテゴリ線画（グレータイル上・黒 stroke） */
 .hub-featured-icon:has(img[src*="hub-icons/"]) {
-  background: transparent;
-  border-color: var(--gray-200);
+  background: #f2f2f2;
+  border-color: transparent;
+  box-shadow: none;
 }
 .hub-featured-icon:has(img[src*="hub-icons/"]) img {
+  width: 70%;
+  height: 70%;
   padding: 0;
+}
+.hub-list-icon-tile:has(img[src*="hub-icons/"]) .hub-list-icon-tile__img {
+  width: 36px;
+  height: 36px;
 }
 .hub-featured-summary {
   font-size: var(--text-sm);
