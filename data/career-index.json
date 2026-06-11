@@ -234,6 +234,24 @@
       "published": true
     },
     {
+      "id": "ai-certs-career-value",
+      "name": "AI資格はキャリアにどう役立つ？職種別・目的別に活かし方を解説",
+      "yomi": "AI Certs Career Value",
+      "summary": "AI資格が転職・社内評価・業務改善にどう効くかを目的別・職種別に整理。履歴書・面接での活かし方と限界も解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "資格",
+        "転職",
+        "キャリア",
+        "G検定",
+        "生成AIパスポート"
+      ],
+      "featured": true,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
