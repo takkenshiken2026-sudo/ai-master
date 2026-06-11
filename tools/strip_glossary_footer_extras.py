@@ -33,8 +33,7 @@ def strip_html(text: str) -> tuple[str, bool]:
 
     new = INDEX_LI_RE.sub("", updated)
     if new != updated:
-        updated = re.sub(r"\n{3,}", "\n\n", updated)
-        updated = updated
+        updated = re.sub(r"\n{3,}", "\n\n", new)
         changed = True
 
     return updated, changed
