@@ -296,15 +296,15 @@ body {
   transform: translateY(-3px);
 }
 .cat-icon-tile {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   margin-bottom: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3px;
-  padding: 6px 3px 4px;
+  padding: 5px 4px 4px;
   background: #fff;
   border: 1px solid var(--gray-200);
   border-radius: 10px;
@@ -313,18 +313,21 @@ body {
   overflow: hidden;
 }
 .cat-icon-tile img {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   display: block;
 }
 .cat-icon-tile__label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.1;
   text-align: center;
   color: var(--ink);
-  word-break: keep-all;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  letter-spacing: -0.02em;
 }
 .cat-num {
   display: inline-flex;

@@ -210,8 +210,8 @@
   padding: 0;
 }
 .hub-list-icon-tile:has(img[src*="hub-icons/"]) .hub-list-icon-tile__img {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
 }
 .hub-featured-summary {
   font-size: var(--text-sm);
@@ -306,7 +306,7 @@
   color: var(--blue);
 }
 .hub-list-link {
-  --hub-list-icon-w: 80px;
+  --hub-list-icon-w: 88px;
   --hub-list-aside-w: 52px;
   display: grid;
   grid-template-columns: var(--hub-list-icon-w) minmax(0, 1fr) var(--hub-list-aside-w);
@@ -318,8 +318,8 @@
   background: transparent;
 }
 .hub-list-icon-tile {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   margin: 0;
   align-self: center;
   justify-self: center;
@@ -328,7 +328,7 @@
   align-items: center;
   justify-content: center;
   gap: 3px;
-  padding: 6px 3px 4px;
+  padding: 5px 4px 4px;
   background: #fff;
   border: 1px solid var(--gray-200);
   border-radius: 10px;
@@ -337,8 +337,8 @@
   overflow: hidden;
 }
 .hub-list-icon-tile__img {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
@@ -349,18 +349,21 @@
   border-radius: 7px;
 }
 .hub-list-icon-tile__img--empty {
+  width: 36px;
+  height: 36px;
   background: var(--gray-100);
   border-radius: 7px;
 }
 .hub-list-icon-tile__label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.1;
   text-align: center;
   color: var(--ink);
+  white-space: nowrap;
   max-width: 100%;
-  word-break: keep-all;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  letter-spacing: -0.02em;
 }
 .hub-list-link > .hub-featured-icon {
   align-self: center;
