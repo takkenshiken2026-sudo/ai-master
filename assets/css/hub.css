@@ -210,8 +210,8 @@
   padding: 0;
 }
 .hub-list-icon-tile:has(img[src*="hub-icons/"]) .hub-list-icon-tile__img {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
 }
 .hub-featured-summary {
   font-size: var(--text-sm);
@@ -306,7 +306,7 @@
   color: var(--blue);
 }
 .hub-list-link {
-  --hub-list-icon-w: 88px;
+  --hub-list-icon-w: 80px;
   --hub-list-aside-w: 52px;
   display: grid;
   grid-template-columns: var(--hub-list-icon-w) minmax(0, 1fr) var(--hub-list-aside-w);
@@ -318,8 +318,8 @@
   background: transparent;
 }
 .hub-list-icon-tile {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   margin: 12px 0 12px 14px;
   align-self: center;
   justify-self: start;
@@ -327,35 +327,35 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 8px 4px 6px;
+  gap: 3px;
+  padding: 6px 3px 4px;
   background: #fff;
   border: 1px solid var(--gray-200);
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.1);
   box-sizing: border-box;
   overflow: hidden;
 }
 .hub-list-icon-tile__img {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
 }
 .hub-list-icon-tile:has(img[src*="tools/"]) .hub-list-icon-tile__img {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
 }
 .hub-list-icon-tile__img--empty {
   background: var(--gray-100);
-  border-radius: 8px;
+  border-radius: 7px;
 }
 .hub-list-icon-tile__label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.15;
   text-align: center;
   color: var(--ink);
   max-width: 100%;
