@@ -775,14 +775,17 @@
 .tool-related-wrap {
   margin-top: 48px;
   padding-top: 32px;
-  border-top: 1px solid var(--gray-200);
+}
+.tool-related-wrap:has(#exam-resources) {
+  border-top: none;
+  padding-top: 0;
 }
 .tool-related-section-title {
   font-size: var(--text-xl);
   font-weight: 700;
   margin: 0 0 28px;
-  padding: 0 0 10px;
-  border-bottom: 1px solid var(--gray-200);
+  padding: 0;
+  border: none;
   color: var(--ink);
   display: flex;
   align-items: stretch;
@@ -821,23 +824,35 @@
   ~ .tool-related-block:not(#exam-resources) {
   grid-column: 1 / -1;
 }
-/* 上段2枚: 試験問題・関連用語カード */
+/* 上段2枚: 試験問題・関連用語（枠線なし・正方形） */
 .tool-related-wrap:has(#exam-resources) #related-exams,
 .tool-related-wrap:has(#exam-resources)
   #related-exams + .tool-related-block:not(#exam-resources) {
   padding: 20px 24px;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-md);
+  background: var(--gray-100);
+  border: none;
+  border-radius: 0;
   box-sizing: border-box;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.tool-related-wrap:has(#exam-resources) #related-exams .tool-related-list,
+.tool-related-wrap:has(#exam-resources)
+  #related-exams + .tool-related-block:not(#exam-resources) .tool-related-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 .tool-related-wrap:has(#exam-resources)
   #related-exams + .tool-related-block:not(#exam-resources)
   ~ .tool-related-block:not(#exam-resources) {
   padding: 20px 24px;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-md);
+  background: var(--gray-100);
+  border: none;
+  border-radius: 0;
   box-sizing: border-box;
 }
 .tool-related-wrap:has(#exam-resources) #exam-resources {
@@ -845,8 +860,8 @@
   margin-top: 4px;
   padding: 20px 24px;
   background: var(--blue-soft);
-  border: 1px solid var(--blue-mid);
-  border-radius: var(--radius-md);
+  border: none;
+  border-radius: 0;
   box-sizing: border-box;
 }
 .tool-related-wrap:has(#exam-resources) #related-exams .tool-related-heading,
@@ -868,10 +883,9 @@
 .tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-drill-link {
   margin: 16px 0 0;
   padding: 12px 16px;
-  border-top: none;
+  border: none;
   background: var(--white);
-  border: 1px solid var(--blue-mid);
-  border-radius: var(--radius-sm);
+  border-radius: 0;
 }
 .tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-drill-link a {
   font-size: var(--text-base);
@@ -980,8 +994,8 @@
 }
 #related-exams .tool-related-list a {
   padding: 10px 12px;
-  background: var(--gray-100);
-  border-radius: var(--radius-sm);
+  background: var(--white);
+  border-radius: 0;
   border-left: 3px solid var(--blue);
   text-decoration: none;
 }
@@ -1004,13 +1018,12 @@
   font-size: var(--text-sm);
   font-weight: var(--font-regular);
   background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: 999px;
+  border: none;
+  border-radius: 0;
   text-decoration: none;
   white-space: nowrap;
 }
 .tool-related-list--hubs a:hover {
-  border-color: var(--blue-mid);
   background: var(--blue-soft);
   color: var(--blue);
 }
@@ -1028,15 +1041,14 @@
   width: auto;
   padding: 7px 14px;
   font-size: var(--text-sm);
-  background: var(--gray-100);
-  border: 1px solid var(--gray-200);
-  border-radius: 999px;
+  background: var(--white);
+  border: none;
+  border-radius: 0;
   text-decoration: none;
 }
 .tool-related-wrap:has(#exam-resources)
   #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-list a:hover,
 .tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list a:hover {
-  border-color: var(--blue-mid);
   background: var(--blue-soft);
   color: var(--blue);
 }
@@ -1154,6 +1166,12 @@
   .tool-related-wrap:has(#exam-resources) #exam-resources .tool-related-exam-groups {
     flex-direction: column;
     gap: 16px;
+  }
+  .tool-related-wrap:has(#exam-resources) #related-exams,
+  .tool-related-wrap:has(#exam-resources)
+    #related-exams + .tool-related-block:not(#exam-resources) {
+    aspect-ratio: auto;
+    overflow: visible;
   }
 }
 @media (max-width: 640px) {
