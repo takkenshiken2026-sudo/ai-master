@@ -120,12 +120,13 @@
 .tool-row-link > .hub-list-icon-spacer {
   width: 56px;
   height: 56px;
-  margin: 0 0 0 14px;
+  margin: 0;
+  justify-self: center;
 }
 .tool-row-link > .hub-featured-icon {
   align-self: center;
-  justify-self: start;
-  margin: 0 0 0 14px;
+  justify-self: center;
+  margin: 0;
 }
 
 .tool-row-body {

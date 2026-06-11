@@ -320,9 +320,9 @@
 .hub-list-icon-tile {
   width: 64px;
   height: 64px;
-  margin: 0 0 0 14px;
+  margin: 0;
   align-self: center;
-  justify-self: start;
+  justify-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -364,13 +364,14 @@
 }
 .hub-list-link > .hub-featured-icon {
   align-self: center;
-  justify-self: start;
-  margin: 16px 0 16px 20px;
+  justify-self: center;
+  margin: 0;
 }
 .hub-list-link > .hub-list-icon-spacer {
   width: 56px;
   height: 56px;
-  margin: 0 0 0 14px;
+  margin: 0;
+  justify-self: center;
 }
 .hub-list-row--planned .hub-list-link {
   cursor: default;
@@ -505,8 +506,5 @@
   }
   .hub-list-aside {
     display: none;
-  }
-  .hub-list-icon-tile {
-    margin-left: 12px;
   }
 }
