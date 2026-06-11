@@ -763,7 +763,6 @@
   "featuredIds": [
     "ai-engineer",
     "machine-learning-engineer",
-    "data-scientist",
     "onecareer-ai-tensyoku"
   ],
   "featured": [
@@ -773,10 +772,6 @@
     },
     {
       "id": "machine-learning-engineer",
-      "icon": "hub-icons/career-role.svg"
-    },
-    {
-      "id": "data-scientist",
       "icon": "hub-icons/career-role.svg"
     },
     {

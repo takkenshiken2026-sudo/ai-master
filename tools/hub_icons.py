@@ -14,18 +14,24 @@ HUB_ICONS_DIR = IMAGES / "hub-icons"
 ALIASES_FILE = ROOT / "data" / "hub-icon-aliases.json"
 CATEGORY_ICONS_FILE = ROOT / "data" / "hub-category-icons.json"
 ICON_EXTS = (".svg", ".png", ".webp", ".jpg")
+FEATURED_MAX = 3
+
+
+def load_featured_ids(path: Path) -> list[str]:
+    if not path.is_file():
+        return []
+    ids = json.loads(path.read_text(encoding="utf-8"))
+    if len(ids) > FEATURED_MAX:
+        print(f"warn: {path.name} has {len(ids)} ids; using first {FEATURED_MAX}")
+        return ids[:FEATURED_MAX]
+    return ids
+
 
 PREFIX_VENDOR = (
     ("claude-", "Anthropic"),
     ("gpt-", "OpenAI"),
     ("gemini-", "Google"),
 )
-
-
-def load_featured_ids(path: Path) -> list[str]:
-    if not path.is_file():
-        return []
-    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def load_section_aliases(section: str) -> dict:
