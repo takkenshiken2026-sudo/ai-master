@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="テキスト動画生成（Text-to-Video）とは？文章や画像から動画クリップを作るAIタスクの意味、Text-to-Imageとの違い、時間軸の難しさと試験の罠をG検定・生成AIパスポート向けに解説。">
+  <title>テキスト動画生成（Text-to-Video）とは？タスク・技術・リスク — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/text-to-video/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="テキスト動画生成（Text-to-Video）とは？タスク・技術・リスク">
+  <meta property="og:description" content="テキストや画像から動画を生成する生成AIタスク。動画生成AI・LLM・編集ソフトとの混同を整理。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/text-to-video/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/glossary/text-to-video/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "用語辞典", "item": "https://ai-master.jp/glossary/" },
+          { "@type": "ListItem", "position": 3, "name": "テキスト動画生成", "item": "https://ai-master.jp/glossary/text-to-video/" }
+        ]
+      },
+      {
+        "@type": "DefinedTerm",
+        "@id": "https://ai-master.jp/glossary/text-to-video/#term",
+        "name": "テキスト動画生成",
+        "alternateName": ["Text-to-Video", "Text to Video", "T2V"],
+        "description": "テキストや画像などを入力として、短い動画クリップを生成する生成AIのタスク・技術。",
+        "inDefinedTermSet": {
+          "@type": "DefinedTermSet",
+          "name": "AI Master 用語辞典",
+          "url": "https://ai-master.jp/glossary/"
+        }
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/glossary/text-to-video/#article",
+        "headline": "テキスト動画生成（Text-to-Video）とは？タスク・技術・リスク",
+        "description": "テキストや画像から動画を生成する生成AIタスク。動画生成AI・LLM・編集ソフトとの混同を整理。",
+        "url": "https://ai-master.jp/glossary/text-to-video/",
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "inLanguage": "ja",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/glossary/text-to-video/#webpage" },
+        "about": { "@id": "https://ai-master.jp/glossary/text-to-video/#term" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/glossary/text-to-video/#webpage",
+        "url": "https://ai-master.jp/glossary/text-to-video/",
+        "name": "テキスト動画生成（Text-to-Video）とは？タスク・技術・リスク",
+        "description": "テキストや画像から動画を生成する生成AIタスク。動画生成AI・LLM・編集ソフトとの混同を整理。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/glossary/text-to-video/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Text-to-Videoとは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "テキストや画像などを入力として、AIが短い動画クリップを生成するタスク・技術です。生成AIパスポートでは「動画生成AIは、テキストや画像などをもとに動画を生成するAI」と定義されます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Text-to-VideoとText-to-Imageの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Text-to-Imageは静止画1枚、Text-to-Videoは時間軸を持つ連続フレーム（動画）を出力します。試験では「画像を生成するAI」の説明を動画生成AIに当てはめる選択肢が罠になります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "生成した動画は現実の証拠映像として使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。動画生成AIの映像は現実を撮影した証拠とは限りません。出所・生成の有無を確認する必要があります（TF-0220）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Text-to-VideoとLLMは同じですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "同じではありません。LLMは主にテキスト生成、Text-to-Videoは動画生成です。「文章作成・要約・翻訳を行う生成AI」という説明はLLM向けで、動画生成AIの定義ではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">テキスト動画生成</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">生成AI活用</p>
+    <h1>テキスト動画生成（Text-to-Video）とは？タスク・技術・リスク</h1>
+    <p class="tool-hero-sub">読み：てきすとどうがせいせい ／ 英：Text-to-Video</p>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-10">2026年6月10日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>テキスト動画生成</strong>（Text-to-Video、T2V）は、<strong>テキストや画像などを入力として、AIが短い動画クリップを生成する</strong><a href="../generative-ai/">生成AI</a>のタスクです。2024〜2026年に<a href="../sora-model/">Sora</a>、Runway、Kling、Veoなどが相次いで登場し、試験でも「動画生成AI」の定義が頻出になりました。本記事はフレーム予測の数式より、<strong>時間軸という追加の難しさ</strong>、<strong>LLM・画像生成・動画編集との混同</strong>、<strong>証拠映像として扱えない理由</strong>——生成AIパスポート第3章で点を取る切り口——に絞って整理します（<strong>2026年6月時点</strong>）。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#exam-study">試験で問われる見方</a></li>
+        <li><a href="#what-is">Text-to-Videoとは</a></li>
+        <li><a href="#time-axis">静止画との決定的な差：時間軸</a></li>
+        <li><a href="#modality">入力パターンとモダリティ</a></li>
+        <li><a href="#vs-terms">近い用語との違い</a></li>
+        <li><a href="#tech-outline">技術の輪郭（試験レベル）</a></li>
+        <li><a href="#risks">利用時の注意</a></li>
+        <li><a href="#traps">すり替えに注意</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連する試験問題・用語</a></li>
+      </ol>
+    </nav>
+
+    <section id="exam-study">
+      <h2>試験で問われる見方</h2>
+      <p>
+        生成AIパスポートの定番は、<strong>「動画生成AIは、テキストや画像などをもとに動画を生成するAI」</strong>（○：<a href="../../exams/genai-passport/drill/q/tf-0219/">TF-0219</a>、<a href="../../exams/genai-passport/practice/q/hq-0344/">HQ-0344</a>）。逆に、<strong>生成映像を現実の証拠として必ず扱える</strong>は×（<a href="../../exams/genai-passport/drill/q/tf-0220/">TF-0220</a>）。
+      </p>
+      <p>
+        選択肢の罠は3パターンに集約されます。<strong>①LLMの説明を動画生成AIに当てる</strong>（文章作成・要約・翻訳——×：<a href="../../exams/genai-passport/practice/q/hq-0421/">HQ-0421</a>）。<strong>②Text-to-Imageの説明を当てる</strong>（プロンプトから画像——×）。<strong>③ディープフェイク＝動画生成AIだけ</strong>——関連はあるが同一ではありません。
+      </p>
+      <div class="tool-callout">
+        <p><strong>演習で確認する</strong></p>
+        <p>
+          生成AIパスポート：<a href="../../exams/genai-passport/drill/q/tf-0219/">TF-0219（定義）</a>、<a href="../../exams/genai-passport/drill/q/tf-0220/">TF-0220（証拠映像×）</a>、<a href="../../exams/genai-passport/drill/q/tf-0148/">TF-0148（Soraと生成AI）</a>、<a href="../../exams/genai-passport/practice/q/hq-0344/">HQ-0344</a>、<a href="../../exams/genai-passport/practice/q/hq-0366/">HQ-0366</a>、<a href="../../exams/genai-passport/practice/q/hq-0421/">HQ-0421</a>
+        </p>
+        <p>
+          姉妹記事：<a href="../text-to-image/">テキスト画像生成（Text-to-Image）</a> · 関連ツール：<a href="../../tools/sora-2/">Sora 2</a>、<a href="../../tools/runway/">Runway</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what-is">
+      <h2>Text-to-Videoとは</h2>
+      <p>
+        Text-to-Videoは、<strong>入力がテキスト（＋場合により画像）、出力が動画</strong>という方向の生成タスクです。「海辺を走る犬、スローモーション、映画風」のようなプロンプトから、数秒〜十数秒のクリップが得られるイメージです。
+      </p>
+      <p>
+        試験用語では<strong>動画生成AI</strong>（サービス・システム全般）と<strong>Text-to-Video</strong>（タスク名）が近い文脈で使われます。<a href="../text-to-image/">Text-to-Image</a>記事と同様、<strong>製品名はツール記事</strong>、<strong>本記事は入出力の概念</strong>として読み分けてください。
+      </p>
+    </section>
+
+    <section id="time-axis">
+      <h2>静止画との決定的な差：時間軸</h2>
+      <p>
+        Text-to-Imageが「1枚の絵を良くする」問題なら、Text-to-Videoは<strong>連続するフレーム間の一貫性</strong>（temporal consistency）も同時に満たす必要があります。
+      </p>
+      <div class="tool-feature-grid">
+        <div class="tool-feature-card">
+          <h3>物体の形が崩れる</h3>
+          <p>手の指がフレームごとに本数が変わる、顔が溶ける——T2Iより目立ちやすい。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>物理・因果の破綻</h3>
+          <p>液体の流れ、重力、衝突——Sora 2以降「物理改善」が売りにされる背景。</p>
+        </div>
+        <div class="tool-feature-card">
+          <h3>カメラ・被写体の動き</h3>
+          <p>パン/ズーム/被写体 motion をプロンプトで指定——解釈の幅が大きい。</p>
+        </div>
+      </div>
+      <p>
+        そのため多くの商用サービスは<strong>短尺クリップ</strong>（5〜20秒程度）に限定され、長編映画1本をワンショット生成するイメージとは距離があります（2026年6月時点の一般像）。
+      </p>
+    </section>
+
+    <section id="modality">
+      <h2>入力パターンとモダリティ</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>パターン</th>
+            <th>入力 → 出力</th>
+            <th>例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Text-to-Video</strong></td>
+            <td>テキスト → 動画</td>
+            <td>プロンプトのみから生成</td>
+          </tr>
+          <tr>
+            <td><strong>Image-to-Video</strong></td>
+            <td>画像 → 動画</td>
+            <td>静止画に動きを付ける（I2V）</td>
+          </tr>
+          <tr>
+            <td>Text + Image → Video</td>
+            <td>両方 → 動画</td>
+            <td>構図は画像、動きはテキスト指示</td>
+          </tr>
+          <tr>
+            <td><a href="../text-to-image/">Text-to-Image</a></td>
+            <td>テキスト → 画像</td>
+            <td>出力に時間軸なし——混同×</td>
+          </tr>
+          <tr>
+            <td>Video-to-Text</td>
+            <td>動画 → テキスト</td>
+            <td>キャプション・要約——方向が逆</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="vs-terms">
+      <h2>近い用語との違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>用語</th>
+            <th>焦点</th>
+            <th>試験での整理</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Text-to-Video</strong></td>
+            <td>テキスト等から<strong>新規</strong>動画を生成するタスク</td>
+            <td>本記事の主題</td>
+          </tr>
+          <tr>
+            <td><strong>動画生成AI</strong></td>
+            <td>動画を生成する<strong>システム・サービス</strong>全般</td>
+            <td>TF-0219の「動画生成AI」</td>
+          </tr>
+          <tr>
+            <td><a href="../llm/">LLM</a></td>
+            <td>テキスト生成が中心</td>
+            <td>動画生成AIの説明に使うと×</td>
+          </tr>
+          <tr>
+            <td>動画<strong>編集</strong>ソフト</td>
+            <td>既存素材のカット・合成</td>
+            <td>生成AIとは別カテゴリ</td>
+          </tr>
+          <tr>
+            <td><a href="../deepfake/">ディープフェイク</a></td>
+            <td>なりすまし・合成メディアの悪用</td>
+            <td>T2V技術が悪用され得るが、用語は別</td>
+          </tr>
+          <tr>
+            <td>アバター動画（HeyGen等）</td>
+            <td>テンプレ人物＋音声で説明動画</td>
+            <td>用途が「プレゼン動画」寄り——T2Vと部分重複</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="tech-outline">
+      <h2>技術の輪郭（試験レベル）</h2>
+      <p>実装は急速に変化します。試験では<strong>家族の名前と「なぜ動画は難しいか」</strong>が問われます。</p>
+      <ul class="tool-example-list">
+        <li><strong><a href="../denoising-diffusion/">拡散モデル</a>の時間拡張</strong> — 画像生成の拡散をフレーム列に拡張（Video Diffusion、Latent Video Diffusion等）</li>
+        <li><strong>Transformer / DiT</strong> — パッチ列＋時間次元を扱うアーキテクチャ（<a href="../sora-model/">Sora</a>はspacetime patchesとして説明）</li>
+        <li><strong>World model 志向</strong> — 物理シミュレーションに近い内部表現（研究・製品説明で登場）</li>
+        <li><strong>音声・効果音の同期</strong> — Sora 2以降、映像と同期音声が一体提供される例も（製品依存）</li>
+      </ul>
+      <p>
+        いずれも<a href="../generative-ai/">生成AI</a>の応用であり、判別型の「動画分類AI」とは目的が異なります。
+      </p>
+    </section>
+
+    <section id="risks">
+      <h2>利用時の注意</h2>
+      <ul class="tool-steps">
+        <li>
+          <strong>証拠性</strong> — 生成映像は現実の記録ではない（TF-0220）。ニュース・法廷・監視映像としての誤用に注意
+        </li>
+        <li>
+          <strong><a href="../deepfake/">ディープフェイク</a>・肖像</strong> — 実在人物のlikeness生成は規約・法律の対象
+        </li>
+        <li>
+          <strong>著作権・学習データ</strong> — 商用利用・再配布はサービス規約と権利確認が必要（<a href="../text-to-image/">T2I</a>と同系）
+        </li>
+        <li>
+          <strong>ラベリング・透明性</strong> — AI生成であることの表示（<a href="../ai-labeling/">AI表示</a>関連のガバナンス）
+        </li>
+        <li>
+          <strong>プロンプト設計</strong> — <a href="../prompt/">プロンプト</a>の具体性は品質に直結するが、安全担保にはならない
+        </li>
+      </ul>
+    </section>
+
+    <section id="traps">
+      <h2>すり替えに注意</h2>
+      <table class="tool-pros-cons-table">
+        <thead>
+          <tr>
+            <th>誤った説明</th>
+            <th>正しい理解</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>動画生成AI＝LLM（要約・翻訳）</td>
+            <td>出力モダリティが違う（HQ-0421）</td>
+          </tr>
+          <tr>
+            <td>動画生成AI＝画像生成AI</td>
+            <td>静止画 vs 時間軸付き動画</td>
+          </tr>
+          <tr>
+            <td>生成動画＝撮影した証拠</td>
+            <td>出所・生成有無を確認（TF-0220）</td>
+          </tr>
+          <tr>
+            <td>Text-to-Video＝動画編集</td>
+            <td>新規生成 vs 既存素材編集</td>
+          </tr>
+          <tr>
+            <td>Sora終了＝OpenAIが動画生成を放棄</td>
+            <td>消費者アプリ/API終了と研究・他製品は別（<a href="../../tools/sora-2/">Sora 2記事</a>参照）</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>Text-to-Videoとは何ですか？</summary>
+          <p class="tool-faq-a">テキストや画像などを入力として、AIが短い動画クリップを生成するタスク・技術です。生成AIパスポートでは「動画生成AIは、テキストや画像などをもとに動画を生成するAI」と定義されます。</p>
+        </details>
+        <details>
+          <summary>Text-to-VideoとText-to-Imageの違いは？</summary>
+          <p class="tool-faq-a">Text-to-Imageは静止画1枚、Text-to-Videoは時間軸を持つ連続フレーム（動画）を出力します。試験では「画像を生成するAI」の説明を動画生成AIに当てはめる選択肢が罠になります。</p>
+        </details>
+        <details>
+          <summary>生成した動画は現実の証拠映像として使えますか？</summary>
+          <p class="tool-faq-a">いいえ。動画生成AIの映像は現実を撮影した証拠とは限りません。出所・生成の有無を確認する必要があります（TF-0220）。</p>
+        </details>
+        <details>
+          <summary>Text-to-VideoとLLMは同じですか？</summary>
+          <p class="tool-faq-a">同じではありません。LLMは主にテキスト生成、Text-to-Videoは動画生成です。「文章作成・要約・翻訳を行う生成AI」という説明はLLM向けで、動画生成AIの定義ではありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <div class="tool-related-block" id="related-exams">
+        <h2 class="tool-related-heading">関連する試験問題</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../exams/genai-passport/drill/q/tf-0219/">TF-0219 · 動画生成AIの定義</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0220/">TF-0220 · 証拠映像×</a></li>
+          <li><a href="../../exams/genai-passport/drill/q/tf-0148/">TF-0148 · Sora</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0344/">HQ-0344 · 定義選択</a></li>
+          <li><a href="../../exams/genai-passport/practice/q/hq-0421/">HQ-0421 · 不適切な説明</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list">
+          <li><a href="../text-to-image/">テキスト画像生成</a></li>
+          <li><a href="../sora-model/">Sora</a></li>
+          <li><a href="../denoising-diffusion/">拡散モデル</a></li>
+          <li><a href="../deepfake/">ディープフェイク</a></li>
+          <li><a href="../multimodal-ai/">マルチモーダルAI</a></li>
+          <li><a href="../prompt/">プロンプト</a></li>
+          <li class="tool-related-list__soon">AI表示 <span class="tool-soon-badge">準備中</span></li>
+          <li class="tool-related-list__index"><a href="../index.html">用語辞典一覧へ →</a></li>
+        </ul>
+      </div>
+      <div class="tool-related-block">
+        <h2 class="tool-related-heading">関連AIツール</h2>
+        <ul class="tool-related-list">
+          <li><a href="../../tools/sora-2/">Sora 2</a></li>
+          <li><a href="../../tools/runway/">Runway</a></li>
+          <li><a href="../../tools/kling-ai/">Kling AI</a></li>
+          <li><a href="../../tools/veo-3/">Veo 3</a></li>
+          <li><a href="../../tools/pika/">Pika</a></li>
+          <li class="tool-related-list__index"><a href="../../tools/">AIツール一覧へ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
