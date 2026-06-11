@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="生成AIパスポートの練習問題を章別に解く勉強法。シラバス5章の学習順序、1章あたりのサイクル、正答率70%の切り替え基準、当サイトの章別演習ページの使い方を解説。">
+  <title>生成AIパスポートの練習問題を章別に解く勉強法 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/guide/genai-practice-05/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Master">
+  <meta property="og:title" content="生成AIパスポートの練習問題を章別に解く勉強法">
+  <meta property="og:description" content="生成AIパスポートシラバス5章を順番に攻略する勉強法。テキスト→一問一答→実践演習のサイクルと弱点章の潰し方。">
+  <meta property="og:url" content="https://ai-master.jp/guide/genai-practice-05/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/guide/genai-practice-05/hero.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ai-master.jp/assets/images/guide/genai-practice-05/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ai-master.jp/guide/genai-practice-05/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://ai-master.jp/" },
+          { "@type": "ListItem", "position": 2, "name": "学習ガイド", "item": "https://ai-master.jp/guide/" },
+          { "@type": "ListItem", "position": 3, "name": "章別に解く勉強法", "item": "https://ai-master.jp/guide/genai-practice-05/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://ai-master.jp/guide/genai-practice-05/#article",
+        "headline": "生成AIパスポートの練習問題を章別に解く勉強法",
+        "description": "生成AIパスポートシラバス5章を順番に攻略する勉強法。テキスト→一問一答→実践演習のサイクルと弱点章の潰し方。",
+        "url": "https://ai-master.jp/guide/genai-practice-05/",
+        "datePublished": "2026-06-11",
+        "dateModified": "2026-06-11",
+        "inLanguage": "ja",
+        "image": "https://ai-master.jp/assets/images/guide/genai-practice-05/hero.jpg",
+        "author": { "@type": "Organization", "name": "AI Master" },
+        "publisher": { "@id": "https://ai-master.jp/#organization" },
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "mainEntityOfPage": { "@id": "https://ai-master.jp/guide/genai-practice-05/#webpage" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://ai-master.jp/guide/genai-practice-05/#webpage",
+        "url": "https://ai-master.jp/guide/genai-practice-05/",
+        "name": "生成AIパスポートの練習問題を章別に解く勉強法",
+        "description": "生成AIパスポートシラバス5章を順番に攻略する勉強法。テキスト→一問一答→実践演習のサイクルと弱点章の潰し方。",
+        "isPartOf": { "@id": "https://ai-master.jp/#website" },
+        "breadcrumb": { "@id": "https://ai-master.jp/guide/genai-practice-05/#breadcrumb" },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "生成AIパスポートは章別に勉強した方がいい？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。本番60問は5章からバランスよく出題されるため、章別にテキスト→一問一答→実践演習のサイクルで進めると漏れが少なくなります。全章を一通り終えてから模擬試験で総合チェックする流れが効果的です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "章別演習はどの順番で進めるべき？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "第1章（AI基礎）→第2章（生成AI）→第3章（活用）→第4章（法律・倫理）→第5章（プロンプト）の順がおすすめです。第4章は出題比率が高いため、演習時間を多めに配分してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "1章あたり何問解けば十分？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "一問一答は章の15問以上解いて正答率70%を目指します。実践演習は70%到達後、同章を10〜15問。模擬試験後に弱点章だけ追加演習するサイクルを繰り返します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AI Masterの練習問題は公式過去問ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。当サイトの章別演習は本番・過去問を想定した模擬問題であり、生成AI活用普及協会の公式過去問そのものではありません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body guide-article">
+
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../index.html" class="active">学習ガイド</a></li>
+    <li><a href="../../glossary/">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">学習ガイド</a></li>
+      <li aria-current="page">章別に解く勉強法</li>
+    </ol>
+  </nav>
+
+  <header class="tool-hero tool-hero--split tool-hero--guide">
+    <div class="tool-hero-body">
+      <p class="tool-hero-eyebrow">生成AIパスポート 演習・過去問</p>
+      <h1>生成AIパスポートの練習問題を章別に解く勉強法</h1>
+      <p class="tool-hero-sub">シラバス5章 · 学習順序 · 弱点章の潰し方</p>
+    </div>
+    <figure class="tool-hero-visual">
+      <img src="../../assets/images/guide/genai-practice-05/hero.jpg" alt="章別に生成AIパスポートの練習問題を進める様子" width="1920" height="1280" fetchpriority="high">
+      <figcaption>出典：<a href="https://unsplash.com/photos/1521587760476-6c12a4b040da" target="_blank" rel="noopener noreferrer">Unsplash</a>（Aaron Burden）</figcaption>
+    </figure>
+  </header>
+
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-06-11">2026年6月11日</time></span>
+    <span>読了目安：約8分</span>
+  </div>
+
+  <article class="tool-content">
+    <p class="tool-lead">
+      生成AIパスポートは<strong>シラバス5章</strong>から<strong>60問</strong>が出題されます。ランダムに問題を解き進めるより、<strong>章別にテキスト→一問一答→実践演習</strong>のサイクルで進めた方が、漏れなく・効率よく定着します。本記事では、おすすめの<strong>学習順序</strong>、1章あたりの<strong>進め方</strong>、模擬試験後の<strong>弱点章の潰し方</strong>を整理します。当サイトの章別演習は<strong>本番・過去問を想定した模擬問題</strong>であり、<strong>公式の過去問そのものではありません</strong>。
+    </p>
+
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#why">なぜ章別で進めるのか</a></li>
+        <li><a href="#order">おすすめの学習順序（5章）</a></li>
+        <li><a href="#cycle">1章あたりのサイクル</a></li>
+        <li><a href="#accuracy">正答率の見方と切り替え基準</a></li>
+        <li><a href="#weak">弱点章の潰し方（模擬試験後）</a></li>
+        <li><a href="#schedule">週次スケジュール例</a></li>
+        <li><a href="#site">当サイトの章別演習ページ</a></li>
+        <li><a href="#mistakes">よくある失敗</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <section id="why">
+      <h2>なぜ章別で進めるのか</h2>
+      <p>
+        生成AIパスポートの出題は、特定章に偏るのではなく<strong>5章すべて</strong>から問われます（<a href="../genai-overview-04/">試験範囲・シラバス</a>）。章別に進めるメリットは次の3点です。
+      </p>
+      <ul class="tool-example-list">
+        <li>
+          <strong>テキストと演習が直結する</strong>
+          公式テキストの章を読んだ直後に、その章の問題を解くと定着率が上がる
+        </li>
+        <li>
+          <strong>弱点が章単位で見える</strong>
+          「第4章は70%、第2章は45%」のように、再学習すべき場所が明確になる
+        </li>
+        <li>
+          <strong>短い学習期間でも達成感が得やすい</strong>
+          約20時間の学習プランでも、「今週は第4章を終えた」と区切りがつく
+        </li>
+      </ul>
+      <p>
+        逆に、章を意識せずランダムに500問を解くと、<strong>得意章ばかり触れて第4章（法律・倫理）が放置</strong>されやすくなります。3モード全体の位置づけは<a href="../genai-practice-02/">過去問想定問題で対策する方法</a>、一問一答の効果は<a href="../genai-practice-04/">別記事</a>で詳述しています。
+      </p>
+    </section>
+
+    <section id="order">
+      <h2>おすすめの学習順序（5章）</h2>
+      <p>
+        シラバス上の並び順そのままでも構いませんが、<strong>前提知識の依存関係</strong>を考えると、次の順序がおすすめです。
+      </p>
+      <ol class="tool-example-list">
+        <li>
+          <strong>第1章：AIの基礎</strong>
+          AIの定義・歴史、機械学習の概要。全体の「地図」を作る入口
+        </li>
+        <li>
+          <strong>第2章：生成AIの仕組み</strong>
+          LLM・ChatGPT・主要モデル。以降の章の前提
+        </li>
+        <li>
+          <strong>第3章：生成AIの活用</strong>
+          RAG・AIエージェント・ビジネス事例
+        </li>
+        <li>
+          <strong>第4章：法律・倫理・ガバナンス</strong>
+          著作権・個人情報・ハルシネーション対策。<strong>出題比率が最も高い</strong>
+        </li>
+        <li>
+          <strong>第5章：プロンプトエンジニアリング</strong>
+          プロンプト設計・業務活用・出力確認
+        </li>
+      </ol>
+      <p>
+        第4章は演習時間を他章の<strong>1.5〜2倍</strong>配分するのが定番です。試験直前は第4章を軽く総復習するのが効果的（<a href="../genai-study-05/">直前3日間の仕上げ</a>）。
+      </p>
+    </section>
+
+    <section id="cycle">
+      <h2>1章あたりのサイクル</h2>
+      <p>
+        各章は、次の<strong>4ステップ</strong>を1セットとして進めます。1章あたり<strong>2〜3日</strong>（1日30〜60分）が目安です。第4章は4〜5日かけても構いません。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>ステップ</th>
+            <th>やること</th>
+            <th>時間目安</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. テキスト</strong></td>
+            <td>該当章を読み、用語辞典で不明語を潰す</td>
+            <td>30〜60分</td>
+          </tr>
+          <tr>
+            <td><strong>2. 一問一答</strong></td>
+            <td>章フィルタで○×問題を解く（15問以上）</td>
+            <td>20〜30分</td>
+          </tr>
+          <tr>
+            <td><strong>3. 弱点の再学習</strong></td>
+            <td>70%未満ならテキストに戻り、間違えた問題の解説を読む</td>
+            <td>20分</td>
+          </tr>
+          <tr>
+            <td><strong>4. 実践演習</strong></td>
+            <td>一問一答70%到達後、同章の四肢択一を10〜15問</td>
+            <td>20〜30分</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        5章すべてこのサイクルを1周したら、<strong>模擬試験</strong>で総合チェック（<a href="../genai-practice-03/">模擬試験の使い方</a>）。弱点が出た章だけ、ステップ2〜4に戻る——この<strong>螺旋型</strong>の繰り返しが章別勉強法の核心です。
+      </p>
+    </section>
+
+    <section id="accuracy">
+      <h2>正答率の見方と切り替え基準</h2>
+      <p>
+        章別演習では、<strong>章ごとの正答率</strong>を基準に次のアクションを決めます。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>正答率</th>
+            <th>状態</th>
+            <th>次にやること</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>70%未満</strong></td>
+            <td>定着不足</td>
+            <td>テキスト再読＋一問一答を同章でもう15問</td>
+          </tr>
+          <tr>
+            <td><strong>70〜85%</strong></td>
+            <td>実践演習へ</td>
+            <td>同章の実践演習10〜15問。解説で引っかけを確認</td>
+          </tr>
+          <tr>
+            <td><strong>85%以上</strong></td>
+            <td>次の章へ</td>
+            <td>新しい章に進み、週末に弱点章だけ軽く復習</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tool-callout">
+        <p><strong>第4章は基準を上げる</strong></p>
+        <p>第4章（法律・倫理）は出題比率が高いため、<strong>80%以上</strong>を目指してから次章に進むのがおすすめです。他章は70%到達で前に進んで構いません。</p>
+      </div>
+    </section>
+
+    <section id="weak">
+      <h2>弱点章の潰し方（模擬試験後）</h2>
+      <p>
+        模擬試験の結果画面には<strong>章別正答率</strong>が表示されます。ここから弱点を潰す手順です。
+      </p>
+      <ol class="tool-example-list">
+        <li>
+          <strong>失点2問以上の章をリストアップ</strong>
+          第4章が含まれていれば最優先（優先度A）
+        </li>
+        <li>
+          <strong>優先度A：一問一答で15〜20問</strong>
+          章フィルタを指定し、間違えた問題の解説をすべて読む
+        </li>
+        <li>
+          <strong>優先度A：実践演習で10問</strong>
+          四肢択一の引っかけパターンを確認
+        </li>
+        <li>
+          <strong>3〜5日後：同章だけ再テスト</strong>
+          一問一答10問で正答率が70%以上に戻ったか確認
+        </li>
+        <li>
+          <strong>次の模擬試験</strong>
+          弱点章の得点が改善しているか総合チェック
+        </li>
+      </ol>
+      <p>
+        詳しい復習サイクルは<a href="../genai-domain-02/">著作権・個人情報の分野解説</a>や<a href="../genai-domain-03/">AI倫理の分野解説</a>と併用すると、第4章の理解が深まります。
+      </p>
+    </section>
+
+    <section id="schedule">
+      <h2>週次スケジュール例</h2>
+      <p>
+        社会人が<strong>3週間（約20時間）</strong>で5章を攻略する一例です。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>週</th>
+            <th>進める章</th>
+            <th>平日（30分）</th>
+            <th>週末（2時間）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1週目</strong></td>
+            <td>第1章 ＋ 第2章</td>
+            <td>テキスト＋一問一答10〜15問</td>
+            <td>2章の一問一答完走＋弱点復習</td>
+          </tr>
+          <tr>
+            <td><strong>2週目</strong></td>
+            <td>第3章 ＋ 第4章（重点）</td>
+            <td>一問一答 or 実践演習</td>
+            <td>第4章を重点演習（一問一答30問以上）</td>
+          </tr>
+          <tr>
+            <td><strong>3週目</strong></td>
+            <td>第5章 ＋ 総仕上げ</td>
+            <td>弱点章の一問一答</td>
+            <td>模擬試験1回＋直前仕上げ</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        2週間集中の場合は、1週目に第1〜3章、2週目に第4〜5章＋模擬試験2回のイメージです。詳しい時間配分は<a href="../genai-study-02/">勉強時間の目安</a>も参照してください。
+      </p>
+    </section>
+
+    <section id="site">
+      <h2>当サイトの章別演習ページ</h2>
+      <p>
+        当サイトでは、<a href="../../exams/genai-passport/drill/">一問一答</a>・<a href="../../exams/genai-passport/practice/">実践演習</a>ともに<strong>章別ページ</strong>と<strong>章フィルタ</strong>に対応しています。
+      </p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr>
+            <th>章</th>
+            <th>内容</th>
+            <th>一問一答</th>
+            <th>実践演習</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>第1章</strong></td>
+            <td>AIの基礎</td>
+            <td><a href="../../exams/genai-passport/drill/domain/chapter-01/">chapter-01</a></td>
+            <td><a href="../../exams/genai-passport/practice/domain/chapter-01/">chapter-01</a></td>
+          </tr>
+          <tr>
+            <td><strong>第2章</strong></td>
+            <td>生成AIの仕組み</td>
+            <td><a href="../../exams/genai-passport/drill/domain/chapter-02/">chapter-02</a></td>
+            <td><a href="../../exams/genai-passport/practice/domain/chapter-02/">chapter-02</a></td>
+          </tr>
+          <tr>
+            <td><strong>第3章</strong></td>
+            <td>生成AIの活用</td>
+            <td><a href="../../exams/genai-passport/drill/domain/chapter-03/">chapter-03</a></td>
+            <td><a href="../../exams/genai-passport/practice/domain/chapter-03/">chapter-03</a></td>
+          </tr>
+          <tr>
+            <td><strong>第4章</strong></td>
+            <td>法律・倫理・ガバナンス</td>
+            <td><a href="../../exams/genai-passport/drill/domain/chapter-04/">chapter-04</a></td>
+            <td><a href="../../exams/genai-passport/practice/domain/chapter-04/">chapter-04</a></td>
+          </tr>
+          <tr>
+            <td><strong>第5章</strong></td>
+            <td>プロンプトエンジニアリング</td>
+            <td><a href="../../exams/genai-passport/drill/domain/chapter-05/">chapter-05</a></td>
+            <td><a href="../../exams/genai-passport/practice/domain/chapter-05/">chapter-05</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        一問一答・実践演習ともに<strong>5章すべてに十分な問題数</strong>があります（合計500問＋800問）。章ページから直接、その章だけに絞って演習を始められます。
+      </p>
+      <div class="tool-callout">
+        <p><strong>無料で章別演習を始める</strong></p>
+        <p><a href="../../exams/genai-passport/">生成AIパスポート 試験対策トップ</a> — 章別一問一答500問・実践演習800問・模擬試験（解説付き・公式過去問ではありません）</p>
+      </div>
+    </section>
+
+    <section id="mistakes">
+      <h2>よくある失敗</h2>
+      <ul class="tool-example-list">
+        <li>
+          <strong>第4章を後回しにする</strong>
+          → 出題比率最高。早めに重点演習し、80%を目指す
+        </li>
+        <li>
+          <strong>章をまたいでランダムに解く</strong>
+          → テキストとの対応がわからず、定着が浅くなる
+        </li>
+        <li>
+          <strong>1章で100%を目指して次に進まない</strong>
+          → 70%（第4章は80%）到達で次へ。全体を1周してから弱点に戻る
+        </li>
+        <li>
+          <strong>模擬試験の章別結果を見ずに点数だけ確認</strong>
+          → 章別正答率こそ次の演習計画の材料
+        </li>
+        <li>
+          <strong>第5章（プロンプト）を軽視する</strong>
+          → 実務直結の章。一問一答で用語を固めておく
+        </li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>生成AIパスポートは章別に勉強した方がいい？</summary>
+          <p class="tool-faq-a">はい。5章からバランスよく出題されるため、章別サイクルで進めると漏れが少なくなります。全章1周後に模擬試験で総合チェックする流れが効果的です。</p>
+        </details>
+        <details>
+          <summary>章別演習はどの順番で進めるべき？</summary>
+          <p class="tool-faq-a">第1章→第2章→第3章→第4章→第5章の順がおすすめです。第4章は演習時間を多めに配分してください。</p>
+        </details>
+        <details>
+          <summary>1章あたり何問解けば十分？</summary>
+          <p class="tool-faq-a">一問一答は15問以上で正答率70%を目指します。実践演習は70%到達後、同章10〜15問。模擬試験後は弱点章だけ追加演習します。</p>
+        </details>
+        <details>
+          <summary>苦手章が複数ある場合、どれから潰す？</summary>
+          <p class="tool-faq-a">模擬試験での<strong>失点数が多い順</strong>に優先。第4章が含まれていれば常に最優先で復習してください。</p>
+        </details>
+        <details>
+          <summary>AI Masterの練習問題は公式過去問ですか？</summary>
+          <p class="tool-faq-a">いいえ。本番・過去問を<strong>想定した模擬問題</strong>であり、協会の公式過去問そのものではありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="tool-related-wrap" id="related">
+      <h2 class="tool-related-section-title">関連するガイド・リソース</h2>
+      <div class="tool-related-block" id="related-guides">
+        <h2 class="tool-related-heading">関連する学習ガイド</h2>
+        <ul class="tool-related-list tool-related-list--cards">
+          <li><a href="../genai-practice-02/">過去問想定問題で対策する方法</a></li>
+          <li><a href="../genai-practice-04/">一問一答は意味ある？</a></li>
+          <li><a href="../genai-practice-03/">模擬試験の使い方と復習方法</a></li>
+          <li><a href="../genai-overview-04/">シラバス5章の解説</a></li>
+          <li><a href="../genai-study-01/">勉強法（20時間プラン）</a></li>
+          <li><a href="../index.html?cat=genai-practice">生成AIパスポート 演習・過去問カテゴリ</a></li>
+          <li class="tool-related-list__index"><a href="../index.html">学習ガイド一覧へ →</a></li>
+        </ul>
+      </div>
+
+      <div class="tool-related-block" id="related-resources">
+        <h2 class="tool-related-heading">学習リソース</h2>
+        <ul class="tool-related-list tool-related-list--cards">
+          <li><a href="../../exams/genai-passport/drill/">一問一答 500問（章別）</a></li>
+          <li><a href="../../exams/genai-passport/practice/">実践演習（章別）</a></li>
+          <li><a href="../../exams/genai-passport/mock/">模擬試験</a></li>
+          <li class="tool-related-list__index"><a href="../../exams/genai-passport/">試験対策トップ →</a></li>
+        </ul>
+      </div>
+    </aside>
+  </article>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="../../legal/privacy.html">プライバシーポリシー</a>
+        ·
+        <a href="../../legal/terms.html">利用規約</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/tool-hero.js" defer></script>
+</body>
+</html>
