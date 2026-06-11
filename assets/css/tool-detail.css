@@ -819,6 +819,10 @@
   grid-column: 2;
   grid-row: 2;
 }
+.tool-related-wrap:has(#exam-resources) #related-terms {
+  grid-column: 2;
+  grid-row: 2;
+}
 .tool-related-wrap:has(#exam-resources)
   #related-exams + .tool-related-block:not(#exam-resources)
   ~ .tool-related-block:not(#exam-resources) {
@@ -826,8 +830,9 @@
 }
 /* 上段2枚: 試験問題・関連用語（枠線なし・正方形） */
 .tool-related-wrap:has(#exam-resources) #related-exams,
+.tool-related-wrap:has(#exam-resources) #related-terms,
 .tool-related-wrap:has(#exam-resources)
-  #related-exams + .tool-related-block:not(#exam-resources) {
+  #related-exams + .tool-related-block:not(#exam-resources):not(#related-terms) {
   padding: 20px 24px;
   background: var(--gray-100);
   border: none;
@@ -839,9 +844,8 @@
   min-height: 0;
   overflow: hidden;
 }
-.tool-related-wrap:has(#exam-resources) #related-exams .tool-related-list,
-.tool-related-wrap:has(#exam-resources)
-  #related-exams + .tool-related-block:not(#exam-resources) .tool-related-list {
+.tool-related-wrap:has(#exam-resources) #related-exams .tool-related-list--cards,
+.tool-related-wrap:has(#exam-resources) #related-terms .tool-related-list--cards {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -865,6 +869,7 @@
   box-sizing: border-box;
 }
 .tool-related-wrap:has(#exam-resources) #related-exams .tool-related-heading,
+.tool-related-wrap:has(#exam-resources) #related-terms .tool-related-heading,
 .tool-related-wrap:has(#exam-resources)
   #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-heading {
   margin-bottom: 16px;
@@ -986,21 +991,49 @@
   color: var(--blue);
   text-decoration-color: var(--blue);
 }
-/* 試験問題リンク */
-#related-exams .tool-related-list {
+/* 試験問題・関連用語（カード行） */
+.tool-related-wrap:has(#exam-resources) .tool-related-list--cards {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex-wrap: nowrap;
 }
-#related-exams .tool-related-list a {
+.tool-related-wrap:has(#exam-resources) .tool-related-list--cards li:not(.tool-related-list__index) a,
+.tool-related-wrap:has(#exam-resources) #related-terms .tool-related-list--cards .tool-related-list__soon {
   padding: 10px 12px;
   background: var(--white);
   border-radius: 0;
   border-left: 3px solid var(--blue);
   text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
 }
-#related-exams .tool-related-list a:hover {
+.tool-related-wrap:has(#exam-resources) .tool-related-list--cards li:not(.tool-related-list__index) a:hover {
   background: var(--blue-soft);
+  color: var(--blue);
+}
+.tool-related-wrap:has(#exam-resources) #related-terms .tool-related-list--cards .tool-related-list__soon {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  border-left-color: var(--gray-300);
+}
+.tool-related-wrap:has(#exam-resources) .tool-related-list--cards .tool-related-list__index {
+  flex: 0 0 auto;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--gray-200);
+}
+.tool-related-wrap:has(#exam-resources) .tool-related-list--cards .tool-related-list__index a {
+  padding: 6px 0;
+  background: none;
+  border: none;
+  border-left: none;
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  text-decoration-color: var(--gray-300);
+}
+.tool-related-wrap:has(#exam-resources) .tool-related-list--cards .tool-related-list__index a:hover {
+  background: none;
   color: var(--blue);
 }
 /* 演習ハブ（チップ） */
@@ -1027,16 +1060,16 @@
   background: var(--blue-soft);
   color: var(--blue);
 }
-/* 関連用語・関連ツール（チップ）— exam-resources より前のブロック */
+/* 関連AIツール等（exam-resources より前・関連用語以外） */
 .tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-list,
+  #related-exams ~ .tool-related-block:not(#exam-resources):not(#related-terms) .tool-related-list,
 .tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 10px;
 }
 .tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-list a,
+  #related-exams ~ .tool-related-block:not(#exam-resources):not(#related-terms) .tool-related-list a,
 .tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list a {
   width: auto;
   padding: 7px 14px;
@@ -1047,7 +1080,7 @@
   text-decoration: none;
 }
 .tool-related-wrap:has(#exam-resources)
-  #related-exams ~ .tool-related-block:not(#exam-resources) .tool-related-list a:hover,
+  #related-exams ~ .tool-related-block:not(#exam-resources):not(#related-terms) .tool-related-list a:hover,
 .tool-related-wrap:not(:has(#exam-resources)) .tool-related-block:last-child .tool-related-list a:hover {
   background: var(--blue-soft);
   color: var(--blue);
@@ -1154,6 +1187,7 @@
     gap: 24px;
   }
   .tool-related-wrap:has(#exam-resources) #related-exams,
+  .tool-related-wrap:has(#exam-resources) #related-terms,
   .tool-related-wrap:has(#exam-resources)
     #related-exams + .tool-related-block:not(#exam-resources),
   .tool-related-wrap:has(#exam-resources)
@@ -1168,8 +1202,7 @@
     gap: 16px;
   }
   .tool-related-wrap:has(#exam-resources) #related-exams,
-  .tool-related-wrap:has(#exam-resources)
-    #related-exams + .tool-related-block:not(#exam-resources) {
+  .tool-related-wrap:has(#exam-resources) #related-terms {
     aspect-ratio: auto;
     overflow: visible;
   }
