@@ -252,6 +252,22 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-sales",
+      "name": "営業職におすすめのAI資格｜生成AI時代の提案力・資料作成に活かす方法",
+      "yomi": "AI Certs for Sales",
+      "summary": "営業職向けにAI資格の選び方と活かし方。提案書・顧客メール・競合整理への接続、履歴書・転職のアピールまで解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "営業",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
