@@ -845,6 +845,17 @@
       "priority": "高",
       "featured": false,
       "published": true
+    },
+    {
+      "id": "g-kentei-practice-05",
+      "no": 75,
+      "name": "G検定の練習問題を分野別に解く勉強法",
+      "summary": "",
+      "category": "g-kentei-practice",
+      "keyword": "G検定 分野別 勉強法",
+      "priority": "高",
+      "featured": false,
+      "published": true
     }
   ]
 }
