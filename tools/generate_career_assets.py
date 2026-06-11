@@ -636,6 +636,20 @@ FLOWS: dict[str, FlowSpec] = {
         highlight_index=3,
         loop_caption="安全確認で次の学習へ",
     ),
+    "ai-certs-for-healthcare": FlowSpec(
+        title="医療・ヘルスケアのAI資格活用フロー",
+        subtitle="コンプライアンスと業務へ接続する",
+        steps=[
+            ("01", "業態", "整理", "病院薬局等"),
+            ("02", "第1", "資格", "選定"),
+            ("03", "学習", "・合格", ""),
+            ("04", "業務", "試行", "統制確認"),
+            ("05", "振り", "返", "改善"),
+            ("06", "キャリア", "記録", "アピール"),
+        ],
+        highlight_index=3,
+        loop_caption="統制確認で次の学習へ",
+    ),
 }
 
 
