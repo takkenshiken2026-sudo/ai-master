@@ -1,0 +1,38 @@
+{
+  "glossary": {
+    "categories": {
+      "basics": "glossary-basics",
+      "models-tech": "glossary-models",
+      "genai-use": "glossary-genai",
+      "data-ops": "glossary-data",
+      "governance": "glossary-governance"
+    }
+  },
+  "guide": {
+    "categories": {
+      "g-kentei-overview": "exam-overview",
+      "genai-overview": "exam-overview",
+      "compare": "cert-compare",
+      "g-kentei-study": "study-method",
+      "genai-study": "study-method",
+      "g-kentei-practice": "exam-scope",
+      "genai-practice": "exam-scope",
+      "g-kentei-domain": "domain-grid",
+      "genai-domain": "domain-grid",
+      "terms": "nav-glossary",
+      "audience": "audience",
+      "enterprise": "enterprise",
+      "trends": "pass-rate",
+      "exam-tips": "difficulty",
+      "after-cert": "after-cert"
+    }
+  },
+  "career": {
+    "categories": {
+      "role": "career-role",
+      "learn": "career-roadmap",
+      "move": "career-move",
+      "market": "career-market"
+    }
+  }
+}

@@ -10,7 +10,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 IMAGES = ROOT / "assets" / "images"
+HUB_ICONS_DIR = IMAGES / "hub-icons"
 ALIASES_FILE = ROOT / "data" / "hub-icon-aliases.json"
+CATEGORY_ICONS_FILE = ROOT / "data" / "hub-category-icons.json"
 ICON_EXTS = (".svg", ".png", ".webp", ".jpg")
 
 PREFIX_VENDOR = (
@@ -80,6 +82,23 @@ def first_existing_dir(base: Path, names: list[str]) -> Path | None:
     return None
 
 
+def load_category_icon_slugs(section: str) -> dict[str, str]:
+    if not CATEGORY_ICONS_FILE.is_file():
+        return {}
+    data = json.loads(CATEGORY_ICONS_FILE.read_text(encoding="utf-8"))
+    return (data.get(section) or {}).get("categories") or {}
+
+
+def resolve_category_hub_icon(section: str, category: str) -> str | None:
+    slug = load_category_icon_slugs(section).get(category)
+    if not slug:
+        return None
+    path = HUB_ICONS_DIR / f"{slug}.svg"
+    if path.is_file():
+        return rel_image(path)
+    return None
+
+
 def resolve_glossary_icon(term_id: str, csv_row: dict, aliases: dict) -> str | None:
     terms_map = aliases.get("terms") or {}
     if term_id in terms_map:
@@ -102,6 +121,10 @@ def resolve_glossary_icon(term_id: str, csv_row: dict, aliases: dict) -> str | N
             return vendors[vendor]
 
     category = csv_row.get("category") or ""
+    found = resolve_category_hub_icon("glossary", category)
+    if found:
+        return found
+
     found = first_existing_dir(IMAGES / "glossary" / "categories", [category])
     if found:
         return rel_image(found)
@@ -118,13 +141,17 @@ def resolve_guide_icon(article_id: str, category: str, aliases: dict) -> str | N
     if found:
         return rel_image(found)
 
+    found = resolve_category_hub_icon("guide", category)
+    if found:
+        return found
+
     if category.startswith("g-kentei"):
-        found = first_existing_dir(IMAGES / "guide" / "categories", ["g-kentei"])
+        found = first_existing_dir(HUB_ICONS_DIR, ["g-kentei"])
         if found:
             return rel_image(found)
 
     if category.startswith("genai"):
-        found = first_existing_dir(IMAGES / "guide" / "categories", ["genai"])
+        found = first_existing_dir(HUB_ICONS_DIR, ["genai"])
         if found:
             return rel_image(found)
 
@@ -143,6 +170,10 @@ def resolve_career_icon(article_id: str, category: str, aliases: dict) -> str | 
     found = first_existing_dir(IMAGES / "career" / article_id, ["icon"])
     if found:
         return rel_image(found)
+
+    found = resolve_category_hub_icon("career", category)
+    if found:
+        return found
 
     found = first_existing_dir(IMAGES / "career" / "categories", [category])
     if found:

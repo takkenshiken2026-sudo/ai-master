@@ -41,15 +41,15 @@
   "featured": [
     {
       "id": "g-kentei-overview-01",
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "g-kentei-overview-02",
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "genai-overview-01",
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-overview.svg"
     }
   ],
   "articles": [
@@ -62,7 +62,7 @@
       "keyword": "G検定 とは",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "g-kentei-overview-02",
@@ -73,7 +73,7 @@
       "keyword": "G検定 受験料 日程",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "g-kentei-overview-03",
@@ -84,7 +84,7 @@
       "keyword": "G検定 合格率 難易度",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "g-kentei-overview-04",
@@ -95,7 +95,7 @@
       "keyword": "G検定 シラバス 試験範囲",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "g-kentei-overview-05",
@@ -106,7 +106,7 @@
       "keyword": "G検定 問題数 形式",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "genai-overview-01",
@@ -117,7 +117,7 @@
       "keyword": "生成AIパスポート とは",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "genai-overview-02",
@@ -128,7 +128,7 @@
       "keyword": "生成AIパスポート 受験料 日程",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "genai-overview-03",
@@ -139,7 +139,7 @@
       "keyword": "生成AIパスポート 合格率 難易度",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "genai-overview-04",
@@ -150,7 +150,7 @@
       "keyword": "生成AIパスポート シラバス",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "genai-overview-05",
@@ -161,7 +161,7 @@
       "keyword": "生成AIパスポート シラバス 改訂",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-overview.svg"
     },
     {
       "id": "compare-01",
@@ -172,7 +172,7 @@
       "keyword": "G検定 生成AIパスポート 違い どっち",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/compare.svg"
+      "icon": "hub-icons/cert-compare.svg"
     },
     {
       "id": "compare-02",
@@ -183,7 +183,7 @@
       "keyword": "G検定 ITパスポート 違い",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/compare.svg"
+      "icon": "hub-icons/cert-compare.svg"
     },
     {
       "id": "compare-03",
@@ -194,7 +194,7 @@
       "keyword": "G検定 E資格 違い",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/compare.svg"
+      "icon": "hub-icons/cert-compare.svg"
     },
     {
       "id": "compare-04",
@@ -205,7 +205,7 @@
       "keyword": "生成AIパスポート ITパスポート 違い",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/compare.svg"
+      "icon": "hub-icons/cert-compare.svg"
     },
     {
       "id": "compare-05",
@@ -216,7 +216,7 @@
       "keyword": "AI資格 一覧 おすすめ",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/compare.svg"
+      "icon": "hub-icons/cert-compare.svg"
     },
     {
       "id": "compare-06",
@@ -227,7 +227,7 @@
       "keyword": "AI資格 意味ない",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/compare.svg"
+      "icon": "hub-icons/cert-compare.svg"
     },
     {
       "id": "compare-07",
@@ -238,7 +238,7 @@
       "keyword": "AI資格 おすすめ 2026",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/compare.svg"
+      "icon": "hub-icons/cert-compare.svg"
     },
     {
       "id": "g-kentei-study-01",
@@ -249,7 +249,7 @@
       "keyword": "G検定 勉強法 文系",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "g-kentei-study-02",
@@ -260,7 +260,7 @@
       "keyword": "G検定 勉強時間",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "g-kentei-study-03",
@@ -271,7 +271,7 @@
       "keyword": "G検定 テキスト おすすめ",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "g-kentei-study-04",
@@ -282,7 +282,7 @@
       "keyword": "G検定 社会人 勉強",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "g-kentei-study-05",
@@ -293,7 +293,7 @@
       "keyword": "G検定 頻出 用語",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "g-kentei-study-06",
@@ -304,7 +304,7 @@
       "keyword": "G検定 直前 対策",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "genai-study-01",
@@ -315,7 +315,7 @@
       "keyword": "生成AIパスポート 勉強法",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "genai-study-02",
@@ -326,7 +326,7 @@
       "keyword": "生成AIパスポート 勉強時間",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "genai-study-03",
@@ -337,7 +337,7 @@
       "keyword": "生成AIパスポート テキスト おすすめ",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "genai-study-04",
@@ -348,7 +348,7 @@
       "keyword": "生成AIパスポート 頻出 用語",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "genai-study-05",
@@ -359,7 +359,7 @@
       "keyword": "生成AIパスポート 直前 対策",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/study-method.svg"
     },
     {
       "id": "g-kentei-domain-01",
@@ -370,7 +370,7 @@
       "keyword": "G検定 機械学習",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "g-kentei-domain-02",
@@ -381,7 +381,7 @@
       "keyword": "G検定 ディープラーニング",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "g-kentei-domain-03",
@@ -392,7 +392,7 @@
       "keyword": "G検定 自然言語処理",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "g-kentei-domain-04",
@@ -403,7 +403,7 @@
       "keyword": "G検定 倫理 法律",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "g-kentei-domain-05",
@@ -414,7 +414,7 @@
       "keyword": "G検定 数学 統計 苦手",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "g-kentei-domain-06",
@@ -425,7 +425,7 @@
       "keyword": "G検定 AI 歴史",
       "priority": "低",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "genai-domain-01",
@@ -436,7 +436,7 @@
       "keyword": "生成AIパスポート プロンプト",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "genai-domain-02",
@@ -447,7 +447,7 @@
       "keyword": "生成AIパスポート 著作権 個人情報",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "genai-domain-03",
@@ -458,7 +458,7 @@
       "keyword": "生成AIパスポート 倫理 ガイドライン",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/domain-grid.svg"
     },
     {
       "id": "terms-01",
@@ -469,7 +469,7 @@
       "keyword": "ハルシネーション とは",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/terms.svg"
+      "icon": "hub-icons/nav-glossary.svg"
     },
     {
       "id": "terms-02",
@@ -480,7 +480,7 @@
       "keyword": "トークン 生成AI とは",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/terms.svg"
+      "icon": "hub-icons/nav-glossary.svg"
     },
     {
       "id": "terms-03",
@@ -491,7 +491,7 @@
       "keyword": "ファインチューニング とは",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/terms.svg"
+      "icon": "hub-icons/nav-glossary.svg"
     },
     {
       "id": "terms-04",
@@ -502,7 +502,7 @@
       "keyword": "RAG とは",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/terms.svg"
+      "icon": "hub-icons/nav-glossary.svg"
     },
     {
       "id": "terms-05",
@@ -513,7 +513,7 @@
       "keyword": "過学習 とは G検定",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/terms.svg"
+      "icon": "hub-icons/nav-glossary.svg"
     },
     {
       "id": "terms-06",
@@ -524,7 +524,7 @@
       "keyword": "プロンプトインジェクション とは",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/terms.svg"
+      "icon": "hub-icons/nav-glossary.svg"
     },
     {
       "id": "terms-07",
@@ -535,7 +535,7 @@
       "keyword": "LLM とは 大規模言語モデル",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/terms.svg"
+      "icon": "hub-icons/nav-glossary.svg"
     },
     {
       "id": "terms-08",
@@ -546,7 +546,7 @@
       "keyword": "AIガバナンス とは",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/terms.svg"
+      "icon": "hub-icons/nav-glossary.svg"
     },
     {
       "id": "audience-01",
@@ -557,7 +557,7 @@
       "keyword": "AI資格 文系 おすすめ",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/audience.svg"
+      "icon": "hub-icons/audience.svg"
     },
     {
       "id": "audience-02",
@@ -568,7 +568,7 @@
       "keyword": "G検定 大学生 就活",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/audience.svg"
+      "icon": "hub-icons/audience.svg"
     },
     {
       "id": "audience-03",
@@ -579,7 +579,7 @@
       "keyword": "AI資格 営業 おすすめ",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/audience.svg"
+      "icon": "hub-icons/audience.svg"
     },
     {
       "id": "audience-04",
@@ -590,7 +590,7 @@
       "keyword": "AI資格 管理職 経営者",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/audience.svg"
+      "icon": "hub-icons/audience.svg"
     },
     {
       "id": "audience-05",
@@ -601,7 +601,7 @@
       "keyword": "AI資格 エンジニア おすすめ",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/audience.svg"
+      "icon": "hub-icons/audience.svg"
     },
     {
       "id": "enterprise-01",
@@ -612,7 +612,7 @@
       "keyword": "G検定 法人 社員 取得",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/enterprise.svg"
+      "icon": "hub-icons/enterprise.svg"
     },
     {
       "id": "enterprise-02",
@@ -623,7 +623,7 @@
       "keyword": "生成AIパスポート 法人 全社員",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/enterprise.svg"
+      "icon": "hub-icons/enterprise.svg"
     },
     {
       "id": "enterprise-03",
@@ -634,7 +634,7 @@
       "keyword": "AI資格 社内制度 補助金",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/enterprise.svg"
+      "icon": "hub-icons/enterprise.svg"
     },
     {
       "id": "enterprise-04",
@@ -645,7 +645,7 @@
       "keyword": "AI資格 中小企業",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/enterprise.svg"
+      "icon": "hub-icons/enterprise.svg"
     },
     {
       "id": "enterprise-05",
@@ -656,7 +656,7 @@
       "keyword": "AI資格 人事 制度",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/enterprise.svg"
+      "icon": "hub-icons/enterprise.svg"
     },
     {
       "id": "trends-01",
@@ -667,7 +667,7 @@
       "keyword": "AI法 資格 企業",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/trends.svg"
+      "icon": "hub-icons/pass-rate.svg"
     },
     {
       "id": "trends-02",
@@ -678,7 +678,7 @@
       "keyword": "AI資格 意味 ChatGPT",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/trends.svg"
+      "icon": "hub-icons/pass-rate.svg"
     },
     {
       "id": "trends-03",
@@ -689,7 +689,7 @@
       "keyword": "G検定 シラバス 改訂 2026",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/trends.svg"
+      "icon": "hub-icons/pass-rate.svg"
     },
     {
       "id": "trends-04",
@@ -700,7 +700,7 @@
       "keyword": "生成AIパスポート シラバス 改訂 2026",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/trends.svg"
+      "icon": "hub-icons/pass-rate.svg"
     },
     {
       "id": "trends-05",
@@ -711,7 +711,7 @@
       "keyword": "AIリテラシー 義務化 企業",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/trends.svg"
+      "icon": "hub-icons/pass-rate.svg"
     },
     {
       "id": "exam-tips-01",
@@ -722,7 +722,7 @@
       "keyword": "G検定 合格 体験談",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/exam-tips.svg"
+      "icon": "hub-icons/difficulty.svg"
     },
     {
       "id": "exam-tips-02",
@@ -733,7 +733,7 @@
       "keyword": "G検定 落ちた 不合格",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/exam-tips.svg"
+      "icon": "hub-icons/difficulty.svg"
     },
     {
       "id": "exam-tips-03",
@@ -744,7 +744,7 @@
       "keyword": "生成AIパスポート 落ちた 不合格",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/exam-tips.svg"
+      "icon": "hub-icons/difficulty.svg"
     },
     {
       "id": "exam-tips-04",
@@ -755,7 +755,7 @@
       "keyword": "G検定 よくある質問 FAQ",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/exam-tips.svg"
+      "icon": "hub-icons/difficulty.svg"
     },
     {
       "id": "exam-tips-05",
@@ -766,7 +766,7 @@
       "keyword": "G検定 当日 注意",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/exam-tips.svg"
+      "icon": "hub-icons/difficulty.svg"
     },
     {
       "id": "after-cert-01",
@@ -777,7 +777,7 @@
       "keyword": "G検定 E資格 次",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/after-cert.svg"
+      "icon": "hub-icons/after-cert.svg"
     },
     {
       "id": "after-cert-02",
@@ -788,7 +788,7 @@
       "keyword": "G検定 年収 転職",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/after-cert.svg"
+      "icon": "hub-icons/after-cert.svg"
     },
     {
       "id": "after-cert-03",
@@ -799,7 +799,7 @@
       "keyword": "G検定 生成AIパスポート 両方",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/after-cert.svg"
+      "icon": "hub-icons/after-cert.svg"
     },
     {
       "id": "after-cert-04",
@@ -810,7 +810,7 @@
       "keyword": "AI資格 履歴書 書き方",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/after-cert.svg"
+      "icon": "hub-icons/after-cert.svg"
     },
     {
       "id": "after-cert-05",
@@ -821,7 +821,7 @@
       "keyword": "G検定 合格後 社内 活用",
       "priority": "中",
       "published": true,
-      "icon": "guide/categories/after-cert.svg"
+      "icon": "hub-icons/after-cert.svg"
     },
     {
       "id": "g-kentei-practice-01",
@@ -832,7 +832,7 @@
       "keyword": "G検定 過去問 公開",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "g-kentei-practice-02",
@@ -843,7 +843,7 @@
       "keyword": "G検定 過去問 対策",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "g-kentei-practice-03",
@@ -854,7 +854,7 @@
       "keyword": "G検定 模擬試験 使い方",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "g-kentei-practice-04",
@@ -865,7 +865,7 @@
       "keyword": "G検定 一問一答 意味",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "g-kentei-practice-05",
@@ -876,7 +876,7 @@
       "keyword": "G検定 分野別 勉強法",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/g-kentei.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "genai-practice-01",
@@ -887,7 +887,7 @@
       "keyword": "生成AIパスポート 過去問 公開",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "genai-practice-02",
@@ -898,7 +898,7 @@
       "keyword": "生成AIパスポート 過去問 対策",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "genai-practice-03",
@@ -909,7 +909,7 @@
       "keyword": "生成AIパスポート 模擬試験 使い方",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "genai-practice-04",
@@ -920,7 +920,7 @@
       "keyword": "生成AIパスポート 一問一答 意味",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-scope.svg"
     },
     {
       "id": "genai-practice-05",
@@ -931,7 +931,7 @@
       "keyword": "生成AIパスポート 章別 勉強法",
       "priority": "高",
       "published": true,
-      "icon": "guide/categories/genai.svg"
+      "icon": "hub-icons/exam-scope.svg"
     }
   ]
 }

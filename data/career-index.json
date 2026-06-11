@@ -19,7 +19,7 @@
         "G検定"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "machine-learning-engineer",
@@ -34,7 +34,7 @@
         "クラウド"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "data-scientist",
@@ -49,7 +49,7 @@
         "Python"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "generative-ai-engineer",
@@ -64,7 +64,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "mlops-engineer",
@@ -79,7 +79,7 @@
         "クラウド"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "prompt-engineer",
@@ -94,7 +94,7 @@
         "未経験可"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "data-analyst",
@@ -109,7 +109,7 @@
         "未経験可"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "ai-product-manager",
@@ -124,7 +124,7 @@
         "PoC"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "data-scientist-vs-analyst",
@@ -138,7 +138,7 @@
         "比較"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "ai-engineer-vs-mlops",
@@ -152,7 +152,7 @@
         "比較"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "beginner-ai-roles-top5",
@@ -167,7 +167,7 @@
         "未経験"
       ],
       "published": true,
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "g-kentei-career",
@@ -182,7 +182,7 @@
         "資格"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "genai-passport-career",
@@ -197,7 +197,7 @@
         "資格"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-by-role",
@@ -214,7 +214,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "beginner-ai-certs-compare",
@@ -231,7 +231,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "non-engineer-ai-certs",
@@ -248,7 +248,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-career-value",
@@ -266,7 +266,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-sales",
@@ -282,7 +282,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-planning",
@@ -298,7 +298,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-marketing",
@@ -314,7 +314,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-admin",
@@ -330,7 +330,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-hr",
@@ -347,7 +347,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-accounting",
@@ -364,7 +364,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-support",
@@ -380,7 +380,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-cs",
@@ -397,7 +397,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-pr",
@@ -414,7 +414,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-newgrad",
@@ -431,7 +431,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-30s",
@@ -448,7 +448,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-managers",
@@ -465,7 +465,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-finance",
@@ -482,7 +482,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-manufacturing",
@@ -499,7 +499,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-healthcare",
@@ -516,7 +516,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-education",
@@ -533,7 +533,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-certs-for-public-sector",
@@ -550,7 +550,7 @@
         "生成AIパスポート"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "beginner-learning-roadmap",
@@ -565,7 +565,7 @@
         "ロードマップ"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-portfolio-guide",
@@ -579,7 +579,7 @@
         "ポートフォリオ"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "ai-side-job-prep",
@@ -593,7 +593,7 @@
         "副業"
       ],
       "published": true,
-      "icon": "career/categories/learn.svg"
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "manufacturing-to-ai-engineer",
@@ -608,7 +608,7 @@
         "転職"
       ],
       "published": true,
-      "icon": "career/categories/move.svg"
+      "icon": "hub-icons/career-move.svg"
     },
     {
       "id": "finance-data-scientist-career",
@@ -623,7 +623,7 @@
         "転職"
       ],
       "published": true,
-      "icon": "career/categories/move.svg"
+      "icon": "hub-icons/career-move.svg"
     },
     {
       "id": "liberal-arts-to-ai",
@@ -639,7 +639,7 @@
         "転職"
       ],
       "published": true,
-      "icon": "career/categories/move.svg"
+      "icon": "hub-icons/career-move.svg"
     },
     {
       "id": "sier-to-ai-startup",
@@ -654,7 +654,7 @@
         "転職"
       ],
       "published": true,
-      "icon": "career/categories/move.svg"
+      "icon": "hub-icons/career-move.svg"
     },
     {
       "id": "second-career-ai",
@@ -669,7 +669,7 @@
         "転職"
       ],
       "published": true,
-      "icon": "career/categories/move.svg"
+      "icon": "hub-icons/career-move.svg"
     },
     {
       "id": "ai-career-outlook-2026",
@@ -683,7 +683,7 @@
         "将来性"
       ],
       "published": true,
-      "icon": "career/categories/market.svg"
+      "icon": "hub-icons/career-market.svg"
     },
     {
       "id": "ai-engineer-salary-trend",
@@ -697,7 +697,7 @@
         "年収"
       ],
       "published": true,
-      "icon": "career/categories/market.svg"
+      "icon": "hub-icons/career-market.svg"
     },
     {
       "id": "overseas-ai-engineer-salary",
@@ -712,7 +712,7 @@
         "年収"
       ],
       "published": true,
-      "icon": "career/categories/market.svg"
+      "icon": "hub-icons/career-market.svg"
     },
     {
       "id": "ai-freelance-market",
@@ -727,7 +727,7 @@
         "副業"
       ],
       "published": true,
-      "icon": "career/categories/market.svg"
+      "icon": "hub-icons/career-market.svg"
     },
     {
       "id": "grad-school-ai-worth",
@@ -742,7 +742,7 @@
         "研究"
       ],
       "published": true,
-      "icon": "career/categories/market.svg"
+      "icon": "hub-icons/career-market.svg"
     }
   ],
   "featuredIds": [
@@ -753,15 +753,15 @@
   "featured": [
     {
       "id": "ai-engineer",
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "machine-learning-engineer",
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     },
     {
       "id": "data-scientist",
-      "icon": "career/categories/role.svg"
+      "icon": "hub-icons/career-role.svg"
     }
   ]
 }
