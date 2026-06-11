@@ -468,6 +468,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-for-manufacturing",
+      "name": "製造業におすすめのAI資格｜スマートファクトリー・現場DXでの活かし方",
+      "yomi": "AI Certs for Manufacturing",
+      "summary": "製造業・メーカー向けにAI資格の選び方と活かし方。現場・品質・生産管理の第1候補、安全な活用範囲、キャリアチェンジまで解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "製造業",
+        "スマートファクトリー",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
       "id": "beginner-learning-roadmap",
       "name": "未経験からAI職へ必要な学習順序（全体版）",
       "yomi": "AI Learning Roadmap",
