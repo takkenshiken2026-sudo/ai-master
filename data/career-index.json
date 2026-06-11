@@ -486,15 +486,32 @@
     },
     {
       "id": "ai-certs-for-healthcare",
-      "name": "医療・ヘルスケア業界におすすめのAI資格｜現場DXとコンプライアンスでの活かし方",
+      "name": "医療・介護職におすすめのAI資格｜生成AI活用と情報管理の基礎",
       "yomi": "AI Certs for Healthcare",
-      "summary": "病院・クリニック・製薬・介護向けにAI資格の選び方と活かし方。個人情報保護、業態別の第1候補、安全な活用範囲とキャリアまで解説。",
+      "summary": "病院・クリニック・製薬・介護向けにAI資格の選び方と活かし方。生成AI活用、情報管理、業態別の第1候補、安全な活用範囲とキャリアまで解説。",
       "category": "learn",
       "salaryMin": null,
       "salaryMax": null,
       "tags": [
         "医療",
         "ヘルスケア",
+        "資格",
+        "生成AIパスポート"
+      ],
+      "featured": false,
+      "published": true
+    },
+    {
+      "id": "ai-certs-for-education",
+      "name": "教育業界におすすめのAI資格｜学校・塾・EdTechでの活かし方",
+      "yomi": "AI Certs for Education",
+      "summary": "学校・塾・EdTech向けにAI資格の選び方と活かし方。授業・教材作成、学術的誠実性、業態別の第1候補、安全な活用範囲とキャリアまで解説。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "教育",
+        "EdTech",
         "資格",
         "生成AIパスポート"
       ],
