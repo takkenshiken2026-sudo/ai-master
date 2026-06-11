@@ -200,6 +200,23 @@
       "published": true
     },
     {
+      "id": "ai-certs-by-role",
+      "name": "職種別おすすめAI資格一覧｜営業・事務・人事・マーケティング向けに比較",
+      "yomi": "AI Certs by Role",
+      "summary": "営業・事務・人事・マーケなど職種別のAI資格第1候補を一覧比較。年代・業界別記事への導線と、詳細ガイドへのリンク集。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "職種別",
+        "資格",
+        "一覧",
+        "生成AIパスポート"
+      ],
+      "featured": true,
+      "published": true
+    },
+    {
       "id": "beginner-ai-certs-compare",
       "name": "AI初心者が最初に取るべき資格｜生成AIパスポート・G検定・ITパスポートを比較",
       "yomi": "Beginner AI Certs",
@@ -520,9 +537,9 @@
     },
     {
       "id": "ai-certs-for-public-sector",
-      "name": "公共・行政におすすめのAI資格｜自治体・省庁での活かし方",
+      "name": "公務員におすすめのAI資格｜自治体DX・生成AI活用に役立つ資格",
       "yomi": "AI Certs for Public Sector",
-      "summary": "自治体・省庁・公共機関向けにAI資格の選び方と活かし方。行政文書、個人情報保護、情報公開、DX推進、業態別の第1候補と安全な活用範囲を解説。",
+      "summary": "自治体・省庁・公共機関向けにAI資格の選び方と活かし方。自治体DX、生成AI活用、行政文書・個人情報保護、業態別の第1候補と安全な活用範囲を解説。",
       "category": "learn",
       "salaryMin": null,
       "salaryMax": null,
