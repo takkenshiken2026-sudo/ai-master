@@ -100,12 +100,10 @@ def render_term_row(term: dict, categories: dict) -> str:
     cat_label = categories.get(term["category"], term["category"])
     tag_cls = TAG_CLASS.get(term["category"], "tag-basics")
     name = html.escape(term["name"])
-    yomi = html.escape(term.get("yomi") or "")
     published = term_has_page(term)
 
     inner = f"""        <div class="term-main">
           <div class="term-name">{name}</div>
-          <div class="term-yomi">{yomi}</div>
         </div>
         <span class="term-tag {tag_cls}">{html.escape(cat_label)}</span>
         {CHEVRON}"""

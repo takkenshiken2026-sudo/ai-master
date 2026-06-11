@@ -114,7 +114,6 @@ function renderTermRow(term) {
     `<h2 class="hub-list-name">${escapeHtml(term.name)}</h2>` +
     status +
     `</div>` +
-    (term.yomi ? `<p class="hub-list-sub">${escapeHtml(term.yomi)}</p>` : '') +
     (term.summary ? `<p class="hub-list-desc">${escapeHtml(term.summary)}</p>` : '') +
     `</div>` +
     `<div class="hub-list-aside">` +
