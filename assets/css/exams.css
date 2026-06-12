@@ -36,6 +36,15 @@ a.exam-pick-card:hover {
   pointer-events: none;
 }
 
+.exam-pick-card--planned .exam-pick-meta {
+  color: var(--text-muted);
+}
+
+.exam-pick-card--planned .exam-pick-cta {
+  background: var(--border-default);
+  color: var(--text-muted);
+}
+
 .exam-pick-name {
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
@@ -100,6 +109,29 @@ a.exam-pick-card:hover .exam-pick-cta {
 
 .exam-mode-row--sample {
   border-style: dashed;
+}
+
+.exam-mode-row--planned {
+  opacity: 0.88;
+  cursor: default;
+  pointer-events: none;
+  border-color: var(--border-default);
+  box-shadow: none;
+}
+
+.exam-mode-row--planned .exam-mode-row__meta {
+  color: var(--text-muted);
+}
+
+.exam-mode-row--planned .exam-mode-row__go {
+  background: var(--border-default);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+.exam-mode-row--planned.exam-mode-row--mock {
+  background: var(--white);
+  border-color: var(--border-default);
 }
 
 .exam-mode-row {
