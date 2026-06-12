@@ -318,6 +318,18 @@ body {
   object-fit: contain;
   display: block;
 }
+.cat-icon-tile--text {
+  padding: 8px 6px;
+}
+.cat-icon-tile--text .cat-icon-tile__label {
+  font-size: 13px;
+  line-height: 1.25;
+  white-space: normal;
+}
+.cat-icon-tile--text .cat-icon-tile__label--compact {
+  font-size: 11px;
+  letter-spacing: -0.03em;
+}
 .cat-icon-tile__label {
   font-size: 11px;
   font-weight: 700;
