@@ -566,11 +566,11 @@
   font-family: var(--font-body);
   font-weight: var(--font-regular);
   color: var(--ink);
-  background: var(--surface-inset);
-  border: none;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
   border-radius: 12px;
   cursor: pointer;
-  transition: background 0.12s, color 0.12s;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
   line-height: 1.35;
   white-space: nowrap;
 }
@@ -581,11 +581,13 @@
 }
 
 .quiz-setup__pill:hover {
-  background: var(--gray-200);
+  border-color: var(--gray-600);
+  background: var(--surface-inset);
 }
 
 .quiz-setup__pill.is-active {
   background: var(--blue-soft);
+  border-color: var(--blue);
   color: var(--blue);
   font-weight: var(--font-semibold);
 }
