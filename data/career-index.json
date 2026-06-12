@@ -777,7 +777,7 @@
   ],
   "featuredIds": [
     "ai-engineer",
-    "machine-learning-engineer",
+    "ai-agent-camp",
     "onecareer-ai-tensyoku"
   ],
   "featured": [
@@ -786,8 +786,8 @@
       "icon": "hub-icons/career-role.svg"
     },
     {
-      "id": "machine-learning-engineer",
-      "icon": "hub-icons/career-role.svg"
+      "id": "ai-agent-camp",
+      "icon": "hub-icons/career-roadmap.svg"
     },
     {
       "id": "onecareer-ai-tensyoku",
