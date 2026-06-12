@@ -269,12 +269,20 @@
       if (legacy && !$(".quiz-setup__count-options", legacy)) {
         legacy.remove();
       }
-      if ($(".quiz-setup__count-options", this.root)) return;
+      if ($(".quiz-setup__count-options", this.root)) {
+        this.ensureSetupHead();
+        return;
+      }
 
       const panel = document.createElement("div");
       panel.className = "quiz-setup";
       panel.hidden = true;
       panel.innerHTML = `
+        <header class="quiz-setup__head">
+          <p class="quiz-setup__eyebrow"></p>
+          <h1 class="quiz-setup__title"></h1>
+          <p class="quiz-setup__lede"></p>
+        </header>
         <div class="quiz-setup__top">
           <div class="quiz-setup__count-block">
             <p class="quiz-setup__label">出題数</p>
@@ -296,6 +304,57 @@
         this.root.insertBefore(panel, bar);
       } else {
         this.root.prepend(panel);
+      }
+      this.renderSetupHead();
+    }
+
+    ensureSetupHead() {
+      const setup = $(".quiz-setup", this.root);
+      if (!setup || $(".quiz-setup__head", setup)) return;
+      const head = document.createElement("header");
+      head.className = "quiz-setup__head";
+      head.innerHTML = `
+        <p class="quiz-setup__eyebrow"></p>
+        <h1 class="quiz-setup__title"></h1>
+        <p class="quiz-setup__lede"></p>
+      `;
+      setup.insertBefore(head, setup.firstChild);
+      this.renderSetupHead();
+    }
+
+    setupHeadContent() {
+      if (this.config.setupTitle) {
+        return {
+          mode: this.config.setupModeLabel || "一問一答",
+          exam: this.config.setupTitle,
+          lede: this.config.setupLede || "",
+        };
+      }
+      const mode =
+        document.querySelector(".breadcrumb [aria-current='page']")?.textContent.trim() ||
+        "一問一答";
+      const examCrumb = document.querySelector(".breadcrumb ol li:nth-last-child(2)");
+      const exam =
+        examCrumb?.querySelector("a")?.textContent.trim() ||
+        examCrumb?.textContent.trim() ||
+        document.title.replace(/\s*(一問一答|実践演習|模擬試験).*$/u, "").trim();
+      const lede =
+        document.querySelector('meta[name="description"]')?.content.trim() || "";
+      return { mode, exam, lede };
+    }
+
+    renderSetupHead() {
+      const head = $(".quiz-setup__head", this.root);
+      if (!head) return;
+      const { mode, exam, lede } = this.setupHeadContent();
+      const eyebrow = $(".quiz-setup__eyebrow", head);
+      const title = $(".quiz-setup__title", head);
+      const lead = $(".quiz-setup__lede", head);
+      if (eyebrow) eyebrow.textContent = mode;
+      if (title) title.textContent = exam;
+      if (lead) {
+        lead.textContent = lede;
+        lead.hidden = !lede;
       }
     }
 
@@ -985,6 +1044,7 @@
 
     showSetup() {
       this.ensureAccuracyInBar();
+      this.ensureSetupHead();
       this.setView("setup");
       this.unbindKeyboard();
       this.selectedSetupDomain = "";
@@ -993,6 +1053,7 @@
       if (domainLabel) {
         domainLabel.textContent = this.config.setupDomainLabel || "分野を選ぶ";
       }
+      this.renderSetupHead();
       this.refreshSetup();
     }
 
