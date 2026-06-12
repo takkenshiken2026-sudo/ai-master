@@ -1027,7 +1027,7 @@
   margin-bottom: 16px;
 }
 /* AIツール記事: 2列（ツール / 用語） */
-.tool-related-wrap:not:is(:has(#related-exams), :has(#related-guides)) {
+.tool-related-wrap:not(:has(#related-exams)):not(:has(#related-guides)) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px 36px;
@@ -1200,14 +1200,14 @@
 /* 関連AIツール等（ツール・用語記事のみ。学習ガイド・キャリアは縦並びのまま） */
 body:not(.guide-article):not(.career-article) .tool-related-wrap:is(:has(#related-exams), :has(#related-guides))
   #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms):not(#related-guides):not(#related-resources) .tool-related-list,
-body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#related-exams), :has(#related-guides)) .tool-related-block:last-child .tool-related-list {
+body:not(.guide-article):not(.career-article) .tool-related-wrap:not(:has(#related-exams)):not(:has(#related-guides)) .tool-related-block:last-child .tool-related-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 10px;
 }
 body:not(.guide-article):not(.career-article) .tool-related-wrap:is(:has(#related-exams), :has(#related-guides))
   #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms):not(#related-guides):not(#related-resources) .tool-related-list a,
-body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#related-exams), :has(#related-guides)) .tool-related-block:last-child .tool-related-list a {
+body:not(.guide-article):not(.career-article) .tool-related-wrap:not(:has(#related-exams)):not(:has(#related-guides)) .tool-related-block:last-child .tool-related-list a {
   width: auto;
   padding: 7px 14px;
   font-size: var(--text-sm);
@@ -1218,7 +1218,7 @@ body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#re
 }
 body:not(.guide-article):not(.career-article) .tool-related-wrap:is(:has(#related-exams), :has(#related-guides))
   #related-exams ~ .tool-related-block:not(#related-exams):not(#related-terms):not(#related-guides):not(#related-resources) .tool-related-list a:hover,
-body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#related-exams), :has(#related-guides)) .tool-related-block:last-child .tool-related-list a:hover {
+body:not(.guide-article):not(.career-article) .tool-related-wrap:not(:has(#related-exams)):not(:has(#related-guides)) .tool-related-block:last-child .tool-related-list a:hover {
   background: var(--blue-soft);
   color: var(--blue);
 }
@@ -1336,7 +1336,7 @@ body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#re
   }
   .tool-plan-grid { grid-template-columns: repeat(2, 1fr); }
   .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)),
-  .tool-related-wrap:not:is(:has(#related-exams), :has(#related-guides)) {
+  .tool-related-wrap:not(:has(#related-exams)):not(:has(#related-guides)) {
     grid-template-columns: 1fr;
     gap: 24px;
   }
@@ -1353,7 +1353,7 @@ body:not(.guide-article):not(.career-article) .tool-related-wrap:not:is(:has(#re
   .tool-content section > h2 { font-size: var(--text-lg); }
   .tool-related-section-title { font-size: var(--text-lg); }
   .tool-related-wrap:is(:has(#related-exams), :has(#related-guides)),
-  .tool-related-wrap:not:is(:has(#related-exams), :has(#related-guides)) { gap: 20px; }
+  .tool-related-wrap:not(:has(#related-exams)):not(:has(#related-guides)) { gap: 20px; }
   .tool-feature-grid,
   .tool-usecase-grid { grid-template-columns: 1fr; }
   .tool-plan-grid { grid-template-columns: 1fr; }
