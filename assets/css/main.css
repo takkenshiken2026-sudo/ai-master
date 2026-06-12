@@ -571,7 +571,7 @@ footer {
   max-width: var(--content-max);
   padding-left: 48px;
   padding-right: 48px;
-  min-height: calc(100vh - var(--nav-h));
+  min-height: 100vh;
   box-shadow: 0 0 0 1px var(--border-subtle);
 }
 @media (max-width: 640px) {
