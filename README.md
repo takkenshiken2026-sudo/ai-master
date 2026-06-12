@@ -1,6 +1,6 @@
 # AIマスター
 
-G検定・生成AIパスポートなど、AI関連資格の学習支援サイト（静的HTML）。
+G検定・生成AIパスポート・ITパスポートなど、資格試験の学習支援サイト（静的HTML）。
 
 本番URL: https://ai-master.jp/
 
@@ -31,9 +31,17 @@ Excel を `~/Downloads` に置いたうえで:
 ```bash
 python3 tools/build_g_kentei_questions.py
 python3 tools/build_genai_passport_questions.py
+python3 tools/build_it_passport_questions.py
 ```
 
-生成先: `assets/data/g-kentei/`、`assets/data/genai-passport/`
+生成先: `assets/data/g-kentei/`、`assets/data/genai-passport/`、`assets/data/it-passport/`
+
+ITパスポート用 Excel（`~/Downloads` に配置）:
+
+- `【最終盤】ITパスポート_過去問.xlsx` — シート名が回ごとの過去問セット
+- `【最終盤】ITパスポート_一問一答.xlsx`
+- `【最終盤】ITパスポート_実践演習.xlsx`
+- `【最終盤】ITパスポート_有料模試.xlsx`
 
 ## 問題ページ（SEO）の生成
 
@@ -80,4 +88,4 @@ window.AI_MASTER.mockExamsEnabled = true;
 
 ## 免責
 
-当サイトは G検定・生成AIパスポートの公式サイトではありません。試験問題は運営者が自作した学習用コンテンツです。
+当サイトは G検定・生成AIパスポート・ITパスポートの公式サイトではありません。試験問題は運営者が自作した学習用コンテンツです。

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ITパスポートの本番・過去問を想定した模擬試験の受験画面。制限時間付きで総仕上げの練習ができます。">
+  <title>ITパスポート 過去問想定 模擬試験 — AI Master</title>
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../assets/css/main.css">
+  <link rel="stylesheet" href="../../../assets/css/hub.css">
+  <link rel="stylesheet" href="../../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../../assets/css/exam-player.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="active">試験対策</a></li>
+    <li><a href="../../../guide/">学習ガイド</a></li>
+    <li><a href="../../../glossary/">用語辞典</a></li>
+    <li><a href="../../../tools/">AIツール</a></li>
+    <li><a href="../../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article page-wrap--quiz" id="mock-main">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../../index.html">ホーム</a></li>
+      <li><a href="../../index.html">試験対策</a></li>
+      <li><a href="../index.html">ITパスポート</a></li>
+      <li><a href="index.html">模擬試験</a></li>
+      <li aria-current="page">受験</li>
+    </ol>
+  </nav>
+
+  <p id="mock-access-gate" class="mock-access-gate" hidden>購入確認中…</p>
+  <p id="mock-player-loading" class="mock-access-gate" hidden>試験画面を読み込み中…</p>
+
+  <header class="hub-header" id="mock-header" hidden>
+    <h1 id="mock-title">ITパスポート 模擬試験</h1>
+    <p class="hub-intro" id="mock-intro">制限時間内にすべての問題に回答してください。解答後に解説を確認できます。</p>
+  </header>
+
+  <div id="exam-player" class="quiz" hidden data-await-boot="1">
+    <div class="quiz-bar" hidden>
+      <div class="quiz-progress"></div>
+      <div class="quiz-timer" hidden></div>
+    </div>
+
+    <div class="quiz-stage" hidden>
+      <article class="quiz-question-card">
+        <div class="quiz-question-card__head">
+          <p class="quiz-meta"></p>
+          <button type="button" class="quiz-bookmark" aria-pressed="false">
+            <svg class="quiz-bookmark__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 2.5h8v11l-4-3-4 3v-11z" stroke-linejoin="round"/></svg>
+            ブックマーク
+          </button>
+        </div>
+        <p class="quiz-prompt"></p>
+      </article>
+
+      <p class="quiz-hint quiz-hint--tf" hidden></p>
+      <p class="quiz-hint quiz-hint--choice" hidden>キーボード <kbd>1</kbd>〜<kbd>4</kbd> で選択 · <kbd>Enter</kbd> で次へ</p>
+
+      <div class="quiz-choices"></div>
+
+      <div class="quiz-feedback" hidden>
+        <p class="quiz-feedback__verdict"></p>
+        <p class="quiz-feedback__body"></p>
+      </div>
+      <div class="quiz-actions" hidden>
+        <p class="quiz-hint quiz-hint--next">キーボード <kbd>Enter</kbd> で次へ</p>
+        <button type="button" class="quiz-btn quiz-btn--primary quiz-next">次の問題へ</button>
+      </div>
+    </div>
+
+    <div class="quiz-complete quiz-panel" hidden>
+      <h2>完了</h2>
+      <p class="quiz-complete__score"></p>
+      <div class="quiz-panel__actions">
+        <button type="button" class="quiz-btn quiz-complete__retry">最初からやり直す</button>
+        <button type="button" class="quiz-btn quiz-btn--primary quiz-complete__back">模擬試験一覧へ</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="../../../assets/js/mock-commerce.js"></script>
+<script src="../../../assets/js/exam-player.js"></script>
+<script>
+(async function () {
+  const EXAM_SLUG = "it-passport";
+  const DATA_URL = "../../../assets/data/it-passport/mock.json";
+  const params = new URLSearchParams(location.search);
+  const examId = params.get("exam") || "mock_01";
+  const isSample = examId === "sample";
+  const root = document.getElementById("exam-player");
+  const header = document.getElementById("mock-header");
+  const loading = document.getElementById("mock-player-loading");
+
+  function showLoadError(message) {
+    if (loading) {
+      loading.hidden = false;
+      loading.textContent = message;
+    }
+  }
+
+  try {
+    if (!isSample && window.MockCommerce) {
+      const ok = await MockCommerce.preparePlayPage(EXAM_SLUG, examId);
+      if (!ok) return;
+    }
+
+    if (loading) loading.hidden = false;
+    if (header) header.hidden = false;
+
+    root.dataset.config = JSON.stringify({
+      mode: "choice",
+      dataUrl: DATA_URL,
+      examId: examId,
+      storagePrefix: "it-passport",
+      storageKey: "mock",
+      timeLimitMinutes: isSample ? 0 : 120,
+      backUrl: "index.html",
+      mockBriefing: true,
+      mockDeferFeedback: !isSample,
+      mockNoPersist: !isSample,
+    });
+
+    if (!isSample) {
+      document.getElementById("mock-main")?.classList.add("page-wrap--mock-exam");
+    }
+
+    window.AI_MASTER = window.AI_MASTER || {};
+    window.AI_MASTER.mockExamsEnabled = true;
+
+    delete root.dataset.playerBooted;
+    delete root.dataset.awaitBoot;
+    root.hidden = false;
+
+    if (typeof window.bootExamPlayer === "function") {
+      window.bootExamPlayer();
+    } else {
+      throw new Error("試験画面の読み込みに失敗しました。ページを再読み込みしてください。");
+    }
+    if (loading) loading.hidden = true;
+  } catch (error) {
+    showLoadError(
+      error instanceof Error ? error.message : "試験画面を読み込めませんでした。"
+    );
+    return;
+  }
+
+  fetch(DATA_URL)
+    .then((r) => r.json())
+    .then((data) => {
+      const exam = data.exams?.[examId];
+      if (!exam) return;
+      document.getElementById("mock-title").textContent = "ITパスポート " + exam.title;
+      document.title = "ITパスポート " + exam.title + " — AI Master";
+      const minutes = isSample ? null : (data.timeLimitMinutes || 120);
+      const intro = document.getElementById("mock-intro");
+      if (intro) {
+        intro.textContent = minutes
+          ? `${exam.questionCount}問 · 制限時間${minutes}分。問題一覧から任意の問題に移動できます。正解と解説は結果画面で確認できます。`
+          : `${exam.questionCount}問のお試しです。操作感を確認してから本番形式に挑戦してください。`;
+      }
+    })
+    .catch(() => {});
+})();
+</script>
+</body>
+</html>

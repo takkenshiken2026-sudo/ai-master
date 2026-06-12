@@ -30,11 +30,18 @@ EXAM_HUBS = {
         ("生成AIパスポート 模擬試験", "mock"),
         ("生成AIパスポート 実践演習", "practice"),
     ],
+    "it-passport": [
+        ("ITパスポート 過去問", "past"),
+        ("ITパスポート 一問一答", "drill"),
+        ("ITパスポート 模擬試験", "mock"),
+        ("ITパスポート 実践演習", "practice"),
+    ],
 }
 
 EXAM_GROUP_LABELS = {
     "g-kentei": "G検定",
     "genai-passport": "生成AIパスポート",
+    "it-passport": "ITパスポート",
 }
 
 SECTION_TITLE = '      <h2 class="tool-related-section-title">関連する試験・用語</h2>'

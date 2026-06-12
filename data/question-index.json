@@ -23069,6 +23069,22 @@
           }
         ]
       }
+    },
+    "it-passport": {
+      "drill": {
+        "exam": "it-passport",
+        "mode": "drill",
+        "count": 0,
+        "domainSlugs": {},
+        "questions": []
+      },
+      "practice": {
+        "exam": "it-passport",
+        "mode": "practice",
+        "count": 0,
+        "domainSlugs": {},
+        "questions": []
+      }
     }
   }
 }

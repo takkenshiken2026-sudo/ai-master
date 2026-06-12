@@ -57,9 +57,25 @@ EXAMS = {
             },
         },
     },
+    "it-passport": {
+        "label": "ITパスポート",
+        "data_dir": "it-passport",
+        "modes": {
+            "drill": {
+                "label": "一問一答",
+                "json": "assets/data/it-passport/drill.json",
+                "kind": "drill",
+            },
+            "practice": {
+                "label": "実践演習",
+                "json": "assets/data/it-passport/practice.json",
+                "kind": "choice",
+            },
+        },
+    },
 }
 
-FOOTER = """    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+FOOTER = """    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。ITパスポートは独立行政法人情報処理推進機構が実施する試験です。当サイトは各試験の公式サイトではありません。</p>
     <div class="foot-bottom">
       <span>© 2026 AIマスター. All rights reserved.</span>
       <span class="foot-legal">
@@ -749,7 +765,11 @@ def main() -> None:
     args = parser.parse_args()
 
     all_urls: list[str] = []
-    index_payload: dict = {"exams": {}}
+    if args.exam or args.mode:
+        index_payload = json.loads(INDEX_JSON.read_text(encoding="utf-8"))
+        index_payload.setdefault("exams", {})
+    else:
+        index_payload = {"exams": {}}
 
     for exam_id, exam_cfg in EXAMS.items():
         if args.exam and args.exam != exam_id:

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ITパスポートの過去問演習の受験画面。制限時間付きで本番形式の練習ができます。">
+  <title>ITパスポート 過去問 — AI Master</title>
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../assets/css/main.css">
+  <link rel="stylesheet" href="../../../assets/css/hub.css">
+  <link rel="stylesheet" href="../../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../../assets/css/exam-player.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FWXFGSH6TD');
+  </script>
+</head>
+<body class="page-body">
+
+<nav class="site-nav">
+  <a href="../../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="active">試験対策</a></li>
+    <li><a href="../../../guide/">学習ガイド</a></li>
+    <li><a href="../../../glossary/">用語辞典</a></li>
+    <li><a href="../../../tools/">AIツール</a></li>
+    <li><a href="../../../career/">キャリア</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap page-wrap--article page-wrap--quiz" id="past-main">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../../index.html">ホーム</a></li>
+      <li><a href="../../index.html">試験対策</a></li>
+      <li><a href="../index.html">ITパスポート</a></li>
+      <li><a href="index.html">過去問</a></li>
+      <li aria-current="page">受験</li>
+    </ol>
+  </nav>
+
+  <p id="past-player-loading" class="mock-access-gate" hidden>試験画面を読み込み中…</p>
+
+  <header class="hub-header" id="past-header" hidden>
+    <h1 id="past-title">ITパスポート 過去問</h1>
+    <p class="hub-intro" id="past-intro">制限時間内にすべての問題に回答してください。解答後に解説を確認できます。</p>
+  </header>
+
+  <div id="exam-player" class="quiz" hidden data-await-boot="1">
+    <div class="quiz-bar" hidden>
+      <div class="quiz-progress"></div>
+      <div class="quiz-timer" hidden></div>
+    </div>
+
+    <div class="quiz-stage" hidden>
+      <article class="quiz-question-card">
+        <div class="quiz-question-card__head">
+          <p class="quiz-meta"></p>
+          <button type="button" class="quiz-bookmark" aria-pressed="false">
+            <svg class="quiz-bookmark__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 2.5h8v11l-4-3-4 3v-11z" stroke-linejoin="round"/></svg>
+            ブックマーク
+          </button>
+        </div>
+        <p class="quiz-prompt"></p>
+      </article>
+
+      <p class="quiz-hint quiz-hint--tf" hidden></p>
+      <p class="quiz-hint quiz-hint--choice" hidden>キーボード <kbd>1</kbd>〜<kbd>4</kbd> で選択 · <kbd>Enter</kbd> で次へ</p>
+
+      <div class="quiz-choices"></div>
+
+      <div class="quiz-feedback" hidden>
+        <p class="quiz-feedback__verdict"></p>
+        <p class="quiz-feedback__body"></p>
+      </div>
+      <div class="quiz-actions" hidden>
+        <p class="quiz-hint quiz-hint--next">キーボード <kbd>Enter</kbd> で次へ</p>
+        <button type="button" class="quiz-btn quiz-btn--primary quiz-next">次の問題へ</button>
+      </div>
+    </div>
+
+    <div class="quiz-complete quiz-panel" hidden>
+      <h2>完了</h2>
+      <p class="quiz-complete__score"></p>
+      <div class="quiz-panel__actions">
+        <button type="button" class="quiz-btn quiz-complete__retry">最初からやり直す</button>
+        <button type="button" class="quiz-btn quiz-btn--primary quiz-complete__back">過去問一覧へ</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="../../../assets/js/exam-player.js"></script>
+<script>
+(async function () {
+  const DATA_URL = "../../../assets/data/it-passport/past.json";
+  const params = new URLSearchParams(location.search);
+  const examId = params.get("exam");
+  const root = document.getElementById("exam-player");
+  const header = document.getElementById("past-header");
+  const loading = document.getElementById("past-player-loading");
+
+  function showLoadError(message) {
+    if (loading) {
+      loading.hidden = false;
+      loading.textContent = message;
+    }
+  }
+
+  if (!examId) {
+    showLoadError("過去問が指定されていません。一覧から選んでください。");
+    return;
+  }
+
+  try {
+    const res = await fetch(DATA_URL);
+    const data = await res.json();
+    const exam = data.exams?.[examId];
+    if (!exam || !exam.questionCount) {
+      showLoadError("この過去問はまだ公開されていません。");
+      return;
+    }
+
+    if (loading) loading.hidden = false;
+    if (header) header.hidden = false;
+
+    const minutes = data.timeLimitMinutes || 120;
+    root.dataset.config = JSON.stringify({
+      mode: "choice",
+      dataUrl: DATA_URL,
+      examId: examId,
+      storagePrefix: "it-passport",
+      storageKey: "past",
+      timeLimitMinutes: minutes,
+      backUrl: "index.html",
+      mockBriefing: true,
+      mockDeferFeedback: true,
+      mockNoPersist: true,
+    });
+
+    document.getElementById("past-main")?.classList.add("page-wrap--mock-exam");
+    document.getElementById("past-title").textContent = "ITパスポート " + exam.title;
+    document.title = "ITパスポート " + exam.title + " — AI Master";
+    const intro = document.getElementById("past-intro");
+    if (intro) {
+      intro.textContent =
+        `${exam.questionCount}問 · 制限時間${minutes}分。問題一覧から任意の問題に移動できます。正解と解説は結果画面で確認できます。`;
+    }
+
+    delete root.dataset.playerBooted;
+    delete root.dataset.awaitBoot;
+    root.hidden = false;
+
+    if (typeof window.bootExamPlayer === "function") {
+      window.bootExamPlayer();
+    } else {
+      throw new Error("試験画面の読み込みに失敗しました。ページを再読み込みしてください。");
+    }
+    if (loading) loading.hidden = true;
+  } catch (error) {
+    showLoadError(
+      error instanceof Error ? error.message : "試験画面を読み込めませんでした。"
+    );
+  }
+})();
+</script>
+</body>
+</html>
