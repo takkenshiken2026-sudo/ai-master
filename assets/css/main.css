@@ -258,7 +258,10 @@ body {
 /* SECTION */
 .section {
   max-width: 1140px; margin: 0 auto;
-  padding: 80px 48px;
+  padding: 80px 48px 48px;
+}
+main > .section:last-child {
+  padding-bottom: 32px;
 }
 .sec-eyebrow {
   font-family: var(--font-mono); font-size: var(--text-xs);
@@ -501,12 +504,12 @@ body {
 footer {
   background: var(--surface-page);
   border-top: 1px solid var(--border-subtle);
-  padding: 32px 48px 20px;
+  padding: 24px 48px 16px;
 }
 .foot-inner { max-width: var(--content-max); margin: 0 auto; }
 .foot-top {
   display: flex; justify-content: space-between;
-  align-items: flex-start; margin-bottom: 24px;
+  align-items: flex-start; margin-bottom: 16px;
 }
 .foot-logo {
   font-family: var(--font-display);
@@ -533,15 +536,15 @@ footer {
 .foot-col a:last-child { margin-bottom: 0; }
 .foot-col a:hover { color: var(--ink); }
 .foot-disclaimer {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font-size: var(--text-xs);
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--text-muted);
 }
 
 .foot-bottom {
   border-top: 1px solid var(--gray-300);
-  padding-top: 14px; font-size: var(--text-xs);
+  padding-top: 12px; font-size: var(--text-xs);
   color: var(--gray-400);
   display: flex; justify-content: space-between;
   flex-wrap: wrap; gap: 8px;
@@ -676,7 +679,8 @@ footer {
   .exam-wrap { padding: 64px 24px; }
   .exam-grid { grid-template-columns: 1fr; }
 
-  .section { padding: 64px 24px; }
+  .section { padding: 64px 24px 40px; }
+  main > .section:last-child { padding-bottom: 28px; }
   .cat-grid { grid-template-columns: 1fr 1fr; }
 
   footer { padding: 28px 24px 18px; }
@@ -761,7 +765,10 @@ svg {
   }
 
   .section {
-    padding: 48px 16px;
+    padding: 48px 16px 32px;
+  }
+  main > .section:last-child {
+    padding-bottom: 24px;
   }
 
   .exam-wrap {
