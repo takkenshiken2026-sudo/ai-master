@@ -758,6 +758,21 @@
       ],
       "published": true,
       "icon": "hub-icons/career-move.svg"
+    },
+    {
+      "id": "ai-agent-camp",
+      "name": "AI Agent Campは使える？非エンジニア向けClaude Code講座",
+      "yomi": "AI Agent Camp",
+      "summary": "月額12,800円のAIエージェント特化講座。向き不向き・独学との比較・受講の流れを整理。",
+      "category": "learn",
+      "salaryMin": null,
+      "salaryMax": null,
+      "tags": [
+        "非エンジニア",
+        "Claude Code"
+      ],
+      "published": true,
+      "icon": "hub-icons/career-learn.svg"
     }
   ],
   "featuredIds": [
