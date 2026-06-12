@@ -1311,6 +1311,11 @@ body.quiz-confirm-modal-open {
   height: 26px;
 }
 
+.quiz-confirm-modal__icon--neutral {
+  color: var(--blue);
+  background: var(--blue-soft);
+}
+
 .quiz-confirm-modal__eyebrow {
   margin: 0 0 6px;
   font-size: var(--text-xs);
@@ -1417,4 +1422,12 @@ body.quiz-confirm-modal-open {
 
 .quiz-confirm-modal__confirm:hover {
   background: var(--blue-hover);
+}
+
+.quiz-confirm-modal__confirm--danger {
+  background: #c0392b;
+}
+
+.quiz-confirm-modal__confirm--danger:hover {
+  background: #a93226;
 }

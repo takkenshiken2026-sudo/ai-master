@@ -77,47 +77,62 @@
     return escapeHtml(str).replace(/'/g, "&#39;");
   }
 
-  function showQuizConfirmDialog(options) {
+  function showQuizActionDialog(options) {
     const {
+      eyebrow = "確認",
       title,
       lead = "",
-      message,
-      unanswered,
-      answered,
-      total,
-      confirmLabel = "結果を見る",
-      cancelLabel = "戻って回答する",
+      message = "",
+      stats = [],
+      confirmLabel = "OK",
+      cancelLabel = "キャンセル",
+      icon = "warn",
+      confirmVariant = "primary",
     } = options;
+
+    const statsHtml = stats.length
+      ? `<div class="quiz-confirm-modal__stats">${stats
+          .map(
+            (stat) => `
+            <div class="quiz-confirm-modal__stat${stat.warn ? " quiz-confirm-modal__stat--warn" : ""}">
+              <span class="quiz-confirm-modal__stat-value">${escapeHtml(String(stat.value))}</span>
+              <span class="quiz-confirm-modal__stat-label">${escapeHtml(stat.label)}</span>
+            </div>`
+          )
+          .join("")}</div>`
+      : "";
+
+    const iconClass =
+      icon === "pause"
+        ? "quiz-confirm-modal__icon quiz-confirm-modal__icon--neutral"
+        : "quiz-confirm-modal__icon";
+
+    const iconSvg =
+      icon === "pause"
+        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M10 8v8M14 8v8" stroke-linecap="round"/>
+          </svg>`
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M12 9v4M12 17h.01" stroke-linecap="round"/>
+            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke-linejoin="round"/>
+          </svg>`;
 
     return new Promise((resolve) => {
       const root = document.createElement("div");
       root.className = "quiz-confirm-modal";
       root.innerHTML = `
         <div class="quiz-confirm-modal__backdrop" data-action="cancel"></div>
-        <div class="quiz-confirm-modal__panel" role="alertdialog" aria-modal="true" aria-labelledby="quiz-confirm-title">
-          <div class="quiz-confirm-modal__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-              <path d="M12 9v4M12 17h.01" stroke-linecap="round"/>
-              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <p class="quiz-confirm-modal__eyebrow">採点前の確認</p>
-          <h2 class="quiz-confirm-modal__title" id="quiz-confirm-title">${escapeHtml(title)}</h2>
+        <div class="quiz-confirm-modal__panel" role="alertdialog" aria-modal="true" aria-labelledby="quiz-action-dialog-title">
+          <div class="${iconClass}" aria-hidden="true">${iconSvg}</div>
+          <p class="quiz-confirm-modal__eyebrow">${escapeHtml(eyebrow)}</p>
+          <h2 class="quiz-confirm-modal__title" id="quiz-action-dialog-title">${escapeHtml(title)}</h2>
           ${lead ? `<p class="quiz-confirm-modal__lead">${escapeHtml(lead)}</p>` : ""}
-          <div class="quiz-confirm-modal__stats">
-            <div class="quiz-confirm-modal__stat quiz-confirm-modal__stat--warn">
-              <span class="quiz-confirm-modal__stat-value">${escapeHtml(String(unanswered))}</span>
-              <span class="quiz-confirm-modal__stat-label">未回答</span>
-            </div>
-            <div class="quiz-confirm-modal__stat">
-              <span class="quiz-confirm-modal__stat-value">${escapeHtml(`${answered} / ${total}`)}</span>
-              <span class="quiz-confirm-modal__stat-label">回答済み</span>
-            </div>
-          </div>
-          <p class="quiz-confirm-modal__message">${escapeHtml(message)}</p>
+          ${statsHtml}
+          ${message ? `<p class="quiz-confirm-modal__message">${escapeHtml(message)}</p>` : ""}
           <div class="quiz-confirm-modal__actions">
             <button type="button" class="quiz-confirm-modal__cancel" data-action="cancel">${escapeHtml(cancelLabel)}</button>
-            <button type="button" class="quiz-confirm-modal__confirm" data-action="confirm">${escapeHtml(confirmLabel)}</button>
+            <button type="button" class="quiz-confirm-modal__confirm${confirmVariant === "danger" ? " quiz-confirm-modal__confirm--danger" : ""}" data-action="confirm">${escapeHtml(confirmLabel)}</button>
           </div>
         </div>
       `;
@@ -147,7 +162,19 @@
 
       document.body.classList.add("quiz-confirm-modal-open");
       document.body.appendChild(root);
-      root.querySelector("[data-action='confirm']")?.focus();
+      root.querySelector("[data-action='cancel']")?.focus();
+    });
+  }
+
+  function showQuizConfirmDialog(options) {
+    const { unanswered, answered, total, ...rest } = options;
+    return showQuizActionDialog({
+      eyebrow: "採点前の確認",
+      stats: [
+        { value: unanswered, label: "未回答", warn: true },
+        { value: `${answered} / ${total}`, label: "回答済み" },
+      ],
+      ...rest,
     });
   }
 
@@ -1098,12 +1125,21 @@
       if (heading) heading.textContent = text;
     }
 
-    interruptSession() {
+    async interruptSession() {
       if (!this.canInterrupt()) return;
-      const { answered } = this.sessionScore;
+      const { answered, correct } = this.sessionScore;
 
       if (answered === 0) {
-        if (!window.confirm("演習を中断して出題設定に戻りますか？")) return;
+        const ok = await showQuizActionDialog({
+          eyebrow: "演習の中断",
+          title: "出題設定に戻りますか？",
+          message: "回答は保存されません。出題数と分野を選び直せます。",
+          confirmLabel: "中断する",
+          cancelLabel: "続ける",
+          icon: "pause",
+          confirmVariant: "danger",
+        });
+        if (!ok) return;
         this.stopActiveSession();
         this.index = 0;
         this.sessionScore = { correct: 0, answered: 0 };
@@ -1113,7 +1149,20 @@
         return;
       }
 
-      if (!window.confirm("演習を中断して、ここまでの結果を表示しますか？")) return;
+      const total = this.questions.length;
+      const ok = await showQuizActionDialog({
+        eyebrow: "演習の中断",
+        title: "ここまでの結果を表示しますか？",
+        message: "中断後は、回答済みの問題までの正答率と解説を確認できます。",
+        stats: [
+          { value: `${answered} / ${total}`, label: "回答済み" },
+          { value: formatRate(correct, answered), label: "現在の正答率" },
+        ],
+        confirmLabel: "結果を見る",
+        cancelLabel: "続ける",
+        icon: "pause",
+      });
+      if (!ok) return;
       this.stopActiveSession();
       this.finish(false, { interrupted: true });
     }
