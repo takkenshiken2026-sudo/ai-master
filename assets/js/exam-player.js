@@ -281,12 +281,14 @@
             <div class="quiz-setup__options quiz-setup__count-options" role="group" aria-label="出題数"></div>
             <p class="quiz-setup__summary"></p>
           </div>
-          <button type="button" class="quiz-setup__start">スタート</button>
         </div>
         <hr class="quiz-setup__divider" />
         <div class="quiz-setup__domain-block">
           <p class="quiz-setup__label quiz-setup__label--domain">分野を選ぶ</p>
           <div class="quiz-setup__options quiz-setup__domain-options" role="group" aria-label="分野"></div>
+        </div>
+        <div class="quiz-setup__actions">
+          <button type="button" class="quiz-setup__start">スタート</button>
         </div>
       `;
       const bar = $(".quiz-bar", this.root);
