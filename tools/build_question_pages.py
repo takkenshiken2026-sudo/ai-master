@@ -129,52 +129,53 @@ def trim_text(text: str, limit: int = 118) -> str:
 
 
 def seo_hub_title(exam_label: str, mode_label: str) -> str:
-    return f"{exam_label} 過去問想定 {mode_label} 問題一覧 — AIマスター"
+    return f"{exam_label} {mode_label} 模擬問題一覧 — AIマスター"
 
 
 def seo_hub_description(exam_label: str, mode_label: str, count: int) -> str:
     return trim_text(
-        f"{exam_label}の本番・過去問を想定した{mode_label}の模擬問題（全{count}問）。"
+        f"{exam_label}の{mode_label}模擬問題（全{count}問）。"
         "公式の過去問ではなく、分野別に解説付きで掲載。"
     )
 
 
 def seo_domain_title(exam_label: str, mode_label: str, domain: str) -> str:
-    return f"{exam_label} 過去問想定 {mode_label} {domain} — AIマスター"
+    return f"{exam_label} {mode_label} {domain}（模擬問題） — AIマスター"
 
 
 def seo_domain_description(
     exam_label: str, mode_label: str, domain: str, count: int
 ) -> str:
     return trim_text(
-        f"{exam_label}の過去問を想定した{mode_label}「{domain}」の模擬問題（{count}問）。解説付き。"
+        f"{exam_label}の{mode_label}「{domain}」模擬問題（{count}問）。"
+        "解説付き。公式の過去問ではありません。"
     )
 
 
 def seo_question_title(exam_label: str, mode_label: str, qid: str, topic: str) -> str:
-    return f"【{exam_label} 過去問想定 {mode_label}】{qid} · {topic} — AIマスター"
+    return f"【{exam_label} {mode_label}】{qid} · {topic} — AIマスター"
 
 
 def seo_question_description(
     exam_label: str, mode_label: str, topic: str, prompt: str
 ) -> str:
     return trim_text(
-        f"{exam_label}の過去問を想定した{mode_label}（{topic}）。"
-        f"{prompt or ''} 模擬問題・解説付き。"
+        f"{exam_label}の{mode_label}模擬問題（{topic}）。"
+        f"{prompt or ''} 解説付き。公式の過去問ではありません。"
     )
 
 
 def seo_hub_intro(exam_label: str, mode_label: str, count: int) -> str:
     return (
-        f"本番・過去問を想定した模擬問題を全{count}問、分野別に掲載しています"
+        f"本番形式の模擬問題を全{count}問、分野別に掲載しています"
         "（公式の過去問ではありません）。演習は"
     )
 
 
 def seo_question_intro(exam_label: str, mode_label: str) -> str:
     return (
-        f"{exam_label}の過去問を想定した{mode_label}の模擬問題です。"
-        "解説付きで個別に学習できます。"
+        f"{exam_label}の{mode_label}模擬問題です。"
+        "解説付きで個別に学習できます（公式の過去問ではありません）。"
     )
 
 
@@ -322,9 +323,10 @@ def match_glossary_terms(
 
 def render_question_header(q: dict, exam_label: str, mode_label: str) -> str:
     topic = html.escape(q.get("topic") or "")
+    qid = html.escape(q.get("id") or "")
     intro = html.escape(seo_question_intro(exam_label, mode_label))
     return f"""  <header class="hub-header hub-header--question">
-    <h1>{topic}</h1>
+    <h1>{qid} · {topic}</h1>
     <p class="hub-intro">{intro}</p>
   </header>"""
 
@@ -452,6 +454,73 @@ def render_choice_body(q: dict, exam_label: str, mode_label: str, domain_slug: s
   </article>"""
 
 
+def question_answer_text(q: dict, kind: str) -> tuple[str, str]:
+    if kind == "drill":
+        return q.get("statement") or "", q.get("answer") or ""
+    question_text = q.get("question") or ""
+    answer_key = str(q.get("answer") or "").upper()
+    choices = q.get("choices") or {}
+    answer_text = f"{answer_key}. {choices.get(answer_key, '')}".strip(". ")
+    return question_text, answer_text
+
+
+def build_question_json_ld(
+    *,
+    q: dict,
+    exam_id: str,
+    exam_label: str,
+    mode_label: str,
+    kind: str,
+    title: str,
+    description: str,
+    canonical: str,
+    topic: str,
+) -> dict:
+    question_text, answer_text = question_answer_text(q, kind)
+    qid = q.get("id") or ""
+    return {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "ホーム", "item": f"{SITE_ORIGIN}/"},
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": exam_label,
+                        "item": f"{SITE_ORIGIN}/exams/{exam_id}/",
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": f"{mode_label} {topic}",
+                        "item": canonical,
+                    },
+                ],
+            },
+            {
+                "@type": "LearningResource",
+                "name": title,
+                "description": description,
+                "url": canonical,
+                "inLanguage": "ja",
+                "learningResourceType": f"模擬問題（{mode_label}）",
+                "keywords": f"{exam_label}, 模擬問題, {q.get('domain', '')}, {topic}",
+            },
+            {
+                "@type": "Question",
+                "name": f"{qid} · {topic}",
+                "text": question_text,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": answer_text,
+                },
+            },
+        ],
+    }
+
+
 def render_question_actions(
     player_href: str, prev_href: str | None, next_href: str | None
 ) -> str:
@@ -480,6 +549,15 @@ def build_mode(
 ) -> tuple[list[str], dict]:
     json_path = ROOT / mode_cfg["json"]
     questions = load_questions(json_path)
+    if not questions:
+        print(f"skip {exam_id}/{mode_id}: no questions")
+        return [], {
+            "exam": exam_id,
+            "mode": mode_id,
+            "count": 0,
+            "domainSlugs": {},
+            "questions": [],
+        }
     validate_questions(questions, mode_cfg["kind"])
 
     base_dir = ROOT / "exams" / exam_id / mode_id
@@ -524,7 +602,7 @@ def build_mode(
         )
     hub_intro = seo_hub_intro(exam_label, mode_label, len(questions))
     hub_body = f"""  <header class="hub-header">
-    <h1>{html.escape(exam_label)} 過去問想定 {html.escape(mode_label)} 問題一覧</h1>
+    <h1>{html.escape(exam_label)} {html.escape(mode_label)} 模擬問題一覧</h1>
     <p class="hub-intro">{html.escape(hub_intro)}<a href="../">演習モード</a>をご利用ください。</p>
   </header>
   <div class="question-domain-grid">
@@ -572,7 +650,7 @@ def build_mode(
             list_items.append(f'      <li><a href="../../q/{qs}/">{topic}</a></li>')
         domain_body = f"""  <header class="hub-header">
     <h1>{html.escape(domain)}</h1>
-    <p class="hub-intro">{html.escape(exam_label)}の過去問を想定した{html.escape(mode_label)} · {len(domain_questions)}問（模擬問題）</p>
+    <p class="hub-intro">{html.escape(exam_label)}の{html.escape(mode_label)}模擬問題 · {len(domain_questions)}問（公式の過去問ではありません）</p>
   </header>
   <ul class="question-hub-list">
 {chr(10).join(list_items)}
@@ -653,38 +731,17 @@ def build_mode(
                 (topic, None),
             ]
         )
-        json_ld = {
-            "@context": "https://schema.org",
-            "@graph": [
-                {
-                    "@type": "BreadcrumbList",
-                    "itemListElement": [
-                        {"@type": "ListItem", "position": 1, "name": "ホーム", "item": f"{SITE_ORIGIN}/"},
-                        {
-                            "@type": "ListItem",
-                            "position": 2,
-                            "name": exam_label,
-                            "item": f"{SITE_ORIGIN}/exams/{exam_id}/",
-                        },
-                        {
-                            "@type": "ListItem",
-                            "position": 3,
-                            "name": f"{mode_label} {topic}",
-                            "item": canonical,
-                        },
-                    ],
-                },
-                {
-                    "@type": "LearningResource",
-                    "name": title,
-                    "description": description,
-                    "url": canonical,
-                    "inLanguage": "ja",
-                    "learningResourceType": f"過去問想定の{mode_label}",
-                    "keywords": f"{exam_label}, 過去問想定, 模擬問題, {q.get('domain', '')}, {topic}",
-                },
-            ],
-        }
+        json_ld = build_question_json_ld(
+            q=q,
+            exam_id=exam_id,
+            exam_label=exam_label,
+            mode_label=mode_label,
+            kind=kind,
+            title=title,
+            description=description,
+            canonical=canonical,
+            topic=topic,
+        )
         (q_dir / "index.html").write_text(
             page_shell(
                 rel=rel_to_root(5),

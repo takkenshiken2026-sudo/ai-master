@@ -9,6 +9,7 @@ SITE_OG_IMAGE = f"{SITE_ORIGIN}/assets/images/og-default.jpg"
 SITE_OG_WIDTH = 1200
 SITE_OG_HEIGHT = 630
 GA4_MEASUREMENT_ID = "G-FWXFGSH6TD"
+ROBOTS_NOINDEX_FOLLOW = "noindex, follow"
 
 SITE_ICONS_HTML = """  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
@@ -56,3 +57,7 @@ def render_og_meta(
 {dims}  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{og_image}">
 """
+
+
+def render_robots_meta(content: str = ROBOTS_NOINDEX_FOLLOW) -> str:
+    return f'  <meta name="robots" content="{content}">\n'
