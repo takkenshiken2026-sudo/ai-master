@@ -61,3 +61,29 @@ def render_og_meta(
 
 def render_robots_meta(content: str = ROBOTS_NOINDEX_FOLLOW) -> str:
     return f'  <meta name="robots" content="{content}">\n'
+
+
+# /path/index.html を canonical の /path/ へ寄せる（GitHub Pages の二重 URL 対策）
+SITE_CANONICAL_NORMALIZE_HTML = """  <script>
+(function () {
+  var path = location.pathname;
+  if (!path.endsWith("/index.html")) return;
+  location.replace(path.slice(0, -10) + location.search + location.hash);
+})();
+  </script>
+"""
+
+# 演習プレイヤーの ?q= 深いリンクは静的問題ページを canonical にする
+PLAYER_DEEPLINK_CANONICAL_HTML = """  <script>
+(function () {
+  var q = new URLSearchParams(location.search).get("q");
+  if (!q) return;
+  var match = location.pathname.match(/(\\/exams\\/[^/]+\\/(?:practice|drill))\\/?$/);
+  if (!match) return;
+  var slug = q.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  var href = location.origin + match[1] + "/q/" + slug + "/";
+  var link = document.querySelector('link[rel="canonical"]');
+  if (link) link.href = href;
+})();
+  </script>
+"""

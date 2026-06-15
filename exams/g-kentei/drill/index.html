@@ -7,6 +7,25 @@
   <meta name="description" content="G検定の本番形式の一問一答（模擬問題500問）。○×形式でスキマ時間に反復学習できます。">
   <title>G検定 一問一答 — AI Master</title>
   <link rel="canonical" href="https://ai-master.jp/exams/g-kentei/drill/">
+<script>
+(function () {
+  var q = new URLSearchParams(location.search).get("q");
+  if (!q) return;
+  var match = location.pathname.match(/(\/exams\/[^/]+\/(?:practice|drill))\/?$/);
+  if (!match) return;
+  var slug = q.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  var href = location.origin + match[1] + "/q/" + slug + "/";
+  var link = document.querySelector('link[rel="canonical"]');
+  if (link) link.href = href;
+})();
+  </script>
+<script>
+(function () {
+  var path = location.pathname;
+  if (!path.endsWith("/index.html")) return;
+  location.replace(path.slice(0, -10) + location.search + location.hash);
+})();
+  </script>
   <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="/assets/images/favicon-16x16.png" type="image/png" sizes="16x16">

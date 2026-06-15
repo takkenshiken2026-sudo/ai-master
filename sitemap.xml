@@ -2087,6 +2087,7 @@
 
 
 
+
   <!-- guide-pages:start -->
   <url>
     <loc>https://ai-master.jp/guide/after-cert-01/</loc>
@@ -2499,20 +2500,10 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/mock/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
 <url>
     <loc>https://ai-master.jp/exams/genai-passport/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/mock/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
 <url>
     <loc>https://ai-master.jp/legal/privacy.html</loc>
@@ -2531,57 +2522,8 @@
 
 
 
+
   <!-- question-pages:start -->
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-01/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-02/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-03/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-04/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-05/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-06/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-07/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-08/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-09/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/drill/domain/domain-10/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
   <url>
     <loc>https://ai-master.jp/exams/g-kentei/drill/q/tf-001/</loc>
     <changefreq>monthly</changefreq>
@@ -5084,56 +5026,6 @@
   </url>
   <url>
     <loc>https://ai-master.jp/exams/g-kentei/drill/questions/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-01/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-02/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-03/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-04/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-05/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-06/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-07/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-08/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-09/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/g-kentei/practice/domain/domain-10/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -7643,31 +7535,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ai-master.jp/exams/genai-passport/drill/domain/chapter-01/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/drill/domain/chapter-02/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/drill/domain/chapter-03/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/drill/domain/chapter-04/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/drill/domain/chapter-05/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://ai-master.jp/exams/genai-passport/drill/q/tf-0001/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -10169,31 +10036,6 @@
   </url>
   <url>
     <loc>https://ai-master.jp/exams/genai-passport/drill/questions/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/practice/domain/chapter-01/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/practice/domain/chapter-02/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/practice/domain/chapter-03/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/practice/domain/chapter-04/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ai-master.jp/exams/genai-passport/practice/domain/chapter-05/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

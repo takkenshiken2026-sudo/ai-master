@@ -13,7 +13,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from site_meta import SITE_ORIGIN, render_robots_meta  # noqa: E402
+from site_meta import (  # noqa: E402
+    PLAYER_DEEPLINK_CANONICAL_HTML,
+    SITE_CANONICAL_NORMALIZE_HTML,
+    SITE_ORIGIN,
+    render_robots_meta,
+)
 
 SITEMAP = ROOT / "sitemap.xml"
 GUIDE_DIR = ROOT / "guide"
@@ -26,7 +31,9 @@ NOINDEX_PATHS = [
     ROOT / "exams/genai-passport/practice/index.html",
     ROOT / "exams/genai-passport/drill/index.html",
     ROOT / "exams/g-kentei/mock/play.html",
+    ROOT / "exams/g-kentei/mock/index.html",
     ROOT / "exams/genai-passport/mock/play.html",
+    ROOT / "exams/genai-passport/mock/index.html",
     ROOT / "exams/it-passport/index.html",
     ROOT / "exams/it-passport/past/index.html",
     ROOT / "exams/it-passport/past/play.html",
@@ -36,6 +43,13 @@ NOINDEX_PATHS = [
     ROOT / "exams/it-passport/practice/questions/index.html",
     ROOT / "exams/it-passport/mock/index.html",
     ROOT / "exams/it-passport/mock/play.html",
+]
+
+PLAYER_SCRIPT_PATHS = [
+    ROOT / "exams/g-kentei/practice/index.html",
+    ROOT / "exams/g-kentei/drill/index.html",
+    ROOT / "exams/genai-passport/practice/index.html",
+    ROOT / "exams/genai-passport/drill/index.html",
 ]
 
 # sitemap から除外（noindex または未公開）
@@ -51,6 +65,8 @@ SITEMAP_EXCLUDE = {
     f"{SITE_ORIGIN}/exams/it-passport/mock/",
     f"{SITE_ORIGIN}/exams/it-passport/drill/questions/",
     f"{SITE_ORIGIN}/exams/it-passport/practice/questions/",
+    f"{SITE_ORIGIN}/exams/g-kentei/mock/",
+    f"{SITE_ORIGIN}/exams/genai-passport/mock/",
 }
 
 TEXT_REPLACEMENTS = (
@@ -81,6 +97,45 @@ def ensure_noindex(path: Path) -> bool:
     if changed:
         path.write_text(text, encoding="utf-8")
     return changed
+
+
+def ensure_player_head_scripts(path: Path) -> bool:
+    if not path.is_file():
+        return False
+    text = path.read_text(encoding="utf-8")
+    changed = False
+
+    if 'match[1] + "/q/"' not in text:
+        marker = '<link rel="canonical" href="'
+        idx = text.find(marker)
+        if idx >= 0:
+            end = text.find(">", idx) + 1
+            text = text[:end] + "\n" + PLAYER_DEEPLINK_CANONICAL_HTML.strip() + text[end:]
+            changed = True
+
+    if 'path.endsWith("/index.html")' not in text:
+        marker = '<link rel="canonical" href="'
+        idx = text.find(marker)
+        if idx >= 0:
+            end = text.find(">", idx) + 1
+            if 'match[1] + "/q/"' in text:
+                script_end = text.find("</script>", text.find('match[1] + "/q/"'))
+                if script_end >= 0:
+                    end = script_end + len("</script>")
+            text = text[:end] + "\n" + SITE_CANONICAL_NORMALIZE_HTML.strip() + text[end:]
+            changed = True
+
+    if changed:
+        path.write_text(text, encoding="utf-8")
+    return changed
+
+
+def strip_domain_urls(text: str) -> str:
+    return re.sub(
+        r"\n  <url>\n    <loc>https://ai-master\.jp/exams/[^<]+/(?:practice|drill)/domain/[^<]+</loc>[\s\S]*?</url>",
+        "",
+        text,
+    )
 
 
 def guide_sitemap_entries() -> list[str]:
@@ -127,6 +182,8 @@ def update_sitemap() -> None:
             text,
         )
 
+    text = strip_domain_urls(text)
+
     guide_block = (
         "\n  <!-- guide-pages:start -->\n"
         + "\n".join(guide_sitemap_entries()[1:])
@@ -149,6 +206,10 @@ def main() -> None:
         if ensure_noindex(path):
             patched += 1
             print(f"noindex: {path.relative_to(ROOT)}")
+    for path in PLAYER_SCRIPT_PATHS:
+        if ensure_player_head_scripts(path):
+            patched += 1
+            print(f"player scripts: {path.relative_to(ROOT)}")
     update_sitemap()
     print(f"patched {patched} HTML files")
 

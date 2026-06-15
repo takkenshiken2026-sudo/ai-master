@@ -19,7 +19,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from site_meta import SITE_GA4_HTML, SITE_ICONS_HTML, SITE_ORIGIN, render_og_meta
+from site_meta import (
+    ROBOTS_NOINDEX_FOLLOW,
+    SITE_CANONICAL_NORMALIZE_HTML,
+    SITE_GA4_HTML,
+    SITE_ICONS_HTML,
+    SITE_ORIGIN,
+    render_og_meta,
+    render_robots_meta,
+)
 SITEMAP = ROOT / "sitemap.xml"
 INDEX_JSON = ROOT / "data" / "question-index.json"
 GLOSSARY_TERMS_JSON = ROOT / "data" / "glossary-terms.json"
@@ -230,6 +238,7 @@ def page_shell(
     json_ld: dict | None = None,
     css_depth: int = 4,
     og_type: str = "website",
+    robots: str | None = None,
 ) -> str:
     css = rel_to_root(css_depth) + "assets/css/"
     json_block = ""
@@ -242,15 +251,16 @@ def page_shell(
     esc_title = html.escape(title)
     esc_desc = html.escape(description)
     og_block = render_og_meta(title, description, canonical, og_type=og_type)
+    robots_block = render_robots_meta(robots) if robots else ""
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="{esc_desc}">
+{robots_block}  <meta name="description" content="{esc_desc}">
   <title>{esc_title}</title>
   <link rel="canonical" href="{canonical}">
-{SITE_ICONS_HTML}{og_block}  <link rel="preconnect" href="https://fonts.googleapis.com">
+{SITE_CANONICAL_NORMALIZE_HTML}{SITE_ICONS_HTML}{og_block}  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{css}main.css">
@@ -362,7 +372,7 @@ def render_related_section(
 
     keyword_links: list[tuple[str, str]] = [
         (exam_label, f"{rel_root}exams/{exam_id}/"),
-        (mode_label, "../../"),
+        (mode_label, "../../questions/"),
         (domain, f"../../domain/{domain_slug}/"),
         ("問題一覧", "../../questions/"),
         ("用語辞典", f"{rel_root}glossary/"),
@@ -664,7 +674,7 @@ def build_mode(
                 ("ホーム", f"{rel_to_root(5)}index.html"),
                 ("試験対策", f"{rel_to_root(5)}exams/"),
                 (exam_label, f"{rel_to_root(5)}exams/{exam_id}/"),
-                (mode_label, "../../"),
+                (mode_label, "../../questions/"),
                 ("問題一覧", "../../questions/"),
                 (domain, None),
             ]
@@ -680,10 +690,10 @@ def build_mode(
                 breadcrumb_html=domain_breadcrumb,
                 body_html=domain_body,
                 css_depth=5,
+                robots=ROBOTS_NOINDEX_FOLLOW,
             ),
             encoding="utf-8",
         )
-        sitemap_urls.append(domain_canonical)
 
     glossary = load_published_glossary()
     rel_root = rel_to_root(5)
@@ -726,7 +736,7 @@ def build_mode(
                 ("ホーム", f"{rel_to_root(5)}index.html"),
                 ("試験対策", f"{rel_to_root(5)}exams/"),
                 (exam_label, f"{rel_to_root(5)}exams/{exam_id}/"),
-                (mode_label, "../../"),
+                (mode_label, "../../questions/"),
                 ("問題一覧", "../../questions/"),
                 (topic, None),
             ]
