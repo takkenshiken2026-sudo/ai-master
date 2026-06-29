@@ -898,6 +898,70 @@
   color: var(--blue);
 }
 
+.tool-launch-cta {
+  margin: 18px 0 0;
+}
+
+.tool-launch-cta .btn-exam-solid {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.tool-callout--launch {
+  background: var(--blue-light, #eef3fc);
+  border-color: var(--blue-mid, #c4d5f7);
+}
+
+.tool-callout--launch .btn-exam-solid {
+  margin-top: 8px;
+  text-decoration: none;
+}
+
+.tool-hero-placeholder-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 200px;
+  padding: 24px;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  background: linear-gradient(145deg, #eef3fc 0%, #ffffff 100%);
+}
+
+.tool-hero-placeholder-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tool-hero-placeholder-sub {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.tool-hero-placeholder-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tool-hero-placeholder-tags li {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #c4d5f7;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
 .tool-example-list {
   margin-top: 14px;
   padding: 0;

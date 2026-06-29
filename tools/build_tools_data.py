@@ -44,7 +44,9 @@ FILTER_LABELS = {
     "local": "ローカル",
 }
 
-FEATURED_IDS = {"chatgpt", "claude", "plaud"}
+FEATURED_IDS = {"chatgpt", "claude", "plaud", "ai-giroku"}
+
+# build_tools_data.py から Excel 再生成する場合、ai-giroku は手動で tools-data.js に追記済み（自社ツール）
 MIN_RASTER_BYTES = 2500
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "

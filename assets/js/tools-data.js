@@ -502,6 +502,18 @@ const TOOLS = [
   },
   // ── 音声・動画・音楽 ──
   {
+    id: "ai-giroku",
+    name: "AI議事録作成ツール",
+    maker: "AI Master",
+    logo: "ai-giroku/app-icon.svg",
+    cat: "audio",
+    catLabel: "音声・動画・音楽",
+    article: true,
+    featured: true,
+    tagline: "完全無料・登録不要。安全に議事録を自動作成",
+    url: "https://giroku.ai-master.jp/",
+  },
+  {
     id: "adobe-podcast",
     name: "Adobe Podcast",
     maker: "Adobe",

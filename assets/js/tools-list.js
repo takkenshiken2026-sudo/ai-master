@@ -1,5 +1,5 @@
 const ICON_BASE = '../assets/images/tools/';
-const FEATURED_LIMIT = 3;
+const FEATURED_LIMIT = 4;
 
 function toolUrl(tool) {
   return `${tool.id}/`;
