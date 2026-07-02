@@ -530,21 +530,6 @@ footer {
   color: var(--text-muted);
 }
 
-.foot-related {
-  margin: 0 0 12px;
-  font-size: var(--text-xs);
-  line-height: 1.55;
-  color: var(--text-muted);
-}
-
-.foot-related a {
-  color: var(--text-muted);
-  text-decoration: underline;
-  transition: color 0.15s;
-}
-
-.foot-related a:hover { color: var(--ink); }
-
 .foot-bottom {
   border-top: 1px solid var(--gray-300);
   padding-top: 16px; font-size: var(--text-xs);
