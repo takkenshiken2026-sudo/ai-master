@@ -1811,11 +1811,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ai-master.jp/tools/ai-giroku/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://ai-master.jp/tools/adobe-podcast/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
