@@ -67,6 +67,26 @@ TOOLS = {
         "lead_kana": None,  # 既に（ガンマ）あり
         "alt": ["ガンマ"],
     },
+    # カナ規約が抜けていたツール（読みが標準的で確実なもののみ。
+    # Suno/Udio/Veo/Zapier/ElevenLabs 等、読みが曖昧なものは意図的に除外）。
+    "claude": {"name": "Claude", "lead_kana": "クロード", "alt": ["クロード"]},
+    "claude-code": {
+        "name": "Claude Code",
+        "lead_kana": "クロードコード",
+        "alt": ["クロードコード"],
+    },
+    "descript": {"name": "Descript", "lead_kana": "ディスクリプト", "alt": ["ディスクリプト"]},
+    "devin": {"name": "Devin", "lead_kana": "デビン", "alt": ["デビン"]},
+    "heygen": {"name": "HeyGen", "lead_kana": "ヘイジェン", "alt": ["ヘイジェン"]},
+    "pika": {"name": "Pika", "lead_kana": "ピカ", "alt": ["ピカ"]},
+    "runway": {"name": "Runway", "lead_kana": "ランウェイ", "alt": ["ランウェイ"]},
+    "whisper": {"name": "Whisper", "lead_kana": "ウィスパー", "alt": ["ウィスパー"]},
+    "magnific": {"name": "Magnific", "lead_kana": "マグニフィック", "alt": ["マグニフィック"]},
+    "manus": {"name": "Manus", "lead_kana": "マナス", "alt": ["マナス"]},
+    "recraft": {"name": "Recraft", "lead_kana": "リクラフト", "alt": ["リクラフト"]},
+    "warp": {"name": "Warp", "lead_kana": "ワープ", "alt": ["ワープ"]},
+    "skywork": {"name": "Skywork", "lead_kana": "スカイワーク", "alt": ["スカイワーク"]},
+    "sora-2": {"name": "Sora 2", "lead_kana": "ソラ", "alt": ["ソラ", "Sora"]},
 }
 
 

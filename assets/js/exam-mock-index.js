@@ -193,7 +193,7 @@
         setIntro(
           introEl,
           config.purchaseIntro ||
-            "本番・過去問を想定した模擬試験です。3回分をセットでご購入いただけます。"
+            "本番形式の模擬試験です。3回分をセットでご購入いただけます。"
         );
         list.classList.remove("exam-mode-list");
         list.classList.add("mock-landing-root");
@@ -217,7 +217,7 @@
             ? config.purchasedIntro ||
                 "受験する回を選んでください。購入済みのため、何度でも再受験できます。"
             : config.freeIntro ||
-                "本番・過去問を想定した模擬試験です。受験する回を選んでください。"
+                "本番形式の模擬試験です。受験する回を選んでください。"
         );
         for (const id of examOrder) {
           const exam = exams[id];

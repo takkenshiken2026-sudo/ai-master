@@ -59,7 +59,7 @@
         <div class="exam-hero__stats" aria-label="試験概要">
           ${renderStats(profile.stats || [])}
         </div>
-        <p class="exam-hero__disclaimer">当サイトの問題は本番・過去問を想定した模擬問題です（公式の過去問ではありません）。</p>
+        <p class="exam-hero__disclaimer">当サイトの問題は本番形式の模擬問題です（公式の過去問ではありません）。</p>
       </div>
     `;
   }
