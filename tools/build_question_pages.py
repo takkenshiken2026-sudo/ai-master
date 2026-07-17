@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from site_meta import (
     ROBOTS_NOINDEX_FOLLOW,
+    SITE_ADSENSE_HTML,
     SITE_CANONICAL_NORMALIZE_HTML,
     SITE_GA4_HTML,
     SITE_ICONS_HTML,
@@ -267,7 +268,7 @@ def page_shell(
   <link rel="stylesheet" href="{css}hub.css">
   <link rel="stylesheet" href="{css}seo.css">
   <link rel="stylesheet" href="{css}question-detail.css">
-{json_block}{SITE_GA4_HTML}</head>
+{json_block}{SITE_GA4_HTML}{SITE_ADSENSE_HTML}</head>
 <body class="page-body">
 
 {render_nav(rel_to_root(css_depth))}

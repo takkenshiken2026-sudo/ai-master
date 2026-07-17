@@ -9,6 +9,7 @@ SITE_OG_IMAGE = f"{SITE_ORIGIN}/assets/images/og-default.jpg"
 SITE_OG_WIDTH = 1200
 SITE_OG_HEIGHT = 630
 GA4_MEASUREMENT_ID = "G-FWXFGSH6TD"
+ADSENSE_CLIENT_ID = "ca-pub-7927260139193410"
 ROBOTS_NOINDEX_FOLLOW = "noindex, follow"
 
 SITE_ICONS_HTML = """  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
@@ -27,6 +28,10 @@ SITE_GA4_HTML = f"""  <!-- Google tag (gtag.js) -->
     gtag('js', new Date());
     gtag('config', '{GA4_MEASUREMENT_ID}');
   </script>
+"""
+
+SITE_ADSENSE_HTML = f"""  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_CLIENT_ID}"
+     crossorigin="anonymous"></script>
 """
 
 

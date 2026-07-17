@@ -16,7 +16,7 @@ sys_path = ROOT / "tools"
 import sys
 
 sys.path.insert(0, str(sys_path))
-from site_meta import SITE_GA4_HTML  # noqa: E402
+from site_meta import SITE_ADSENSE_HTML, SITE_GA4_HTML  # noqa: E402
 
 OUT = ROOT / "docs" / "hub-featured" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
@@ -177,7 +177,7 @@ def main() -> None:
     .tool-content-section h2 {{ font-size:var(--text-xl); margin:0 0 8px; }}
     .tool-spec-table code {{ font-size:.9em; }}
   </style>
-{SITE_GA4_HTML}</head>
+{SITE_GA4_HTML}{SITE_ADSENSE_HTML}</head>
 <body class="page-body">
 <nav class="site-nav">
   <a href="../../index.html" class="logo">AI<em>マスター</em></a>

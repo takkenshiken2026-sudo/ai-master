@@ -27,7 +27,7 @@ from hub_icons import (  # noqa: E402
     load_section_aliases,
     resolve_glossary_icon,
 )
-from site_meta import SITE_GA4_HTML, SITE_ICONS_HTML  # noqa: E402
+from site_meta import SITE_ADSENSE_HTML, SITE_GA4_HTML, SITE_ICONS_HTML  # noqa: E402
 GLOSSARY_INDEX = ROOT / "glossary" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 SITE_ORIGIN = "https://ai-master.jp"
@@ -209,7 +209,7 @@ def build_index_html(data: dict) -> str:
     ]
   }}
   </script>
-{SITE_GA4_HTML}</head>
+{SITE_GA4_HTML}{SITE_ADSENSE_HTML}</head>
 <body class="page-body">
 
 <nav class="site-nav">
@@ -352,7 +352,7 @@ def scaffold_term_page(term: dict, categories: dict) -> None:
   <link rel="stylesheet" href="../../assets/css/main.css">
   <link rel="stylesheet" href="../../assets/css/seo.css">
   <link rel="stylesheet" href="../../assets/css/tool-detail.css">
-{SITE_GA4_HTML}</head>
+{SITE_GA4_HTML}{SITE_ADSENSE_HTML}</head>
 <body class="page-body">
 
 <nav class="site-nav">

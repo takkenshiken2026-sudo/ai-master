@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""全 HTML にファビコン・OG 寸法メタを注入する（未設定ページのみ）。"""
+"""全 HTML にファビコン・OG 寸法メタ・GA4・AdSense を注入する（未設定ページのみ）。"""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from site_meta import (
+    SITE_ADSENSE_HTML,
     SITE_GA4_HTML,
     SITE_ICONS_HTML,
     SITE_OG_HEIGHT,
@@ -21,6 +22,7 @@ from site_meta import (
 ICON_MARKER = 'rel="icon" href="/assets/images/favicon.svg"'
 OG_DIM_MARKER = 'property="og:image:width"'
 GA4_MARKER = "googletagmanager.com/gtag/js"
+ADSENSE_MARKER = "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
 
 DEFAULT_OG_BLOCK = f"""  <meta property="og:image:width" content="{SITE_OG_WIDTH}">
   <meta property="og:image:height" content="{SITE_OG_HEIGHT}">
@@ -45,6 +47,12 @@ def inject_ga4(content: str) -> str:
     return content.replace("</head>", f"{SITE_GA4_HTML}</head>", 1)
 
 
+def inject_adsense(content: str) -> str:
+    if ADSENSE_MARKER in content:
+        return content
+    return content.replace("</head>", f"{SITE_ADSENSE_HTML}</head>", 1)
+
+
 def inject_default_og_dims(content: str) -> str:
     if OG_DIM_MARKER in content:
         return content
@@ -63,6 +71,7 @@ def process_file(path: Path) -> bool:
     updated = inject_icons(original)
     updated = inject_default_og_dims(updated)
     updated = inject_ga4(updated)
+    updated = inject_adsense(updated)
     if updated != original:
         path.write_text(updated, encoding="utf-8")
         return True
