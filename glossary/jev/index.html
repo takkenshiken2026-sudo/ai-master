@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jevとは？TypeSafe AIが2026年に公開した「System Oneモデル」。文章を生成せず、型安全な判断結果と確信度を高速に返す非LLM型AIの仕組み・LLMとの違い・ユースケースを解説。">
+  <title>Jevとは？文章を生成しない「判断特化型AI」を解説 — AI Master</title>
+  <link rel="canonical" href="https://ai-master.jp/glossary/jev/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#1A5CDB">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jevとは？文章を生成しない「判断特化型AI」">
+  <meta property="og:description" content="LLMが文章を生成するのに対し、Jevはソフトウェア向けに型安全な判断結果と確信度を高速に返す。TypeSafe AIが提唱する「System Oneモデル」を解説。">
+  <meta property="og:url" content="https://ai-master.jp/glossary/jev/">
+  <meta property="og:image" content="https://ai-master.jp/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/seo.css">
+  <link rel="stylesheet" href="../../assets/css/tool-detail.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Jev",
+        "alternateName": ["System One Model", "ジェブ", "TypeSafe Jev"],
+        "description": "TypeSafe AIが2026年に公開した「System Oneモデル」。文章を生成せず、型安全な判断結果と較正済みの確信度をソフトウェア向けに高速出力する非LLM型AI。"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "JevとLLMの違いは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "LLMは人間向けに文章（トークン）を逐次生成しますが、Jevは文章を生成しません。あらかじめ定義された選択肢や数値などの型安全な判断結果を、確信度付きで並列に一度に出力します。用途は「文章を書く」ことではなく「ソフトウェアが使う判断を返す」ことに特化しています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Jevはなぜ高速・低コストなのですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "LLMは出力トークンを1つずつ順番に生成するため時間とコストがかかります。Jevは出力候補があらかじめ決まっている前提で、必要な答えを1回の並列計算でまとめて算出します。同社は応答時間70〜500ミリ秒、LLM比で最大約193倍速・約444倍低コスト（自社4ワークフロー評価の上限値）と説明しています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Jevはどんな用途に向きますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "問い合わせの自動分類、アラートの優先度付け、文書のリスク判定、AIエージェントが使うツール・スキルの選択、モデルルーティングなど、答えの候補を事前に列挙できる高頻度の判断タスクに向きます。逆に、チャット応答・文章生成・コード生成のような自由記述が必要な用途には向きません。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXFGSH6TD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FWXFGSH6TD');</script>
+  <meta name="google-adsense-account" content="ca-pub-7927260139193410">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7927260139193410"
+     crossorigin="anonymous"></script>
+</head>
+<body class="page-body">
+<nav class="site-nav">
+  <a href="../../index.html" class="logo">AI<em>マスター</em></a>
+  <ul class="nav-links">
+    <li><a href="../../exams/">試験対策</a></li>
+    <li><a href="../../guide/">学習ガイド</a></li>
+    <li><a href="../index.html" class="active">用語辞典</a></li>
+    <li><a href="../../tools/">AIツール</a></li>
+    <li><a href="../../career/">キャリア</a></li>
+  </ul>
+</nav>
+<main class="page-wrap page-wrap--article">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="../../index.html">ホーム</a></li>
+      <li><a href="../index.html">用語辞典</a></li>
+      <li aria-current="page">Jev</li>
+    </ol>
+  </nav>
+  <header class="tool-hero tool-hero--article">
+    <p class="tool-hero-eyebrow">モデル・技術</p>
+    <h1>Jevとは？文章を生成しない「判断特化型AI」</h1>
+    <p class="tool-hero-sub">英名：Jev ／ 種別：System One モデル（判断特化型AI）</p>
+  </header>
+  <div class="tool-meta-bar">
+    <span>更新日：<time datetime="2026-09-18">2026年9月18日</time></span>
+    <span>読了目安：約7分</span>
+  </div>
+  <article class="tool-content">
+    <p class="tool-lead">
+      <strong>Jev（ジェブ）</strong>は、2026年9月にスタートアップ<strong>TypeSafe AI</strong>が公開したAIモデルです。最大の特徴は、<a href="../llm/">LLM</a>のように<strong>文章（テキスト）を生成しない</strong>こと。代わりに「はい/いいえ」「選択肢の選択」「数値」といった<strong>型安全な判断結果</strong>を、<strong>確信度付きで超高速に返す</strong>ことに特化しています。同社はこれを<strong>「System One（システム・ワン）モデル」</strong>という新しいモデルの分類として提唱しました。本記事では、なぜ「しゃべらないAI」がいま注目されるのかを、<a href="../generative-ai/">生成AI</a>との違いから整理します。
+    </p>
+    <div class="tool-callout">
+      <p><strong>試験との関係</strong></p>
+      <p>Jevは2026年9月に登場したばかりの新技術で、現時点でG検定・生成AIパスポートなどの出題範囲には含まれません。本記事は最新トレンドの理解を目的とした<strong>解説記事</strong>です。数値や仕様は早期提供（アーリーアクセス）時点の同社発表に基づき、今後変わる可能性があります。</p>
+    </div>
+    <nav class="tool-toc" aria-label="目次">
+      <p class="tool-toc-title">目次</p>
+      <ol>
+        <li><a href="#what-is">Jevとは</a></li>
+        <li><a href="#system-one">System Oneモデルの考え方</a></li>
+        <li><a href="#vs-llm">LLMとの違い</a></li>
+        <li><a href="#numbers">速度・コスト・精度</a></li>
+        <li><a href="#reliability">型安全・確信度・ハルシネーション</a></li>
+        <li><a href="#use-cases">想定ユースケース</a></li>
+        <li><a href="#limits">苦手なこと・注意点</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#related">関連用語</a></li>
+      </ol>
+    </nav>
+    <section id="what-is">
+      <h2>Jevとは</h2>
+      <p>
+        Jevは、元<strong>OpenAI</strong>の研究者<strong>Diogo Almeida（ディオゴ・アルメイダ）</strong>氏が率いるTypeSafe AIが2026年9月15日に発表したモデルです。Almeida氏は<a href="../rlhf/">RLHF</a>の研究に携わり、<a href="../gpt-4/">ChatGPT</a>を支えた手法の共同開発者として知られます。その人物が今回、<strong>「文章生成を捨てる」</strong>という逆張りの設計を打ち出した点が話題になりました。
+      </p>
+      <p>
+        一般的な<a href="../llm/">大規模言語モデル（LLM）</a>は「人間が読む文章を作る」ことに最適化されています。これに対しJevは、<strong>ソフトウェアがそのまま使える判断（決定）</strong>を返すことに目的を絞りました。出力は自由な文章ではなく、あらかじめ指定した選択肢や評価尺度に沿った<strong>構造化データ</strong>です。
+      </p>
+    </section>
+    <section id="system-one">
+      <h2>System Oneモデルの考え方</h2>
+      <p>
+        「System One」という名称は、心理学者ダニエル・カーネマンの<strong>「システム1（速い・直感的思考）／システム2（遅い・熟考型思考）」</strong>に由来します。長い思考連鎖（Chain-of-Thought）でじっくり考えるLLMが「システム2」寄りだとすれば、Jevは<strong>専門家が一瞬で下す直感的判断＝「システム1」</strong>をモデル化した、という位置づけです。
+      </p>
+      <ul class="tool-example-list">
+        <li><strong>入力</strong> — 非構造データ＋プログラムの状態（state）と、型付きの問い</li>
+        <li><strong>出力</strong> — 型安全な値（選択肢・数値・真偽など）＋較正済みの確率（確信度）</li>
+        <li><strong>処理</strong> — トークンを逐次生成せず、必要な答えを<strong>1回の並列パス</strong>でまとめて算出</li>
+      </ul>
+      <p>
+        開発者はこれを<strong>「フロンティア級の知能を関数呼び出し（function call）にしたもの」</strong>と表現しています。つまり、AIの判断をプログラムの一部品として組み込みやすくすることが狙いです。
+      </p>
+    </section>
+    <section id="vs-llm">
+      <h2>LLMとの違い</h2>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>観点</th><th>LLM（GPT・Claudeなど）</th><th>Jev（System Oneモデル）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>主な相手</td><td>人間（読む文章）</td><td>ソフトウェア（使う判断）</td></tr>
+          <tr><td>出力</td><td>自由なテキスト</td><td>型安全な値＋確信度</td></tr>
+          <tr><td>生成方式</td><td>トークンを逐次生成</td><td>並列で一度に算出</td></tr>
+          <tr><td>得意</td><td>文章・要約・コード・対話</td><td>分類・判定・選択・ルーティング</td></tr>
+          <tr><td>速度感</td><td>数秒〜数十秒</td><td>ミリ秒級</td></tr>
+        </tbody>
+      </table>
+      <p>
+        重要なのは、JevはLLMの<strong>置き換えではなく使い分け</strong>だという点です。文章を書く仕事はLLM、答えの候補が決まっている高頻度の判断はJev、というように役割が分かれます。
+      </p>
+    </section>
+    <section id="numbers">
+      <h2>速度・コスト・精度</h2>
+      <p>同社が公開した数値（自社ベンチマーク・アーリーアクセス時点）は次のとおりです。<strong>いずれも自己申告であり、第三者の公開ベンチマークでの検証はこれからという段階</strong>です。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>指標</th><th>Jev</th><th>比較（フロンティアLLM）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>応答時間</td><td>約70〜500ミリ秒</td><td>約3〜329秒</td></tr>
+          <tr><td>速度</td><td colspan="2">LLM比で約20〜200倍（上限値 約193.6倍）</td></tr>
+          <tr><td>コスト</td><td colspan="2">LLM比で約40〜400倍安い（上限値 約444.6倍、出力トークンは無料）</td></tr>
+          <tr><td>入力料金</td><td colspan="2">100万トークンあたり約$0.042</td></tr>
+          <tr><td>精度（同社4課題評価）</td><td>約67.8%</td><td>GPT-5.6 Terra 約67.9%（ほぼ同等）</td></tr>
+        </tbody>
+      </table>
+      <p>
+        ポイントは「最高精度を目指すモデル」ではなく、<strong>フロンティアLLMに近い精度を、桁違いに速く・安く出す</strong>という設計思想にあります。高頻度で繰り返す判断ほど、このコスト差が効いてきます。
+      </p>
+    </section>
+    <section id="reliability">
+      <h2>型安全・確信度・ハルシネーション</h2>
+      <p>Jevが「業務に組み込みやすい」とされる理由は、出力の信頼性を担保する3つの設計にあります。</p>
+      <ul class="tool-example-list">
+        <li><strong>型安全</strong> — 事前に定義した形式の値しか返さないため、存在しない選択肢を返す<a href="../hallucination/">ハルシネーション</a>が原理的に起きにくい</li>
+        <li><strong>較正済みの確信度</strong> — 各判断に確信度が付き、周囲のコードが「自動実行するか、人間のレビューに回すか」を切り分けられる</li>
+        <li><strong>学習手法</strong> — LLMで使われるRLHFではなく、判断の較正に特化した独自手法（RLCD）で信頼性を高めたと説明</li>
+      </ul>
+      <p>
+        LLMの出力を使う際に必要だった「文字列を解析し、検証し、失敗したら再試行する」という手間（parse・validate・retry）を減らせる点が、開発者にとっての実利になります。
+      </p>
+    </section>
+    <section id="use-cases">
+      <h2>想定ユースケース</h2>
+      <p>Jevは、<strong>答えの候補を事前に列挙できる判断</strong>で力を発揮します。</p>
+      <table class="tool-spec-table">
+        <thead>
+          <tr><th>領域</th><th>例</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>分類・振り分け</td><td>問い合わせメールのカテゴリ判定、コンテンツのモデレーション</td></tr>
+          <tr><td>優先度付け</td><td>大量アラートの緊急度スコアリング</td></tr>
+          <tr><td>リスク判定</td><td>契約書・文書の要注意箇所の検出</td></tr>
+          <tr><td>ルーティング</td><td>どのLLM／どの担当に回すかのモデルルーティング</td></tr>
+          <tr><td>エージェント</td><td>AIエージェントが次に使うツール・スキルの候補選択</td></tr>
+        </tbody>
+      </table>
+      <p>
+        特にツールを多数持つAIエージェントでは、判断部分をJevに任せることで<strong>生成LLMの呼び出し回数を減らし、動作を速く・監査しやすく</strong>できる可能性が指摘されています。
+      </p>
+    </section>
+    <section id="limits">
+      <h2>苦手なこと・注意点</h2>
+      <table class="tool-spec-table">
+        <thead><tr><th>誤解しやすい点</th><th>正しい理解</th></tr></thead>
+        <tbody>
+          <tr><td>Jev＝LLMの上位互換</td><td>用途が違う。文章生成はできず、置き換えではなく使い分け</td></tr>
+          <tr><td>何でも判断できる</td><td>出力候補を事前定義できるタスク限定。自由記述の問いには不向き</td></tr>
+          <tr><td>チャットやコード生成に使える</td><td>不向き。説明文を書く用途は対象外</td></tr>
+          <tr><td>数値は確定した実力</td><td>多くが同社の自己申告。公開ベンチや本番規模の信頼性は未検証</td></tr>
+        </tbody>
+      </table>
+      <p>
+        2026年9月時点でJevは<strong>アーリーアクセス（ウェイトリスト制）</strong>で提供されており、料金や挙動は今後変わる可能性があります。導入検討時は最新の公式情報を確認してください。
+      </p>
+    </section>
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="tool-faq">
+        <details>
+          <summary>JevとLLMの違いは？</summary>
+          <p class="tool-faq-a">LLMは人間向けに文章（トークン）を逐次生成しますが、Jevは文章を生成しません。あらかじめ定義された選択肢や数値などの型安全な判断結果を、確信度付きで並列に一度に出力します。用途は「文章を書く」ことではなく「ソフトウェアが使う判断を返す」ことに特化しています。</p>
+        </details>
+        <details>
+          <summary>Jevはなぜ高速・低コストなのですか？</summary>
+          <p class="tool-faq-a">LLMは出力トークンを1つずつ順番に生成するため時間とコストがかかります。Jevは出力候補があらかじめ決まっている前提で、必要な答えを1回の並列計算でまとめて算出します。同社は応答時間70〜500ミリ秒、LLM比で最大約193倍速・約444倍低コスト（自社4ワークフロー評価の上限値）と説明しています。</p>
+        </details>
+        <details>
+          <summary>Jevはどんな用途に向きますか？</summary>
+          <p class="tool-faq-a">問い合わせの自動分類、アラートの優先度付け、文書のリスク判定、AIエージェントが使うツール・スキルの選択、モデルルーティングなど、答えの候補を事前に列挙できる高頻度の判断タスクに向きます。逆に、チャット応答・文章生成・コード生成のような自由記述が必要な用途には向きません。</p>
+        </details>
+      </div>
+    </section>
+    <aside class="tool-related-wrap" id="related">
+      <h2 class="tool-related-section-title">関連用語</h2>
+      <div class="tool-related-block" id="related-terms">
+        <h2 class="tool-related-heading">関連用語</h2>
+        <ul class="tool-related-list tool-related-list--cards">
+          <li><a href="../llm/">LLM</a></li>
+          <li><a href="../gpt-4/">GPT-4</a></li>
+          <li><a href="../generative-ai/">生成AI</a></li>
+          <li><a href="../rlhf/">RLHF</a></li>
+          <li><a href="../hallucination/">ハルシネーション</a></li>
+          <li><a href="../inference/">推論</a></li>
+        </ul>
+      </div>
+</aside>
+  </article>
+</main>
+<footer>
+  <div class="foot-inner">
+    <p class="foot-disclaimer">G検定は（社）日本ディープラーニング協会の登録商標です。生成AIパスポートは一般社団法人グロービスの商標です。当サイトは各試験の公式サイトではありません。</p>
+    <div class="foot-bottom">
+      <span>© 2026 AIマスター. All rights reserved.</span>
+      <span class="foot-legal"><a href="../../legal/privacy.html">プライバシーポリシー</a> · <a href="../../legal/terms.html">利用規約</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

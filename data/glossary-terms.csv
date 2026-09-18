@@ -20,6 +20,7 @@ gpu,GPU,Graphics Processing Unit,G,並列演算に強いプロセッサ。深層
 human-in-the-loop,Human-in-the-Loop,Human-in-the-Loop,H,人が学習・運用のループに介在し品質や安全性を高める設計。,basics,H,published,2,g-kentei|genai-passport,,
 iot,IoT,Internet of Things,I,センサー付きデバイスがネットワーク接続する仕組み。AIのデータ源。,basics,I,planned,2,g-kentei,,
 isolation-forest,Isolation Forest,Isolation Forest,I,ランダム分割で異常点を孤立させ検出する手法。,basics,I,planned,2,g-kentei,,
+jev,Jev,Jev,J,TypeSafe AIが2026年に公開した「System Oneモデル」。文章を生成せず、型安全な判断結果と確信度を高速に返す非LLM型AI。,models-tech,J,published,2,,,
 l1-regularization,L1正則化,L1 Regularization,L,重みの絶対値和を罰しスパース解を促す正則化。,basics,L,planned,2,g-kentei,,
 l2-regularization,L2正則化,L2 Regularization,L,重みの二乗和を罰す正則化。リッジ回帰でも用いる。,basics,L,planned,2,g-kentei,,
 lime,LIME,LIME,L,局所的に単純モデルで予測を説明する手法。,basics,L,published,2,g-kentei,,

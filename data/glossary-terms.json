@@ -345,6 +345,20 @@
       "notes": ""
     },
     {
+      "id": "jev",
+      "name": "Jev",
+      "yomi": "Jev",
+      "reading": "J",
+      "summary": "TypeSafe AIが2026年に公開した「System Oneモデル」。文章を生成せず、型安全な判断結果と確信度を高速に返す非LLM型AI。",
+      "category": "models-tech",
+      "sortKey": "J",
+      "status": "published",
+      "tier": 2,
+      "exams": [],
+      "priority": "",
+      "notes": ""
+    },
+    {
       "id": "l1-regularization",
       "name": "L1正則化",
       "yomi": "L1 Regularization",
